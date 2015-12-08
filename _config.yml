@@ -1,0 +1,25 @@
+# Permalinks
+#
+# Use of `relative_permalinks` ensures post links from the index work properly.
+permalink:           pretty
+relative_permalinks: true
+
+markdown:         redcarpet
+redcarpet:
+    extensions: [with_toc_data]
+
+highlighter:      pygments
+
+# Setup
+title:               Hippocamplus
+tagline:             'My Second Memory'
+description:         'A place to gather useful information I keep on forgetting.'
+baseurl:             ''
+paginate:            5
+
+# About/contact
+author:
+  name:              Jean Monlong
+  url:               https://github.com/jmonlong
+  email:             jean.monlong@gmail.com
+
