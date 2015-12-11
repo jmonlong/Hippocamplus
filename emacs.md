@@ -3,16 +3,33 @@ layout: pagetoc
 title: Emacs
 ---
 
-I use Emacs for almost everything: **coding, writing, taking notes, preparing presentations**. I'm using it right now ! Well I mean, at the time I'm writing this. There is still a chance I'm using it when you read this.
+I use Emacs for almost everything: **coding, writing, taking notes, preparing presentations**. I'm using it right now ! Well I mean, at the time I'm writing this. There is still a good chance I'm using it now *now*.
 
 ## Basic configuration
 
+I use [Solarized](http://ethanschoonover.com/solarized) theme palette. I installed the *color-theme-sanityinc-solarized* pacakge directly from [MELPA](#melpa-package-repository). I added the dark version as default with `(load-theme 'sanityinc-solarized-dark t)`. To change it interactively I run `M-x load-theme` and then for example `sanityinc-solarized-light`.
+
 + Apparently `(setq comint-scroll-to-bottom-on-output t)` will force the convenient scroll-down when a line/region is send to a console buffer (e.g. R, Shell).
+
 
 ## General commands
 
 + Select a region and press `M-=` to count words. There are other ways for LaTeX.
 + In a console (R, Shell), previous/next line in the history is accessed by `M-p`/`M-n`. (Useful in clusters when `C-up` doesn't work).
+
+## MELPA package repository
+
+Usually packages are just `.el` files to download and add in the folder defined in `.emacs` (e.g. `(add-to-list 'load-path "~/.emacs.d/lisp/")`). However, there is easier way: [MELPA](http://www.emacswiki.org/emacs/MELPA) package manager !
+
+To install it, add to `.emacs`:
+
+```lisp
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(package-initialize)
+```
+
+Then to find and install a new package, use `M-x list-packages`, find the package in the list and click on *Install*.
 
 ## For R
 
@@ -46,7 +63,7 @@ I would like to add a feature to this: counting selected text.
 
 To open a *shell* buffer, type `M-x shell`.
 
-Then I use the [*Emacs Speaks SHELL*](http://www.emacswiki.org/emacs/essh) package, that adds all the nice commands to sending lines/regions from a script to a Shell buffer. In my `.emacs` I added:
+Then I use the [*Emacs Speaks SHELL*](http://www.emacswiki.org/emacs/essh) package, that adds all the nice commands to send lines/regions from a script to a Shell buffer. In my `.emacs` I added:
 
 ```lisp
 (require 'essh)
@@ -60,4 +77,4 @@ Then I use the [*Emacs Speaks SHELL*](http://www.emacswiki.org/emacs/essh) packa
 (add-hook 'sh-mode-hook 'essh-sh-hook)
 ```
 
-The created shortcuts are self-explanatory.
+The shortcuts are self-explanatory.
