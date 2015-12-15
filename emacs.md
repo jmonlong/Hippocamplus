@@ -38,6 +38,7 @@ Then to find and install a new package, use `M-x list-packages`, find the packag
 With polymode, the mode depends on the position of the cursor in the document. For R + Markdown it means that we can edit the Markdown part in the markdown-mode and run the R code as if in a R script.
 
 I added this to my `.emacs`:
+
 ```lisp
 (require 'poly-R)
 (require 'poly-markdown)

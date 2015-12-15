@@ -79,7 +79,7 @@ In Emacs, the columns can be *"easily"* rearranged using rectangular selection. 
 
 ### Tables from *R*
 
-Package *knitr* has a function `kable` to easily format a *data.frame* using LaTeX format. 
+Package *knitr* has a function `kable` to easily format a *data.frame* in LaTeX format. 
 
 
 ## For publications
@@ -109,7 +109,7 @@ Using `\usepackage{authblk}`, the authors' affiliations can be defined like this
 
 ## Bibliography
 
-I use `\usepackage[comma,super]{natbib}`
+I use `\usepackage[comma,super]{natbib}`.
 
 ### Reduce long list of authors
 
@@ -164,3 +164,48 @@ FUNCTION {format.names}
 This allows maximum five authors before it switches to *"First Author et al"* mode. These numbers are defined in lines with `'max.num.names.before.forced.et.al :=` and `'num.names.shown.with.forced.et.al :`.
 
 I put this new `.bst` file in the folder of my `.tex` file and called it in the style command: `\bibliographystyle{unsrtnat5}`.
+
+
+## Presentations
+
+### Changing the font
+
+By default, Beamer uses a sans-serif font. It looks a bit harsh. I find the *Palatino* font easier on the eye. To switch to serif font and choose the *Palatino*, I add at the beginning of the document:
+
+```latex
+\renewcommand*{\familydefault}{\rmdefault}
+\renewcommand*\rmdefault{ppl}
+```
+
+### Section slides
+
+To introduce sections, Beamer can automatically insert slides. These automated slides can be defined with:
+
+```latex
+\AtBeginSection{
+  \begin{frame}
+    \begin{center}
+      \structure{\Large\bf \insertsection}
+    \end{center}
+  \end{frame}
+}
+\AtBeginSubsection{
+  \begin{frame}
+    \begin{center}
+      \structure{\large \insertsubsection}
+    \end{center}
+  \end{frame}
+}
+```
+
+### Themes
+
+I tend to use the minimalist *default* theme, remove the navigation bar but add slide number: 
+
+```latex
+\usetheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}[page number]
+```
+
+For an important presentation, I could use a more fancy theme, such as the [Metropolis](https://github.com/matze/mtheme) theme or the [Execushares](http://hamaluik.com/posts/better-beamer-themes/) one. Eventually I would like to mix and customize these two.

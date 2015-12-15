@@ -9,3 +9,6 @@ So here are some notes on
 
 + [Emacs](emacs)
 + [LaTeX](latex)
++ [Markdown](md)
++ [R](r)
++ [Python](python)
