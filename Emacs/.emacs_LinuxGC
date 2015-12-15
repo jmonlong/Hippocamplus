@@ -1,0 +1,181 @@
+;; Load path for extra packages
+(add-to-list 'load-path "~/.emacs.d/lisp/")
+
+;;;; MELPA package manager
+(require 'package) ;; You might already have this line
+(add-to-list 'package-archives
+	     '("melpa" . "https://melpa.org/packages/") t)
+(when (< emacs-major-version 24)
+  ;; For important compatibility libraries like cl-lib
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+(package-initialize) ;; You might already have this line
+
+;; Should force scroll down when sending line/regions to console buffer.
+(setq comint-scroll-to-bottom-on-output t) 
+
+;; Python
+;;(elpy-enable)
+(add-hook 'python-mode-hook 'elpy-enable)
+(require 'pymacs)
+(pymacs-load "ropemacs" "rope-")
+
+;;;; Emacs visual
+;; Disable startup screen
+(setq inhibit-splash-screen t)
+;; Turn the blinking off
+(blink-cursor-mode 0)
+;;; Turn off the tool-bar (<=0 off, >0 on)
+(tool-bar-mode 0)
+;;; turn off the menu bar (<=0 off, >0 on)
+;;(menu-bar-mode 0)
+;; Solarized
+(load-theme 'sanityinc-solarized-dark t) 
+;; Font
+;;(set-default-font "Consolas 14") ;; OSX
+(set-default-font "DejaVu Sans Mono 12") ;; Linux
+
+;; Shell commands
+(require 'essh)
+(defun essh-sh-hook ()
+  (define-key sh-mode-map "\C-c\C-r" 'pipe-region-to-shell)
+  (define-key sh-mode-map "\C-c\C-b" 'pipe-buffer-to-shell)
+  (define-key sh-mode-map "\C-c\C-j" 'pipe-line-to-shell)
+  (define-key sh-mode-map "\C-c\C-n" 'pipe-line-to-shell-and-step)
+  (define-key sh-mode-map "\C-c\C-f" 'pipe-function-to-shell)
+  (define-key sh-mode-map "\C-c\C-d" 'shell-cd-current-directory))
+(add-hook 'sh-mode-hook 'essh-sh-hook)
+
+;; Word count
+(load "word-count")
+;; Edit compressed files
+(auto-compression-mode t)
+
+;;;; ESS
+(add-to-list 'load-path "~/.emacs.d/lisp/ess/lisp/")
+;;(load "~/.emacs.d/lisp/ess/lisp/ess.el")
+(load "ess-site")
+(setq ess-describe-at-point-method 'tooltip)
+(setq ess-ask-for-ess-directory nil)
+;; set indentation size
+(setq ess-default-style 'DEFAULT)
+(setq ess-indent-level 2)
+;; imenus
+(require 'imenu-anywhere)
+(global-set-key [?\M-o] 'imenu-anywhere)
+;; Smart underscore
+(require 'ess-smart-underscore)
+(setq ess-S-underscore-when-last-character-is-a-space t)
+;; AutoComplete
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/lisp/ac-dict")
+(ac-config-default)
+(setq ac-auto-start nil)
+(define-key ac-mode-map [C-tab] 'auto-complete)
+(define-key ac-completing-map "\t" 'ac-complete)
+(define-key ac-completing-map "\r" nil)
+(setq ac-quick-help-delay 0.1)
+;; Eldoc : Show function information when cursor on function
+(setq ess-eldoc-show-on-symbol t)
+;; Grep specific lines in separate ESS buffer
+(defun findR(term)
+  (interactive "sSearch: \n")
+  (shell-command (concat "grep '" term "' '"(buffer-name)"'"))
+  (other-window 1)
+  (r-mode)
+)
+;; ggplot indentation https://github.com/emacs-ess/ESS/issues/120
+;; (add-to-list 'ess-style-alist
+;; 	     '(jm-style
+;; 	       (ess-indent-level default-value 'ess-indent-level)
+;; 	       (ess-first-continued-statement-offset . 2)
+;; 	       (ess-continued-statement-offset . 0)
+;; 	       (ess-brace-offset default-value 'ess-brace-offset)
+;; 	       (ess-expression-offset default-value 'ess-expression-offset)
+;; 	       (ess-else-offset default-value 'ess-else-offset)
+;; 	       (ess-brace-imaginary-offset default-value 'ess-brace-imaginary-offset)
+;; 	       (ess-continued-brace-offset default-value 'ess-continued-brace-offset)
+;; 	       (ess-arg-function-offset default-value 'ess-arg-function-offset)
+;; 	       (ess-arg-function-offset-new-line default-value 'ess-arg-function-offset-new-line)
+;; 	       (ess-close-brace-offset default-value 'ess-close-brace-offset))
+;; 	     )
+;; (setq ess-default-style 'jm-style)
+
+;; tsv mode
+;;(autoload 'tsv-mode "tsv-mode" "A mode to edit table like file" t)
+;;(autoload 'tsv-normal-mode "tsv-mode" "A minor mode to edit table like file" t)
+
+;;;; Modes and file extensions
+(require 'poly-R)
+(require 'poly-markdown)
+(autoload 'markdown-mode "markdown-mode"
+  "Major mode for editing Markdown files" t)
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.Rmd\\'" . poly-markdown+r-mode))
+(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+;;(add-to-list 'auto-mode-alist '("\\.tsv\\'" . tsv-mode))
+
+;;;; LaTeX
+(add-to-list 'auto-mode-alist '("\\.tex$" . LaTeX-mode))
+(setq TeX-PDF-mode t)
+(setq TeX-source-correlate-mode t)
+(setq TeX-show-compilation nil)
+(setq TeX-auto-save t)
+(setq TeX-parse-self t)
+(setq-default TeX-master nil)
+;;(add-hook 'LaTeX-mode-hook 'visual-line-mode)
+(add-hook 'LaTeX-mode-hook 'flyspell-mode)
+(add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+(add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+(setq reftex-plug-into-AUCTeX t)
+(global-set-key (kbd "C-x r C-SPC") 'rm-set-mark)
+(global-set-key (kbd "C-x r C-x") 'rm-exchange-point-and-mark)
+(global-set-key (kbd "C-x r C-w") 'rm-kill-region)
+(global-set-key (kbd "C-x r M-w") 'rm-kill-ring-save)
+(autoload 'rm-set-mark "rect-mark"
+  "Set mark for rectangle." t)
+(autoload 'rm-exchange-point-and-mark "rect-mark"
+  "Exchange point and mark for rectangle." t)
+(autoload 'rm-kill-region "rect-mark"
+  "Kill a rectangular region and save it in the kill ring." t)
+(autoload 'rm-kill-ring-save "rect-mark"
+  "Copy a rectangular region to the kill ring." t)
+
+;;;; Ispell 
+;; OSX -
+;; (setq ispell-program-name "/usr/local/Cellar/ispell/3.3.02/bin/ispell")
+;; Flyspell "right click"
+;;(eval-after-load "flyspell"
+    ;; '(progn
+    ;;    (define-key flyspell-mouse-map [down-mouse-3] #'flyspell-correct-word)
+    ;;    (define-key flyspell-mouse-map [mouse-3] #'undefined)))
+;; - OSX
+;; Autoturn on for latex documents
+(add-hook 'latex-mode-hook 'flyspell-mode)
+(add-hook 'markdown-mode-hook 'flyspell-mode)
+;; Default languages
+(setq ispell-dictionary "american")
+(setq ispell-local-dictionary "american")
+
+;;;; OSX specific : 
+;; Mac key bindings:
+;; (define-key function-key-map (kbd "M-<down>") 'forward-paragraph)
+;; (define-key function-key-map (kbd "M-<up>") 'backward-paragraph)
+;; Window size
+;; (require 'maxframe)
+;; (add-hook 'window-setup-hook 'maximize-frame t)
+;; Window focus
+;; (x-focus-frame nil)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" default))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
