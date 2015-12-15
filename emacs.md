@@ -33,6 +33,17 @@ Then to find and install a new package, use `M-x list-packages`, find the packag
 
 ## For R
 
+### Poly-mode for R + Markdown
+
+With polymode, the mode depends on the position of the cursor in the document. For R + Markdown it means that we can edit the Markdown part in the markdown-mode and run the R code as if in a R script.
+
+I added this to my `.emacs`:
+```lisp
+(require 'poly-R)
+(require 'poly-markdown)
+(add-to-list 'auto-mode-alist '("\\.Rmd\\'" . poly-markdown+r-mode))
+```
+
 ## For LaTeX
 
 I put some Emacs tricks (e.g. for table manipulation) on the [LaTeX page](latex.md).

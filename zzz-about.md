@@ -26,5 +26,5 @@ title: About
 
 For this website, I'm using [Jekyll](http://jekyllrb.com/) hosted on [GitHub](https://github.com/). I chose the [Lanyon](http://lanyon.getpoole.com/) theme.
 
-I also use [this Javascript plugin](https://github.com/ghiculescu/jekyll-table-of-contents) to generate the table of contents of the pages
+I also use [this Javascript plugin](https://github.com/ghiculescu/jekyll-table-of-contents) to generate the table of contents of the pages.
 
