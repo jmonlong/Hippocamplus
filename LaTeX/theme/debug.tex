@@ -1,13 +1,14 @@
 \documentclass{beamer}
 
 \usetheme{MyExecushares}
+\setcounter{showSlideNumbers}{1}
 
 \title{Understanding Beamer themes}
 \subtitle{My attempt at making pretty themes}
 \author{Jean Monlong}
+\institute{Human Genetics Dept.\\McGill University}
 \date{\today}
 
-\setcounter{showSlideNumbers}{1}
 
 \begin{document}
 
@@ -17,7 +18,7 @@
 
 \section{Introduction}
 
-\begin{frame}{Here it is}
+\begin{frame}{Some block and lists}
   \begin{block}{List}
     \begin{itemize}
     \item Item 1
@@ -27,6 +28,17 @@
       \item Sub item 2
       \end{itemize}
     \end{itemize}
+  \end{block}
+
+  \begin{block}{Second list}
+    \begin{enumerate}
+    \item Item 1
+    \item Item 2
+      \begin{enumerate}
+      \item Sub item 1
+      \item Sub item 2
+      \end{enumerate}
+    \end{enumerate}
   \end{block}
   
 \end{frame}
