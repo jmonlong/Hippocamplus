@@ -15,7 +15,7 @@ I use [Solarized](http://ethanschoonover.com/solarized) theme palette. I install
 ## General commands
 
 + Select a region and press `M-=` to count words. There are other ways for LaTeX.
-+ In a console (R, Shell), previous/next line in the history is accessed by `M-p`/`M-n`. (Useful in clusters when `C-up` doesn't work).
++ In a console (R, Shell), previous/next line in the history is accessed by `M-p`/`M-n`. (Useful when ssh-tunneling with broken key-bindings).
 
 ## MELPA package repository
 

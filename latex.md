@@ -79,7 +79,7 @@ In Emacs, the columns can be *"easily"* rearranged using rectangular selection. 
 
 ### Tables from *R*
 
-Package *knitr* has a function `kable` to easily format a *data.frame* in LaTeX format. 
+Package [*knitr*](https://cran.r-project.org/web/packages/knitr/) has a function `kable` to easily format a *data.frame* in LaTeX format. 
 
 
 ## For publications
