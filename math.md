@@ -3,17 +3,41 @@ layout: pagetoc
 title: Math/Stats
 ---
 
-All of this is mostly extracted from [Wikipedia](https://en.wikipedia.org). These notes are exactly fitter to my fragmented knowledge/memory, the purpose is to fill the gaps, not to fully review the concepts.
+All of this is mostly extracted from [Wikipedia](https://en.wikipedia.org). These notes are exactly fitted to my fragmented knowledge/memory, the purpose is to fill the gaps, not to fully review the concepts.
 
 ## Probability distributions
 
 ### Binomial
 
+Binomial distribution models the **number of successes in *n* tries**, knowing the **probability *p* of success**, \\(\mathcal{B}(n,p)\\). It has *np* mean and \\(np(1-p)\\) variance.
+
+\\[\mathrm{Pr}(X=k) = \binom{n}{k}p^k (1-p)^{n-k} \\]
+
+### Hypergeometric
+
+Hypergeometric distribution models the **number of successes** when drawing, **without replacement, *n* elements from a population of size *N* containing *K* successes**. It can be used to analyze over-/under-representation of a sub-population in a sample. Its mean is \\(n\frac{K}{N}\\). 
+
+\\[\mathrm{Pr}(X=k) = \frac{\binom{K}{k}\binom{N-K}{n-k}}{\binom{N}{n}} \\]
+
 ### Normal
 
 ### Poisson
 
+Poisson distribution models the **number of events occurring in an interval of time**, knowing the rate \\(\lambda\\). It has \\(\lambda\\) mean and variance. Of note a binomial distribution with large *n* and small *p* can be approximated by a Poisson with parameter *np*.
+
+\\[\mathrm{Pr}(X=k) = \frac{\lambda^k e^{-\lambda}}{k!} \\]
+
+*Example:* number of mutation on a strand of DNA
+
 ### Beta-binomial
+
+Beta-binomial distribution is a **binomial** distribution in which the **probability of success follows a beta distribution**. It's often used as an over-dispersed binomial distribution. The three parameters are *n*, \\(\alpha\\) and \\(\beta\\).
+
+### Beta
+
+Beta distribution is defined on interval [0,1] by two shape parameters, \\(\alpha\\) and \\(\beta\\). It is often used as prior for binomial distributions.
+
+*Example:* allele frequencies in population.
 
 
 
@@ -45,6 +69,8 @@ All of this is mostly extracted from [Wikipedia](https://en.wikipedia.org). Thes
 ### Monte Carlo methods
 
 ### MCMC
+
+A Markov Chain Monte Carlo is **constructed to approximate a complex probability distribution**. It can be designed so that after enough iterations, the walk along the chain approximates the targeted distribution. 
 
 ### Hidden Markov Model
 
