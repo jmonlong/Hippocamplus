@@ -44,12 +44,22 @@ Beta distribution is defined on interval [0,1] by two shape parameters, \\(\alph
 ## Statistical tests
 
 ### Student t-test
+Usually **tests if two distributions, assumed to be Normal, are different**. Student distribution describes the estimated mean, from a small sample size, of a normally distributed population. [Welch's t-test](https://en.wikipedia.org/wiki/Welch's_t_test) is similar but more robust to unequal variance and different sample sizes between the tested groups.
 
-### Fisher test
+Different flavors exist, e.g one-sample vs two-sample or unpaired vs paired.
 
-### \\(\chi^2\\)
+### Fisher's exact test
+**Test association between two categorical classifications**. It is usually employed for small sample sizes but valid for all sample sizes. 
 
-### Wilcoxon
+It models the number in the contingency table following a [hypergeometric distribution](#hypergeometric).
+
+One difference with other test is that it assumes that the total are fixed before the sampling. *Is it a problem?*
+
+### \\(\chi^2\\) test
+Also used to test association between two categorical classifications. However it is **only suited when sample size is large and the expected values are not too low**.
+
+### Wilcoxon test
+Based on ranks, it **tests if one distribution is stochastically higher than another**. It is also called Mann-Whitney U test. Its non-parametric nature makes it robust to outliers and non-Normal or different distributions.
 
 ### ANOVA
 
