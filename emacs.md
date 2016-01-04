@@ -33,6 +33,32 @@ Then to find and install a new package, use `M-x list-packages`, find the packag
 
 ## For R
 
+### Emacs Speaks Statistics
+To install ESS, without needing the admin rights, the easiest way is to download and compile it in a dedicated folder (e.g. `.emacs.d/lisp/ess`):
+
+```sh
+git clone https://github.com/emacs-ess/ESS.git .emacs.d/lisp/ess
+cd .emacs.d/lisp/ess
+make
+```
+
+Then add these lines to `~/.emacs`:
+
+```lisp
+(add-to-list 'load-path "~/.emacs.d/lisp/ess/lisp/")
+(load "ess-site")
+```
+
+### Smart underscores
+By default, pressing underscore will insert a ` <- ` instead of a `_`. This was supposed to ease the pain of writing assignments with the arrow. However now we want a `_` most of the time (e.g. for *ggplot2* functions). Using smart underscore, ` <- ` will be inserted only when following a space.
+
+Simply put [this *.el* file](http://www.emacswiki.org/emacs/download/ess-smart-underscore.el) in the load path and add these lines to `~/.emacs`:
+
+```lisp
+(require 'ess-smart-underscore)
+(setq ess-S-underscore-when-last-character-is-a-space t)
+```
+
 ### Poly-mode for R + Markdown
 
 With polymode, the mode depends on the position of the cursor in the document. For R + Markdown it means that we can edit the Markdown part in the markdown-mode and run the R code as if in a R script.
