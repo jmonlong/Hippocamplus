@@ -116,3 +116,41 @@ Then I use the [*Emacs Speaks SHELL*](http://www.emacswiki.org/emacs/essh) packa
 ```
 
 The shortcuts are self-explanatory.
+
+## For Evernote
+
+I use [Evernote](https://evernote.com/) for easily keep notes synchronized across computer, tablet and smartphone. And there is a [Emacs mode for it](https://github.com/pymander/evernote-mode) (of course!).
+
+To install it, first run:
+
+```sh
+gem install evernote_oauth
+git clone https://github.com/pymander/evernote-mode
+cd evernote-mode/ruby
+ruby setup.rb
+```
+
+I had an error with the last command and fixed it by changing `::Config::CONFIG` with `::RbConfig::CONFIG` in `setup.rb`.
+
+Then, copy `evernote-mode.el` to the load path and add to `.emacs`:
+
+```lisp
+(require 'evernote-mode)
+(setq evernote-developer-token "<MYTOKEN>")
+(setq evernote-username "<MYUSERNAME>")
+(setq evernote-enml-formatter-command '("w3m" "-dump" "-I" "UTF8" "-O" "UTF8"))
+(global-set-key "\C-cec" 'evernote-create-note)
+(global-set-key "\C-ceo" 'evernote-open-note)
+(global-set-key "\C-ces" 'evernote-search-notes)
+(global-set-key "\C-ceS" 'evernote-do-saved-search)
+(global-set-key "\C-cew" 'evernote-write-note)
+(global-set-key "\C-cep" 'evernote-post-region)
+(global-set-key "\C-ceb" 'evernote-browser)
+```
+
+I retrieved my developer token (to use instead of `<MYTOKEN>`) [there](https://www.evernote.com/api/DeveloperToken.action). 
+
+Side notes:
+
+1. I also had to install *w3m* software.
+2. By default the notes are in read-only XHTML mode, I use `M-x evernote-change-edit-mode TEXT` to change the edit mode to text.
