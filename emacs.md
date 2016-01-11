@@ -6,11 +6,12 @@ title: Emacs
 I use Emacs for almost everything: **coding, writing, taking notes, preparing presentations**. I'm using it right now ! Well I mean, at the time I'm writing this. There is still a good chance I'm using it now *now*.
 
 ## Basic configuration
+Some of the basic tweaks on my `.emacs` file:
 
-I use [Solarized](http://ethanschoonover.com/solarized) theme palette. I installed the *color-theme-sanityinc-solarized* pacakge directly from [MELPA](#melpa-package-repository). I added the dark version as default with `(load-theme 'sanityinc-solarized-dark t)`. To change it interactively I run `M-x load-theme` and then for example `sanityinc-solarized-light`.
-
-+ Apparently `(setq comint-scroll-to-bottom-on-output t)` will force the convenient scroll-down when a line/region is send to a console buffer (e.g. R, Shell).
-
++ Disable startup screen with `(setq inhibit-splash-screen t)`.
++ Turn the blinking off with `(blink-cursor-mode 0)`.
++ Turn off the tool bar with `(tool-bar-mode 0)`.
++ Change the font with `(set-default-font "DejaVu Sans Mono 12")`.
 
 ## General commands
 
@@ -30,6 +31,11 @@ To install it, add to `.emacs`:
 ```
 
 Then to find and install a new package, use `M-x list-packages`, find the package in the list and click on *Install*.
+
+## Solarized theme
+
+I use [Solarized](http://ethanschoonover.com/solarized) theme palette. I installed the *color-theme-sanityinc-solarized* pacakge directly from [MELPA](#melpa-package-repository). I added the dark version as default with `(load-theme 'sanityinc-solarized-dark t)`. To change it interactively I run `M-x load-theme` and then for example `sanityinc-solarized-light`.
+
 
 ## For R
 
@@ -96,6 +102,26 @@ I would like to add a feature to this: counting selected text.
 ## For Markdown
 
 ## For Python
+
+### Elpy python mode
+[Elpy](https://github.com/jorgenschaefer/elpy) combines several packages to provide a lot of nice features, e.g. code coloring, completion, syntax checks, formatting recommendations.
+
+To install, follow instructions on the [GitHub page](https://github.com/jorgenschaefer/elpy) and add to `.emacs`:
+
+```lisp
+(package-initialize)
+(elpy-enable)
+```
+
+### Add some key bindings
+I added key bindings to send regions or the entire buffer to the opened Python shell. In `.emacs`:
+
+```lisp
+(add-hook 'python-mode-hook 'my-python)
+(defun my-python ()
+  (define-key python-mode-map (kbd "C-c r") 'python-shell-send-region)
+  (define-key python-mode-map (kbd "C-c b") 'python-shell-send-buffer))
+```
 
 ## For Shell
 

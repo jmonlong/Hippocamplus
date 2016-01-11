@@ -12,4 +12,5 @@ So here are some notes on
 + [Markdown](md)
 + [R](r)
 + [Python](python)
++ [Shell](shell)
 + [Math/Stats](math)
