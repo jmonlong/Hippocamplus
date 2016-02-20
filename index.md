@@ -14,3 +14,4 @@ So here are some notes on
 + [Python](python)
 + [Shell](shell)
 + [Math/Stats](math)
++ [Internet](internet)

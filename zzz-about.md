@@ -9,7 +9,7 @@ title: About
 + [PubMed](http://www.ncbi.nlm.nih.gov/pubmed/?term=Monlong%2C%20Jean[Full%20Author%20Name]%20OR%20Monlong%2C%20Jean[Full%20Investigator%20Name]&cmd=DetailsSearch).
 + [ResearchGate](https://www.researchgate.net/profile/Jean_Monlong).
 + [LinkedIn](https://www.linkedin.com/in/jeanmonlong).
-+ [Twitter](https://twitter.com/JMonlong/), although I'm not so active.
++ [Twitter](https://twitter.com/JMonlong/) (not very active).
 
 ### My current lab
 
