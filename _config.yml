@@ -4,9 +4,10 @@
 permalink:           pretty
 # relative_permalinks: true
 
-markdown:         redcarpet
-redcarpet:
-    extensions: [with_toc_data]
+# markdown:         redcarpet
+markdown: kramdown
+# redcarpet:
+#     extensions: [with_toc_data]
 
 highlighter:      pygments
 
