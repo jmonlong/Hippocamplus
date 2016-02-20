@@ -9,7 +9,8 @@ markdown: kramdown
 # redcarpet:
 #     extensions: [with_toc_data]
 
-highlighter:      pygments
+#highlighter:      pygments
+highlighter: rouge
 
 # Setup
 title:               Hippocamplus
