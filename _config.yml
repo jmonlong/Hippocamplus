@@ -14,7 +14,7 @@ highlighter:      pygments
 title:               Hippocamplus
 tagline:             'My Second Memory'
 description:         'A place to gather useful information I keep on forgetting.'
-baseurl:             '/hc/'
+baseurl:             '/Hippocamplus/'
 paginate:            5
 
 # About/contact
