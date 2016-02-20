@@ -9,9 +9,9 @@ I use [markdown-styles](https://github.com/mixu/markdown-styles) tool. I install
 
 To convert a Markdown document:
 
-```sh
+~~~sh
 generate-md --layout witex --input example.md --output output-example
-```
+~~~
 
 The themes I like:
 
@@ -38,28 +38,28 @@ I use [this Javascript plugin](https://github.com/ghiculescu/jekyll-table-of-con
 
 In practice I added to the *head* of the pages:
 
-```html
+~~~html
 <script type="text/javascript" src="https://raw.githubusercontent.com/ghiculescu/jekyll-table-of-contents/master/toc.js" ></script>
-```
+~~~
 
 Then, for the pages for which I want a TOC, I positioned it using `<div id="toc"></div>` and added the configuration at the bottom of the file:
 
-```html
+~~~html
 <script type="text/javascript">
   $(document).ready(function() {
   $('#toc').toc({ showSpeed: 0 });
   });
 </script>
-```
+~~~
 
 
 ### Math formulas
 
 I use [MathJax](http://docs.mathjax.org/en/latest/mathjax.html) JavaScript display engine. I added to the *head* of the pages:
 
-```html
+~~~html
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" ></script>
-```
+~~~
 
 Then inline formulas are defined by `\\(...\\)` (for equations, use `\\[...\\]`), and they follow [LaTeX syntax](https://en.wikibooks.org/wiki/LaTeX/Mathematics).
 

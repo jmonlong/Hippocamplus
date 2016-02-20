@@ -24,11 +24,11 @@ Usually packages are just `.el` files to download and add in the folder defined 
 
 To install it, add to `.emacs`:
 
-```lisp
+~~~lisp
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
-```
+~~~
 
 Then to find and install a new package, use `M-x list-packages`, find the package in the list and click on *Install*.
 
@@ -42,28 +42,28 @@ I use [Solarized](http://ethanschoonover.com/solarized) theme palette. I install
 ### Emacs Speaks Statistics
 To install ESS, without needing the admin rights, the easiest way is to download and compile it in a dedicated folder (e.g. `.emacs.d/lisp/ess`):
 
-```sh
+~~~sh
 git clone https://github.com/emacs-ess/ESS.git .emacs.d/lisp/ess
 cd .emacs.d/lisp/ess
 make
-```
+~~~
 
 Then add these lines to `~/.emacs`:
 
-```lisp
+~~~lisp
 (add-to-list 'load-path "~/.emacs.d/lisp/ess/lisp/")
 (load "ess-site")
-```
+~~~
 
 ### Smart underscores
 By default, pressing underscore will insert a ` <- ` instead of a `_`. This was supposed to ease the pain of writing assignments with the arrow. However now we want a `_` most of the time (e.g. for *ggplot2* functions). Using smart underscore, ` <- ` will be inserted only when following a space.
 
 Simply put [this *.el* file](http://www.emacswiki.org/emacs/download/ess-smart-underscore.el) in the load path and add these lines to `~/.emacs`:
 
-```lisp
+~~~lisp
 (require 'ess-smart-underscore)
 (setq ess-S-underscore-when-last-character-is-a-space t)
-```
+~~~
 
 ### Poly-mode for R + Markdown
 
@@ -71,11 +71,11 @@ With polymode, the mode depends on the position of the cursor in the document. F
 
 I added this to my `.emacs`:
 
-```lisp
+~~~lisp
 (require 'poly-R)
 (require 'poly-markdown)
 (add-to-list 'auto-mode-alist '("\\.Rmd\\'" . poly-markdown+r-mode))
-```
+~~~
 
 ## For LaTeX
 
@@ -85,7 +85,7 @@ I put some Emacs tricks (e.g. for table manipulation) on the [LaTeX page](latex.
 
 I found a wrapper around `texcount` that count the number of words in a document. It can be called with `M-x latex` after adding this to your `.emacs` configuration:
 
-```lisp
+~~~lisp
 (defun latex-word-count ()
  (interactive)
   (let* ((this-file (buffer-file-name))
@@ -95,7 +95,7 @@ I found a wrapper around `texcount` that count the number of words in a document
           (call-process "texcount" nil t nil "-inc" "-brief" this-file)))))
 (string-match "\n$" word-count)
 (message (replace-match "" nil nil word-count))))
-```
+~~~
 
 I would like to add a feature to this: counting selected text.
 
@@ -108,20 +108,20 @@ I would like to add a feature to this: counting selected text.
 
 To install, follow instructions on the [GitHub page](https://github.com/jorgenschaefer/elpy) and add to `.emacs`:
 
-```lisp
+~~~lisp
 (package-initialize)
 (elpy-enable)
-```
+~~~
 
 ### Add some key bindings
 I added key bindings to send regions or the entire buffer to the opened Python shell. In `.emacs`:
 
-```lisp
+~~~lisp
 (add-hook 'python-mode-hook 'my-python)
 (defun my-python ()
   (define-key python-mode-map (kbd "C-c r") 'python-shell-send-region)
   (define-key python-mode-map (kbd "C-c b") 'python-shell-send-buffer))
-```
+~~~
 
 ## For Shell
 
@@ -129,7 +129,7 @@ To open a *shell* buffer, type `M-x shell`.
 
 Then I use the [*Emacs Speaks SHELL*](http://www.emacswiki.org/emacs/essh) package, that adds all the nice commands to send lines/regions from a script to a Shell buffer. In my `.emacs` I added:
 
-```lisp
+~~~lisp
 (require 'essh)
 (defun essh-sh-hook ()
   (define-key sh-mode-map "\C-c\C-r" 'pipe-region-to-shell)
@@ -139,7 +139,7 @@ Then I use the [*Emacs Speaks SHELL*](http://www.emacswiki.org/emacs/essh) packa
   (define-key sh-mode-map "\C-c\C-f" 'pipe-function-to-shell)
   (define-key sh-mode-map "\C-c\C-d" 'shell-cd-current-directory))
 (add-hook 'sh-mode-hook 'essh-sh-hook)
-```
+~~~
 
 The shortcuts are self-explanatory.
 
@@ -149,18 +149,18 @@ I use [Evernote](https://evernote.com/) for easily keep notes synchronized acros
 
 To install it, first run:
 
-```sh
+~~~sh
 gem install evernote_oauth
 git clone https://github.com/pymander/evernote-mode
 cd evernote-mode/ruby
 ruby setup.rb
-```
+~~~
 
 I had an error with the last command and fixed it by changing `::Config::CONFIG` with `::RbConfig::CONFIG` in `setup.rb`.
 
 Then, copy `evernote-mode.el` to the load path and add to `.emacs`:
 
-```lisp
+~~~lisp
 (require 'evernote-mode)
 (setq evernote-developer-token "<MYTOKEN>")
 (setq evernote-username "<MYUSERNAME>")
@@ -172,7 +172,7 @@ Then, copy `evernote-mode.el` to the load path and add to `.emacs`:
 (global-set-key "\C-cew" 'evernote-write-note)
 (global-set-key "\C-cep" 'evernote-post-region)
 (global-set-key "\C-ceb" 'evernote-browser)
-```
+~~~
 
 I retrieved my developer token (to use instead of `<MYTOKEN>`) [there](https://www.evernote.com/api/DeveloperToken.action). 
 

@@ -7,15 +7,15 @@ title: Shell
 
 I ended up using Inkscape in command-line mode. The result is not so bad (better than the `pdf2eps` etc).
 
-```sh
+~~~sh
 inkscape document.pdf --export-eps=document.eps
-```
+~~~
 
 [Apparently](http://blm.io/blog/convert-pdf-eps-osx/), `pdftops` is even better. 
 
-```sh
+~~~sh
 pdftops -eps document.pdf
-```
+~~~
 
 ## Docker cheatsheet
 
@@ -31,16 +31,16 @@ I'm still learning Docker but here are commands/parameters that seem relevant fo
 
 To run in the folder with the `Dockerfile`.
 
-```sh
+~~~sh
 docker build -t jmonlong/popsv-docker .
-```
+~~~
 
 ### Launch a docker instance
 
 To launch an interactive instance with a shared folder:
 
-```sh
+~~~sh
 docker run -t -i -v /home/ubuntu/analysis1:/root/analysis1 jmonlong/popsv-docker bash
-```
+~~~
 
 

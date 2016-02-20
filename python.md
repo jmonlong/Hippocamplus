@@ -17,6 +17,6 @@ There should be a `__init__.py` file **in each directory containing modules** to
 
 To import the classes defined in file `class1.py`, simply do
 
-```python
+~~~python
 import class1
-```
+~~~

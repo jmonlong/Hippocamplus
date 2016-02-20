@@ -4,7 +4,7 @@
 permalink:           pretty
 # relative_permalinks: true
 
-# markdown:         redcarpet
+#markdown:         redcarpet
 markdown: kramdown
 # redcarpet:
 #     extensions: [with_toc_data]

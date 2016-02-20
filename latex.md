@@ -7,7 +7,7 @@ title: LaTeX
 
 This is my default (more or less) :
 
-```latex
+~~~ latex
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
@@ -18,7 +18,7 @@ This is my default (more or less) :
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{fullpage}
-```
+~~~
 
 ## Figures
 
@@ -26,22 +26,22 @@ This is my default (more or less) :
 
 This requires `\usepackage{caption}` and `\usepackage{subcaption}`. Then use like this:
 
-```latex
+~~~latex
 \begin{subfigure}[b]{.48\textwidth}
 	\includegraphics{example.pdf}
 	\caption{}
 	\label{fig:example}
 end{subfigure}
-```
+~~~
 
 ### Supplementary figures
 
 The counter and style for supplementary figures (and tables) can be changed. I place this block at the beginning of the supplementary figure section: 
 
-```latex
+~~~latex
 \setcounter{figure}{0}
 \renewcommand{\thefigure}{S\arabic{figure}}
-```
+~~~
 
 Moreover, some journals require the supplementary figures to be named *Supplementary Fig. 1*. As it is, with the configuration above, it would look like *Fig. S1* when using `Fig. \ref{fig:toto}`. The only solution I can think of is to manually write or not the *Supplementary* and remove the *S* in the number. But it's painful. Eventually I could write a small script that does this automatically.
 
@@ -54,10 +54,10 @@ Side-note: I don't like this style. Ok it looks a bit more fancy but using *S12*
 
 Similar to figures I use:
 
-```latex
+~~~latex
 \setcounter{table}{0}
 \renewcommand{\thetable}{S\arabic{table}}%
-```
+~~~
 
 ### Spanning columns/rows
 
@@ -88,23 +88,23 @@ Package [*knitr*](https://cran.r-project.org/web/packages/knitr/) has a function
 
 An abstract environment exists:
 
-```latex
+~~~latex
 \begin{abstract}
 Genetics has been shown to be important...
 \end{abstract}
-```
+~~~
 
 ### Author affiliation
 
 Using `\usepackage{authblk}`, the authors' affiliations can be defined like this:
 
-```latex
+~~~latex
 \author[1,2]{Jean Monlong}
 ...
 \affil[1]{Department of Human Genetics, McGill University, Montréal, H3A 1B1, Canada}
 \affil[2]{McGill University and Génome Québec Innovation Center, Montréal, H3A 1A4, Canada}
 ...
-```
+~~~
 
 
 ## Bibliography
@@ -117,7 +117,7 @@ To change a long list of authors into *"First Author et al"* in the references, 
 
 I downloaded the original version of the file [there](http://ctan.org/tex-archive/macros/latex/contrib/natbib) and change the `FUNCTION {format.names}` part by
 
-```
+~~~
 INTEGERS { max.num.names.before.forced.et.al num.names.shown.with.forced.et.al }
 
 FUNCTION {format.names}
@@ -159,7 +159,7 @@ FUNCTION {format.names}
     }
   while$
 }
-```
+~~~
 
 This allows maximum five authors before it switches to *"First Author et al"* mode. These numbers are defined in lines with `'max.num.names.before.forced.et.al :=` and `'num.names.shown.with.forced.et.al :`.
 
@@ -172,16 +172,16 @@ I put this new `.bst` file in the folder of my `.tex` file and called it in the 
 
 By default, Beamer uses a sans-serif font. It looks a bit harsh. I find the *Palatino* font easier on the eye. To switch to serif font and choose the *Palatino*, I add at the beginning of the document:
 
-```latex
+~~~latex
 \renewcommand*{\familydefault}{\rmdefault}
 \renewcommand*\rmdefault{ppl}
-```
+~~~
 
 ### Section slides
 
 To introduce sections, Beamer can automatically insert slides. These automated slides can be defined with:
 
-```latex
+~~~latex
 \AtBeginSection{
   \begin{frame}
     \begin{center}
@@ -196,16 +196,16 @@ To introduce sections, Beamer can automatically insert slides. These automated s
     \end{center}
   \end{frame}
 }
-```
+~~~
 
 ### Themes
 
 I tend to use the minimalist *default* theme, remove the navigation bar but add slide number: 
 
-```latex
+~~~latex
 \usetheme{default}
 \setbeamertemplate{navigation symbols}{}
 \setbeamertemplate{footline}[page number]
-```
+~~~
 
 For an important presentation, I could use a more fancy theme, such as the [Metropolis](https://github.com/matze/mtheme) theme or the [Execushares](http://hamaluik.com/posts/better-beamer-themes/) one. Eventually I would like to mix and customize these two.
