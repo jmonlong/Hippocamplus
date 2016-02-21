@@ -39,9 +39,11 @@
 \setbeamercolor{section in toc}{fg=ExecusharesBlack}
 \setbeamercolor{block title}{fg=ExecusharesWhite}
 \setbeamercolor{block title}{bg=ExecusharesRed}
+\setbeamercolor{block border}{bg=ExecusharesRed}
+
 
 % set fonts
-\setbeamerfont{itemize/enumerate body}{size=\large}
+\setbeamerfont{itemize/enumerate body}{size=\normalsize}
 \setbeamerfont{itemize/enumerate subbody}{size=\normalsize}
 \setbeamerfont{itemize/enumerate subsubbody}{size=\small}
 
@@ -170,7 +172,7 @@
 			% swap the comment on these to add section titles to slide titles
 			%\node[anchor=north,text width=11.8cm,inner xsep=0.5cm,inner ysep=0.25cm] at (6.4cm,9.6cm) {\color{ExecusharesWhite}\Large\textbf{\insertsectionhead: \insertframetitle}};
 			%\node[anchor=north,text width=\slidewidth-1cm,inner xsep=0.5cm,inner ysep=0.25cm] at (0.5\slidewidth,\slideheight) {\color{ExecusharesWhite}\Large\textbf{\insertframetitle}};
-			
+
 			% if we're showing a progress bar, show it
 			% (I disable the progress bar and slide numbers for the "Appendix" slides)
 			\ifnum \value{showProgressBar}>0\relax%
