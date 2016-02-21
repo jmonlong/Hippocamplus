@@ -208,4 +208,4 @@ I tend to use the minimalist *default* theme, remove the navigation bar but add 
 \setbeamertemplate{footline}[page number]
 ~~~
 
-For an important presentation, I could use a more fancy theme, such as the [Metropolis](https://github.com/matze/mtheme) theme or the [Execushares](http://hamaluik.com/posts/better-beamer-themes/) one. Eventually I would like to mix and customize these two.
+For an important presentation, I could use a more fancy theme, such as the [Metropolis](https://github.com/matze/mtheme) theme or the [Execushares](http://hamaluik.com/posts/better-beamer-themes/) one. Eventually I would like to mix and customize these two (see current state [there](https://github.com/jmonlong/Hippocamplus/blob/master/LaTeX/theme/beamerthemeMyExecushares.sty)).
