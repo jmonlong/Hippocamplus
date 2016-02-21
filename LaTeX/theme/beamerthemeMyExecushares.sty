@@ -158,7 +158,7 @@
 			\node[anchor=north east,text width=\slidewidth-1cm,align=right] at (\slidewidth-0.4cm,4cm) {\color{ExecusharesBlack}\tiny\insertsubtitle};
 			\node[anchor=north,text width=\slidewidth-1cm,inner xsep=0cm] at (0.5\slidewidth,3cm)  {\color{ExecusharesBlack}\normalsize\insertauthor};
                         \node[anchor=north, text width=\slidewidth-1cm,inner xsep=0cm] at(0.5\slidewidth,2.5cm) {\color{ExecusharesBlack}\normalsize\insertdate};
-			\node[anchor=north,text width=\slidewidth-1cm,inner xsep=0cm] at (0.5\slidewidth,1.6cm)  {\color{ExecusharesBlack}\scriptsize\sf\insertinstitute};
+			\node[anchor=north,text width=\slidewidth-1cm,inner xsep=0cm] at (0.5\slidewidth,1.6cm)  {\color{ExecusharesBlack}\scriptsize\sc\insertinstitute};
 
 			% add the date in the corner
 			% \node[anchor=south east] at(\slidewidth,0cm) {\color{ExecusharesGrey}\scriptsize\insertdate};
@@ -175,20 +175,23 @@
 			% (I disable the progress bar and slide numbers for the "Appendix" slides)
 			\ifnum \value{showProgressBar}>0\relax%
 				% the the progress bar icon in the middle of the screen
-				\draw[fill=ExecusharesGrey,draw=none] (0cm,0cm) rectangle(\slidewidth,0.25cm);
-				\draw[fill=ExecusharesRed,draw=none] (0cm,0cm) rectangle(\progressbar@tmpdim,0.25cm);
+				% \draw[fill=ExecusharesGrey,draw=none] (0cm,0cm) rectangle(\slidewidth,0.25cm);
+				% \draw[fill=ExecusharesRed,draw=none] (0cm,0cm) rectangle(\progressbar@tmpdim,0.25cm);
+				\draw[fill=ExecusharesGrey,draw=none] (0cm,0cm) rectangle(\slidewidth,0.3cm);
+				\draw[fill=ExecusharesRed,draw=none] (0cm,0cm) rectangle(\progressbar@tmpdim,0.3cm);
 
 				% bottom information
-				\node[anchor=south west] at(0cm,0.25cm) {\color{ExecusharesGrey}\tiny\insertsection};
+				% \node[anchor=south west] at(0cm,0.25cm) {\color{ExecusharesGrey}\tiny\insertsection};
+                                \node[anchor=north west] at(0cm,0.35cm) {\color{ExecusharesWhite}\tiny\insertsection};
 				% if slide numbers are active
 				\ifnum \value{showSlideNumbers}>0\relax%
 					% if slide totals are active
 					\ifnum \value{showSlideTotal}>0\relax%
 						% draw both slide number and slide total
-						\node[anchor=south east] at(\slidewidth,0.25cm) {\color{ExecusharesGrey}\tiny\insertframenumber/\inserttotalframenumber};
+						\node[anchor=north east] at(\slidewidth,0.35cm) {\color{ExecusharesWhite}\tiny\insertframenumber/\inserttotalframenumber};
 					\else
 						% slide totals aren't active, don't draw them
-						\node[anchor=south east] at(\slidewidth,0.25cm) {\color{ExecusharesGrey}\tiny\insertframenumber};
+						\node[anchor=north east] at(\slidewidth,0.35cm) {\color{ExecusharesWhite}\tiny\insertframenumber};
 					\fi
 				\fi
 			% don't show the progress bar?
@@ -222,6 +225,6 @@
 		%\fill[color=ExecusharesWhite] (0,0) rectangle(\the\paperwidth,\the\paperheight);
 		\fill[color=ExecusharesWhite] (-1cm, 2cm) rectangle (\slidewidth, \slideheight+0.1cm);
 		\fill[color=ExecusharesRed] (-1cm, 0.5\slideheight-1cm) rectangle(\slidewidth, 0.5\slideheight+1cm);
-		\node[text width=\the\paperwidth-1cm,align=center] at (0.4\slidewidth, 0.5\slideheight) {\color{ExecusharesWhite}\Huge\textbf{\insertsection}};
+		\node[text width=\the\paperwidth-1cm,align=center] at (0.4\slidewidth, 0.5\slideheight) {\color{ExecusharesWhite}\LARGE\textbf{\insertsection}};
 	\end{tikzpicture}
 }
