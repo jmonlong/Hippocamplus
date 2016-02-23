@@ -81,6 +81,28 @@ In Emacs, the columns can be *"easily"* rearranged using rectangular selection. 
 
 Package [*knitr*](https://cran.r-project.org/web/packages/knitr/) has a function `kable` to easily format a *data.frame* in LaTeX format. 
 
+## Code blocks
+
+The easiest is to use [Listings](https://en.wikibooks.org/wiki/LaTeX/Source_Code_Listings) environment.
+
+In Emacs to avoid misinterpreting special character (e.g. `$` or `_`) I added to `.emacs` :
+
+~~~lisp
+(setq LaTeX-verbatim-environments-local '("lstlisting"))
+~~~
+
+Then in the LaTeX document I setup the *lstlisting* environment with something like:
+
+~~~latex
+\lstset{ 
+  basicstyle=\scriptsize\ttfamily, % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  frame=single,	                   % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code
+  language=sh,                     % the language of the code
+}
+~~~
 
 ## For publications
 

@@ -40,7 +40,9 @@ docker build -t jmonlong/popsv-docker .
 To launch an interactive instance with a shared folder:
 
 ~~~sh
-docker run -t -i -v /home/ubuntu/analysis1:/root/analysis1 jmonlong/popsv-docker bash
+docker run -t -i -v /home/ubuntu/analysis1:/root/analysis1 jmonlong/popsv-docker
 ~~~
 
++ `-t` and `-i` are used for interactive run.
++ `-v` links folder in the host with folder in the image. It must be **absolute paths*.
 
