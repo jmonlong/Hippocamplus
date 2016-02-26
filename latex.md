@@ -20,6 +20,44 @@ This is my default (more or less) :
 \usepackage{fullpage}
 ~~~
 
+## Basics
+
+### Change the symbol in lists
+
+~~~latex
+\renewcommand{\labelitemi}{\textgreater}
+~~~
+
+Here are some appropriate symbols: `\ast`, `\star`, `\diamond`, `\blacktriangleleft`, `\blacktriangleright`, `\rightarrow`, `\Rightarrow`.
+
+### Math calligraphy
+
+The two most popular math calligraphy are used with :
+
++ `$\mathcal{A}$` for calligraphy.
++ `$\mathbb{A}$` for blackboard (e.g. sets).
++ `$\mathbf{A}$` for bold.
+
+### Languages and encoding
+
+At some time when writing in French or Spannish I used:
+
+~~~latex
+\usepackage[utf8]{inputenc}
+\usepackage[frenchb]{babel}
+\usepackage[T1]{fontenc}
+~~~
+
+and
+
+~~~latex
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+~~~
+
+An accent was specified as `\'i`.
+
 ## Figures
 
 ### Sub-figures
@@ -49,6 +87,14 @@ Side-note: I don't like this style. Ok it looks a bit more fancy but using *S12*
 
 
 ## Tables
+
+### Control tabular width
+
+~~~latex
+\resizebox{.8\textwidth}{!}{
+	TABULAR
+}
+~~~
 
 ### Supplementary tables
 

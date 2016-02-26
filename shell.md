@@ -3,6 +3,50 @@ layout: page
 title: Shell
 ---
 
+## Shell scripting
+
+### Add headers with cat
+
+`cat file.txt | cat headers.txt -` concatenated end of the pipe after `headers.txt`.
+
+### If Then Else
+
+A simple example:
+
+~~~sh
+if [ $VAL == "YEP" ]; then
+	echo "It's a yes!"
+else
+	echo "No no no :("
+fi
+~~~
+
+Or with multiple conditions:
+
+~~~sh
+if [ $VAL == "YEP" ] && [ COND ]; then
+	echo "It's a yes!"
+else
+	echo "No no no :("
+fi
+~~~
+
+The spacing is quite important, and the conditions can be built with:
+
++ `-eq` equal to.
++ `-ne` not equal to.
++ `-lt` less than.
++ `-le` less or equal than.
++ `-gt` great than.
++ `-ge` great or equal than.
++ `-s` file exists and not empty.
++ `-f` file exists and not directory.
++ `-d` directory exists.
++ `-x` file executable.
++ `-w` file writable.
++ `-r` file readable.
+
+
 ## Converting PDF into EPS
 
 I ended up using Inkscape in command-line mode. The result is not so bad (better than the `pdf2eps` etc).

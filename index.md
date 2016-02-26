@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: home
 title: Home
 ---
 
@@ -15,3 +15,5 @@ So here are some notes on
 + [Shell](shell)
 + [Math/Stats](math)
 + [Internet](internet)
+
+Here are some other miscellaneous stuff in the format of posts.

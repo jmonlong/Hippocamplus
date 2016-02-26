@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  {% include head.html %}
+
+  <body>
+
+    {% include sidebar.html %}
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="{{ site.baseurl }}/" title="Home">{{ site.title }}</a>
+            <small>{{ site.tagline }}</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        {{ content }}
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <!-- <div class="posts"> -->
+    <!--   <ul> -->
+    <!-- 	{% for post in site.posts %} -->
+    <!-- 	<li> -->
+    <!-- 	  <a href="{{ site.baseurl }}/{{ post.url }}">{{ post.title }}</a> -->
+    <!-- 	</li> -->
+    <!-- 	{% endfor %} -->
+    <!--   </ul> -->
+    <!-- </div> -->
+    
+    <div class="posts">
+      {% for post in site.posts %}
+      <div class="container content">
+	<div class="post">
+    	  <h3 class="post-title">
+    	    <a href="{{ site.baseurl }}/{{ post.url }}">
+              {{ post.title }}
+    	    </a>
+    	  </h3>
+	  
+    	  <span class="post-date">{{ post.date | date_to_string }}</span>
+
+	  <!-- {{ post.excerpt }} -->
+
+	</div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- <div class="pagination"> -->
+    <!--   {% if paginator.next_page %} -->
+    <!--   <a class="pagination-item older" href="{{ site.baseurl }}/page{{paginator.next_page}}">Older</a> -->
+    <!--   {% else %} -->
+    <!--   <span class="pagination-item older">Older</span> -->
+    <!--   {% endif %} -->
+    <!--   {% if paginator.previous_page %} -->
+    <!--   {% if paginator.page == 2 %} -->
+    <!--   <a class="pagination-item newer" href="{{ site.baseurl }}/">Newer</a> -->
+    <!--   {% else %} -->
+    <!--   <a class="pagination-item newer" href="{{ site.baseurl }}/page{{paginator.previous_page}}">Newer</a> -->
+    <!--   {% endif %} -->
+    <!--   {% else %} -->
+    <!--   <span class="pagination-item newer">Newer</span> -->
+    <!--   {% endif %} -->
+    <!-- </div> -->
+    
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if(!checkbox.checked ||
+             sidebar.contains(target) ||
+             (target === checkbox || target === toggle)) return;
+
+          checkbox.checked = false;
+        }, false);
+      })(document);
+    </script>
+  </body>
+</html>
