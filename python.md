@@ -20,3 +20,28 @@ To import the classes defined in file `class1.py`, simply do
 ~~~python
 import class1
 ~~~
+
+## Passing arguments to a script
+
+The quick way is to use `sys.argv` like that:
+
+~~~python
+import sys
+in1 =  sys.argv[1]
+~~~
+
+The more fancy way is to use `argparse`. The [doc](https://docs.python.org/2/library/argparse.html) gives this example:
+
+~~~python
+import argparse
+
+parser = argparse.ArgumentParser(description='Process some integers.')
+parser.add_argument('integers', metavar='N', type=int, nargs='+',
+                   help='an integer for the accumulator')
+parser.add_argument('--sum', dest='accumulate', action='store_const',
+                   const=sum, default=max,
+                   help='sum the integers (default: find the max)')
+
+args = parser.parse_args()
+print args.accumulate(args.integers)
+~~~
