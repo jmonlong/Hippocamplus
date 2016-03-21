@@ -3,6 +3,10 @@ layout: pagetoc
 title: Markdown
 ---
 
+## Tips
+
++ `/` to add some vertical space/break.
+
 ## Converting Markdown into nice HTML pages
 
 I use [markdown-styles](https://github.com/mixu/markdown-styles) tool. I installed it through `sudo npm install -g markdown-styles`.
@@ -23,6 +27,9 @@ This is fine for simple text documents, but seems to require more efforts to inc
 
 It would be cool if everything (css, js, even images) was included with the text in one single HTML document. It would allow easy sharing of notes with others online, or host them quickly somewhere. Maybe it's possible, I should investigate. Eventually could I implement it ?
 
+## Converting Markdown into slides
+
+I use [MarkdownSlides](https://github.com/asanzdiego/markdownslides).
 
 ## Jekyll websites
 

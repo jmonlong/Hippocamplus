@@ -3,11 +3,24 @@ layout: page
 title: Shell
 ---
 
-## Shell scripting
+## Tricks
 
 ### Add headers with cat
 
 `cat file.txt | cat headers.txt -` concatenated end of the pipe after `headers.txt`.
+
+### Avoid killing ssh jobs
+
+`nohup` function.
+
+
+## Shell scripting
+
+Start a script with one of the [shebang](https://en.wikipedia.org/wiki/Shebang_%28Unix%29)
+
+~~~sh
+#!/bin/sh
+~~~
 
 ### If Then Else
 

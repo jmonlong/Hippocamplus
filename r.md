@@ -5,7 +5,11 @@ title: R
 
 ## Details to remember
 
-#### Order in condition assessment
+### Run a OS command
+
+Use `system2` instead of `system`. It's more portable apparently.
+
+### Order in condition assessment
 
 Using `&` and `|` operators, *R* tries all the conditions and then performs the operations. However sometimes in sequential assessment is preferable. Especially with `&`. For example, we get an error if we run:
 
