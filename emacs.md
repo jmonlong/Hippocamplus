@@ -143,7 +143,9 @@ Then I use the [*Emacs Speaks SHELL*](http://www.emacswiki.org/emacs/essh) packa
 
 The shortcuts are self-explanatory.
 
-## For Evernote
+## For online notes
+
+### Evernote
 
 I use [Evernote](https://evernote.com/) for easily keep notes synchronized across computer, tablet and smartphone. And there is a [Emacs mode for it](https://github.com/pymander/evernote-mode) (of course!).
 
@@ -180,3 +182,11 @@ Side notes:
 
 1. I also had to install *w3m* software.
 2. By default the notes are in read-only XHTML mode, I use `M-x evernote-change-edit-mode TEXT` to change the edit mode to text.
+
+### Simplenote
+
+I now use [Simplenote]{https://app.simplenote.com/} instead of Evernote, in order to make sure that I have an offline version of my notes at all time. Moreover it integrates (almost completely) Markdown format. It makes it easy to take notes and put them in our wiki (e.g. for conference notes). It's also easier to clean the notes through emacs compared to the online page or apps.
+
+There is a [Emacs package](https://github.com/alpha22jp/simplenote2.el) that can be installed using MELPA: `M-x package-install [RET] simplenote2 [RET]`.
+
+The Simplenote buffer can be summoned by `M-x simplenote2-browse`.
