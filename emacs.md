@@ -185,7 +185,7 @@ Side notes:
 
 ### Simplenote
 
-I now use [Simplenote]{https://app.simplenote.com/} instead of Evernote, in order to make sure that I have an offline version of my notes at all time. Moreover it integrates (almost completely) Markdown format. It makes it easy to take notes and put them in our wiki (e.g. for conference notes). It's also easier to clean the notes through emacs compared to the online page or apps.
+I now use [Simplenote](https://app.simplenote.com/) instead of Evernote, in order to make sure that I have an offline version of my notes at all time. Moreover it integrates (almost completely) Markdown format. It makes it easy to take notes and put them in our wiki (e.g. for conference notes). It's also easier to clean the notes through emacs compared to the online page or apps.
 
 There is a [Emacs package](https://github.com/alpha22jp/simplenote2.el) that can be installed using MELPA: `M-x package-install [RET] simplenote2 [RET]`.
 
