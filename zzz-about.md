@@ -9,7 +9,7 @@ title: About
 + [PubMed](http://www.ncbi.nlm.nih.gov/pubmed/?term=Monlong%2C%20Jean[Full%20Author%20Name]%20OR%20Monlong%2C%20Jean[Full%20Investigator%20Name]&cmd=DetailsSearch).
 + [ResearchGate](https://www.researchgate.net/profile/Jean_Monlong).
 + [LinkedIn](https://www.linkedin.com/in/jeanmonlong).
-+ [Twitter](https://twitter.com/JMonlong/) (not very active).
++ [Twitter](https://twitter.com/JMonlong/) (in passive mode).
 
 ### My current lab
 
@@ -28,3 +28,4 @@ For this website, I'm using [Jekyll](http://jekyllrb.com/) hosted on [GitHub](ht
 
 I also use [this Javascript plugin](https://github.com/ghiculescu/jekyll-table-of-contents) to generate the table of contents of the pages, and [MathJax](http://docs.mathjax.org/en/latest/mathjax.html) to render math formulas.
 
+I use [knitr-jekyll](http://yihui.name/knitr-jekyll/2014/09/jekyll-with-knitr.html) to transform `.Rmd` documents into markdown that Jekyll can process.

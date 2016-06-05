@@ -5,7 +5,7 @@ title: Home
 
 This is where I put all the useful information I keep on forgetting. It's my second memory, better than my hippocampus, my [hippocamPLUS](public/chandler-lol.gif)...
 
-So here are some notes on
+So here are structured notes on
 
 + [Emacs](emacs)
 + [LaTeX](latex)
@@ -16,4 +16,4 @@ So here are some notes on
 + [Math/Stats](math)
 + [Internet](internet)
 
-Here are some other miscellaneous stuff in the format of posts.
+Other random stuff:

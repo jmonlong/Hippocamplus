@@ -33,7 +33,7 @@ I use [MarkdownSlides](https://github.com/asanzdiego/markdownslides).
 
 ## Jekyll websites
 
-[Jekyll](http://jekyllrb.com/) websites are simple Markdown documents that can be converted into a website. [GitHub](https://pages.github.com/) uses it to provide a website for a repo. 
+[Jekyll](http://jekyllrb.com/) websites are simple Markdown documents that can be converted into a website. [GitHub](https://pages.github.com/) uses it to provide a website for a repo.
 
 ### Themes
 
