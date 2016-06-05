@@ -79,7 +79,7 @@ I added this to my `.emacs`:
 
 ## For LaTeX
 
-I put some Emacs tricks (e.g. for table manipulation) on the [LaTeX page](latex.md).
+I put some Emacs tricks (e.g. for table manipulation) on the [LaTeX page]({{ site.baseurl }}latex).
 
 ### Word count
 
