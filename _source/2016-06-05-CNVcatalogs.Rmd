@@ -1,0 +1,68 @@
+---
+layout: posttoc
+title: Human Genome - CNV Catalogs Exploration
+tags: genome
+---
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(ggplot2)
+library(dplyr)
+library(magrittr)
+library(GenomicRanges)
+DOWNLOAD=TRUE
+winsor <- function(x,u=NULL,l=NULL){
+    if(!is.null(u) & any(x>u)) x[x>u] = u
+    if(!is.null(l) & any(x<l)) x[x<l] = l
+    x
+}
+```
+
+# CNV map from DGV
+
+I downloaded the *stringent* map from [Zarrei et al., Nat Reviews 2015](http://www.nature.com/nrg/journal/v16/n3/full/nrg3871.html). These CNVs were derived from the [Database of Genomic Variants](http://dgvbeta.tcag.ca/dgv/app/home) ("healthy" individuals). In their stringent map, they kept CNVs seen in at least two studies.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+if(DOWNLOAD & !file.exists("Stringent.Gain+Loss.hg19.2015-02-03.txt")) download.file("http://dgvbeta.tcag.ca/dgv/docs/Stringent.Gain+Loss.hg19.2015-02-03.txt", "Stringent.Gain+Loss.hg19.2015-02-03.txt")
+dgv = read.table("Stringent.Gain+Loss.hg19.2015-02-03.txt",as.is=TRUE,header=TRUE,sep="\t",quote="")
+dgv$nb.studies = unlist(lapply(strsplit(dgv$studies,","),length))
+```
+
+## Loss versus Gain
+
+More loss of DNA than gain are present in the catalog (`r round(sum(dgv$type=="Loss") / sum(dgv$type=="Gain"),1)`x more).
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(dgv,aes(x=type)) + geom_bar() + theme_bw() + ylab("number of CNVs") + coord_flip()
+```
+
+## Size
+
+As expected the size distribution is wider for losses than for gain (deletions are easier to detect). However we can see some peaks in the distribution of losses. These are not due to the classic 300bp/6kbp transposon polymorphism, so I think it's due to the different methods/studies that were combined. Hence this distribution is not completely representative of the real CNV size distribution.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(dgv,aes(x=end-start)) + geom_histogram() + theme_bw() + xlab("size (bp)") + scale_x_log10() + scale_fill_brewer(palette="Set1") + ylab("number of CNVs") + facet_grid(type~., scales="free")
+ggplot(dgv,aes(x=end-start, fill=type)) + geom_histogram() + theme_bw() + xlab("size (bp)") + scale_fill_brewer(palette="Set1") + xlim(0,3000)  + ylab("number of CNVs") + facet_grid(type~., scales="free")
+```
+
+ As shown in the cumulative proportion curves, we see that 90% of the deletions are smaller than 10 Kbp while only 40% of detected gains are.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(dgv,aes(x=end-start, colour=type)) + stat_ecdf() + theme_bw() + xlab("size (bp)") + scale_x_log10() + scale_colour_brewer(palette="Set1") + ylab("cumulative proportion") + scale_y_continuous(breaks=seq(0,1,.1))
+ggplot(dgv,aes(x=winsor(end-start,10000), colour=type)) + stat_ecdf() + theme_bw() + xlab("size (bp)") + scale_colour_brewer(palette="Set1") + scale_x_continuous(breaks=seq(0,1e4,1e3), labels=c(seq(0,9000,1e3),">10000")) + ylab("cumulative proportion") + scale_y_continuous(breaks=seq(0,1,.1))
+```
+
+To investigate a bit the suspicious peaks, I look at the effect of the three studies contributing the most to the catalog. We can see that *Wong2012b* is responsible for the first large peak, and *1000GenomesPhase1*/*Conrad2009* for the second peak.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+studies = unlist(strsplit(dgv$studies, ","))
+top.st = sort(table(studies),decreasing=TRUE)
+for(std in head(names(top.st),3)){
+  print(dgv %>% mutate(top.study=grepl(std,studies)) %>% ggplot(aes(x=end-start, fill=top.study)) + geom_histogram() + theme_bw() + xlab("size (bp)") + scale_x_log10() + scale_fill_brewer(palette="Set1", name=std) + ylab("number of CNVs") + theme(legend.position=c(1,1), legend.justification=c(1,1)))
+}
+```
+
+## Mappability
+
+
+## Distance to centromere/telomere/gaps
