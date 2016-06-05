@@ -62,7 +62,29 @@ for(std in head(names(top.st),3)){
 }
 ```
 
+## Density
+
 ## Mappability
 
-
 ## Distance to centromere/telomere/gaps
+
+## Per sample catalog
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+samples = strsplit(dgv$samples,",")
+dgv.samp = dgv[rep(1:length(samples), unlist(lapply(samples,length))),]
+dgv.samp$sample = unlist(samples)
+dgv.samp %<>% select(chr, start, end, sample, type, num_samples,num_studies,studies, nb.studies)
+intersectStudies <- function(ss){
+  ss.l = strsplit(ss, ",")
+  study = ss.l[[1]]
+  for(ss in ss.l){
+    study = intersect(study, ss)
+  }
+  return(paste(study,collapse=","))
+}
+dgv.samp.s = dgv.samp %>% group_by(sample) %>% summarize(study=intersectStudies(studies)) %>% mutate(ambiguous.std=grepl(",",study))
+dgv.samp = merge(dgv.samp, dgv.samp.s)
+dgv.samp %>% group_by(sample,ambiguous.std) %>% summarize(n=n()) %>% ggplot(aes(x=winsor(n, 2000), fill=ambiguous.std)) + geom_histogram() + theme_bw() + xlab("number of CNVs") + ylab("number of samples") + theme(legend.position=c(1,1), legend.justification=c(1,1)) + scale_fill_brewer(palette="Set1", name="ambiguous\nstudy") + scale_x_continuous(breaks=seq(0,2000,500),labels=c(seq(0,1500,500),">2000")) + geom_vline(xintercept=500, linetype=2)
+dgv.samp %>% filter(!ambiguous.std) %>% group_by(study,sample) %>% summarize(n=n()) %>% ggplot(aes(x=winsor(n, 2000), fill=study)) + geom_histogram() + theme_bw() + xlab("number of CNVs") + ylab("number of samples") + theme(legend.position=c(1,1), legend.justification=c(1,1)) + scale_x_continuous(breaks=seq(0,2000,500),labels=c(seq(0,1500,500),">2000")) + geom_vline(xintercept=500, linetype=2)
+```
