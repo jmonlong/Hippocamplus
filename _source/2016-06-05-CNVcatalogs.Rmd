@@ -10,11 +10,26 @@ library(ggplot2)
 library(dplyr)
 library(magrittr)
 library(GenomicRanges)
+library(PopSV)
 DOWNLOAD=TRUE
 winsor <- function(x,u=NULL,l=NULL){
     if(!is.null(u) & any(x>u)) x[x>u] = u
     if(!is.null(l) & any(x<l)) x[x<l] = l
     x
+}
+olBins <- function(bins.df, feat.df, label="ol"){
+  bins.gr = makeGRangesFromDataFrame(bins.df)
+  feat.gr = makeGRangesFromDataFrame(feat.df)
+  res.df = data.frame(n=rep(0,nrow(bins.df)), d=rep(0,nrow(bins.df)))
+  colnames(res.df) = paste(label,colnames(res.df), sep=".")
+  res.df[,1] = countOverlaps(bins.gr, feat.gr)
+  feat.gr = reduce(feat.gr)
+  ol = findOverlaps(bins.gr, feat.gr)
+  cov.t = tapply(width(pintersect(bins.gr[queryHits(ol)], feat.gr[subjectHits(ol)])), queryHits(ol), sum)
+  res.df[as.numeric(names(cov.t)),2] = as.numeric(cov.t)
+  res.df[,2] = res.df[,2] / width(bins.gr)
+  bins.df = cbind(bins.df, res.df)
+  bins.df
 }
 ```
 
@@ -26,6 +41,7 @@ I downloaded the *stringent* map from [Zarrei et al., Nat Reviews 2015](http://w
 if(DOWNLOAD & !file.exists("Stringent.Gain+Loss.hg19.2015-02-03.txt")) download.file("http://dgvbeta.tcag.ca/dgv/docs/Stringent.Gain+Loss.hg19.2015-02-03.txt", "Stringent.Gain+Loss.hg19.2015-02-03.txt")
 dgv = read.table("Stringent.Gain+Loss.hg19.2015-02-03.txt",as.is=TRUE,header=TRUE,sep="\t",quote="")
 dgv$nb.studies = unlist(lapply(strsplit(dgv$studies,","),length))
+dgv$chr = gsub("chr","",dgv$chr)
 ```
 
 ## Loss versus Gain
@@ -64,11 +80,29 @@ for(std in head(names(top.st),3)){
 
 ## Density
 
+Using non-overlapping windows of 1 Mb the CNV density looks like this:
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+gfrag.df = fragment.genome.hg19(1e6, XY.chr = TRUE)
+gfrag.df %<>% mutate(chr=factor(chr, levels=c(1:22,"X","Y")))
+dgv.d = olBins(gfrag.df, dgv, "cnv")
+ggplot(dgv.d, aes(x=winsor(cnv.n,25))) + geom_histogram(binwidth=1) + ylab("number of 1 Mb windows") + xlab("number of CNVs") + theme_bw() + scale_fill_brewer(palette="Set1") + scale_x_continuous(breaks=seq(0,25,5), labels=c(seq(0,20,5),">25"))
+dgv.d %>% group_by(chr) %>% summarize(cnv.n=mean(cnv.n)) %>% ggplot(aes(x=chr, y=cnv.n)) + geom_point() + theme_bw() + ylab("average number of CNVs per Mb")
+ggplot(dgv.d, aes(x=start, y=chr)) + geom_tile(aes(fill=cnv.n)) + theme_bw() + xlab("position") + geom_tile(fill="yellow", aes(alpha=cnv.n==0)) + scale_alpha_manual(values=c(0,1), name="CNV desert") + scale_fill_gradient(name="CNVs\nper Mb") + theme(legend.position=c(1,1), legend.justification=c(1,1))
+```
+
+*Of note, this graph is NOT based on the CNV frequency, but rather the location of any CNVs, not matter their frequency.*
+
+
 ## Mappability
 
 ## Distance to centromere/telomere/gaps
 
 ## Per sample catalog
+
+As it is, the samples affected are jointly associated for each CNV. However, I transform the format in order to have regions representing one CNV in one sample. Although it duplicates information, it makes it easier to have an idea of what is in one genome.
+
+I eventually tried to guess the study each sample is coming from. It didn't work completely as it seems some were analyzed by several studies.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 samples = strsplit(dgv$samples,",")
@@ -88,3 +122,12 @@ dgv.samp = merge(dgv.samp, dgv.samp.s)
 dgv.samp %>% group_by(sample,ambiguous.std) %>% summarize(n=n()) %>% ggplot(aes(x=winsor(n, 2000), fill=ambiguous.std)) + geom_histogram() + theme_bw() + xlab("number of CNVs") + ylab("number of samples") + theme(legend.position=c(1,1), legend.justification=c(1,1)) + scale_fill_brewer(palette="Set1", name="ambiguous\nstudy") + scale_x_continuous(breaks=seq(0,2000,500),labels=c(seq(0,1500,500),">2000")) + geom_vline(xintercept=500, linetype=2)
 dgv.samp %>% filter(!ambiguous.std) %>% group_by(study,sample) %>% summarize(n=n()) %>% ggplot(aes(x=winsor(n, 2000), fill=study)) + geom_histogram() + theme_bw() + xlab("number of CNVs") + ylab("number of samples") + theme(legend.position=c(1,1), legend.justification=c(1,1)) + scale_x_continuous(breaks=seq(0,2000,500),labels=c(seq(0,1500,500),">2000")) + geom_vline(xintercept=500, linetype=2)
 ```
+
+I keep only the samples with at least 500 CNVs. Samples with less are suspicious while samples with more than 500 CNVs have a smooth enough distribution.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+dgv.gen = dgv.samp %>% group_by(sample) %>% summarize(n=n(), mb=sum((end-start)/1e6)) %>% filter(n>500)
+ggplot(dgv.gen, aes(x=mb)) + geom_histogram() + ylab("number of samples") + xlab("affected genome (Mbp)") + theme_bw()
+```
+
+On average, `r round(mean(dgv.gen$mb),2)` Mbp of a genome is annotated as CNV.

@@ -33,7 +33,29 @@ To investigate a bit the suspicious peaks, I look at the effect of the three stu
 
 ![plot of chunk unnamed-chunk-6]({{ site.baseurl }}images/figure/source/2016-06-05-CNVcatalogs/unnamed-chunk-6-1.png)![plot of chunk unnamed-chunk-6]({{ site.baseurl }}images/figure/source/2016-06-05-CNVcatalogs/unnamed-chunk-6-2.png)![plot of chunk unnamed-chunk-6]({{ site.baseurl }}images/figure/source/2016-06-05-CNVcatalogs/unnamed-chunk-6-3.png)
 
+## Density
+
+Using non-overlapping windows of 1 Mb the CNV density looks like this:
+
+![plot of chunk unnamed-chunk-7]({{ site.baseurl }}images/figure/source/2016-06-05-CNVcatalogs/unnamed-chunk-7-1.png)![plot of chunk unnamed-chunk-7]({{ site.baseurl }}images/figure/source/2016-06-05-CNVcatalogs/unnamed-chunk-7-2.png)![plot of chunk unnamed-chunk-7]({{ site.baseurl }}images/figure/source/2016-06-05-CNVcatalogs/unnamed-chunk-7-3.png)
+
+*Of note, this graph is NOT based on the CNV frequency, but rather the location of any CNVs, not matter their frequency.*
+
+
 ## Mappability
 
-
 ## Distance to centromere/telomere/gaps
+
+## Per sample catalog
+
+As it is, the samples affected are jointly associated for each CNV. However, I transform the format in order to have regions representing one CNV in one sample. Although it duplicates information, it makes it easier to have an idea of what is in one genome.
+
+I eventually tried to guess the study each sample is coming from. It didn't work completely as it seems some were analyzed by several studies.
+
+![plot of chunk unnamed-chunk-8]({{ site.baseurl }}images/figure/source/2016-06-05-CNVcatalogs/unnamed-chunk-8-1.png)![plot of chunk unnamed-chunk-8]({{ site.baseurl }}images/figure/source/2016-06-05-CNVcatalogs/unnamed-chunk-8-2.png)
+
+I keep only the samples with at least 500 CNVs. Samples with less are suspicious while samples with more than 500 CNVs have a smooth enough distribution.
+
+![plot of chunk unnamed-chunk-9]({{ site.baseurl }}images/figure/source/2016-06-05-CNVcatalogs/unnamed-chunk-9-1.png)
+
+On average, 32 Mbp of a genome is annotated as CNV.
