@@ -6,6 +6,7 @@ title: Emacs
 I use Emacs for almost everything: **coding, writing, taking notes, preparing presentations**. I'm using it right now ! Well I mean, at the time I'm writing this. There is still a good chance I'm using it now *now*.
 
 ## Basic configuration
+
 Some of the basic tweaks on my `.emacs` file:
 
 + Disable startup screen with `(setq inhibit-splash-screen t)`.
@@ -101,6 +102,8 @@ I would like to add a feature to this: counting selected text.
 
 ## For Markdown
 
+Pressing `TAB` when the cursor is in a heading will cycle through *heading-only/full* view.
+
 ## For Python
 
 ### Elpy python mode
@@ -142,6 +145,17 @@ Then I use the [*Emacs Speaks SHELL*](http://www.emacswiki.org/emacs/essh) packa
 ~~~
 
 The shortcuts are self-explanatory.
+
+## For file manipulation
+
+To compare and merge two files, use Ediff mode by calling `M-x ediff` (or `M-x ediff-buffers` when *diff* should be done between existing buffers). Once launched press:
+
++ `|` to change the split mode (vertical/horizontal).
++ `n`/`p` to go to the next/previous difference.
++ `a` to put A's version to B.
++ `b` to put B's version to A.
++ `q` to quit.
++ `?` to get the full list of shortcuts.
 
 ## For online notes
 
