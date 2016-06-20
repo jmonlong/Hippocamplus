@@ -157,6 +157,8 @@ To compare and merge two files, use Ediff mode by calling `M-x ediff` (or `M-x e
 + `q` to quit.
 + `?` to get the full list of shortcuts.
 
+To visualize blanks (tabs, spaces, new lines) I use the minor mode `whitespace-mode`.
+
 ## For online notes
 
 ### Evernote
