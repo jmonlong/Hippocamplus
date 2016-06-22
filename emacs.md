@@ -18,6 +18,7 @@ Some of the basic tweaks on my `.emacs` file:
 
 + Select a region and press `M-=` to count words. There are other ways for LaTeX.
 + In a console (R, Shell), previous/next line in the history is accessed by `M-p`/`M-n`. (Useful when ssh-tunneling with broken key-bindings).
++ Look for a regular expression in files using `M-x lgrep` command.
 
 ## MELPA package repository
 
@@ -192,7 +193,7 @@ Then, copy `evernote-mode.el` to the load path and add to `.emacs`:
 (global-set-key "\C-ceb" 'evernote-browser)
 ~~~
 
-I retrieved my developer token (to use instead of `<MYTOKEN>`) [there](https://www.evernote.com/api/DeveloperToken.action). 
+I retrieved my developer token (to use instead of `<MYTOKEN>`) [there](https://www.evernote.com/api/DeveloperToken.action).
 
 Side notes:
 
