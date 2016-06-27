@@ -30,18 +30,18 @@ import sys
 in1 =  sys.argv[1]
 ~~~
 
-The more fancy way is to use `argparse`. The [doc](https://docs.python.org/2/library/argparse.html) gives this example:
+The more fancy way is to use `argparse`. I usually use it like this (see the [doc](https://docs.python.org/2/library/argparse.html) for a more complete example):
 
 ~~~python
 import argparse
 
-parser = argparse.ArgumentParser(description='Process some integers.')
-parser.add_argument('integers', metavar='N', type=int, nargs='+',
-                   help='an integer for the accumulator')
-parser.add_argument('--sum', dest='accumulate', action='store_const',
-                   const=sum, default=max,
-                   help='sum the integers (default: find the max)')
+parser = argparse.ArgumentParser(description='Do something cool.')
+parser.add_argument('-in', dest=input', help='the input file')
+parser.add_argument('-k', dest='k', default=3, type=int, help='an integer')
+parser.add_argument('-out', dest='output', help='the output file')
 
 args = parser.parse_args()
-print args.accumulate(args.integers)
+print args.input
+print args.k
+print args.output
 ~~~
