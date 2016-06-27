@@ -127,6 +127,12 @@ I added key bindings to send regions or the entire buffer to the opened Python s
   (define-key python-mode-map (kbd "C-c b") 'python-shell-send-buffer))
 ~~~
 
+### Send commands to a specific buffer
+
+Sometimes I want to send the commands to a specific buffer. For example, when testing new packages within a Docker container, I start a *shell* buffer, run docker and python.
+
+I installed *isend* from MELPA. Then I simply go to the *code* buffer and run `M-x isend-associate RET *shell* RET`. At this point `C-Enter` will send the command to the *shell* buffer.
+
 ## For Shell
 
 To open a *shell* buffer, type `M-x shell`.
@@ -146,6 +152,7 @@ Then I use the [*Emacs Speaks SHELL*](http://www.emacswiki.org/emacs/essh) packa
 ~~~
 
 The shortcuts are self-explanatory.
+
 
 ## For file manipulation
 
