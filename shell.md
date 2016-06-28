@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: pagetoc
 title: Shell
 ---
 
