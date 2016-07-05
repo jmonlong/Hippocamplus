@@ -157,6 +157,8 @@ for record in SeqIO.parse(fasta_file, "fasta"):
 To write a fasta:
 
 ~~~python
+from Bio.SeqRecord import SeqRecord
+
 recs = []
 for ii in xrange(1000):
     seq = randSeq(100))
