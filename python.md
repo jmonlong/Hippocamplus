@@ -40,6 +40,8 @@ line.split('\t')
 ~~~
 
 + `rstrip` removes the trailing characters. By defaut, white spaces. `s.rstrip('\t\n')` removes *any combination* of tabs and new lines.
++ `str.replace(a_string, ":", "_")` to replace characters.
++ `' '.join(a_string_array)` to merge an array into one string.
 
 ## Input/Output
 
@@ -64,15 +66,49 @@ f.write('something' + str(an_integer) + '\n')
 f.close()
 ~~~
 
+To quickly read a manually indexed (e.g. `grep -b`) file quickly, use `seek` to jump to a byte-offset and `tell` to save the current byte-offset.
+
+~~~python
+f = open(reads_fn)
+f.seek(bos)
+line = f.next()
+f.close()
+~~~
+
 ## Files structure, packages and imports
 
 There should be a `__init__.py` file **in each directory containing modules** to import. It can be empty. If not the code inside is run on import.
 
-To import the classes defined in file `class1.py`, simply do
+To import the classes/functions defined in file `module1.py`, simply do
 
 ~~~python
-import class1
+import module1
 ~~~
+
+### Install a module locally
+
+For example when running a script on a HPC cluster, it's often easier to install modules in your home.
+
+To initialize the local library I created the directory and updated `PYTHONPATH`.
+
+~~~sh
+mkdir -p /home/monlongj/pylib/lib/python2.7/site-packages/
+PYTHONPATH=$PYTHONPATH:/home/monlongj/pylib/lib/python2.7/site-packages/
+export PYTHONPATH
+~~~
+
+Then to install a module (e.g. pyfaidx) I did:
+
+~~~sh
+wget https://github.com/mdshw5/pyfaidx/archive/v0.4.7.1.tar.gz
+tar -xzvf v0.4.7.1.tar.gz
+cd pyfaidx-0.4.7.1/
+python setup.py install --prefix=/home/monlongj/pylib
+~~~
+
+To use this, I must always have the local library in `PYTHONPATH`.
+
+Modules (as in `module load ...`) might be a cleaner solution. I use existing *module* but I didn't take the time to see how I could create and use them more.
 
 ## Passing arguments to a script
 
@@ -104,6 +140,8 @@ print args.output
 
 + When iterating, use `xrange` instead of `range`. It's faster and more memory efficient.
 + Sort elements with `sorted(a_list, key=lambda k: -something[k])`.
++ Sub-sample with `random.sample(a_list, 10)`.
++ In a loop, jump to the next iteration with `continue`.
 
 When filling a nested dictionary, it's painful to always test if the key exists before updating it's value. One trick is to use `try`/`except`. It's not that much quicker but it looks fancier so you forget about the *pain*:
 
@@ -112,6 +150,30 @@ try:
     dict[lev1].append(i)
 except KeyError:
     dict[lev1] = [i]
+~~~
+
+## Shell integration
+
+List files with *glob*, remove with *os*.
+
+~~~python
+import glob
+import os
+
+filelist = glob.glob('temp*')
+for f in filelist:
+    os.remove(f)
+~~~
+
+Run commands with *subprocess*. `/dev/null` to avoid annoying messages.
+
+~~~python
+import subprocess
+
+bwa_cmd = ['bwa', 'mem', bwaidx_file, fastq_file]
+dump = open('/dev/null')
+bwa_out = subprocess.check_output(bwa_cmd, stderr=dump)
+dump.close()
 ~~~
 
 ## Bioinfo
@@ -179,3 +241,15 @@ print fa.id + '\t' + fa.seq
 ~~~
 
 
+
+### SAM files
+
+~~~python
+import pysam
+
+bamfile = pysam.AlignmentFile(bam_fn, "rb")
+reads_reg = bamfile.fetch(reference=ch_reg, start=start_reg, end=end_reg)
+reads_seq = {}
+for read in reads_reg:
+    reads_seq[read.query_name] = read.query_alignment_sequence
+~~~
