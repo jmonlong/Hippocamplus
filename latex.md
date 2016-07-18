@@ -150,7 +150,7 @@ Then in the LaTeX document I setup the *lstlisting* environment with something l
 }
 ~~~
 
-## For publications
+## For manuscripts
 
 ### Abstract
 
@@ -174,6 +174,15 @@ Using `\usepackage{authblk}`, the authors' affiliations can be defined like this
 ...
 ~~~
 
+### Text formatting
+
++ `\linespread{1.6}` for double-spacing.
++ To add line numbers, *lineno* package:
+
+~~~latex
+\usepackage[modulo]{lineno}
+\linenumbers
+~~~
 
 ## Bibliography
 
