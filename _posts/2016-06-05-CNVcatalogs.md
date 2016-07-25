@@ -41,8 +41,31 @@ Using non-overlapping windows of 1 Mb the CNV density looks like this:
 
 *Of note, this graph is NOT based on the CNV frequency, but rather the location of any CNVs, not matter their frequency.*
 
+There is, on average, 3.81 annotated CNVs per Mb.
 
 ## Mappability
+
+The mappability track was produced from the UCSC track. The raw file contains, for each base in the genome, an estimation of how likely a read is correctly mapped to this position. Using a sliding-window approach, I computed the average mappability in regions of size 1 Kbp.
+
+![plot of chunk unnamed-chunk-8]({{ site.baseurl }}images/figure/source/2016-06-05-CNVcatalogs/unnamed-chunk-8-1.png)
+
+|cov.class |       mb|  prop|
+|:---------|--------:|-----:|
+|unique    | 2485.972| 0.803|
+|low-map   |  375.608| 0.121|
+|no-map    |  233.228| 0.075|
+
+I defined *unique* regions that have an average mappability higher than 0.95, *no-map* when the mappability is null, and the rest as *low-map*.
+
+
+|cov.class | nb.cnv| prop.cnv|
+|:---------|------:|--------:|
+|no-map    |      1|    0.000|
+|low-map   |   6174|    0.526|
+|unique    |   9629|    0.821|
+
+Most CNVs overlap unique regions but many still overlap low-mappability regions. Actually only 12.1% of the genome is annotated as *low-map* but 52.6% of the CNVs overlap such regions.
+
 
 ## Distance to centromere/telomere/gaps
 
@@ -50,12 +73,17 @@ Using non-overlapping windows of 1 Mb the CNV density looks like this:
 
 As it is, the samples affected are jointly associated for each CNV. However, I transform the format in order to have regions representing one CNV in one sample. Although it duplicates information, it makes it easier to have an idea of what is in one genome.
 
-I eventually tried to guess the study each sample is coming from. It didn't work completely as it seems some were analyzed by several studies.
+I eventually tried to guess the study each sample is coming from. It didn't work completely... It seems that some samples were analyzed by several studies.
 
-![plot of chunk unnamed-chunk-8]({{ site.baseurl }}images/figure/source/2016-06-05-CNVcatalogs/unnamed-chunk-8-1.png)![plot of chunk unnamed-chunk-8]({{ site.baseurl }}images/figure/source/2016-06-05-CNVcatalogs/unnamed-chunk-8-2.png)
+![plot of chunk unnamed-chunk-10]({{ site.baseurl }}images/figure/source/2016-06-05-CNVcatalogs/unnamed-chunk-10-1.png)![plot of chunk unnamed-chunk-10]({{ site.baseurl }}images/figure/source/2016-06-05-CNVcatalogs/unnamed-chunk-10-2.png)
 
 I keep only the samples with at least 500 CNVs. Samples with less are suspicious while samples with more than 500 CNVs have a smooth enough distribution.
 
-![plot of chunk unnamed-chunk-9]({{ site.baseurl }}images/figure/source/2016-06-05-CNVcatalogs/unnamed-chunk-9-1.png)
+![plot of chunk unnamed-chunk-11]({{ site.baseurl }}images/figure/source/2016-06-05-CNVcatalogs/unnamed-chunk-11-1.png)
 
 On average, 32 Mbp of a genome is annotated as CNV.
+
+
+# CNV map from 1000 Genomes Project
+
+# CNV map from long-read sequencing

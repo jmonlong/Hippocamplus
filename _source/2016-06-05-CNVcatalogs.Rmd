@@ -10,7 +10,9 @@ library(ggplot2)
 library(dplyr)
 library(magrittr)
 library(GenomicRanges)
+library(data.table)
 library(PopSV)
+library(knitr)
 DOWNLOAD=TRUE
 winsor <- function(x,u=NULL,l=NULL){
     if(!is.null(u) & any(x>u)) x[x>u] = u
@@ -57,7 +59,7 @@ ggplot(dgv,aes(x=type)) + geom_bar() + theme_bw() + ylab("number of CNVs") + coo
 As expected the size distribution is wider for losses than for gain (deletions are easier to detect). However we can see some peaks in the distribution of losses. These are not due to the classic 300bp/6kbp transposon polymorphism, so I think it's due to the different methods/studies that were combined. Hence this distribution is not completely representative of the real CNV size distribution.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-ggplot(dgv,aes(x=end-start)) + geom_histogram() + theme_bw() + xlab("size (bp)") + scale_x_log10() + scale_fill_brewer(palette="Set1") + ylab("number of CNVs") + facet_grid(type~., scales="free")
+ggplot(dgv,aes(x=end-start, fill=type)) + geom_histogram() + theme_bw() + xlab("size (bp)") + scale_x_log10() + scale_fill_brewer(palette="Set1") + ylab( "number of CNVs") + facet_grid(type~., scales="free")
 ggplot(dgv,aes(x=end-start, fill=type)) + geom_histogram() + theme_bw() + xlab("size (bp)") + scale_fill_brewer(palette="Set1") + xlim(0,3000)  + ylab("number of CNVs") + facet_grid(type~., scales="free")
 ```
 
@@ -86,15 +88,46 @@ Using non-overlapping windows of 1 Mb the CNV density looks like this:
 gfrag.df = fragment.genome.hg19(1e6, XY.chr = TRUE)
 gfrag.df %<>% mutate(chr=factor(chr, levels=c(1:22,"X","Y")))
 dgv.d = olBins(gfrag.df, dgv, "cnv")
-ggplot(dgv.d, aes(x=winsor(cnv.n,25))) + geom_histogram(binwidth=1) + ylab("number of 1 Mb windows") + xlab("number of CNVs") + theme_bw() + scale_fill_brewer(palette="Set1") + scale_x_continuous(breaks=seq(0,25,5), labels=c(seq(0,20,5),">25"))
-dgv.d %>% group_by(chr) %>% summarize(cnv.n=mean(cnv.n)) %>% ggplot(aes(x=chr, y=cnv.n)) + geom_point() + theme_bw() + ylab("average number of CNVs per Mb")
+cnvMb = mean(dgv.d$cnv.n)
+ggplot(dgv.d, aes(x=winsor(cnv.n,25))) + geom_histogram(binwidth=1) + ylab("number of 1 Mb windows") + xlab("number of CNVs") + theme_bw() + scale_fill_brewer(palette="Set1") + scale_x_continuous(breaks=seq(0,25,5), labels=c(seq(0,20,5),">25")) + geom_vline(xintercept=cnvMb, linetype=2)
+dgv.d %>% group_by(chr) %>% summarize(cnv.n=mean(cnv.n)) %>% ggplot(aes(x=chr, y=cnv.n)) + geom_point() + theme_bw() + ylab("average number of CNVs per Mb")  + geom_hline(yintercept=cnvMb, linetype=2)
 ggplot(dgv.d, aes(x=start, y=chr)) + geom_tile(aes(fill=cnv.n)) + theme_bw() + xlab("position") + geom_tile(fill="yellow", aes(alpha=cnv.n==0)) + scale_alpha_manual(values=c(0,1), name="CNV desert") + scale_fill_gradient(name="CNVs\nper Mb") + theme(legend.position=c(1,1), legend.justification=c(1,1))
 ```
 
 *Of note, this graph is NOT based on the CNV frequency, but rather the location of any CNVs, not matter their frequency.*
 
+There is, on average, `r round(cnvMb, 2)` annotated CNVs per Mb.
 
 ## Mappability
+
+The mappability track was produced from the UCSC track. The raw file contains, for each base in the genome, an estimation of how likely a read is correctly mapped to this position. Using a sliding-window approach, I computed the average mappability in regions of size 1 Kbp.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+if(DOWNLOAD & !file.exists("map100mer-1kbp.bed.gz")) system2("sh", "./downloadUCSCMappability.sh")
+map.df = as.data.frame(fread("gunzip -c map100mer-1kbp.bed.gz", showProgress = FALSE))
+colnames(map.df) = c("chr", "start", "end", "map")
+map.df %<>% mutate(chr=factor(gsub("chr","",chr), levels=c(1:22,"X","Y"))) %>% filter(!is.na(chr))
+map.df %<>% mutate(cov.class="low-map", cov.class=ifelse(map==0,"no-map", cov.class), cov.class=ifelse(map>.95,"unique", cov.class))
+ggplot(map.df, aes(x=map, fill=cov.class)) + geom_histogram() + theme_bw()
+map.s = map.df %>% group_by(cov.class) %>% summarize(mb=n()/1000) %>% ungroup %>% mutate(prop=mb/sum(mb)) %>% arrange(desc(mb))
+map.s %>% kable(digits=3)
+```
+
+I defined *unique* regions that have an average mappability higher than 0.95, *no-map* when the mappability is null, and the rest as *low-map*.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+map.gr = makeGRangesFromDataFrame(map.df, keep.extra.columns = TRUE)
+dgv.gr = makeGRangesFromDataFrame(dgv)
+cnv.map = lapply(unique(map.gr$cov.class), function(cc) {
+  ol = overlapsAny(dgv.gr, subset(map.gr, cov.class==cc))
+  data.frame(cov.class=cc, nb.cnv=sum(ol), prop.cnv=mean(ol))
+})
+cnv.map = do.call(rbind, cnv.map)
+kable(cnv.map, digits=3)
+```
+
+Most CNVs overlap unique regions but many still overlap low-mappability regions. Actually only `r round(100*subset(map.s, cov.class=="low-map")$prop, 1)`% of the genome is annotated as *low-map* but `r round(100*subset(cnv.map, cov.class=="low-map")$prop.cnv, 1)`% of the CNVs overlap such regions.
+
 
 ## Distance to centromere/telomere/gaps
 
@@ -102,7 +135,7 @@ ggplot(dgv.d, aes(x=start, y=chr)) + geom_tile(aes(fill=cnv.n)) + theme_bw() + x
 
 As it is, the samples affected are jointly associated for each CNV. However, I transform the format in order to have regions representing one CNV in one sample. Although it duplicates information, it makes it easier to have an idea of what is in one genome.
 
-I eventually tried to guess the study each sample is coming from. It didn't work completely as it seems some were analyzed by several studies.
+I eventually tried to guess the study each sample is coming from. It didn't work completely... It seems that some samples were analyzed by several studies.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 samples = strsplit(dgv$samples,",")
@@ -131,3 +164,8 @@ ggplot(dgv.gen, aes(x=mb)) + geom_histogram() + ylab("number of samples") + xlab
 ```
 
 On average, `r round(mean(dgv.gen$mb),2)` Mbp of a genome is annotated as CNV.
+
+
+# CNV map from 1000 Genomes Project
+
+# CNV map from long-read sequencing
