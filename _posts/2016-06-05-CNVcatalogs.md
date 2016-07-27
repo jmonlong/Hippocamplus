@@ -69,17 +69,34 @@ Most CNVs overlap unique regions but many still overlap low-mappability regions.
 
 ## Distance to centromere/telomere/gaps
 
+
+
+Then I compute the distance between each CNV and the nearest centromere/telomere/gap.
+
+
+
+As a control, the same is done for random regions of similar sizes.
+
+
+
+The cumulative distribution of the distance to the nearest CTG shows that CNVs are closer to CTG than expected by chance.
+
+![plot of chunk unnamed-chunk-13]({{ site.baseurl }}images/figure/source/2016-06-05-CNVcatalogs/unnamed-chunk-13-1.png)
+
+In this graph we see that control regions overlap CTG much more than CNVs (*x=0*) but that CNVs catch up and become quickly present close to CTGs. Most likely, the lack of CNV overlapping CTGs is mostly due to difficulties detecting them there, more than real absence.
+
+
 ## Per sample catalog
 
 As it is, the samples affected are jointly associated for each CNV. However, I transform the format in order to have regions representing one CNV in one sample. Although it duplicates information, it makes it easier to have an idea of what is in one genome.
 
 I eventually tried to guess the study each sample is coming from. It didn't work completely... It seems that some samples were analyzed by several studies.
 
-![plot of chunk unnamed-chunk-10]({{ site.baseurl }}images/figure/source/2016-06-05-CNVcatalogs/unnamed-chunk-10-1.png)![plot of chunk unnamed-chunk-10]({{ site.baseurl }}images/figure/source/2016-06-05-CNVcatalogs/unnamed-chunk-10-2.png)
+![plot of chunk unnamed-chunk-14]({{ site.baseurl }}images/figure/source/2016-06-05-CNVcatalogs/unnamed-chunk-14-1.png)![plot of chunk unnamed-chunk-14]({{ site.baseurl }}images/figure/source/2016-06-05-CNVcatalogs/unnamed-chunk-14-2.png)
 
 I keep only the samples with at least 500 CNVs. Samples with less are suspicious while samples with more than 500 CNVs have a smooth enough distribution.
 
-![plot of chunk unnamed-chunk-11]({{ site.baseurl }}images/figure/source/2016-06-05-CNVcatalogs/unnamed-chunk-11-1.png)
+![plot of chunk unnamed-chunk-15]({{ site.baseurl }}images/figure/source/2016-06-05-CNVcatalogs/unnamed-chunk-15-1.png)
 
 On average, 32 Mbp of a genome is annotated as CNV.
 

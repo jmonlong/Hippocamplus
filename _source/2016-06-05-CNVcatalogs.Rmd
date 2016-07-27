@@ -33,6 +33,13 @@ olBins <- function(bins.df, feat.df, label="ol"){
   bins.df = cbind(bins.df, res.df)
   bins.df
 }
+library(BSgenome.Hsapiens.UCSC.hg19)
+seql.1.22 = seqlengths(BSgenome.Hsapiens.UCSC.hg19)[paste0("chr",1:22)]
+rand.gr <- function(widths){
+    chrs = apply(rmultinom(length(widths), 1, (seql.1.22/1e3)/sum(seql.1.22/1e3)),2,function(e)which(e==1))
+    starts = runif(length(widths), 0, seql.1.22[chrs]-widths)
+    return(GRanges(chrs, IRanges(starts, width=widths)))
+}
 ```
 
 # CNV map from DGV
@@ -130,6 +137,43 @@ Most CNVs overlap unique regions but many still overlap low-mappability regions.
 
 
 ## Distance to centromere/telomere/gaps
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+if(DOWNLOAD) download.file("http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/cytoBandIdeo.txt.gz","cytoBandIdeo.txt.gz")
+chr.band = read.table("cytoBandIdeo.txt.gz",sep="\t")
+colnames(chr.band)[1:3] = c("chr","start","end")
+if(DOWNLOAD) download.file("http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/gap.txt.gz","gap-hg19.tsv.gz")
+ct = read.table("gap-hg19.tsv.gz",sep="\t")
+ct = ct %>% select(V2,V3,V4,V8)
+colnames(ct) =  c("chr","start","end", "type")
+ct = rbind(ct, chr.band %>% group_by(chr) %>% summarize(start=min(start),end=1e4) %>% mutate(type="telomere"))
+ct = rbind(ct, chr.band %>% group_by(chr) %>% summarize(start=max(end)-1e4,end=max(end)) %>% mutate(type="telomere"))
+centel.gr = ct %>% mutate(chr=gsub("chr","",chr)) %>% makeGRangesFromDataFrame(TRUE)
+```
+
+Then I compute the distance between each CNV and the nearest centromere/telomere/gap.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+d.ct = as.data.frame(distanceToNearest(makeGRangesFromDataFrame(dgv),centel.gr))
+dgv.ctg = data.frame(region="CNV", d.ct = d.ct$distance, type.ct=as.character(mcols(centel.gr)$type[d.ct$subjectHits]))
+```
+
+As a control, the same is done for random regions of similar sizes.
+
+```{r, cache=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
+dgv.rand = rand.gr(dgv$end - dgv$start)
+d.ct = as.data.frame(distanceToNearest(dgv.rand,centel.gr))
+dgv.ctg = rbind(dgv.ctg, data.frame(region="control", d.ct = d.ct$distance, type.ct=as.character(mcols(centel.gr)$type[d.ct$subjectHits])))
+```
+
+The cumulative distribution of the distance to the nearest CTG shows that CNVs are closer to CTG than expected by chance.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(dgv.ctg,aes(x=winsor(d.ct/1e6,u=20), colour=region)) + stat_ecdf() + theme_bw() + xlab("distance to centomere/telomere (Mbp)") + theme(legend.position=c(1,0),legend.justification=c(1,0))  + ylab("cumulative event proportion") + scale_colour_brewer(palette="Set1")
+```
+
+In this graph we see that control regions overlap CTG much more than CNVs (*x=0*) but that CNVs catch up and become quickly present close to CTGs. Most likely, the lack of CNV overlapping CTGs is mostly due to difficulties detecting them there, more than real absence.
+
 
 ## Per sample catalog
 
