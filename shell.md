@@ -76,7 +76,9 @@ pdftops -eps document.pdf
 
 ## Git
 
-### Aliases
++ Commit all modification and added files: `git commit -am "informative message"`
+
+#### Aliases
 
 ~~~sh
 git config --global alias.co checkout
@@ -85,9 +87,8 @@ git config --global alias.st status
 git config --global alias.br branch
 ~~~
 
-+ Commit all modification and added files: `git commit -am "informative message"`
 
-### Branches
+#### Branches
 
 + List branches: `git branch`
 + List all branches: `git branch -a`
@@ -104,7 +105,7 @@ git config --global alias.br branch
 
 I'm still learning Docker but here are commands/parameters that seem relevant for me:
 
-### Build a docker instance
+#### Build a docker instance
 
 [Write a Dockerfile](https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/) :
 
@@ -118,7 +119,7 @@ To run in the folder with the `Dockerfile`.
 docker build -t jmonlong/popsv-docker .
 ~~~
 
-### Launch a docker instance
+#### Launch a docker instance
 
 To launch an interactive instance with a shared folder:
 
