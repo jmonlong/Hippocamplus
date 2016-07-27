@@ -74,6 +74,32 @@ inkscape document.pdf --export-eps=document.eps
 pdftops -eps document.pdf
 ~~~
 
+## Git
+
+### Aliases
+
+~~~sh
+git config --global alias.co checkout
+git config --global alias.ci commit
+git config --global alias.st status
+git config --global alias.br branch
+~~~
+
++ Commit all modification and added files: `git commit -am "informative message"`
+
+### Branches
+
++ List branches: `git branch`
++ List all branches: `git branch -a`
++ Update remote branch list: `git remote prune origin`
++ Create branch: `git checkout -b hotfix`
++ Link it to a remote branch: `git branch -u origin/hotflix`
++ Creat a new local branch from remote: `git co -t origin/hotfix`
++ Merge the current branch with another branch: `git merge hotfix`
++ Delete a branch: `git branch -d hotfix`
++ Delete remote branch: `git push origin :hotfix`
+
+
 ## Docker cheatsheet
 
 I'm still learning Docker but here are commands/parameters that seem relevant for me:
