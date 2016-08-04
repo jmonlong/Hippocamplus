@@ -14,6 +14,10 @@ To directly see the HTML page, the hack is to transform the link by replacing `h
 I'm using [Ubuntu Gnome 16.04](https://wiki.ubuntu.com/UbuntuGNOME/GetUbuntuGNOME). 
 
 + I followed some of the steps [there](http://www.omgubuntu.co.uk/2016/04/10-things-to-do-after-installing-ubuntu-16-04-lts) to install essential packages.
++ To enable the use of my existing DSA SSH keys I did: 
+
+`echo "PubkeyAcceptedKeyTypes +ssh-dss" >> ~/.ssh/config`
+
 + To force the second screen to follow the workspace of the primary screen I found [this](http://gregcor.com/2011/05/07/fix-dual-monitors-in-gnome-3-aka-my-workspaces-are-broken/): 
 
 `gsettings set org.gnome.shell.overrides workspaces-only-on-primary false`
