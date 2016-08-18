@@ -188,6 +188,13 @@ To compare and merge two files, use Ediff mode by calling `M-x ediff` (or `M-x e
 
 To visualize blanks (tabs, spaces, new lines) I use the minor mode `whitespace-mode`.
 
+## For Version Control
+
++ `C-x v +` to pull.
++ `C-x v v` to commit.
++ `C-x v i` to add.
++ `C-x v =` to see differences.
+
 ## For online notes
 
 ### Evernote
