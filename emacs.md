@@ -62,6 +62,25 @@ Then add these lines to `~/.emacs`:
 (load "ess-site")
 ~~~
 
+ESS can also be installed through **MELPA**.
+
+## Auto-complete
+
+To get auto-completion (with objects, functions or parameters) I use *auto-complete*. It's also available through MELPA.
+
+Then I configure it in my `.emacs`:
+
+~~~lisp
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/lisp/ac-dict")
+(ac-config-default)
+(setq ac-auto-start nil)
+(define-key ac-mode-map [C-tab] 'auto-complete)
+(define-key ac-completing-map "\t" 'ac-complete)
+(define-key ac-completing-map "\r" nil)
+(setq ac-quick-help-delay 0.1)
+~~~
+
 ### Smart underscores
 By default, pressing underscore will insert a ` <- ` instead of a `_`. This was supposed to ease the pain of writing assignments with the arrow. However now we want a `_` most of the time (e.g. for *ggplot2* functions). Using smart underscore, ` <- ` will be inserted only when following a space.
 
@@ -72,9 +91,11 @@ Simply put [this *.el* file](http://www.emacswiki.org/emacs/download/ess-smart-u
 (setq ess-S-underscore-when-last-character-is-a-space t)
 ~~~
 
+Also in **MELPA**.
+
 ### Poly-mode for R + Markdown
 
-With polymode, the mode depends on the position of the cursor in the document. For R + Markdown it means that we can edit the Markdown part in the markdown-mode and run the R code as if in a R script.
+With polymode (MELPA), the mode depends on the position of the cursor in the document. For R + Markdown it means that we can edit the Markdown part in the markdown-mode and run the R code as if in a R script.
 
 I added this to my `.emacs`:
 
@@ -173,6 +194,13 @@ To compare and merge two files, use Ediff mode by calling `M-x ediff` (or `M-x e
 + `?` to get the full list of shortcuts.
 
 To visualize blanks (tabs, spaces, new lines) I use the minor mode `whitespace-mode`.
+
+## For Version Control
+
++ `C-x v +` to pull.
++ `C-x v v` to commit.
++ `C-x v i` to add.
++ `C-x v =` to see differences.
 
 ## For online notes
 
