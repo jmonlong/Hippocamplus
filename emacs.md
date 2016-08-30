@@ -20,6 +20,11 @@ Some of the basic tweaks on my `.emacs` file:
 + In a console (R, Shell), previous/next line in the history is accessed by `M-p`/`M-n`. (Useful when ssh-tunneling with broken key-bindings).
 + Look for a regular expression in files using `M-x lgrep` command.
 
+Regexp replace :
++ Command: `C-M-%`.
++ `\(` and `\)` to define groups.
++ `\1` to refer to the first group.
+
 ## MELPA package repository
 
 Usually packages are just `.el` files to download and add in the folder defined in `.emacs` (e.g. `(add-to-list 'load-path "~/.emacs.d/lisp/")`). However, there is easier way: [MELPA](http://www.emacswiki.org/emacs/MELPA) package manager !
@@ -104,6 +109,8 @@ I would like to add a feature to this: counting selected text.
 ## For Markdown
 
 Pressing `TAB` when the cursor is in a heading will cycle through *heading-only/full* view.
+
+`M-x orgtbl-mode` to format markdown tables.
 
 ## For Python
 
