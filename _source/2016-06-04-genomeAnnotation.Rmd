@@ -103,7 +103,7 @@ exons.gr = makeGRangesFromDataFrame(exons)
 The mappability track was produced from the UCSC track. The raw file contains, for each base in the genome, an estimation of how likely a read is correctly mapped to this position. Using a sliding-window approach, I computed the average mappability in regions of size 1 Kbp.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-if(DOWNLOAD & !file.exists("map100mer-1kbp.bed.gz")) system2("sh", "./downloadUCSCMappabilityOSX.sh")
+if(DOWNLOAD & !file.exists("map100mer-1kbp.bed.gz")) download.file("https://dl.dropboxusercontent.com/s/i537zjs65dpw34n/map100mer-1kbp.bed.gz?dl=0", "map100mer-1kbp.bed.gz")
 map.df = as.data.frame(fread("gunzip -c map100mer-1kbp.bed.gz", showProgress = FALSE))
 colnames(map.df) = c("chr", "start", "end", "map")
 map.df %<>% mutate(chr=factor(gsub("chr","",chr), levels=c(1:22,"X","Y"))) %>% filter(!is.na(chr))

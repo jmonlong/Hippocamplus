@@ -6,6 +6,9 @@ tags: genome
 
 
 
+{% highlight text %}
+Error in library(ggrepel): there is no package called 'ggrepel'
+{% endhighlight %}
 
 # Quick look at the annotations
 
@@ -394,7 +397,16 @@ Using non-overlapping windows of 1 Mb the density of low-mappability regions loo
 
 Grouping the repeats according to their motif, we can ask how frequent is each motif.
 
-![plot of chunk unnamed-chunk-36]({{ site.baseurl }}images/figure/source/2016-06-04-genomeAnnotation/unnamed-chunk-36-1.png)![plot of chunk unnamed-chunk-36]({{ site.baseurl }}images/figure/source/2016-06-04-genomeAnnotation/unnamed-chunk-36-2.png)
+
+{% highlight text %}
+Error in eval(expr, envir, enclos): could not find function "geom_text_repel"
+{% endhighlight %}
+
+
+
+{% highlight text %}
+Error in eval(expr, envir, enclos): could not find function "geom_text_repel"
+{% endhighlight %}
 
 ## Summary tables
 
