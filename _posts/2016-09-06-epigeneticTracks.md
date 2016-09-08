@@ -23,11 +23,11 @@ The R-markdown source code is in the website's [GitHub](https://github.com/jmonl
 
 I'll use the [AnnotationHub](http://bioconductor.org/packages/release/bioc/html/AnnotationHub.html) package, which links Encode and EpigenomeRoadmap data (and more) directly in R. 
 
-I search for *peaks* in *hg19* from H3K27ac, H3K27me3, H3K36me3, H3K4me1, H3K4me3 or H3K9me3, in brain, blood, liver, muscle, lung, kidney, skin or heart. Let's see if I can find what I want.
+I search for *narrowPeak* in *hg19* from H3K27ac, H3K27me3, H3K36me3, H3K4me1, H3K4me3 or H3K9me3, in brain, blood, liver, muscle, lung, kidney, skin or heart. I also look for DNase peaks. Let's see if I can find what I want.
 
 ![plot of chunk unnamed-chunk-2]({{ site.baseurl }}images/figure/source/2016-09-06-epigeneticTracks/unnamed-chunk-2-1.png)
 
-Except for liver and kidney, the other tissues have more than 3 tracks for each mark. In total, it represents 686 different tracks, that I want to merge into one track per mark/tissue.
+Most tissues have more than 3 tracks for each histone mark. I'll just exclude liver and knidney that don't. DNase is a bit more rare but there is at least one track per tissue. In total, it represents 360 different tracks, that I want to merge into one track per mark/tissue.
 
 ## Download and merge tracks
 
@@ -43,19 +43,12 @@ The results were uploaded there: [https://dl.dropboxusercontent.com/s/8c412u1ug2
 
 ![plot of chunk unnamed-chunk-4]({{ site.baseurl }}images/figure/source/2016-09-06-epigeneticTracks/unnamed-chunk-4-1.png)![plot of chunk unnamed-chunk-4]({{ site.baseurl }}images/figure/source/2016-09-06-epigeneticTracks/unnamed-chunk-4-2.png)![plot of chunk unnamed-chunk-4]({{ site.baseurl }}images/figure/source/2016-09-06-epigeneticTracks/unnamed-chunk-4-3.png)
 
-## Density map
-
-Using non-overlapping windows of 1 Mb the top 10 denser Mb in tissue-specific marks looks like this:
-
-![plot of chunk unnamed-chunk-5]({{ site.baseurl }}images/figure/source/2016-09-06-epigeneticTracks/unnamed-chunk-5-1.png)
-
 ## Limitations
 
-I searched all tracks with keywords *$tissue*, *$mark* (and *peak*, *hg19*). 
-**It's possible that several tracks correspond to the same sample**, for example one has *narrowPeaks* while the other has *broadPeaks*.
-In summary, I can't make sure that the different tracks come from different replicates.
-Maybe there is a way to automatically find and integrate this information but it might be painful if the metadata is messy.
-Instead I decided to use a **more stringent cutoff** when selecting the "replicated" regions: I keep regions that are seen in more than half the tracks.
+I searched all tracks with keywords *$tissue*, *$mark* (and *narrowPeak*, *hg19*). 
+I'm **not completely sure that the different tracks come from different replicates.** 
+I think I avoided the "bioinformatics" replicates by taking only the *narrowPeaks*.
+And when there are different sub-tissues (e.g. for brain), I decided to keep only regions supported by half the tracks, but then I **might miss the specific a sub-tissue regions**.
 
 I also made **some arbitrary choices**. 
 For example, in for a particular mark/tissue, I stitch together regions that are at 500 bp or less.
