@@ -28,3 +28,7 @@ if(!is.null(x) && x>10) message("so big !")
 ~~~
 
 Now it won't try to do `x<10` if `!is.null(x)` is not true (because what's the point, anything "*False AND ...*" is for sure *False*).
+
+### Get RPubs working
+
+`options(rpubs.upload.method = "internal")`
