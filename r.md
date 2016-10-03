@@ -32,3 +32,19 @@ Now it won't try to do `x<10` if `!is.null(x)` is not true (because what's the p
 ### Get RPubs working
 
 `options(rpubs.upload.method = "internal")`
+
+## Jekyll and Rmarkdown
+
+The `Rmd` files located in the `_source` folder get automatically compiled by `servr` package using this command:
+
+~~~sh
+Rscript -e "servr::jekyll(script='build.R', serve=FALSE)"
+~~~
+
+To define *knitr* parameters, I add a chunk at the beginning of the Rmarkdown document:
+
+~~~md
+```{r include=FALSE}
+knitr::opts_chunk$set(fig.width=10)
+```
+~~~
