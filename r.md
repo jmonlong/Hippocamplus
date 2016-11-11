@@ -5,6 +5,10 @@ title: R
 
 ## Details to remember
 
+### ggplot2
+
++ To plot a density distribution without the x-axis line, use `stat_density(geom="line")` (and eventually `position="dodge"` if plotting several groups).
+
 ### Run a OS command
 
 Use `system2` instead of `system`. It's more portable apparently.

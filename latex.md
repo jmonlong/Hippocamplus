@@ -60,9 +60,17 @@ An accent was specified as `\'i`.
 
 ## Figures
 
+### Position
+
++ `[h]` meand **h**ere.
++ `[t]` means at the **t**op of the page.
++ `[p]` means on its own **p**age.
+
+I usually use `[ht]` for small/medium figures, and `[htp]` for large ones.
+
 ### Sub-figures
 
-This requires `\usepackage{caption}` and `\usepackage{subcaption}`. Then use like this:
+After adding `\usepackage{subcaption}`, use like this:
 
 ~~~latex
 \begin{subfigure}[b]{.48\textwidth}
@@ -70,6 +78,35 @@ This requires `\usepackage{caption}` and `\usepackage{subcaption}`. Then use lik
 	\caption{}
 	\label{fig:example}
 end{subfigure}
+~~~
+
+For more custom organization of the sub-figures, feel free to use `minipage` environment. To force a caption number/letter, use `\addtocounter{subfigure}{XX}`. For example, to have the second subfigure as a long vertical panel on the right and figure {\it a} and {\it c}, smaller on the left:
+
+~~~latex
+\begin{figure}[htp]
+	\begin{minipage}[c]{.4\textwidth}
+		\begin{subfigure}[b]{\linewidth}
+			\includegraphics{example.pdf}
+			\caption{}
+			\label{figa}
+		\end{subfigure}
+		\addtocounter{subfigure}{1}
+		\begin{subfigure}[b]{\linewidth}
+			\includegraphics[page=3]{example.pdf}
+			\caption{}
+			\label{figc}
+		\end{subfigure}
+	\end{minipage}
+	\begin{minipage}[c]{.6\textwidth}
+		\addtocounter{subfigure}{-2}
+		\begin{subfigure}[b]{\linewidth}
+			\includegraphics[page=2]{example.png}
+			\caption{}
+			\label{figb}
+		\end{subfigure}
+	\end{minipage}    
+	\caption{Whole figure caption}
+\end{figure}
 ~~~
 
 ### Supplementary figures

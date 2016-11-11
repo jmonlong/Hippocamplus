@@ -22,6 +22,15 @@ Start a script with one of the [shebang](https://en.wikipedia.org/wiki/Shebang_%
 #!/bin/sh
 ~~~
 
+### Variables
+
+To remove a specific prefix/suffix from a variable name:
+
+~~~sh
+foo=${foop#$prefix}
+foo=${foos%$suffix}
+~~~
+
 ### If Then Else
 
 A simple example:
