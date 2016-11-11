@@ -3,7 +3,7 @@ layout: pagetoc
 title: Shell
 ---
 
-## Tricks
+## Misc
 
 ### Add headers with cat
 
@@ -13,6 +13,13 @@ title: Shell
 
 `nohup` function.
 
+### rsync
+
+`rsync` is not completely intuitive to me. Let's say I would like to recurrently sync all the files that match the patterns in `rsyncIncludes.txt`, I would have to use:
+
+~~~sh
+rsync -r --include='*/' --include-from=../rsyncIncludes.txt --exclude='*' --prune-empty-dirs SRC DEST
+~~~
 
 ## Shell scripting
 
