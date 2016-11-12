@@ -141,7 +141,7 @@ print args.output
 + When iterating, use `xrange` instead of `range`. It's faster and more memory efficient.
 + Sort elements with `sorted(a_list, key=lambda k: -something[k])`.
 + Sub-sample with `random.sample(a_list, 10)`.
-+ In a loop, jump to the next iteration with `continue`.
++ In a loop, jump to the next iteration with `continue`, or leave the loop with `break`.
 
 When filling a nested dictionary, it's painful to always test if the key exists before updating it's value. One trick is to use `try`/`except`. It's not that much quicker but it looks fancier so you forget about the *pain*:
 
