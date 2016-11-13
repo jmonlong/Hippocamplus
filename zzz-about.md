@@ -13,7 +13,7 @@ title: About
 
 ### My current lab
 
-+ [Bourque's Lab](https://genomequebec.mcgill.ca/gbourque/).
++ [Bourque's Lab](http://www.computationalgenomics.ca/BourqueLab/).
 + [McGill Genome Centre](http://www.mcgillgenomecentre.org/).
 + [Canadian Centre for Computational Genomics (C3G)](http://computationalgenomics.ca/).
 
