@@ -3,9 +3,9 @@ layout: page
 title: Emacs
 ---
 
-{% include toc.html %}
-
 I use Emacs for almost everything: **coding, writing, taking notes, preparing presentations**. I'm using it right now ! Well I mean, at the time I'm writing this. There is still a good chance I'm using it now *now*.
+
+{% include toc.html %}
 
 ## Basic configuration
 
