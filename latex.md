@@ -1,7 +1,10 @@
 ---
-layout: pagetoc
+layout: page
 title: LaTeX
 ---
+
+{% include toc.html %}
+
 
 ## Standard packages
 

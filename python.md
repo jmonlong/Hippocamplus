@@ -1,7 +1,9 @@
 ---
-layout: pagetoc
+layout: page
 title: Python
 ---
+
+{% include toc.html %}
 
 Some notes on my recent attempt to learn Python.
 

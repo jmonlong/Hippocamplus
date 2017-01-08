@@ -1,7 +1,10 @@
 ---
-layout: pagetoc
+layout: page
 title: Math/Stats
 ---
+
+{% include toc.html %}
+
 
 All of this is mostly extracted from [Wikipedia](https://en.wikipedia.org). These notes are exactly fitted to my fragmented knowledge/memory, the purpose is to fill the gaps, not to fully review the concepts.
 

@@ -1,7 +1,9 @@
 ---
-layout: pagetoc
+layout: page
 title: Emacs
 ---
+
+{% include toc.html %}
 
 I use Emacs for almost everything: **coding, writing, taking notes, preparing presentations**. I'm using it right now ! Well I mean, at the time I'm writing this. There is still a good chance I'm using it now *now*.
 
@@ -249,3 +251,8 @@ I now use [Simplenote](https://app.simplenote.com/) instead of Evernote, in orde
 There is a [Emacs package](https://github.com/alpha22jp/simplenote2.el) that can be installed using MELPA: `M-x package-install [RET] simplenote2 [RET]`.
 
 The Simplenote buffer can be summoned by `M-x simplenote2-browse`.
+
+
+## File encryption
+
+Encryption is integrated directly. Just add the extension `.gpg` to a file.

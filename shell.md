@@ -1,7 +1,9 @@
 ---
-layout: pagetoc
+layout: page
 title: Shell
 ---
+
+{% include toc.html %}
 
 ## Misc
 

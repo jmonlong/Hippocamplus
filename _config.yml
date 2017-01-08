@@ -6,6 +6,8 @@ permalink:           pretty
 
 #markdown:         redcarpet
 markdown: kramdown
+kramdown: 
+  parse_block_html: true
 # redcarpet:
 #     extensions: [with_toc_data]
 
@@ -16,7 +18,8 @@ highlighter: rouge
 title:               Hippocamplus
 tagline:             'My Second Memory'
 description:         'A place to gather useful information I keep on forgetting.'
-baseurl:             '/Hippocamplus/'
+# baseurl:             '/Hippocamplus/'
+baseurl:             ''
 paginate:            5
 
 # About/contact

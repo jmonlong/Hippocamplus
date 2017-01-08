@@ -1,7 +1,9 @@
 ---
-layout: pagetoc
+layout: page
 title: Markdown
 ---
+
+{% include toc.html %}
 
 ## Tips
 
@@ -39,24 +41,29 @@ I use [MarkdownSlides](https://github.com/asanzdiego/markdownslides).
 
 There are several themes [available](http://jekyllthemes.org/). My favorite are the two [Poole](http://getpoole.com/) themes, Hyde and Lanyon.
 
-### Table of Contents in Javascript
+### Table of Contents 
 
-I use [this Javascript plugin](https://github.com/ghiculescu/jekyll-table-of-contents) to generate the table of contents of the pages.
+`kramdown` automatically creates TOC if it sees : 
 
-In practice I added to the *head* of the pages:
-
-~~~html
-<script type="text/javascript" src="https://raw.githubusercontent.com/ghiculescu/jekyll-table-of-contents/master/toc.js" ></script>
+~~~markdown
+* Is replaced by the TOC
+{toc}
 ~~~
 
-Then, for the pages for which I want a TOC, I positioned it using `<div id="toc"></div>` and added the configuration at the bottom of the file:
+To make it a bit nicer I created a `toc.html` file in the `_include` folder with:
 
 ~~~html
-<script type="text/javascript">
-  $(document).ready(function() {
-  $('#toc').toc({ showSpeed: 0 });
-  });
-</script>
+<nav>
+  <h4>Table of Contents</h4>
+  * TOC
+  {:toc}
+</nav>
+~~~
+
+Then I call the TOC in each markdown document using (without the `\`):
+
+~~~markdown
+\{\% include toc.html \%\}
 ~~~
 
 
