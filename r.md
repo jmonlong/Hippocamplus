@@ -3,6 +3,8 @@ layout: page
 title: R
 ---
 
+{% include toc.html %}
+
 ## Details to remember
 
 ### ggplot2
@@ -37,6 +39,27 @@ Now it won't try to do `x<10` if `!is.null(x)` is not true (because what's the p
 
 `options(rpubs.upload.method = "internal")`
 
+## ggplot2
+
+### Align/stack two ggplots
+
+One easy way is to use the `tracks` function in the [ggbio](https://bioconductor.org/packages/release/bioc/html/ggbio.html) package. However I don't really like this package because it sometimes conflicts with ggplot2 (boo!) and you end up having to specify `ggplot2::` to the functions to avoid obscure errors.
+
+I found [another way on the internet](http://www.exegetic.biz/blog/2015/05/r-recipe-aligning-axes-in-ggplot2/):
+
+~~~r
+library(ggplot2)
+library(gridExtra)
+p1 <- ggplot(...
+p2 <- ggplot(...
+p1 <- ggplot_gtable(ggplot_build(p1))
+p2 <- ggplot_gtable(ggplot_build(p2))
+maxWidth = unit.pmax(p1$widths[2:3], p2$widths[2:3])
+p1$widths[2:3] <- maxWidth
+p2$widths[2:3] <- maxWidth
+grid.arrange(p1, p2, heights = c(3, 2))
+~~~
+
 ## Rmarkdown
 
 ### Jekyll website
@@ -60,7 +83,7 @@ knitr::opts_chunk$set(fig.width=10)
 Some useful options to put in the YAML header:
 
 ~~~yaml
-title: The TiTle
+title: The Title
 subtitle: The Subtitle
 author: Jean Monlong
 date: 11 Oct. 2016
