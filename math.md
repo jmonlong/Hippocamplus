@@ -66,7 +66,7 @@ Based on ranks, it **tests if one distribution is stochastically higher than ano
 
 ### ANOVA
 
-## Regression
+## Regression & Machine Learning
 
 ### Linear regression
 
@@ -74,6 +74,35 @@ Based on ranks, it **tests if one distribution is stochastically higher than ano
 
 ### LOESS
 
+### Machine Learning basics
+
+- [k-nearest neighbors](https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm)
+- [Gradient descent](https://en.wikipedia.org/wiki/Gradient_descent)
+- [Sigmoid Function](https://en.wikipedia.org/wiki/Sigmoid_function) to transform a value into a more interpretable decision value (S shaped between 0 and 1).
+
+### CART
+
+[CART](https://en.wikipedia.org/wiki/Decision_tree_learning) stands for **C**lassification **A**nd **R**egression **T**ree, and was introduced by [Breinman](https://en.wikipedia.org/wiki/Leo_Breiman) et al in 1984.
+
+The data space is split using a **binary tree**. Following the tree for a new value points at the most similar region in the data space. The labels/values of training data in this split/leaf is used to predict the new label/value.
+
+For a **regression tree**, the predicted value is the average of those in the training data in this split/leaf. A **classification tree** uses a majority vote among the training data labels in this split/leaf.
+
+The **greedy algorithm** for deciding the successive splits in a decision tree finds the best dimension and best split that minimizes the training errors. Once the tree is fully built pruning can help improving performance. Random forest is another approach to counter the issues of having fully grown trees.
+
+**Pruning** removes parts of the tree with lower importance. It improves the decision tree by reducing the complexity and reducing over-fitting, hence increasing the predictive accuracy.
+
+**Bagging** is simply using bootstrap approach to get a more robust prediction (i.e. with less overfitting). The training set is sampled with replacement and a tree is constructed. Them the final prediction uses the average (or majority call) across all the trees.
+
+**Random forest** could be seen as an extension of the bagging approach. The main difference is that a random subset of features are used at each split. This ensures that the forest contains different trees and not necessarily similar trees. Random forest is particularly useful when the number of samples is much smaller than the number of features, as it forces the trees to focus on different features, and not only the globally better ones.
+
+### Neural Networks
+
+- [Neural Network](https://en.wikipedia.org/wiki/Artificial_neural_network)
+
+
+
+### SVM
 
 ## Misc stats
 
@@ -102,6 +131,11 @@ The [forward algorithm](https://en.wikipedia.org/wiki/Forward_algorithm) uses *d
 ### Maximum Likelihood Estimation
 
 ### Expectation-Maximization
+
+
+### Greedy algorithm
+
+> A greedy algorithm is an algorithmic paradigm that follows the problem solving heuristic of making the locally optimal choice at each stage with the hope of finding a global optimum.
 
 ### Bayesian vs Frequentist
 
