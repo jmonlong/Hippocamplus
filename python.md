@@ -45,6 +45,16 @@ line.split('\t')
 + `str.replace(a_string, ":", "_")` to replace characters.
 + `' '.join(a_string_array)` to merge an array into one string.
 
+### Function
+
+~~~python
+def functionname( parameters ):
+   "function_docstring"
+   function_suite
+   return [expression]
+~~~
+
+
 ## Input/Output
 
 To read a file line by line:
@@ -76,6 +86,15 @@ f.seek(bos)
 line = f.next()
 f.close()
 ~~~
+
+To save python objects one can use `pickle` module:
+
+~~~python
+pickle.dump(obj1, open("obj1.pkl","wb"))
+obj1 = pickle.load(open("obj1.pkl", "rb"))
+~~~
+
+Note the *b* that specifies *binary mode* which is slightly more efficient for non-text files.
 
 ## Files structure, packages and imports
 
@@ -153,6 +172,8 @@ try:
 except KeyError:
     dict[lev1] = [i]
 ~~~
+
+To time a function, one simple way is to use `time.time()` before and after the function and report the difference. There might be issues with Windows but I use timing for internal benchmarks, never in final code.
 
 ## Shell integration
 
@@ -246,17 +267,24 @@ print fa.id + '\t' + fa.seq
 
 ### SAM files
 
-Here is a short example on how to get reads from a region, as well as the total number of reads in the BAM file.
+Here is a short example on how to get reads from a region.
 
 ~~~python
 import pysam
 
 bamfile = pysam.AlignmentFile(bam_fn, "rb")
 
-readc = bamfile.mapped + bam.unmapped
-
 reads_reg = bamfile.fetch(reference=ch_reg, start=start_reg, end=end_reg)
 reads_seq = {}
 for read in reads_reg:
     reads_seq[read.query_name] = read.query_alignment_sequence
 ~~~
+
+To iterate over all the reads (faster) use:
+
+~~~python
+for aln in bamfile.fetch(until_eof=True):
+	...
+~~~
+
+If the BAM is indexed, the **number of mapped and unmapped reads** is stored in `bamfile.mapped` and `bamfile.unmapped`.
