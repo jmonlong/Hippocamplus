@@ -246,10 +246,15 @@ print fa.id + '\t' + fa.seq
 
 ### SAM files
 
+Here is a short example on how to get reads from a region, as well as the total number of reads in the BAM file.
+
 ~~~python
 import pysam
 
 bamfile = pysam.AlignmentFile(bam_fn, "rb")
+
+readc = bamfile.mapped + bam.unmapped
+
 reads_reg = bamfile.fetch(reference=ch_reg, start=start_reg, end=end_reg)
 reads_seq = {}
 for read in reads_reg:
