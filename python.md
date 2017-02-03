@@ -146,7 +146,7 @@ The more fancy way is to use `argparse`. I usually use it like this (see the [do
 import argparse
 
 parser = argparse.ArgumentParser(description='Do something cool.')
-parser.add_argument('-in', dest='input', help='the input file')
+parser.add_argument('-in', dest='input', help='the input file', require=True)
 parser.add_argument('-k', dest='k', default=3, type=int, help='an integer')
 parser.add_argument('-out', dest='output', help='the output file')
 
@@ -163,6 +163,7 @@ print args.output
 + Sort elements with `sorted(a_list, key=lambda k: -something[k])`.
 + Sub-sample with `random.sample(a_list, 10)`.
 + In a loop, jump to the next iteration with `continue`, or leave the loop with `break`.
++ `quit()` to stop a program.
 
 When filling a nested dictionary, it's painful to always test if the key exists before updating it's value. One trick is to use `try`/`except`. It's not that much quicker but it looks fancier so you forget about the *pain*:
 
@@ -174,6 +175,15 @@ except KeyError:
 ~~~
 
 To time a function, one simple way is to use `time.time()` before and after the function and report the difference. There might be issues with Windows but I use timing for internal benchmarks, never in final code.
+
+To convert a **binary number into a decimal number**: `int('11011011', 2)`.
+
+To get the index as well as the value in a list, use `enumerate`:
+
+~~~python
+for id, val in enumerate(myList):
+	print(id, val)
+~~~
 
 ## Shell integration
 
