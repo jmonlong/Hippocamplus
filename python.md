@@ -24,6 +24,13 @@ for elt in arr:
     print elt
 ~~~
 
+*numpy* arrays are more efficient when the data needs to be manipulated/combined. For example it allows for some vectorized operations:
+
+~~~python
+pred_counts = numpy.zeros((4, len(rfc.classes_)))
+pred_counts[0, ] += sum(predprobs > .5)
+~~~
+
 ### Hash
 
 Hash tables or dictionaries holds unordered sets of key/value pairs.
