@@ -25,6 +25,10 @@ This is my default (more or less) :
 
 ## Basics
 
+### Font sizes
+
+`\tiny`, `\scriptsize`, `\footnotesize`, `\small`, `\normalsize`, `\large`, `\Large`, `\LARGE`, `\huge`, `\Huge`.
+
 ### Change the symbol in lists
 
 ~~~latex
