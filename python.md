@@ -52,6 +52,15 @@ line.split('\t')
 + `str.replace(a_string, ":", "_")` to replace characters.
 + `' '.join(a_string_array)` to merge an array into one string.
 
+For regular expression:
+
+~~~python
+import re
+pattern = re.compile('something:(.+)')
+mres = pattern.search(line)
+mres.group(1)
+~~~
+
 ### Function
 
 ~~~python
@@ -194,15 +203,18 @@ for id, val in enumerate(myList):
 
 ## Shell integration
 
-List files with *glob*, remove with *os*.
+List files with *glob*, remove with *os*, remove non-empty directories with *shutil*.
 
 ~~~python
 import glob
 import os
+import shutil
 
 filelist = glob.glob('temp*')
 for f in filelist:
     os.remove(f)
+	
+shutil.rmtree('myDir')
 ~~~
 
 Run commands with *subprocess*. `/dev/null` to avoid annoying messages.
