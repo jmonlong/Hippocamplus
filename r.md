@@ -5,6 +5,10 @@ title: R
 
 {% include toc.html %}
 
+## Optimization
+
++ Use `rbindlist` from *data.table* package for a memory-optimized and faster `do.call(rbind, list(..))`.
+
 ## Details to remember
 
 ### ggplot2

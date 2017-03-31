@@ -95,6 +95,8 @@ pdftops -eps document.pdf
 ## Git
 
 + Commit all modification and added files: `git commit -am "informative message"`
++ To show all the history of a file: `git log -p -- file`.
++ To retrieve a specific version of a file: `git show COMMIT:file`.
 
 #### Aliases
 
