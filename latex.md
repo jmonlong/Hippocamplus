@@ -228,17 +228,18 @@ Using `\usepackage{authblk}`, the authors' affiliations can be defined like this
 \linenumbers
 ~~~
 
+
 ### Notes
 
 ~~~latex
 \usepackage{todonotes}
 \newcounter{mycomment}
-\newcommand{\comment}[2][]{%
-  \refstepcounter{mycomment}%
-  {%
+\newcommand{\comment}[2][]{
+  \refstepcounter{mycomment}
+  {
     %\setstretch{0.7}% spacing
-    \todo[color={red!100!green!33},size=\tiny]{%
-      \textbf{[\uppercase{#1}\themycomment]:}~#2}%
+    \todo[color={red!100!green!33},size=\tiny]{
+      \textbf{[\uppercase{#1}\themycomment]:}~#2}
   }}
 ~~~
 
