@@ -11,10 +11,6 @@ title: R
 
 ## Details to remember
 
-### ggplot2
-
-+ To plot a density distribution without the x-axis line, use `stat_density(geom="line")` (and eventually `position="dodge"` if plotting several groups).
-
 ### Run a OS command
 
 Use `system2` instead of `system`. It's more portable apparently.
@@ -45,6 +41,10 @@ Now it won't try to do `x<10` if `!is.null(x)` is not true (because what's the p
 
 ## ggplot2
 
+### Tricks
+
++ To plot a density distribution without the x-axis line, use `stat_density(geom="line")` (and eventually `position="dodge"` if plotting several groups).
+
 ### Align/stack two ggplots
 
 One easy way is to use the `tracks` function in the [ggbio](https://bioconductor.org/packages/release/bioc/html/ggbio.html) package. However I don't really like this package because it sometimes conflicts with ggplot2 (boo!) and you end up having to specify `ggplot2::` to the functions to avoid obscure errors.
@@ -62,6 +62,17 @@ maxWidth = unit.pmax(p1$widths[2:3], p2$widths[2:3])
 p1$widths[2:3] <- maxWidth
 p2$widths[2:3] <- maxWidth
 grid.arrange(p1, p2, heights = c(3, 2))
+~~~
+
+### Waffle graphs
+
+`waffle` package provides a `waffle` and `iron` function. For example:
+
+~~~r
+iron(
+  waffle(c(thing1=0, thing2=100), rows=5, keep=FALSE, size=0.5, colors=c("#af9139", "#544616")),
+  waffle(c(thing1=25, thing2=75), rows=5, keep=FALSE, size=0.5, colors=c("#af9139", "#544616"))
+)
 ~~~
 
 ## Rmarkdown

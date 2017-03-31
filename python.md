@@ -173,12 +173,34 @@ print args.output
 ~~~
 
 
+
+## Graphs
+
+An histogram with *matplotlib*:
+
+~~~python
+import matplotlib.pyplot as plt
+plt.hist(x)
+plt.xlabel('x label')
+plt.ylabel('y label')
+plt.show()
+~~~
+
+Scatterplot:
+
+~~~python
+plt.plot(xy[1], xy[0])
+plt.show()
+~~~
+
 ## Tricks
 
 + When iterating, use `xrange` instead of `range`. It's faster and more memory efficient.
 + Sort elements with `sorted(a_list, key=lambda k: -something[k])`.
++ Count unique elements in an array: `unique, counts = numpy.unique(array1, return_counts=True)`.
 + Sub-sample with `random.sample(a_list, 10)`.
 + In a loop, jump to the next iteration with `continue`, or leave the loop with `break`.
++ Find indexes in array: `numpy.where(x > 0)`.
 + `quit()` to stop a program.
 
 When filling a nested dictionary, it's painful to always test if the key exists before updating it's value. One trick is to use `try`/`except`. It's not that much quicker but it looks fancier so you forget about the *pain*:
