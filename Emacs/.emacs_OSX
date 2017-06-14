@@ -1,0 +1,144 @@
+;; Load path for extra packages
+(add-to-list 'load-path "~/.emacs.d/lisp/")
+
+;;;; MELPA package manager
+(require 'package) ;; You might already have this line
+(add-to-list 'package-archives
+             '("elpy" . "https://jorgenschaefer.github.io/packages/"))
+(add-to-list 'package-archives
+	     '("melpa" . "https://melpa.org/packages/") t)
+(when (< emacs-major-version 24)
+  ;; For important compatibility libraries like cl-lib
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+(package-initialize) ;; You might already have this line
+
+;; Pyhton
+(elpy-enable)
+(defun my-python-mode-hook ()
+  (define-key python-mode-map (kbd "C-c r") 'python-shell-send-region)
+  (define-key python-mode-map (kbd "C-c b") 'python-shell-send-buffer)
+  (setq python-indent 4))
+(add-hook 'python-mode-hook 'my-python-mode-hook)
+
+;;;; Emacs visual
+;; Disable startup screen
+(setq inhibit-splash-screen t)
+;; Turn the blinking off
+(blink-cursor-mode 0)
+;;; Turn off the tool-bar (<=0 off, >0 on)
+(tool-bar-mode 0)
+;;; turn off the menu bar (<=0 off, >0 on)
+;;(menu-bar-mode 0)
+;; Solarized
+(load-theme 'sanityinc-solarized-dark t)
+;; Font
+(set-default-font "Consolas 14") ;; OSX
+;;(set-default-font "DejaVu Sans Mono 12") ;; Linux
+;; Line wrap that doesn't cut words
+;(global-visual-line-mode 1)
+;; Turn off auto-fill mode
+(remove-hook 'text-mode-hook #'turn-on-auto-fill)
+
+;; Word count
+;; (load "word-count")
+;; Edit compressed files
+(auto-compression-mode t)
+
+;;;; ESS
+;; (add-to-list 'load-path "~/.emacs.d/lisp/ess/ess-14.09/lisp/")
+(load "ess-site")
+(setq ess-describe-at-point-method 'tooltip)
+(setq ess-ask-for-ess-directory nil)
+;; set indentation size
+(add-hook 'ess-mode-hook
+	  (lambda ()
+	    (ess-set-style 'GNU 'quiet)
+	    ;; Because
+	    ;;                                 DEF GNU BSD K&R C++
+	    ;; ess-indent-level                  2   2   8   5   4
+	    ;; ess-continued-statement-offset    2   2   8   5   4
+	    ;; ess-brace-offset                  0   0  -8  -5  -4
+	    ;; ess-arg-function-offset           2   4   0   0   0
+	    ;; ess-expression-offset             4   2   8   5   4
+	    ;; ess-else-offset                   0   0   0   0   0
+	    ;; ess-close-brace-offset            0   0   0   0   0
+	    (add-hook 'local-write-file-hooks
+		      (lambda ()
+			(ess-nuke-trailing-whitespace)))))
+;;(setq ess-nuke-trailing-whitespace-p 'ask)
+;; or even
+(setq ess-nuke-trailing-whitespace-p t)
+;; imenus
+(require 'imenu-anywhere)
+(global-set-key [?\M-o] 'imenu-anywhere)
+;; Smart underscore
+(require 'ess-smart-underscore)
+(setq ess-S-underscore-when-last-character-is-a-space t)
+;; AutoComplete
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/lisp/ac-dict")
+(ac-config-default)
+(setq ac-auto-start nil)
+(define-key ac-mode-map [C-tab] 'auto-complete)
+(define-key ac-completing-map "\t" 'ac-complete)
+(define-key ac-completing-map "\r" nil)
+(setq ac-quick-help-delay 0.1)
+;; Eldoc : Show function information when cursor on function
+(setq ess-eldoc-show-on-symbol t)
+
+;;;; Modes and file extensions
+(require 'poly-R)
+(require 'poly-markdown)
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.Rmd\\'" . poly-markdown+r-mode))
+(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+
+;;;; Latex
+(setq TeX-PDF-mode t)
+(setq-default TeX-master nil)
+(setq LaTeX-verbatim-environments-local '("lstlisting"))
+
+;;;; Ispell
+;; OSX -
+(setq ispell-program-name "/usr/local/Cellar/ispell/3.4.00/bin/ispell")
+;;Flyspell "right click"
+(eval-after-load "flyspell"
+    '(progn
+       (define-key flyspell-mouse-map [down-mouse-3] #'flyspell-correct-word)
+       (define-key flyspell-mouse-map [mouse-3] #'undefined)))
+;; - OSX
+;; Autoturn on for latex and markdown documents
+(add-hook 'LaTeX-mode-hook 'flyspell-mode)
+(add-hook 'markdown-mode-hook 'flyspell-mode)
+;; Default languages
+(setq ispell-dictionary "american")
+(setq ispell-local-dictionary "american")
+
+;;;; Simplenote
+(require 'simplenote2)
+(setq simplenote2-email "*******")
+(setq simplenote2-password "*******")
+(setq simplenote2-markdown-notes-mode 'markdown-mode)
+(simplenote2-setup)
+
+(require 'essh)
+(defun essh-sh-hook ()
+  (define-key sh-mode-map "\C-c\C-r" 'pipe-region-to-shell)
+  (define-key sh-mode-map "\C-c\C-b" 'pipe-buffer-to-shell)
+  (define-key sh-mode-map "\C-c\C-j" 'pipe-line-to-shell)
+  (define-key sh-mode-map "\C-c\C-n" 'pipe-line-to-shell-and-step)
+  (define-key sh-mode-map "\C-c\C-f" 'pipe-function-to-shell)
+  (define-key sh-mode-map "\C-c\C-d" 'shell-cd-current-directory))
+(add-hook 'sh-mode-hook 'essh-sh-hook)
+
+;;;; OSX specific :
+;; Mac key bindings:
+(define-key function-key-map (kbd "M-<down>") 'forward-paragraph)
+(define-key function-key-map (kbd "M-<up>") 'backward-paragraph)
+(global-set-key (kbd "<home>") 'beginning-of-line)
+(global-set-key (kbd "<end>") 'end-of-line)
+;; Window size
+(require 'maxframe)
+(add-hook 'window-setup-hook 'maximize-frame t)
+;; Window focus
+(x-focus-frame nil)
