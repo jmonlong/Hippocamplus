@@ -13,7 +13,7 @@ title: Shell
 
 ### Avoid killing ssh jobs
 
-`nohup` function.
+`nohup` function (apparently).
 
 ### rsync
 
@@ -22,6 +22,17 @@ title: Shell
 ~~~sh
 rsync -r --include='*/' --include-from=../rsyncIncludes.txt --exclude='*' --prune-empty-dirs SRC DEST
 ~~~
+
+### Mount server in OSX
+
+I created a directory `sftp` (I don't know why I choose this name...anyway) and mount the root of the different servers there. Eventually I created a symbolic link at the root of my computer to point there so that paths like `/gs/projects/...` work directly, as if in the cluster.
+
+To mount a server I use the following command:
+
+~~~sh
+sshfs jmonlong@guillimin.hpc.mcgill.ca:/ /Users/jeanmonlong/sftp/guillimin -ovolname=NAME
+~~~
+
 
 ## Shell scripting
 
@@ -86,7 +97,7 @@ I ended up using Inkscape in command-line mode. The result is not so bad (better
 inkscape document.pdf --export-eps=document.eps
 ~~~
 
-[Apparently](http://blm.io/blog/convert-pdf-eps-osx/), `pdftops` is even better. 
+[Apparently](http://blm.io/blog/convert-pdf-eps-osx/), `pdftops` is even better.
 
 ~~~sh
 pdftops -eps document.pdf
