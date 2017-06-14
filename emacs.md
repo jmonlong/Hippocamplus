@@ -256,3 +256,46 @@ The Simplenote buffer can be summoned by `M-x simplenote2-browse`.
 ## File encryption
 
 Encryption is integrated directly. Just add the extension `.gpg` to a file.
+
+
+## For OSX
+
+Here are some bits of configuration specific to OSX.
+
+### Maximize window at opening
+
+Using the *maxframe* elisp from [Ryan McGeary](https://github.com/rmm5t/maxframe.el). I'll copy the `maxframe.el` in the *master* branch of this repo in case it disappears.
+
+~~~lisp
+(require 'maxframe)
+(add-hook 'window-setup-hook 'maximize-frame t)
+~~~
+
+### Keybindings
+
+To change the annoying OSX bindings: paragraph jumping, home/end for line not page.
+
+~~~lisp
+(define-key function-key-map (kbd "M-<down>") 'forward-paragraph)
+(define-key function-key-map (kbd "M-<up>") 'backward-paragraph)
+(global-set-key (kbd "<home>") 'beginning-of-line)
+(global-set-key (kbd "<end>") 'end-of-line)
+~~~
+
+### Ispell
+
+To specify where is *ispell* located.
+
+~~~lisp
+(setq ispell-program-name "/usr/local/Cellar/ispell/3.4.00/bin/ispell")
+~~~
+
+Also something about the right-click (I don't remember why I have that).
+
+~~~lisp
+(eval-after-load "flyspell"
+    '(progn
+       (define-key flyspell-mouse-map [down-mouse-3] #'flyspell-correct-word)
+       (define-key flyspell-mouse-map [mouse-3] #'undefined)))
+~~~
+
