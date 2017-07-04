@@ -126,7 +126,9 @@ import module1
 
 For example when running a script on a HPC cluster, it's often easier to install modules in your home.
 
-To initialize the local library I created the directory and updated `PYTHONPATH`.
+If the package can be installed with `pip`, I used `pip install --user packageName`.
+
+Otherwise using the `setup.py` method, I first initialize the local library by creating a directory and updating `PYTHONPATH`.
 
 ~~~sh
 mkdir -p /home/monlongj/pylib/lib/python2.7/site-packages/
@@ -162,7 +164,7 @@ The more fancy way is to use `argparse`. I usually use it like this (see the [do
 import argparse
 
 parser = argparse.ArgumentParser(description='Do something cool.')
-parser.add_argument('-in', dest='input', help='the input file', require=True)
+parser.add_argument('-in', dest='input', help='the input file', required=True)
 parser.add_argument('-k', dest='k', default=3, type=int, help='an integer')
 parser.add_argument('-out', dest='output', help='the output file')
 
@@ -202,6 +204,7 @@ plt.show()
 + In a loop, jump to the next iteration with `continue`, or leave the loop with `break`.
 + Find indexes in array: `numpy.where(x > 0)`.
 + `quit()` to stop a program.
++ `myVar is None` to test if a variable is *None*.
 
 When filling a nested dictionary, it's painful to always test if the key exists before updating it's value. One trick is to use `try`/`except`. It's not that much quicker but it looks fancier so you forget about the *pain*:
 
@@ -235,7 +238,7 @@ import shutil
 filelist = glob.glob('temp*')
 for f in filelist:
     os.remove(f)
-	
+
 shutil.rmtree('myDir')
 ~~~
 
@@ -298,7 +301,7 @@ from Bio.SeqRecord import SeqRecord
 recs = []
 for ii in xrange(1000):
     seq = randSeq(100))
-    recs.append(SeqRecord(seq, id=str(ii))) 
+    recs.append(SeqRecord(seq, id=str(ii)))
 SeqIO.write(recs, "reads.fa", "fasta")
 ~~~
 

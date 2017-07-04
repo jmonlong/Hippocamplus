@@ -303,6 +303,45 @@ This allows maximum five authors before it switches to *"First Author et al"* mo
 
 I put this new `.bst` file in the folder of my `.tex` file and called it in the style command: `\bibliographystyle{unsrtnat5}`.
 
+### "Name Year" style
+
+I used `\citep{}` with this configuration:
+
+~~~latex
+\usepackage{natbib}
+\bibpunct{ (}{)}{;}{a}{}{;} 
+~~~
+
+### Order of initials
+
+To get *Simpson H.* instead of *Homer Simpson* I changes the `.bst` file line in the `format.names` function to :
+
+~~~latex
+{ s nameptr "{vv~}{ll~}{f.}{, jj}" format.name$ 't :=
+~~~
+
+### No URL or DOI
+
+There are nicer option with `biblatex` but since I'm still using `bibtex` I went into the `.bst` file and changed the formatting functions:
+
+~~~latex
+FUNCTION {format.url}
+{ "" }
+%%{ url empty$
+%%    { "" }
+%%    { new.block "URL \url{" url * "}" * }
+%%  if$
+%%}
+
+FUNCTION {format.doi}
+{ "" }
+%%{ doi empty$
+%%    { "" }
+%%    { new.block "\doi{" doi * "}" * }
+%%  if$
+%%}
+~~~
+
 
 ## Presentations
 

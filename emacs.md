@@ -83,6 +83,25 @@ Then I configure it in my `.emacs`:
 (setq ac-quick-help-delay 0.1)
 ~~~
 
+## Spell checking
+
+I use *ispell* and *flyspell*.
+
+To turn on automatically the live spell check for Latex and markdown documents:
+
+~~~lisp
+(add-hook 'LaTeX-mode-hook 'flyspell-mode)
+(add-hook 'markdown-mode-hook 'flyspell-mode)
+~~~
+
+I use the *american* dictionary by default:
+
+~~~lisp
+(setq ispell-dictionary "american")
+(setq ispell-local-dictionary "american")
+~~~
+
+
 ### Smart underscores
 By default, pressing underscore will insert a ` <- ` instead of a `_`. This was supposed to ease the pain of writing assignments with the arrow. However now we want a `_` most of the time (e.g. for *ggplot2* functions). Using smart underscore, ` <- ` will be inserted only when following a space.
 
@@ -110,6 +129,16 @@ I added this to my `.emacs`:
 ## For LaTeX
 
 I put some Emacs tricks (e.g. for table manipulation) on the [LaTeX page]({{ site.baseurl }}latex).
+
+I general I prefer to use AUCTeX (available through MELPA).
+For example, it handles multi-file documents and keeps the annoying compilation buffer closed.
+My configuration is:
+
+~~~lisp
+(setq TeX-PDF-mode t)
+(setq-default TeX-master nil)
+~~~
+
 
 ### Word count
 
