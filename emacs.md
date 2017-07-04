@@ -66,7 +66,7 @@ Then add these lines to `~/.emacs`:
 
 ESS can also be installed through **MELPA**.
 
-## Auto-complete
+### Auto-complete
 
 To get auto-completion (with objects, functions or parameters) I use *auto-complete*. It's also available through MELPA.
 
@@ -81,24 +81,6 @@ Then I configure it in my `.emacs`:
 (define-key ac-completing-map "\t" 'ac-complete)
 (define-key ac-completing-map "\r" nil)
 (setq ac-quick-help-delay 0.1)
-~~~
-
-## Spell checking
-
-I use *ispell* and *flyspell*.
-
-To turn on automatically the live spell check for Latex and markdown documents:
-
-~~~lisp
-(add-hook 'LaTeX-mode-hook 'flyspell-mode)
-(add-hook 'markdown-mode-hook 'flyspell-mode)
-~~~
-
-I use the *american* dictionary by default:
-
-~~~lisp
-(setq ispell-dictionary "american")
-(setq ispell-local-dictionary "american")
 ~~~
 
 
@@ -124,6 +106,24 @@ I added this to my `.emacs`:
 (require 'poly-R)
 (require 'poly-markdown)
 (add-to-list 'auto-mode-alist '("\\.Rmd\\'" . poly-markdown+r-mode))
+~~~
+
+## Spell checking
+
+I use *ispell* and *flyspell*.
+
+To turn on automatically the live spell check for Latex and markdown documents:
+
+~~~lisp
+(add-hook 'LaTeX-mode-hook 'flyspell-mode)
+(add-hook 'markdown-mode-hook 'flyspell-mode)
+~~~
+
+I use the *american* dictionary by default:
+
+~~~lisp
+(setq ispell-dictionary "american")
+(setq ispell-local-dictionary "american")
 ~~~
 
 ## For LaTeX
