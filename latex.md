@@ -386,3 +386,17 @@ I tend to use the minimalist *default* theme, remove the navigation bar but add 
 ~~~
 
 For an important presentation, I could use a more fancy theme, such as the [Metropolis](https://github.com/matze/mtheme) theme or the [Execushares](http://hamaluik.com/posts/better-beamer-themes/) one. Eventually I would like to mix and customize these two (see current state [there](https://github.com/jmonlong/Hippocamplus/blob/master/LaTeX/theme/beamerthemeMyExecushares.sty)).
+
+### Backup slides
+
+To add extra slides at the end of the presentation without increasing the total number of slides displayed:
+
+~~~latex
+\appendix
+\newcounter{finalframe}
+\setcounter{finalframe}{\value{framenumber}}
+
+%% EXTRA SLIDES
+
+\setcounter{framenumber}{\value{finalframe}}
+~~~
