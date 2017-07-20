@@ -69,7 +69,7 @@ An accent was specified as `\'i`.
 
 ### Position
 
-+ `[h]` meand **h**ere.
++ `[h]` means **h**ere.
 + `[t]` means at the **t**op of the page.
 + `[p]` means on its own **p**age.
 
@@ -111,14 +111,14 @@ For more custom organization of the sub-figures, feel free to use `minipage` env
 			\caption{}
 			\label{figb}
 		\end{subfigure}
-	\end{minipage}    
+	\end{minipage}
 	\caption{Whole figure caption}
 \end{figure}
 ~~~
 
 ### Supplementary figures
 
-The counter and style for supplementary figures (and tables) can be changed. I place this block at the beginning of the supplementary figure section: 
+The counter and style for supplementary figures (and tables) can be changed. I place this block at the beginning of the supplementary figure section:
 
 ~~~latex
 \setcounter{figure}{0}
@@ -151,7 +151,7 @@ Similar to figures I use:
 
 ### Spanning columns/rows
 
-+ `\multicolumn{2}{c|}{Multi-column}` for a column spanning 2 columns. 
++ `\multicolumn{2}{c|}{Multi-column}` for a column spanning 2 columns.
 + `\multirow{2}{*}{Multi-row}` for a row spanning 2 rows.
 + `\cline{2-10}` to avoid `\hline` crossing a multi-row cell (one the first column).
 
@@ -169,7 +169,7 @@ In Emacs, the columns can be *"easily"* rearranged using rectangular selection. 
 
 ### Tables from *R*
 
-Package [*knitr*](https://cran.r-project.org/web/packages/knitr/) has a function `kable` to easily format a *data.frame* in LaTeX format. 
+Package [*knitr*](https://cran.r-project.org/web/packages/knitr/) has a function `kable` to easily format a *data.frame* in LaTeX format.
 
 ## Code blocks
 
@@ -184,7 +184,7 @@ In Emacs to avoid misinterpreting special character (e.g. `$` or `_`) I added to
 Then in the LaTeX document I setup the *lstlisting* environment with something like:
 
 ~~~latex
-\lstset{ 
+\lstset{
   basicstyle=\scriptsize\ttfamily, % the size of the fonts that are used for the code
   breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
   breaklines=true,                 % sets automatic line breaking
@@ -309,7 +309,7 @@ I used `\citep{}` with this configuration:
 
 ~~~latex
 \usepackage{natbib}
-\bibpunct{ (}{)}{;}{a}{}{;} 
+\bibpunct{ (}{)}{;}{a}{}{;}
 ~~~
 
 ### Order of initials
@@ -377,7 +377,7 @@ To introduce sections, Beamer can automatically insert slides. These automated s
 
 ### Themes
 
-I tend to use the minimalist *default* theme, remove the navigation bar but add slide number: 
+I tend to use the minimalist *default* theme, remove the navigation bar but add slide number:
 
 ~~~latex
 \usetheme{default}
