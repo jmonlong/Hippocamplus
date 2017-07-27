@@ -166,6 +166,7 @@ import argparse
 parser = argparse.ArgumentParser(description='Do something cool.')
 parser.add_argument('-in', dest='input', help='the input file', required=True)
 parser.add_argument('-k', dest='k', default=3, type=int, help='an integer')
+parser.add_argument('-bool', dest='bool', action='store_true', help='False by default')
 parser.add_argument('-out', dest='output', help='the output file')
 
 args = parser.parse_args()
