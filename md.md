@@ -11,23 +11,11 @@ title: Markdown
 
 ## Converting Markdown into nice HTML pages
 
-I use [markdown-styles](https://github.com/mixu/markdown-styles) tool. I installed it through `sudo npm install -g markdown-styles`.
-
-To convert a Markdown document:
+I use RMarkdown. It creates self-contained HTML pages from markdown pages that look nice enough.
 
 ~~~sh
-generate-md --layout witex --input example.md --output output-example
+Rscript -e 'rmarkdown::render("document.md")'
 ~~~
-
-The themes I like:
-
-+ `witex` looks like LaTeX, i.e. old-school scientific.
-+ `jasonm23-markdown` looks more modern and web/blog like.
-+ `thomasf-solarizedcssdark` is a simple solarized theme.
-
-This is fine for simple text documents, but seems to require more efforts to include images and multiple pages. I'm using it to convert single documents, mostly notes.
-
-It would be cool if everything (css, js, even images) was included with the text in one single HTML document. It would allow easy sharing of notes with others online, or host them quickly somewhere. Maybe it's possible, I should investigate. Eventually could I implement it ?
 
 ## Converting Markdown into slides
 
@@ -41,9 +29,9 @@ I use [MarkdownSlides](https://github.com/asanzdiego/markdownslides).
 
 There are several themes [available](http://jekyllthemes.org/). My favorite are the two [Poole](http://getpoole.com/) themes, Hyde and Lanyon.
 
-### Table of Contents 
+### Table of Contents
 
-`kramdown` automatically creates TOC if it sees : 
+`kramdown` automatically creates TOC if it sees :
 
 ~~~markdown
 * Is replaced by the TOC
