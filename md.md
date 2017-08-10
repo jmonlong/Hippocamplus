@@ -11,7 +11,7 @@ title: Markdown
 
 ## Converting Markdown into nice HTML pages
 
-I use RMarkdown. It creates self-contained HTML pages from markdown pages that look nice enough.
+I use RMarkdown. It creates a self-contained HTML document that's looks nice enough and is easy to share.
 
 ~~~sh
 Rscript -e 'rmarkdown::render("document.md")'
