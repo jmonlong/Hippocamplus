@@ -165,7 +165,7 @@ Pressing `TAB` when the cursor is in a heading will cycle through *heading-only/
 `M-x orgtbl-mode` to format markdown tables.
 
 ## For Python
-
+	
 ### Elpy python mode
 [Elpy](https://github.com/jorgenschaefer/elpy) combines several packages to provide a lot of nice features, e.g. code coloring, completion, syntax checks, formatting recommendations.
 
@@ -226,6 +226,12 @@ To compare and merge two files, use Ediff mode by calling `M-x ediff` (or `M-x e
 
 To visualize blanks (tabs, spaces, new lines) I use the minor mode `whitespace-mode`.
 
+### CSV/TSV
+
+I use the `csv-mode` and the command `c-c c-a` to align columns.
+By default it understand `,`, `;` and `\t` as separator.
+If not I think the variable to customize is `csv-separators`.
+
 ## For Version Control
 
 + `C-x v +` to pull.
@@ -279,7 +285,21 @@ I now use [Simplenote](https://app.simplenote.com/) instead of Evernote, in orde
 
 There is a [Emacs package](https://github.com/alpha22jp/simplenote2.el) that can be installed using MELPA: `M-x package-install [RET] simplenote2 [RET]`.
 
-The Simplenote buffer can be summoned by `M-x simplenote2-browse`.
+The Simplenote buffer can be summoned by `M-x simplenote2-browse` or `M-x simplenote2-list`.
+
+In list mode, the relevant commands are:
+
+- `g`: sync with the server.
+- `a`: create a new note
+- `d`: mark note on the current line for deletion
+- `u`: unmark note on the current line for deletion
+- `t`: set tags for filtering
+- `^`: toggle tags filtering condition between "AND" and "OR"
+
+Other general commands include:
+
+- `simplenote2-add-tag` and `simplenote2-delete-tag`
+- `simplenote2-set-markdown`
 
 
 ## File encryption
@@ -328,3 +348,4 @@ Also something about the right-click (I don't remember why I have that).
        (define-key flyspell-mouse-map [mouse-3] #'undefined)))
 ~~~
 
+	
