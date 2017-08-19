@@ -349,3 +349,11 @@ Also something about the right-click (I don't remember why I have that).
 ~~~
 
 	
+### LaTeX path
+
+To update the *PATH* used by emacs I added this to `.emacs`:
+
+~~~lisp
+(setenv "PATH" (concat (getenv "PATH") ":/usr/texbin"))
+(setq exec-path (append exec-path '("/usr/texbin")))
+~~~
