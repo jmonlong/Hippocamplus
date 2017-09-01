@@ -241,6 +241,9 @@ for f in filelist:
     os.remove(f)
 
 shutil.rmtree('myDir')
+
+if(os.path.isfile(filen)):
+	file = open(filen)
 ~~~
 
 Run commands with *subprocess*. `/dev/null` to avoid annoying messages.
