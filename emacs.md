@@ -3,7 +3,7 @@ layout: page
 title: Emacs
 ---
 
-I use Emacs for almost everything: **coding, writing, taking notes, preparing presentations**. I'm using it right now ! Well I mean, at the time I'm writing this. There is still a good chance I'm using it now *now*.
+I use Emacs for almost everything: **coding, writing, taking notes, preparing presentations**. I'm using it right now ! Well I mean, at the time I'm writing this. There is also a good chance I'm using it now *now*.
 
 {% include toc.html %}
 
@@ -18,9 +18,9 @@ Some of the basic tweaks on my `.emacs` file:
 
 ## General commands
 
-+ Select a region and press `M-=` to count words. There are other ways for LaTeX.
++ Counting words: select a region and press `M-=`. There are other ways for LaTeX.
 + In a console (R, Shell), previous/next line in the history is accessed by `M-p`/`M-n`. (Useful when ssh-tunneling with broken key-bindings).
-+ Look for a regular expression in files using `M-x lgrep` command.
++ Search for a regular expression in files using `M-x lgrep` command.
 
 Regexp replace :
 + Command: `C-M-%`.
@@ -49,6 +49,9 @@ I use [Solarized](http://ethanschoonover.com/solarized) theme palette. I install
 ## For R
 
 ### Emacs Speaks Statistics
+
+ESS can be installed through **MELPA**. Otherwise, see below.
+
 To install ESS, without needing the admin rights, the easiest way is to download and compile it in a dedicated folder (e.g. `.emacs.d/lisp/ess`):
 
 ~~~sh
@@ -63,8 +66,6 @@ Then add these lines to `~/.emacs`:
 (add-to-list 'load-path "~/.emacs.d/lisp/ess/lisp/")
 (load "ess-site")
 ~~~
-
-ESS can also be installed through **MELPA**.
 
 ### Auto-complete
 
@@ -87,14 +88,12 @@ Then I configure it in my `.emacs`:
 ### Smart underscores
 By default, pressing underscore will insert a ` <- ` instead of a `_`. This was supposed to ease the pain of writing assignments with the arrow. However now we want a `_` most of the time (e.g. for *ggplot2* functions). Using smart underscore, ` <- ` will be inserted only when following a space.
 
-Simply put [this *.el* file](http://www.emacswiki.org/emacs/download/ess-smart-underscore.el) in the load path and add these lines to `~/.emacs`:
+Available in **MELPA**. Otherwise simply put [this *.el* file](http://www.emacswiki.org/emacs/download/ess-smart-underscore.el) in the load path and add these lines to `~/.emacs`:
 
 ~~~lisp
 (require 'ess-smart-underscore)
 (setq ess-S-underscore-when-last-character-is-a-space t)
 ~~~
-
-Also in **MELPA**.
 
 ### Poly-mode for R + Markdown
 
@@ -106,6 +105,24 @@ I added this to my `.emacs`:
 (require 'poly-R)
 (require 'poly-markdown)
 (add-to-list 'auto-mode-alist '("\\.Rmd\\'" . poly-markdown+r-mode))
+~~~
+
+### Keyboard shortcut to render RMarkdown
+
+I [tweaked](https://stat.ethz.ch/pipermail/ess-help/2004-September/002092.html) a function to run `rmarkdown::render` on the current buffer and I created a shortcut for it.
+
+In `.emacs`:
+
+~~~lisp
+(defun renderRmd ()
+  (interactive)
+  (save-excursion
+    (message "Rendering %S" (buffer-file-name))
+    (setq ess-command (format "rmarkdown::render(%S)" (buffer-file-name)))
+    (ess-execute ess-command 'buffer nil nil)))
+(add-hook 'ess-mode-hook
+          (lambda ()
+            (local-set-key (kbd "C-c C-d C-r") 'renderRmd)))
 ~~~
 
 ## Spell checking
@@ -131,18 +148,19 @@ I use the *american* dictionary by default:
 I put some Emacs tricks (e.g. for table manipulation) on the [LaTeX page]({{ site.baseurl }}latex).
 
 I general I prefer to use AUCTeX (available through MELPA).
-For example, it handles multi-file documents and keeps the annoying compilation buffer closed.
+It handles multi-file documents and keeps the annoying compilation buffer closed.
 My configuration is:
 
 ~~~lisp
 (setq TeX-PDF-mode t)
 (setq-default TeX-master nil)
+(setq LaTeX-verbatim-environments-local '("lstlisting"))
 ~~~
 
 
 ### Word count
 
-I found a wrapper around `texcount` that count the number of words in a document. It can be called with `M-x latex` after adding this to your `.emacs` configuration:
+I found a wrapper around `texcount` that count the number of words in a document. It can be called with `M-x latex-word-count` after adding this to your `.emacs` configuration:
 
 ~~~lisp
 (defun latex-word-count ()
@@ -349,11 +367,17 @@ Also something about the right-click (I don't remember why I have that).
 ~~~
 
 	
-### LaTeX path
+### Explicit path definition
 
-To update the *PATH* used by emacs I added this to `.emacs`:
+For LaTeX, I specified the *PATH* in `.emacs`:
 
 ~~~lisp
 (setenv "PATH" (concat (getenv "PATH") ":/usr/texbin"))
 (setq exec-path (append exec-path '("/usr/texbin")))
+~~~
+
+For pandoc and ESS, I defined a *RSTUDIO_PANDOCPATH* in `.emacs`:
+
+~~~lisp
+(setenv "RSTUDIO_PANDOCPATH" (concat (getenv "RSTUDIO_PANDOCPATH") ":/usr/local/bin/pandoc"))
 ~~~
