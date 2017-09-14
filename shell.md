@@ -161,3 +161,14 @@ docker run -t -i -v /home/ubuntu/analysis1:/root/analysis1 jmonlong/popsv-docker
 + `-t` and `-i` are used for interactive run.
 + `-v` links folder in the host with folder in the image. It must be **absolute paths*.
 
+#### Increase memory
+
+In Mac OS, I had some problems with the docker stopping because of memory issues.
+I fixed by changing:
+
+~~~sh
+docker-machine stop
+VBoxManage modifyvm default --cpus 3
+VBoxManage modifyvm default --memory 8192
+docker-machine start
+~~~

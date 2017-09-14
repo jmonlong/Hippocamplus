@@ -125,7 +125,13 @@ In `.emacs`:
             (local-set-key (kbd "C-c C-d C-r") 'renderRmd)))
 ~~~
 
-## Spell checking
+### Markdown live preview
+
+[`markdown-preview-mode`](https://github.com/ancane/markdown-preview-mode) opens a page on the web browser and update it every time the buffer is saved.
+
+## For writing
+
+### Spell checking
 
 I use *ispell* and *flyspell*.
 
@@ -142,6 +148,37 @@ I use the *american* dictionary by default:
 (setq ispell-dictionary "american")
 (setq ispell-local-dictionary "american")
 ~~~
+
+### Thesaurus and synonyms
+
+I use the `synonyms` package available in MELPA.
+It's not as user friendly as some online resources but a good off-line alternative.
+I downloaded the Gutenberg thesaurus [here](https://archive.org/download/mobythesauruslis03202gut/mthesaur.txt).
+In my `.emacs`:
+
+~~~lisp
+(setq synonyms-file "/Users/jeanmonlong/.emacs.d/mthesaur.txt")
+(setq synonyms-cache-file "/Users/jeanmonlong/.emacs.d/synonyms.cache")
+(require 'synonyms)
+~~~
+
+### Grammar checking
+
+Apparently `langtool` package available in MELPA.
+In my `.emacs`:
+
+~~~lisp
+(require 'langtool)
+(setq langtool-language-tool-jar "/usr/local/Cellar/languagetool/3.8/libexec/languagetool-commandline.jar")
+(setq langtool-default-language "en-US")
+(setq langtool-mother-tongue "fr")
+(setq langtool-disabled-rules '("MORFOLOGIK_RULE_EN_US"))
+~~~
+
+Then:
+
+- `M-x langtool-check` to highlight problems.
+- `M-x langtool-check-done` to stop.
 
 ## For LaTeX
 
@@ -376,8 +413,8 @@ For LaTeX, I specified the *PATH* in `.emacs`:
 (setq exec-path (append exec-path '("/usr/texbin")))
 ~~~
 
-For pandoc and ESS, I defined a *RSTUDIO_PANDOCPATH* in `.emacs`:
+For pandoc and ESS, I defined a *RSTUDIO_PANDOC* in `.emacs`:
 
 ~~~lisp
-(setenv "RSTUDIO_PANDOCPATH" (concat (getenv "RSTUDIO_PANDOCPATH") ":/usr/local/bin/pandoc"))
+(setenv "RSTUDIO_PANDOCPATH" (concat (getenv "RSTUDIO_PANDOC") ":/usr/local/bin"))
 ~~~
