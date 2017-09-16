@@ -1,4 +1,5 @@
 theme = "lanyon-hugo"
+baseURL = 'Hippocamplus/'
 languageCode = "en-us"
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$", "\\.RData"]
 publishDir = "docs"

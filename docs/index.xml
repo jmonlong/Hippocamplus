@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Hippocamplus </title>
-    <link>/</link>
+    <link>/Hippocamplus/</link>
     <language>en-us</language>
     <author></author>
     <rights>(C) 2017</rights>
@@ -30,10 +30,10 @@
       
         <item>
           <title>Regression</title>
-          <link>/2017/09/16/regression/</link>
+          <link>/Hippocamplus/2017/09/16/regression/</link>
           <pubDate>Sat, 16 Sep 2017 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/2017/09/16/regression/</guid>
+          <guid>/Hippocamplus/2017/09/16/regression/</guid>
           <description>&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
 library(broom)
 library(magrittr)
@@ -271,7 +271,7 @@ ext.df = do.call(rbind, ext.df)
 ext.df %&amp;gt;% filter(term == &amp;quot;xTRUE&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate)) + 
     geom_density(fill = &amp;quot;grey50&amp;quot;) + facet_grid(ss ~ 
     ., scales = &amp;quot;free&amp;quot;) + theme_bw()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2017-09-16-Regression_files/figure-html/lrextsim-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/post/2017-09-16-Regression_files/figure-html/lrextsim-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;It seems like the estimate “inflation” is problematic mostly when there are only 1 or 2 supporting observations. If there are more than 5 supporting observations the estimate is correctly centered in 0.&lt;/p&gt;
 &lt;p&gt;This problem is in fact called the &lt;a href=&#34;https://en.wikipedia.org/wiki/Separation_(statistics)&#34;&gt;problem of separation&lt;/a&gt;. There are two approaches to deal with it:&lt;/p&gt;
 &lt;ol style=&#34;list-style-type: decimal&#34;&gt;
@@ -298,7 +298,7 @@ extrms.df = do.call(rbind, extrms.df)
 extrms.df %&amp;gt;% filter(term == &amp;quot;x&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate)) + 
     geom_density(fill = &amp;quot;grey50&amp;quot;) + facet_grid(ss ~ 
     penalty, scales = &amp;quot;free&amp;quot;) + theme_bw()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2017-09-16-Regression_files/figure-html/lrms-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/post/2017-09-16-Regression_files/figure-html/lrms-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;It definitely helps: the estimates are now much closer to 0. I don’t see much difference between penalties 1, 3 or 5.&lt;/p&gt;
 &lt;p&gt;The &lt;a href=&#34;https://cran.r-project.org/web/packages/logistf/index.html&#34;&gt;&lt;code&gt;logistf&lt;/code&gt; package&lt;/a&gt;. It implements Firth’s bias reduction method with its &lt;code&gt;logistf&lt;/code&gt; function.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(logistf)
@@ -316,7 +316,7 @@ extstf.df = do.call(rbind, extstf.df)
 extstf.df %&amp;gt;% filter(term == &amp;quot;xTRUE&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate)) + 
     geom_density(fill = &amp;quot;grey50&amp;quot;) + facet_grid(ss ~ 
     ., scales = &amp;quot;free&amp;quot;) + theme_bw()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2017-09-16-Regression_files/figure-html/lrreg-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/post/2017-09-16-Regression_files/figure-html/lrreg-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;This works well too.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -330,7 +330,7 @@ df$y = ifelse(df$x &amp;gt; 40, rnorm(nb.samp, 0, 5) - df$x *
     df$x/300 + 20, df$y)
 ggplot(df, aes(x = x, y = y)) + geom_point(alpha = 0.5) + 
     theme_bw()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2017-09-16-Regression_files/figure-html/blm-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/post/2017-09-16-Regression_files/figure-html/blm-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;glm.o = glm(y ~ x, data = df)
 loess.o = loess(y ~ x, data = df)
 library(mgcv)
@@ -346,7 +346,7 @@ pred.df = rbind(df %&amp;gt;% mutate(y = predict(glm.o), model = &amp;quot;glm&a
 ggplot(df, aes(x = x, y = y)) + geom_point(alpha = 0.2) + 
     geom_line(aes(colour = model), size = 2, alpha = 0.9, 
         data = pred.df) + theme_bw() + scale_colour_brewer(palette = &amp;quot;Set1&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2017-09-16-Regression_files/figure-html/blmmodels-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/post/2017-09-16-Regression_files/figure-html/blmmodels-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 </description>
         </item>
@@ -355,10 +355,10 @@ ggplot(df, aes(x = x, y = y)) + geom_point(alpha = 0.2) +
       
         <item>
           <title>Enrichment between genomic regions</title>
-          <link>/2017/09/05/enrichment-between-genomic-regions/</link>
+          <link>/Hippocamplus/2017/09/05/enrichment-between-genomic-regions/</link>
           <pubDate>Tue, 05 Sep 2017 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/2017/09/05/enrichment-between-genomic-regions/</guid>
+          <guid>/Hippocamplus/2017/09/05/enrichment-between-genomic-regions/</guid>
           <description>&lt;p&gt;Testing if two sets of genomic regions overlap significantly is not straightforward. In the simple situation of regions of 1 bp (e.g. SNVs) we could use a hypergeometric test. When the regions are small enough and there are not too many, the hypergeometric test might be a fair approximation as well.&lt;/p&gt;
 &lt;p&gt;But what about annotations with many regions, of variable size, covering the genome ? For example overlapping genes and repeats ?&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
@@ -415,7 +415,7 @@ ht.sim %&amp;gt;% mutate(nbsize = paste0(nb, &amp;quot; x &amp;quot;, size,
     xlab(&amp;quot;P-value&amp;quot;) + scale_color_brewer(palette = &amp;quot;Set1&amp;quot;, 
     name = &amp;quot;regions&amp;quot;) + theme(legend.justification = c(1, 
     0), legend.position = c(0.99, 0.01))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/testhg-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/testhg-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;As expected, the hypergeometric test works well for region of 1 bp. Otherwise the distribution of the P-values is biased. The larger the regions the stronger the bias. To a lower extent, more regions has means more bias.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;using-control-regions-with-similar-features&#34; class=&#34;section level2&#34;&gt;
@@ -448,7 +448,7 @@ lr.sim %&amp;gt;% mutate(nbsize = paste0(nb, &amp;quot; x &amp;quot;, size,
     xlab(&amp;quot;P-value&amp;quot;) + scale_color_brewer(palette = &amp;quot;Set1&amp;quot;, 
     name = &amp;quot;regions&amp;quot;) + theme(legend.justification = c(1, 
     0), legend.position = c(0.99, 0.01))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/contreg-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/contreg-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Much better.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;controlling-for-correlated-features&#34; class=&#34;section level2&#34;&gt;
@@ -764,16 +764,16 @@ null.df %&amp;gt;% filter(term == &amp;quot;regionTRUE&amp;quot;) %&amp;gt;% sel
     estimate, region) %&amp;gt;% spread(region, estimate) %&amp;gt;% 
     ggplot(aes(x = cnv.sm, y = cnv.lg)) + geom_point(alpha = 0.5) + 
     theme_bw()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;null.df %&amp;gt;% filter(term == &amp;quot;regionTRUE&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;null.df %&amp;gt;% filter(term == &amp;quot;fold-change&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-3.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-3.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;null.df %&amp;gt;% filter(term == &amp;quot;diff-change&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-4.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-4.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;asso.df = lapply(1:1000, function(ii) {
     cnv.sm = randRegions(rep(1000, 1000))
     cnv.lg = randRegions(rep(10000, 1000))
@@ -791,18 +791,18 @@ asso.df %&amp;gt;% filter(term == &amp;quot;regionTRUE&amp;quot;) %&amp;gt;% sel
     estimate, region) %&amp;gt;% spread(region, estimate) %&amp;gt;% 
     ggplot(aes(x = cnv.sm, y = cnv.lg)) + geom_point(alpha = 0.5) + 
     theme_bw()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-5.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-5.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;asso.df %&amp;gt;% filter(term == &amp;quot;regionTRUE&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-6.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-6.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;asso.df %&amp;gt;% filter(term == &amp;quot;fold-change&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw() + 
     geom_vline(xintercept = 1)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-7.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-7.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;asso.df %&amp;gt;% filter(term == &amp;quot;diff-change&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw() + 
     geom_vline(xintercept = 0)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-8.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-8.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;asso2.df = lapply(1:1000, function(ii) {
     cnv.sm = randRegions(rep(1000, 1000))
     cnv.lg = randRegions(rep(10000, 1000))
@@ -824,18 +824,18 @@ asso2.df %&amp;gt;% filter(term == &amp;quot;regionTRUE&amp;quot;) %&amp;gt;% se
     estimate, region) %&amp;gt;% spread(region, estimate) %&amp;gt;% 
     ggplot(aes(x = cnv.sm, y = cnv.lg)) + geom_point(alpha = 0.5) + 
     theme_bw()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-9.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-9.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;asso2.df %&amp;gt;% filter(term == &amp;quot;regionTRUE&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-10.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-10.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;asso2.df %&amp;gt;% filter(term == &amp;quot;fold-change&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw() + 
     geom_vline(xintercept = 1)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-11.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-11.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;asso2.df %&amp;gt;% filter(term == &amp;quot;diff-change&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw() + 
     geom_vline(xintercept = 0)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-12.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-12.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 </description>
         </item>
@@ -844,10 +844,10 @@ asso2.df %&amp;gt;% filter(term == &amp;quot;regionTRUE&amp;quot;) %&amp;gt;% se
       
         <item>
           <title>Summary epigenetic mark tracks</title>
-          <link>/2016/09/06/summary-epigenetic-mark-tracks/</link>
+          <link>/Hippocamplus/2016/09/06/summary-epigenetic-mark-tracks/</link>
           <pubDate>Tue, 06 Sep 2016 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/2016/09/06/summary-epigenetic-mark-tracks/</guid>
+          <guid>/Hippocamplus/2016/09/06/summary-epigenetic-mark-tracks/</guid>
           <description>&lt;p&gt;To assess the potential impact of variants (SNV, SVs) we might want to use some of the public epigentic datasets. The amount and heterogeneity of this data is a bit overwhelming. I would like to get a summary of which regions of the genome are the most functionally important.&lt;/p&gt;
 &lt;p&gt;The plan is to:&lt;/p&gt;
 &lt;ul&gt;
@@ -862,7 +862,7 @@ asso2.df %&amp;gt;% filter(term == &amp;quot;regionTRUE&amp;quot;) %&amp;gt;% se
 &lt;h2&gt;AnnotationHub&lt;/h2&gt;
 &lt;p&gt;I’ll use the &lt;a href=&#34;http://bioconductor.org/packages/release/bioc/html/AnnotationHub.html&#34;&gt;AnnotationHub&lt;/a&gt; package, which links Encode and EpigenomeRoadmap data (and more) directly in R.&lt;/p&gt;
 &lt;p&gt;I search for &lt;em&gt;narrowPeak&lt;/em&gt; in &lt;em&gt;hg19&lt;/em&gt; from H3K27ac, H3K27me3, H3K36me3, H3K4me1, H3K4me3 or H3K9me3, in brain, blood, liver, muscle, lung, kidney, skin or heart. I also look for DNase peaks. Let’s see if I can find what I want.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2016-09-06-epigeneticTracks_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/post/2016-09-06-epigeneticTracks_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Most tissues have more than 3 tracks for each histone mark. I’ll just exclude liver and knidney that don’t. DNase is a bit more rare but there is at least one track per tissue. In total, it represents 360 different tracks, that I want to merge into one track per mark/tissue.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;download-and-merge-tracks&#34; class=&#34;section level2&#34;&gt;
@@ -873,7 +873,7 @@ asso2.df %&amp;gt;% filter(term == &amp;quot;regionTRUE&amp;quot;) %&amp;gt;% se
 &lt;/div&gt;
 &lt;div id=&#34;overview&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Overview&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2016-09-06-epigeneticTracks_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;img src=&#34;/post/2016-09-06-epigeneticTracks_files/figure-html/unnamed-chunk-5-2.png&#34; width=&#34;672&#34; /&gt;&lt;img src=&#34;/post/2016-09-06-epigeneticTracks_files/figure-html/unnamed-chunk-5-3.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/post/2016-09-06-epigeneticTracks_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;img src=&#34;/Hippocamplus/post/2016-09-06-epigeneticTracks_files/figure-html/unnamed-chunk-5-2.png&#34; width=&#34;672&#34; /&gt;&lt;img src=&#34;/Hippocamplus/post/2016-09-06-epigeneticTracks_files/figure-html/unnamed-chunk-5-3.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;limitations&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Limitations&lt;/h2&gt;
@@ -887,10 +887,10 @@ asso2.df %&amp;gt;% filter(term == &amp;quot;regionTRUE&amp;quot;) %&amp;gt;% se
       
         <item>
           <title>Word Cloud in R</title>
-          <link>/2016/02/26/word-cloud-in-r/</link>
+          <link>/Hippocamplus/2016/02/26/word-cloud-in-r/</link>
           <pubDate>Fri, 26 Feb 2016 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/2016/02/26/word-cloud-in-r/</guid>
+          <guid>/Hippocamplus/2016/02/26/word-cloud-in-r/</guid>
           <description>&lt;p&gt;With the &lt;code&gt;wordcloud&lt;/code&gt; package.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(wordcloud)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;For example with fake words the command would look like that.&lt;/p&gt;
@@ -901,10 +901,10 @@ freq = c(sample(1:50, 190, T), sample(100:150, 10,
     T))
 freq = freq/sum(freq)
 wordcloud(words, freq)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2016-02-26-wordcloud_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/post/2016-02-26-wordcloud_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;wordcloud(words[1:10], freq, colors = rep(c(&amp;quot;red&amp;quot;, 
     &amp;quot;blue&amp;quot;), 5), ordered.colors = TRUE)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2016-02-26-wordcloud_files/figure-html/unnamed-chunk-3-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/post/2016-02-26-wordcloud_files/figure-html/unnamed-chunk-3-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 </description>
         </item>
       
