@@ -51,7 +51,7 @@ I'll use the [AnnotationHub](http://bioconductor.org/packages/release/bioc/html/
 
 I search for *narrowPeak* in *hg19* from H3K27ac, H3K27me3, H3K36me3, H3K4me1, H3K4me3 or H3K9me3, in brain, blood, liver, muscle, lung, kidney, skin or heart. I also look for DNase peaks. Let's see if I can find what I want.
 
-```{r}
+```{r, cache=TRUE}
 epi.marks = c("H3K27ac", "H3K27me3", "H3K36me3", "H3K4me1", "H3K4me3", "H3K9me3", "dnase")
 tissues = c("brain", "blood", "liver", "muscle", "lung", "kidney", "skin", "heart")
 library(AnnotationHub)

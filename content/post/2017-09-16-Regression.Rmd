@@ -60,7 +60,7 @@ For example if just a few genomic regions overlap an interesting annotation and 
 
 Let's look at the worst cases when there are only 1 observation for a particular class.
 
-```{r lrext}
+```{r lrext, cache=TRUE}
 df = data.frame(y = sample(c(FALSE, TRUE), 100, TRUE))
 df$x = 1:nrow(df) %in% sample.int(nrow(df), 1)
 glm(y~x, data=df, family=binomial()) %>% tidy %>% kable
@@ -69,7 +69,7 @@ glm(y~x, data=df, family=binomial()) %>% tidy %>% kable
 Although the significance is low, the estimate seems quite high.
 I'll repeat this process a bunch of time and with different number of supporting observations to have an idea of the distribution.
 
-```{r lrextsim}
+```{r lrextsim, cache=TRUE, dependson='lrext'}
 ext.df = lapply(1:500, function(ii){
   res = lapply(1:10, function(ssi){
     df$x = 1:nrow(df) %in% sample.int(nrow(df), ssi)
@@ -94,7 +94,7 @@ There are two approaches to deal with it:
 The [`rms` package](https://cran.r-project.org/web/packages/rms/index.html) from [Frank Harell](http://www.fharrell.com/2017/01/introduction.html).
 It implements a penalized maximum likelihood estimation of the model coefficients through the `lrm` function which has a `penalty=` parameter.
 
-```{r lrms}
+```{r lrms, cache=TRUE, dependson='lrext'}
 library(rms)
 extrms.df = lapply(1:200, function(ii){
   res = lapply(1:10, function(ssi){
@@ -117,7 +117,7 @@ I don't see much difference between  penalties 1, 3 or 5.
 The [`logistf` package](https://cran.r-project.org/web/packages/logistf/index.html).
 It implements Firth's bias reduction method with its `logistf` function.
 
-```{r lrreg}
+```{r lrreg, cache=TRUE, dependson='lrext'}
 library(logistf)
 extstf.df = lapply(1:200, function(ii){
   res = lapply(1:10, function(ssi){

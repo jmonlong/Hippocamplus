@@ -184,7 +184,7 @@ Then:
 
 ## For LaTeX
 
-I put some Emacs tricks (e.g. for table manipulation) on the [LaTeX page]({{ "/latex" | absURL }}).
+I put some Emacs tricks (e.g. for table manipulation) on the [LaTeX page](/latex).
 
 I general I prefer to use AUCTeX (available through MELPA).
 It handles multi-file documents and keeps the annoying compilation buffer closed.

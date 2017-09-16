@@ -34,7 +34,7 @@ randRegions &lt;- function(sizes, max.pos = 2.5e+08, max.iter = 10) {
 <p>Now some regions will be our “repeats”: 10,000 regions from size 10 bp to 6 Kbp.</p>
 <pre class="r"><code>rep.r = randRegions(runif(10000, 10, 6000))
 sum(width(rep.r))/2.5e+08</code></pre>
-<pre><code>## [1] 0.1207308</code></pre>
+<pre><code>## [1] 0.1207039</code></pre>
 <p>They cover 12.07% of the chromosome.</p>
 <p>The hypergeometric test is applied as if we were sampling bases in the genome and testing if it was covered by a repeat. In that sense, we expect 12.07% of our regions to overlap a repeat.</p>
 <pre class="r"><code>testHG &lt;- function(feat.r, nb = 1000, size = 1, nb.test = 3000, 
@@ -62,7 +62,7 @@ ht.sim %&gt;% mutate(nbsize = paste0(nb, &quot; x &quot;, size,
     xlab(&quot;P-value&quot;) + scale_color_brewer(palette = &quot;Set1&quot;, 
     name = &quot;regions&quot;) + theme(legend.justification = c(1, 
     0), legend.position = c(0.99, 0.01))</code></pre>
-<p><img src="/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/testhg-1.png" width="672" /></p>
+<p><img src="/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/testhg-1.png" width="672" /></p>
 <p>As expected, the hypergeometric test works well for region of 1 bp. Otherwise the distribution of the P-values is biased. The larger the regions the stronger the bias. To a lower extent, more regions has means more bias.</p>
 </div>
 <div id="using-control-regions-with-similar-features" class="section level2">
@@ -95,7 +95,7 @@ lr.sim %&gt;% mutate(nbsize = paste0(nb, &quot; x &quot;, size,
     xlab(&quot;P-value&quot;) + scale_color_brewer(palette = &quot;Set1&quot;, 
     name = &quot;regions&quot;) + theme(legend.justification = c(1, 
     0), legend.position = c(0.99, 0.01))</code></pre>
-<p><img src="/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/contreg-1.png" width="672" /></p>
+<p><img src="/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/contreg-1.png" width="672" /></p>
 <p>Much better.</p>
 </div>
 <div id="controlling-for-correlated-features" class="section level2">
@@ -138,16 +138,16 @@ glm(ol ~ region, data = df, family = binomial()) %&gt;%
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<td align="right">-0.2586049</td>
-<td align="right">0.0464880</td>
-<td align="right">-5.562833</td>
+<td align="right">-0.2930884</td>
+<td align="right">0.0471909</td>
+<td align="right">-6.210691</td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">regionTRUE</td>
-<td align="right">0.8513543</td>
-<td align="right">0.0669235</td>
-<td align="right">12.721311</td>
+<td align="right">0.8205155</td>
+<td align="right">0.0675423</td>
+<td align="right">12.148169</td>
 <td align="right">0</td>
 </tr>
 </tbody>
@@ -172,17 +172,17 @@ glm(ol ~ region, data = df, family = binomial()) %&gt;%
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<td align="right">-0.1569543</td>
-<td align="right">0.0463056</td>
-<td align="right">-3.38953</td>
-<td align="right">0.0007001</td>
+<td align="right">-0.2428037</td>
+<td align="right">0.0464793</td>
+<td align="right">-5.223916</td>
+<td align="right">2e-07</td>
 </tr>
 <tr class="even">
 <td align="left">regionTRUE</td>
-<td align="right">0.8373422</td>
-<td align="right">0.0673169</td>
-<td align="right">12.43881</td>
-<td align="right">0.0000000</td>
+<td align="right">0.8892097</td>
+<td align="right">0.0672260</td>
+<td align="right">13.227165</td>
+<td align="right">0e+00</td>
 </tr>
 </tbody>
 </table>
@@ -210,17 +210,17 @@ glm(ol ~ region, data = df, family = binomial()) %&gt;%
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<td align="right">-0.2786048</td>
-<td align="right">0.0593941</td>
-<td align="right">-4.690783</td>
-<td align="right">2.7e-06</td>
+<td align="right">-0.1968529</td>
+<td align="right">0.0602936</td>
+<td align="right">-3.264905</td>
+<td align="right">0.0010950</td>
 </tr>
 <tr class="even">
 <td align="left">regionTRUE</td>
-<td align="right">0.3790352</td>
-<td align="right">0.0836457</td>
-<td align="right">4.531439</td>
-<td align="right">5.9e-06</td>
+<td align="right">0.1842514</td>
+<td align="right">0.0850636</td>
+<td align="right">2.166043</td>
+<td align="right">0.0303079</td>
 </tr>
 </tbody>
 </table>
@@ -239,24 +239,24 @@ glm(ol ~ region, data = df, family = binomial()) %&gt;%
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<td align="right">-0.3338927</td>
-<td align="right">0.0618786</td>
-<td align="right">-5.395929</td>
-<td align="right">0.0000001</td>
+<td align="right">-0.2454674</td>
+<td align="right">0.0623406</td>
+<td align="right">-3.9375179</td>
+<td align="right">0.0000823</td>
 </tr>
 <tr class="even">
 <td align="left">regionTRUE</td>
-<td align="right">0.1584311</td>
-<td align="right">0.1072556</td>
-<td align="right">1.477137</td>
-<td align="right">0.1396390</td>
+<td align="right">-0.0366057</td>
+<td align="right">0.1103811</td>
+<td align="right">-0.3316304</td>
+<td align="right">0.7401684</td>
 </tr>
 <tr class="odd">
 <td align="left">repcorTRUE</td>
-<td align="right">0.3538189</td>
-<td align="right">0.1074289</td>
-<td align="right">3.293517</td>
-<td align="right">0.0009894</td>
+<td align="right">0.3500336</td>
+<td align="right">0.1107942</td>
+<td align="right">3.1593145</td>
+<td align="right">0.0015814</td>
 </tr>
 </tbody>
 </table>
@@ -310,17 +310,17 @@ glm(ol ~ region, data = df, family = binomial()) %&gt;%
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<td align="right">-0.1401759</td>
-<td align="right">0.0596689</td>
-<td align="right">-2.349228</td>
-<td align="right">0.0188124</td>
+<td align="right">-0.2683889</td>
+<td align="right">0.0612078</td>
+<td align="right">-4.384877</td>
+<td align="right">1.16e-05</td>
 </tr>
 <tr class="even">
 <td align="left">regionTRUE</td>
-<td align="right">0.2305829</td>
-<td align="right">0.0843243</td>
-<td align="right">2.734478</td>
-<td align="right">0.0062479</td>
+<td align="right">0.3659824</td>
+<td align="right">0.0862266</td>
+<td align="right">4.244427</td>
+<td align="right">2.19e-05</td>
 </tr>
 </tbody>
 </table>
@@ -344,32 +344,32 @@ glm(ol ~ region, data = df, family = binomial()) %&gt;%
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<td align="right">0.1010602</td>
-<td align="right">0.0595987</td>
-<td align="right">1.6956774</td>
-<td align="right">0.0899470</td>
+<td align="right">-0.0276006</td>
+<td align="right">0.0606676</td>
+<td align="right">-0.454949</td>
+<td align="right">0.6491459</td>
 </tr>
 <tr class="even">
 <td align="left">regionTRUE</td>
-<td align="right">-0.0106533</td>
-<td align="right">0.0842746</td>
-<td align="right">-0.1264114</td>
-<td align="right">0.8994063</td>
+<td align="right">0.1251941</td>
+<td align="right">0.0858439</td>
+<td align="right">1.458393</td>
+<td align="right">0.1447322</td>
 </tr>
 </tbody>
 </table>
 <pre class="r"><code>mean(overlapsAny(repcorcor.r, repcor.r))</code></pre>
-<pre><code>## [1] 0.7732507</code></pre>
+<pre><code>## [1] 0.7626495</code></pre>
 <pre class="r"><code>mean(overlapsAny(cont.r, repcor.r))</code></pre>
-<pre><code>## [1] 0.14969</code></pre>
+<pre><code>## [1] 0.149954</code></pre>
 <pre class="r"><code>mean(overlapsAny(contSize.r, repcor.r))</code></pre>
-<pre><code>## [1] 0.7732507</code></pre>
+<pre><code>## [1] 0.7626495</code></pre>
 <pre class="r"><code>mean(overlapsAny(repcorcor.r, rep.r))</code></pre>
-<pre><code>## [1] 0.5225864</code></pre>
+<pre><code>## [1] 0.524379</code></pre>
 <pre class="r"><code>mean(overlapsAny(cont.r, rep.r))</code></pre>
-<pre><code>## [1] 0.4650133</code></pre>
+<pre><code>## [1] 0.4333027</code></pre>
 <pre class="r"><code>mean(overlapsAny(contSize.r, rep.r))</code></pre>
-<pre><code>## [1] 0.5252436</code></pre>
+<pre><code>## [1] 0.4931003</code></pre>
 <p>Controlling within the logistic regression or using better control regions. What’s best ? Power analysis.</p>
 </div>
 <div id="comparing-different-sets" class="section level2">
@@ -381,9 +381,9 @@ glm(ol ~ region, data = df, family = binomial()) %&gt;%
 cnv.sm = randRegions(rep(1000, 1000))
 cnv.lg = randRegions(rep(10000, 1000))
 mean(overlapsAny(cnv.sm, fun.r))</code></pre>
-<pre><code>## [1] 0.103</code></pre>
+<pre><code>## [1] 0.119</code></pre>
 <pre class="r"><code>mean(overlapsAny(cnv.lg, fun.r))</code></pre>
-<pre><code>## [1] 0.691</code></pre>
+<pre><code>## [1] 0.722</code></pre>
 <pre class="r"><code>testLR &lt;- function(reg.r, feat.r) {
     cont.r = randRegions(width(reg.r))
     df.sm = rbind(data.frame(region = TRUE, ol = overlapsAny(reg.r, 
@@ -411,16 +411,16 @@ null.df %&gt;% filter(term == &quot;regionTRUE&quot;) %&gt;% select(rep,
     estimate, region) %&gt;% spread(region, estimate) %&gt;% 
     ggplot(aes(x = cnv.sm, y = cnv.lg)) + geom_point(alpha = 0.5) + 
     theme_bw()</code></pre>
-<p><img src="/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <pre class="r"><code>null.df %&gt;% filter(term == &quot;regionTRUE&quot;) %&gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw()</code></pre>
-<p><img src="/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
+<p><img src="/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
 <pre class="r"><code>null.df %&gt;% filter(term == &quot;fold-change&quot;) %&gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw()</code></pre>
-<p><img src="/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-3.png" width="672" /></p>
+<p><img src="/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-3.png" width="672" /></p>
 <pre class="r"><code>null.df %&gt;% filter(term == &quot;diff-change&quot;) %&gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw()</code></pre>
-<p><img src="/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-4.png" width="672" /></p>
+<p><img src="/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-4.png" width="672" /></p>
 <pre class="r"><code>asso.df = lapply(1:1000, function(ii) {
     cnv.sm = randRegions(rep(1000, 1000))
     cnv.lg = randRegions(rep(10000, 1000))
@@ -438,18 +438,18 @@ asso.df %&gt;% filter(term == &quot;regionTRUE&quot;) %&gt;% select(rep,
     estimate, region) %&gt;% spread(region, estimate) %&gt;% 
     ggplot(aes(x = cnv.sm, y = cnv.lg)) + geom_point(alpha = 0.5) + 
     theme_bw()</code></pre>
-<p><img src="/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-5.png" width="672" /></p>
+<p><img src="/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-5.png" width="672" /></p>
 <pre class="r"><code>asso.df %&gt;% filter(term == &quot;regionTRUE&quot;) %&gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw()</code></pre>
-<p><img src="/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-6.png" width="672" /></p>
+<p><img src="/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-6.png" width="672" /></p>
 <pre class="r"><code>asso.df %&gt;% filter(term == &quot;fold-change&quot;) %&gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw() + 
     geom_vline(xintercept = 1)</code></pre>
-<p><img src="/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-7.png" width="672" /></p>
+<p><img src="/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-7.png" width="672" /></p>
 <pre class="r"><code>asso.df %&gt;% filter(term == &quot;diff-change&quot;) %&gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw() + 
     geom_vline(xintercept = 0)</code></pre>
-<p><img src="/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-8.png" width="672" /></p>
+<p><img src="/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-8.png" width="672" /></p>
 <pre class="r"><code>asso2.df = lapply(1:1000, function(ii) {
     cnv.sm = randRegions(rep(1000, 1000))
     cnv.lg = randRegions(rep(10000, 1000))
@@ -471,16 +471,16 @@ asso2.df %&gt;% filter(term == &quot;regionTRUE&quot;) %&gt;% select(rep,
     estimate, region) %&gt;% spread(region, estimate) %&gt;% 
     ggplot(aes(x = cnv.sm, y = cnv.lg)) + geom_point(alpha = 0.5) + 
     theme_bw()</code></pre>
-<p><img src="/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-9.png" width="672" /></p>
+<p><img src="/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-9.png" width="672" /></p>
 <pre class="r"><code>asso2.df %&gt;% filter(term == &quot;regionTRUE&quot;) %&gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw()</code></pre>
-<p><img src="/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-10.png" width="672" /></p>
+<p><img src="/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-10.png" width="672" /></p>
 <pre class="r"><code>asso2.df %&gt;% filter(term == &quot;fold-change&quot;) %&gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw() + 
     geom_vline(xintercept = 1)</code></pre>
-<p><img src="/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-11.png" width="672" /></p>
+<p><img src="/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-11.png" width="672" /></p>
 <pre class="r"><code>asso2.df %&gt;% filter(term == &quot;diff-change&quot;) %&gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw() + 
     geom_vline(xintercept = 0)</code></pre>
-<p><img src="/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-12.png" width="672" /></p>
+<p><img src="/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-12.png" width="672" /></p>
 </div>

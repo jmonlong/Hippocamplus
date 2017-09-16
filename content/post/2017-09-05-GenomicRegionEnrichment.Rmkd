@@ -1,4 +1,5 @@
 ---
+draft: true
 title: Enrichment between genomic regions
 date: 2017-09-05
 tags: ["genome", "stats"]
@@ -46,7 +47,7 @@ randRegions <- function(sizes, max.pos=25e7, max.iter=10){
 
 Now some regions will be our "repeats": 10,000 regions from size 10 bp to 6 Kbp.
 
-```{r rep}
+```{r rep, cache=TRUE}
 rep.r = randRegions(runif(1e4, 10,6000))
 sum(width(rep.r)) / 25e7
 ```
@@ -56,7 +57,7 @@ They cover `r round(100*sum(width(rep.r))/25e7, 2)`% of the chromosome.
 The hypergeometric test is applied as if we were sampling bases in the genome and testing if it was covered by a repeat.
 In that sense, we expect `r round(100*sum(width(rep.r))/25e7, 2)`% of our regions to overlap a repeat.
 
-```{r testhg}
+```{r testhg, cache=TRUE, dependson="rep"}
 testHG <- function(feat.r, nb=1000, size=1, nb.test=3000, total.b = 25e7){
   exp.b = sum(width(feat.r))
   sapply(1:nb.test, function(ii){
@@ -84,7 +85,7 @@ To a lower extent, more regions has means more bias.
 We want to control for the size distribution and the total number of regions tested.
 By drawing random regions in the genome with the same sizes we can then apply a logistic regression.
 
-```{r contreg}
+```{r contreg, cache=TRUE, dependson="rep"}
 testLR <- function(feat.r, nb=1000, size=1, nb.test=3000){
   sapply(1:nb.test, function(ii){
     reg.r = randRegions(rep(size, nb))
@@ -108,7 +109,7 @@ Much better.
 
 ## Controlling for correlated features
 
-```{r contfeat}
+```{r contfeat, cache=TRUE, dependson="rep"}
 corRegions <- function(sizes, feat.r, or=2, max.iter=10, max.pos=25e7){
   reg.r = randRegions(sizes)
   for(ii in 1:or){
@@ -148,7 +149,7 @@ glm(ol~region+repcor, data=df, family=binomial()) %>% tidy %>% kable
 
 Another approach is to control the feature overlap in the control regions.
 
-```{r}
+```{r, cache=TRUE, dependson="rep"}
 randRegionsCons <- function(reg.r, feat.r, nb.seed=1e6){
   seed.r = randRegions(rep(1, nb.seed))
   dist.df = distanceToNearest(seed.r, feat.r) %>% as.data.frame
@@ -205,7 +206,7 @@ What should we compare ?
 A practical example would be two catalogs of CNVs, say from two different methods, that we want to compare to a functional annotation.
 If say one catalogs has more CNVs, or has larger CNVs, how can we say which one overlaps the best with the functional annotation ?
 
-```{r}
+```{r, cache=TRUE}
 fun.r = randRegions(rep(10, 30000))
 
 cnv.sm = randRegions(rep(1000, 1000))
