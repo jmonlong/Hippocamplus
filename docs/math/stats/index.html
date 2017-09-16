@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Math/Stats &middot; Hippocamplus
+    
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/poole.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  <link rel="stylesheet" href="/css/lanyon.css">
+  <link rel="stylesheet" href="/css/github.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/assets/favicon.ico">
+
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+  
+  <body>
+
+    
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>A place to gather useful information I keep on forgetting.</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item " href="/">Home</a>
+    <a class="sidebar-nav-item " href="/post">Posts</a>
+
+    
+    
+      
+        <a class="sidebar-nav-item " href="/emacs/">Emacs</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/latex/">LaTeX</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/markdown/">Markdown</a>
+      
+    
+      
+        <a class="sidebar-nav-item  active " href="/math/stats/">Math/Stats</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/python/">Python</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/r/">R</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/shell/">Shell</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/internet/">Internet</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/about/">About</a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+    
+  </nav>
+
+  <div class="sidebar-item">
+    <p>&copy; 2017. All rights reserved.</p>
+  </div>
+</div>
+
+
+    
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">Hippocamplus</a>
+            <small>My Second Memory</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+
+
+<div class="page">
+  <h1 class="page-title">Math/Stats</h1>
+  <div id="TOC">
+<ul>
+<li><a href="#probability-distributions">Probability distributions</a><ul>
+<li><a href="#binomial">Binomial</a></li>
+<li><a href="#hypergeometric">Hypergeometric</a></li>
+<li><a href="#normal">Normal</a></li>
+<li><a href="#poisson">Poisson</a></li>
+<li><a href="#beta-binomial">Beta-binomial</a></li>
+<li><a href="#beta">Beta</a></li>
+</ul></li>
+<li><a href="#statistical-tests">Statistical tests</a><ul>
+<li><a href="#student-t-test">Student t-test</a></li>
+<li><a href="#fishers-exact-test">Fisher’s exact test</a></li>
+<li><a href="#test">\(^2\) test</a></li>
+<li><a href="#wilcoxon-test">Wilcoxon test</a></li>
+<li><a href="#anova">ANOVA</a></li>
+</ul></li>
+<li><a href="#regression-machine-learning">Regression &amp; Machine Learning</a><ul>
+<li><a href="#linear-regression">Linear regression</a></li>
+<li><a href="#lasso">LASSO</a></li>
+<li><a href="#loess">LOESS</a></li>
+<li><a href="#machine-learning-basics">Machine Learning basics</a></li>
+<li><a href="#cart">CART</a></li>
+<li><a href="#neural-networks">Neural Networks</a></li>
+<li><a href="#svm">SVM</a></li>
+</ul></li>
+<li><a href="#misc-stats">Misc stats</a><ul>
+<li><a href="#markov-model">Markov Model</a></li>
+<li><a href="#monte-carlo-methods">Monte Carlo methods</a></li>
+<li><a href="#mcmc">MCMC</a></li>
+<li><a href="#hidden-markov-model">Hidden Markov Model</a></li>
+<li><a href="#maximum-likelihood-estimation">Maximum Likelihood Estimation</a></li>
+<li><a href="#expectation-maximization">Expectation-Maximization</a></li>
+<li><a href="#greedy-algorithm">Greedy algorithm</a></li>
+<li><a href="#bayesian-vs-frequentist">Bayesian vs Frequentist</a></li>
+</ul></li>
+<li><a href="#graph-theory">Graph theory</a><ul>
+<li><a href="#de-bruijn-graphs">De Bruijn graphs</a></li>
+<li><a href="#hamiltonian-path">Hamiltonian path</a></li>
+<li><a href="#euclidian-path">Euclidian path</a></li>
+</ul></li>
+<li><a href="#algebra">Algebra</a><ul>
+<li><a href="#svd-decomposition">SVD decomposition</a></li>
+<li><a href="#pca">PCA</a></li>
+</ul></li>
+</ul>
+</div>
+
+<p>All of this is mostly extracted from <a href="https://en.wikipedia.org">Wikipedia</a>. These notes are exactly fitted to my fragmented knowledge/memory, the purpose is to fill the gaps, not to fully review the concepts.</p>
+<div id="probability-distributions" class="section level2">
+<h2>Probability distributions</h2>
+<div id="binomial" class="section level3">
+<h3>Binomial</h3>
+<p>Binomial distribution models the <strong>number of successes in <em>n</em> tries</strong>, knowing the <strong>probability <em>p</em> of success</strong>, \((n,p)\). It has <em>np</em> mean and \(np(1-p)\) variance.</p>
+<p>\[(X=k) = p^k (1-p)^{n-k} \]</p>
+</div>
+<div id="hypergeometric" class="section level3">
+<h3>Hypergeometric</h3>
+<p>Hypergeometric distribution models the <strong>number of successes</strong> when drawing, <strong>without replacement, <em>n</em> elements from a population of size <em>N</em> containing <em>K</em> successes</strong>. It can be used to analyze over-/under-representation of a sub-population in a sample. Its mean is \(n\).</p>
+<p>\[(X=k) =  \]</p>
+</div>
+<div id="normal" class="section level3">
+<h3>Normal</h3>
+</div>
+<div id="poisson" class="section level3">
+<h3>Poisson</h3>
+<p>Poisson distribution models the <strong>number of events occurring in an interval of time</strong>, knowing the rate \(\). It has \(\) mean and variance. Of note a binomial distribution with large <em>n</em> and small <em>p</em> can be approximated by a Poisson with parameter <em>np</em>.</p>
+<p>\[(X=k) =  \]</p>
+<p><em>Example:</em> number of mutation on a strand of DNA</p>
+</div>
+<div id="beta-binomial" class="section level3">
+<h3>Beta-binomial</h3>
+<p>Beta-binomial distribution is a <strong>binomial</strong> distribution in which the <strong>probability of success follows a beta distribution</strong>. It’s often used as an over-dispersed binomial distribution. The three parameters are <em>n</em>, \(\) and \(\).</p>
+</div>
+<div id="beta" class="section level3">
+<h3>Beta</h3>
+<p>Beta distribution is defined on interval [0,1] by two shape parameters, \(\) and \(\). It is often used as prior for binomial distributions.</p>
+<p><em>Example:</em> allele frequencies in population.</p>
+</div>
+</div>
+<div id="statistical-tests" class="section level2">
+<h2>Statistical tests</h2>
+<div id="student-t-test" class="section level3">
+<h3>Student t-test</h3>
+<p>Usually <strong>tests if two distributions, assumed to be Normal, are different</strong>. Student distribution describes the estimated mean, from a small sample size, of a normally distributed population. <a href="https://en.wikipedia.org/wiki/Welch&#39;s_t_test">Welch’s t-test</a> is similar but more robust to unequal variance and different sample sizes between the tested groups.</p>
+<p>Different flavors exist, e.g one-sample vs two-sample or unpaired vs paired.</p>
+</div>
+<div id="fishers-exact-test" class="section level3">
+<h3>Fisher’s exact test</h3>
+<p><strong>Test association between two categorical classifications</strong>. It is usually employed for small sample sizes but valid for all sample sizes.</p>
+<p>It models the number in the contingency table following a <a href="#hypergeometric">hypergeometric distribution</a>.</p>
+<p>One difference with other test is that it assumes that the total are fixed before the sampling. <em>Is it a problem?</em></p>
+</div>
+<div id="test" class="section level3">
+<h3>\(^2\) test</h3>
+<p>Also used to test association between two categorical classifications. However it is <strong>only suited when sample size is large and the expected values are not too low</strong>.</p>
+</div>
+<div id="wilcoxon-test" class="section level3">
+<h3>Wilcoxon test</h3>
+<p>Based on ranks, it <strong>tests if one distribution is stochastically higher than another</strong>. It is also called Mann-Whitney U test. Its non-parametric nature makes it robust to outliers and non-Normal or different distributions.</p>
+</div>
+<div id="anova" class="section level3">
+<h3>ANOVA</h3>
+</div>
+</div>
+<div id="regression-machine-learning" class="section level2">
+<h2>Regression &amp; Machine Learning</h2>
+<div id="linear-regression" class="section level3">
+<h3>Linear regression</h3>
+</div>
+<div id="lasso" class="section level3">
+<h3>LASSO</h3>
+</div>
+<div id="loess" class="section level3">
+<h3>LOESS</h3>
+</div>
+<div id="machine-learning-basics" class="section level3">
+<h3>Machine Learning basics</h3>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm">k-nearest neighbors</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Gradient_descent">Gradient descent</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Sigmoid_function">Sigmoid Function</a> to transform a value into a more interpretable decision value (S shaped between 0 and 1).</li>
+</ul>
+</div>
+<div id="cart" class="section level3">
+<h3>CART</h3>
+<p><a href="https://en.wikipedia.org/wiki/Decision_tree_learning">CART</a> stands for <strong>C</strong>lassification <strong>A</strong>nd <strong>R</strong>egression <strong>T</strong>ree, and was introduced by <a href="https://en.wikipedia.org/wiki/Leo_Breiman">Breinman</a> et al in 1984.</p>
+<p>The data space is split using a <strong>binary tree</strong>. Following the tree for a new value points at the most similar region in the data space. The labels/values of training data in this split/leaf is used to predict the new label/value.</p>
+<p>For a <strong>regression tree</strong>, the predicted value is the average of those in the training data in this split/leaf. A <strong>classification tree</strong> uses a majority vote among the training data labels in this split/leaf.</p>
+<p>The <strong>greedy algorithm</strong> for deciding the successive splits in a decision tree finds the best dimension and best split that minimizes the training errors. Once the tree is fully built pruning can help improving performance. Random forest is another approach to counter the issues of having fully grown trees.</p>
+<p><strong>Pruning</strong> removes parts of the tree with lower importance. It improves the decision tree by reducing the complexity and reducing over-fitting, hence increasing the predictive accuracy.</p>
+<p><strong>Bagging</strong> is simply using bootstrap approach to get a more robust prediction (i.e. with less overfitting). The training set is sampled with replacement and a tree is constructed. Them the final prediction uses the average (or majority call) across all the trees.</p>
+<p><strong>Random forest</strong> could be seen as an extension of the bagging approach. The main difference is that a random subset of features are used at each split. This ensures that the forest contains different trees and not necessarily similar trees. Random forest is particularly useful when the number of samples is much smaller than the number of features, as it forces the trees to focus on different features, and not only the globally better ones.</p>
+</div>
+<div id="neural-networks" class="section level3">
+<h3>Neural Networks</h3>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Artificial_neural_network">Neural Network</a></li>
+</ul>
+</div>
+<div id="svm" class="section level3">
+<h3>SVM</h3>
+</div>
+</div>
+<div id="misc-stats" class="section level2">
+<h2>Misc stats</h2>
+<div id="markov-model" class="section level3">
+<h3>Markov Model</h3>
+</div>
+<div id="monte-carlo-methods" class="section level3">
+<h3>Monte Carlo methods</h3>
+</div>
+<div id="mcmc" class="section level3">
+<h3>MCMC</h3>
+<p>A Markov Chain Monte Carlo is <strong>constructed to approximate a complex probability distribution</strong>. It can be designed so that after enough iterations, the walk along the chain approximates the targeted distribution.</p>
+</div>
+<div id="hidden-markov-model" class="section level3">
+<h3>Hidden Markov Model</h3>
+<p>Hidden Markov Model (HMM) is a Markov chain where the states are unknown but an output, that depends on the state, is visible. A HMM is defined by a set of states (<em>X</em>) with transition (<em>a</em>) and emission (<em>b</em>) probabilities, and produces an observed variable <em>y</em>:</p>
+<div class="figure">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/HiddenMarkovModel.svg/600px-HiddenMarkovModel.svg.png" alt="HMM" />
+<p class="caption">HMM</p>
+</div>
+<p>The <a href="https://en.wikipedia.org/wiki/Forward_algorithm">forward algorithm</a> uses <em>dynamic programming</em> to <strong>compute the probability of an observed sequence</strong>, i.e. when the parameters of the HMM are known.</p>
+<p><a href="https://en.wikipedia.org/wiki/Viterbi_algorithm">Viterbi algorithm</a> goes further and retrieves the <strong>most likely sequence of states for an observed sequence</strong>. The <em>dynamic programming</em> approach is very similar to the forward algorithm.</p>
+<p><a href="https://en.wikipedia.org/wiki/Baum%E2%80%93Welch_algorithm">Baum-Welch algorithm</a> <strong>finds the unknown parameters of a HMM</strong> from an observed sequence. It’s an <em>Expectation-Maximization method</em>. After initialization of the HMM parameters, the observed sequence and forward-backward are used to compute the probability of being in state <em>i</em> at time <em>t</em>. New parameters are then derived from these probabilities.</p>
+</div>
+<div id="maximum-likelihood-estimation" class="section level3">
+<h3>Maximum Likelihood Estimation</h3>
+</div>
+<div id="expectation-maximization" class="section level3">
+<h3>Expectation-Maximization</h3>
+</div>
+<div id="greedy-algorithm" class="section level3">
+<h3>Greedy algorithm</h3>
+<blockquote>
+<p>A greedy algorithm is an algorithmic paradigm that follows the problem solving heuristic of making the locally optimal choice at each stage with the hope of finding a global optimum.</p>
+</blockquote>
+</div>
+<div id="bayesian-vs-frequentist" class="section level3">
+<h3>Bayesian vs Frequentist</h3>
+</div>
+</div>
+<div id="graph-theory" class="section level2">
+<h2>Graph theory</h2>
+<div id="de-bruijn-graphs" class="section level3">
+<h3>De Bruijn graphs</h3>
+</div>
+<div id="hamiltonian-path" class="section level3">
+<h3>Hamiltonian path</h3>
+</div>
+<div id="euclidian-path" class="section level3">
+<h3>Euclidian path</h3>
+</div>
+</div>
+<div id="algebra" class="section level2">
+<h2>Algebra</h2>
+<div id="svd-decomposition" class="section level3">
+<h3>SVD decomposition</h3>
+</div>
+<div id="pca" class="section level3">
+<h3>PCA</h3>
+</div>
+</div>
+
+</div>
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src="/assets/highlight.min.js"></script>
+    <script src="/assets/r.min.js"></script>
+    
+    <script>
+      hljs.configure({languages: ['r']});
+      hljs.initHighlightingOnLoad();
+    </script>
+    
+  </body>
+</html>
+

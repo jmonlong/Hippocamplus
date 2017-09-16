@@ -1,0 +1,215 @@
+---
+layout: posttoc
+title: Human Genome - CNV Catalogs Exploration
+tags: genome
+---
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(ggplot2)
+library(dplyr)
+library(magrittr)
+library(GenomicRanges)
+library(data.table)
+library(PopSV)
+library(knitr)
+DOWNLOAD=TRUE
+winsor <- function(x,u=NULL,l=NULL){
+    if(!is.null(u) & any(x>u)) x[x>u] = u
+    if(!is.null(l) & any(x<l)) x[x<l] = l
+    x
+}
+olBins <- function(bins.df, feat.df, label="ol"){
+  bins.gr = makeGRangesFromDataFrame(bins.df)
+  feat.gr = makeGRangesFromDataFrame(feat.df)
+  res.df = data.frame(n=rep(0,nrow(bins.df)), d=rep(0,nrow(bins.df)))
+  colnames(res.df) = paste(label,colnames(res.df), sep=".")
+  res.df[,1] = countOverlaps(bins.gr, feat.gr)
+  feat.gr = reduce(feat.gr)
+  ol = findOverlaps(bins.gr, feat.gr)
+  cov.t = tapply(width(pintersect(bins.gr[queryHits(ol)], feat.gr[subjectHits(ol)])), queryHits(ol), sum)
+  res.df[as.numeric(names(cov.t)),2] = as.numeric(cov.t)
+  res.df[,2] = res.df[,2] / width(bins.gr)
+  bins.df = cbind(bins.df, res.df)
+  bins.df
+}
+library(BSgenome.Hsapiens.UCSC.hg19)
+seql.1.22 = seqlengths(BSgenome.Hsapiens.UCSC.hg19)[paste0("chr",1:22)]
+rand.gr <- function(widths){
+    chrs = apply(rmultinom(length(widths), 1, (seql.1.22/1e3)/sum(seql.1.22/1e3)),2,function(e)which(e==1))
+    starts = runif(length(widths), 0, seql.1.22[chrs]-widths)
+    return(GRanges(chrs, IRanges(starts, width=widths)))
+}
+```
+
+# CNV map from DGV
+
+I downloaded the *stringent* map from [Zarrei et al., Nat Reviews 2015](http://www.nature.com/nrg/journal/v16/n3/full/nrg3871.html). These CNVs were derived from the [Database of Genomic Variants](http://dgvbeta.tcag.ca/dgv/app/home) ("healthy" individuals). In their stringent map, they kept CNVs seen in at least two studies.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+if(DOWNLOAD & !file.exists("Stringent.Gain+Loss.hg19.2015-02-03.txt")) download.file("http://dgvbeta.tcag.ca/dgv/docs/Stringent.Gain+Loss.hg19.2015-02-03.txt", "Stringent.Gain+Loss.hg19.2015-02-03.txt")
+dgv = read.table("Stringent.Gain+Loss.hg19.2015-02-03.txt",as.is=TRUE,header=TRUE,sep="\t",quote="")
+dgv$nb.studies = unlist(lapply(strsplit(dgv$studies,","),length))
+dgv$chr = gsub("chr","",dgv$chr)
+```
+
+## Loss versus Gain
+
+More loss of DNA than gain are present in the catalog (`r round(sum(dgv$type=="Loss") / sum(dgv$type=="Gain"),1)`x more).
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(dgv,aes(x=type)) + geom_bar() + theme_bw() + ylab("number of CNVs") + coord_flip()
+```
+
+## Size
+
+As expected the size distribution is wider for losses than for gain (deletions are easier to detect). However we can see some peaks in the distribution of losses. These are not due to the classic 300bp/6kbp transposon polymorphism, so I think it's due to the different methods/studies that were combined. Hence this distribution is not completely representative of the real CNV size distribution.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(dgv,aes(x=end-start, fill=type)) + geom_histogram() + theme_bw() + xlab("size (bp)") + scale_x_log10() + scale_fill_brewer(palette="Set1") + ylab( "number of CNVs") + facet_grid(type~., scales="free")
+ggplot(dgv,aes(x=end-start, fill=type)) + geom_histogram() + theme_bw() + xlab("size (bp)") + scale_fill_brewer(palette="Set1") + xlim(0,3000)  + ylab("number of CNVs") + facet_grid(type~., scales="free")
+```
+
+ As shown in the cumulative proportion curves, we see that 90% of the deletions are smaller than 10 Kbp while only 40% of detected gains are.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(dgv,aes(x=end-start, colour=type)) + stat_ecdf() + theme_bw() + xlab("size (bp)") + scale_x_log10() + scale_colour_brewer(palette="Set1") + ylab("cumulative proportion") + scale_y_continuous(breaks=seq(0,1,.1))
+ggplot(dgv,aes(x=winsor(end-start,10000), colour=type)) + stat_ecdf() + theme_bw() + xlab("size (bp)") + scale_colour_brewer(palette="Set1") + scale_x_continuous(breaks=seq(0,1e4,1e3), labels=c(seq(0,9000,1e3),">10000")) + ylab("cumulative proportion") + scale_y_continuous(breaks=seq(0,1,.1))
+```
+
+To investigate a bit the suspicious peaks, I look at the effect of the three studies contributing the most to the catalog. We can see that *Wong2012b* is responsible for the first large peak, and *1000GenomesPhase1*/*Conrad2009* for the second peak.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+studies = unlist(strsplit(dgv$studies, ","))
+top.st = sort(table(studies),decreasing=TRUE)
+for(std in head(names(top.st),3)){
+  print(dgv %>% mutate(top.study=grepl(std,studies)) %>% ggplot(aes(x=end-start, fill=top.study)) + geom_histogram() + theme_bw() + xlab("size (bp)") + scale_x_log10() + scale_fill_brewer(palette="Set1", name=std) + ylab("number of CNVs") + theme(legend.position=c(1,1), legend.justification=c(1,1)))
+}
+```
+
+## Density
+
+Using non-overlapping windows of 1 Mb the CNV density looks like this:
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+gfrag.df = fragment.genome.hg19(1e6, XY.chr = TRUE)
+gfrag.df %<>% mutate(chr=factor(chr, levels=c(1:22,"X","Y")))
+dgv.d = olBins(gfrag.df, dgv, "cnv")
+cnvMb = mean(dgv.d$cnv.n)
+ggplot(dgv.d, aes(x=winsor(cnv.n,25))) + geom_histogram(binwidth=1) + ylab("number of 1 Mb windows") + xlab("number of CNVs") + theme_bw() + scale_fill_brewer(palette="Set1") + scale_x_continuous(breaks=seq(0,25,5), labels=c(seq(0,20,5),">25")) + geom_vline(xintercept=cnvMb, linetype=2)
+dgv.d %>% group_by(chr) %>% summarize(cnv.n=mean(cnv.n)) %>% ggplot(aes(x=chr, y=cnv.n)) + geom_point() + theme_bw() + ylab("average number of CNVs per Mb")  + geom_hline(yintercept=cnvMb, linetype=2)
+ggplot(dgv.d, aes(x=start, y=chr)) + geom_tile(aes(fill=cnv.n)) + theme_bw() + xlab("position") + geom_tile(fill="yellow", aes(alpha=cnv.n==0)) + scale_alpha_manual(values=c(0,1), name="CNV desert") + scale_fill_gradient(name="CNVs\nper Mb") + theme(legend.position=c(1,1), legend.justification=c(1,1))
+```
+
+*Of note, this graph is NOT based on the CNV frequency, but rather the location of any CNVs, not matter their frequency.*
+
+There is, on average, `r round(cnvMb, 2)` annotated CNVs per Mb.
+
+## Mappability
+
+The mappability track was produced from the UCSC track. The raw file contains, for each base in the genome, an estimation of how likely a read is correctly mapped to this position. Using a sliding-window approach, I computed the average mappability in regions of size 1 Kbp.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+if(DOWNLOAD & !file.exists("map100mer-1kbp.bed.gz")) download.file("https://dl.dropboxusercontent.com/s/i537zjs65dpw34n/map100mer-1kbp.bed.gz?dl=0", "map100mer-1kbp.bed.gz")
+map.df = as.data.frame(fread("gunzip -c map100mer-1kbp.bed.gz", showProgress = FALSE))
+colnames(map.df) = c("chr", "start", "end", "map")
+map.df %<>% mutate(chr=factor(gsub("chr","",chr), levels=c(1:22,"X","Y"))) %>% filter(!is.na(chr))
+map.df %<>% mutate(cov.class="low-map", cov.class=ifelse(map==0,"no-map", cov.class), cov.class=ifelse(map>.95,"unique", cov.class))
+ggplot(map.df, aes(x=map, fill=cov.class)) + geom_histogram() + theme_bw()
+map.s = map.df %>% group_by(cov.class) %>% summarize(mb=n()/1000) %>% ungroup %>% mutate(prop=mb/sum(mb)) %>% arrange(desc(mb))
+map.s %>% kable(digits=3)
+```
+
+I defined *unique* regions that have an average mappability higher than 0.95, *no-map* when the mappability is null, and the rest as *low-map*.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+map.gr = makeGRangesFromDataFrame(map.df, keep.extra.columns = TRUE)
+dgv.gr = makeGRangesFromDataFrame(dgv)
+cnv.map = lapply(unique(map.gr$cov.class), function(cc) {
+  ol = overlapsAny(dgv.gr, subset(map.gr, cov.class==cc))
+  data.frame(cov.class=cc, nb.cnv=sum(ol), prop.cnv=mean(ol))
+})
+cnv.map = do.call(rbind, cnv.map)
+kable(cnv.map, digits=3)
+```
+
+Most CNVs overlap unique regions but many still overlap low-mappability regions. Actually only `r round(100*subset(map.s, cov.class=="low-map")$prop, 1)`% of the genome is annotated as *low-map* but `r round(100*subset(cnv.map, cov.class=="low-map")$prop.cnv, 1)`% of the CNVs overlap such regions.
+
+
+## Distance to centromere/telomere/gaps
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+if(DOWNLOAD) download.file("http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/cytoBandIdeo.txt.gz","cytoBandIdeo.txt.gz")
+chr.band = read.table("cytoBandIdeo.txt.gz",sep="\t")
+colnames(chr.band)[1:3] = c("chr","start","end")
+if(DOWNLOAD) download.file("http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/gap.txt.gz","gap-hg19.tsv.gz")
+ct = read.table("gap-hg19.tsv.gz",sep="\t")
+ct = ct %>% select(V2,V3,V4,V8)
+colnames(ct) =  c("chr","start","end", "type")
+ct = rbind(ct, chr.band %>% group_by(chr) %>% summarize(start=min(start),end=1e4) %>% mutate(type="telomere"))
+ct = rbind(ct, chr.band %>% group_by(chr) %>% summarize(start=max(end)-1e4,end=max(end)) %>% mutate(type="telomere"))
+centel.gr = ct %>% mutate(chr=gsub("chr","",chr)) %>% makeGRangesFromDataFrame(TRUE)
+```
+
+Then I compute the distance between each CNV and the nearest centromere/telomere/gap.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+d.ct = as.data.frame(distanceToNearest(makeGRangesFromDataFrame(dgv),centel.gr))
+dgv.ctg = data.frame(region="CNV", d.ct = d.ct$distance, type.ct=as.character(mcols(centel.gr)$type[d.ct$subjectHits]))
+```
+
+As a control, the same is done for random regions of similar sizes.
+
+```{r, cache=TRUE, echo=FALSE, message=FALSE, warning=FALSE}
+dgv.rand = rand.gr(dgv$end - dgv$start)
+d.ct = as.data.frame(distanceToNearest(dgv.rand,centel.gr))
+dgv.ctg = rbind(dgv.ctg, data.frame(region="control", d.ct = d.ct$distance, type.ct=as.character(mcols(centel.gr)$type[d.ct$subjectHits])))
+```
+
+The cumulative distribution of the distance to the nearest CTG shows that CNVs are closer to CTG than expected by chance.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(dgv.ctg,aes(x=winsor(d.ct/1e6,u=20), colour=region)) + stat_ecdf() + theme_bw() + xlab("distance to centomere/telomere (Mbp)") + theme(legend.position=c(1,0),legend.justification=c(1,0))  + ylab("cumulative event proportion") + scale_colour_brewer(palette="Set1")
+```
+
+In this graph we see that control regions overlap CTG much more than CNVs (*x=0*) but that CNVs catch up and become quickly present close to CTGs. Most likely, the lack of CNV overlapping CTGs is mostly due to difficulties detecting them there, more than real absence.
+
+
+## Per sample catalog
+
+As it is, the samples affected are jointly associated for each CNV. However, I transform the format in order to have regions representing one CNV in one sample. Although it duplicates information, it makes it easier to have an idea of what is in one genome.
+
+I eventually tried to guess the study each sample is coming from. It didn't work completely... It seems that some samples were analyzed by several studies.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+samples = strsplit(dgv$samples,",")
+dgv.samp = dgv[rep(1:length(samples), unlist(lapply(samples,length))),]
+dgv.samp$sample = unlist(samples)
+dgv.samp %<>% select(chr, start, end, sample, type, num_samples,num_studies,studies, nb.studies)
+intersectStudies <- function(ss){
+  ss.l = strsplit(ss, ",")
+  study = ss.l[[1]]
+  for(ss in ss.l){
+    study = intersect(study, ss)
+  }
+  return(paste(study,collapse=","))
+}
+dgv.samp.s = dgv.samp %>% group_by(sample) %>% summarize(study=intersectStudies(studies)) %>% mutate(ambiguous.std=grepl(",",study))
+dgv.samp = merge(dgv.samp, dgv.samp.s)
+dgv.samp %>% group_by(sample,ambiguous.std) %>% summarize(n=n()) %>% ggplot(aes(x=winsor(n, 2000), fill=ambiguous.std)) + geom_histogram() + theme_bw() + xlab("number of CNVs") + ylab("number of samples") + theme(legend.position=c(1,1), legend.justification=c(1,1)) + scale_fill_brewer(palette="Set1", name="ambiguous\nstudy") + scale_x_continuous(breaks=seq(0,2000,500),labels=c(seq(0,1500,500),">2000")) + geom_vline(xintercept=500, linetype=2)
+dgv.samp %>% filter(!ambiguous.std) %>% group_by(study,sample) %>% summarize(n=n()) %>% ggplot(aes(x=winsor(n, 2000), fill=study)) + geom_histogram() + theme_bw() + xlab("number of CNVs") + ylab("number of samples") + theme(legend.position=c(1,1), legend.justification=c(1,1)) + scale_x_continuous(breaks=seq(0,2000,500),labels=c(seq(0,1500,500),">2000")) + geom_vline(xintercept=500, linetype=2)
+```
+
+I keep only the samples with at least 500 CNVs. Samples with less are suspicious while samples with more than 500 CNVs have a smooth enough distribution.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+dgv.gen = dgv.samp %>% group_by(sample) %>% summarize(n=n(), mb=sum((end-start)/1e6)) %>% filter(n>500)
+ggplot(dgv.gen, aes(x=mb)) + geom_histogram() + ylab("number of samples") + xlab("affected genome (Mbp)") + theme_bw()
+```
+
+On average, `r round(mean(dgv.gen$mb),2)` Mbp of a genome is annotated as CNV.
+
+
+# CNV map from 1000 Genomes Project
+
+# CNV map from long-read sequencing

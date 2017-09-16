@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Shell &middot; Hippocamplus
+    
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/poole.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  <link rel="stylesheet" href="/css/lanyon.css">
+  <link rel="stylesheet" href="/css/github.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/assets/favicon.ico">
+
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+  
+  <body>
+
+    
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>A place to gather useful information I keep on forgetting.</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item " href="/">Home</a>
+    <a class="sidebar-nav-item " href="/post">Posts</a>
+
+    
+    
+      
+        <a class="sidebar-nav-item " href="/emacs/">Emacs</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/latex/">LaTeX</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/markdown/">Markdown</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/math/stats/">Math/Stats</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/python/">Python</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/r/">R</a>
+      
+    
+      
+        <a class="sidebar-nav-item  active " href="/shell/">Shell</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/internet/">Internet</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/about/">About</a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+    
+  </nav>
+
+  <div class="sidebar-item">
+    <p>&copy; 2017. All rights reserved.</p>
+  </div>
+</div>
+
+
+    
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">Hippocamplus</a>
+            <small>My Second Memory</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+
+
+<div class="page">
+  <h1 class="page-title">Shell</h1>
+  <div id="TOC">
+<ul>
+<li><a href="#misc">Misc</a><ul>
+<li><a href="#add-headers-with-cat">Add headers with cat</a></li>
+<li><a href="#avoid-killing-ssh-jobs">Avoid killing ssh jobs</a></li>
+<li><a href="#rsync">rsync</a></li>
+<li><a href="#mount-server-in-osx">Mount server in OSX</a></li>
+</ul></li>
+<li><a href="#shell-scripting">Shell scripting</a><ul>
+<li><a href="#variables">Variables</a></li>
+<li><a href="#if-then-else">If Then Else</a></li>
+</ul></li>
+<li><a href="#converting-pdf-into-eps">Converting PDF into EPS</a></li>
+<li><a href="#git">Git</a></li>
+<li><a href="#docker-cheatsheet">Docker cheatsheet</a></li>
+</ul>
+</div>
+
+<div id="misc" class="section level2">
+<h2>Misc</h2>
+<div id="add-headers-with-cat" class="section level3">
+<h3>Add headers with cat</h3>
+<p><code>cat file.txt | cat headers.txt -</code> concatenated end of the pipe after <code>headers.txt</code>.</p>
+</div>
+<div id="avoid-killing-ssh-jobs" class="section level3">
+<h3>Avoid killing ssh jobs</h3>
+<p><code>nohup</code> function (apparently).</p>
+</div>
+<div id="rsync" class="section level3">
+<h3>rsync</h3>
+<p><code>rsync</code> is not completely intuitive to me. Let’s say I would like to recurrently sync all the files that match the patterns in <code>rsyncIncludes.txt</code>, I would have to use:</p>
+<pre class="sh"><code>rsync -r --include=&#39;*/&#39; --include-from=../rsyncIncludes.txt --exclude=&#39;*&#39; --prune-empty-dirs SRC DEST</code></pre>
+</div>
+<div id="mount-server-in-osx" class="section level3">
+<h3>Mount server in OSX</h3>
+<p>I created a directory <code>sftp</code> (I don’t know why I choose this name…anyway) and mount the root of the different servers there. Eventually I created a symbolic link at the root of my computer to point there so that paths like <code>/gs/projects/...</code> work directly, as if in the cluster.</p>
+<p>To mount a server I use the following command:</p>
+<pre class="sh"><code>sshfs jmonlong@guillimin.hpc.mcgill.ca:/ /Users/jeanmonlong/sftp/guillimin -ovolname=NAME</code></pre>
+</div>
+</div>
+<div id="shell-scripting" class="section level2">
+<h2>Shell scripting</h2>
+<p>Start a script with one of the <a href="https://en.wikipedia.org/wiki/Shebang_%28Unix%29">shebang</a></p>
+<pre class="sh"><code>#!/bin/sh</code></pre>
+<div id="variables" class="section level3">
+<h3>Variables</h3>
+<p>To remove a specific prefix/suffix from a variable name:</p>
+<pre class="sh"><code>foo=${foop#$prefix}
+foo=${foos%$suffix}</code></pre>
+</div>
+<div id="if-then-else" class="section level3">
+<h3>If Then Else</h3>
+<p>A simple example:</p>
+<pre class="sh"><code>if [ $VAL == &quot;YEP&quot; ]; then
+    echo &quot;It&#39;s a yes!&quot;
+else
+    echo &quot;No no no :(&quot;
+fi</code></pre>
+<p>Or with multiple conditions:</p>
+<pre class="sh"><code>if [ $VAL == &quot;YEP&quot; ] &amp;&amp; [ COND ]; then
+    echo &quot;It&#39;s a yes!&quot;
+else
+    echo &quot;No no no :(&quot;
+fi</code></pre>
+<p>The spacing is quite important, and the conditions can be built with:</p>
+<ul>
+<li><code>-eq</code> equal to.</li>
+<li><code>-ne</code> not equal to.</li>
+<li><code>-lt</code> less than.</li>
+<li><code>-le</code> less or equal than.</li>
+<li><code>-gt</code> great than.</li>
+<li><code>-ge</code> great or equal than.</li>
+<li><code>-s</code> file exists and not empty.</li>
+<li><code>-f</code> file exists and not directory.</li>
+<li><code>-d</code> directory exists.</li>
+<li><code>-x</code> file executable.</li>
+<li><code>-w</code> file writable.</li>
+<li><code>-r</code> file readable.</li>
+</ul>
+</div>
+</div>
+<div id="converting-pdf-into-eps" class="section level2">
+<h2>Converting PDF into EPS</h2>
+<p>I ended up using Inkscape in command-line mode. The result is not so bad (better than the <code>pdf2eps</code> etc).</p>
+<pre class="sh"><code>inkscape document.pdf --export-eps=document.eps</code></pre>
+<p><a href="http://blm.io/blog/convert-pdf-eps-osx/">Apparently</a>, <code>pdftops</code> is even better.</p>
+<pre class="sh"><code>pdftops -eps document.pdf</code></pre>
+</div>
+<div id="git" class="section level2">
+<h2>Git</h2>
+<ul>
+<li>Commit all modification and added files: <code>git commit -am &quot;informative message&quot;</code></li>
+<li>To show all the history of a file: <code>git log -p -- file</code>.</li>
+<li>To retrieve a specific version of a file: <code>git show COMMIT:file</code>.</li>
+</ul>
+<div id="aliases" class="section level4">
+<h4>Aliases</h4>
+<pre class="sh"><code>git config --global alias.co checkout
+git config --global alias.ci commit
+git config --global alias.st status
+git config --global alias.br branch</code></pre>
+</div>
+<div id="branches" class="section level4">
+<h4>Branches</h4>
+<ul>
+<li>List branches: <code>git branch</code></li>
+<li>List all branches: <code>git branch -a</code></li>
+<li>Update remote branch list: <code>git remote prune origin</code></li>
+<li>Create branch: <code>git checkout -b hotfix</code></li>
+<li>Link it to a remote branch: <code>git branch -u origin/hotflix</code></li>
+<li>Creat a new local branch from remote: <code>git co -t origin/hotfix</code></li>
+<li>Merge the current branch with another branch: <code>git merge hotfix</code></li>
+<li>Delete a branch: <code>git branch -d hotfix</code></li>
+<li>Delete remote branch: <code>git push origin :hotfix</code></li>
+</ul>
+</div>
+</div>
+<div id="docker-cheatsheet" class="section level2">
+<h2>Docker cheatsheet</h2>
+<p>I’m still learning Docker but here are commands/parameters that seem relevant for me:</p>
+<div id="build-a-docker-instance" class="section level4">
+<h4>Build a docker instance</h4>
+<p><a href="https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/">Write a Dockerfile</a> :</p>
+<ul>
+<li><code>WORKDIR /root</code> sets the working directory.</li>
+<li><code>COPY PopSV_1.0.tar.gz ./</code> copies a file in the instance. The <code>/</code> is important !</li>
+<li>There is a cache management system so it’s important to keep related commands in the same <code>RUN</code>.</li>
+</ul>
+<p>To run in the folder with the <code>Dockerfile</code>.</p>
+<pre class="sh"><code>docker build -t jmonlong/popsv-docker .</code></pre>
+</div>
+<div id="launch-a-docker-instance" class="section level4">
+<h4>Launch a docker instance</h4>
+<p>To launch an interactive instance with a shared folder:</p>
+<pre class="sh"><code>docker run -t -i -v /home/ubuntu/analysis1:/root/analysis1 jmonlong/popsv-docker</code></pre>
+<ul>
+<li><code>-t</code> and <code>-i</code> are used for interactive run.</li>
+<li><code>-v</code> links folder in the host with folder in the image. It must be **absolute paths*.</li>
+</ul>
+</div>
+<div id="increase-memory" class="section level4">
+<h4>Increase memory</h4>
+<p>In Mac OS, I had some problems with the docker stopping because of memory issues. I fixed by changing:</p>
+<pre class="sh"><code>docker-machine stop
+VBoxManage modifyvm default --cpus 3
+VBoxManage modifyvm default --memory 8192
+docker-machine start</code></pre>
+</div>
+</div>
+
+</div>
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src="/assets/highlight.min.js"></script>
+    <script src="/assets/r.min.js"></script>
+    
+    <script>
+      hljs.configure({languages: ['r']});
+      hljs.initHighlightingOnLoad();
+    </script>
+    
+  </body>
+</html>
+

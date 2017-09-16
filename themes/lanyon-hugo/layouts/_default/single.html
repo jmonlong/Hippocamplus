@@ -1,0 +1,17 @@
+{{ partial "default_head.html" . }}
+
+<div class="post">
+  <h1 class="post-title">{{ .Title }}</h1>
+  <span class="post-date">{{ .Site.Params.DateForm | default "Jan 2, 2006" | .Date.Format }}
+  {{ range $i := (slice "categories" "tags") }}
+  {{ with ($.Param $i) }}
+  {{ range $k := . }}
+  <a href='{{ relURL (print "/" $i "/" $k | urlize) }}' class='label'>{{$k}}</a>
+  {{ end }}
+  {{ end }}
+  {{ end }}
+  </span>
+  {{ .Content }}
+</div>
+
+{{ partial "default_foot.html" . }}

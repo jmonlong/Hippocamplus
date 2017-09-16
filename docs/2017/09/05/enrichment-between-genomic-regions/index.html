@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Enrichment between genomic regions &middot; Hippocamplus
+    
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/poole.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  <link rel="stylesheet" href="/css/lanyon.css">
+  <link rel="stylesheet" href="/css/github.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/assets/favicon.ico">
+
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+  
+  <body>
+
+    
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>A place to gather useful information I keep on forgetting.</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item " href="/">Home</a>
+    <a class="sidebar-nav-item " href="/post">Posts</a>
+
+    
+    
+      
+        <a class="sidebar-nav-item " href="/emacs/">Emacs</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/latex/">LaTeX</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/markdown/">Markdown</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/math/stats/">Math/Stats</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/python/">Python</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/r/">R</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/shell/">Shell</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/internet/">Internet</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/about/">About</a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+    
+  </nav>
+
+  <div class="sidebar-item">
+    <p>&copy; 2017. All rights reserved.</p>
+  </div>
+</div>
+
+
+    
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">Hippocamplus</a>
+            <small>My Second Memory</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+
+
+<div class="post">
+  <h1 class="post-title">Enrichment between genomic regions</h1>
+  <span class="post-date">Sep 5, 2017
+  
+  
+  
+  
+  
+  <a href='/tags/genome' class='label'>genome</a>
+  
+  <a href='/tags/stats' class='label'>stats</a>
+  
+  
+  
+  </span>
+  <p>Testing if two sets of genomic regions overlap significantly is not straightforward. In the simple situation of regions of 1 bp (e.g. SNVs) we could use a hypergeometric test. When the regions are small enough and there are not too many, the hypergeometric test might be a fair approximation as well.</p>
+<p>But what about annotations with many regions, of variable size, covering the genome ? For example overlapping genes and repeats ?</p>
+<pre class="r"><code>library(ggplot2)
+library(dplyr)
+library(magrittr)
+library(broom)
+library(knitr)
+library(tidyr)</code></pre>
+<div id="simulated-data" class="section level2">
+<h2>Simulated data</h2>
+<p>In a very simple scenario of having only one chromosome of size 250 Mbp.</p>
+<p>First let’s create a function that draw random regions (ranges) in this chromosome.</p>
+<pre class="r"><code>library(IRanges)
+randRegions &lt;- function(sizes, max.pos = 2.5e+08, max.iter = 10) {
+    gr = IRanges(runif(length(sizes), 0, max.pos - 
+        sizes), width = sizes)
+    dup = which(countOverlaps(gr, gr) &gt; 1)
+    iter = 1
+    while (iter &lt;= max.iter &amp; length(dup) &gt; 0) {
+        gr[dup] = IRanges(runif(length(dup), 0, max.pos - 
+            sizes[dup]), width = sizes[dup])
+        dup = which(countOverlaps(gr, gr) &gt; 1)
+    }
+    return(gr)
+}</code></pre>
+<p>Now some regions will be our “repeats”: 10,000 regions from size 10 bp to 6 Kbp.</p>
+<pre class="r"><code>rep.r = randRegions(runif(10000, 10, 6000))
+sum(width(rep.r))/2.5e+08</code></pre>
+<pre><code>## [1] 0.1207308</code></pre>
+<p>They cover 12.07% of the chromosome.</p>
+<p>The hypergeometric test is applied as if we were sampling bases in the genome and testing if it was covered by a repeat. In that sense, we expect 12.07% of our regions to overlap a repeat.</p>
+<pre class="r"><code>testHG &lt;- function(feat.r, nb = 1000, size = 1, nb.test = 3000, 
+    total.b = 2.5e+08) {
+    exp.b = sum(width(feat.r))
+    sapply(1:nb.test, function(ii) {
+        reg.r = randRegions(rep(size, nb))
+        obs.ol = sum(overlapsAny(reg.r, feat.r))
+        phyper(obs.ol, exp.b, total.b - exp.b, length(reg.r), 
+            lower.tail = FALSE)
+    })
+}
+
+ht.sim = rbind(data.frame(nb = 1000, size = 1, pv = testHG(rep.r, 
+    1000, 1)), data.frame(nb = 1000, size = 1000, pv = testHG(rep.r, 
+    1000, 1000)), data.frame(nb = 100, size = 1000, 
+    pv = testHG(rep.r, 100, 1000)), data.frame(nb = 1000, 
+    size = 100, pv = testHG(rep.r, 1000, 100)))
+
+ht.sim %&gt;% mutate(nbsize = paste0(nb, &quot; x &quot;, size, 
+    &quot;bp&quot;)) %&gt;% group_by(nbsize) %&gt;% arrange(pv) %&gt;% 
+    mutate(cumprop = (1:n())/n()) %&gt;% ggplot(aes(x = pv, 
+    y = cumprop, color = nbsize)) + geom_line() + theme_bw() + 
+    geom_abline(linetype = 2) + ylab(&quot;cumulative proportion&quot;) + 
+    xlab(&quot;P-value&quot;) + scale_color_brewer(palette = &quot;Set1&quot;, 
+    name = &quot;regions&quot;) + theme(legend.justification = c(1, 
+    0), legend.position = c(0.99, 0.01))</code></pre>
+<p><img src="/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/testhg-1.png" width="672" /></p>
+<p>As expected, the hypergeometric test works well for region of 1 bp. Otherwise the distribution of the P-values is biased. The larger the regions the stronger the bias. To a lower extent, more regions has means more bias.</p>
+</div>
+<div id="using-control-regions-with-similar-features" class="section level2">
+<h2>Using control regions with similar features</h2>
+<p>We want to control for the size distribution and the total number of regions tested. By drawing random regions in the genome with the same sizes we can then apply a logistic regression.</p>
+<pre class="r"><code>testLR &lt;- function(feat.r, nb = 1000, size = 1, nb.test = 3000) {
+    sapply(1:nb.test, function(ii) {
+        reg.r = randRegions(rep(size, nb))
+        cont.r = randRegions(width(reg.r))
+        df = rbind(data.frame(region = TRUE, ol = overlapsAny(reg.r, 
+            feat.r)), data.frame(region = FALSE, ol = overlapsAny(cont.r, 
+            feat.r)))
+        pvs = glm(ol ~ region, data = df, family = binomial()) %&gt;% 
+            tidy %&gt;% .$p.value
+        pvs[2]
+    })
+}
+
+lr.sim = rbind(data.frame(nb = 1000, size = 1, pv = testLR(rep.r, 
+    1000, 1)), data.frame(nb = 1000, size = 1000, pv = testLR(rep.r, 
+    1000, 1000)), data.frame(nb = 100, size = 1000, 
+    pv = testLR(rep.r, 100, 1000)), data.frame(nb = 1000, 
+    size = 100, pv = testLR(rep.r, 1000, 100)))
+
+lr.sim %&gt;% mutate(nbsize = paste0(nb, &quot; x &quot;, size, 
+    &quot;bp&quot;)) %&gt;% group_by(nbsize) %&gt;% arrange(pv) %&gt;% 
+    mutate(cumprop = (1:n())/n()) %&gt;% ggplot(aes(x = pv, 
+    y = cumprop, color = nbsize)) + geom_line() + theme_bw() + 
+    geom_abline(linetype = 2) + ylab(&quot;cumulative proportion&quot;) + 
+    xlab(&quot;P-value&quot;) + scale_color_brewer(palette = &quot;Set1&quot;, 
+    name = &quot;regions&quot;) + theme(legend.justification = c(1, 
+    0), legend.position = c(0.99, 0.01))</code></pre>
+<p><img src="/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/contreg-1.png" width="672" /></p>
+<p>Much better.</p>
+</div>
+<div id="controlling-for-correlated-features" class="section level2">
+<h2>Controlling for correlated features</h2>
+<pre class="r"><code>corRegions &lt;- function(sizes, feat.r, or = 2, max.iter = 10, 
+    max.pos = 2.5e+08) {
+    reg.r = randRegions(sizes)
+    for (ii in 1:or) {
+        reg.r = c(reg.r[overlapsAny(reg.r, feat.r)], 
+            randRegions(sizes))
+    }
+    dup = which(countOverlaps(reg.r, reg.r) &gt; 1)
+    sizes = width(reg.r)
+    iter = 1
+    while (iter &lt;= max.iter &amp; length(dup) &gt; 0) {
+        reg.r[dup] = IRanges(runif(length(dup), 0, 
+            max.pos - sizes[dup]), width = sizes[dup])
+        dup = which(countOverlaps(reg.r, reg.r) &gt; 1)
+    }
+    reg.r
+}
+
+repcor.r = corRegions(rep(10000, 1000), rep.r)
+cont.r = randRegions(width(repcor.r))
+df = rbind(data.frame(region = TRUE, ol = overlapsAny(repcor.r, 
+    rep.r)), data.frame(region = FALSE, ol = overlapsAny(cont.r, 
+    rep.r)))
+glm(ol ~ region, data = df, family = binomial()) %&gt;% 
+    tidy %&gt;% kable</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-0.2586049</td>
+<td align="right">0.0464880</td>
+<td align="right">-5.562833</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">regionTRUE</td>
+<td align="right">0.8513543</td>
+<td align="right">0.0669235</td>
+<td align="right">12.721311</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>repcor2.r = corRegions(rep(10000, 1000), rep.r)
+cont.r = randRegions(width(repcor2.r))
+df = rbind(data.frame(region = TRUE, ol = overlapsAny(repcor2.r, 
+    rep.r)), data.frame(region = FALSE, ol = overlapsAny(cont.r, 
+    rep.r)))
+glm(ol ~ region, data = df, family = binomial()) %&gt;% 
+    tidy %&gt;% kable</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-0.1569543</td>
+<td align="right">0.0463056</td>
+<td align="right">-3.38953</td>
+<td align="right">0.0007001</td>
+</tr>
+<tr class="even">
+<td align="left">regionTRUE</td>
+<td align="right">0.8373422</td>
+<td align="right">0.0673169</td>
+<td align="right">12.43881</td>
+<td align="right">0.0000000</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>seed.r = randRegions(rep(10000, 6000))
+seed.ol = overlapsAny(seed.r, repcor.r)
+repcorcor.r = c(seed.r[seed.ol], seed.r[head(which(!seed.ol), 
+    sum(!seed.ol) * 0.05)])
+cont.r = randRegions(width(repcorcor.r))
+df = rbind(data.frame(region = TRUE, ol = overlapsAny(repcorcor.r, 
+    rep.r), repcor = overlapsAny(repcorcor.r, repcor.r)), 
+    data.frame(region = FALSE, ol = overlapsAny(cont.r, 
+        rep.r), repcor = overlapsAny(cont.r, repcor.r)))
+glm(ol ~ region, data = df, family = binomial()) %&gt;% 
+    tidy %&gt;% kable</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-0.2786048</td>
+<td align="right">0.0593941</td>
+<td align="right">-4.690783</td>
+<td align="right">2.7e-06</td>
+</tr>
+<tr class="even">
+<td align="left">regionTRUE</td>
+<td align="right">0.3790352</td>
+<td align="right">0.0836457</td>
+<td align="right">4.531439</td>
+<td align="right">5.9e-06</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>glm(ol ~ region + repcor, data = df, family = binomial()) %&gt;% 
+    tidy %&gt;% kable</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-0.3338927</td>
+<td align="right">0.0618786</td>
+<td align="right">-5.395929</td>
+<td align="right">0.0000001</td>
+</tr>
+<tr class="even">
+<td align="left">regionTRUE</td>
+<td align="right">0.1584311</td>
+<td align="right">0.1072556</td>
+<td align="right">1.477137</td>
+<td align="right">0.1396390</td>
+</tr>
+<tr class="odd">
+<td align="left">repcorTRUE</td>
+<td align="right">0.3538189</td>
+<td align="right">0.1074289</td>
+<td align="right">3.293517</td>
+<td align="right">0.0009894</td>
+</tr>
+</tbody>
+</table>
+<p>Another approach is to control the feature overlap in the control regions.</p>
+<pre class="r"><code>randRegionsCons &lt;- function(reg.r, feat.r, nb.seed = 1e+06) {
+    seed.r = randRegions(rep(1, nb.seed))
+    dist.df = distanceToNearest(seed.r, feat.r) %&gt;% 
+        as.data.frame
+    reg.ol = overlapsAny(reg.r, feat.r)
+    res.r = lapply(unique(width(reg.r)), function(size) {
+        size.ii = which(width(reg.r) == size)
+        res.r = IRanges()
+        if (sum(reg.ol[size.ii]) &gt; 0) {
+            seed.ii = dist.df %&gt;% filter(distance &lt; 
+                size/2) %&gt;% .$queryHits %&gt;% sample(sum(reg.ol[size.ii]))
+            res.r = c(res.r, resize(seed.r[seed.ii], 
+                size, fix = &quot;center&quot;))
+        }
+        if (sum(!reg.ol[size.ii]) &gt; 0) {
+            seed.ii = dist.df %&gt;% filter(distance &gt; 
+                size/2) %&gt;% .$queryHits %&gt;% sample(sum(!reg.ol[size.ii]))
+            res.r = c(res.r, resize(seed.r[seed.ii], 
+                size, fix = &quot;center&quot;))
+        }
+        res.r
+    })
+    do.call(c, res.r)
+}
+
+seed.r = randRegions(rep(10000, 6000))
+seed.ol = overlapsAny(seed.r, repcor.r)
+repcorcor.r = c(seed.r[seed.ol], seed.r[head(which(!seed.ol), 
+    sum(!seed.ol) * 0.05)])
+cont.r = randRegions(width(repcorcor.r))
+df = rbind(data.frame(region = TRUE, ol = overlapsAny(repcorcor.r, 
+    rep.r), repcor = overlapsAny(repcorcor.r, repcor.r)), 
+    data.frame(region = FALSE, ol = overlapsAny(cont.r, 
+        rep.r), repcor = overlapsAny(cont.r, repcor.r)))
+glm(ol ~ region, data = df, family = binomial()) %&gt;% 
+    tidy %&gt;% kable</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-0.1401759</td>
+<td align="right">0.0596689</td>
+<td align="right">-2.349228</td>
+<td align="right">0.0188124</td>
+</tr>
+<tr class="even">
+<td align="left">regionTRUE</td>
+<td align="right">0.2305829</td>
+<td align="right">0.0843243</td>
+<td align="right">2.734478</td>
+<td align="right">0.0062479</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>contSize.r = randRegionsCons(repcorcor.r, repcor.r)
+df = rbind(data.frame(region = TRUE, ol = overlapsAny(repcorcor.r, 
+    rep.r), repcor = overlapsAny(repcorcor.r, repcor.r)), 
+    data.frame(region = FALSE, ol = overlapsAny(contSize.r, 
+        rep.r), repcor = overlapsAny(contSize.r, repcor.r)))
+glm(ol ~ region, data = df, family = binomial()) %&gt;% 
+    tidy %&gt;% kable</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">0.1010602</td>
+<td align="right">0.0595987</td>
+<td align="right">1.6956774</td>
+<td align="right">0.0899470</td>
+</tr>
+<tr class="even">
+<td align="left">regionTRUE</td>
+<td align="right">-0.0106533</td>
+<td align="right">0.0842746</td>
+<td align="right">-0.1264114</td>
+<td align="right">0.8994063</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>mean(overlapsAny(repcorcor.r, repcor.r))</code></pre>
+<pre><code>## [1] 0.7732507</code></pre>
+<pre class="r"><code>mean(overlapsAny(cont.r, repcor.r))</code></pre>
+<pre><code>## [1] 0.14969</code></pre>
+<pre class="r"><code>mean(overlapsAny(contSize.r, repcor.r))</code></pre>
+<pre><code>## [1] 0.7732507</code></pre>
+<pre class="r"><code>mean(overlapsAny(repcorcor.r, rep.r))</code></pre>
+<pre><code>## [1] 0.5225864</code></pre>
+<pre class="r"><code>mean(overlapsAny(cont.r, rep.r))</code></pre>
+<pre><code>## [1] 0.4650133</code></pre>
+<pre class="r"><code>mean(overlapsAny(contSize.r, rep.r))</code></pre>
+<pre><code>## [1] 0.5252436</code></pre>
+<p>Controlling within the logistic regression or using better control regions. What’s best ? Power analysis.</p>
+</div>
+<div id="comparing-different-sets" class="section level2">
+<h2>Comparing different sets</h2>
+<p>What if we need to compare two sets of regions with a third one. If the two sets are comparable in term of size and total number we could directly compare the overlap or an enrichment estimate (e.g. model estimate). If they are not both might be enriched but the estimates may not be directly comparable. Even the P-value might be affected by the difference in size/number between the two sets. What should we compare ?</p>
+<p>A practical example would be two catalogs of CNVs, say from two different methods, that we want to compare to a functional annotation. If say one catalogs has more CNVs, or has larger CNVs, how can we say which one overlaps the best with the functional annotation ?</p>
+<pre class="r"><code>fun.r = randRegions(rep(10, 30000))
+
+cnv.sm = randRegions(rep(1000, 1000))
+cnv.lg = randRegions(rep(10000, 1000))
+mean(overlapsAny(cnv.sm, fun.r))</code></pre>
+<pre><code>## [1] 0.103</code></pre>
+<pre class="r"><code>mean(overlapsAny(cnv.lg, fun.r))</code></pre>
+<pre><code>## [1] 0.691</code></pre>
+<pre class="r"><code>testLR &lt;- function(reg.r, feat.r) {
+    cont.r = randRegions(width(reg.r))
+    df.sm = rbind(data.frame(region = TRUE, ol = overlapsAny(reg.r, 
+        feat.r)), data.frame(region = FALSE, ol = overlapsAny(cont.r, 
+        feat.r)))
+    rbind(data.frame(term = &quot;fold-change&quot;, estimate = mean(overlapsAny(reg.r, 
+        feat.r))/mean(overlapsAny(cont.r, feat.r)), 
+        p.value = NA), data.frame(term = &quot;diff-change&quot;, 
+        estimate = mean(overlapsAny(reg.r, feat.r)) - 
+            mean(overlapsAny(cont.r, feat.r)), p.value = NA), 
+        glm(ol ~ region, data = df.sm, family = binomial()) %&gt;% 
+            tidy %&gt;% select(term, estimate, p.value))
+}
+
+null.df = lapply(1:1000, function(ii) {
+    cnv.sm = randRegions(rep(1000, 1000))
+    cnv.lg = randRegions(rep(10000, 1000))
+    rbind(testLR(cnv.sm, fun.r) %&gt;% mutate(region = &quot;cnv.sm&quot;, 
+        rep = ii), testLR(cnv.lg, fun.r) %&gt;% mutate(region = &quot;cnv.lg&quot;, 
+        rep = ii))
+})
+
+null.df = do.call(rbind, null.df)
+null.df %&gt;% filter(term == &quot;regionTRUE&quot;) %&gt;% select(rep, 
+    estimate, region) %&gt;% spread(region, estimate) %&gt;% 
+    ggplot(aes(x = cnv.sm, y = cnv.lg)) + geom_point(alpha = 0.5) + 
+    theme_bw()</code></pre>
+<p><img src="/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<pre class="r"><code>null.df %&gt;% filter(term == &quot;regionTRUE&quot;) %&gt;% ggplot(aes(x = estimate, 
+    colour = region)) + geom_density() + theme_bw()</code></pre>
+<p><img src="/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
+<pre class="r"><code>null.df %&gt;% filter(term == &quot;fold-change&quot;) %&gt;% ggplot(aes(x = estimate, 
+    colour = region)) + geom_density() + theme_bw()</code></pre>
+<p><img src="/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-3.png" width="672" /></p>
+<pre class="r"><code>null.df %&gt;% filter(term == &quot;diff-change&quot;) %&gt;% ggplot(aes(x = estimate, 
+    colour = region)) + geom_density() + theme_bw()</code></pre>
+<p><img src="/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-4.png" width="672" /></p>
+<pre class="r"><code>asso.df = lapply(1:1000, function(ii) {
+    cnv.sm = randRegions(rep(1000, 1000))
+    cnv.lg = randRegions(rep(10000, 1000))
+    cnv.sm = c(cnv.sm[overlapsAny(cnv.sm, fun.r)], 
+        randRegions(rep(1000, 1000)))
+    cnv.lg = c(cnv.lg[overlapsAny(cnv.lg, fun.r)], 
+        randRegions(rep(10000, 1000)))
+    rbind(testLR(cnv.sm, fun.r) %&gt;% mutate(region = &quot;cnv.sm&quot;, 
+        rep = ii), testLR(cnv.lg, fun.r) %&gt;% mutate(region = &quot;cnv.lg&quot;, 
+        rep = ii))
+})
+
+asso.df = do.call(rbind, asso.df)
+asso.df %&gt;% filter(term == &quot;regionTRUE&quot;) %&gt;% select(rep, 
+    estimate, region) %&gt;% spread(region, estimate) %&gt;% 
+    ggplot(aes(x = cnv.sm, y = cnv.lg)) + geom_point(alpha = 0.5) + 
+    theme_bw()</code></pre>
+<p><img src="/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-5.png" width="672" /></p>
+<pre class="r"><code>asso.df %&gt;% filter(term == &quot;regionTRUE&quot;) %&gt;% ggplot(aes(x = estimate, 
+    colour = region)) + geom_density() + theme_bw()</code></pre>
+<p><img src="/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-6.png" width="672" /></p>
+<pre class="r"><code>asso.df %&gt;% filter(term == &quot;fold-change&quot;) %&gt;% ggplot(aes(x = estimate, 
+    colour = region)) + geom_density() + theme_bw() + 
+    geom_vline(xintercept = 1)</code></pre>
+<p><img src="/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-7.png" width="672" /></p>
+<pre class="r"><code>asso.df %&gt;% filter(term == &quot;diff-change&quot;) %&gt;% ggplot(aes(x = estimate, 
+    colour = region)) + geom_density() + theme_bw() + 
+    geom_vline(xintercept = 0)</code></pre>
+<p><img src="/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-8.png" width="672" /></p>
+<pre class="r"><code>asso2.df = lapply(1:1000, function(ii) {
+    cnv.sm = randRegions(rep(1000, 1000))
+    cnv.lg = randRegions(rep(10000, 1000))
+    cnv.sm = c(cnv.sm[overlapsAny(cnv.sm, fun.r)], 
+        randRegions(rep(1000, 1000)))
+    cnv.lg = c(cnv.lg[overlapsAny(cnv.lg, fun.r)], 
+        randRegions(rep(10000, 1000)))
+    cnv.sm = c(cnv.sm[overlapsAny(cnv.sm, fun.r)], 
+        randRegions(rep(1000, 1000)))
+    cnv.lg = c(cnv.lg[overlapsAny(cnv.lg, fun.r)], 
+        randRegions(rep(10000, 1000)))
+    rbind(testLR(cnv.sm, fun.r) %&gt;% mutate(region = &quot;cnv.sm&quot;, 
+        rep = ii), testLR(cnv.lg, fun.r) %&gt;% mutate(region = &quot;cnv.lg&quot;, 
+        rep = ii))
+})
+
+asso2.df = do.call(rbind, asso2.df)
+asso2.df %&gt;% filter(term == &quot;regionTRUE&quot;) %&gt;% select(rep, 
+    estimate, region) %&gt;% spread(region, estimate) %&gt;% 
+    ggplot(aes(x = cnv.sm, y = cnv.lg)) + geom_point(alpha = 0.5) + 
+    theme_bw()</code></pre>
+<p><img src="/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-9.png" width="672" /></p>
+<pre class="r"><code>asso2.df %&gt;% filter(term == &quot;regionTRUE&quot;) %&gt;% ggplot(aes(x = estimate, 
+    colour = region)) + geom_density() + theme_bw()</code></pre>
+<p><img src="/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-10.png" width="672" /></p>
+<pre class="r"><code>asso2.df %&gt;% filter(term == &quot;fold-change&quot;) %&gt;% ggplot(aes(x = estimate, 
+    colour = region)) + geom_density() + theme_bw() + 
+    geom_vline(xintercept = 1)</code></pre>
+<p><img src="/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-11.png" width="672" /></p>
+<pre class="r"><code>asso2.df %&gt;% filter(term == &quot;diff-change&quot;) %&gt;% ggplot(aes(x = estimate, 
+    colour = region)) + geom_density() + theme_bw() + 
+    geom_vline(xintercept = 0)</code></pre>
+<p><img src="/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-12.png" width="672" /></p>
+</div>
+
+</div>
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src="/assets/highlight.min.js"></script>
+    <script src="/assets/r.min.js"></script>
+    
+    <script>
+      hljs.configure({languages: ['r']});
+      hljs.initHighlightingOnLoad();
+    </script>
+    
+  </body>
+</html>
+

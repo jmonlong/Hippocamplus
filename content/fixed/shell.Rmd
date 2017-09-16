@@ -1,0 +1,176 @@
+---
+sidebar: true
+title: Shell
+weight: 1
+output:
+  blogdown::html_page:
+    toc: true
+---
+
+## Misc
+
+### Add headers with cat
+
+`cat file.txt | cat headers.txt -` concatenated end of the pipe after `headers.txt`.
+
+### Avoid killing ssh jobs
+
+`nohup` function (apparently).
+
+### rsync
+
+`rsync` is not completely intuitive to me. Let's say I would like to recurrently sync all the files that match the patterns in `rsyncIncludes.txt`, I would have to use:
+
+~~~sh
+rsync -r --include='*/' --include-from=../rsyncIncludes.txt --exclude='*' --prune-empty-dirs SRC DEST
+~~~
+
+### Mount server in OSX
+
+I created a directory `sftp` (I don't know why I choose this name...anyway) and mount the root of the different servers there. Eventually I created a symbolic link at the root of my computer to point there so that paths like `/gs/projects/...` work directly, as if in the cluster.
+
+To mount a server I use the following command:
+
+~~~sh
+sshfs jmonlong@guillimin.hpc.mcgill.ca:/ /Users/jeanmonlong/sftp/guillimin -ovolname=NAME
+~~~
+
+
+## Shell scripting
+
+Start a script with one of the [shebang](https://en.wikipedia.org/wiki/Shebang_%28Unix%29)
+
+~~~sh
+#!/bin/sh
+~~~
+
+### Variables
+
+To remove a specific prefix/suffix from a variable name:
+
+~~~sh
+foo=${foop#$prefix}
+foo=${foos%$suffix}
+~~~
+
+### If Then Else
+
+A simple example:
+
+~~~sh
+if [ $VAL == "YEP" ]; then
+	echo "It's a yes!"
+else
+	echo "No no no :("
+fi
+~~~
+
+Or with multiple conditions:
+
+~~~sh
+if [ $VAL == "YEP" ] && [ COND ]; then
+	echo "It's a yes!"
+else
+	echo "No no no :("
+fi
+~~~
+
+The spacing is quite important, and the conditions can be built with:
+
++ `-eq` equal to.
++ `-ne` not equal to.
++ `-lt` less than.
++ `-le` less or equal than.
++ `-gt` great than.
++ `-ge` great or equal than.
++ `-s` file exists and not empty.
++ `-f` file exists and not directory.
++ `-d` directory exists.
++ `-x` file executable.
++ `-w` file writable.
++ `-r` file readable.
+
+
+## Converting PDF into EPS
+
+I ended up using Inkscape in command-line mode. The result is not so bad (better than the `pdf2eps` etc).
+
+~~~sh
+inkscape document.pdf --export-eps=document.eps
+~~~
+
+[Apparently](http://blm.io/blog/convert-pdf-eps-osx/), `pdftops` is even better.
+
+~~~sh
+pdftops -eps document.pdf
+~~~
+
+## Git
+
++ Commit all modification and added files: `git commit -am "informative message"`
++ To show all the history of a file: `git log -p -- file`.
++ To retrieve a specific version of a file: `git show COMMIT:file`.
+
+#### Aliases
+
+~~~sh
+git config --global alias.co checkout
+git config --global alias.ci commit
+git config --global alias.st status
+git config --global alias.br branch
+~~~
+
+
+#### Branches
+
++ List branches: `git branch`
++ List all branches: `git branch -a`
++ Update remote branch list: `git remote prune origin`
++ Create branch: `git checkout -b hotfix`
++ Link it to a remote branch: `git branch -u origin/hotflix`
++ Creat a new local branch from remote: `git co -t origin/hotfix`
++ Merge the current branch with another branch: `git merge hotfix`
++ Delete a branch: `git branch -d hotfix`
++ Delete remote branch: `git push origin :hotfix`
+
+
+## Docker cheatsheet
+
+I'm still learning Docker but here are commands/parameters that seem relevant for me:
+
+#### Build a docker instance
+
+[Write a Dockerfile](https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/) :
+
++ `WORKDIR /root` sets the working directory.
++ `COPY PopSV_1.0.tar.gz ./` copies a file in the instance. The `/` is important !
++ There is a cache management system so it's important to keep related commands in the same `RUN`.
+
+To run in the folder with the `Dockerfile`.
+
+~~~sh
+docker build -t jmonlong/popsv-docker .
+~~~
+
+#### Launch a docker instance
+
+To launch an interactive instance with a shared folder:
+
+~~~sh
+docker run -t -i -v /home/ubuntu/analysis1:/root/analysis1 jmonlong/popsv-docker
+~~~
+
++ `-t` and `-i` are used for interactive run.
++ `-v` links folder in the host with folder in the image. It must be **absolute paths*.
+
+#### Increase memory
+
+In Mac OS, I had some problems with the docker stopping because of memory issues.
+I fixed by changing:
+
+~~~sh
+docker-machine stop
+VBoxManage modifyvm default --cpus 3
+VBoxManage modifyvm default --memory 8192
+docker-machine start
+~~~

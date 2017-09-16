@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      LaTeX &middot; Hippocamplus
+    
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/poole.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  <link rel="stylesheet" href="/css/lanyon.css">
+  <link rel="stylesheet" href="/css/github.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/assets/favicon.ico">
+
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+  
+  <body>
+
+    
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>A place to gather useful information I keep on forgetting.</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item " href="/">Home</a>
+    <a class="sidebar-nav-item " href="/post">Posts</a>
+
+    
+    
+      
+        <a class="sidebar-nav-item " href="/emacs/">Emacs</a>
+      
+    
+      
+        <a class="sidebar-nav-item  active " href="/latex/">LaTeX</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/markdown/">Markdown</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/math/stats/">Math/Stats</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/python/">Python</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/r/">R</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/shell/">Shell</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/internet/">Internet</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/about/">About</a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+    
+  </nav>
+
+  <div class="sidebar-item">
+    <p>&copy; 2017. All rights reserved.</p>
+  </div>
+</div>
+
+
+    
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">Hippocamplus</a>
+            <small>My Second Memory</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+
+
+<div class="page">
+  <h1 class="page-title">LaTeX</h1>
+  <div id="TOC">
+<ul>
+<li><a href="#standard-packages">Standard packages</a></li>
+<li><a href="#basics">Basics</a><ul>
+<li><a href="#font-sizes">Font sizes</a></li>
+<li><a href="#change-the-symbol-in-lists">Change the symbol in lists</a></li>
+<li><a href="#math-calligraphy">Math calligraphy</a></li>
+<li><a href="#languages-and-encoding">Languages and encoding</a></li>
+</ul></li>
+<li><a href="#figures">Figures</a><ul>
+<li><a href="#position">Position</a></li>
+<li><a href="#sub-figures">Sub-figures</a></li>
+<li><a href="#supplementary-figures">Supplementary figures</a></li>
+</ul></li>
+<li><a href="#tables">Tables</a><ul>
+<li><a href="#control-tabular-width">Control tabular width</a></li>
+<li><a href="#supplementary-tables">Supplementary tables</a></li>
+<li><a href="#spanning-columnsrows">Spanning columns/rows</a></li>
+<li><a href="#align-columns">Align columns</a></li>
+<li><a href="#rectangular-selectioncutpaste">Rectangular selection/cut/paste</a></li>
+<li><a href="#tables-from-r">Tables from <em>R</em></a></li>
+</ul></li>
+<li><a href="#code-blocks">Code blocks</a></li>
+<li><a href="#for-manuscripts">For manuscripts</a><ul>
+<li><a href="#abstract">Abstract</a></li>
+<li><a href="#author-affiliation">Author affiliation</a></li>
+<li><a href="#text-formatting">Text formatting</a></li>
+<li><a href="#notes">Notes</a></li>
+</ul></li>
+<li><a href="#bibliography">Bibliography</a><ul>
+<li><a href="#reduce-long-list-of-authors">Reduce long list of authors</a></li>
+<li><a href="#name-year-style">“Name Year” style</a></li>
+<li><a href="#order-of-initials">Order of initials</a></li>
+<li><a href="#no-url-or-doi">No URL or DOI</a></li>
+</ul></li>
+<li><a href="#presentations">Presentations</a><ul>
+<li><a href="#changing-the-font">Changing the font</a></li>
+<li><a href="#section-slides">Section slides</a></li>
+<li><a href="#themes">Themes</a></li>
+<li><a href="#backup-slides">Backup slides</a></li>
+</ul></li>
+</ul>
+</div>
+
+<div id="standard-packages" class="section level2">
+<h2>Standard packages</h2>
+<p>This is my default (more or less) :</p>
+<pre class="latex"><code>\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage[colorlinks=true,linkcolor=black,citecolor=black]{hyperref}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{fullpage}</code></pre>
+</div>
+<div id="basics" class="section level2">
+<h2>Basics</h2>
+<div id="font-sizes" class="section level3">
+<h3>Font sizes</h3>
+<p><code>\tiny</code>, <code>\scriptsize</code>, <code>\footnotesize</code>, <code>\small</code>, <code>\normalsize</code>, <code>\large</code>, <code>\Large</code>, <code>\LARGE</code>, <code>\huge</code>, <code>\Huge</code>.</p>
+</div>
+<div id="change-the-symbol-in-lists" class="section level3">
+<h3>Change the symbol in lists</h3>
+<pre class="latex"><code>\renewcommand{\labelitemi}{\textgreater}</code></pre>
+<p>Here are some appropriate symbols: <code>\ast</code>, <code>\star</code>, <code>\diamond</code>, <code>\blacktriangleleft</code>, <code>\blacktriangleright</code>, <code>\rightarrow</code>, <code>\Rightarrow</code>.</p>
+</div>
+<div id="math-calligraphy" class="section level3">
+<h3>Math calligraphy</h3>
+<p>The two most popular math calligraphy are used with :</p>
+<ul>
+<li><code>$\mathcal{A}$</code> for calligraphy.</li>
+<li><code>$\mathbb{A}$</code> for blackboard (e.g. sets).</li>
+<li><code>$\mathbf{A}$</code> for bold.</li>
+</ul>
+</div>
+<div id="languages-and-encoding" class="section level3">
+<h3>Languages and encoding</h3>
+<p>At some time when writing in French or Spannish I used:</p>
+<pre class="latex"><code>\usepackage[utf8]{inputenc}
+\usepackage[frenchb]{babel}
+\usepackage[T1]{fontenc}</code></pre>
+<p>and</p>
+<pre class="latex"><code>\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}</code></pre>
+<p>An accent was specified as <code>\'i</code>.</p>
+</div>
+</div>
+<div id="figures" class="section level2">
+<h2>Figures</h2>
+<div id="position" class="section level3">
+<h3>Position</h3>
+<ul>
+<li><code>[h]</code> means <strong>h</strong>ere.</li>
+<li><code>[t]</code> means at the <strong>t</strong>op of the page.</li>
+<li><code>[p]</code> means on its own <strong>p</strong>age.</li>
+</ul>
+<p>I usually use <code>[ht]</code> for small/medium figures, and <code>[htp]</code> for large ones.</p>
+</div>
+<div id="sub-figures" class="section level3">
+<h3>Sub-figures</h3>
+<p>After adding <code>\usepackage{subcaption}</code>, use like this:</p>
+<pre class="latex"><code>\begin{subfigure}[b]{.48\textwidth}
+    \includegraphics{example.pdf}
+    \caption{}
+    \label{fig:example}
+end{subfigure}</code></pre>
+<p>For more custom organization of the sub-figures, feel free to use <code>minipage</code> environment. To force a caption number/letter, use <code>\addtocounter{subfigure}{XX}</code>. For example, to have the second subfigure as a long vertical panel on the right and figure {} and {}, smaller on the left:</p>
+<pre class="latex"><code>\begin{figure}[htp]
+    \begin{minipage}[c]{.4\textwidth}
+        \begin{subfigure}[b]{\linewidth}
+            \includegraphics{example.pdf}
+            \caption{}
+            \label{figa}
+        \end{subfigure}
+        \addtocounter{subfigure}{1}
+        \begin{subfigure}[b]{\linewidth}
+            \includegraphics[page=3]{example.pdf}
+            \caption{}
+            \label{figc}
+        \end{subfigure}
+    \end{minipage}
+    \begin{minipage}[c]{.6\textwidth}
+        \addtocounter{subfigure}{-2}
+        \begin{subfigure}[b]{\linewidth}
+            \includegraphics[page=2]{example.png}
+            \caption{}
+            \label{figb}
+        \end{subfigure}
+    \end{minipage}
+    \caption{Whole figure caption}
+\end{figure}</code></pre>
+</div>
+<div id="supplementary-figures" class="section level3">
+<h3>Supplementary figures</h3>
+<p>The counter and style for supplementary figures (and tables) can be changed. I place this block at the beginning of the supplementary figure section:</p>
+<pre class="latex"><code>\setcounter{figure}{0}
+\renewcommand{\thefigure}{S\arabic{figure}}</code></pre>
+<p>Moreover, some journals require the supplementary figures to be named <em>Supplementary Fig. 1</em>. As it is, with the configuration above, it would look like <em>Fig. S1</em> when using <code>Fig. \ref{fig:toto}</code>. The only solution I can think of is to manually write or not the <em>Supplementary</em> and remove the <em>S</em> in the number. But it’s painful. Eventually I could write a small script that does this automatically.</p>
+<p>Side-note: I don’t like this style. Ok it looks a bit more fancy but using <em>S12</em> is shorter and clearer, and avoids any confusion even when citing multiple figures.</p>
+</div>
+</div>
+<div id="tables" class="section level2">
+<h2>Tables</h2>
+<div id="control-tabular-width" class="section level3">
+<h3>Control tabular width</h3>
+<pre class="latex"><code>\resizebox{.8\textwidth}{!}{
+    TABULAR
+}</code></pre>
+</div>
+<div id="supplementary-tables" class="section level3">
+<h3>Supplementary tables</h3>
+<p>Similar to figures I use:</p>
+<pre class="latex"><code>\setcounter{table}{0}
+\renewcommand{\thetable}{S\arabic{table}}%</code></pre>
+</div>
+<div id="spanning-columnsrows" class="section level3">
+<h3>Spanning columns/rows</h3>
+<ul>
+<li><code>\multicolumn{2}{c|}{Multi-column}</code> for a column spanning 2 columns.</li>
+<li><code>\multirow{2}{*}{Multi-row}</code> for a row spanning 2 rows.</li>
+<li><code>\cline{2-10}</code> to avoid <code>\hline</code> crossing a multi-row cell (one the first column).</li>
+</ul>
+</div>
+<div id="align-columns" class="section level3">
+<h3>Align columns</h3>
+<p>In Emacs, place the cursor within the tabular and press <code>M-x align-current</code>.</p>
+</div>
+<div id="rectangular-selectioncutpaste" class="section level3">
+<h3>Rectangular selection/cut/paste</h3>
+<p>In Emacs, the columns can be <em>“easily”</em> rearranged using rectangular selection. Depending on Emacs’ version it could be:</p>
+<ul>
+<li><code>C-x space</code> starts the selection.</li>
+<li><code>C-x r k</code> cut the selection.</li>
+<li><code>C-x r y</code> paste the selection, considering the cursor in the top-left corner of the desired location.</li>
+</ul>
+</div>
+<div id="tables-from-r" class="section level3">
+<h3>Tables from <em>R</em></h3>
+<p>Package <a href="https://cran.r-project.org/web/packages/knitr/"><em>knitr</em></a> has a function <code>kable</code> to easily format a <em>data.frame</em> in LaTeX format.</p>
+</div>
+</div>
+<div id="code-blocks" class="section level2">
+<h2>Code blocks</h2>
+<p>The easiest is to use <a href="https://en.wikibooks.org/wiki/LaTeX/Source_Code_Listings">Listings</a> environment.</p>
+<p>In Emacs to avoid misinterpreting special character (e.g. <code>$</code> or <code>_</code>) I added to <code>.emacs</code> :</p>
+<pre class="lisp"><code>(setq LaTeX-verbatim-environments-local &#39;(&quot;lstlisting&quot;))</code></pre>
+<p>Then in the LaTeX document I setup the <em>lstlisting</em> environment with something like:</p>
+<pre class="latex"><code>\lstset{
+  basicstyle=\scriptsize\ttfamily, % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  frame=single,                    % adds a frame around the code
+  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code
+  language=sh,                     % the language of the code
+}</code></pre>
+</div>
+<div id="for-manuscripts" class="section level2">
+<h2>For manuscripts</h2>
+<div id="abstract" class="section level3">
+<h3>Abstract</h3>
+<p>An abstract environment exists:</p>
+<pre class="latex"><code>\begin{abstract}
+Genetics has been shown to be important...
+\end{abstract}</code></pre>
+</div>
+<div id="author-affiliation" class="section level3">
+<h3>Author affiliation</h3>
+<p>Using <code>\usepackage{authblk}</code>, the authors’ affiliations can be defined like this:</p>
+<pre class="latex"><code>\author[1,2]{Jean Monlong}
+...
+\affil[1]{Department of Human Genetics, McGill University, Montréal, H3A 1B1, Canada}
+\affil[2]{McGill University and Génome Québec Innovation Center, Montréal, H3A 1A4, Canada}
+...</code></pre>
+</div>
+<div id="text-formatting" class="section level3">
+<h3>Text formatting</h3>
+<ul>
+<li><code>\linespread{1.6}</code> for double-spacing.</li>
+<li>To add line numbers, <em>lineno</em> package:</li>
+</ul>
+<pre class="latex"><code>\usepackage[modulo]{lineno}
+\linenumbers</code></pre>
+</div>
+<div id="notes" class="section level3">
+<h3>Notes</h3>
+<pre class="latex"><code>\usepackage{todonotes}
+\newcounter{mycomment}
+\newcommand{\comment}[2][]{
+  \refstepcounter{mycomment}
+  {
+    %\setstretch{0.7}% spacing
+    \todo[color={red!100!green!33},size=\tiny]{
+      \textbf{[\uppercase{#1}\themycomment]:}~#2}
+  }}</code></pre>
+<p>By default, for an inline comment: <code>\todo[inline]{...}</code>.</p>
+</div>
+</div>
+<div id="bibliography" class="section level2">
+<h2>Bibliography</h2>
+<p>I use <code>\usepackage[comma,super]{natbib}</code>.</p>
+<div id="reduce-long-list-of-authors" class="section level3">
+<h3>Reduce long list of authors</h3>
+<p>To change a long list of authors into <em>“First Author et al”</em> in the references, use a custom <code>.bst</code> file.</p>
+<p>I downloaded the original version of the file <a href="http://ctan.org/tex-archive/macros/latex/contrib/natbib">there</a> and change the <code>FUNCTION {format.names}</code> part by</p>
+<pre><code>INTEGERS { max.num.names.before.forced.et.al num.names.shown.with.forced.et.al }
+
+FUNCTION {format.names}
+{ &#39;s :=
+  #1 &#39;nameptr :=
+  #5 &#39;max.num.names.before.forced.et.al :=
+  #1 &#39;num.names.shown.with.forced.et.al :=
+  s num.names$ &#39;numnames :=
+  numnames &#39;namesleft :=
+    { namesleft #0 &gt; }
+    { s nameptr &quot;{f.~}{vv~}{ll}{, jj}&quot; format.name$ &#39;t :=
+      nameptr #1 &gt;
+        { nameptr num.names.shown.with.forced.et.al #1 + =
+          numnames max.num.names.before.forced.et.al &gt;
+          and
+            { &quot;others&quot; &#39;t :=
+              #1 &#39;namesleft :=
+            }
+            { skip$ }
+          if$
+          namesleft #1 &gt;
+            { &quot;, &quot; * t * }
+            { t &quot;others&quot; =
+                { &quot; &quot; * &quot;et~al.&quot; emphasize * }
+                { numnames #2 &gt;
+                    { &quot;,&quot; * }
+                    { skip$ }
+                  if$
+                  &quot; and &quot; * t *
+                }
+              if$
+            }
+          if$
+        }
+        &#39;t
+      if$
+      nameptr #1 + &#39;nameptr :=
+      namesleft #1 - &#39;namesleft :=
+    }
+  while$
+}</code></pre>
+<p>This allows maximum five authors before it switches to <em>“First Author et al”</em> mode. These numbers are defined in lines with <code>'max.num.names.before.forced.et.al :=</code> and <code>'num.names.shown.with.forced.et.al :</code>.</p>
+<p>I put this new <code>.bst</code> file in the folder of my <code>.tex</code> file and called it in the style command: <code>\bibliographystyle{unsrtnat5}</code>.</p>
+</div>
+<div id="name-year-style" class="section level3">
+<h3>“Name Year” style</h3>
+<p>I used <code>\citep{}</code> with this configuration:</p>
+<pre class="latex"><code>\usepackage{natbib}
+\bibpunct{ (}{)}{;}{a}{}{;}</code></pre>
+</div>
+<div id="order-of-initials" class="section level3">
+<h3>Order of initials</h3>
+<p>To get <em>Simpson H.</em> instead of <em>Homer Simpson</em> I changes the <code>.bst</code> file line in the <code>format.names</code> function to :</p>
+<pre class="latex"><code>{ s nameptr &quot;{vv~}{ll~}{f.}{, jj}&quot; format.name$ &#39;t :=</code></pre>
+</div>
+<div id="no-url-or-doi" class="section level3">
+<h3>No URL or DOI</h3>
+<p>There are nicer option with <code>biblatex</code> but since I’m still using <code>bibtex</code> I went into the <code>.bst</code> file and changed the formatting functions:</p>
+<pre class="latex"><code>FUNCTION {format.url}
+{ &quot;&quot; }
+%%{ url empty$
+%%    { &quot;&quot; }
+%%    { new.block &quot;URL \url{&quot; url * &quot;}&quot; * }
+%%  if$
+%%}
+
+FUNCTION {format.doi}
+{ &quot;&quot; }
+%%{ doi empty$
+%%    { &quot;&quot; }
+%%    { new.block &quot;\doi{&quot; doi * &quot;}&quot; * }
+%%  if$
+%%}</code></pre>
+</div>
+</div>
+<div id="presentations" class="section level2">
+<h2>Presentations</h2>
+<div id="changing-the-font" class="section level3">
+<h3>Changing the font</h3>
+<p>By default, Beamer uses a sans-serif font. It looks a bit harsh. I find the <em>Palatino</em> font easier on the eye. To switch to serif font and choose the <em>Palatino</em>, I add at the beginning of the document:</p>
+<pre class="latex"><code>\renewcommand*{\familydefault}{\rmdefault}
+\renewcommand*\rmdefault{ppl}</code></pre>
+</div>
+<div id="section-slides" class="section level3">
+<h3>Section slides</h3>
+<p>To introduce sections, Beamer can automatically insert slides. These automated slides can be defined with:</p>
+<pre class="latex"><code>\AtBeginSection{
+  \begin{frame}
+    \begin{center}
+      \structure{\Large\bf \insertsection}
+    \end{center}
+  \end{frame}
+}
+\AtBeginSubsection{
+  \begin{frame}
+    \begin{center}
+      \structure{\large \insertsubsection}
+    \end{center}
+  \end{frame}
+}</code></pre>
+</div>
+<div id="themes" class="section level3">
+<h3>Themes</h3>
+<p>I tend to use the minimalist <em>default</em> theme, remove the navigation bar but add slide number:</p>
+<pre class="latex"><code>\usetheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}[page number]</code></pre>
+<p>For an important presentation, I could use a more fancy theme, such as the <a href="https://github.com/matze/mtheme">Metropolis</a> theme or the <a href="http://hamaluik.com/posts/better-beamer-themes/">Execushares</a> one. Eventually I would like to mix and customize these two (see current state <a href="https://github.com/jmonlong/Hippocamplus/blob/master/LaTeX/theme/beamerthemeMyExecushares.sty">there</a>).</p>
+</div>
+<div id="backup-slides" class="section level3">
+<h3>Backup slides</h3>
+<p>To add extra slides at the end of the presentation without increasing the total number of slides displayed:</p>
+<pre class="latex"><code>\appendix
+\newcounter{finalframe}
+\setcounter{finalframe}{\value{framenumber}}
+
+%% EXTRA SLIDES
+
+\setcounter{framenumber}{\value{finalframe}}</code></pre>
+</div>
+</div>
+
+</div>
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src="/assets/highlight.min.js"></script>
+    <script src="/assets/r.min.js"></script>
+    
+    <script>
+      hljs.configure({languages: ['r']});
+      hljs.initHighlightingOnLoad();
+    </script>
+    
+  </body>
+</html>
+

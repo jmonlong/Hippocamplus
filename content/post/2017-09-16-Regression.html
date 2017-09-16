@@ -1,0 +1,322 @@
+---
+title: Regression
+date: 2017-09-16
+tags: ["stats", "R"]
+---
+
+
+
+<pre class="r"><code>library(ggplot2)
+library(broom)
+library(magrittr)
+library(dplyr)
+library(knitr)</code></pre>
+<div id="logistic-regression" class="section level2">
+<h2>Logistic regression</h2>
+<div id="one-way-or-another" class="section level3">
+<h3><a href="https://youtu.be/4kg9LasvLFE">One way or another</a></h3>
+<p>If we have two binary variables and we want to see if they are associated we could use a logistic regression. How do we decide which variable to be the predictor and which variable to observed variable ?</p>
+<p>In theory there shouldn’t be any differences but let’s check with a dummy example:</p>
+<pre class="r"><code>df = data.frame(x = sample(c(FALSE, TRUE), 100, TRUE))
+df$y = df$x
+df$y[1:70] = sample(c(FALSE, TRUE), 70, TRUE)
+
+glm(y ~ x, data = df, family = binomial()) %&gt;% tidy %&gt;% 
+    kable</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-0.4626235</td>
+<td align="right">0.3096136</td>
+<td align="right">-1.494196</td>
+<td align="right">0.1351243</td>
+</tr>
+<tr class="even">
+<td align="left">xTRUE</td>
+<td align="right">1.5612358</td>
+<td align="right">0.4371481</td>
+<td align="right">3.571411</td>
+<td align="right">0.0003551</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>glm(x ~ y, data = df, family = binomial()) %&gt;% tidy %&gt;% 
+    kable</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-0.6567795</td>
+<td align="right">0.3293411</td>
+<td align="right">-1.994223</td>
+<td align="right">0.0461277</td>
+</tr>
+<tr class="even">
+<td align="left">yTRUE</td>
+<td align="right">1.5612358</td>
+<td align="right">0.4371482</td>
+<td align="right">3.571411</td>
+<td align="right">0.0003551</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>df$z = runif(100)
+glm(y ~ x + z, data = df, family = binomial()) %&gt;% 
+    tidy %&gt;% kable</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-0.5099726</td>
+<td align="right">0.5065442</td>
+<td align="right">-1.0067683</td>
+<td align="right">0.3140461</td>
+</tr>
+<tr class="even">
+<td align="left">xTRUE</td>
+<td align="right">1.5595546</td>
+<td align="right">0.4373504</td>
+<td align="right">3.5659158</td>
+<td align="right">0.0003626</td>
+</tr>
+<tr class="odd">
+<td align="left">z</td>
+<td align="right">0.0935546</td>
+<td align="right">0.7907211</td>
+<td align="right">0.1183156</td>
+<td align="right">0.9058176</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>glm(x ~ y + z, data = df, family = binomial()) %&gt;% 
+    tidy %&gt;% kable</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-0.7777571</td>
+<td align="right">0.5223688</td>
+<td align="right">-1.4889041</td>
+<td align="right">0.1365126</td>
+</tr>
+<tr class="even">
+<td align="left">yTRUE</td>
+<td align="right">1.5595466</td>
+<td align="right">0.4373488</td>
+<td align="right">3.5659102</td>
+<td align="right">0.0003626</td>
+</tr>
+<tr class="odd">
+<td align="left">z</td>
+<td align="right">0.2365421</td>
+<td align="right">0.7881274</td>
+<td align="right">0.3001318</td>
+<td align="right">0.7640766</td>
+</tr>
+</tbody>
+</table>
+<p>Adding another predictor doesn’t change the estimates either.</p>
+</div>
+<div id="interpretation" class="section level3">
+<h3>Interpretation</h3>
+<p>Just to make I understand the estimates correctly. It represents the log odds ratio change for each “unit” of the predictor. In the case of a binary variable, the log odds ratio between the two groups.</p>
+<pre class="r"><code>glm(y ~ x, data = df, family = binomial()) %&gt;% tidy %&gt;% 
+    kable</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-0.4626235</td>
+<td align="right">0.3096136</td>
+<td align="right">-1.494196</td>
+<td align="right">0.1351243</td>
+</tr>
+<tr class="even">
+<td align="left">xTRUE</td>
+<td align="right">1.5612358</td>
+<td align="right">0.4371481</td>
+<td align="right">3.571411</td>
+<td align="right">0.0003551</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>odds.y.ifx = mean(subset(df, x)$y)/mean(!subset(df, 
+    x)$y)
+odds.y.ifnotx = mean(subset(df, !x)$y)/mean(!subset(df, 
+    !x)$y)
+log(odds.y.ifx/odds.y.ifnotx)</code></pre>
+<pre><code>## [1] 1.561236</code></pre>
+</div>
+<div id="extreme-cases" class="section level3">
+<h3>Extreme cases</h3>
+<p>How efficient is the logistic regression in cases where there is an imbalance between different types of observations ? For example if just a few genomic regions overlap an interesting annotation and I want to test is the overlap is significant.</p>
+<p>Let’s look at the worst cases when there are only 1 observation for a particular class.</p>
+<pre class="r"><code>df = data.frame(y = sample(c(FALSE, TRUE), 100, TRUE))
+df$x = 1:nrow(df) %in% sample.int(nrow(df), 1)
+glm(y ~ x, data = df, family = binomial()) %&gt;% tidy %&gt;% 
+    kable</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">0.1416505</td>
+<td align="right">0.2015119</td>
+<td align="right">0.7029386</td>
+<td align="right">0.4820940</td>
+</tr>
+<tr class="even">
+<td align="left">xTRUE</td>
+<td align="right">-15.7077188</td>
+<td align="right">1455.3975464</td>
+<td align="right">-0.0107927</td>
+<td align="right">0.9913888</td>
+</tr>
+</tbody>
+</table>
+<p>Although the significance is low, the estimate seems quite high. I’ll repeat this process a bunch of time and with different number of supporting observations to have an idea of the distribution.</p>
+<pre class="r"><code>ext.df = lapply(1:500, function(ii) {
+    res = lapply(1:10, function(ssi) {
+        df$x = 1:nrow(df) %in% sample.int(nrow(df), 
+            ssi)
+        glm(y ~ x, data = df, family = binomial()) %&gt;% 
+            tidy %&gt;% mutate(rep = ii, ss = ssi)
+    })
+    do.call(rbind, res)
+})
+ext.df = do.call(rbind, ext.df)
+
+ext.df %&gt;% filter(term == &quot;xTRUE&quot;) %&gt;% ggplot(aes(x = estimate)) + 
+    geom_density(fill = &quot;grey50&quot;) + facet_grid(ss ~ 
+    ., scales = &quot;free&quot;) + theme_bw()</code></pre>
+<p><img src="/post/2017-09-16-Regression_files/figure-html/lrextsim-1.png" width="672" /></p>
+<p>It seems like the estimate “inflation” is problematic mostly when there are only 1 or 2 supporting observations. If there are more than 5 supporting observations the estimate is correctly centered in 0.</p>
+<p>This problem is in fact called the <a href="https://en.wikipedia.org/wiki/Separation_(statistics)">problem of separation</a>. There are two approaches to deal with it:</p>
+<ol style="list-style-type: decimal">
+<li>Firth logistic regression.</li>
+<li>Exact logistic regression.</li>
+</ol>
+<p>The <a href="https://cran.r-project.org/web/packages/rms/index.html"><code>rms</code> package</a> from <a href="http://www.fharrell.com/2017/01/introduction.html">Frank Harell</a>. It implements a penalized maximum likelihood estimation of the model coefficients through the <code>lrm</code> function which has a <code>penalty=</code> parameter.</p>
+<pre class="r"><code>library(rms)
+extrms.df = lapply(1:200, function(ii) {
+    res = lapply(1:10, function(ssi) {
+        res = lapply(c(1, 3, 5), function(pen) {
+            df$x = 1:nrow(df) %in% sample.int(nrow(df), 
+                ssi)
+            cc = lrm(y ~ x, data = df, penalty = pen)$coefficient
+            data.frame(term = names(cc), estimate = cc, 
+                rep = ii, ss = ssi, penalty = pen, 
+                stringsAsFactors = FALSE)
+        })
+        do.call(rbind, res)
+    })
+    do.call(rbind, res)
+})
+extrms.df = do.call(rbind, extrms.df)
+extrms.df %&gt;% filter(term == &quot;x&quot;) %&gt;% ggplot(aes(x = estimate)) + 
+    geom_density(fill = &quot;grey50&quot;) + facet_grid(ss ~ 
+    penalty, scales = &quot;free&quot;) + theme_bw()</code></pre>
+<p><img src="/post/2017-09-16-Regression_files/figure-html/lrms-1.png" width="672" /></p>
+<p>It definitely helps: the estimates are now much closer to 0. I don’t see much difference between penalties 1, 3 or 5.</p>
+<p>The <a href="https://cran.r-project.org/web/packages/logistf/index.html"><code>logistf</code> package</a>. It implements Firth’s bias reduction method with its <code>logistf</code> function.</p>
+<pre class="r"><code>library(logistf)
+extstf.df = lapply(1:200, function(ii) {
+    res = lapply(1:10, function(ssi) {
+        df$x = 1:nrow(df) %in% sample.int(nrow(df), 
+            ssi)
+        cc = logistf(y ~ x, data = df)$coefficient
+        data.frame(term = names(cc), estimate = cc, 
+            rep = ii, ss = ssi, stringsAsFactors = FALSE)
+    })
+    do.call(rbind, res)
+})
+extstf.df = do.call(rbind, extstf.df)
+extstf.df %&gt;% filter(term == &quot;xTRUE&quot;) %&gt;% ggplot(aes(x = estimate)) + 
+    geom_density(fill = &quot;grey50&quot;) + facet_grid(ss ~ 
+    ., scales = &quot;free&quot;) + theme_bw()</code></pre>
+<p><img src="/post/2017-09-16-Regression_files/figure-html/lrreg-1.png" width="672" /></p>
+<p>This works well too.</p>
+</div>
+</div>
+<div id="more-advanced-models" class="section level2">
+<h2>More advanced models</h2>
+<p>A dummy example with some code for Generalized Additive Models, LOESS and SVM.</p>
+<pre class="r"><code>nb.samp = 1000
+df = data.frame(x = runif(nb.samp, 0, 100))
+df$y = rnorm(nb.samp, 0, 5) + abs(df$x - 25)
+df$y = ifelse(df$x &gt; 40, rnorm(nb.samp, 0, 5) - df$x * 
+    df$x/300 + 20, df$y)
+ggplot(df, aes(x = x, y = y)) + geom_point(alpha = 0.5) + 
+    theme_bw()</code></pre>
+<p><img src="/post/2017-09-16-Regression_files/figure-html/blm-1.png" width="672" /></p>
+<pre class="r"><code>glm.o = glm(y ~ x, data = df)
+loess.o = loess(y ~ x, data = df)
+library(mgcv)
+gam.o = gam(y ~ s(x, bs = &quot;cs&quot;), data = df)
+library(e1071)
+svm.o = svm(y ~ x, data = df)
+
+pred.df = rbind(df %&gt;% mutate(y = predict(glm.o), model = &quot;glm&quot;), 
+    df %&gt;% mutate(y = predict(gam.o), model = &quot;gam&quot;), 
+    df %&gt;% mutate(y = predict(loess.o), model = &quot;LOESS&quot;), 
+    df %&gt;% mutate(y = predict(svm.o), model = &quot;SVM&quot;))
+
+ggplot(df, aes(x = x, y = y)) + geom_point(alpha = 0.2) + 
+    geom_line(aes(colour = model), size = 2, alpha = 0.9, 
+        data = pred.df) + theme_bw() + scale_colour_brewer(palette = &quot;Set1&quot;)</code></pre>
+<p><img src="/post/2017-09-16-Regression_files/figure-html/blmmodels-1.png" width="672" /></p>
+</div>

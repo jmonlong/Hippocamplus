@@ -1,0 +1,10 @@
+<h2 class="post-title"><a href="{{ .URL }}">{{ .Title }}</a></h2>
+<span class="post-date">{{ .Site.Params.DateForm | default "Jan 2, 2006" | .Date.Format }}
+  {{ if isset .Params "tags"}}
+  <i class="fa fa-tags"></i>
+  {{ range .Params.tags }}
+  <a href="{{ "tags/" | absLangURL }}{{ . | urlize }}" class="label label-primary">{{ . }}</a>
+  {{ end }}
+  {{ end }}
+</span>
+

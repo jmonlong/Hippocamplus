@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Emacs &middot; Hippocamplus
+    
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/poole.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  <link rel="stylesheet" href="/css/lanyon.css">
+  <link rel="stylesheet" href="/css/github.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/assets/favicon.ico">
+
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+  
+  <body>
+
+    
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>A place to gather useful information I keep on forgetting.</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item " href="/">Home</a>
+    <a class="sidebar-nav-item " href="/post">Posts</a>
+
+    
+    
+      
+        <a class="sidebar-nav-item  active " href="/emacs/">Emacs</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/latex/">LaTeX</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/markdown/">Markdown</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/math/stats/">Math/Stats</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/python/">Python</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/r/">R</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/shell/">Shell</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/internet/">Internet</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/about/">About</a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+    
+  </nav>
+
+  <div class="sidebar-item">
+    <p>&copy; 2017. All rights reserved.</p>
+  </div>
+</div>
+
+
+    
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">Hippocamplus</a>
+            <small>My Second Memory</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+
+
+<div class="page">
+  <h1 class="page-title">Emacs</h1>
+  <div id="TOC">
+<ul>
+<li><a href="#basic-configuration">Basic configuration</a></li>
+<li><a href="#general-commands">General commands</a></li>
+<li><a href="#melpa-package-repository">MELPA package repository</a></li>
+<li><a href="#solarized-theme">Solarized theme</a></li>
+<li><a href="#for-r">For R</a><ul>
+<li><a href="#emacs-speaks-statistics">Emacs Speaks Statistics</a></li>
+<li><a href="#auto-complete">Auto-complete</a></li>
+<li><a href="#smart-underscores">Smart underscores</a></li>
+<li><a href="#poly-mode-for-r-markdown">Poly-mode for R + Markdown</a></li>
+<li><a href="#keyboard-shortcut-to-render-rmarkdown">Keyboard shortcut to render RMarkdown</a></li>
+<li><a href="#markdown-live-preview">Markdown live preview</a></li>
+</ul></li>
+<li><a href="#for-writing">For writing</a><ul>
+<li><a href="#spell-checking">Spell checking</a></li>
+<li><a href="#thesaurus-and-synonyms">Thesaurus and synonyms</a></li>
+<li><a href="#grammar-checking">Grammar checking</a></li>
+</ul></li>
+<li><a href="#for-latex">For LaTeX</a><ul>
+<li><a href="#word-count">Word count</a></li>
+</ul></li>
+<li><a href="#for-markdown">For Markdown</a></li>
+<li><a href="#for-python">For Python</a><ul>
+<li><a href="#elpy-python-mode">Elpy python mode</a></li>
+<li><a href="#add-some-key-bindings">Add some key bindings</a></li>
+<li><a href="#send-commands-to-a-specific-buffer">Send commands to a specific buffer</a></li>
+</ul></li>
+<li><a href="#for-shell">For Shell</a></li>
+<li><a href="#for-file-manipulation">For file manipulation</a><ul>
+<li><a href="#csvtsv">CSV/TSV</a></li>
+</ul></li>
+<li><a href="#for-version-control">For Version Control</a></li>
+<li><a href="#for-online-notes">For online notes</a><ul>
+<li><a href="#evernote">Evernote</a></li>
+<li><a href="#simplenote">Simplenote</a></li>
+</ul></li>
+<li><a href="#file-encryption">File encryption</a></li>
+<li><a href="#for-osx">For OSX</a><ul>
+<li><a href="#maximize-window-at-opening">Maximize window at opening</a></li>
+<li><a href="#keybindings">Keybindings</a></li>
+<li><a href="#ispell">Ispell</a></li>
+<li><a href="#explicit-path-definition">Explicit path definition</a></li>
+</ul></li>
+</ul>
+</div>
+
+<p>I use Emacs for almost everything: <strong>coding, writing, taking notes, preparing presentations</strong>. I’m using it right now ! Well I mean, at the time I’m writing this. There is also a good chance I’m using it now <em>now</em>.</p>
+<div id="basic-configuration" class="section level2">
+<h2>Basic configuration</h2>
+<p>Some of the basic tweaks on my <code>.emacs</code> file:</p>
+<ul>
+<li>Disable startup screen with <code>(setq inhibit-splash-screen t)</code>.</li>
+<li>Turn the blinking off with <code>(blink-cursor-mode 0)</code>.</li>
+<li>Turn off the tool bar with <code>(tool-bar-mode 0)</code>.</li>
+<li>Change the font with <code>(set-default-font &quot;DejaVu Sans Mono 12&quot;)</code>.</li>
+</ul>
+</div>
+<div id="general-commands" class="section level2">
+<h2>General commands</h2>
+<ul>
+<li>Counting words: select a region and press <code>M-=</code>. There are other ways for LaTeX.</li>
+<li>In a console (R, Shell), previous/next line in the history is accessed by <code>M-p</code>/<code>M-n</code>. (Useful when ssh-tunneling with broken key-bindings).</li>
+<li>Search for a regular expression in files using <code>M-x lgrep</code> command.</li>
+</ul>
+<p>Regexp replace : + Command: <code>C-M-%</code>. + <code>\(</code> and <code>\)</code> to define groups. + <code>\1</code> to refer to the first group.</p>
+</div>
+<div id="melpa-package-repository" class="section level2">
+<h2>MELPA package repository</h2>
+<p>Usually packages are just <code>.el</code> files to download and add in the folder defined in <code>.emacs</code> (e.g. <code>(add-to-list 'load-path &quot;~/.emacs.d/lisp/&quot;)</code>). However, there is easier way: <a href="http://www.emacswiki.org/emacs/MELPA">MELPA</a> package manager !</p>
+<p>To install it, add to <code>.emacs</code>:</p>
+<pre class="lisp"><code>(require &#39;package)
+(add-to-list &#39;package-archives &#39;(&quot;melpa&quot; . &quot;https://melpa.org/packages/&quot;) t)
+(package-initialize)</code></pre>
+<p>Then to find and install a new package, use <code>M-x list-packages</code>, find the package in the list and click on <em>Install</em>.</p>
+</div>
+<div id="solarized-theme" class="section level2">
+<h2>Solarized theme</h2>
+<p>I use <a href="http://ethanschoonover.com/solarized">Solarized</a> theme palette. I installed the <em>color-theme-sanityinc-solarized</em> pacakge directly from <a href="#melpa-package-repository">MELPA</a>. I added the dark version as default with <code>(load-theme 'sanityinc-solarized-dark t)</code>. To change it interactively I run <code>M-x load-theme</code> and then for example <code>sanityinc-solarized-light</code>.</p>
+</div>
+<div id="for-r" class="section level2">
+<h2>For R</h2>
+<div id="emacs-speaks-statistics" class="section level3">
+<h3>Emacs Speaks Statistics</h3>
+<p>ESS can be installed through <strong>MELPA</strong>. Otherwise, see below.</p>
+<p>To install ESS, without needing the admin rights, the easiest way is to download and compile it in a dedicated folder (e.g. <code>.emacs.d/lisp/ess</code>):</p>
+<pre class="sh"><code>git clone https://github.com/emacs-ess/ESS.git .emacs.d/lisp/ess
+cd .emacs.d/lisp/ess
+make</code></pre>
+<p>Then add these lines to <code>~/.emacs</code>:</p>
+<pre class="lisp"><code>(add-to-list &#39;load-path &quot;~/.emacs.d/lisp/ess/lisp/&quot;)
+(load &quot;ess-site&quot;)</code></pre>
+</div>
+<div id="auto-complete" class="section level3">
+<h3>Auto-complete</h3>
+<p>To get auto-completion (with objects, functions or parameters) I use <em>auto-complete</em>. It’s also available through MELPA.</p>
+<p>Then I configure it in my <code>.emacs</code>:</p>
+<pre class="lisp"><code>(require &#39;auto-complete-config)
+(add-to-list &#39;ac-dictionary-directories &quot;~/.emacs.d/lisp/ac-dict&quot;)
+(ac-config-default)
+(setq ac-auto-start nil)
+(define-key ac-mode-map [C-tab] &#39;auto-complete)
+(define-key ac-completing-map &quot;\t&quot; &#39;ac-complete)
+(define-key ac-completing-map &quot;\r&quot; nil)
+(setq ac-quick-help-delay 0.1)</code></pre>
+</div>
+<div id="smart-underscores" class="section level3">
+<h3>Smart underscores</h3>
+<p>By default, pressing underscore will insert a <code>&lt;-</code> instead of a <code>_</code>. This was supposed to ease the pain of writing assignments with the arrow. However now we want a <code>_</code> most of the time (e.g. for <em>ggplot2</em> functions). Using smart underscore, <code>&lt;-</code> will be inserted only when following a space.</p>
+<p>Available in <strong>MELPA</strong>. Otherwise simply put <a href="http://www.emacswiki.org/emacs/download/ess-smart-underscore.el">this <em>.el</em> file</a> in the load path and add these lines to <code>~/.emacs</code>:</p>
+<pre class="lisp"><code>(require &#39;ess-smart-underscore)
+(setq ess-S-underscore-when-last-character-is-a-space t)</code></pre>
+</div>
+<div id="poly-mode-for-r-markdown" class="section level3">
+<h3>Poly-mode for R + Markdown</h3>
+<p>With polymode (MELPA), the mode depends on the position of the cursor in the document. For R + Markdown it means that we can edit the Markdown part in the markdown-mode and run the R code as if in a R script.</p>
+<p>I added this to my <code>.emacs</code>:</p>
+<pre class="lisp"><code>(require &#39;poly-R)
+(require &#39;poly-markdown)
+(add-to-list &#39;auto-mode-alist &#39;(&quot;\\.Rmd\\&#39;&quot; . poly-markdown+r-mode))</code></pre>
+</div>
+<div id="keyboard-shortcut-to-render-rmarkdown" class="section level3">
+<h3>Keyboard shortcut to render RMarkdown</h3>
+<p>I <a href="https://stat.ethz.ch/pipermail/ess-help/2004-September/002092.html">tweaked</a> a function to run <code>rmarkdown::render</code> on the current buffer and I created a shortcut for it.</p>
+<p>In <code>.emacs</code>:</p>
+<pre class="lisp"><code>(defun renderRmd ()
+  (interactive)
+  (save-excursion
+    (message &quot;Rendering %S&quot; (buffer-file-name))
+    (setq ess-command (format &quot;rmarkdown::render(%S)&quot; (buffer-file-name)))
+    (ess-execute ess-command &#39;buffer nil nil)))
+(add-hook &#39;ess-mode-hook
+          (lambda ()
+            (local-set-key (kbd &quot;C-c C-d C-r&quot;) &#39;renderRmd)))</code></pre>
+</div>
+<div id="markdown-live-preview" class="section level3">
+<h3>Markdown live preview</h3>
+<p><a href="https://github.com/ancane/markdown-preview-mode"><code>markdown-preview-mode</code></a> opens a page on the web browser and update it every time the buffer is saved.</p>
+</div>
+</div>
+<div id="for-writing" class="section level2">
+<h2>For writing</h2>
+<div id="spell-checking" class="section level3">
+<h3>Spell checking</h3>
+<p>I use <em>ispell</em> and <em>flyspell</em>.</p>
+<p>To turn on automatically the live spell check for Latex and markdown documents:</p>
+<pre class="lisp"><code>(add-hook &#39;LaTeX-mode-hook &#39;flyspell-mode)
+(add-hook &#39;markdown-mode-hook &#39;flyspell-mode)</code></pre>
+<p>I use the <em>american</em> dictionary by default:</p>
+<pre class="lisp"><code>(setq ispell-dictionary &quot;american&quot;)
+(setq ispell-local-dictionary &quot;american&quot;)</code></pre>
+</div>
+<div id="thesaurus-and-synonyms" class="section level3">
+<h3>Thesaurus and synonyms</h3>
+<p>I use the <code>synonyms</code> package available in MELPA. It’s not as user friendly as some online resources but a good off-line alternative. I downloaded the Gutenberg thesaurus <a href="https://archive.org/download/mobythesauruslis03202gut/mthesaur.txt">here</a>. In my <code>.emacs</code>:</p>
+<pre class="lisp"><code>(setq synonyms-file &quot;/Users/jeanmonlong/.emacs.d/mthesaur.txt&quot;)
+(setq synonyms-cache-file &quot;/Users/jeanmonlong/.emacs.d/synonyms.cache&quot;)
+(require &#39;synonyms)</code></pre>
+</div>
+<div id="grammar-checking" class="section level3">
+<h3>Grammar checking</h3>
+<p>Apparently <code>langtool</code> package available in MELPA. In my <code>.emacs</code>:</p>
+<pre class="lisp"><code>(require &#39;langtool)
+(setq langtool-language-tool-jar &quot;/usr/local/Cellar/languagetool/3.8/libexec/languagetool-commandline.jar&quot;)
+(setq langtool-default-language &quot;en-US&quot;)
+(setq langtool-mother-tongue &quot;fr&quot;)
+(setq langtool-disabled-rules &#39;(&quot;MORFOLOGIK_RULE_EN_US&quot;))</code></pre>
+<p>Then:</p>
+<ul>
+<li><code>M-x langtool-check</code> to highlight problems.</li>
+<li><code>M-x langtool-check-done</code> to stop.</li>
+</ul>
+</div>
+</div>
+<div id="for-latex" class="section level2">
+<h2>For LaTeX</h2>
+<p>I put some Emacs tricks (e.g. for table manipulation) on the <a href="/latex">LaTeX page</a>.</p>
+<p>I general I prefer to use AUCTeX (available through MELPA). It handles multi-file documents and keeps the annoying compilation buffer closed. My configuration is:</p>
+<pre class="lisp"><code>(setq TeX-PDF-mode t)
+(setq-default TeX-master nil)
+(setq LaTeX-verbatim-environments-local &#39;(&quot;lstlisting&quot;))</code></pre>
+<div id="word-count" class="section level3">
+<h3>Word count</h3>
+<p>I found a wrapper around <code>texcount</code> that count the number of words in a document. It can be called with <code>M-x latex-word-count</code> after adding this to your <code>.emacs</code> configuration:</p>
+<pre class="lisp"><code>(defun latex-word-count ()
+ (interactive)
+  (let* ((this-file (buffer-file-name))
+     (word-count
+      (with-output-to-string
+        (with-current-buffer standard-output
+          (call-process &quot;texcount&quot; nil t nil &quot;-inc&quot; &quot;-brief&quot; this-file)))))
+(string-match &quot;\n$&quot; word-count)
+(message (replace-match &quot;&quot; nil nil word-count))))</code></pre>
+<p>I would like to add a feature to this: counting selected text.</p>
+</div>
+</div>
+<div id="for-markdown" class="section level2">
+<h2>For Markdown</h2>
+<p>Pressing <code>TAB</code> when the cursor is in a heading will cycle through <em>heading-only/full</em> view.</p>
+<p><code>M-x orgtbl-mode</code> to format markdown tables.</p>
+</div>
+<div id="for-python" class="section level2">
+<h2>For Python</h2>
+<div id="elpy-python-mode" class="section level3">
+<h3>Elpy python mode</h3>
+<p><a href="https://github.com/jorgenschaefer/elpy">Elpy</a> combines several packages to provide a lot of nice features, e.g. code coloring, completion, syntax checks, formatting recommendations.</p>
+<p>To install, follow instructions on the <a href="https://github.com/jorgenschaefer/elpy">GitHub page</a> and add to <code>.emacs</code>:</p>
+<pre class="lisp"><code>(package-initialize)
+(elpy-enable)</code></pre>
+</div>
+<div id="add-some-key-bindings" class="section level3">
+<h3>Add some key bindings</h3>
+<p>I added key bindings to send regions or the entire buffer to the opened Python shell. In <code>.emacs</code>:</p>
+<pre class="lisp"><code>(add-hook &#39;python-mode-hook &#39;my-python)
+(defun my-python ()
+  (define-key python-mode-map (kbd &quot;C-c r&quot;) &#39;python-shell-send-region)
+  (define-key python-mode-map (kbd &quot;C-c b&quot;) &#39;python-shell-send-buffer))</code></pre>
+</div>
+<div id="send-commands-to-a-specific-buffer" class="section level3">
+<h3>Send commands to a specific buffer</h3>
+<p>Sometimes I want to send the commands to a specific buffer. For example, when testing new packages within a Docker container, I start a <em>shell</em> buffer, run docker and python.</p>
+<p>I installed <em>isend</em> from MELPA. Then I simply go to the <em>code</em> buffer and run <code>M-x isend-associate RET *shell* RET</code>. At this point <code>C-Enter</code> will send the command to the <em>shell</em> buffer.</p>
+</div>
+</div>
+<div id="for-shell" class="section level2">
+<h2>For Shell</h2>
+<p>To open a <em>shell</em> buffer, type <code>M-x shell</code>.</p>
+<p>Then I use the <a href="http://www.emacswiki.org/emacs/essh"><em>Emacs Speaks SHELL</em></a> package, that adds all the nice commands to send lines/regions from a script to a Shell buffer. In my <code>.emacs</code> I added:</p>
+<pre class="lisp"><code>(require &#39;essh)
+(defun essh-sh-hook ()
+  (define-key sh-mode-map &quot;\C-c\C-r&quot; &#39;pipe-region-to-shell)
+  (define-key sh-mode-map &quot;\C-c\C-b&quot; &#39;pipe-buffer-to-shell)
+  (define-key sh-mode-map &quot;\C-c\C-j&quot; &#39;pipe-line-to-shell)
+  (define-key sh-mode-map &quot;\C-c\C-n&quot; &#39;pipe-line-to-shell-and-step)
+  (define-key sh-mode-map &quot;\C-c\C-f&quot; &#39;pipe-function-to-shell)
+  (define-key sh-mode-map &quot;\C-c\C-d&quot; &#39;shell-cd-current-directory))
+(add-hook &#39;sh-mode-hook &#39;essh-sh-hook)</code></pre>
+<p>The shortcuts are self-explanatory.</p>
+</div>
+<div id="for-file-manipulation" class="section level2">
+<h2>For file manipulation</h2>
+<p>To compare and merge two files, use Ediff mode by calling <code>M-x ediff</code> (or <code>M-x ediff-buffers</code> when <em>diff</em> should be done between existing buffers). Once launched press:</p>
+<ul>
+<li><code>|</code> to change the split mode (vertical/horizontal).</li>
+<li><code>n</code>/<code>p</code> to go to the next/previous difference.</li>
+<li><code>a</code> to put A’s version to B.</li>
+<li><code>b</code> to put B’s version to A.</li>
+<li><code>q</code> to quit.</li>
+<li><code>?</code> to get the full list of shortcuts.</li>
+</ul>
+<p>To visualize blanks (tabs, spaces, new lines) I use the minor mode <code>whitespace-mode</code>.</p>
+<div id="csvtsv" class="section level3">
+<h3>CSV/TSV</h3>
+<p>I use the <code>csv-mode</code> and the command <code>c-c c-a</code> to align columns. By default it understand <code>,</code>, <code>;</code> and <code>\t</code> as separator. If not I think the variable to customize is <code>csv-separators</code>.</p>
+</div>
+</div>
+<div id="for-version-control" class="section level2">
+<h2>For Version Control</h2>
+<ul>
+<li><code>C-x v +</code> to pull.</li>
+<li><code>C-x v v</code> to commit.</li>
+<li><code>C-x v i</code> to add.</li>
+<li><code>C-x v =</code> to see differences.</li>
+</ul>
+</div>
+<div id="for-online-notes" class="section level2">
+<h2>For online notes</h2>
+<div id="evernote" class="section level3">
+<h3>Evernote</h3>
+<p>I use <a href="https://evernote.com/">Evernote</a> for easily keep notes synchronized across computer, tablet and smartphone. And there is a <a href="https://github.com/pymander/evernote-mode">Emacs mode for it</a> (of course!).</p>
+<p>To install it, first run:</p>
+<pre class="sh"><code>gem install evernote_oauth
+git clone https://github.com/pymander/evernote-mode
+cd evernote-mode/ruby
+ruby setup.rb</code></pre>
+<p>I had an error with the last command and fixed it by changing <code>::Config::CONFIG</code> with <code>::RbConfig::CONFIG</code> in <code>setup.rb</code>.</p>
+<p>Then, copy <code>evernote-mode.el</code> to the load path and add to <code>.emacs</code>:</p>
+<pre class="lisp"><code>(require &#39;evernote-mode)
+(setq evernote-developer-token &quot;&lt;MYTOKEN&gt;&quot;)
+(setq evernote-username &quot;&lt;MYUSERNAME&gt;&quot;)
+(setq evernote-enml-formatter-command &#39;(&quot;w3m&quot; &quot;-dump&quot; &quot;-I&quot; &quot;UTF8&quot; &quot;-O&quot; &quot;UTF8&quot;))
+(global-set-key &quot;\C-cec&quot; &#39;evernote-create-note)
+(global-set-key &quot;\C-ceo&quot; &#39;evernote-open-note)
+(global-set-key &quot;\C-ces&quot; &#39;evernote-search-notes)
+(global-set-key &quot;\C-ceS&quot; &#39;evernote-do-saved-search)
+(global-set-key &quot;\C-cew&quot; &#39;evernote-write-note)
+(global-set-key &quot;\C-cep&quot; &#39;evernote-post-region)
+(global-set-key &quot;\C-ceb&quot; &#39;evernote-browser)</code></pre>
+<p>I retrieved my developer token (to use instead of <code>&lt;MYTOKEN&gt;</code>) <a href="https://www.evernote.com/api/DeveloperToken.action">there</a>.</p>
+<p>Side notes:</p>
+<ol style="list-style-type: decimal">
+<li>I also had to install <em>w3m</em> software.</li>
+<li>By default the notes are in read-only XHTML mode, I use <code>M-x evernote-change-edit-mode TEXT</code> to change the edit mode to text.</li>
+</ol>
+</div>
+<div id="simplenote" class="section level3">
+<h3>Simplenote</h3>
+<p>I now use <a href="https://app.simplenote.com/">Simplenote</a> instead of Evernote, in order to make sure that I have an offline version of my notes at all time. Moreover it integrates (almost completely) the Markdown format. It makes it easy to take notes and to transfer them in our wiki (e.g. for conference notes). It’s also easier to clean the notes through emacs compared to the online page or apps.</p>
+<p>There is a <a href="https://github.com/alpha22jp/simplenote2.el">Emacs package</a> that can be installed using MELPA: <code>M-x package-install [RET] simplenote2 [RET]</code>.</p>
+<p>The Simplenote buffer can be summoned by <code>M-x simplenote2-browse</code> or <code>M-x simplenote2-list</code>.</p>
+<p>In list mode, the relevant commands are:</p>
+<ul>
+<li><code>g</code>: sync with the server.</li>
+<li><code>a</code>: create a new note</li>
+<li><code>d</code>: mark note on the current line for deletion</li>
+<li><code>u</code>: unmark note on the current line for deletion</li>
+<li><code>t</code>: set tags for filtering</li>
+<li><code>^</code>: toggle tags filtering condition between “AND” and “OR”</li>
+</ul>
+<p>Other general commands include:</p>
+<ul>
+<li><code>simplenote2-add-tag</code> and <code>simplenote2-delete-tag</code></li>
+<li><code>simplenote2-set-markdown</code></li>
+</ul>
+</div>
+</div>
+<div id="file-encryption" class="section level2">
+<h2>File encryption</h2>
+<p>Encryption is integrated directly. Just add the extension <code>.gpg</code> to a file.</p>
+</div>
+<div id="for-osx" class="section level2">
+<h2>For OSX</h2>
+<p>Here are some bits of configuration specific to OSX.</p>
+<div id="maximize-window-at-opening" class="section level3">
+<h3>Maximize window at opening</h3>
+<p>Using the <em>maxframe</em> elisp from <a href="https://github.com/rmm5t/maxframe.el">Ryan McGeary</a>. I’ll copy the <code>maxframe.el</code> in the <em>master</em> branch of this repo in case it disappears.</p>
+<pre class="lisp"><code>(require &#39;maxframe)
+(add-hook &#39;window-setup-hook &#39;maximize-frame t)</code></pre>
+</div>
+<div id="keybindings" class="section level3">
+<h3>Keybindings</h3>
+<p>To change the annoying OSX bindings: paragraph jumping, home/end for line not page.</p>
+<pre class="lisp"><code>(define-key function-key-map (kbd &quot;M-&lt;down&gt;&quot;) &#39;forward-paragraph)
+(define-key function-key-map (kbd &quot;M-&lt;up&gt;&quot;) &#39;backward-paragraph)
+(global-set-key (kbd &quot;&lt;home&gt;&quot;) &#39;beginning-of-line)
+(global-set-key (kbd &quot;&lt;end&gt;&quot;) &#39;end-of-line)</code></pre>
+</div>
+<div id="ispell" class="section level3">
+<h3>Ispell</h3>
+<p>To specify where is <em>ispell</em> located.</p>
+<pre class="lisp"><code>(setq ispell-program-name &quot;/usr/local/Cellar/ispell/3.4.00/bin/ispell&quot;)</code></pre>
+<p>Also something about the right-click (I don’t remember why I have that).</p>
+<pre class="lisp"><code>(eval-after-load &quot;flyspell&quot;
+    &#39;(progn
+       (define-key flyspell-mouse-map [down-mouse-3] #&#39;flyspell-correct-word)
+       (define-key flyspell-mouse-map [mouse-3] #&#39;undefined)))</code></pre>
+</div>
+<div id="explicit-path-definition" class="section level3">
+<h3>Explicit path definition</h3>
+<p>For LaTeX, I specified the <em>PATH</em> in <code>.emacs</code>:</p>
+<pre class="lisp"><code>(setenv &quot;PATH&quot; (concat (getenv &quot;PATH&quot;) &quot;:/usr/texbin&quot;))
+(setq exec-path (append exec-path &#39;(&quot;/usr/texbin&quot;)))</code></pre>
+<p>For pandoc and ESS, I defined a <em>RSTUDIO_PANDOC</em> in <code>.emacs</code>:</p>
+<pre class="lisp"><code>(setenv &quot;RSTUDIO_PANDOCPATH&quot; (concat (getenv &quot;RSTUDIO_PANDOC&quot;) &quot;:/usr/local/bin&quot;))</code></pre>
+</div>
+</div>
+
+</div>
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src="/assets/highlight.min.js"></script>
+    <script src="/assets/r.min.js"></script>
+    
+    <script>
+      hljs.configure({languages: ['r']});
+      hljs.initHighlightingOnLoad();
+    </script>
+    
+  </body>
+</html>
+

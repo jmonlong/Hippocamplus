@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      R &middot; Hippocamplus
+    
+  </title>
+
+  
+  <link rel="stylesheet" href="/css/poole.css">
+  <link rel="stylesheet" href="/css/syntax.css">
+  <link rel="stylesheet" href="/css/lanyon.css">
+  <link rel="stylesheet" href="/css/github.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/assets/favicon.ico">
+
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+  
+  <body>
+
+    
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>A place to gather useful information I keep on forgetting.</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item " href="/">Home</a>
+    <a class="sidebar-nav-item " href="/post">Posts</a>
+
+    
+    
+      
+        <a class="sidebar-nav-item " href="/emacs/">Emacs</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/latex/">LaTeX</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/markdown/">Markdown</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/math/stats/">Math/Stats</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/python/">Python</a>
+      
+    
+      
+        <a class="sidebar-nav-item  active " href="/r/">R</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/shell/">Shell</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/internet/">Internet</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/about/">About</a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+    
+  </nav>
+
+  <div class="sidebar-item">
+    <p>&copy; 2017. All rights reserved.</p>
+  </div>
+</div>
+
+
+    
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">Hippocamplus</a>
+            <small>My Second Memory</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+
+
+<div class="page">
+  <h1 class="page-title">R</h1>
+  <div id="TOC">
+<ul>
+<li><a href="#optimization">Optimization</a></li>
+<li><a href="#details-to-remember">Details to remember</a><ul>
+<li><a href="#run-a-os-command">Run a OS command</a></li>
+<li><a href="#order-in-condition-assessment">Order in condition assessment</a></li>
+<li><a href="#get-rpubs-working">Get RPubs working</a></li>
+</ul></li>
+<li><a href="#ggplot2">ggplot2</a><ul>
+<li><a href="#tricks">Tricks</a></li>
+<li><a href="#alignstack-two-ggplots">Align/stack two ggplots</a></li>
+<li><a href="#waffle-graphs">Waffle graphs</a></li>
+</ul></li>
+<li><a href="#rmarkdown">Rmarkdown</a><ul>
+<li><a href="#jekyll-website">Jekyll website</a></li>
+<li><a href="#beamer-presentation">Beamer presentation</a></li>
+</ul></li>
+</ul>
+</div>
+
+<div id="optimization" class="section level2">
+<h2>Optimization</h2>
+<ul>
+<li>Use <code>rbindlist</code> from <em>data.table</em> package for a memory-optimized and faster <code>do.call(rbind, list(..))</code>.</li>
+</ul>
+</div>
+<div id="details-to-remember" class="section level2">
+<h2>Details to remember</h2>
+<div id="run-a-os-command" class="section level3">
+<h3>Run a OS command</h3>
+<p>Use <code>system2</code> instead of <code>system</code>. It’s more portable apparently.</p>
+</div>
+<div id="order-in-condition-assessment" class="section level3">
+<h3>Order in condition assessment</h3>
+<p>Using <code>&amp;</code> and <code>|</code> operators, <em>R</em> tries all the conditions and then performs the operations. However sometimes in sequential assessment is preferable. Especially with <code>&amp;</code>. For example, we get an error if we run:</p>
+<pre class="r"><code>x = NULL
+if(!is.null(x) &amp; x&gt;10) message(&quot;so big !&quot;)</code></pre>
+<p>Because it tries to do <code>x&gt;10</code> when <em>x</em> is <em>NULL</em>. What we want is <code>&amp;&amp;</code>:</p>
+<pre class="r"><code>x = NULL
+if(!is.null(x) &amp;&amp; x&gt;10) message(&quot;so big !&quot;)
+x = 17
+if(!is.null(x) &amp;&amp; x&gt;10) message(&quot;so big !&quot;)</code></pre>
+<p>Now it won’t try to do <code>x&lt;10</code> if <code>!is.null(x)</code> is not true (because what’s the point, anything “<em>False AND …</em>” is for sure <em>False</em>).</p>
+</div>
+<div id="get-rpubs-working" class="section level3">
+<h3>Get RPubs working</h3>
+<p><code>options(rpubs.upload.method = &quot;internal&quot;)</code></p>
+</div>
+</div>
+<div id="ggplot2" class="section level2">
+<h2>ggplot2</h2>
+<div id="tricks" class="section level3">
+<h3>Tricks</h3>
+<ul>
+<li>To plot a density distribution without the x-axis line, use <code>stat_density(geom=&quot;line&quot;)</code> (and eventually <code>position=&quot;dodge&quot;</code> if plotting several groups).</li>
+</ul>
+</div>
+<div id="alignstack-two-ggplots" class="section level3">
+<h3>Align/stack two ggplots</h3>
+<p>One easy way is to use the <code>tracks</code> function in the <a href="https://bioconductor.org/packages/release/bioc/html/ggbio.html">ggbio</a> package. However I don’t really like this package because it sometimes conflicts with ggplot2 (boo!) and you end up having to specify <code>ggplot2::</code> to the functions to avoid obscure errors.</p>
+<p>I found <a href="http://www.exegetic.biz/blog/2015/05/r-recipe-aligning-axes-in-ggplot2/">another way on the internet</a>:</p>
+<pre class="r"><code>library(ggplot2)
+library(gridExtra)
+p1 &lt;- ggplot(...
+p2 &lt;- ggplot(...
+p1 &lt;- ggplot_gtable(ggplot_build(p1))
+p2 &lt;- ggplot_gtable(ggplot_build(p2))
+maxWidth = unit.pmax(p1$widths[2:3], p2$widths[2:3])
+p1$widths[2:3] &lt;- maxWidth
+p2$widths[2:3] &lt;- maxWidth
+grid.arrange(p1, p2, heights = c(3, 2))</code></pre>
+</div>
+<div id="waffle-graphs" class="section level3">
+<h3>Waffle graphs</h3>
+<p><code>waffle</code> package provides a <code>waffle</code> and <code>iron</code> function. For example:</p>
+<pre class="r"><code>iron(
+  waffle(c(thing1=0, thing2=100), rows=5, keep=FALSE, size=0.5, colors=c(&quot;#af9139&quot;, &quot;#544616&quot;)),
+  waffle(c(thing1=25, thing2=75), rows=5, keep=FALSE, size=0.5, colors=c(&quot;#af9139&quot;, &quot;#544616&quot;))
+)</code></pre>
+</div>
+</div>
+<div id="rmarkdown" class="section level2">
+<h2>Rmarkdown</h2>
+<div id="jekyll-website" class="section level3">
+<h3>Jekyll website</h3>
+<p>The <code>Rmd</code> files located in the <code>_source</code> folder get automatically compiled by <code>servr</code> package using this command:</p>
+<pre class="sh"><code>Rscript -e &quot;servr::jekyll(script=&#39;build.R&#39;, serve=FALSE)&quot;</code></pre>
+<p>To define <em>knitr</em> parameters, I add a chunk at the beginning of the Rmarkdown document:</p>
+<pre class="md"><code></code></pre>
+</div>
+<div id="beamer-presentation" class="section level3">
+<h3>Beamer presentation</h3>
+<p>Some useful options to put in the YAML header:</p>
+<pre class="yaml"><code>title: The Title
+subtitle: The Subtitle
+author: Jean Monlong
+date: 11 Oct. 2016
+output:
+  beamer_presentation:
+    slide_level: 2
+    fig_width: 7
+    includes:
+      in_header: header.tex
+    toc: true
+    keep_tex: true</code></pre>
+<ul>
+<li><code>slide_level</code> defines the header level to be considered as a new slide.</li>
+</ul>
+<p>To add slide count I put this on the <code>header.tex</code>:</p>
+<pre class="tex"><code>\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}[page number]</code></pre>
+</div>
+</div>
+
+</div>
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src="/assets/highlight.min.js"></script>
+    <script src="/assets/r.min.js"></script>
+    
+    <script>
+      hljs.configure({languages: ['r']});
+      hljs.initHighlightingOnLoad();
+    </script>
+    
+  </body>
+</html>
+

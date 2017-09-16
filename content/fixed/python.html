@@ -1,0 +1,273 @@
+---
+sidebar: true
+weight: 1
+title: Python
+output:
+  blogdown::html_page:
+    toc: true
+---
+
+
+<div id="TOC">
+<ul>
+<li><a href="#naming-and-formatting">Naming and formatting</a></li>
+<li><a href="#data-structures">Data structures</a><ul>
+<li><a href="#array">Array</a></li>
+<li><a href="#hash">Hash</a></li>
+<li><a href="#class">Class</a></li>
+</ul></li>
+<li><a href="#strings">Strings</a><ul>
+<li><a href="#function">Function</a></li>
+</ul></li>
+<li><a href="#inputoutput">Input/Output</a></li>
+<li><a href="#files-structure-packages-and-imports">Files structure, packages and imports</a><ul>
+<li><a href="#install-a-module-locally">Install a module locally</a></li>
+</ul></li>
+<li><a href="#passing-arguments-to-a-script">Passing arguments to a script</a></li>
+<li><a href="#graphs">Graphs</a></li>
+<li><a href="#tricks">Tricks</a></li>
+<li><a href="#shell-integration">Shell integration</a></li>
+<li><a href="#bioinfo">Bioinfo</a><ul>
+<li><a href="#sequences">Sequences</a></li>
+<li><a href="#fasta">Fasta</a></li>
+<li><a href="#sam-files">SAM files</a></li>
+</ul></li>
+</ul>
+</div>
+
+<p>Some notes on my recent attempt to learn Python.</p>
+<div id="naming-and-formatting" class="section level2">
+<h2>Naming and formatting</h2>
+<ul>
+<li>Use lowercase <code>_</code>-separated for modules and functions name. E.g. <code>my_function</code>.</li>
+<li>Use CapsWord for classes. E.g. <code>MyClass</code>.</li>
+<li>Use <code>_</code> prefix for private variable. E.g. <code>_secret_variable</code>.</li>
+</ul>
+</div>
+<div id="data-structures" class="section level2">
+<h2>Data structures</h2>
+<div id="array" class="section level3">
+<h3>Array</h3>
+<pre class="python"><code>arr = [3]
+arr.append(19)
+for elt in arr:
+    print elt</code></pre>
+<p><em>numpy</em> arrays are more efficient when the data needs to be manipulated/combined. For example it allows for some vectorized operations:</p>
+<pre class="python"><code>pred_counts = numpy.zeros((4, len(rfc.classes_)))
+pred_counts[0, ] += sum(predprobs &gt; .5)</code></pre>
+</div>
+<div id="hash" class="section level3">
+<h3>Hash</h3>
+<p>Hash tables or dictionaries holds unordered sets of key/value pairs.</p>
+<pre class="python"><code>a_hash = {&#39;bob&#39;: 42, &#39;kevin&#39;: 7}</code></pre>
+</div>
+<div id="class" class="section level3">
+<h3>Class</h3>
+</div>
+</div>
+<div id="strings" class="section level2">
+<h2>Strings</h2>
+<pre class="python"><code>&#39;tempString&#39; + another_string + str(an_integer)
+line.split(&#39;\t&#39;)</code></pre>
+<ul>
+<li><code>rstrip</code> removes the trailing characters. By defaut, white spaces. <code>s.rstrip('\t\n')</code> removes <em>any combination</em> of tabs and new lines.</li>
+<li><code>str.replace(a_string, &quot;:&quot;, &quot;_&quot;)</code> to replace characters.</li>
+<li><code>' '.join(a_string_array)</code> to merge an array into one string.</li>
+</ul>
+<p>For regular expression:</p>
+<pre class="python"><code>import re
+pattern = re.compile(&#39;something:(.+)&#39;)
+mres = pattern.search(line)
+mres.group(1)</code></pre>
+<div id="function" class="section level3">
+<h3>Function</h3>
+<pre class="python"><code>def functionname( parameters ):
+   &quot;function_docstring&quot;
+   function_suite
+   return [expression]</code></pre>
+</div>
+</div>
+<div id="inputoutput" class="section level2">
+<h2>Input/Output</h2>
+<p>To read a file line by line:</p>
+<pre class="python"><code>for line in open(input_file)
+    line.rstrip(&#39;\n&#39;)</code></pre>
+<p>Or in one line:</p>
+<pre class="python"><code>lines = [line.rstrip(&#39;\n&#39;) for line in open(input_file)]</code></pre>
+<p>To write a file:</p>
+<pre class="python"><code>f = open(output_file, &#39;w&#39;)
+f.write(&#39;something&#39; + str(an_integer) + &#39;\n&#39;)
+f.close()</code></pre>
+<p>To quickly read a manually indexed (e.g. <code>grep -b</code>) file quickly, use <code>seek</code> to jump to a byte-offset and <code>tell</code> to save the current byte-offset.</p>
+<pre class="python"><code>f = open(reads_fn)
+f.seek(bos)
+line = f.next()
+f.close()</code></pre>
+<p>To save python objects one can use <code>pickle</code> module:</p>
+<pre class="python"><code>pickle.dump(obj1, open(&quot;obj1.pkl&quot;,&quot;wb&quot;))
+obj1 = pickle.load(open(&quot;obj1.pkl&quot;, &quot;rb&quot;))</code></pre>
+<p>Note the <em>b</em> that specifies <em>binary mode</em> which is slightly more efficient for non-text files.</p>
+</div>
+<div id="files-structure-packages-and-imports" class="section level2">
+<h2>Files structure, packages and imports</h2>
+<p>There should be a <code>__init__.py</code> file <strong>in each directory containing modules</strong> to import. It can be empty. If not the code inside is run on import.</p>
+<p>To import the classes/functions defined in file <code>module1.py</code>, simply do</p>
+<pre class="python"><code>import module1</code></pre>
+<div id="install-a-module-locally" class="section level3">
+<h3>Install a module locally</h3>
+<p>For example when running a script on a HPC cluster, it’s often easier to install modules in your home.</p>
+<p>If the package can be installed with <code>pip</code>, I used <code>pip install --user packageName</code>.</p>
+<p>Otherwise using the <code>setup.py</code> method, I first initialize the local library by creating a directory and updating <code>PYTHONPATH</code>.</p>
+<pre class="sh"><code>mkdir -p /home/monlongj/pylib/lib/python2.7/site-packages/
+PYTHONPATH=$PYTHONPATH:/home/monlongj/pylib/lib/python2.7/site-packages/
+export PYTHONPATH</code></pre>
+<p>Then to install a module (e.g. pyfaidx) I did:</p>
+<pre class="sh"><code>wget https://github.com/mdshw5/pyfaidx/archive/v0.4.7.1.tar.gz
+tar -xzvf v0.4.7.1.tar.gz
+cd pyfaidx-0.4.7.1/
+python setup.py install --prefix=/home/monlongj/pylib</code></pre>
+<p>To use this, I must always have the local library in <code>PYTHONPATH</code>.</p>
+<p>Modules (as in <code>module load ...</code>) might be a cleaner solution. I use existing <em>module</em> but I didn’t take the time to see how I could create and use them more.</p>
+</div>
+</div>
+<div id="passing-arguments-to-a-script" class="section level2">
+<h2>Passing arguments to a script</h2>
+<p>The quick way is to use <code>sys.argv</code> like that:</p>
+<pre class="python"><code>import sys
+in1 =  sys.argv[1]</code></pre>
+<p>The more fancy way is to use <code>argparse</code>. I usually use it like this (see the <a href="https://docs.python.org/2/library/argparse.html">doc</a> for a more complete example):</p>
+<pre class="python"><code>import argparse
+
+parser = argparse.ArgumentParser(description=&#39;Do something cool.&#39;)
+parser.add_argument(&#39;-in&#39;, dest=&#39;input&#39;, help=&#39;the input file&#39;, required=True)
+parser.add_argument(&#39;-k&#39;, dest=&#39;k&#39;, default=3, type=int, help=&#39;an integer&#39;)
+parser.add_argument(&#39;-bool&#39;, dest=&#39;bool&#39;, action=&#39;store_true&#39;, help=&#39;False by default&#39;)
+parser.add_argument(&#39;-out&#39;, dest=&#39;output&#39;, help=&#39;the output file&#39;)
+
+args = parser.parse_args()
+print args.input
+print args.k
+print args.output</code></pre>
+</div>
+<div id="graphs" class="section level2">
+<h2>Graphs</h2>
+<p>An histogram with <em>matplotlib</em>:</p>
+<pre class="python"><code>import matplotlib.pyplot as plt
+plt.hist(x)
+plt.xlabel(&#39;x label&#39;)
+plt.ylabel(&#39;y label&#39;)
+plt.show()</code></pre>
+<p>Scatterplot:</p>
+<pre class="python"><code>plt.plot(xy[1], xy[0])
+plt.show()</code></pre>
+</div>
+<div id="tricks" class="section level2">
+<h2>Tricks</h2>
+<ul>
+<li>When iterating, use <code>xrange</code> instead of <code>range</code>. It’s faster and more memory efficient.</li>
+<li>Sort elements with <code>sorted(a_list, key=lambda k: -something[k])</code>.</li>
+<li>Count unique elements in an array: <code>unique, counts = numpy.unique(array1, return_counts=True)</code>.</li>
+<li>Sub-sample with <code>random.sample(a_list, 10)</code>.</li>
+<li>In a loop, jump to the next iteration with <code>continue</code>, or leave the loop with <code>break</code>.</li>
+<li>Find indexes in array: <code>numpy.where(x &gt; 0)</code>.</li>
+<li><code>quit()</code> to stop a program.</li>
+<li><code>myVar is None</code> to test if a variable is <em>None</em>.</li>
+</ul>
+<p>When filling a nested dictionary, it’s painful to always test if the key exists before updating it’s value. One trick is to use <code>try</code>/<code>except</code>. It’s not that much quicker but it looks fancier so you forget about the <em>pain</em>:</p>
+<pre class="python"><code>try:
+    dict[lev1].append(i)
+except KeyError:
+    dict[lev1] = [i]</code></pre>
+<p>To time a function, one simple way is to use <code>time.time()</code> before and after the function and report the difference. There might be issues with Windows but I use timing for internal benchmarks, never in final code.</p>
+<p>To convert a <strong>binary number into a decimal number</strong>: <code>int('11011011', 2)</code>.</p>
+<p>To get the index as well as the value in a list, use <code>enumerate</code>:</p>
+<pre class="python"><code>for id, val in enumerate(myList):
+    print(id, val)</code></pre>
+</div>
+<div id="shell-integration" class="section level2">
+<h2>Shell integration</h2>
+<p>List files with <em>glob</em>, remove with <em>os</em>, remove non-empty directories with <em>shutil</em>.</p>
+<pre class="python"><code>import glob
+import os
+import shutil
+
+filelist = glob.glob(&#39;temp*&#39;)
+for f in filelist:
+    os.remove(f)
+
+shutil.rmtree(&#39;myDir&#39;)
+
+if(os.path.isfile(filen)):
+    file = open(filen)</code></pre>
+<p>Run commands with <em>subprocess</em>. <code>/dev/null</code> to avoid annoying messages.</p>
+<pre class="python"><code>import subprocess
+
+bwa_cmd = [&#39;bwa&#39;, &#39;mem&#39;, bwaidx_file, fastq_file]
+dump = open(&#39;/dev/null&#39;)
+bwa_out = subprocess.check_output(bwa_cmd, stderr=dump)
+dump.close()</code></pre>
+</div>
+<div id="bioinfo" class="section level2">
+<h2>Bioinfo</h2>
+<p>BioPython main documentation is available <a href="http://biopython.org/DIST/docs/tutorial/Tutorial.html">here</a>. What I ended up using are the following.</p>
+<div id="sequences" class="section level3">
+<h3>Sequences</h3>
+<pre class="python"><code>from Bio.Seq import MutableSeq
+from Bio.Alphabet import generic_dna
+
+mseq = MutableSeq(&#39;ATGCTAGCT&#39;, generic_dna)
+len(mseq)
+str(mseq[3:6])</code></pre>
+<p>To simulate sequences, I ended up using <em>numpy</em> arrays (I think they could take a list as indexes).</p>
+<pre class="python"><code>import numpy
+import random
+from Bio.Seq import MutableSeq
+from Bio.Alphabet import generic_dna
+
+_nuc = numpy.array([&quot;A&quot;, &quot;T&quot;, &quot;C&quot;, &quot;G&quot;])
+def randSeq(length):
+    seqArray = _nuc[[int(random.random()*4) for i in xrange(length)]]
+    return(MutableSeq(&quot;&quot;.join(seqArray), generic_dna))</code></pre>
+</div>
+<div id="fasta" class="section level3">
+<h3>Fasta</h3>
+<p>To read a fasta file:</p>
+<pre class="python"><code>from Bio import SeqIO
+
+for record in SeqIO.parse(fasta_file, &quot;fasta&quot;):
+    print record.id + &#39;\t&#39; + str(len(record.seq))</code></pre>
+<p>To write a fasta:</p>
+<pre class="python"><code>from Bio.SeqRecord import SeqRecord
+
+recs = []
+for ii in xrange(1000):
+    seq = randSeq(100))
+    recs.append(SeqRecord(seq, id=str(ii)))
+SeqIO.write(recs, &quot;reads.fa&quot;, &quot;fasta&quot;)</code></pre>
+<div id="indexed-fasta" class="section level4">
+<h4>Indexed fasta</h4>
+<p>I use <code>pyfaidx</code> (see <a href="https://github.com/mdshw5/pyfaidx">repo</a>) to quickly access slices of an indexed fasta. The indexing can be performed by <code>samtools faidx</code> or functions from the package.</p>
+<pre class="python"><code>from pyfaidx import Fasta
+
+fa = Fasta(args.ref)
+fa = fa[str(ch)][start:end]
+print fa.id + &#39;\t&#39; + fa.seq</code></pre>
+</div>
+</div>
+<div id="sam-files" class="section level3">
+<h3>SAM files</h3>
+<p>Here is a short example on how to get reads from a region.</p>
+<pre class="python"><code>import pysam
+
+bamfile = pysam.AlignmentFile(bam_fn, &quot;rb&quot;)
+
+reads_reg = bamfile.fetch(reference=ch_reg, start=start_reg, end=end_reg)
+reads_seq = {}
+for read in reads_reg:
+    reads_seq[read.query_name] = read.query_alignment_sequence</code></pre>
+<p>To iterate over all the reads (faster) use:</p>
+<pre class="python"><code>for aln in bamfile.fetch(until_eof=True):
+    ...</code></pre>
+<p>If the BAM is indexed, the <strong>number of mapped and unmapped reads</strong> is stored in <code>bamfile.mapped</code> and <code>bamfile.unmapped</code>.</p>
+</div>
+</div>

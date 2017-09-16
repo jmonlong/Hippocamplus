@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>/emacs/</loc>
+  </url>
+  
+  <url>
+    <loc>/latex/</loc>
+  </url>
+  
+  <url>
+    <loc>/markdown/</loc>
+  </url>
+  
+  <url>
+    <loc>/math/stats/</loc>
+  </url>
+  
+  <url>
+    <loc>/python/</loc>
+  </url>
+  
+  <url>
+    <loc>/r/</loc>
+  </url>
+  
+  <url>
+    <loc>/shell/</loc>
+  </url>
+  
+  <url>
+    <loc>/internet/</loc>
+  </url>
+  
+  <url>
+    <loc>/about/</loc>
+  </url>
+  
+  <url>
+    <loc>/2017/09/16/regression/</loc>
+    <lastmod>2017-09-16T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2017/09/05/enrichment-between-genomic-regions/</loc>
+    <lastmod>2017-09-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2016/09/06/summary-epigenetic-mark-tracks/</loc>
+    <lastmod>2016-09-06T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2016/02/26/word-cloud-in-r/</loc>
+    <lastmod>2016-02-26T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/categories/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/data/</loc>
+    <lastmod>2016-09-06T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/epigenetic/</loc>
+    <lastmod>2016-09-06T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/fixed/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/genome/</loc>
+    <lastmod>2017-09-05T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/</loc>
+    <lastmod>2017-09-16T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/plot/</loc>
+    <lastmod>2016-02-26T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/post/</loc>
+    <lastmod>2017-09-16T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/r/</loc>
+    <lastmod>2017-09-16T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/stats/</loc>
+    <lastmod>2017-09-16T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <lastmod>2016-09-06T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+</urlset>

@@ -1,0 +1,67 @@
+---
+sidebar: true
+weight: 1
+title: Markdown
+output:
+  blogdown::html_page:
+    toc: true
+---
+
+
+<div id="TOC">
+<ul>
+<li><a href="#tips">Tips</a></li>
+<li><a href="#converting-markdown-into-nice-html-pages">Converting Markdown into nice HTML pages</a></li>
+<li><a href="#converting-markdown-into-slides">Converting Markdown into slides</a></li>
+<li><a href="#jekyll-websites">Jekyll websites</a><ul>
+<li><a href="#themes">Themes</a></li>
+<li><a href="#table-of-contents">Table of Contents</a></li>
+<li><a href="#math-formulas">Math formulas</a></li>
+</ul></li>
+</ul>
+</div>
+
+<div id="tips" class="section level2">
+<h2>Tips</h2>
+<ul>
+<li><code>/</code> to add some vertical space/break.</li>
+</ul>
+</div>
+<div id="converting-markdown-into-nice-html-pages" class="section level2">
+<h2>Converting Markdown into nice HTML pages</h2>
+<p>I use RMarkdown. It creates a self-contained HTML document that’s looks nice enough and is easy to share.</p>
+<pre class="sh"><code>Rscript -e &#39;rmarkdown::render(&quot;document.md&quot;)&#39;</code></pre>
+</div>
+<div id="converting-markdown-into-slides" class="section level2">
+<h2>Converting Markdown into slides</h2>
+<p>I use <a href="https://github.com/asanzdiego/markdownslides">MarkdownSlides</a>.</p>
+</div>
+<div id="jekyll-websites" class="section level2">
+<h2>Jekyll websites</h2>
+<p><a href="http://jekyllrb.com/">Jekyll</a> websites are simple Markdown documents that can be converted into a website. <a href="https://pages.github.com/">GitHub</a> uses it to provide a website for a repo.</p>
+<div id="themes" class="section level3">
+<h3>Themes</h3>
+<p>There are several themes <a href="http://jekyllthemes.org/">available</a>. My favorite are the two <a href="http://getpoole.com/">Poole</a> themes, Hyde and Lanyon.</p>
+</div>
+<div id="table-of-contents" class="section level3">
+<h3>Table of Contents</h3>
+<p><code>kramdown</code> automatically creates TOC if it sees :</p>
+<pre class="markdown"><code>* Is replaced by the TOC
+{toc}</code></pre>
+<p>To make it a bit nicer I created a <code>toc.html</code> file in the <code>_include</code> folder with:</p>
+<pre class="html"><code>&lt;nav&gt;
+  &lt;h4&gt;Table of Contents&lt;/h4&gt;
+  * TOC
+  {:toc}
+&lt;/nav&gt;</code></pre>
+<p>Then I call the TOC in each markdown document using (without the <code>\</code>):</p>
+<pre class="markdown"><code>\{\% include toc.html \%\}</code></pre>
+</div>
+<div id="math-formulas" class="section level3">
+<h3>Math formulas</h3>
+<p>I use <a href="http://docs.mathjax.org/en/latest/mathjax.html">MathJax</a> JavaScript display engine. I added to the <em>head</em> of the pages:</p>
+<pre class="html"><code>&lt;script type=&quot;text/javascript&quot; src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot; &gt;&lt;/script&gt;</code></pre>
+<p>Then inline formulas are defined by <code>\\(...\\)</code> (for equations, use <code>\\[...\\]</code>), and they follow <a href="https://en.wikibooks.org/wiki/LaTeX/Mathematics">LaTeX syntax</a>.</p>
+<p>For example, <code>\\(\int_{-\infty}^\infty e^{-x^2}\mathrm{d}x = \sqrt{\pi}\\)</code> produces \(_{-}<sup>e</sup>{-x^2}x = \).</p>
+</div>
+</div>

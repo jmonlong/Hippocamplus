@@ -1,0 +1,146 @@
+---
+title: Summary epigenetic mark tracks
+date: 2016-09-06
+tags: ["genome", "data", "epigenetic"]
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE)
+```
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(magrittr)
+library(GenomicRanges)
+library(data.table)
+library(PopSV)
+library(knitr)
+DOWNLOAD=TRUE ## Should the results be downloaded. If FALSE, everything will be recomputed (takes some time).
+olBins <- function(bins.df, feat.gr, label="ol"){
+  bins.gr = makeGRangesFromDataFrame(bins.df)
+  res.df = data.frame(n=rep(0,nrow(bins.df)), d=rep(0,nrow(bins.df)))
+  colnames(res.df) = paste(label,colnames(res.df), sep=".")
+  res.df[,1] = countOverlaps(bins.gr, feat.gr)
+  feat.gr = reduce(feat.gr)
+  ol = findOverlaps(bins.gr, feat.gr)
+  cov.t = tapply(width(pintersect(bins.gr[queryHits(ol)], feat.gr[subjectHits(ol)])), queryHits(ol), sum)
+  res.df[as.numeric(names(cov.t)),2] = as.numeric(cov.t)
+  res.df[,2] = res.df[,2] / width(bins.gr)
+  bins.df = cbind(bins.df, res.df)
+  bins.df
+}
+```
+
+To assess the potential impact of variants (SNV, SVs) we might want to use some of the public epigentic datasets. The amount and heterogeneity of this data is a bit overwhelming. I would like to get a summary of which regions of the genome are the most functionally important.
+
+The plan is to:
+
++ get annotated **peaks**
++ for the 6 **typical histone marks**
++ in **5-6 tissues**, merging sub-tissues (e.g. brain subregions)
++ keep regions **supported by enough replicates**
+
+Eventually, I could also annotate the regions that are tissue-specific or shared across tissues.
+
+The R-markdown source code is in the website's [GitHub](https://github.com/jmonlong/Hippocamplus/blob/gh-pages/_source/2016-09-06-epigeneticTracks.Rmd).
+
+## AnnotationHub
+
+I'll use the [AnnotationHub](http://bioconductor.org/packages/release/bioc/html/AnnotationHub.html) package, which links Encode and EpigenomeRoadmap data (and more) directly in R. 
+
+I search for *narrowPeak* in *hg19* from H3K27ac, H3K27me3, H3K36me3, H3K4me1, H3K4me3 or H3K9me3, in brain, blood, liver, muscle, lung, kidney, skin or heart. I also look for DNase peaks. Let's see if I can find what I want.
+
+```{r}
+epi.marks = c("H3K27ac", "H3K27me3", "H3K36me3", "H3K4me1", "H3K4me3", "H3K9me3", "dnase")
+tissues = c("brain", "blood", "liver", "muscle", "lung", "kidney", "skin", "heart")
+library(AnnotationHub)
+ah = AnnotationHub()
+snapshotDate(ah) = "2016-08-15"
+
+qres.df = lapply(epi.marks, function(hm){
+  res = lapply(tissues, function(tis){
+    qres <- query(ah, c("hg19",hm, "narrowPeak", tis))
+    good.tracks = which(!grepl("unconsolidated", qres$tags) & (!grepl("dnase",qres$title, ignore.case = TRUE) | grepl("hotspot.fdr", qres$title)))
+    data.frame(mark=hm, tissue=tis, nb.tracks=length(good.tracks))
+  })
+  do.call(rbind, res)
+})
+qres.df = do.call(rbind, qres.df)
+
+tissues.o = qres.df %>% group_by(tissue) %>% summarize(n=sum(nb.tracks)) %>% arrange(n)
+qres.df %<>% mutate(tissue = factor(tissue, levels=tissues.o$tissue))
+ggplot(qres.df, aes(x=mark, y=nb.tracks, fill=tissue)) + geom_bar(stat="identity", position="dodge") + theme_bw() + geom_hline(yintercept=3, linetype=2) + scale_fill_brewer(palette="Set1", name="tissue")
+```
+
+Most tissues have more than 3 tracks for each histone mark. I'll just exclude liver and knidney that don't. DNase is a bit more rare but there is at least one track per tissue. In total, it represents `r sum(subset(qres.df, !(tissue %in% c("liver","kidney")))$nb.tracks)` different tracks, that I want to merge into one track per mark/tissue.
+
+## Download and merge tracks
+
+For each mark/tissue, I download the available tracks, overlap the peaks into sub-peaks (*disjoin*) and keep the pieces supported by more than half the tracks. Finally, these recurrent sub-peaks are stitched (*reduce*) if closer than 500 bp.
+
+Afterwards, the regions for each mark is annotated with the number of tissues with overlapping regions.
+
+```{r}
+epi.marks = c("dnase","H3K27ac", "H3K27me3", "H3K36me3", "H3K4me1", "H3K4me3", "H3K9me3")
+tissues = c("brain", "blood", "muscle", "lung", "skin", "heart")
+
+mergeTracks <- function(gr, nb.tracks){
+  gr.dis = disjoin(gr)
+  gr.dis$nbt = countOverlaps(gr.dis, gr)
+  gr.res = reduce(subset(gr.dis, nbt>nb.tracks/2), min.gapwidth=500)
+}
+
+if(DOWNLOAD){
+  if(!file.exists("epiTracks.RData")) download.file("https://dl.dropboxusercontent.com/s/8c412u1ug2lwrc2/epiTracks.RData?dl=0","epiTracks.RData")
+  load("epiTracks.RData")
+} else {
+  tracks.gr = lapply(epi.marks, function(hm){
+    res = lapply(tissues, function(tis){
+      qres <- query(ah, c("hg19",hm, "narrowPeak", tis))
+      good.tracks = which(!grepl("unconsolidated", qres$tags) & (!grepl("dnase",qres$title, ignore.case = TRUE) | grepl("macs2", qres$title)))
+      gr = lapply(good.tracks, function(ii) qres[[ii]])
+      gr = do.call(c, gr)
+      gr = mergeTracks(gr, nb.tracks=length(good.tracks))
+      gr$tissue = tis
+      gr$mark = hm
+      gr
+    })
+    do.call(c, res)
+  })
+  tracks.gr = do.call(c, tracks.gr)
+  tracks.gr = lapply(unique(tracks.gr$mark), function(hm){
+    tracks.hm = subset(tracks.gr, mark==hm)
+    ol = findOverlaps(tracks.hm, tracks.hm)
+    nb.tis = tapply(tracks.hm$tissue[subjectHits(ol)], queryHits(ol), function(x)length(unique(x)))
+    tracks.hm$nb.tis = NA
+    tracks.hm$nb.tis[as.numeric(names(nb.tis))] = as.numeric(nb.tis)
+    tracks.hm
+  })
+  tracks.gr = do.call(c, tracks.gr)
+  save(tracks.gr, file="epiTracks.RData")
+}
+```
+
+The results were uploaded there: [https://dl.dropboxusercontent.com/s/8c412u1ug2lwrc2/epiTracks.RData?dl=0](https://dl.dropboxusercontent.com/s/8c412u1ug2lwrc2/epiTracks.RData?dl=0).
+
+## Overview
+
+```{r}
+tracks.gr$tissue = factor(tracks.gr$tissue, levels=tissues.o$tissue)
+mcols(tracks.gr) %>% as.data.frame %>% group_by(tissue, mark) %>% summarize(nb.mark=n()) %>% ggplot(aes(x=mark, y=nb.mark, fill=tissue)) + geom_bar(stat="identity", position="dodge") + theme_bw() + scale_fill_brewer(palette="Set1", name="tissue")
+mcols(tracks.gr) %>% as.data.frame %>% group_by(mark, tissue, nb.tis) %>% summarize(n=n()/nb.tis[1]) %>% ggplot(aes(x=nb.tis, y=n, fill=tissue)) + geom_bar(stat="identity") + theme_bw() + ylab("number of regions") + xlab("number of tissues") + facet_wrap(~mark, scales="free") + scale_fill_brewer(palette="Set1", name="tissue") + scale_x_continuous(breaks=1:max(tracks.gr$nb.tis))
+mcols(tracks.gr) %>% as.data.frame %>% filter(nb.tis==1) %>% group_by(mark, tissue) %>% summarize(n=n()) %>% ggplot(aes(x=mark, y=n, fill=tissue)) + geom_bar(stat="identity", position="dodge") + theme_bw() + ylab("number of regions") + scale_fill_brewer(palette="Set1", name="tissue") + ggtitle("Tissue-specific regions")
+```
+
+## Limitations
+
+I searched all tracks with keywords *$tissue*, *$mark* (and *narrowPeak*, *hg19*). 
+I'm **not completely sure that the different tracks come from different replicates.** 
+I think I avoided the "bioinformatics" replicates by taking only the *narrowPeaks*.
+And when there are different sub-tissues (e.g. for brain), I decided to keep only regions supported by half the tracks, but then I **might miss the specific a sub-tissue regions**.
+
+I also made **some arbitrary choices**. 
+For example, in for a particular mark/tissue, I stitch together regions that are at 500 bp or less.
+The main motivation is to reduce the amount of data.
+Also, I'm interested in large variants (SVs), so this resolution is fine.

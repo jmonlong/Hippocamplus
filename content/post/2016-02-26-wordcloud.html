@@ -1,0 +1,22 @@
+---
+title: Word Cloud in R
+date: 2016-02-26
+tags: ["R", "plot"]
+---
+
+
+
+<p>With the <code>wordcloud</code> package.</p>
+<pre class="r"><code>library(wordcloud)</code></pre>
+<p>For example with fake words the command would look like that.</p>
+<pre class="r"><code>createWords &lt;- function(w.l = 3) paste(sample(letters, 
+    w.l, TRUE), collapse = &quot;&quot;)
+words = sapply(1:200, function(e) createWords())
+freq = c(sample(1:50, 190, T), sample(100:150, 10, 
+    T))
+freq = freq/sum(freq)
+wordcloud(words, freq)</code></pre>
+<p><img src="/post/2016-02-26-wordcloud_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<pre class="r"><code>wordcloud(words[1:10], freq, colors = rep(c(&quot;red&quot;, 
+    &quot;blue&quot;), 5), ordered.colors = TRUE)</code></pre>
+<p><img src="/post/2016-02-26-wordcloud_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>

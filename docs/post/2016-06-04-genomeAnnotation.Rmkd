@@ -1,0 +1,408 @@
+---
+title: Exploring basic annotations of the Human genome
+date: 2016-06-04
+tags: ["genome"]
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE)
+```
+
+```{r}
+library(ggplot2)
+library(ggrepel)
+library(GenomicRanges)
+library(dplyr)
+library(PopSV)
+library(magrittr)
+library(knitr)
+library(data.table)
+DOWNLOAD=TRUE
+winsor <- function(x,u=10){
+    if(any(x>=u)) x[x>=u] = u
+    x
+}
+olBins <- function(bins.df, feat.df, label="ol"){
+  bins.gr = makeGRangesFromDataFrame(bins.df)
+  feat.gr = makeGRangesFromDataFrame(feat.df)
+  res.df = data.frame(n=rep(0,nrow(bins.df)), d=rep(0,nrow(bins.df)))
+  colnames(res.df) = paste(label,colnames(res.df), sep=".")
+  res.df[,1] = countOverlaps(bins.gr, feat.gr)
+  feat.gr = reduce(feat.gr)
+  ol = findOverlaps(bins.gr, feat.gr)
+  cov.t = tapply(width(pintersect(bins.gr[queryHits(ol)], feat.gr[subjectHits(ol)])), queryHits(ol), sum)
+  res.df[as.numeric(names(cov.t)),2] = as.numeric(cov.t)
+  res.df[,2] = res.df[,2] / width(bins.gr)
+  bins.df = cbind(bins.df, res.df)
+  bins.df
+}
+library(BSgenome.Hsapiens.UCSC.hg19)
+seql.1.22 = seqlengths(BSgenome.Hsapiens.UCSC.hg19)[paste0("chr",1:22)]
+rand.gr <- function(widths){
+    chrs = apply(rmultinom(length(widths), 1, (seql.1.22/1e3)/sum(seql.1.22/1e3)),2,function(e)which(e==1))
+    starts = runif(length(widths), 0, seql.1.22[chrs]-widths)
+    return(GRanges(chrs, IRanges(starts, width=widths)))
+}
+```
+
+# Quick look at the annotations
+
+## Genes
+
+```{r}
+if(DOWNLOAD & !file.exists("gencode.v19.gtf.gz")) download.file("ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz", "gencode.v19.gtf.gz")
+genes = fread("gunzip -c gencode.v19.gtf.gz", showProgress = FALSE)
+genes = genes %>% as.data.frame %>% filter(V3=="gene") %>% select(V1,V4,V5,V9)
+colnames(genes) = c("chr","start","end","info")
+genes$chr = factor(gsub("chr","",genes$chr), levels=c(1:22,"X","Y"))
+genes = subset(genes, !is.na(chr))
+genes$type = gsub(".*gene_type \"([^\"]+).*","\\1",genes$info)
+genes$name = gsub(".*gene_name \"([^\"]+).*","\\1",genes$info)
+genes$info = NULL
+```
+In Gencode V19 and focusing on autosomes/X/Y, there are `r nrow(genes)` "genes" of different types:
+
+```{r}
+genes %>% group_by(type) %>% summarize(n=n()) %>% arrange(desc(n)) %>% kable
+```
+
+```{r}
+genes$type.f = "other"
+genes$type.f[grepl("RNA", genes$type)] = "RNA"
+genes$type.f[grepl("Mt", genes$type)] = "Mt RNA"
+genes$type.f[genes$type%in%c("pseudogene","lincRNA","protein_coding","miRNA")] = genes$type[genes$type%in%c("pseudogene","lincRNA","protein_coding","miRNA")]
+genes.gr = makeGRangesFromDataFrame(genes)
+```
+
+## Exons
+
+```{r}
+exons = fread("gunzip -c gencode.v19.gtf.gz", showProgress = FALSE)
+exons = exons %>% as.data.frame %>% filter(V3=="exon") %>% select(V1,V4,V5,V9)
+colnames(exons) = c("chr","start","end","info")
+exons$chr = gsub("chr","",exons$chr)
+exons = subset(exons, chr %in% c(1:22,"X","Y"))
+exons$type = gsub(".*gene_type \"([^\"]+).*","\\1",exons$info)
+exons$name = gsub(".*gene_name \"([^\"]+).*","\\1",exons$info)
+exons$exon.nb = as.numeric(gsub(".*exon_number ([^;]+).*","\\1",exons$info))
+exons$exon.nb.f = cut(exons$exon.nb, breaks=c(0,1,2,3,Inf), labels=c(1,2,3,">3"))
+exons$info = NULL
+```
+In Gencode V19 and focusing on autosomes/X/Y, there are `r nrow(exons)` "exons" from different types of genes:
+
+```{r}
+exons %>% group_by(type) %>% summarize(n=n()) %>% arrange(desc(n)) %>% kable
+```
+
+I focus on exons from protein-coding genes because it's what we think about most of the time.
+
+```{r}
+exons = subset(exons, type=="protein_coding")
+exons.gr = makeGRangesFromDataFrame(exons)
+```
+
+## Mappability
+
+The mappability track was produced from the UCSC track. The raw file contains, for each base in the genome, an estimation of how likely a read is correctly mapped to this position. Using a sliding-window approach, I computed the average mappability in regions of size 1 Kbp.
+
+```{r}
+if(DOWNLOAD & !file.exists("map100mer-1kbp.bed.gz")) download.file("https://dl.dropboxusercontent.com/s/i537zjs65dpw34n/map100mer-1kbp.bed.gz?dl=0", "map100mer-1kbp.bed.gz")
+map.df = as.data.frame(fread("gunzip -c map100mer-1kbp.bed.gz", showProgress = FALSE))
+colnames(map.df) = c("chr", "start", "end", "map")
+map.df %<>% mutate(chr=factor(gsub("chr","",chr), levels=c(1:22,"X","Y"))) %>% filter(!is.na(chr))
+```
+
+```{r}
+ggplot(map.df, aes(x=map)) + geom_histogram() + theme_bw() + xlab("Average mappability in 1 Kb regions") + ylab("number of 1 Kb regions")
+map.df %>% group_by(chr) %>% summarize(prop.low = mean(map<.75)) %>% ggplot(aes(x=chr, y=prop.low)) + geom_bar(stat="identity") + theme_bw() + ylab("Proportion of 1 Kbp regions with mappability below 75%") + ylim(0,1)
+```
+
+For later use I also define regions of low-mappability as regions with an average mappability below 0.75, which represents `r round(mean(map.df$map<.75)*100)`% of the genome.
+
+```{r}
+er.gr = map.df %>% filter(map<.75) %>% select(chr, start, end) %>% makeGRangesFromDataFrame
+```
+
+## Centromere, telomeres and gaps
+I group different elements in this class:
+
+```{r}
+if(DOWNLOAD) download.file("http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/cytoBandIdeo.txt.gz","cytoBandIdeo.txt.gz")
+chr.band = read.table("cytoBandIdeo.txt.gz",sep="\t")
+colnames(chr.band)[1:3] = c("chr","start","end")
+if(DOWNLOAD) download.file("http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/gap.txt.gz","gap-hg19.tsv.gz")
+ct = read.table("gap-hg19.tsv.gz",sep="\t")
+ct = ct %>% select(V2,V3,V4,V8)
+colnames(ct) =  c("chr","start","end", "type")
+ct = rbind(ct, chr.band %>% group_by(chr) %>% summarize(start=min(start),end=1e4) %>% mutate(type="telomere"))
+ct = rbind(ct, chr.band %>% group_by(chr) %>% summarize(start=max(end)-1e4,end=max(end)) %>% mutate(type="telomere"))
+centel.gr = ct %>% mutate(chr=gsub("chr","",chr)) %>% makeGRangesFromDataFrame(TRUE)
+centel.gr %>% as.data.frame %>% group_by(type) %>% summarize(n=n(), mean.size.kb=round(mean(end-start)/1e3, 1)) %>% arrange(desc(n)) %>% kable
+```
+
+## Simple repeats
+
+```{r, cache=TRUE}
+if(DOWNLOAD & !file.exists("simpleRepeat.txt.gz")) download.file("http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/simpleRepeat.txt.gz","simpleRepeat.txt.gz")
+sr.df = as.data.frame(fread("gunzip -c simpleRepeat.txt.gz", showProgress = FALSE))
+colnames(sr.df) = c("bin","chrom","chromStart","chromEnd","name","period","copyNum","consensusSize","perMatch","perIndel","score","A","C","G","T","entropy","sequence")
+sr.df = sr.df[,c("chrom","chromStart","chromEnd","period","copyNum","sequence")]
+colnames(sr.df)[1:3] = c("chr","start","end")
+sr.df %>% group_by(sequence) %>% summarize(n=n()) %>% arrange(desc(n)) %>% head(10) %>% kable
+```
+
+In total there are `r nrow(sr.df)` annotated simple repeats.
+
+## RepeatMasker annotation
+
+```{r, cache=TRUE}
+if(DOWNLOAD & !file.exists("rmsk.txt.gz")) download.file("http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/rmsk.txt.gz","rmsk.txt.gz")
+rm.df = as.data.frame(fread("gunzip -c rmsk.txt.gz", showProgress = FALSE))
+colnames(rm.df) = c("bin","swScore","milliDiv","milliDel","milliIns","genoName","genoStart","genoEnd","genoLeft","strand","repName","repClass","repFamily","repStart","repEnd","repLeft","id")
+rm.df = rm.df[,c("genoName","genoStart","genoEnd","repName","repClass","repFamily")]
+colnames(rm.df)[1:3] = c("chr","start","end")
+```
+
+There are different classes of repeats in RepeatMasker annotation:
+
+```{r}
+rm.df %>% group_by(repClass) %>% summarize(n=n()) %>% arrange(desc(n)) %>% kable
+```
+
+I extract DNA satellites. They are grouped in different families:
+
+```{r}
+sat.df = subset(rm.df, repClass=="Satellite")
+sat.df %>% group_by(repName, repFamily) %>% summarize(n=n()) %>% ungroup %>% arrange(desc(n)) %>% kable
+```
+
+I also extract transposable elements.
+
+```{r}
+te.df = subset(rm.df, repClass %in% c("SINE","LINE","LTR","DNA","Other"))
+te.df %>% group_by(repFamily, repClass) %>% summarize(n=n()) %>% ungroup %>% arrange(desc(n)) %>% kable
+```
+
+Moreover they are organized in `r length(unique(te.df$repName))` sub-families.
+
+
+# Genes
+
+## Size
+
+```{r}
+ggplot(genes, aes(x=(end-start)/1e3, fill=type.f)) + geom_histogram() + ylab("number of genes") + xlab("gene length (Kb)") + theme_bw() + scale_x_log10() + scale_fill_brewer(palette="Set1")
+```
+
+The largest annotated genes are
+
+```{r}
+genes %>% arrange(desc(end-start)) %>% head(10) %>% mutate(size.kb=(end-start)/1e3) %>% select(chr, name, type.f, size.kb) %>% kable
+```
+
+The smallest protein-coding annotated genes are
+
+```{r}
+genes %>% filter(type.f=="protein_coding") %>% arrange(end-start) %>% head(10) %>% mutate(size.kb=(end-start)/1e3) %>% select(chr, name, type.f, size.kb) %>% kable
+```
+
+## Density
+Using non-overlapping windows of 1 Mb the gene density looks like this:
+
+```{r}
+gfrag.df = fragment.genome.hg19(1e6, XY.chr = TRUE)
+gfrag.df %<>% mutate(chr=factor(chr, levels=c(1:22,"X","Y")))
+gene.d = genes %>% group_by(type.f) %>% do(olBins(gfrag.df, ., "gene"))
+ggplot(gene.d, aes(x=winsor(gene.n,25), fill=type.f)) + geom_histogram(binwidth=1) + ylab("number of 1 Mb windows") + xlab("number of genes") + theme_bw() + scale_fill_brewer(palette="Set1") + scale_x_continuous(breaks=seq(0,25,5), labels=c(seq(0,20,5),">25"))
+gene.d %>% group_by(chr, type.f) %>% summarize(gene.n=mean(gene.n)) %>% ggplot(aes(x=chr, y=gene.n, colour=type.f, group=type.f)) + geom_point() + geom_line() + theme_bw() + ylab("average number of genes per Mb") + scale_colour_brewer(palette="Set1")
+gene.d %>% filter(type.f=="protein_coding") %>% ggplot(aes(x=start, y=chr)) + geom_tile(aes(fill=gene.n)) + theme_bw() + xlab("position") + geom_tile(fill="yellow", aes(alpha=gene.n==0)) + scale_alpha_manual(values=c(0,1), name="gene desert") + scale_fill_gradient(name="genes\nper Mb") + theme(legend.position=c(1,1), legend.justification=c(1,1)) + ggtitle("Protein-coding genes")
+```
+
+## Mappability
+
+Here I compute how many genes overlap regions of low-mappability (defined previously).Also how many genes are within those regions, defined as genes with at least 50% of their body overlapping low-mappability regions.
+
+```{r, cache=TRUE}
+genes = olBins(genes, er.gr, "lowMap")
+ggplot(genes, aes(x=type.f, fill=lowMap.d>0)) + geom_bar() + theme_bw() + scale_fill_brewer(palette="Set1", name="overlap\nlow-map") + xlab("") + ylab("number of genes")
+ggplot(genes, aes(x=type.f, fill=lowMap.d>0)) + geom_bar(position="fill") + theme_bw() + scale_fill_brewer(palette="Set1", name="overlap\nlow-map") + xlab("") + ylab("proportion of genes")
+ggplot(genes, aes(x=type.f, fill=lowMap.d>.5)) + geom_bar() + theme_bw() + scale_fill_brewer(palette="Set1", name="within\nlow-map") + xlab("") + ylab("number of genes")
+ggplot(genes, aes(x=type.f, fill=lowMap.d>.5)) + geom_bar(position="fill") + theme_bw() + scale_fill_brewer(palette="Set1", name="within\nlow-map") + xlab("") + ylab("proportion of genes")
+```
+
+## Centromere, telomeres and gaps
+```{r, cache=TRUE}
+d.ct = as.data.frame(distanceToNearest(makeGRangesFromDataFrame(genes),centel.gr))
+genes$d.ct = NA
+genes$d.ct[d.ct$queryHits] = d.ct$distance
+genes$type.ct = NA
+genes$type.ct[d.ct$queryHits] = as.character(mcols(centel.gr)$type[d.ct$subjectHits])
+```
+
+As a control, random regions of similar sizes are used.
+
+```{r, cache=TRUE}
+genes.rand = rand.gr(width(sample(genes.gr, 1e4)))
+d.ct = as.data.frame(distanceToNearest(genes.rand,centel.gr))
+genes.rand$d.ct = NA
+genes.rand$d.ct[d.ct$queryHits] = d.ct$distance
+genes.rand$type.ct = NA
+genes.rand$type.ct[d.ct$queryHits] = as.character(mcols(centel.gr)$type[d.ct$subjectHits])
+```
+
+```{r}
+ggplot(subset(genes, d.ct!=0),aes(x=winsor(d.ct/1e6,u=20))) + stat_ecdf(aes(colour=type.f), size=2, alpha=.8) + theme_bw() + xlab("distance to centomere/telomere (Mbp)") + theme(legend.position=c(1,0),legend.justification=c(1,0))  + ylab("cumulative event proportion") + stat_ecdf(data=as.data.frame(subset(genes.rand, d.ct!=0)), linetype=2) + scale_colour_brewer(palette="Set1")
+```
+
+## Summary table
+
+```{r}
+gene.dens = gene.d %>% group_by(type.f) %>% summarize(genePerMb=mean(gene.n))
+genes %>% mutate(kb=(end-start)/1e3) %>% group_by(type.f) %>% summarize(nb=n(),min.kb=min(kb),mean.kb=mean(kb),med.kb=median(kb),max.kb=max(kb), inLowMap=mean(lowMap.d>.5), olLowMap=mean(lowMap.d>0)) %>% merge(gene.dens) %>% arrange(desc(nb)) %>% kable(digits=2)
+```
+
+# Exons
+
+## Size
+
+```{r}
+ggplot(exons, aes(x=winsor(end-start, 1000))) + geom_histogram() + ylab("number of exons") + xlab("exon length (bp)") + theme_bw() + scale_fill_brewer(palette="Set1") + scale_x_continuous(breaks=seq(0,1000,200), labels=c(seq(0,800,200), ">1000"))
+ggplot(exons, aes(y=winsor(end-start, 1000), x=exon.nb.f)) + geom_violin() + xlab("exon order") + ylab("exon length (bp)") + theme_bw() + scale_y_continuous(breaks=seq(0,1000,200), labels=c(seq(0,800,200), ">1000"))
+```
+
+The largest annotated exons are
+
+```{r}
+exons %>% arrange(desc(end-start)) %>% head(10) %>% mutate(size.kb=(end-start)/1e3) %>% select(chr, name, size.kb) %>% kable
+```
+
+The smallest protein-coding annotated exons are
+
+```{r}
+exons %>% arrange(end-start) %>% head(10) %>% mutate(size.kb=(end-start)/1e3) %>% select(chr, name, size.kb) %>% kable
+```
+
+*ToDo: Size per type (first exon, second exon, ...)*
+
+## Density
+Using non-overlapping windows of 1 Mb the gene density looks like this:
+
+```{r}
+gfrag.df = fragment.genome.hg19(1e6)
+exon.d = olBins(gfrag.df, exons, "exon")
+ggplot(exon.d, aes(x=exon.n)) + geom_histogram() + ylab("number of 1 Mb windows") + xlab("number of exons") + theme_bw() + scale_fill_brewer(palette="Set1")
+```
+
+There are, on average, `r mean(exon.d$exon.n)` exons per Mb.
+
+## Mappability
+```{r, cache=TRUE}
+exons = olBins(exons, er.gr, "lowMap")
+ggplot(exons,aes(lowMap.d)) + geom_histogram() + theme_bw() + scale_fill_brewer(palette="Set1") + xlab("proportion overlapping low-mappability regions") + ylab("number of exons")
+```
+
+`r sum(exons$lowMap.d>0)` exons overlap low-mappability regions.
+
+## Centromere, telomeres and gaps
+```{r, cache=TRUE}
+d.ct = as.data.frame(distanceToNearest(makeGRangesFromDataFrame(exons),centel.gr))
+exons$d.ct = NA
+exons$d.ct[d.ct$queryHits] = d.ct$distance
+```
+
+As a control, random regions of similar sizes are used.
+
+```{r, cache=TRUE}
+exons.rand = rand.gr(width(sample(exons.gr, 1e4)))
+d.ct = as.data.frame(distanceToNearest(exons.rand,centel.gr))
+exons.rand$d.ct = NA
+exons.rand$d.ct[d.ct$queryHits] = d.ct$distance
+```
+
+```{r}
+ggplot(subset(exons, d.ct!=0),aes(x=winsor(d.ct/1e6,u=20))) + stat_ecdf(size=2, alpha=.8) + theme_bw() + xlab("distance to centomere/telomere (Mbp)") + theme(legend.position=c(1,0),legend.justification=c(1,0))  + ylab("cumulative event proportion") + stat_ecdf(data=as.data.frame(subset(exons.rand, d.ct!=0)), linetype=2)
+```
+
+# GWAS
+
+# Mappability
+
+## Density
+Using non-overlapping windows of 1 Mb the density of low-mappability regions looks like this:
+
+```{r}
+gfrag.df = fragment.genome.hg19(1e6, XY.chr = TRUE)
+gfrag.df %<>% mutate(chr=factor(chr, levels=c(1:22,"X","Y")))
+map.d =  olBins(gfrag.df, er.gr, "lowMap")
+ggplot(map.d, aes(x=lowMap.d)) + geom_histogram() + ylab("number of 1 Mb windows") + xlab("proportion overlapping low-mappability regions") + theme_bw()
+ggplot(map.d,aes(x=start, y=chr)) + geom_tile(aes(fill=lowMap.d)) + theme_bw() + xlab("position") + geom_tile(fill="yellow", aes(alpha=lowMap.d==1)) + scale_alpha_manual(values=c(0,1), name="mappability null") + scale_fill_gradient(name="proportion\nnon-mappable") + theme(legend.position=c(1,1), legend.justification=c(1,1))
+```
+
+*Yellow regions are 1 Mb regions fully annotated as low-mappability.*
+
+# Segmental duplications
+
+# DNA Satellites
+
+# Centromeres, telomeres and gaps
+
+# Simple repeats
+
+```{r}
+ggplot(sr.df,aes(x=winsor(period,50))) + geom_histogram(binwidth=1) + theme_bw() + ylab("number of simple repeat") + scale_x_continuous(breaks=seq(0,50,5),labels=c(seq(0,45,5),">50")) + xlab("period")
+ggplot(sr.df,aes(x=winsor(copyNum,50))) + geom_histogram(binwidth=1) + theme_bw() + scale_x_log10() + ylab("number of simple repeat") + scale_x_continuous(breaks=seq(0,50,5),labels=c(seq(0,45,5),">50")) + xlab("number of copies")
+ggplot(sr.df,aes(x=winsor(end-start,500))) + geom_histogram() + theme_bw() + ylab("number of simple repeat") + xlab("size (bp)") + scale_x_continuous(breaks=seq(0,500,100),labels=c(seq(0,400,100),">500"))
+ggplot(sr.df,aes(x=winsor(end-start,500))) + stat_ecdf() + theme_bw() + ylab("cumulative proportion of simple repeat") + xlab("size (bp)") + scale_x_continuous(breaks=seq(0,500,100),labels=c(seq(0,400,100),">500"))
+```
+
++ Interestingly, there is much less STR of period 3 than expected. Why ?
++ There is also this burst at copy-number 25. Methodological artifact ?
+
+Grouping the repeats according to their motif, we can ask how frequent is each motif.
+
+```{r}
+sr.s = sr.df %>% mutate(size=end-start) %>% group_by(sequence) %>% summarize(period=round(mean(period)), n=n(), n.100=sum(size>100), n.400=sum(size>400), n.1k=sum(size>1e3), size.mean=mean(size), total.kb=sum(size/1e3)) %>% mutate(period.class=cut(period, breaks=c(0:6,Inf), labels=c(1:6,">6")))
+ggplot(subset(sr.s,n>50), aes(x=n)) + geom_point(aes(y=size.mean, colour=period.class)) + scale_y_log10() + scale_x_log10() + theme_bw() + geom_text_repel(aes(y=size.mean, label=sequence), data=subset(sr.s, n>600 & size.mean>80)) + scale_colour_brewer(name="period",palette="Dark2") + xlab("number of instances in the genome") + ylab("average size (bp)")
+ggplot(subset(sr.s,n>50), aes(x=n)) + geom_point(aes(y=total.kb, colour=period.class)) + scale_y_log10() + scale_x_log10() + theme_bw() + geom_text_repel(aes(y=total.kb, label=sequence), data=subset(sr.s, n>600 & size.mean>80)) + scale_colour_brewer(name="period",palette="Dark2") + xlab("number of instances in the genome") + ylab("total annotated genome (Kbp)")
+```
+
+## Summary tables
+
+Most numerous STRs:
+
+```{r}
+sr.s %>% arrange(desc(n)) %>% head(10) %>% kable(digits=2)
+```
+
+Most numerous in term of instances larger than 100 bp:
+
+```{r}
+sr.s %>% arrange(desc(n.100)) %>% head(10) %>% kable(digits=2)
+```
+
+Most numerous in term of instances larger than 400 bp:
+
+```{r}
+sr.s %>% arrange(desc(n.400)) %>% head(10) %>% kable(digits=2)
+```
+
+Set of large and numerous STRs (names annotated in the previous graphs):
+
+```{r}
+sr.s %>% filter(n>600, size.mean>80) %>% arrange(desc(n))  %>% kable(digits=2)
+```
+
+
+# DNA satellites
+
+```{r}
+ggplot(sat.df,aes(x=end-start, fill=repName)) + geom_histogram() + theme_bw() + scale_x_log10() + ylab("number of simple repeat") + xlab("size (bp)")
+sat.df %>% group_by(repName) %>% summarize(mean.size=mean(end-start)) %>% arrange(mean.size) %>% kable(digits=2)
+ggplot(sat.df,aes(x=end-start)) + stat_ecdf() + theme_bw() + scale_x_log10() + ylab("cumulative proportion of satellites") + xlab("size (bp)")
+```
+
+# Transposable elements
+
+```{r}
+ggplot(te.df,aes(x=end-start, fill=repClass)) + geom_histogram() + theme_bw() + scale_x_log10() + ylab("number of simple repeat") + xlab("size (bp)")
+```
