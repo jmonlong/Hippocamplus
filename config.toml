@@ -1,5 +1,5 @@
 theme = "lanyon-hugo"
-baseURL = 'https://jmonlong.github.io/Hippocamplus'
+baseURL = '/Hippocamplus'
 languageCode = "en-us"
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$", "\\.RData"]
 publishDir = "docs"
