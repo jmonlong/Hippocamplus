@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Hippocamplus </title>
-    <link>/http://jmonlong.github.io/Hippocamplus/tags/r/</link>
+    <link>/Hippocamplus/tags/r/</link>
     <language>en-us</language>
     <author></author>
     <rights>(C) 2017</rights>
@@ -12,10 +12,10 @@
       
         <item>
           <title>Regression</title>
-          <link>/http://jmonlong.github.io/Hippocamplus/2017/09/16/regression/</link>
+          <link>/Hippocamplus/2017/09/16/regression/</link>
           <pubDate>Sat, 16 Sep 2017 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/http://jmonlong.github.io/Hippocamplus/2017/09/16/regression/</guid>
+          <guid>/Hippocamplus/2017/09/16/regression/</guid>
           <description>&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
 library(broom)
 library(magrittr)
@@ -253,7 +253,7 @@ ext.df = do.call(rbind, ext.df)
 ext.df %&amp;gt;% filter(term == &amp;quot;xTRUE&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate)) + 
     geom_density(fill = &amp;quot;grey50&amp;quot;) + facet_grid(ss ~ 
     ., scales = &amp;quot;free&amp;quot;) + theme_bw()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/http://jmonlong.github.io/Hippocamplus/post/2017-09-16-Regression_files/figure-html/lrextsim-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/post/2017-09-16-Regression_files/figure-html/lrextsim-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;It seems like the estimate “inflation” is problematic mostly when there are only 1 or 2 supporting observations. If there are more than 5 supporting observations the estimate is correctly centered in 0.&lt;/p&gt;
 &lt;p&gt;This problem is in fact called the &lt;a href=&#34;https://en.wikipedia.org/wiki/Separation_(statistics)&#34;&gt;problem of separation&lt;/a&gt;. There are two approaches to deal with it:&lt;/p&gt;
 &lt;ol style=&#34;list-style-type: decimal&#34;&gt;
@@ -280,7 +280,7 @@ extrms.df = do.call(rbind, extrms.df)
 extrms.df %&amp;gt;% filter(term == &amp;quot;x&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate)) + 
     geom_density(fill = &amp;quot;grey50&amp;quot;) + facet_grid(ss ~ 
     penalty, scales = &amp;quot;free&amp;quot;) + theme_bw()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/http://jmonlong.github.io/Hippocamplus/post/2017-09-16-Regression_files/figure-html/lrms-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/post/2017-09-16-Regression_files/figure-html/lrms-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;It definitely helps: the estimates are now much closer to 0. I don’t see much difference between penalties 1, 3 or 5.&lt;/p&gt;
 &lt;p&gt;The &lt;a href=&#34;https://cran.r-project.org/web/packages/logistf/index.html&#34;&gt;&lt;code&gt;logistf&lt;/code&gt; package&lt;/a&gt;. It implements Firth’s bias reduction method with its &lt;code&gt;logistf&lt;/code&gt; function.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(logistf)
@@ -298,7 +298,7 @@ extstf.df = do.call(rbind, extstf.df)
 extstf.df %&amp;gt;% filter(term == &amp;quot;xTRUE&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate)) + 
     geom_density(fill = &amp;quot;grey50&amp;quot;) + facet_grid(ss ~ 
     ., scales = &amp;quot;free&amp;quot;) + theme_bw()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/http://jmonlong.github.io/Hippocamplus/post/2017-09-16-Regression_files/figure-html/lrreg-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/post/2017-09-16-Regression_files/figure-html/lrreg-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;This works well too.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -312,7 +312,7 @@ df$y = ifelse(df$x &amp;gt; 40, rnorm(nb.samp, 0, 5) - df$x *
     df$x/300 + 20, df$y)
 ggplot(df, aes(x = x, y = y)) + geom_point(alpha = 0.5) + 
     theme_bw()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/http://jmonlong.github.io/Hippocamplus/post/2017-09-16-Regression_files/figure-html/blm-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/post/2017-09-16-Regression_files/figure-html/blm-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;glm.o = glm(y ~ x, data = df)
 loess.o = loess(y ~ x, data = df)
 library(mgcv)
@@ -328,7 +328,7 @@ pred.df = rbind(df %&amp;gt;% mutate(y = predict(glm.o), model = &amp;quot;glm&a
 ggplot(df, aes(x = x, y = y)) + geom_point(alpha = 0.2) + 
     geom_line(aes(colour = model), size = 2, alpha = 0.9, 
         data = pred.df) + theme_bw() + scale_colour_brewer(palette = &amp;quot;Set1&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/http://jmonlong.github.io/Hippocamplus/post/2017-09-16-Regression_files/figure-html/blmmodels-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/post/2017-09-16-Regression_files/figure-html/blmmodels-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 </description>
         </item>
@@ -337,10 +337,10 @@ ggplot(df, aes(x = x, y = y)) + geom_point(alpha = 0.2) +
       
         <item>
           <title>Word Cloud in R</title>
-          <link>/http://jmonlong.github.io/Hippocamplus/2016/02/26/word-cloud-in-r/</link>
+          <link>/Hippocamplus/2016/02/26/word-cloud-in-r/</link>
           <pubDate>Fri, 26 Feb 2016 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/http://jmonlong.github.io/Hippocamplus/2016/02/26/word-cloud-in-r/</guid>
+          <guid>/Hippocamplus/2016/02/26/word-cloud-in-r/</guid>
           <description>&lt;p&gt;With the &lt;code&gt;wordcloud&lt;/code&gt; package.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(wordcloud)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;For example with fake words the command would look like that.&lt;/p&gt;
@@ -351,10 +351,10 @@ freq = c(sample(1:50, 190, T), sample(100:150, 10,
     T))
 freq = freq/sum(freq)
 wordcloud(words, freq)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/http://jmonlong.github.io/Hippocamplus/post/2016-02-26-wordcloud_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/post/2016-02-26-wordcloud_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;wordcloud(words[1:10], freq, colors = rep(c(&amp;quot;red&amp;quot;, 
     &amp;quot;blue&amp;quot;), 5), ordered.colors = TRUE)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/http://jmonlong.github.io/Hippocamplus/post/2016-02-26-wordcloud_files/figure-html/unnamed-chunk-3-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/post/2016-02-26-wordcloud_files/figure-html/unnamed-chunk-3-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 </description>
         </item>
       

@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Hippocamplus </title>
-    <link>/http://jmonlong.github.io/Hippocamplus/tags/epigenetic/</link>
+    <link>/Hippocamplus/tags/epigenetic/</link>
     <language>en-us</language>
     <author></author>
     <rights>(C) 2017</rights>
@@ -12,10 +12,10 @@
       
         <item>
           <title>Summary epigenetic mark tracks</title>
-          <link>/http://jmonlong.github.io/Hippocamplus/2016/09/06/summary-epigenetic-mark-tracks/</link>
+          <link>/Hippocamplus/2016/09/06/summary-epigenetic-mark-tracks/</link>
           <pubDate>Tue, 06 Sep 2016 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/http://jmonlong.github.io/Hippocamplus/2016/09/06/summary-epigenetic-mark-tracks/</guid>
+          <guid>/Hippocamplus/2016/09/06/summary-epigenetic-mark-tracks/</guid>
           <description>&lt;p&gt;To assess the potential impact of variants (SNV, SVs) we might want to use some of the public epigentic datasets. The amount and heterogeneity of this data is a bit overwhelming. I would like to get a summary of which regions of the genome are the most functionally important.&lt;/p&gt;
 &lt;p&gt;The plan is to:&lt;/p&gt;
 &lt;ul&gt;
@@ -30,7 +30,7 @@
 &lt;h2&gt;AnnotationHub&lt;/h2&gt;
 &lt;p&gt;I’ll use the &lt;a href=&#34;http://bioconductor.org/packages/release/bioc/html/AnnotationHub.html&#34;&gt;AnnotationHub&lt;/a&gt; package, which links Encode and EpigenomeRoadmap data (and more) directly in R.&lt;/p&gt;
 &lt;p&gt;I search for &lt;em&gt;narrowPeak&lt;/em&gt; in &lt;em&gt;hg19&lt;/em&gt; from H3K27ac, H3K27me3, H3K36me3, H3K4me1, H3K4me3 or H3K9me3, in brain, blood, liver, muscle, lung, kidney, skin or heart. I also look for DNase peaks. Let’s see if I can find what I want.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/http://jmonlong.github.io/Hippocamplus/post/2016-09-06-epigeneticTracks_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/post/2016-09-06-epigeneticTracks_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Most tissues have more than 3 tracks for each histone mark. I’ll just exclude liver and knidney that don’t. DNase is a bit more rare but there is at least one track per tissue. In total, it represents 360 different tracks, that I want to merge into one track per mark/tissue.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;download-and-merge-tracks&#34; class=&#34;section level2&#34;&gt;
@@ -41,7 +41,7 @@
 &lt;/div&gt;
 &lt;div id=&#34;overview&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Overview&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;/http://jmonlong.github.io/Hippocamplus/post/2016-09-06-epigeneticTracks_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;img src=&#34;/http://jmonlong.github.io/Hippocamplus/post/2016-09-06-epigeneticTracks_files/figure-html/unnamed-chunk-5-2.png&#34; width=&#34;672&#34; /&gt;&lt;img src=&#34;/http://jmonlong.github.io/Hippocamplus/post/2016-09-06-epigeneticTracks_files/figure-html/unnamed-chunk-5-3.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/post/2016-09-06-epigeneticTracks_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;img src=&#34;/Hippocamplus/post/2016-09-06-epigeneticTracks_files/figure-html/unnamed-chunk-5-2.png&#34; width=&#34;672&#34; /&gt;&lt;img src=&#34;/Hippocamplus/post/2016-09-06-epigeneticTracks_files/figure-html/unnamed-chunk-5-3.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;limitations&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Limitations&lt;/h2&gt;
