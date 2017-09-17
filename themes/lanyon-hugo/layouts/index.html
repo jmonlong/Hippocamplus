@@ -8,7 +8,7 @@
   {{ $thisperma := .Permalink }}
   {{ range .Site.Pages.ByWeight }}
   {{ if isset .Params "sidebar" }}
-  <a class="homelinks" href="{{ .Permalink }}">{{ .Title }}</a>
+    <a class="homelinks" href="{{ .Permalink }}">{{ .Title }}</a>
   {{ end }}
   {{ end }}
 </div>

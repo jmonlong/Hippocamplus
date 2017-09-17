@@ -570,10 +570,20 @@ a.pagination-item:hover {
 }
 
 .homelinks{
-    padding: 0.1rem;
+    padding: 0.2rem;
+    /* margin: 0.7rem; */
+    /* margin-bottom: 1rem; */
     color: black;
+    /* border-radius: .25rem; */
+    /* border: 1px solid #555; */
+    font-size: 1rem;   
+}
+
+.homelinks:hover{
+    background-color: #f5f5f5;
+    text-decoration: none;
 }
 
 .homehead{
-  margin-bottom: 1rem;
+  margin-bottom: 3rem;
 }
