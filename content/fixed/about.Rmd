@@ -4,7 +4,11 @@ sidebar: true
 weight: 10
 ---
 
-### Some links
+## About this website
+
+This is where I put all the useful information I keep on forgetting. Instead of googling the same things over and over, wasting time and server energy I put them here. It's like a second memory, better than my hippocampus, my [hippocamPLUS](https://jmonlong.github.io/Hippocamplus/assets/chandler-lol.gif)...
+
+## About me
 
 + [GitHub profile](https://github.com/jmonlong).
 + [PubMed](http://www.ncbi.nlm.nih.gov/pubmed/?term=Monlong%2C%20Jean[Full%20Author%20Name]%20OR%20Monlong%2C%20Jean[Full%20Investigator%20Name]&cmd=DetailsSearch).
