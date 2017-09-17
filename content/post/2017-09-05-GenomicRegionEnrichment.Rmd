@@ -1,5 +1,4 @@
 ---
-draft: true
 title: Enrichment between genomic regions
 date: 2017-09-05
 tags: ["genome", "stats"]
@@ -11,12 +10,12 @@ knitr::opts_chunk$set(message=FALSE, warning=FALSE, tidy=TRUE, tidy.opts=list(wi
 
 Testing if two sets of genomic regions overlap significantly is not straightforward.
 In the simple situation of regions of 1 bp (e.g. SNVs) we could use a hypergeometric test.
-When the regions are small enough and there are not too many, the hypergeometric test might be a fair approximation as well.
+When the regions are small enough and there are not too many, the hypergeometric test might also be a fair approximation.
 
-But what about annotations with many regions, of variable size, covering the genome ?
-For example overlapping genes and repeats ?
+But when we manipulate many regions of variable size covering the entire genome it's not as straightforward.
+The gene annotation is an example. The repeat annotation is even worse as it covers almost 50% of the genome and contains different families with very different size/location profiles.
 
-```{r}
+```{r libs}
 library(ggplot2)
 library(dplyr)
 library(magrittr)
@@ -54,8 +53,10 @@ sum(width(rep.r)) / 25e7
 
 They cover `r round(100*sum(width(rep.r))/25e7, 2)`% of the chromosome.
 
-The hypergeometric test is applied as if we were sampling bases in the genome and testing if it was covered by a repeat.
+Now if we have another set of regions and we want to know how much they overlap with the repeats we could use the hypergeometric test.
+With this test we assume that we are sampling bases in the genome and testing if it's covered by a repeat.
 In that sense, we expect `r round(100*sum(width(rep.r))/25e7, 2)`% of our regions to overlap a repeat.
+If we compare random regions there shouldn't be a significant overlap and the distribution of the P-value should be flat.
 
 ```{r testhg, cache=TRUE, dependson="rep"}
 testHG <- function(feat.r, nb=1000, size=1, nb.test=3000, total.b = 25e7){
@@ -71,19 +72,22 @@ ht.sim = rbind(data.frame(nb=1000, size=1, pv=testHG(rep.r, 1000, 1)),
                data.frame(nb=1000, size=1000, pv=testHG(rep.r, 1000, 1000)),
                data.frame(nb=100, size=1000, pv=testHG(rep.r, 100, 1000)),
                data.frame(nb=1000, size=100, pv=testHG(rep.r, 1000, 100)))
+```
 
+```{r testhggraph}
 ht.sim %>% mutate(nbsize=paste0(nb, ' x ', size, 'bp')) %>% group_by(nbsize) %>% arrange(pv) %>% mutate(cumprop=(1:n())/n()) %>% ggplot(aes(x=pv, y=cumprop, color=nbsize)) + geom_line() + theme_bw() + geom_abline(linetype=2) + ylab('cumulative proportion') + xlab('P-value') + scale_color_brewer(palette='Set1', name='regions') + theme(legend.justification=c(1,0), legend.position=c(.99,.01))
 ```
 
 As expected, the hypergeometric test works well for region of 1 bp.
 Otherwise the distribution of the P-values is biased.
 The larger the regions the stronger the bias.
-To a lower extent, more regions has means more bias.
+To a lower extent, more regions also means more bias.
 
 ## Using control regions with similar features
 
 We want to control for the size distribution and the total number of regions tested.
-By drawing random regions in the genome with the same sizes we can then apply a logistic regression.
+Instead of the hypergeometric test, we can get control regions and compare their overlap with the actual regions, using a logistic regression for example.
+The control regions must be randomly distributed in the genome but have the same size distribution as our original regions. In the logistic regression we compare the two binary variables: overlapping a repeat or not, being an original region or a control region. 
 
 ```{r contreg, cache=TRUE, dependson="rep"}
 testLR <- function(feat.r, nb=1000, size=1, nb.test=3000){
@@ -101,15 +105,23 @@ lr.sim = rbind(data.frame(nb=1000, size=1, pv=testLR(rep.r, 1000, 1)),
                data.frame(nb=1000, size=1000, pv=testLR(rep.r, 1000, 1000)),
                data.frame(nb=100, size=1000, pv=testLR(rep.r, 100, 1000)),
                data.frame(nb=1000, size=100, pv=testLR(rep.r, 1000, 100)))
+```
 
+```{r contreggraph}
 lr.sim %>% mutate(nbsize=paste0(nb, ' x ', size, 'bp')) %>% group_by(nbsize) %>% arrange(pv) %>% mutate(cumprop=(1:n())/n()) %>% ggplot(aes(x=pv, y=cumprop, color=nbsize)) + geom_line() + theme_bw() + geom_abline(linetype=2) + ylab('cumulative proportion') + xlab('P-value') + scale_color_brewer(palette='Set1', name='regions') + theme(legend.justification=c(1,0), legend.position=c(.99,.01))
 ```
 
-Much better.
+The distribution of the P-values is much better.
 
 ## Controlling for correlated features
 
-```{r contfeat, cache=TRUE, dependson="rep"}
+In the genome, the distribution of genes, repeats, functional regions, and others is not random. Different types of elements tend to be found together while others don't. For example some repeats are located in GC-rich regions and others in AT-rich regions. Transposable elements don't overlap exonic regions much. Their are hotspots of segmental duplications.
+
+Sometimes we want to control for the overlap with one (or more) genomic features to test the independent association of another. For example, we known copy number variants (CNVs) are enriched in segmental duplications and transposable elements are also enriched in segmental duplications. We might want to test if CNVs are independently enriched in regions with transposable elements, controlling for the overlap with segmental duplications.
+
+I tried to simulate a first set of regions that significantly overlaps our repeats and another one that significantly overlaps the first set. That way we should see a significant overlap with repeat when we test them separately, but the second one should be significant when we control for the first one. 
+
+```{r contex}
 corRegions <- function(sizes, feat.r, or=2, max.iter=10, max.pos=25e7){
   reg.r = randRegions(sizes)
   for(ii in 1:or){
@@ -125,31 +137,40 @@ corRegions <- function(sizes, feat.r, or=2, max.iter=10, max.pos=25e7){
   reg.r
 }
 
+## First set of regions
 repcor.r = corRegions(rep(10000, 1000), rep.r)
 cont.r = randRegions(width(repcor.r))
 df = rbind(data.frame(region=TRUE, ol = overlapsAny(repcor.r, rep.r)),
            data.frame(region=FALSE, ol = overlapsAny(cont.r, rep.r)))
 glm(ol~region, data=df, family=binomial()) %>% tidy %>% kable
 
-repcor2.r = corRegions(rep(10000, 1000), rep.r)
-cont.r = randRegions(width(repcor2.r))
-df = rbind(data.frame(region=TRUE, ol = overlapsAny(repcor2.r, rep.r)),
-           data.frame(region=FALSE, ol = overlapsAny(cont.r, rep.r)))
-glm(ol~region, data=df, family=binomial()) %>% tidy %>% kable
-
+## Second set of regions
 seed.r = randRegions(rep(10000, 6000))
 seed.ol = overlapsAny(seed.r, repcor.r)
 repcorcor.r = c(seed.r[seed.ol], seed.r[head(which(!seed.ol), sum(!seed.ol)*.05)])
 cont.r = randRegions(width(repcorcor.r))
+df = rbind(data.frame(region=TRUE, ol = overlapsAny(repcorcor.r, rep.r)),
+           data.frame(region=FALSE, ol = overlapsAny(cont.r, rep.r)))
+glm(ol~region, data=df, family=binomial()) %>% tidy %>% kable
+```
+
+### Extending the logistic regression model
+
+One strategy is to add a variable in the model that represents the effect we want to control for. 
+
+```{r contfeat, cache=TRUE, dependson="rep"}
 df = rbind(data.frame(region=TRUE, ol = overlapsAny(repcorcor.r, rep.r), repcor = overlapsAny(repcorcor.r, repcor.r)),
            data.frame(region=FALSE, ol = overlapsAny(cont.r, rep.r), repcor = overlapsAny(cont.r, repcor.r)))
-glm(ol~region, data=df, family=binomial()) %>% tidy %>% kable
 glm(ol~region+repcor, data=df, family=binomial()) %>% tidy %>% kable
 ```
 
-Another approach is to control the feature overlap in the control regions.
+As expected, adding a variable in the model controls for this.
 
-```{r, cache=TRUE, dependson="rep"}
+### Better control regions
+
+Another approach is to control the specific overlap in the control regions. We want to force our control regions to overlap as much with the feature as the original regions.
+
+```{r, contsim}
 randRegionsCons <- function(reg.r, feat.r, nb.seed=1e6){
   seed.r = randRegions(rep(1, nb.seed))
   dist.df = distanceToNearest(seed.r, feat.r) %>% as.data.frame
@@ -170,45 +191,50 @@ randRegionsCons <- function(reg.r, feat.r, nb.seed=1e6){
   do.call(c, res.r)
 }
 
-seed.r = randRegions(rep(10000, 6000))
-seed.ol = overlapsAny(seed.r, repcor.r)
-repcorcor.r = c(seed.r[seed.ol], seed.r[head(which(!seed.ol), sum(!seed.ol)*.05)])
-cont.r = randRegions(width(repcorcor.r))
-df = rbind(data.frame(region=TRUE, ol = overlapsAny(repcorcor.r, rep.r), repcor = overlapsAny(repcorcor.r, repcor.r)),
-           data.frame(region=FALSE, ol = overlapsAny(cont.r, rep.r), repcor = overlapsAny(cont.r, repcor.r)))
-glm(ol~region, data=df, family=binomial()) %>% tidy %>% kable
-
 contSize.r = randRegionsCons(repcorcor.r, repcor.r)
 df = rbind(data.frame(region=TRUE, ol = overlapsAny(repcorcor.r, rep.r), repcor = overlapsAny(repcorcor.r, repcor.r)),
            data.frame(region=FALSE, ol = overlapsAny(contSize.r, rep.r), repcor = overlapsAny(contSize.r, repcor.r)))
 glm(ol~region, data=df, family=binomial()) %>% tidy %>% kable
+```
 
+It works too. One benefit of this approach is its interpretability: we can directly compare summary metrics using the control regions, e.g. like the proportion of regions overlapping repeats.
+
+```{r contsimsum}
 mean(overlapsAny(repcorcor.r, repcor.r))
 mean(overlapsAny(cont.r, repcor.r))
 mean(overlapsAny(contSize.r, repcor.r))
-
-mean(overlapsAny(repcorcor.r, rep.r))
-mean(overlapsAny(cont.r, rep.r))
-mean(overlapsAny(contSize.r, rep.r))
 ```
 
-Controlling within the logistic regression or using better control regions. What's best ? Power analysis.
+There might be another benefits in special situation with extreme overlap distribution. If only a few regions overlap the feature in the simple control regions, the regression might not correct for it as well as if forcing the control regions to be similar. Maybe there would some differences in power in those cases ?
+
+In practice I would do both: include the variable in the regression model and use regions with controlled overlap.
 
 
 ## Comparing different sets
 
-What if we need to compare two sets of regions with a third one.
-If the two sets are comparable in term of size and total number we could directly compare the overlap or an enrichment estimate (e.g. model estimate).
-If they are not both might be enriched but the estimates may not be directly comparable.
+What if we need to compare sets of regions *A* and *B* with a third one *C*.
+If the *A* and *B* are comparable in term of size and total number we could directly compare the overlap or an enrichment estimate (e.g. model estimate).
+If *A* and *B* have different size distribution or just total number of regions, these estimates may not be directly comparable.
+If they both overlap significantly with *C*, the previous test (control regions + logistic regression) should test them significant.
 Even the P-value might be affected by the difference in size/number between the two sets.
-What should we compare ? 
+But how should we compared them ?
+Which interpretable metric could we use to compare enrichment of two different sets or regions ?
 
 A practical example would be two catalogs of CNVs, say from two different methods, that we want to compare to a functional annotation.
-If say one catalogs has more CNVs, or has larger CNVs, how can we say which one overlaps the best with the functional annotation ?
+If one catalogs has more CNVs, or has larger CNVs, how can we say which one overlaps better with the functional annotation ?
 
-```{r, cache=TRUE}
+I simulate this scenario and compare a few metrics:
+
+- The fold-change in overlap proportion: proportion overlapping / proportion overlapping in control regions.
+- The diff-change in overlap proportion: proportion overlapping - proportion overlapping in control regions.
+- The logistic regression estimate which are log odds ratio.
+
+Well, the main question was how should I simulate this. I ended up simulating two sets with similar odds ratio so we already know which metric will work better... One of the value of simulation is to force us to define the question. Or at least think about it. In this example, forcing two different sets to have similar odds ratio seemed more natural than trying to double the proportion for example. The odds ratio seems more fair to me and might avoid the situation where we are more likely to observe a large effect size just because the regions are rarer/smaller.
+
+Using a set of functional regions, I will try to compare a set of small CNVs and large CNVs. We expect more of the large CNVs to overlap the functional regions by chance.
+
+```{r cnvsim, cache=TRUE}
 fun.r = randRegions(rep(10, 30000))
-
 cnv.sm = randRegions(rep(1000, 1000))
 cnv.lg = randRegions(rep(10000, 1000))
 mean(overlapsAny(cnv.sm, fun.r))
@@ -223,19 +249,37 @@ testLR <- function(reg.r, feat.r){
         glm(ol~region, data=df.sm, family=binomial()) %>% tidy %>% select(term, estimate, p.value))
 }
 
+metrics.df = rbind(testLR(cnv.sm, fun.r) %>% mutate(region='cnv.sm'), testLR(cnv.lg, fun.r) %>% mutate(region='cnv.lg'))
+metrics.df %>% filter(term!= "(Intercept)") %>% select(region, term, estimate) %>% kable
+```
+
+### No association
+
+If the CNVs are not enriched in the functional regions, how do the three metrics compare ?
+
+```{r cnvnoassoc, cache=TRUE, dependson="cnvsim"} 
 null.df = lapply(1:1000, function(ii){
   cnv.sm = randRegions(rep(1000, 1000))
   cnv.lg = randRegions(rep(10000, 1000))
   rbind(testLR(cnv.sm, fun.r) %>% mutate(region='cnv.sm', rep=ii),
         testLR(cnv.lg, fun.r) %>% mutate(region='cnv.lg', rep=ii))
 })
-
 null.df = do.call(rbind, null.df)
-null.df %>% filter(term=='regionTRUE') %>% select(rep, estimate, region) %>% spread(region, estimate) %>% ggplot(aes(x=cnv.sm, y=cnv.lg)) + geom_point(alpha=.5) + theme_bw()
-null.df %>% filter(term=='regionTRUE') %>% ggplot(aes(x=estimate, colour=region)) + geom_density() + theme_bw()
-null.df %>% filter(term=='fold-change') %>% ggplot(aes(x=estimate, colour=region)) + geom_density() + theme_bw()
-null.df %>% filter(term=='diff-change') %>% ggplot(aes(x=estimate, colour=region)) + geom_density() + theme_bw()
+```
 
+```{r cnvnoassocgraph}
+null.df %>% filter(term=='regionTRUE') %>% ggplot(aes(x=estimate, colour=region)) + geom_density() + theme_bw() + geom_vline(xintercept=0)  + ggtitle('log odds ratio')
+null.df %>% filter(term=='fold-change') %>% ggplot(aes(x=estimate, colour=region)) + geom_density() + theme_bw() + geom_vline(xintercept=1) + ggtitle('fold-change')
+null.df %>% filter(term=='diff-change') %>% ggplot(aes(x=estimate, colour=region)) + geom_density() + theme_bw() + geom_vline(xintercept=0) + ggtitle('diff-change')
+```
+
+The three metrics are centered in 0 but the variance of the fold-change metric is much higher for the small CNVs.
+
+### Association
+
+If the odds of overlapping the functional regions are doubled.
+
+```{r cnvassoc, cache=TRUE, dependson="cnvsim"}
 asso.df = lapply(1:1000, function(ii){
   cnv.sm = randRegions(rep(1000, 1000))
   cnv.lg = randRegions(rep(10000, 1000))
@@ -244,27 +288,14 @@ asso.df = lapply(1:1000, function(ii){
   rbind(testLR(cnv.sm, fun.r) %>% mutate(region='cnv.sm', rep=ii),
         testLR(cnv.lg, fun.r) %>% mutate(region='cnv.lg', rep=ii))
 })
-
 asso.df = do.call(rbind, asso.df)
-asso.df %>% filter(term=='regionTRUE') %>% select(rep, estimate, region) %>% spread(region, estimate) %>% ggplot(aes(x=cnv.sm, y=cnv.lg)) + geom_point(alpha=.5) + theme_bw()
-asso.df %>% filter(term=='regionTRUE') %>% ggplot(aes(x=estimate, colour=region)) + geom_density() + theme_bw()
-asso.df %>% filter(term=='fold-change') %>% ggplot(aes(x=estimate, colour=region)) + geom_density() + theme_bw() + geom_vline(xintercept=1)
-asso.df %>% filter(term=='diff-change') %>% ggplot(aes(x=estimate, colour=region)) + geom_density() + theme_bw() + geom_vline(xintercept=0)
-
-asso2.df = lapply(1:1000, function(ii){
-  cnv.sm = randRegions(rep(1000, 1000))
-  cnv.lg = randRegions(rep(10000, 1000))
-  cnv.sm = c(cnv.sm[overlapsAny(cnv.sm, fun.r)], randRegions(rep(1000, 1000)))
-  cnv.lg = c(cnv.lg[overlapsAny(cnv.lg, fun.r)], randRegions(rep(10000, 1000)))
-  cnv.sm = c(cnv.sm[overlapsAny(cnv.sm, fun.r)], randRegions(rep(1000, 1000)))
-  cnv.lg = c(cnv.lg[overlapsAny(cnv.lg, fun.r)], randRegions(rep(10000, 1000)))
-  rbind(testLR(cnv.sm, fun.r) %>% mutate(region='cnv.sm', rep=ii),
-        testLR(cnv.lg, fun.r) %>% mutate(region='cnv.lg', rep=ii))
-})
-
-asso2.df = do.call(rbind, asso2.df)
-asso2.df %>% filter(term=='regionTRUE') %>% select(rep, estimate, region) %>% spread(region, estimate) %>% ggplot(aes(x=cnv.sm, y=cnv.lg)) + geom_point(alpha=.5) + theme_bw()
-asso2.df %>% filter(term=='regionTRUE') %>% ggplot(aes(x=estimate, colour=region)) + geom_density() + theme_bw()
-asso2.df %>% filter(term=='fold-change') %>% ggplot(aes(x=estimate, colour=region)) + geom_density() + theme_bw() + geom_vline(xintercept=1)
-asso2.df %>% filter(term=='diff-change') %>% ggplot(aes(x=estimate, colour=region)) + geom_density() + theme_bw() + geom_vline(xintercept=0)
 ```
+
+```{r cnvassocgraph}
+asso.df %>% filter(term=='regionTRUE') %>% ggplot(aes(x=estimate, colour=region)) + geom_density() + theme_bw() + geom_vline(xintercept=0) + ggtitle('log odds ratio')
+asso.df %>% filter(term=='fold-change') %>% ggplot(aes(x=estimate, colour=region)) + geom_density() + theme_bw() + geom_vline(xintercept=1) + ggtitle('fold-change')
+asso.df %>% filter(term=='diff-change') %>% ggplot(aes(x=estimate, colour=region)) + geom_density() + theme_bw() + geom_vline(xintercept=0) + ggtitle('diff-change')
+```
+
+As expected by construction, only the logistic regression estimate are similar. If we used the fold-change metric it would look like the small CNVs are more enriched; with the diff-change metric the large CNVs would.
+

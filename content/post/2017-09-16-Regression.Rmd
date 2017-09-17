@@ -78,7 +78,9 @@ ext.df = lapply(1:500, function(ii){
   do.call(rbind, res)
 })
 ext.df = do.call(rbind, ext.df)
+```
 
+```{r lrextsimgraph}
 ext.df %>% filter(term=='xTRUE') %>% ggplot(aes(x=estimate)) + geom_density(fill='grey50') + facet_grid(ss~., scales='free') + theme_bw()
 ```
 
@@ -108,6 +110,9 @@ extrms.df = lapply(1:200, function(ii){
   do.call(rbind, res)
 })
 extrms.df = do.call(rbind, extrms.df)
+```
+
+```{r lrmsgraph}
 extrms.df %>% filter(term=='x') %>% ggplot(aes(x=estimate)) + geom_density(fill='grey50') + facet_grid(ss~penalty, scales='free') + theme_bw()
 ```
 
@@ -128,6 +133,9 @@ extstf.df = lapply(1:200, function(ii){
   do.call(rbind, res)
 })
 extstf.df = do.call(rbind, extstf.df)
+```
+
+```{r lrreggraph}
 extstf.df %>% filter(term=='xTRUE') %>% ggplot(aes(x=estimate)) + geom_density(fill='grey50') + facet_grid(ss~., scales='free') + theme_bw()
 ```
 

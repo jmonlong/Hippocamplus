@@ -20,7 +20,7 @@ tags: ["genome", "data", "epigenetic"]
 <h2>AnnotationHub</h2>
 <p>I’ll use the <a href="http://bioconductor.org/packages/release/bioc/html/AnnotationHub.html">AnnotationHub</a> package, which links Encode and EpigenomeRoadmap data (and more) directly in R.</p>
 <p>I search for <em>narrowPeak</em> in <em>hg19</em> from H3K27ac, H3K27me3, H3K36me3, H3K4me1, H3K4me3 or H3K9me3, in brain, blood, liver, muscle, lung, kidney, skin or heart. I also look for DNase peaks. Let’s see if I can find what I want.</p>
-<p><img src="/Hippocamplus/post/2016-09-06-epigeneticTracks_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><img src="/Hippocamplus/post/2016-09-06-epigeneticTracks_files/figure-html/ahgraph-1.png" width="672" /></p>
 <p>Most tissues have more than 3 tracks for each histone mark. I’ll just exclude liver and knidney that don’t. DNase is a bit more rare but there is at least one track per tissue. In total, it represents 360 different tracks, that I want to merge into one track per mark/tissue.</p>
 </div>
 <div id="download-and-merge-tracks" class="section level2">
@@ -31,7 +31,7 @@ tags: ["genome", "data", "epigenetic"]
 </div>
 <div id="overview" class="section level2">
 <h2>Overview</h2>
-<p><img src="/Hippocamplus/post/2016-09-06-epigeneticTracks_files/figure-html/unnamed-chunk-5-1.png" width="672" /><img src="/Hippocamplus/post/2016-09-06-epigeneticTracks_files/figure-html/unnamed-chunk-5-2.png" width="672" /><img src="/Hippocamplus/post/2016-09-06-epigeneticTracks_files/figure-html/unnamed-chunk-5-3.png" width="672" /></p>
+<p><img src="/Hippocamplus/post/2016-09-06-epigeneticTracks_files/figure-html/overview-1.png" width="672" /><img src="/Hippocamplus/post/2016-09-06-epigeneticTracks_files/figure-html/overview-2.png" width="672" /><img src="/Hippocamplus/post/2016-09-06-epigeneticTracks_files/figure-html/overview-3.png" width="672" /></p>
 </div>
 <div id="limitations" class="section level2">
 <h2>Limitations</h2>

@@ -8,7 +8,7 @@ tags: ["genome", "data", "epigenetic"]
 knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE)
 ```
 
-```{r}
+```{r libs}
 library(ggplot2)
 library(dplyr)
 library(magrittr)
@@ -51,7 +51,7 @@ I'll use the [AnnotationHub](http://bioconductor.org/packages/release/bioc/html/
 
 I search for *narrowPeak* in *hg19* from H3K27ac, H3K27me3, H3K36me3, H3K4me1, H3K4me3 or H3K9me3, in brain, blood, liver, muscle, lung, kidney, skin or heart. I also look for DNase peaks. Let's see if I can find what I want.
 
-```{r, cache=TRUE}
+```{r ah, cache=TRUE}
 epi.marks = c("H3K27ac", "H3K27me3", "H3K36me3", "H3K4me1", "H3K4me3", "H3K9me3", "dnase")
 tissues = c("brain", "blood", "liver", "muscle", "lung", "kidney", "skin", "heart")
 library(AnnotationHub)
@@ -67,11 +67,14 @@ qres.df = lapply(epi.marks, function(hm){
   do.call(rbind, res)
 })
 qres.df = do.call(rbind, qres.df)
+```
 
+```{r ahgraph}
 tissues.o = qres.df %>% group_by(tissue) %>% summarize(n=sum(nb.tracks)) %>% arrange(n)
 qres.df %<>% mutate(tissue = factor(tissue, levels=tissues.o$tissue))
 ggplot(qres.df, aes(x=mark, y=nb.tracks, fill=tissue)) + geom_bar(stat="identity", position="dodge") + theme_bw() + geom_hline(yintercept=3, linetype=2) + scale_fill_brewer(palette="Set1", name="tissue")
 ```
+
 
 Most tissues have more than 3 tracks for each histone mark. I'll just exclude liver and knidney that don't. DNase is a bit more rare but there is at least one track per tissue. In total, it represents `r sum(subset(qres.df, !(tissue %in% c("liver","kidney")))$nb.tracks)` different tracks, that I want to merge into one track per mark/tissue.
 
@@ -81,7 +84,7 @@ For each mark/tissue, I download the available tracks, overlap the peaks into su
 
 Afterwards, the regions for each mark is annotated with the number of tissues with overlapping regions.
 
-```{r}
+```{r tracks}
 epi.marks = c("dnase","H3K27ac", "H3K27me3", "H3K36me3", "H3K4me1", "H3K4me3", "H3K9me3")
 tissues = c("brain", "blood", "muscle", "lung", "skin", "heart")
 
@@ -126,7 +129,7 @@ The results were uploaded there: [https://dl.dropboxusercontent.com/s/8c412u1ug2
 
 ## Overview
 
-```{r}
+```{r overview}
 tracks.gr$tissue = factor(tracks.gr$tissue, levels=tissues.o$tissue)
 mcols(tracks.gr) %>% as.data.frame %>% group_by(tissue, mark) %>% summarize(nb.mark=n()) %>% ggplot(aes(x=mark, y=nb.mark, fill=tissue)) + geom_bar(stat="identity", position="dodge") + theme_bw() + scale_fill_brewer(palette="Set1", name="tissue")
 mcols(tracks.gr) %>% as.data.frame %>% group_by(mark, tissue, nb.tis) %>% summarize(n=n()/nb.tis[1]) %>% ggplot(aes(x=nb.tis, y=n, fill=tissue)) + geom_bar(stat="identity") + theme_bw() + ylab("number of regions") + xlab("number of tissues") + facet_wrap(~mark, scales="free") + scale_fill_brewer(palette="Set1", name="tissue") + scale_x_continuous(breaks=1:max(tracks.gr$nb.tis))

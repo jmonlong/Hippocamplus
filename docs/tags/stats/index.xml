@@ -46,17 +46,17 @@ glm(y ~ x, data = df, family = binomial()) %&amp;gt;% tidy %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.8383292&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.2992105&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-2.801804&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0050818&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.5947071&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.3114205&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-1.909659&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0561771&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;xTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.4997277&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4292843&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;3.493554&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0004766&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.2337871&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4211794&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.929362&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0033966&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -75,17 +75,17 @@ glm(y ~ x, data = df, family = binomial()) %&amp;gt;% tidy %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.8383292&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.2992105&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-2.801804&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0050818&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.4228569&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.2951514&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-1.432678&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.1519499&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;yTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.4997277&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4292843&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;3.493554&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0004766&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.2337871&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4211793&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.929363&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0033966&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -105,24 +105,24 @@ glm(y ~ x + z, data = df, family = binomial()) %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.4876009&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4171234&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-1.168961&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.2424195&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.5527388&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4601252&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-1.2012792&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.2296429&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;xTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.5884533&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4429267&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;3.586266&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0003354&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.2353795&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4214607&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.9311852&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0033767&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;z&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.8386753&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.7202839&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-1.164368&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.2442750&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.0867747&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.7018381&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.1236392&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.9016009&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -141,24 +141,24 @@ glm(y ~ x + z, data = df, family = binomial()) %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-1.431641&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4978004&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-2.875935&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0040283&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.5253454&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4595636&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-1.1431399&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.2529805&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;yTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.590289&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4433146&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;3.587270&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0003342&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.2354067&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4214656&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.9312159&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0033764&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;z&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.149841&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.7287231&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.577884&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.1145922&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.2064052&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.7066182&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.2921028&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.7702080&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -182,17 +182,17 @@ glm(y ~ x + z, data = df, family = binomial()) %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.8383292&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.2992105&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-2.801804&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0050818&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.5947071&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.3114205&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-1.909659&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0561771&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;xTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.4997277&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4292843&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;3.493554&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0004766&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.2337871&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4211794&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.929362&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0033966&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -201,7 +201,7 @@ glm(y ~ x + z, data = df, family = binomial()) %&amp;gt;%
 odds.y.ifnotx = mean(subset(df, !x)$y)/mean(!subset(df, 
     !x)$y)
 log(odds.y.ifx/odds.y.ifnotx)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 1.499728&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 1.233787&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;extreme-cases&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Extreme cases&lt;/h3&gt;
@@ -227,14 +227,14 @@ glm(y ~ x, data = df, family = binomial()) %&amp;gt;% tidy %&amp;gt;%
 &lt;td align=&#34;right&#34;&gt;0.1010961&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;0.2012644&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;0.5023050&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.615453&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.6154530&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;xTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-15.6671644&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1455.3975463&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.0107649&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.991411&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;15.4649721&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1455.3975462&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0106259&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.9915219&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -248,12 +248,11 @@ glm(y ~ x, data = df, family = binomial()) %&amp;gt;% tidy %&amp;gt;%
     })
     do.call(rbind, res)
 })
-ext.df = do.call(rbind, ext.df)
-
-ext.df %&amp;gt;% filter(term == &amp;quot;xTRUE&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate)) + 
+ext.df = do.call(rbind, ext.df)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ext.df %&amp;gt;% filter(term == &amp;quot;xTRUE&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate)) + 
     geom_density(fill = &amp;quot;grey50&amp;quot;) + facet_grid(ss ~ 
     ., scales = &amp;quot;free&amp;quot;) + theme_bw()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-16-Regression_files/figure-html/lrextsim-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-16-Regression_files/figure-html/lrextsimgraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;It seems like the estimate “inflation” is problematic mostly when there are only 1 or 2 supporting observations. If there are more than 5 supporting observations the estimate is correctly centered in 0.&lt;/p&gt;
 &lt;p&gt;This problem is in fact called the &lt;a href=&#34;https://en.wikipedia.org/wiki/Separation_(statistics)&#34;&gt;problem of separation&lt;/a&gt;. There are two approaches to deal with it:&lt;/p&gt;
 &lt;ol style=&#34;list-style-type: decimal&#34;&gt;
@@ -276,11 +275,11 @@ extrms.df = lapply(1:200, function(ii) {
     })
     do.call(rbind, res)
 })
-extrms.df = do.call(rbind, extrms.df)
-extrms.df %&amp;gt;% filter(term == &amp;quot;x&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate)) + 
+extrms.df = do.call(rbind, extrms.df)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;extrms.df %&amp;gt;% filter(term == &amp;quot;x&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate)) + 
     geom_density(fill = &amp;quot;grey50&amp;quot;) + facet_grid(ss ~ 
     penalty, scales = &amp;quot;free&amp;quot;) + theme_bw()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-16-Regression_files/figure-html/lrms-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-16-Regression_files/figure-html/lrmsgraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;It definitely helps: the estimates are now much closer to 0. I don’t see much difference between penalties 1, 3 or 5.&lt;/p&gt;
 &lt;p&gt;The &lt;a href=&#34;https://cran.r-project.org/web/packages/logistf/index.html&#34;&gt;&lt;code&gt;logistf&lt;/code&gt; package&lt;/a&gt;. It implements Firth’s bias reduction method with its &lt;code&gt;logistf&lt;/code&gt; function.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(logistf)
@@ -294,11 +293,11 @@ extstf.df = lapply(1:200, function(ii) {
     })
     do.call(rbind, res)
 })
-extstf.df = do.call(rbind, extstf.df)
-extstf.df %&amp;gt;% filter(term == &amp;quot;xTRUE&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate)) + 
+extstf.df = do.call(rbind, extstf.df)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;extstf.df %&amp;gt;% filter(term == &amp;quot;xTRUE&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate)) + 
     geom_density(fill = &amp;quot;grey50&amp;quot;) + facet_grid(ss ~ 
     ., scales = &amp;quot;free&amp;quot;) + theme_bw()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-16-Regression_files/figure-html/lrreg-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-16-Regression_files/figure-html/lrreggraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;This works well too.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -341,8 +340,8 @@ ggplot(df, aes(x = x, y = y)) + geom_point(alpha = 0.2) +
           <pubDate>Tue, 05 Sep 2017 00:00:00 UTC</pubDate>
           <author></author>
           <guid>/Hippocamplus/2017/09/05/enrichment-between-genomic-regions/</guid>
-          <description>&lt;p&gt;Testing if two sets of genomic regions overlap significantly is not straightforward. In the simple situation of regions of 1 bp (e.g. SNVs) we could use a hypergeometric test. When the regions are small enough and there are not too many, the hypergeometric test might be a fair approximation as well.&lt;/p&gt;
-&lt;p&gt;But what about annotations with many regions, of variable size, covering the genome ? For example overlapping genes and repeats ?&lt;/p&gt;
+          <description>&lt;p&gt;Testing if two sets of genomic regions overlap significantly is not straightforward. In the simple situation of regions of 1 bp (e.g. SNVs) we could use a hypergeometric test. When the regions are small enough and there are not too many, the hypergeometric test might also be a fair approximation.&lt;/p&gt;
+&lt;p&gt;But when we manipulate many regions of variable size covering the entire genome it’s not as straightforward. The gene annotation is an example. The repeat annotation is even worse as it covers almost 50% of the genome and contains different families with very different size/location profiles.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
 library(dplyr)
 library(magrittr)
@@ -369,9 +368,9 @@ randRegions &amp;lt;- function(sizes, max.pos = 2.5e+08, max.iter = 10) {
 &lt;p&gt;Now some regions will be our “repeats”: 10,000 regions from size 10 bp to 6 Kbp.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;rep.r = randRegions(runif(10000, 10, 6000))
 sum(width(rep.r))/2.5e+08&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 0.1207039&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;They cover 12.07% of the chromosome.&lt;/p&gt;
-&lt;p&gt;The hypergeometric test is applied as if we were sampling bases in the genome and testing if it was covered by a repeat. In that sense, we expect 12.07% of our regions to overlap a repeat.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.1196666&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;They cover 11.97% of the chromosome.&lt;/p&gt;
+&lt;p&gt;Now if we have another set of regions and we want to know how much they overlap with the repeats we could use the hypergeometric test. With this test we assume that we are sampling bases in the genome and testing if it’s covered by a repeat. In that sense, we expect 11.97% of our regions to overlap a repeat. If we compare random regions there shouldn’t be a significant overlap and the distribution of the P-value should be flat.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;testHG &amp;lt;- function(feat.r, nb = 1000, size = 1, nb.test = 3000, 
     total.b = 2.5e+08) {
     exp.b = sum(width(feat.r))
@@ -387,9 +386,8 @@ ht.sim = rbind(data.frame(nb = 1000, size = 1, pv = testHG(rep.r,
     1000, 1)), data.frame(nb = 1000, size = 1000, pv = testHG(rep.r, 
     1000, 1000)), data.frame(nb = 100, size = 1000, 
     pv = testHG(rep.r, 100, 1000)), data.frame(nb = 1000, 
-    size = 100, pv = testHG(rep.r, 1000, 100)))
-
-ht.sim %&amp;gt;% mutate(nbsize = paste0(nb, &amp;quot; x &amp;quot;, size, 
+    size = 100, pv = testHG(rep.r, 1000, 100)))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ht.sim %&amp;gt;% mutate(nbsize = paste0(nb, &amp;quot; x &amp;quot;, size, 
     &amp;quot;bp&amp;quot;)) %&amp;gt;% group_by(nbsize) %&amp;gt;% arrange(pv) %&amp;gt;% 
     mutate(cumprop = (1:n())/n()) %&amp;gt;% ggplot(aes(x = pv, 
     y = cumprop, color = nbsize)) + geom_line() + theme_bw() + 
@@ -397,12 +395,12 @@ ht.sim %&amp;gt;% mutate(nbsize = paste0(nb, &amp;quot; x &amp;quot;, size,
     xlab(&amp;quot;P-value&amp;quot;) + scale_color_brewer(palette = &amp;quot;Set1&amp;quot;, 
     name = &amp;quot;regions&amp;quot;) + theme(legend.justification = c(1, 
     0), legend.position = c(0.99, 0.01))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/testhg-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;As expected, the hypergeometric test works well for region of 1 bp. Otherwise the distribution of the P-values is biased. The larger the regions the stronger the bias. To a lower extent, more regions has means more bias.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/testhggraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;As expected, the hypergeometric test works well for region of 1 bp. Otherwise the distribution of the P-values is biased. The larger the regions the stronger the bias. To a lower extent, more regions also means more bias.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;using-control-regions-with-similar-features&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Using control regions with similar features&lt;/h2&gt;
-&lt;p&gt;We want to control for the size distribution and the total number of regions tested. By drawing random regions in the genome with the same sizes we can then apply a logistic regression.&lt;/p&gt;
+&lt;p&gt;We want to control for the size distribution and the total number of regions tested. Instead of the hypergeometric test, we can get control regions and compare their overlap with the actual regions, using a logistic regression for example. The control regions must be randomly distributed in the genome but have the same size distribution as our original regions. In the logistic regression we compare the two binary variables: overlapping a repeat or not, being an original region or a control region.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;testLR &amp;lt;- function(feat.r, nb = 1000, size = 1, nb.test = 3000) {
     sapply(1:nb.test, function(ii) {
         reg.r = randRegions(rep(size, nb))
@@ -420,9 +418,8 @@ lr.sim = rbind(data.frame(nb = 1000, size = 1, pv = testLR(rep.r,
     1000, 1)), data.frame(nb = 1000, size = 1000, pv = testLR(rep.r, 
     1000, 1000)), data.frame(nb = 100, size = 1000, 
     pv = testLR(rep.r, 100, 1000)), data.frame(nb = 1000, 
-    size = 100, pv = testLR(rep.r, 1000, 100)))
-
-lr.sim %&amp;gt;% mutate(nbsize = paste0(nb, &amp;quot; x &amp;quot;, size, 
+    size = 100, pv = testLR(rep.r, 1000, 100)))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;lr.sim %&amp;gt;% mutate(nbsize = paste0(nb, &amp;quot; x &amp;quot;, size, 
     &amp;quot;bp&amp;quot;)) %&amp;gt;% group_by(nbsize) %&amp;gt;% arrange(pv) %&amp;gt;% 
     mutate(cumprop = (1:n())/n()) %&amp;gt;% ggplot(aes(x = pv, 
     y = cumprop, color = nbsize)) + geom_line() + theme_bw() + 
@@ -430,11 +427,14 @@ lr.sim %&amp;gt;% mutate(nbsize = paste0(nb, &amp;quot; x &amp;quot;, size,
     xlab(&amp;quot;P-value&amp;quot;) + scale_color_brewer(palette = &amp;quot;Set1&amp;quot;, 
     name = &amp;quot;regions&amp;quot;) + theme(legend.justification = c(1, 
     0), legend.position = c(0.99, 0.01))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/contreg-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;Much better.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/contreggraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;The distribution of the P-values is much better.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;controlling-for-correlated-features&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Controlling for correlated features&lt;/h2&gt;
+&lt;p&gt;In the genome, the distribution of genes, repeats, functional regions, and others is not random. Different types of elements tend to be found together while others don’t. For example some repeats are located in GC-rich regions and others in AT-rich regions. Transposable elements don’t overlap exonic regions much. Their are hotspots of segmental duplications.&lt;/p&gt;
+&lt;p&gt;Sometimes we want to control for the overlap with one (or more) genomic features to test the independent association of another. For example, we known copy number variants (CNVs) are enriched in segmental duplications and transposable elements are also enriched in segmental duplications. We might want to test if CNVs are independently enriched in regions with transposable elements, controlling for the overlap with segmental duplications.&lt;/p&gt;
+&lt;p&gt;I tried to simulate a first set of regions that significantly overlaps our repeats and another one that significantly overlaps the first set. That way we should see a significant overlap with repeat when we test them separately, but the second one should be significant when we control for the first one.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;corRegions &amp;lt;- function(sizes, feat.r, or = 2, max.iter = 10, 
     max.pos = 2.5e+08) {
     reg.r = randRegions(sizes)
@@ -453,6 +453,7 @@ lr.sim %&amp;gt;% mutate(nbsize = paste0(nb, &amp;quot; x &amp;quot;, size,
     reg.r
 }
 
+## First set of regions
 repcor.r = corRegions(rep(10000, 1000), rep.r)
 cont.r = randRegions(width(repcor.r))
 df = rbind(data.frame(region = TRUE, ol = overlapsAny(repcor.r, 
@@ -473,23 +474,27 @@ glm(ol ~ region, data = df, family = binomial()) %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.2930884&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0471909&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-6.210691&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.2375323&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0464770&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-5.11075&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3e-07&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;regionTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.8205155&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0675423&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;12.148169&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.8549335&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0670786&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;12.74525&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0e+00&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;repcor2.r = corRegions(rep(10000, 1000), rep.r)
-cont.r = randRegions(width(repcor2.r))
-df = rbind(data.frame(region = TRUE, ol = overlapsAny(repcor2.r, 
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;## Second set of regions
+seed.r = randRegions(rep(10000, 6000))
+seed.ol = overlapsAny(seed.r, repcor.r)
+repcorcor.r = c(seed.r[seed.ol], seed.r[head(which(!seed.ol), 
+    sum(!seed.ol) * 0.05)])
+cont.r = randRegions(width(repcorcor.r))
+df = rbind(data.frame(region = TRUE, ol = overlapsAny(repcorcor.r, 
     rep.r)), data.frame(region = FALSE, ol = overlapsAny(cont.r, 
     rep.r)))
 glm(ol ~ region, data = df, family = binomial()) %&amp;gt;% 
@@ -507,30 +512,28 @@ glm(ol ~ region, data = df, family = binomial()) %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.2428037&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0464793&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-5.223916&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;2e-07&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.2231436&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0590620&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-3.778125&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0001580&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;regionTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.8892097&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0672260&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;13.227165&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0e+00&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.2214209&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0832684&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.659123&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0078344&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;seed.r = randRegions(rep(10000, 6000))
-seed.ol = overlapsAny(seed.r, repcor.r)
-repcorcor.r = c(seed.r[seed.ol], seed.r[head(which(!seed.ol), 
-    sum(!seed.ol) * 0.05)])
-cont.r = randRegions(width(repcorcor.r))
-df = rbind(data.frame(region = TRUE, ol = overlapsAny(repcorcor.r, 
+&lt;div id=&#34;extending-the-logistic-regression-model&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Extending the logistic regression model&lt;/h3&gt;
+&lt;p&gt;One strategy is to add a variable in the model that represents the effect we want to control for.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df = rbind(data.frame(region = TRUE, ol = overlapsAny(repcorcor.r, 
     rep.r), repcor = overlapsAny(repcorcor.r, repcor.r)), 
     data.frame(region = FALSE, ol = overlapsAny(cont.r, 
         rep.r), repcor = overlapsAny(cont.r, repcor.r)))
-glm(ol ~ region, data = df, family = binomial()) %&amp;gt;% 
+glm(ol ~ region + repcor, data = df, family = binomial()) %&amp;gt;% 
     tidy %&amp;gt;% kable&lt;/code&gt;&lt;/pre&gt;
 &lt;table&gt;
 &lt;thead&gt;
@@ -545,57 +548,32 @@ glm(ol ~ region, data = df, family = binomial()) %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.1968529&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0602936&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-3.264905&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0010950&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.2817899&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0612109&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-4.6035936&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0000042&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;regionTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.1842514&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0850636&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;2.166043&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0303079&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;glm(ol ~ region + repcor, data = df, family = binomial()) %&amp;gt;% 
-    tidy %&amp;gt;% kable&lt;/code&gt;&lt;/pre&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr class=&#34;header&#34;&gt;
-&lt;th align=&#34;left&#34;&gt;term&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;estimate&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;std.error&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;statistic&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;p.value&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.2454674&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0623406&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-3.9375179&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0000823&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;regionTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.0366057&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.1103811&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.3316304&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.7401684&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.0452678&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.1093757&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.4138742&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.6789663&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;repcorTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.3500336&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.1107942&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;3.1593145&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0015814&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4156934&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.1096425&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3.7913531&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0001498&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;p&gt;Another approach is to control the feature overlap in the control regions.&lt;/p&gt;
+&lt;p&gt;As expected, adding a variable in the model controls for this.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;better-control-regions&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Better control regions&lt;/h3&gt;
+&lt;p&gt;Another approach is to control the specific overlap in the control regions. We want to force our control regions to overlap as much with the feature as the original regions.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;randRegionsCons &amp;lt;- function(reg.r, feat.r, nb.seed = 1e+06) {
     seed.r = randRegions(rep(1, nb.seed))
     dist.df = distanceToNearest(seed.r, feat.r) %&amp;gt;% 
@@ -621,45 +599,7 @@ glm(ol ~ region, data = df, family = binomial()) %&amp;gt;%
     do.call(c, res.r)
 }
 
-seed.r = randRegions(rep(10000, 6000))
-seed.ol = overlapsAny(seed.r, repcor.r)
-repcorcor.r = c(seed.r[seed.ol], seed.r[head(which(!seed.ol), 
-    sum(!seed.ol) * 0.05)])
-cont.r = randRegions(width(repcorcor.r))
-df = rbind(data.frame(region = TRUE, ol = overlapsAny(repcorcor.r, 
-    rep.r), repcor = overlapsAny(repcorcor.r, repcor.r)), 
-    data.frame(region = FALSE, ol = overlapsAny(cont.r, 
-        rep.r), repcor = overlapsAny(cont.r, repcor.r)))
-glm(ol ~ region, data = df, family = binomial()) %&amp;gt;% 
-    tidy %&amp;gt;% kable&lt;/code&gt;&lt;/pre&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr class=&#34;header&#34;&gt;
-&lt;th align=&#34;left&#34;&gt;term&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;estimate&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;std.error&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;statistic&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;p.value&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.2683889&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0612078&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-4.384877&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.16e-05&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;regionTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.3659824&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0862266&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;4.244427&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;2.19e-05&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;contSize.r = randRegionsCons(repcorcor.r, repcor.r)
+contSize.r = randRegionsCons(repcorcor.r, repcor.r)
 df = rbind(data.frame(region = TRUE, ol = overlapsAny(repcorcor.r, 
     rep.r), repcor = overlapsAny(repcorcor.r, repcor.r)), 
     data.frame(region = FALSE, ol = overlapsAny(contSize.r, 
@@ -679,46 +619,50 @@ glm(ol ~ region, data = df, family = binomial()) %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.0276006&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0606676&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.454949&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.6491459&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.1709578&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0589111&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.901961&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0037083&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;regionTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.1251941&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0858439&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.458393&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.1447322&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.1726805&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0831615&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-2.076448&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0378526&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
+&lt;p&gt;It works too. One benefit of this approach is its interpretability: we can directly compare summary metrics using the control regions, e.g. like the proportion of regions overlapping repeats.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mean(overlapsAny(repcorcor.r, repcor.r))&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 0.7626495&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.7812231&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mean(overlapsAny(cont.r, repcor.r))&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 0.149954&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.1395349&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mean(overlapsAny(contSize.r, repcor.r))&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 0.7626495&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mean(overlapsAny(repcorcor.r, rep.r))&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 0.524379&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mean(overlapsAny(cont.r, rep.r))&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 0.4333027&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mean(overlapsAny(contSize.r, rep.r))&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 0.4931003&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Controlling within the logistic regression or using better control regions. What’s best ? Power analysis.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.7812231&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;There might be another benefits in special situation with extreme overlap distribution. If only a few regions overlap the feature in the simple control regions, the regression might not correct for it as well as if forcing the control regions to be similar. Maybe there would some differences in power in those cases ?&lt;/p&gt;
+&lt;p&gt;In practice I would do both: include the variable in the regression model and use regions with controlled overlap.&lt;/p&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;comparing-different-sets&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Comparing different sets&lt;/h2&gt;
-&lt;p&gt;What if we need to compare two sets of regions with a third one. If the two sets are comparable in term of size and total number we could directly compare the overlap or an enrichment estimate (e.g. model estimate). If they are not both might be enriched but the estimates may not be directly comparable. Even the P-value might be affected by the difference in size/number between the two sets. What should we compare ?&lt;/p&gt;
-&lt;p&gt;A practical example would be two catalogs of CNVs, say from two different methods, that we want to compare to a functional annotation. If say one catalogs has more CNVs, or has larger CNVs, how can we say which one overlaps the best with the functional annotation ?&lt;/p&gt;
+&lt;p&gt;What if we need to compare sets of regions &lt;em&gt;A&lt;/em&gt; and &lt;em&gt;B&lt;/em&gt; with a third one &lt;em&gt;C&lt;/em&gt;. If the &lt;em&gt;A&lt;/em&gt; and &lt;em&gt;B&lt;/em&gt; are comparable in term of size and total number we could directly compare the overlap or an enrichment estimate (e.g. model estimate). If &lt;em&gt;A&lt;/em&gt; and &lt;em&gt;B&lt;/em&gt; have different size distribution or just total number of regions, these estimates may not be directly comparable. If they both overlap significantly with &lt;em&gt;C&lt;/em&gt;, the previous test (control regions + logistic regression) should test them significant. Even the P-value might be affected by the difference in size/number between the two sets. But how should we compared them ? Which interpretable metric could we use to compare enrichment of two different sets or regions ?&lt;/p&gt;
+&lt;p&gt;A practical example would be two catalogs of CNVs, say from two different methods, that we want to compare to a functional annotation. If one catalogs has more CNVs, or has larger CNVs, how can we say which one overlaps better with the functional annotation ?&lt;/p&gt;
+&lt;p&gt;I simulate this scenario and compare a few metrics:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The fold-change in overlap proportion: proportion overlapping / proportion overlapping in control regions.&lt;/li&gt;
+&lt;li&gt;The diff-change in overlap proportion: proportion overlapping - proportion overlapping in control regions.&lt;/li&gt;
+&lt;li&gt;The logistic regression estimate which are log odds ratio.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Well, the main question was how should I simulate this. I ended up simulating two sets with similar odds ratio so we already know which metric will work better… One of the value of simulation is to force us to define the question. Or at least think about it. In this example, forcing two different sets to have similar odds ratio seemed more natural than trying to double the proportion for example. The odds ratio seems more fair to me and might avoid the situation where we are more likely to observe a large effect size just because the regions are rarer/smaller.&lt;/p&gt;
+&lt;p&gt;Using a set of functional regions, I will try to compare a set of small CNVs and large CNVs. We expect more of the large CNVs to overlap the functional regions by chance.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fun.r = randRegions(rep(10, 30000))
-
 cnv.sm = randRegions(rep(1000, 1000))
 cnv.lg = randRegions(rep(10000, 1000))
 mean(overlapsAny(cnv.sm, fun.r))&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 0.119&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.112&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mean(overlapsAny(cnv.lg, fun.r))&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 0.722&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.688&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;testLR &amp;lt;- function(reg.r, feat.r) {
     cont.r = randRegions(width(reg.r))
     df.sm = rbind(data.frame(region = TRUE, ol = overlapsAny(reg.r, 
@@ -733,29 +677,79 @@ mean(overlapsAny(cnv.sm, fun.r))&lt;/code&gt;&lt;/pre&gt;
             tidy %&amp;gt;% select(term, estimate, p.value))
 }
 
-null.df = lapply(1:1000, function(ii) {
+metrics.df = rbind(testLR(cnv.sm, fun.r) %&amp;gt;% mutate(region = &amp;quot;cnv.sm&amp;quot;), 
+    testLR(cnv.lg, fun.r) %&amp;gt;% mutate(region = &amp;quot;cnv.lg&amp;quot;))
+metrics.df %&amp;gt;% filter(term != &amp;quot;(Intercept)&amp;quot;) %&amp;gt;% select(region, 
+    term, estimate) %&amp;gt;% kable&lt;/code&gt;&lt;/pre&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;region&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;term&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;estimate&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;cnv.sm&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;fold-change&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.0566038&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;cnv.sm&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;diff-change&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0060000&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;cnv.sm&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;regionTRUE&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0617938&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;cnv.lg&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;fold-change&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.9745042&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;cnv.lg&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;diff-change&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.0180000&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;cnv.lg&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;regionTRUE&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.0852498&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;div id=&#34;no-association&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;No association&lt;/h3&gt;
+&lt;p&gt;If the CNVs are not enriched in the functional regions, how do the three metrics compare ?&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;null.df = lapply(1:1000, function(ii) {
     cnv.sm = randRegions(rep(1000, 1000))
     cnv.lg = randRegions(rep(10000, 1000))
     rbind(testLR(cnv.sm, fun.r) %&amp;gt;% mutate(region = &amp;quot;cnv.sm&amp;quot;, 
         rep = ii), testLR(cnv.lg, fun.r) %&amp;gt;% mutate(region = &amp;quot;cnv.lg&amp;quot;, 
         rep = ii))
 })
-
-null.df = do.call(rbind, null.df)
-null.df %&amp;gt;% filter(term == &amp;quot;regionTRUE&amp;quot;) %&amp;gt;% select(rep, 
-    estimate, region) %&amp;gt;% spread(region, estimate) %&amp;gt;% 
-    ggplot(aes(x = cnv.sm, y = cnv.lg)) + geom_point(alpha = 0.5) + 
-    theme_bw()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+null.df = do.call(rbind, null.df)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;null.df %&amp;gt;% filter(term == &amp;quot;regionTRUE&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate, 
-    colour = region)) + geom_density() + theme_bw()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+    colour = region)) + geom_density() + theme_bw() + 
+    geom_vline(xintercept = 0) + ggtitle(&amp;quot;log odds ratio&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvnoassocgraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;null.df %&amp;gt;% filter(term == &amp;quot;fold-change&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate, 
-    colour = region)) + geom_density() + theme_bw()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-3.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+    colour = region)) + geom_density() + theme_bw() + 
+    geom_vline(xintercept = 1) + ggtitle(&amp;quot;fold-change&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvnoassocgraph-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;null.df %&amp;gt;% filter(term == &amp;quot;diff-change&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate, 
-    colour = region)) + geom_density() + theme_bw()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-4.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+    colour = region)) + geom_density() + theme_bw() + 
+    geom_vline(xintercept = 0) + ggtitle(&amp;quot;diff-change&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvnoassocgraph-3.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;The three metrics are centered in 0 but the variance of the fold-change metric is much higher for the small CNVs.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;association&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Association&lt;/h3&gt;
+&lt;p&gt;If the odds of overlapping the functional regions are doubled.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;asso.df = lapply(1:1000, function(ii) {
     cnv.sm = randRegions(rep(1000, 1000))
     cnv.lg = randRegions(rep(10000, 1000))
@@ -767,57 +761,21 @@ null.df %&amp;gt;% filter(term == &amp;quot;regionTRUE&amp;quot;) %&amp;gt;% sel
         rep = ii), testLR(cnv.lg, fun.r) %&amp;gt;% mutate(region = &amp;quot;cnv.lg&amp;quot;, 
         rep = ii))
 })
-
-asso.df = do.call(rbind, asso.df)
-asso.df %&amp;gt;% filter(term == &amp;quot;regionTRUE&amp;quot;) %&amp;gt;% select(rep, 
-    estimate, region) %&amp;gt;% spread(region, estimate) %&amp;gt;% 
-    ggplot(aes(x = cnv.sm, y = cnv.lg)) + geom_point(alpha = 0.5) + 
-    theme_bw()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-5.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;asso.df %&amp;gt;% filter(term == &amp;quot;regionTRUE&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate, 
-    colour = region)) + geom_density() + theme_bw()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-6.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+    colour = region)) + geom_density() + theme_bw() + 
+    geom_vline(xintercept = 0) + ggtitle(&amp;quot;log odds ratio&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvassocgraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;asso.df %&amp;gt;% filter(term == &amp;quot;fold-change&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw() + 
-    geom_vline(xintercept = 1)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-7.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+    geom_vline(xintercept = 1) + ggtitle(&amp;quot;fold-change&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvassocgraph-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;asso.df %&amp;gt;% filter(term == &amp;quot;diff-change&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw() + 
-    geom_vline(xintercept = 0)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-8.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;asso2.df = lapply(1:1000, function(ii) {
-    cnv.sm = randRegions(rep(1000, 1000))
-    cnv.lg = randRegions(rep(10000, 1000))
-    cnv.sm = c(cnv.sm[overlapsAny(cnv.sm, fun.r)], 
-        randRegions(rep(1000, 1000)))
-    cnv.lg = c(cnv.lg[overlapsAny(cnv.lg, fun.r)], 
-        randRegions(rep(10000, 1000)))
-    cnv.sm = c(cnv.sm[overlapsAny(cnv.sm, fun.r)], 
-        randRegions(rep(1000, 1000)))
-    cnv.lg = c(cnv.lg[overlapsAny(cnv.lg, fun.r)], 
-        randRegions(rep(10000, 1000)))
-    rbind(testLR(cnv.sm, fun.r) %&amp;gt;% mutate(region = &amp;quot;cnv.sm&amp;quot;, 
-        rep = ii), testLR(cnv.lg, fun.r) %&amp;gt;% mutate(region = &amp;quot;cnv.lg&amp;quot;, 
-        rep = ii))
-})
-
-asso2.df = do.call(rbind, asso2.df)
-asso2.df %&amp;gt;% filter(term == &amp;quot;regionTRUE&amp;quot;) %&amp;gt;% select(rep, 
-    estimate, region) %&amp;gt;% spread(region, estimate) %&amp;gt;% 
-    ggplot(aes(x = cnv.sm, y = cnv.lg)) + geom_point(alpha = 0.5) + 
-    theme_bw()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-9.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;asso2.df %&amp;gt;% filter(term == &amp;quot;regionTRUE&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate, 
-    colour = region)) + geom_density() + theme_bw()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-10.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;asso2.df %&amp;gt;% filter(term == &amp;quot;fold-change&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate, 
-    colour = region)) + geom_density() + theme_bw() + 
-    geom_vline(xintercept = 1)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-11.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;asso2.df %&amp;gt;% filter(term == &amp;quot;diff-change&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate, 
-    colour = region)) + geom_density() + theme_bw() + 
-    geom_vline(xintercept = 0)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/unnamed-chunk-4-12.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+    geom_vline(xintercept = 0) + ggtitle(&amp;quot;diff-change&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvassocgraph-3.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;As expected by construction, only the logistic regression estimate are similar. If we used the fold-change metric it would look like the small CNVs are more enriched; with the diff-change metric the large CNVs would.&lt;/p&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 </description>
         </item>

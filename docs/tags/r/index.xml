@@ -46,17 +46,17 @@ glm(y ~ x, data = df, family = binomial()) %&amp;gt;% tidy %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.8383292&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.2992105&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-2.801804&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0050818&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.5947071&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.3114205&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-1.909659&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0561771&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;xTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.4997277&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4292843&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;3.493554&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0004766&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.2337871&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4211794&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.929362&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0033966&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -75,17 +75,17 @@ glm(y ~ x, data = df, family = binomial()) %&amp;gt;% tidy %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.8383292&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.2992105&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-2.801804&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0050818&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.4228569&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.2951514&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-1.432678&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.1519499&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;yTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.4997277&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4292843&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;3.493554&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0004766&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.2337871&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4211793&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.929363&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0033966&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -105,24 +105,24 @@ glm(y ~ x + z, data = df, family = binomial()) %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.4876009&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4171234&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-1.168961&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.2424195&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.5527388&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4601252&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-1.2012792&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.2296429&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;xTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.5884533&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4429267&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;3.586266&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0003354&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.2353795&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4214607&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.9311852&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0033767&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;z&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.8386753&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.7202839&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-1.164368&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.2442750&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.0867747&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.7018381&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.1236392&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.9016009&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -141,24 +141,24 @@ glm(y ~ x + z, data = df, family = binomial()) %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-1.431641&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4978004&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-2.875935&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0040283&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.5253454&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4595636&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-1.1431399&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.2529805&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;yTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.590289&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4433146&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;3.587270&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0003342&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.2354067&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4214656&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.9312159&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0033764&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;z&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.149841&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.7287231&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.577884&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.1145922&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.2064052&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.7066182&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.2921028&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.7702080&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -182,17 +182,17 @@ glm(y ~ x + z, data = df, family = binomial()) %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.8383292&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.2992105&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-2.801804&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0050818&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.5947071&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.3114205&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-1.909659&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0561771&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;xTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.4997277&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4292843&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;3.493554&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0004766&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.2337871&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4211794&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.929362&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0033966&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -201,7 +201,7 @@ glm(y ~ x + z, data = df, family = binomial()) %&amp;gt;%
 odds.y.ifnotx = mean(subset(df, !x)$y)/mean(!subset(df, 
     !x)$y)
 log(odds.y.ifx/odds.y.ifnotx)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 1.499728&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 1.233787&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;extreme-cases&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Extreme cases&lt;/h3&gt;
@@ -227,14 +227,14 @@ glm(y ~ x, data = df, family = binomial()) %&amp;gt;% tidy %&amp;gt;%
 &lt;td align=&#34;right&#34;&gt;0.1010961&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;0.2012644&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;0.5023050&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.615453&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.6154530&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;xTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-15.6671644&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1455.3975463&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.0107649&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.991411&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;15.4649721&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1455.3975462&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0106259&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.9915219&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -248,12 +248,11 @@ glm(y ~ x, data = df, family = binomial()) %&amp;gt;% tidy %&amp;gt;%
     })
     do.call(rbind, res)
 })
-ext.df = do.call(rbind, ext.df)
-
-ext.df %&amp;gt;% filter(term == &amp;quot;xTRUE&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate)) + 
+ext.df = do.call(rbind, ext.df)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ext.df %&amp;gt;% filter(term == &amp;quot;xTRUE&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate)) + 
     geom_density(fill = &amp;quot;grey50&amp;quot;) + facet_grid(ss ~ 
     ., scales = &amp;quot;free&amp;quot;) + theme_bw()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-16-Regression_files/figure-html/lrextsim-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-16-Regression_files/figure-html/lrextsimgraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;It seems like the estimate “inflation” is problematic mostly when there are only 1 or 2 supporting observations. If there are more than 5 supporting observations the estimate is correctly centered in 0.&lt;/p&gt;
 &lt;p&gt;This problem is in fact called the &lt;a href=&#34;https://en.wikipedia.org/wiki/Separation_(statistics)&#34;&gt;problem of separation&lt;/a&gt;. There are two approaches to deal with it:&lt;/p&gt;
 &lt;ol style=&#34;list-style-type: decimal&#34;&gt;
@@ -276,11 +275,11 @@ extrms.df = lapply(1:200, function(ii) {
     })
     do.call(rbind, res)
 })
-extrms.df = do.call(rbind, extrms.df)
-extrms.df %&amp;gt;% filter(term == &amp;quot;x&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate)) + 
+extrms.df = do.call(rbind, extrms.df)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;extrms.df %&amp;gt;% filter(term == &amp;quot;x&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate)) + 
     geom_density(fill = &amp;quot;grey50&amp;quot;) + facet_grid(ss ~ 
     penalty, scales = &amp;quot;free&amp;quot;) + theme_bw()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-16-Regression_files/figure-html/lrms-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-16-Regression_files/figure-html/lrmsgraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;It definitely helps: the estimates are now much closer to 0. I don’t see much difference between penalties 1, 3 or 5.&lt;/p&gt;
 &lt;p&gt;The &lt;a href=&#34;https://cran.r-project.org/web/packages/logistf/index.html&#34;&gt;&lt;code&gt;logistf&lt;/code&gt; package&lt;/a&gt;. It implements Firth’s bias reduction method with its &lt;code&gt;logistf&lt;/code&gt; function.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(logistf)
@@ -294,11 +293,11 @@ extstf.df = lapply(1:200, function(ii) {
     })
     do.call(rbind, res)
 })
-extstf.df = do.call(rbind, extstf.df)
-extstf.df %&amp;gt;% filter(term == &amp;quot;xTRUE&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate)) + 
+extstf.df = do.call(rbind, extstf.df)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;extstf.df %&amp;gt;% filter(term == &amp;quot;xTRUE&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate)) + 
     geom_density(fill = &amp;quot;grey50&amp;quot;) + facet_grid(ss ~ 
     ., scales = &amp;quot;free&amp;quot;) + theme_bw()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-16-Regression_files/figure-html/lrreg-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-16-Regression_files/figure-html/lrreggraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;This works well too.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -341,20 +340,19 @@ ggplot(df, aes(x = x, y = y)) + geom_point(alpha = 0.2) +
           <pubDate>Fri, 26 Feb 2016 00:00:00 UTC</pubDate>
           <author></author>
           <guid>/Hippocamplus/2016/02/26/word-cloud-in-r/</guid>
-          <description>&lt;p&gt;With the &lt;code&gt;wordcloud&lt;/code&gt; package.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(wordcloud)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;For example with fake words the command would look like that.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;createWords &amp;lt;- function(w.l = 3) paste(sample(letters, 
+          <description>&lt;p&gt;With the &lt;code&gt;wordcloud&lt;/code&gt; package, an example with fake words the command would look like this:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(wordcloud)
+createWords &amp;lt;- function(w.l = 3) paste(sample(letters, 
     w.l, TRUE), collapse = &amp;quot;&amp;quot;)
 words = sapply(1:200, function(e) createWords())
 freq = c(sample(1:50, 190, T), sample(100:150, 10, 
     T))
 freq = freq/sum(freq)
 wordcloud(words, freq)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2016-02-26-wordcloud_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;wordcloud(words[1:10], freq, colors = rep(c(&amp;quot;red&amp;quot;, 
-    &amp;quot;blue&amp;quot;), 5), ordered.colors = TRUE)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2016-02-26-wordcloud_files/figure-html/unnamed-chunk-3-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2016-02-26-wordcloud_files/figure-html/example-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;wordcloud(words, freq, colors = sample(c(&amp;quot;red&amp;quot;, &amp;quot;blue&amp;quot;), 
+    length(words), replace = TRUE), ordered.colors = TRUE)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2016-02-26-wordcloud_files/figure-html/example-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 </description>
         </item>
       
