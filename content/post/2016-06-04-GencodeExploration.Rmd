@@ -1,0 +1,163 @@
+---
+title: Gencode exploration
+date: 2016-06-04
+tags: ["genome"]
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, fig.width=8)
+```
+
+```{r libs}
+library(ggplot2)
+library(dplyr)
+library(magrittr)
+library(knitr)
+library(GenomicRanges)
+library(rtracklayer)
+library(waffle)
+library(RColorBrewer)
+## library(ggrepel)
+library(PopSV)
+## library(data.table)
+winsor <- function(x,u=10){
+    if(any(x>=u)) x[x>=u] = u
+    x
+}
+olBins <- function(bins.df, feat.df, label="ol"){
+  bins.gr = makeGRangesFromDataFrame(bins.df)
+  feat.gr = makeGRangesFromDataFrame(feat.df)
+  res.df = data.frame(n=rep(0,nrow(bins.df)), d=rep(0,nrow(bins.df)))
+  colnames(res.df) = paste(label,colnames(res.df), sep=".")
+  res.df[,1] = countOverlaps(bins.gr, feat.gr)
+  feat.gr = reduce(feat.gr)
+  ol = findOverlaps(bins.gr, feat.gr) %>% as.data.frame %>% mutate(qsw=width(pintersect(bins.gr[queryHits], feat.gr[subjectHits]))) %>% group_by(queryHits) %>% summarize(bp=sum(qsw))
+  res.df[ol$queryHits,2] = ol$bp
+  res.df[,2] = res.df[,2] / width(bins.gr)
+  bins.df = cbind(bins.df, res.df)
+  bins.df
+}
+## library(BSgenome.Hsapiens.UCSC.hg19)
+## seql.1.22 = seqlengths(BSgenome.Hsapiens.UCSC.hg19)[paste0("chr",1:22)]
+## rand.gr <- function(widths){
+##     chrs = apply(rmultinom(length(widths), 1, (seql.1.22/1e3)/sum(seql.1.22/1e3)),2,function(e)which(e==1))
+##     starts = runif(length(widths), 0, seql.1.22[chrs]-widths)
+##     return(GRanges(chrs, IRanges(starts, width=widths)))
+## }
+```
+
+## Gencode v19
+
+```{r dl}
+if(!file.exists("gencode.v19.gtf.gz")) download.file("ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz", "gencode.v19.gtf.gz")
+gtf = import("gencode.v19.gtf.gz")
+gtf = gtf[as.character(seqnames(gtf)) %in% paste0('chr', c(1:22,'X','Y'))]
+genes = subset(gtf, type=='gene')
+exons = subset(gtf, type=='exon')
+```
+
+I downloaded Gencode v19 at [ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz](ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz).
+
+## Genes
+
+### Number
+
+Focusing on autosomes/X/Y, there are `r format(length(genes), big.mark=',')` "genes" of different types:
+
+```{r genetypes}
+pal = c(brewer.pal(9,'Set1'), brewer.pal(8,'Set2'))[-6]
+genes %>% as.data.frame %>% mutate(gene_type=ifelse(grepl('IG|TR', gene_type), 'IG/TR', gene_type)) %>% group_by(gene_type) %>% summarize(vals=ceiling(n()/100)) %>% dplyr::rename(names=gene_type) %>% arrange(desc(vals)) %>% as.data.frame %>% waffle(colors=pal[1:15], legend_pos='bottom', rows=15, xlab='1 sq = 100 genes')
+```
+
+I merge the rare types into a *other* class and some RNAs.
+
+```{r genetypestable}
+genes$gene_type.f = "other"
+genes$gene_type.f[grepl("RNA", genes$gene_type)] = "RNA"
+genes$gene_type.f[genes$gene_type%in%c("pseudogene","lincRNA","protein_coding","miRNA")] = genes$gene_type[genes$gene_type%in%c("pseudogene","lincRNA","protein_coding","miRNA")]
+genes %>% as.data.frame %>% group_by(gene_type.f) %>% summarize(n=n()) %>% arrange(desc(n)) %>% kable
+```
+
+### Size
+
+```{r genesize}
+genes %>% as.data.frame %>% ggplot(aes(x=width, fill=gene_type.f)) + geom_histogram() + ylab("number of genes") + xlab("gene length (bp)") + theme_bw() + scale_x_log10(breaks=10^(1:6)) + scale_fill_brewer(palette="Set1") + theme(legend.position=c(.99,.99), legend.justification=c(1,1), legend.title=element_blank())
+```
+
+The largest annotated genes span more than 2 Mbp:
+
+```{r largegenes}
+genes %>% as.data.frame %>% arrange(desc(width)) %>% head(5) %>% mutate(size.Mbp=(width)/1e6) %>% select(seqnames, gene_name, gene_type, size.Mbp) %>% kable
+```
+
+The smallest protein-coding annotated genes less than 100 bp:
+
+```{r smallgenes}
+genes %>% as.data.frame %>% filter(gene_type=="protein_coding") %>% arrange(width) %>% head(5) %>% mutate(size.bp=width) %>% select(seqnames, gene_name, gene_type, size.bp) %>% kable
+```
+
+### Density
+
+Using non-overlapping windows of 1 Mb the gene density looks like this:
+
+```{r genedens}
+gfrag.df = fragment.genome.hg19(1e6, XY.chr = TRUE)
+gfrag.df %<>% mutate(chr=factor(chr, levels=c(1:22,"X","Y")))
+gene.d = genes %>% as.data.frame %>% mutate(seqnames=gsub('chr','',seqnames)) %>% group_by(gene_type.f) %>% do(olBins(gfrag.df, ., "gene"))
+gene.d %>% group_by(chr, gene_type.f) %>% summarize(gene.n=mean(gene.n)) %>% ggplot(aes(x=chr, y=gene.n, colour=gene_type.f, group=gene_type.f)) + geom_point() + geom_line() + theme_bw() + ylab("average number of genes per Mb") + scale_colour_brewer(palette="Set1") + theme(legend.position=c(.01,.99), legend.justification=c(0,1), legend.title=element_blank()) + xlab('chromosome')
+gene.d %>% filter(gene_type.f=="protein_coding") %>% mutate(chr=factor(chr, levels=rev(levels(chr)))) %>% ggplot(aes(x=start, y=chr)) + geom_tile(aes(fill=gene.n)) + theme_bw() + xlab("position") + geom_tile(fill="yellow", aes(alpha=gene.n==0)) + scale_alpha_manual(values=c(0,1), name="", labels=c('','gene desert')) + scale_fill_gradient(name="genes\nper Mb") + theme(legend.position=c(.99,.01), legend.justification=c(1,0)) + ggtitle("Protein-coding genes")
+```
+
+- Chr 19, 17 and 11 have more protein-coding genes than the rest.
+- Chr Y has more pseudogene compared to other classes.
+
+## Exons
+
+### Number
+
+Focusing on autosomes/X/Y, there are `r format(length(exons), big.mark=',')` "exons" from different types of genes:
+
+```{r exontype}
+exons %>% as.data.frame %>% mutate(gene_type=ifelse(grepl('IG|TR', gene_type), 'IG/TR', gene_type)) %>% group_by(gene_type) %>% summarize(vals=ceiling(n()/1000)) %>% dplyr::rename(names=gene_type) %>% arrange(desc(vals)) %>% as.data.frame %>% waffle(colors=pal[1:15], legend_pos='bottom', rows=20, xlab='1 sq = 1,000 exons')
+exons = subset(exons, gene_type=="protein_coding")
+```
+
+For the rest of the analysis, I use only exons from protein-coding genes.
+
+### Number per gene
+
+```{r exongene}
+exons.gene = exons %>% as.data.frame %>% group_by(gene_name) %>% summarize(exon=n())
+exons.gene %>% mutate(exon.f=cut(exon, c(0,1,10,30,50,100,Inf))) %>% ggplot(aes(x=exon.f)) + geom_bar() + xlab('number of exons in gene') + ylab('number of genes') + theme_bw()
+exons.gene %>% ungroup %>% summarize(mean.nb.exon=mean(exon), median.nb.exon=median(exon), max.nb.exon=max(exon)) %>% kable(digits=1)
+```
+
+The gene with the most exons is the [Titin gene](http://www.genecards.org/cgi-bin/carddisp.pl?gene=TTN):
+
+```{r exongenetop}
+exons.gene %>% arrange(desc(exon)) %>% head(5) %>% kable
+```
+
+### Size
+
+The average exon size is `r round(mean(width(exons)))` bp. 
+
+```{r exonsize}
+exons %>% as.data.frame %>% ggplot(aes(x=width)) + geom_histogram() + ylab("number of exons") + xlab("exon length (bp)") + theme_bw() + scale_x_log10(breaks=c(1,10,100,1000,1e4))
+genes10ex = exons %>% as.data.frame %>% filter(as.numeric(exon_number)>10) %>% .$gene_name %>% unique
+exons %>% as.data.frame %>% filter(gene_name %in% genes10ex) %>% ggplot(aes(x=factor(winsor(as.numeric(exon_number), 10)), y=winsor(width, 1000))) + geom_violin() + geom_boxplot(alpha=0) + xlab("exon order") + ylab("exon length (bp)") + theme_bw() + scale_y_continuous(breaks=seq(0,1000,200), labels=c(seq(0,800,200), ">1000")) + scale_x_discrete(breaks=1:10, labels=c(1:9, "10+"))
+```
+
+The first exon seems to be slightly larger than the others. I used genes with at least 10 exons to be sure it's not due to large single-exon genes.
+
+The largest annotated exons are more than 20 Kbp long:
+
+```{r exonlarge}
+exons %>% as.data.frame %>% arrange(desc(width)) %>% head(5) %>% mutate(size.kb=(width)/1e3) %>% select(seqnames, gene_name, size.kb) %>% kable(digits=2)
+```
+
+The smallest are just 1 bp !?
+
+```{r exonsmall}
+exons %>% as.data.frame %>% arrange(width) %>% head(5) %>% mutate(size.bp=width) %>% select(seqnames, gene_name, size.bp) %>% kable(digits=2)
+```

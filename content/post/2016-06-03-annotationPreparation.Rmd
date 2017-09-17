@@ -1,0 +1,58 @@
+---
+title: Preparing some genomic annotations
+date: 2016-06-03
+tags: ["genome"]
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, tidy=TRUE, tidy.opts=list(width.cutoff=50), fig.width=8)
+```
+
+```{r libs}
+library(ggplot2)
+library(dplyr)
+library(magrittr)
+library(GenomicRanges)
+library(data.table)
+library(knitr)
+DOWNLOAD = TRUE
+```
+
+## Mappability track
+
+I produced a mappability track from the UCSC track. The [raw file](http://hgdownload.soe.ucsc.edu/gbdb/hg19/bbi/wgEncodeCrgMapabilityAlign100mer.bw) contains, for each base in the genome, an estimation of the probability that a read is correctly mapped at this position. 
+
+Using a sliding-window approach, I compute the average mappability in regions of size 1 Kbp.
+This is a more manageable amount of data and still informative, especially when interested in large regions (e.g. SVs).
+
+I used a custom Perl script to efficiently parse the bedGraph-transformed original file. See the code on [GitHub](https://github.com/jmonlong/Hippocamplus/blob/gh-pages/_source/mappabilityBin.pl).
+
+```{r bin}
+if(DOWNLOAD){
+  if(!file.exists('map100mer-1kbp.bed.gz')) download.file('https://dl.dropboxusercontent.com/s/i537zjs65dpw34n/map100mer-1kbp.bed.gz?dl=0', 'map100mer-1kbp.bed.gz')
+} else {
+  download.file("http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64.v287/bigWigToBedGraph","bigWigToBedGraph")
+  system2("chmod","+x bigWigToBedGraph")
+  download.file("http://hgdownload.soe.ucsc.edu/gbdb/hg19/bbi/wgEncodeCrgMapabilityAlign100mer.bw","wgEncodeCrgMapabilityAlign100mer.bw")
+  system2("./bigWigToBedGraph","wgEncodeCrgMapabilityAlign100mer.bw wgEncodeCrgMapabilityAlign100mer.bed")
+  system2("perl","mappabilityBin.pl -i wgEncodeCrgMapabilityAlign100mer.bed -o map100mer-1kbp.bed -bin 1000")
+  system2("gzip","-f map100mer-1kbp.bed")
+  rm = file.remove(c("bigWigToBedGraph", "wgEncodeCrgMapabilityAlign100mer.bw", "wgEncodeCrgMapabilityAlign100mer.bed"))
+}
+```
+
+I uploaded the result there: [https://dl.dropboxusercontent.com/s/i537zjs65dpw34n/map100mer-1kbp.bed.gz?dl=0](https://dl.dropboxusercontent.com/s/i537zjs65dpw34n/map100mer-1kbp.bed.gz?dl=0).
+
+We can cut the genome into three mappability classes:
+
++ **unique** regions with high mappability estimate (>0.95).
++ **low-map** regions with a non-null mappability but lower than 0.95.
++ **no-map** regions with mappability 0.
+
+```{r summary}
+map.df = as.data.frame(fread("gunzip -c map100mer-1kbp.bed.gz", showProgress = FALSE))
+colnames(map.df) = c("chr", "start", "end", "map")
+map.df %<>% mutate(chr=factor(gsub("chr","",chr), levels=c(1:22,"X","Y"))) %>% filter(!is.na(chr)) %>% mutate(map.class=ifelse(map>.95,"unique", "low-map"), map.class=ifelse(map==0,"no-map", map.class))
+ggplot(map.df, aes(x=map, fill=reorder(map.class, map.class, length))) + geom_histogram() + theme_bw() + ylab("number of 1 kb bins") + scale_fill_brewer(palette="Set1", name="map class") + theme(legend.position='bottom')
+map.df %>% group_by(map.class) %>% summarize(Mb=n()/1000) %>% ungroup %>% mutate(prop=Mb/sum(Mb)) %>% arrange(desc(Mb)) %>% kable(digits=3)
+```

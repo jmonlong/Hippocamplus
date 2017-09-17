@@ -10,7 +10,7 @@
 
   <title>
     
-      Genome &middot; Hippocamplus
+      Preparing some genomic annotations &middot; Hippocamplus
     
   </title>
 
@@ -142,66 +142,60 @@
       <div class="container content">
 
 
-<div class="header">
-  <h1>Genome</h1>
+<div class="post">
+  <h1 class="post-title">Preparing some genomic annotations</h1>
+  <span class="post-date">Jun 3, 2016
+  
+  
+  
+  
+  
+  <a href='/Hippocamplus/tags/genome' class='label'>genome</a>
+  
+  
+  
+  </span>
+  <div id="mappability-track" class="section level2">
+<h2>Mappability track</h2>
+<p>I produced a mappability track from the UCSC track. The <a href="http://hgdownload.soe.ucsc.edu/gbdb/hg19/bbi/wgEncodeCrgMapabilityAlign100mer.bw">raw file</a> contains, for each base in the genome, an estimation of the probability that a read is correctly mapped at this position.</p>
+<p>Using a sliding-window approach, I compute the average mappability in regions of size 1 Kbp. This is a more manageable amount of data and still informative, especially when interested in large regions (e.g. SVs).</p>
+<p>I used a custom Perl script to efficiently parse the bedGraph-transformed original file. See the code on <a href="https://github.com/jmonlong/Hippocamplus/blob/gh-pages/_source/mappabilityBin.pl">GitHub</a>.</p>
+<p>I uploaded the result there: <a href="https://dl.dropboxusercontent.com/s/i537zjs65dpw34n/map100mer-1kbp.bed.gz?dl=0"><a href="https://dl.dropboxusercontent.com/s/i537zjs65dpw34n/map100mer-1kbp.bed.gz?dl=0" class="uri">https://dl.dropboxusercontent.com/s/i537zjs65dpw34n/map100mer-1kbp.bed.gz?dl=0</a></a>.</p>
+<p>We can cut the genome into three mappability classes:</p>
+<ul>
+<li><strong>unique</strong> regions with high mappability estimate (&gt;0.95).</li>
+<li><strong>low-map</strong> regions with a non-null mappability but lower than 0.95.</li>
+<li><strong>no-map</strong> regions with mappability 0.</li>
+</ul>
+<p><img src="/Hippocamplus/post/2016-06-03-annotationPreparation_files/figure-html/summary-1.png" width="768" /></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">map.class</th>
+<th align="right">Mb</th>
+<th align="right">prop</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">unique</td>
+<td align="right">2485.972</td>
+<td align="right">0.803</td>
+</tr>
+<tr class="even">
+<td align="left">low-map</td>
+<td align="right">375.608</td>
+<td align="right">0.121</td>
+</tr>
+<tr class="odd">
+<td align="left">no-map</td>
+<td align="right">233.228</td>
+<td align="right">0.075</td>
+</tr>
+</tbody>
+</table>
 </div>
 
-<div class="content">
-  
-    <h2 class="post-title"><a href="/Hippocamplus/2017/09/05/enrichment-between-genomic-regions/">Enrichment between genomic regions</a></h2>
-<span class="post-date">Sep 5, 2017
-  
-  <i class="fa fa-tags"></i>
-  
-  <a href="/Hippocamplus/tags/genome" class="label label-primary">genome</a>
-  
-  <a href="/Hippocamplus/tags/stats" class="label label-primary">stats</a>
-  
-  
-</span>
-
-
-  
-    <h2 class="post-title"><a href="/Hippocamplus/2016/09/06/summary-epigenetic-mark-tracks/">Summary epigenetic mark tracks</a></h2>
-<span class="post-date">Sep 6, 2016
-  
-  <i class="fa fa-tags"></i>
-  
-  <a href="/Hippocamplus/tags/genome" class="label label-primary">genome</a>
-  
-  <a href="/Hippocamplus/tags/data" class="label label-primary">data</a>
-  
-  <a href="/Hippocamplus/tags/epigenetic" class="label label-primary">epigenetic</a>
-  
-  
-</span>
-
-
-  
-    <h2 class="post-title"><a href="/Hippocamplus/2016/06/04/gencode-exploration/">Gencode exploration</a></h2>
-<span class="post-date">Jun 4, 2016
-  
-  <i class="fa fa-tags"></i>
-  
-  <a href="/Hippocamplus/tags/genome" class="label label-primary">genome</a>
-  
-  
-</span>
-
-
-  
-    <h2 class="post-title"><a href="/Hippocamplus/2016/06/03/preparing-some-genomic-annotations/">Preparing some genomic annotations</a></h2>
-<span class="post-date">Jun 3, 2016
-  
-  <i class="fa fa-tags"></i>
-  
-  <a href="/Hippocamplus/tags/genome" class="label label-primary">genome</a>
-  
-  
-</span>
-
-
-  
 </div>
 
       </div>

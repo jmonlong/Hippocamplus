@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Gencode exploration &middot; Hippocamplus
+    
+  </title>
+
+  
+  <link rel="stylesheet" href=/Hippocamplus/css/poole.css>
+  <link rel="stylesheet" href=/Hippocamplus/css/syntax.css>
+  <link rel="stylesheet" href=/Hippocamplus/css/lanyon.css>
+  <link rel="stylesheet" href=/Hippocamplus/css/github.min.css>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href=/Hippocamplus/assets/hippoPlus-icon.png>
+  <link rel="shortcut icon" href=/Hippocamplus/assets/hippoPlus-icon.png>
+
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS" href=/atom.xml>
+</head>
+
+  
+  <body>
+
+    
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>A place to gather useful information I keep on forgetting.</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item " href=/Hippocamplus/>Home</a>
+    <a class="sidebar-nav-item " href=/Hippocamplus/post>Posts</a>
+
+    
+    
+      
+        <a class="sidebar-nav-item " href="/Hippocamplus/emacs/">Emacs</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/Hippocamplus/latex/">LaTeX</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/Hippocamplus/markdown/">Markdown</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/Hippocamplus/math/stats/">Math/Stats</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/Hippocamplus/python/">Python</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/Hippocamplus/r/">R</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/Hippocamplus/shell/">Shell</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/Hippocamplus/internet/">Internet</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="/Hippocamplus/about/">About</a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+    
+  </nav>
+
+  <div class="sidebar-item">
+    <p>&copy; 2017. All rights reserved.</p>
+  </div>
+</div>
+
+
+    
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href=/Hippocamplus/ title="Home">Hippocamplus</a>
+            <small>My Second Memory</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+
+
+<div class="post">
+  <h1 class="post-title">Gencode exploration</h1>
+  <span class="post-date">Jun 4, 2016
+  
+  
+  
+  
+  
+  <a href='/Hippocamplus/tags/genome' class='label'>genome</a>
+  
+  
+  
+  </span>
+  <div id="gencode-v19" class="section level2">
+<h2>Gencode v19</h2>
+<p>I downloaded Gencode v19 at <a href="ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz"><a href="ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz" class="uri">ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz</a></a>.</p>
+</div>
+<div id="genes" class="section level2">
+<h2>Genes</h2>
+<div id="number" class="section level3">
+<h3>Number</h3>
+<p>Focusing on autosomes/X/Y, there are 57,783 “genes” of different types:</p>
+<p><img src="/Hippocamplus/post/2016-06-04-GencodeExploration_files/figure-html/genetypes-1.png" width="768" /></p>
+<p>I merge the rare types into a <em>other</em> class and some RNAs.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">gene_type.f</th>
+<th align="right">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">protein_coding</td>
+<td align="right">20332</td>
+</tr>
+<tr class="even">
+<td align="left">pseudogene</td>
+<td align="right">13931</td>
+</tr>
+<tr class="odd">
+<td align="left">other</td>
+<td align="right">7417</td>
+</tr>
+<tr class="even">
+<td align="left">lincRNA</td>
+<td align="right">7114</td>
+</tr>
+<tr class="odd">
+<td align="left">RNA</td>
+<td align="right">5934</td>
+</tr>
+<tr class="even">
+<td align="left">miRNA</td>
+<td align="right">3055</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="size" class="section level3">
+<h3>Size</h3>
+<p><img src="/Hippocamplus/post/2016-06-04-GencodeExploration_files/figure-html/genesize-1.png" width="768" /></p>
+<p>The largest annotated genes span more than 2 Mbp:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">seqnames</th>
+<th align="left">gene_name</th>
+<th align="left">gene_type</th>
+<th align="right">size.Mbp</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">chr7</td>
+<td align="left">CNTNAP2</td>
+<td align="left">protein_coding</td>
+<td align="right">2.304638</td>
+</tr>
+<tr class="even">
+<td align="left">chr9</td>
+<td align="left">PTPRD</td>
+<td align="left">protein_coding</td>
+<td align="right">2.298478</td>
+</tr>
+<tr class="odd">
+<td align="left">chrX</td>
+<td align="left">DMD</td>
+<td align="left">protein_coding</td>
+<td align="right">2.241765</td>
+</tr>
+<tr class="even">
+<td align="left">chr3</td>
+<td align="left">LSAMP</td>
+<td align="left">protein_coding</td>
+<td align="right">2.194861</td>
+</tr>
+<tr class="odd">
+<td align="left">chr11</td>
+<td align="left">DLG2</td>
+<td align="left">protein_coding</td>
+<td align="right">2.172912</td>
+</tr>
+</tbody>
+</table>
+<p>The smallest protein-coding annotated genes less than 100 bp:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">seqnames</th>
+<th align="left">gene_name</th>
+<th align="left">gene_type</th>
+<th align="right">size.bp</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">chr2</td>
+<td align="left">AC011308.1</td>
+<td align="left">protein_coding</td>
+<td align="right">59</td>
+</tr>
+<tr class="even">
+<td align="left">chr12</td>
+<td align="left">AC055736.1</td>
+<td align="left">protein_coding</td>
+<td align="right">66</td>
+</tr>
+<tr class="odd">
+<td align="left">chr16</td>
+<td align="left">PIH1</td>
+<td align="left">protein_coding</td>
+<td align="right">93</td>
+</tr>
+<tr class="even">
+<td align="left">chr2</td>
+<td align="left">AC012360.2</td>
+<td align="left">protein_coding</td>
+<td align="right">96</td>
+</tr>
+<tr class="odd">
+<td align="left">chr5</td>
+<td align="left">AC008914.1</td>
+<td align="left">protein_coding</td>
+<td align="right">102</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="density" class="section level3">
+<h3>Density</h3>
+<p>Using non-overlapping windows of 1 Mb the gene density looks like this:</p>
+<p><img src="/Hippocamplus/post/2016-06-04-GencodeExploration_files/figure-html/genedens-1.png" width="768" /><img src="/Hippocamplus/post/2016-06-04-GencodeExploration_files/figure-html/genedens-2.png" width="768" /></p>
+<ul>
+<li>Chr 19, 17 and 11 have more protein-coding genes than the rest.</li>
+<li>Chr Y has more pseudogene compared to other classes.</li>
+</ul>
+</div>
+</div>
+<div id="exons" class="section level2">
+<h2>Exons</h2>
+<div id="number-1" class="section level3">
+<h3>Number</h3>
+<p>Focusing on autosomes/X/Y, there are 1,196,256 “exons” from different types of genes:</p>
+<p><img src="/Hippocamplus/post/2016-06-04-GencodeExploration_files/figure-html/exontype-1.png" width="768" /></p>
+<p>For the rest of the analysis, I use only exons from protein-coding genes.</p>
+</div>
+<div id="number-per-gene" class="section level3">
+<h3>Number per gene</h3>
+<p><img src="/Hippocamplus/post/2016-06-04-GencodeExploration_files/figure-html/exongene-1.png" width="768" /></p>
+<table>
+<thead>
+<tr class="header">
+<th align="right">mean.nb.exon</th>
+<th align="right">median.nb.exon</th>
+<th align="right">max.nb.exon</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">52.9</td>
+<td align="right">31</td>
+<td align="right">1696</td>
+</tr>
+</tbody>
+</table>
+<p>The gene with the most exons is the <a href="http://www.genecards.org/cgi-bin/carddisp.pl?gene=TTN">Titin gene</a>:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">gene_name</th>
+<th align="right">exon</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">TTN</td>
+<td align="right">1696</td>
+</tr>
+<tr class="even">
+<td align="left">SYNE1</td>
+<td align="right">1377</td>
+</tr>
+<tr class="odd">
+<td align="left">NEB</td>
+<td align="right">1225</td>
+</tr>
+<tr class="even">
+<td align="left">CACNA1G</td>
+<td align="right">1139</td>
+</tr>
+<tr class="odd">
+<td align="left">CACNA1C</td>
+<td align="right">1098</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="size-1" class="section level3">
+<h3>Size</h3>
+<p>The average exon size is 232 bp.</p>
+<p><img src="/Hippocamplus/post/2016-06-04-GencodeExploration_files/figure-html/exonsize-1.png" width="768" /><img src="/Hippocamplus/post/2016-06-04-GencodeExploration_files/figure-html/exonsize-2.png" width="768" /></p>
+<p>The first exon seems to be slightly larger than the others. I used genes with at least 10 exons to be sure it’s not due to large single-exon genes.</p>
+<p>The largest annotated exons are more than 20 Kbp long:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">seqnames</th>
+<th align="left">gene_name</th>
+<th align="right">size.kb</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">chr8</td>
+<td align="left">TRAPPC9</td>
+<td align="right">29.06</td>
+</tr>
+<tr class="even">
+<td align="left">chr5</td>
+<td align="left">MCC</td>
+<td align="right">27.20</td>
+</tr>
+<tr class="odd">
+<td align="left">chr12</td>
+<td align="left">GRIN2B</td>
+<td align="right">24.41</td>
+</tr>
+<tr class="even">
+<td align="left">chr19</td>
+<td align="left">MUC16</td>
+<td align="right">21.69</td>
+</tr>
+<tr class="odd">
+<td align="left">chr2</td>
+<td align="left">ABI2</td>
+<td align="right">20.55</td>
+</tr>
+</tbody>
+</table>
+<p>The smallest are just 1 bp !?</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">seqnames</th>
+<th align="left">gene_name</th>
+<th align="right">size.bp</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">chr2</td>
+<td align="left">ALK</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">chr3</td>
+<td align="left">ACAD11</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">chr4</td>
+<td align="left">PPA2</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">chr5</td>
+<td align="left">PAM</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">chr5</td>
+<td align="left">GALNT10</td>
+<td align="right">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src=/Hippocamplus/assets/highlight.min.js></script>
+    <script src=/Hippocamplus/assets/r.min.js></script>
+    
+    <script>
+      hljs.configure({languages: ['r']});
+      hljs.initHighlightingOnLoad();
+    </script>
+    
+  </body>
+</html>
+
