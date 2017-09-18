@@ -147,7 +147,9 @@
   <div id="TOC">
 <ul>
 <li><a href="#basic-configuration">Basic configuration</a></li>
-<li><a href="#general-commands">General commands</a></li>
+<li><a href="#general-commands">General commands</a><ul>
+<li><a href="#console-size-split-screen">Console-size split screen</a></li>
+</ul></li>
 <li><a href="#melpa-package-repository">MELPA package repository</a></li>
 <li><a href="#solarized-theme">Solarized theme</a></li>
 <li><a href="#for-r">For R</a><ul>
@@ -210,6 +212,17 @@
 <li>Search for a regular expression in files using <code>M-x lgrep</code> command.</li>
 </ul>
 <p>Regexp replace : + Command: <code>C-M-%</code>. + <code>\(</code> and <code>\)</code> to define groups. + <code>\1</code> to refer to the first group.</p>
+<div id="console-size-split-screen" class="section level3">
+<h3>Console-size split screen</h3>
+<p>I put this function and key binding in my <code>.emacs</code>:</p>
+<pre class="lisp"><code>(defun consoleSplit ()
+  (interactive)
+  (save-excursion
+    (split-window-below)
+    (enlarge-window 15)))
+(global-set-key (kbd &quot;C-x 9&quot;) &#39;consoleSplit)</code></pre>
+<p>It splits the buffer in two and reduce the bottom buffer by 15 lines resulting in a large and a small buffer for example for a script and the console.</p>
+</div>
 </div>
 <div id="melpa-package-repository" class="section level2">
 <h2>MELPA package repository</h2>
@@ -402,12 +415,16 @@ make</code></pre>
 </div>
 <div id="for-version-control" class="section level2">
 <h2>For Version Control</h2>
+<p>The built-in interface supports Git:</p>
 <ul>
 <li><code>C-x v +</code> to pull.</li>
+<li><code>C-x v d</code> to show the status.</li>
 <li><code>C-x v v</code> to commit.</li>
+<li><code>C-x v P</code> to push.</li>
 <li><code>C-x v i</code> to add.</li>
 <li><code>C-x v =</code> to see differences.</li>
 </ul>
+<p>A more popular Git interface is <a href="https://www.emacswiki.org/emacs/Magit">Magit</a>.</p>
 </div>
 <div id="for-online-notes" class="section level2">
 <h2>For online notes</h2>
