@@ -8,7 +8,7 @@ publishDir = "docs"
 title = "Hippocamplus"
 tagline = 'My Second Memory'
 description = 'A place to gather useful information I keep on forgetting.'
-year = "2017"
+year = "2017 Jean Monlong"
 [params.github]
 url = "https://github.com/jmonlong"
 
