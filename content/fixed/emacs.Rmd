@@ -291,10 +291,15 @@ If not I think the variable to customize is `csv-separators`.
 
 ## For Version Control
 
+The built-in interface supports Git:
+
 + `C-x v +` to pull.
 + `C-x v v` to commit.
 + `C-x v i` to add.
 + `C-x v =` to see differences.
++ `C-x v d` to show the status.
+
+A more popular Git interface is [Magit](https://www.emacswiki.org/emacs/Magit).
 
 ## For online notes
 
