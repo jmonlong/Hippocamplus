@@ -29,6 +29,21 @@ Regexp replace :
 + `\(` and `\)` to define groups.
 + `\1` to refer to the first group.
 
+### Console-size split screen
+
+I put this function and key binding in my `.emacs`:
+
+~~~lisp
+(defun consoleSplit ()
+  (interactive)
+  (save-excursion
+    (split-window-below)
+    (enlarge-window 15)))
+(global-set-key (kbd "C-x 9") 'consoleSplit)
+~~~
+
+It splits the buffer in two and reduce the bottom buffer by 15 lines resulting in a large and a small buffer for example for a script and the console.
+
 ## MELPA package repository
 
 Usually packages are just `.el` files to download and add in the folder defined in `.emacs` (e.g. `(add-to-list 'load-path "~/.emacs.d/lisp/")`). However, there is easier way: [MELPA](http://www.emacswiki.org/emacs/MELPA) package manager !
