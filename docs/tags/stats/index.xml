@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Hippocamplus </title>
-    <link>/tags/stats/</link>
+    <link>/Hippocamplus/tags/stats/</link>
     <language>en-us</language>
     <author></author>
     <rights>(C) 2017</rights>
@@ -12,10 +12,10 @@
       
         <item>
           <title>Regression</title>
-          <link>/2017/09/16/regression/</link>
+          <link>/Hippocamplus/2017/09/16/regression/</link>
           <pubDate>Sat, 16 Sep 2017 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/2017/09/16/regression/</guid>
+          <guid>/Hippocamplus/2017/09/16/regression/</guid>
           <description>&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
 library(broom)
 library(magrittr)
@@ -46,17 +46,17 @@ glm(y ~ x, data = df, family = binomial()) %&amp;gt;% tidy %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.3429448&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.2787698&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-1.230208&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.2186194&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.8803587&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.2884678&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-3.051844&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0022744&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;xTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.8198688&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4095741&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;2.001760&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0453106&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.6827052&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4411569&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3.814301&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0001366&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -75,17 +75,17 @@ glm(y ~ x, data = df, family = binomial()) %&amp;gt;% tidy %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.5436154&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.2963336&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-1.834471&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0665841&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-1.148623&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.3182973&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-3.608648&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0003078&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;yTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.8198688&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4095741&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;2.001760&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0453106&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.682705&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4411569&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3.814301&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0001366&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -105,24 +105,24 @@ glm(y ~ x + z, data = df, family = binomial()) %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.3887701&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4613601&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.8426609&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.3994181&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.6738265&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4661109&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-1.4456357&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.1482794&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;xTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.8189270&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4096573&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.9990537&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0456025&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.7197981&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4485592&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3.8340496&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0001261&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;z&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0887129&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.7106585&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.1248320&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.9006566&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.4267956&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.7683652&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.5554593&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.5785805&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -141,24 +141,24 @@ glm(y ~ x + z, data = df, family = binomial()) %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.6101534&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4745734&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-1.2856882&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.1985519&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-1.732052&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.5509965&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-3.143490&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0016695&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;yTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.8189348&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4096568&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.9990757&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0456002&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.720894&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4487669&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3.834717&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0001257&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;z&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.1284027&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.7131870&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.1800407&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.8571206&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.065901&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.7834323&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.360553&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.1736549&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -182,17 +182,17 @@ glm(y ~ x + z, data = df, family = binomial()) %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.3429448&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.2787698&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-1.230208&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.2186194&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.8803587&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.2884678&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-3.051844&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0022744&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;xTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.8198688&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4095741&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;2.001760&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0453106&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.6827052&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4411569&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3.814301&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0001366&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -201,7 +201,7 @@ glm(y ~ x + z, data = df, family = binomial()) %&amp;gt;%
 odds.y.ifnotx = mean(subset(df, !x)$y)/mean(!subset(df, 
     !x)$y)
 log(odds.y.ifx/odds.y.ifnotx)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 0.8198688&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 1.682705&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;extreme-cases&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Extreme cases&lt;/h3&gt;
@@ -336,10 +336,10 @@ ggplot(df, aes(x = x, y = y)) + geom_point(alpha = 0.2) +
       
         <item>
           <title>Enrichment between genomic regions</title>
-          <link>/2017/09/05/enrichment-between-genomic-regions/</link>
+          <link>/Hippocamplus/2017/09/05/enrichment-between-genomic-regions/</link>
           <pubDate>Tue, 05 Sep 2017 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/2017/09/05/enrichment-between-genomic-regions/</guid>
+          <guid>/Hippocamplus/2017/09/05/enrichment-between-genomic-regions/</guid>
           <description>&lt;p&gt;Testing if two sets of genomic regions overlap significantly is not straightforward. In the simple situation of regions of 1 bp (e.g. SNVs) we could use a hypergeometric test. When the regions are small enough and there are not too many, the hypergeometric test might also be a fair approximation.&lt;/p&gt;
 &lt;p&gt;But when we manipulate many regions of variable size covering the entire genome it’s not as straightforward. The gene annotation is an example. The repeat annotation is even worse as it covers almost 50% of the genome and contains different families with very different size/location profiles.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
