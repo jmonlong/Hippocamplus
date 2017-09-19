@@ -152,9 +152,9 @@
   
   
   
-  <a href='/Hippocamplus/tags/r' class='label'>R</a>
+  <a href='/Hippocamplus/tags/r/' class='label'>R</a>
   
-  <a href='/Hippocamplus/tags/plot' class='label'>plot</a>
+  <a href='/Hippocamplus/tags/plot/' class='label'>plot</a>
   
   
   
@@ -170,7 +170,7 @@ library(tidyr)</code></pre>
 <p>The MUMerplot that I want to reproduce showed three contigs overlapping a region of chr 14. I had filtered the delta file with <code>delta-filter -l 10000 -q -r</code> to get only the contigs with the best alignments. I had used <code>mummerplot</code> with the <code>-l</code> layout option to reorder and orient the sequence to have a nice diagonal.</p>
 <p><em>FIND OUT THE MUMPLOT COMMAND OR RERUN</em></p>
 <div class="figure">
-<img src="/imgs/mumplot-example.png" />
+<img src="/Hippocamplus/imgs/mumplot-example.png" />
 
 </div>
 </div>
@@ -368,7 +368,7 @@ mumgp.filt %&gt;% head %&gt;% kable</code></pre>
         0), axis.text.y = element_blank(), axis.ticks.y = element_blank()) + 
     xlab(&quot;reference sequence&quot;) + ylab(&quot;assembly&quot;) + 
     scale_colour_brewer(palette = &quot;Set1&quot;)</code></pre>
-<p><img src="/Hippocamplus/post/2017-09-19-MumplotsWithGgplot2_files/figure-html/graph-1.png" width="672" /></p>
+<p><img src="/Hippocamplus/Hippocamplus/post/2017-09-19-MumplotsWithGgplot2_files/figure-html/graph-1.png" width="672" /></p>
 <p>Not bad but it would look nicer if we flipped the contigs to have more or less a diagonal.</p>
 </div>
 <div id="diagonalize" class="section level2">
@@ -395,9 +395,9 @@ ggplot(mumgp.filt.diag, aes(x = rs, xend = re, y = qs,
         0), axis.text.y = element_blank(), axis.ticks.y = element_blank()) + 
     xlab(&quot;reference sequence&quot;) + ylab(&quot;assembly&quot;) + 
     scale_colour_brewer(palette = &quot;Set1&quot;)</code></pre>
-<p><img src="/Hippocamplus/post/2017-09-19-MumplotsWithGgplot2_files/figure-html/diag-1.png" width="672" /></p>
+<p><img src="/Hippocamplus/Hippocamplus/post/2017-09-19-MumplotsWithGgplot2_files/figure-html/diag-1.png" width="672" /></p>
 <div class="figure">
-<img src="/imgs/mumplot-example.png" />
+<img src="/Hippocamplus/imgs/mumplot-example.png" />
 
 </div>
 </div>
@@ -413,12 +413,12 @@ ggplot(mumgp, aes(x = rs, xend = re, y = similarity,
     yend = similarity)) + geom_segment() + theme_bw() + 
     xlab(&quot;reference sequence&quot;) + ylab(&quot;similarity&quot;) + 
     ggtitle(&quot;All contigs&quot;) + ylim(0, 1)</code></pre>
-<p><img src="/Hippocamplus/post/2017-09-19-MumplotsWithGgplot2_files/figure-html/simgraph-1.png" width="672" /></p>
+<p><img src="/Hippocamplus/Hippocamplus/post/2017-09-19-MumplotsWithGgplot2_files/figure-html/simgraph-1.png" width="672" /></p>
 <pre class="r"><code>ggplot(mumgp.filt, aes(x = rs, xend = re, y = similarity, 
     yend = similarity)) + geom_segment() + theme_bw() + 
     xlab(&quot;reference sequence&quot;) + ylab(&quot;similarity&quot;) + 
     ggtitle(&quot;At least 10 Kbp aligned&quot;) + ylim(0, 1)</code></pre>
-<p><img src="/Hippocamplus/post/2017-09-19-MumplotsWithGgplot2_files/figure-html/simgraph-2.png" width="672" /></p>
+<p><img src="/Hippocamplus/Hippocamplus/post/2017-09-19-MumplotsWithGgplot2_files/figure-html/simgraph-2.png" width="672" /></p>
 <p>To better highlighted which region in the reference is covered, I annotate each base of the reference with the maximum similarity.</p>
 <pre class="r"><code>maxSimilarityDisjoin &lt;- function(df) {
     ref.ir = GRanges(&quot;X&quot;, IRanges(df$rs, df$re), similarity = df$similarity)
@@ -459,14 +459,14 @@ mumgp.sim %&gt;% select(similarity, start, end) %&gt;% gather(end,
     ggtitle(&quot;All contigs&quot;) + ylim(0, 1) + geom_segment(aes(x = rs, 
     xend = re, y = similarity, yend = similarity), 
     data = mumgp)</code></pre>
-<p><img src="/Hippocamplus/post/2017-09-19-MumplotsWithGgplot2_files/figure-html/simcov-1.png" width="672" /></p>
+<p><img src="/Hippocamplus/Hippocamplus/post/2017-09-19-MumplotsWithGgplot2_files/figure-html/simcov-1.png" width="672" /></p>
 <pre class="r"><code>ggplot(mumgp.sim) + geom_segment(aes(x = start, xend = end, 
     yend = similarity, y = similarity), color = &quot;red&quot;, 
     size = 2) + theme_bw() + xlab(&quot;reference sequence&quot;) + 
     ylab(&quot;similarity&quot;) + ylim(0, 1) + geom_segment(aes(x = rs, 
     xend = re, y = similarity, yend = similarity), 
     data = mumgp)</code></pre>
-<p><img src="/Hippocamplus/post/2017-09-19-MumplotsWithGgplot2_files/figure-html/simcov-2.png" width="672" /></p>
+<p><img src="/Hippocamplus/Hippocamplus/post/2017-09-19-MumplotsWithGgplot2_files/figure-html/simcov-2.png" width="672" /></p>
 <p>With this graph we could compare different assemblies or before/after filtering:</p>
 <pre class="r"><code>mumgp.filt.sim = maxSimilarityDisjoin(mumgp.filt)
 
@@ -478,13 +478,13 @@ mumgp.filt.m %&gt;% select(similarity, start, end, filter) %&gt;%
     colour = filter)) + geom_line(alpha = 0.8) + theme_bw() + 
     xlab(&quot;reference sequence&quot;) + ylab(&quot;similarity&quot;) + 
     ylim(0, 1) + scale_colour_brewer(palette = &quot;Set1&quot;)</code></pre>
-<p><img src="/Hippocamplus/post/2017-09-19-MumplotsWithGgplot2_files/figure-html/simcovcomp-1.png" width="672" /></p>
+<p><img src="/Hippocamplus/Hippocamplus/post/2017-09-19-MumplotsWithGgplot2_files/figure-html/simcovcomp-1.png" width="672" /></p>
 <p>Not so pretty but we see that a few region are not covered any more after our filtering. Maybe something like this instead :</p>
 <pre class="r"><code>mumgp.filt.m %&gt;% filter(similarity == 0) %&gt;% ggplot(aes(x = start, 
     xend = end, y = filter, yend = filter)) + geom_segment(size = 10) + 
     theme_bw() + xlab(&quot;reference sequence&quot;) + ylab(&quot;filter&quot;) + 
     scale_colour_brewer(palette = &quot;Set1&quot;) + ggtitle(&quot;Reference regions not covered&quot;)</code></pre>
-<p><img src="/Hippocamplus/post/2017-09-19-MumplotsWithGgplot2_files/figure-html/simcovcomptrack-1.png" width="672" /></p>
+<p><img src="/Hippocamplus/Hippocamplus/post/2017-09-19-MumplotsWithGgplot2_files/figure-html/simcovcomptrack-1.png" width="672" /></p>
 </div>
 
 </div>

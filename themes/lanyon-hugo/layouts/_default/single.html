@@ -6,7 +6,7 @@
   {{ range $i := (slice "categories" "tags") }}
   {{ with ($.Param $i) }}
   {{ range $k := . }}
-  <a href='{{ relURL (print "/" $i "/" $k | urlize) }}' class='label'>{{$k}}</a>
+  <a href='{{ relURL (print "/" $i "/" $k | urlize) }}/' class='label'>{{$k}}</a>
   {{ end }}
   {{ end }}
   {{ end }}

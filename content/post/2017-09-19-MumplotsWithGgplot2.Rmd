@@ -1,6 +1,5 @@
 ---
 title: MUMerplots with ggplot2
-draft: true
 date: 2017-09-19
 tags: ["R", "plot"]
 ---
@@ -17,6 +16,7 @@ library(knitr)
 library(ggplot2)
 library(tidyr)
 ```
+
 
 ## MUMplot
 

@@ -3,6 +3,7 @@ baseURL = "/Hippocamplus/"
 languageCode = "en-us"
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$", "\\.RData", "\\.gz$"]
 publishDir = "docs"
+canonifyurls = true
 
 [params]
 title = "Hippocamplus"

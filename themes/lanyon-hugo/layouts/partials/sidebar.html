@@ -15,7 +15,7 @@
     {{ $thisperma := .Permalink }}
     {{ range .Site.Pages.ByWeight }}
       {{ if isset .Params "sidebar" }}
-        <a class="sidebar-nav-item {{ if eq .Permalink $thisperma }} active {{ end }}" href="{{ .Permalink }}">{{ .Title }}</a>
+        <a class="sidebar-nav-item {{ if eq .Permalink $thisperma }} active {{ end }}" href="{{ .RelPermalink }}">{{ .Title }}</a>
       {{ end }}
     {{ end }}
 

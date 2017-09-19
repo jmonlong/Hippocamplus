@@ -152,9 +152,9 @@
   
   
   
-  <a href='/Hippocamplus/tags/stats' class='label'>stats</a>
+  <a href='/Hippocamplus/tags/stats/' class='label'>stats</a>
   
-  <a href='/Hippocamplus/tags/r' class='label'>R</a>
+  <a href='/Hippocamplus/tags/r/' class='label'>R</a>
   
   
   
@@ -395,7 +395,7 @@ ext.df = do.call(rbind, ext.df)</code></pre>
 <pre class="r"><code>ext.df %&gt;% filter(term == &quot;xTRUE&quot;) %&gt;% ggplot(aes(x = estimate)) + 
     geom_density(fill = &quot;grey50&quot;) + facet_grid(ss ~ 
     ., scales = &quot;free&quot;) + theme_bw()</code></pre>
-<p><img src="/Hippocamplus/post/2017-09-16-Regression_files/figure-html/lrextsimgraph-1.png" width="672" /></p>
+<p><img src="/Hippocamplus/Hippocamplus/post/2017-09-16-Regression_files/figure-html/lrextsimgraph-1.png" width="672" /></p>
 <p>It seems like the estimate “inflation” is problematic mostly when there are only 1 or 2 supporting observations. If there are more than 5 supporting observations the estimate is correctly centered in 0.</p>
 <p>This problem is in fact called the <a href="https://en.wikipedia.org/wiki/Separation_(statistics)">problem of separation</a>. There are two approaches to deal with it:</p>
 <ol style="list-style-type: decimal">
@@ -422,7 +422,7 @@ extrms.df = do.call(rbind, extrms.df)</code></pre>
 <pre class="r"><code>extrms.df %&gt;% filter(term == &quot;x&quot;) %&gt;% ggplot(aes(x = estimate)) + 
     geom_density(fill = &quot;grey50&quot;) + facet_grid(ss ~ 
     penalty, scales = &quot;free&quot;) + theme_bw()</code></pre>
-<p><img src="/Hippocamplus/post/2017-09-16-Regression_files/figure-html/lrmsgraph-1.png" width="672" /></p>
+<p><img src="/Hippocamplus/Hippocamplus/post/2017-09-16-Regression_files/figure-html/lrmsgraph-1.png" width="672" /></p>
 <p>It definitely helps: the estimates are now much closer to 0. I don’t see much difference between penalties 1, 3 or 5.</p>
 <p>The <a href="https://cran.r-project.org/web/packages/logistf/index.html"><code>logistf</code> package</a>. It implements Firth’s bias reduction method with its <code>logistf</code> function.</p>
 <pre class="r"><code>library(logistf)
@@ -440,7 +440,7 @@ extstf.df = do.call(rbind, extstf.df)</code></pre>
 <pre class="r"><code>extstf.df %&gt;% filter(term == &quot;xTRUE&quot;) %&gt;% ggplot(aes(x = estimate)) + 
     geom_density(fill = &quot;grey50&quot;) + facet_grid(ss ~ 
     ., scales = &quot;free&quot;) + theme_bw()</code></pre>
-<p><img src="/Hippocamplus/post/2017-09-16-Regression_files/figure-html/lrreggraph-1.png" width="672" /></p>
+<p><img src="/Hippocamplus/Hippocamplus/post/2017-09-16-Regression_files/figure-html/lrreggraph-1.png" width="672" /></p>
 <p>This works well too.</p>
 </div>
 </div>
@@ -454,7 +454,7 @@ df$y = ifelse(df$x &gt; 40, rnorm(nb.samp, 0, 5) - df$x *
     df$x/300 + 20, df$y)
 ggplot(df, aes(x = x, y = y)) + geom_point(alpha = 0.5) + 
     theme_bw()</code></pre>
-<p><img src="/Hippocamplus/post/2017-09-16-Regression_files/figure-html/blm-1.png" width="672" /></p>
+<p><img src="/Hippocamplus/Hippocamplus/post/2017-09-16-Regression_files/figure-html/blm-1.png" width="672" /></p>
 <pre class="r"><code>glm.o = glm(y ~ x, data = df)
 loess.o = loess(y ~ x, data = df)
 library(mgcv)
@@ -470,7 +470,7 @@ pred.df = rbind(df %&gt;% mutate(y = predict(glm.o), model = &quot;glm&quot;),
 ggplot(df, aes(x = x, y = y)) + geom_point(alpha = 0.2) + 
     geom_line(aes(colour = model), size = 2, alpha = 0.9, 
         data = pred.df) + theme_bw() + scale_colour_brewer(palette = &quot;Set1&quot;)</code></pre>
-<p><img src="/Hippocamplus/post/2017-09-16-Regression_files/figure-html/blmmodels-1.png" width="672" /></p>
+<p><img src="/Hippocamplus/Hippocamplus/post/2017-09-16-Regression_files/figure-html/blmmodels-1.png" width="672" /></p>
 </div>
 
 </div>

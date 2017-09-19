@@ -8,7 +8,7 @@
   {{ $thisperma := .Permalink }}
   {{ range .Site.Pages.ByWeight }}
   {{ if isset .Params "sidebar" }}
-    <a class="homelinks" href="{{ .Permalink }}">{{ .Title }}</a>
+    <a class="homelinks" href="{{ .RelPermalink }}">{{ .Title }}</a>
   {{ end }}
   {{ end }}
 </div>
@@ -17,12 +17,12 @@
   <h2 class="post-title">Posts</h2>
   {{ range .Paginator.Pages }}
     <!-- <div class="post"> -->
-        <h3 class="post-title"><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
+        <h3 class="post-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
         <span class="post-date">{{ .Site.Params.DateForm | default "Jan 2, 2006" | .Date.Format }}
 	{{ if isset .Params "tags"}}
 	<i class="fa fa-tags"></i>
 	{{ range .Params.tags }}
-	<a href="{{ "tags/" | absLangURL }}{{ . | urlize }}" class="label label-primary">{{ . }}</a>
+	<a href="{{ "tags/" | relLangURL }}{{ . | urlize }}/" class="label label-primary">{{ . }}</a>
 	{{ end }}
 	{{ end }}
 	</span>
