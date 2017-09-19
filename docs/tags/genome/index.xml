@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Hippocamplus </title>
-    <link>/Hippocamplus/tags/genome/</link>
+    <link>/tags/genome/</link>
     <language>en-us</language>
     <author></author>
     <rights>(C) 2017</rights>
@@ -12,10 +12,10 @@
       
         <item>
           <title>Enrichment between genomic regions</title>
-          <link>/Hippocamplus/2017/09/05/enrichment-between-genomic-regions/</link>
+          <link>/2017/09/05/enrichment-between-genomic-regions/</link>
           <pubDate>Tue, 05 Sep 2017 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2017/09/05/enrichment-between-genomic-regions/</guid>
+          <guid>/2017/09/05/enrichment-between-genomic-regions/</guid>
           <description>&lt;p&gt;Testing if two sets of genomic regions overlap significantly is not straightforward. In the simple situation of regions of 1 bp (e.g. SNVs) we could use a hypergeometric test. When the regions are small enough and there are not too many, the hypergeometric test might also be a fair approximation.&lt;/p&gt;
 &lt;p&gt;But when we manipulate many regions of variable size covering the entire genome it’s not as straightforward. The gene annotation is an example. The repeat annotation is even worse as it covers almost 50% of the genome and contains different families with very different size/location profiles.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
@@ -71,7 +71,7 @@ ht.sim = rbind(data.frame(nb = 1000, size = 1, pv = testHG(rep.r,
     xlab(&amp;quot;P-value&amp;quot;) + scale_color_brewer(palette = &amp;quot;Set1&amp;quot;, 
     name = &amp;quot;regions&amp;quot;) + theme(legend.justification = c(1, 
     0), legend.position = c(0.99, 0.01))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/testhggraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-09-05-GenomicRegionEnrichment_files/figure-html/testhggraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;As expected, the hypergeometric test works well for region of 1 bp. Otherwise the distribution of the P-values is biased. The larger the regions the stronger the bias. To a lower extent, more regions also means more bias.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;using-control-regions-with-similar-features&#34; class=&#34;section level2&#34;&gt;
@@ -103,7 +103,7 @@ lr.sim = rbind(data.frame(nb = 1000, size = 1, pv = testLR(rep.r,
     xlab(&amp;quot;P-value&amp;quot;) + scale_color_brewer(palette = &amp;quot;Set1&amp;quot;, 
     name = &amp;quot;regions&amp;quot;) + theme(legend.justification = c(1, 
     0), legend.position = c(0.99, 0.01))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/contreggraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-09-05-GenomicRegionEnrichment_files/figure-html/contreggraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;The distribution of the P-values is much better.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;controlling-for-correlated-features&#34; class=&#34;section level2&#34;&gt;
@@ -412,15 +412,15 @@ null.df = do.call(rbind, null.df)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;null.df %&amp;gt;% filter(term == &amp;quot;regionTRUE&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw() + 
     geom_vline(xintercept = 0) + ggtitle(&amp;quot;log odds ratio&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvnoassocgraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvnoassocgraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;null.df %&amp;gt;% filter(term == &amp;quot;fold-change&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw() + 
     geom_vline(xintercept = 1) + ggtitle(&amp;quot;fold-change&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvnoassocgraph-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvnoassocgraph-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;null.df %&amp;gt;% filter(term == &amp;quot;diff-change&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw() + 
     geom_vline(xintercept = 0) + ggtitle(&amp;quot;diff-change&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvnoassocgraph-3.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvnoassocgraph-3.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;The three metrics are centered in 0 but the variance of the fold-change metric is much higher for the small CNVs.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;association&#34; class=&#34;section level3&#34;&gt;
@@ -441,15 +441,15 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;asso.df %&amp;gt;% filter(term == &amp;quot;regionTRUE&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw() + 
     geom_vline(xintercept = 0) + ggtitle(&amp;quot;log odds ratio&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvassocgraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvassocgraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;asso.df %&amp;gt;% filter(term == &amp;quot;fold-change&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw() + 
     geom_vline(xintercept = 1) + ggtitle(&amp;quot;fold-change&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvassocgraph-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvassocgraph-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;asso.df %&amp;gt;% filter(term == &amp;quot;diff-change&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw() + 
     geom_vline(xintercept = 0) + ggtitle(&amp;quot;diff-change&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvassocgraph-3.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvassocgraph-3.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;As expected by construction, only the logistic regression estimate are similar. If we used the fold-change metric it would look like the small CNVs are more enriched; with the diff-change metric the large CNVs would.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -460,10 +460,10 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
       
         <item>
           <title>Summary epigenetic mark tracks</title>
-          <link>/Hippocamplus/2016/09/06/summary-epigenetic-mark-tracks/</link>
+          <link>/2016/09/06/summary-epigenetic-mark-tracks/</link>
           <pubDate>Tue, 06 Sep 2016 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2016/09/06/summary-epigenetic-mark-tracks/</guid>
+          <guid>/2016/09/06/summary-epigenetic-mark-tracks/</guid>
           <description>&lt;p&gt;To assess the potential impact of variants (SNV, SVs) we might want to use some of the public epigentic datasets. The amount and heterogeneity of this data is a bit overwhelming. I would like to get a summary of which regions of the genome are the most functionally important.&lt;/p&gt;
 &lt;p&gt;The plan is to:&lt;/p&gt;
 &lt;ul&gt;
@@ -478,7 +478,7 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
 &lt;h2&gt;AnnotationHub&lt;/h2&gt;
 &lt;p&gt;I’ll use the &lt;a href=&#34;http://bioconductor.org/packages/release/bioc/html/AnnotationHub.html&#34;&gt;AnnotationHub&lt;/a&gt; package, which links Encode and EpigenomeRoadmap data (and more) directly in R.&lt;/p&gt;
 &lt;p&gt;I search for &lt;em&gt;narrowPeak&lt;/em&gt; in &lt;em&gt;hg19&lt;/em&gt; from H3K27ac, H3K27me3, H3K36me3, H3K4me1, H3K4me3 or H3K9me3, in brain, blood, liver, muscle, lung, kidney, skin or heart. I also look for DNase peaks. Let’s see if I can find what I want.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2016-09-06-epigeneticTracks_files/figure-html/ahgraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2016-09-06-epigeneticTracks_files/figure-html/ahgraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Most tissues have more than 3 tracks for each histone mark. I’ll just exclude liver and knidney that don’t. DNase is a bit more rare but there is at least one track per tissue. In total, it represents 360 different tracks, that I want to merge into one track per mark/tissue.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;download-and-merge-tracks&#34; class=&#34;section level2&#34;&gt;
@@ -489,7 +489,7 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;overview&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Overview&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2016-09-06-epigeneticTracks_files/figure-html/overview-1.png&#34; width=&#34;672&#34; /&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2016-09-06-epigeneticTracks_files/figure-html/overview-2.png&#34; width=&#34;672&#34; /&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2016-09-06-epigeneticTracks_files/figure-html/overview-3.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2016-09-06-epigeneticTracks_files/figure-html/overview-1.png&#34; width=&#34;672&#34; /&gt;&lt;img src=&#34;../../post/2016-09-06-epigeneticTracks_files/figure-html/overview-2.png&#34; width=&#34;672&#34; /&gt;&lt;img src=&#34;../../post/2016-09-06-epigeneticTracks_files/figure-html/overview-3.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;limitations&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Limitations&lt;/h2&gt;
@@ -503,10 +503,10 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
       
         <item>
           <title>Gencode exploration</title>
-          <link>/Hippocamplus/2016/06/04/gencode-exploration/</link>
+          <link>/2016/06/04/gencode-exploration/</link>
           <pubDate>Sat, 04 Jun 2016 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2016/06/04/gencode-exploration/</guid>
+          <guid>/2016/06/04/gencode-exploration/</guid>
           <description>&lt;div id=&#34;gencode-v19&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Gencode v19&lt;/h2&gt;
 &lt;p&gt;I downloaded Gencode v19 at &lt;a href=&#34;ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz&#34;&gt;&lt;a href=&#34;ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz&#34; class=&#34;uri&#34;&gt;ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz&lt;/a&gt;&lt;/a&gt;.&lt;/p&gt;
@@ -516,7 +516,7 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;number&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Number&lt;/h3&gt;
 &lt;p&gt;Focusing on autosomes/X/Y, there are 57,783 “genes” of different types:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2016-06-04-GencodeExploration_files/figure-html/genetypes-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2016-06-04-GencodeExploration_files/figure-html/genetypes-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;I merge the rare types into a &lt;em&gt;other&lt;/em&gt; class and some RNAs.&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;
@@ -555,7 +555,7 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;size&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Size&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2016-06-04-GencodeExploration_files/figure-html/genesize-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2016-06-04-GencodeExploration_files/figure-html/genesize-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;The largest annotated genes span more than 2 Mbp:&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;
@@ -646,7 +646,7 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;density&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Density&lt;/h3&gt;
 &lt;p&gt;Using non-overlapping windows of 1 Mb the gene density looks like this:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2016-06-04-GencodeExploration_files/figure-html/genedens-1.png&#34; width=&#34;768&#34; /&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2016-06-04-GencodeExploration_files/figure-html/genedens-2.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2016-06-04-GencodeExploration_files/figure-html/genedens-1.png&#34; width=&#34;768&#34; /&gt;&lt;img src=&#34;../../post/2016-06-04-GencodeExploration_files/figure-html/genedens-2.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Chr 19, 17 and 11 have more protein-coding genes than the rest.&lt;/li&gt;
 &lt;li&gt;Chr Y has more pseudogene compared to other classes.&lt;/li&gt;
@@ -658,12 +658,12 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;number-1&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Number&lt;/h3&gt;
 &lt;p&gt;Focusing on autosomes/X/Y, there are 1,196,256 “exons” from different types of genes:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2016-06-04-GencodeExploration_files/figure-html/exontype-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2016-06-04-GencodeExploration_files/figure-html/exontype-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;For the rest of the analysis, I use only exons from protein-coding genes.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;number-per-gene&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Number per gene&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2016-06-04-GencodeExploration_files/figure-html/exongene-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2016-06-04-GencodeExploration_files/figure-html/exongene-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr class=&#34;header&#34;&gt;
@@ -715,7 +715,7 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;size-1&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Size&lt;/h3&gt;
 &lt;p&gt;The average exon size is 232 bp.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2016-06-04-GencodeExploration_files/figure-html/exonsize-1.png&#34; width=&#34;768&#34; /&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2016-06-04-GencodeExploration_files/figure-html/exonsize-2.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2016-06-04-GencodeExploration_files/figure-html/exonsize-1.png&#34; width=&#34;768&#34; /&gt;&lt;img src=&#34;../../post/2016-06-04-GencodeExploration_files/figure-html/exonsize-2.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;The first exon seems to be slightly larger than the others. I used genes with at least 10 exons to be sure it’s not due to large single-exon genes.&lt;/p&gt;
 &lt;p&gt;The largest annotated exons are more than 20 Kbp long:&lt;/p&gt;
 &lt;table&gt;
@@ -800,10 +800,10 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
       
         <item>
           <title>Preparing some genomic annotations</title>
-          <link>/Hippocamplus/2016/06/03/preparing-some-genomic-annotations/</link>
+          <link>/2016/06/03/preparing-some-genomic-annotations/</link>
           <pubDate>Fri, 03 Jun 2016 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2016/06/03/preparing-some-genomic-annotations/</guid>
+          <guid>/2016/06/03/preparing-some-genomic-annotations/</guid>
           <description>&lt;div id=&#34;mappability-track&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Mappability track&lt;/h2&gt;
 &lt;p&gt;I produced a mappability track from the UCSC track. The &lt;a href=&#34;http://hgdownload.soe.ucsc.edu/gbdb/hg19/bbi/wgEncodeCrgMapabilityAlign100mer.bw&#34;&gt;raw file&lt;/a&gt; contains, for each base in the genome, an estimation of the probability that a read is correctly mapped at this position.&lt;/p&gt;
@@ -816,7 +816,7 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
 &lt;li&gt;&lt;strong&gt;low-map&lt;/strong&gt; regions with a non-null mappability but lower than 0.95.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;no-map&lt;/strong&gt; regions with mappability 0.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2016-06-03-annotationPreparation_files/figure-html/summary-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2016-06-03-annotationPreparation_files/figure-html/summary-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr class=&#34;header&#34;&gt;

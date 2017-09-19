@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Hippocamplus </title>
-    <link>/Hippocamplus/tags/stats/</link>
+    <link>/tags/stats/</link>
     <language>en-us</language>
     <author></author>
     <rights>(C) 2017</rights>
@@ -12,10 +12,10 @@
       
         <item>
           <title>Regression</title>
-          <link>/Hippocamplus/2017/09/16/regression/</link>
+          <link>/2017/09/16/regression/</link>
           <pubDate>Sat, 16 Sep 2017 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2017/09/16/regression/</guid>
+          <guid>/2017/09/16/regression/</guid>
           <description>&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
 library(broom)
 library(magrittr)
@@ -46,17 +46,17 @@ glm(y ~ x, data = df, family = binomial()) %&amp;gt;% tidy %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.0741080&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.2723524&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.2721033&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.7855426&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.3429448&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.2787698&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-1.230208&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.2186194&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;xTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.5159407&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4067501&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.2684464&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.2046386&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.8198688&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4095741&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.001760&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0453106&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -75,17 +75,17 @@ glm(y ~ x, data = df, family = binomial()) %&amp;gt;% tidy %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.4418328&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.3021090&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-1.462495&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.1436057&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.5436154&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.2963336&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-1.834471&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0665841&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;yTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.5159407&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4067501&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.268446&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.2046386&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.8198688&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4095741&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.001760&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0453106&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -105,24 +105,24 @@ glm(y ~ x + z, data = df, family = binomial()) %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0530828&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4776758&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.1111272&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.9115155&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.3887701&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4613601&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.8426609&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.3994181&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;xTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.5022962&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4089703&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.2281972&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.2193729&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.8189270&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4096573&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.9990537&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0456025&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;z&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.2427566&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.7492941&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.3239804&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.7459528&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0887129&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.7106585&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.1248320&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.9006566&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -141,24 +141,24 @@ glm(y ~ x + z, data = df, family = binomial()) %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.0538278&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4831522&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.1114096&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.9112916&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.6101534&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4745734&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-1.2856882&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.1985519&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;yTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.5024176&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4089673&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.2285029&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.2192582&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.8189348&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4096568&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.9990757&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0456002&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;z&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.7690884&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.7544378&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-1.0194192&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.3080040&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.1284027&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.7131870&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.1800407&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.8571206&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -182,17 +182,17 @@ glm(y ~ x + z, data = df, family = binomial()) %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.0741080&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.2723524&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.2721033&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.7855426&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.3429448&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.2787698&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-1.230208&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.2186194&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;xTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.5159407&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4067501&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.2684464&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.2046386&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.8198688&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4095741&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.001760&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0453106&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -201,7 +201,7 @@ glm(y ~ x + z, data = df, family = binomial()) %&amp;gt;%
 odds.y.ifnotx = mean(subset(df, !x)$y)/mean(!subset(df, 
     !x)$y)
 log(odds.y.ifx/odds.y.ifnotx)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 0.5159407&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.8198688&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;extreme-cases&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Extreme cases&lt;/h3&gt;
@@ -252,7 +252,7 @@ ext.df = do.call(rbind, ext.df)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ext.df %&amp;gt;% filter(term == &amp;quot;xTRUE&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate)) + 
     geom_density(fill = &amp;quot;grey50&amp;quot;) + facet_grid(ss ~ 
     ., scales = &amp;quot;free&amp;quot;) + theme_bw()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-16-Regression_files/figure-html/lrextsimgraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-09-16-Regression_files/figure-html/lrextsimgraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;It seems like the estimate “inflation” is problematic mostly when there are only 1 or 2 supporting observations. If there are more than 5 supporting observations the estimate is correctly centered in 0.&lt;/p&gt;
 &lt;p&gt;This problem is in fact called the &lt;a href=&#34;https://en.wikipedia.org/wiki/Separation_(statistics)&#34;&gt;problem of separation&lt;/a&gt;. There are two approaches to deal with it:&lt;/p&gt;
 &lt;ol style=&#34;list-style-type: decimal&#34;&gt;
@@ -279,7 +279,7 @@ extrms.df = do.call(rbind, extrms.df)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;extrms.df %&amp;gt;% filter(term == &amp;quot;x&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate)) + 
     geom_density(fill = &amp;quot;grey50&amp;quot;) + facet_grid(ss ~ 
     penalty, scales = &amp;quot;free&amp;quot;) + theme_bw()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-16-Regression_files/figure-html/lrmsgraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-09-16-Regression_files/figure-html/lrmsgraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;It definitely helps: the estimates are now much closer to 0. I don’t see much difference between penalties 1, 3 or 5.&lt;/p&gt;
 &lt;p&gt;The &lt;a href=&#34;https://cran.r-project.org/web/packages/logistf/index.html&#34;&gt;&lt;code&gt;logistf&lt;/code&gt; package&lt;/a&gt;. It implements Firth’s bias reduction method with its &lt;code&gt;logistf&lt;/code&gt; function.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(logistf)
@@ -297,7 +297,7 @@ extstf.df = do.call(rbind, extstf.df)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;extstf.df %&amp;gt;% filter(term == &amp;quot;xTRUE&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate)) + 
     geom_density(fill = &amp;quot;grey50&amp;quot;) + facet_grid(ss ~ 
     ., scales = &amp;quot;free&amp;quot;) + theme_bw()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-16-Regression_files/figure-html/lrreggraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-09-16-Regression_files/figure-html/lrreggraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;This works well too.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -311,7 +311,7 @@ df$y = ifelse(df$x &amp;gt; 40, rnorm(nb.samp, 0, 5) - df$x *
     df$x/300 + 20, df$y)
 ggplot(df, aes(x = x, y = y)) + geom_point(alpha = 0.5) + 
     theme_bw()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-16-Regression_files/figure-html/blm-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-09-16-Regression_files/figure-html/blm-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;glm.o = glm(y ~ x, data = df)
 loess.o = loess(y ~ x, data = df)
 library(mgcv)
@@ -327,7 +327,7 @@ pred.df = rbind(df %&amp;gt;% mutate(y = predict(glm.o), model = &amp;quot;glm&a
 ggplot(df, aes(x = x, y = y)) + geom_point(alpha = 0.2) + 
     geom_line(aes(colour = model), size = 2, alpha = 0.9, 
         data = pred.df) + theme_bw() + scale_colour_brewer(palette = &amp;quot;Set1&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-16-Regression_files/figure-html/blmmodels-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-09-16-Regression_files/figure-html/blmmodels-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 </description>
         </item>
@@ -336,10 +336,10 @@ ggplot(df, aes(x = x, y = y)) + geom_point(alpha = 0.2) +
       
         <item>
           <title>Enrichment between genomic regions</title>
-          <link>/Hippocamplus/2017/09/05/enrichment-between-genomic-regions/</link>
+          <link>/2017/09/05/enrichment-between-genomic-regions/</link>
           <pubDate>Tue, 05 Sep 2017 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2017/09/05/enrichment-between-genomic-regions/</guid>
+          <guid>/2017/09/05/enrichment-between-genomic-regions/</guid>
           <description>&lt;p&gt;Testing if two sets of genomic regions overlap significantly is not straightforward. In the simple situation of regions of 1 bp (e.g. SNVs) we could use a hypergeometric test. When the regions are small enough and there are not too many, the hypergeometric test might also be a fair approximation.&lt;/p&gt;
 &lt;p&gt;But when we manipulate many regions of variable size covering the entire genome it’s not as straightforward. The gene annotation is an example. The repeat annotation is even worse as it covers almost 50% of the genome and contains different families with very different size/location profiles.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
@@ -395,7 +395,7 @@ ht.sim = rbind(data.frame(nb = 1000, size = 1, pv = testHG(rep.r,
     xlab(&amp;quot;P-value&amp;quot;) + scale_color_brewer(palette = &amp;quot;Set1&amp;quot;, 
     name = &amp;quot;regions&amp;quot;) + theme(legend.justification = c(1, 
     0), legend.position = c(0.99, 0.01))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/testhggraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-09-05-GenomicRegionEnrichment_files/figure-html/testhggraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;As expected, the hypergeometric test works well for region of 1 bp. Otherwise the distribution of the P-values is biased. The larger the regions the stronger the bias. To a lower extent, more regions also means more bias.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;using-control-regions-with-similar-features&#34; class=&#34;section level2&#34;&gt;
@@ -427,7 +427,7 @@ lr.sim = rbind(data.frame(nb = 1000, size = 1, pv = testLR(rep.r,
     xlab(&amp;quot;P-value&amp;quot;) + scale_color_brewer(palette = &amp;quot;Set1&amp;quot;, 
     name = &amp;quot;regions&amp;quot;) + theme(legend.justification = c(1, 
     0), legend.position = c(0.99, 0.01))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/contreggraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-09-05-GenomicRegionEnrichment_files/figure-html/contreggraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;The distribution of the P-values is much better.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;controlling-for-correlated-features&#34; class=&#34;section level2&#34;&gt;
@@ -736,15 +736,15 @@ null.df = do.call(rbind, null.df)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;null.df %&amp;gt;% filter(term == &amp;quot;regionTRUE&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw() + 
     geom_vline(xintercept = 0) + ggtitle(&amp;quot;log odds ratio&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvnoassocgraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvnoassocgraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;null.df %&amp;gt;% filter(term == &amp;quot;fold-change&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw() + 
     geom_vline(xintercept = 1) + ggtitle(&amp;quot;fold-change&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvnoassocgraph-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvnoassocgraph-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;null.df %&amp;gt;% filter(term == &amp;quot;diff-change&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw() + 
     geom_vline(xintercept = 0) + ggtitle(&amp;quot;diff-change&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvnoassocgraph-3.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvnoassocgraph-3.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;The three metrics are centered in 0 but the variance of the fold-change metric is much higher for the small CNVs.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;association&#34; class=&#34;section level3&#34;&gt;
@@ -765,15 +765,15 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;asso.df %&amp;gt;% filter(term == &amp;quot;regionTRUE&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw() + 
     geom_vline(xintercept = 0) + ggtitle(&amp;quot;log odds ratio&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvassocgraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvassocgraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;asso.df %&amp;gt;% filter(term == &amp;quot;fold-change&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw() + 
     geom_vline(xintercept = 1) + ggtitle(&amp;quot;fold-change&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvassocgraph-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvassocgraph-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;asso.df %&amp;gt;% filter(term == &amp;quot;diff-change&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw() + 
     geom_vline(xintercept = 0) + ggtitle(&amp;quot;diff-change&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvassocgraph-3.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvassocgraph-3.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;As expected by construction, only the logistic regression estimate are similar. If we used the fold-change metric it would look like the small CNVs are more enriched; with the diff-change metric the large CNVs would.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;

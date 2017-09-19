@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Hippocamplus </title>
-    <link>/Hippocamplus/post/</link>
+    <link>/post/</link>
     <language>en-us</language>
     <author></author>
     <rights>(C) 2017</rights>
@@ -12,10 +12,10 @@
       
         <item>
           <title>MUMerplots with ggplot2</title>
-          <link>/Hippocamplus/2017/09/19/mumerplots-with-ggplot2/</link>
+          <link>/2017/09/19/mumerplots-with-ggplot2/</link>
           <pubDate>Tue, 19 Sep 2017 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2017/09/19/mumerplots-with-ggplot2/</guid>
+          <guid>/2017/09/19/mumerplots-with-ggplot2/</guid>
           <description>&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(dplyr)
 library(magrittr)
 library(GenomicRanges)
@@ -27,7 +27,7 @@ library(tidyr)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;The MUMerplot that I want to reproduce showed three contigs overlapping a region of chr 14. I had filtered the delta file with &lt;code&gt;delta-filter -l 10000 -q -r&lt;/code&gt; to get only the contigs with the best alignments. I had used &lt;code&gt;mummerplot&lt;/code&gt; with the &lt;code&gt;-l&lt;/code&gt; layout option to reorder and orient the sequence to have a nice diagonal.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;FIND OUT THE MUMPLOT COMMAND OR RERUN&lt;/em&gt;&lt;/p&gt;
 &lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;/Hippocamplus/imgs/mumplot-example.png&#34; /&gt;
+&lt;img src=&#34;../imgs/mumplot-example.png&#34; /&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -225,7 +225,7 @@ mumgp.filt %&amp;gt;% head %&amp;gt;% kable&lt;/code&gt;&lt;/pre&gt;
         0), axis.text.y = element_blank(), axis.ticks.y = element_blank()) + 
     xlab(&amp;quot;reference sequence&amp;quot;) + ylab(&amp;quot;assembly&amp;quot;) + 
     scale_colour_brewer(palette = &amp;quot;Set1&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-19-MumplotsWithGgplot2_files/figure-html/graph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../post/2017-09-19-MumplotsWithGgplot2_files/figure-html/graph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Not bad but it would look nicer if we flipped the contigs to have more or less a diagonal.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;diagonalize&#34; class=&#34;section level2&#34;&gt;
@@ -252,9 +252,9 @@ ggplot(mumgp.filt.diag, aes(x = rs, xend = re, y = qs,
         0), axis.text.y = element_blank(), axis.ticks.y = element_blank()) + 
     xlab(&amp;quot;reference sequence&amp;quot;) + ylab(&amp;quot;assembly&amp;quot;) + 
     scale_colour_brewer(palette = &amp;quot;Set1&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-19-MumplotsWithGgplot2_files/figure-html/diag-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../post/2017-09-19-MumplotsWithGgplot2_files/figure-html/diag-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;/Hippocamplus/imgs/mumplot-example.png&#34; /&gt;
+&lt;img src=&#34;../imgs/mumplot-example.png&#34; /&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -270,12 +270,12 @@ ggplot(mumgp, aes(x = rs, xend = re, y = similarity,
     yend = similarity)) + geom_segment() + theme_bw() + 
     xlab(&amp;quot;reference sequence&amp;quot;) + ylab(&amp;quot;similarity&amp;quot;) + 
     ggtitle(&amp;quot;All contigs&amp;quot;) + ylim(0, 1)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-19-MumplotsWithGgplot2_files/figure-html/simgraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../post/2017-09-19-MumplotsWithGgplot2_files/figure-html/simgraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(mumgp.filt, aes(x = rs, xend = re, y = similarity, 
     yend = similarity)) + geom_segment() + theme_bw() + 
     xlab(&amp;quot;reference sequence&amp;quot;) + ylab(&amp;quot;similarity&amp;quot;) + 
     ggtitle(&amp;quot;At least 10 Kbp aligned&amp;quot;) + ylim(0, 1)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-19-MumplotsWithGgplot2_files/figure-html/simgraph-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../post/2017-09-19-MumplotsWithGgplot2_files/figure-html/simgraph-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;To better highlighted which region in the reference is covered, I annotate each base of the reference with the maximum similarity.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;maxSimilarityDisjoin &amp;lt;- function(df) {
     ref.ir = GRanges(&amp;quot;X&amp;quot;, IRanges(df$rs, df$re), similarity = df$similarity)
@@ -316,14 +316,14 @@ mumgp.sim %&amp;gt;% select(similarity, start, end) %&amp;gt;% gather(end,
     ggtitle(&amp;quot;All contigs&amp;quot;) + ylim(0, 1) + geom_segment(aes(x = rs, 
     xend = re, y = similarity, yend = similarity), 
     data = mumgp)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-19-MumplotsWithGgplot2_files/figure-html/simcov-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../post/2017-09-19-MumplotsWithGgplot2_files/figure-html/simcov-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(mumgp.sim) + geom_segment(aes(x = start, xend = end, 
     yend = similarity, y = similarity), color = &amp;quot;red&amp;quot;, 
     size = 2) + theme_bw() + xlab(&amp;quot;reference sequence&amp;quot;) + 
     ylab(&amp;quot;similarity&amp;quot;) + ylim(0, 1) + geom_segment(aes(x = rs, 
     xend = re, y = similarity, yend = similarity), 
     data = mumgp)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-19-MumplotsWithGgplot2_files/figure-html/simcov-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../post/2017-09-19-MumplotsWithGgplot2_files/figure-html/simcov-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;With this graph we could compare different assemblies or before/after filtering:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mumgp.filt.sim = maxSimilarityDisjoin(mumgp.filt)
 
@@ -335,13 +335,13 @@ mumgp.filt.m %&amp;gt;% select(similarity, start, end, filter) %&amp;gt;%
     colour = filter)) + geom_line(alpha = 0.8) + theme_bw() + 
     xlab(&amp;quot;reference sequence&amp;quot;) + ylab(&amp;quot;similarity&amp;quot;) + 
     ylim(0, 1) + scale_colour_brewer(palette = &amp;quot;Set1&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-19-MumplotsWithGgplot2_files/figure-html/simcovcomp-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../post/2017-09-19-MumplotsWithGgplot2_files/figure-html/simcovcomp-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Not so pretty but we see that a few region are not covered any more after our filtering. Maybe something like this instead :&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mumgp.filt.m %&amp;gt;% filter(similarity == 0) %&amp;gt;% ggplot(aes(x = start, 
     xend = end, y = filter, yend = filter)) + geom_segment(size = 10) + 
     theme_bw() + xlab(&amp;quot;reference sequence&amp;quot;) + ylab(&amp;quot;filter&amp;quot;) + 
     scale_colour_brewer(palette = &amp;quot;Set1&amp;quot;) + ggtitle(&amp;quot;Reference regions not covered&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-19-MumplotsWithGgplot2_files/figure-html/simcovcomptrack-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../post/2017-09-19-MumplotsWithGgplot2_files/figure-html/simcovcomptrack-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 </description>
         </item>
@@ -350,10 +350,10 @@ mumgp.filt.m %&amp;gt;% select(similarity, start, end, filter) %&amp;gt;%
       
         <item>
           <title>Regression</title>
-          <link>/Hippocamplus/2017/09/16/regression/</link>
+          <link>/2017/09/16/regression/</link>
           <pubDate>Sat, 16 Sep 2017 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2017/09/16/regression/</guid>
+          <guid>/2017/09/16/regression/</guid>
           <description>&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
 library(broom)
 library(magrittr)
@@ -384,17 +384,17 @@ glm(y ~ x, data = df, family = binomial()) %&amp;gt;% tidy %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.0741080&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.2723524&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.2721033&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.7855426&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.3429448&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.2787698&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-1.230208&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.2186194&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;xTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.5159407&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4067501&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.2684464&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.2046386&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.8198688&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4095741&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.001760&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0453106&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -413,17 +413,17 @@ glm(y ~ x, data = df, family = binomial()) %&amp;gt;% tidy %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.4418328&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.3021090&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-1.462495&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.1436057&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.5436154&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.2963336&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-1.834471&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0665841&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;yTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.5159407&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4067501&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.268446&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.2046386&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.8198688&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4095741&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.001760&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0453106&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -443,24 +443,24 @@ glm(y ~ x + z, data = df, family = binomial()) %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0530828&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4776758&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.1111272&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.9115155&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.3887701&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4613601&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.8426609&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.3994181&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;xTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.5022962&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4089703&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.2281972&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.2193729&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.8189270&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4096573&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.9990537&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0456025&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;z&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.2427566&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.7492941&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.3239804&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.7459528&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0887129&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.7106585&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.1248320&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.9006566&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -479,24 +479,24 @@ glm(y ~ x + z, data = df, family = binomial()) %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.0538278&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4831522&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.1114096&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.9112916&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.6101534&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4745734&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-1.2856882&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.1985519&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;yTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.5024176&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4089673&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.2285029&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.2192582&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.8189348&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4096568&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.9990757&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0456002&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;z&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.7690884&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.7544378&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-1.0194192&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.3080040&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.1284027&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.7131870&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.1800407&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.8571206&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -520,17 +520,17 @@ glm(y ~ x + z, data = df, family = binomial()) %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.0741080&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.2723524&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.2721033&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.7855426&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.3429448&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.2787698&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-1.230208&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.2186194&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;xTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.5159407&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4067501&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.2684464&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.2046386&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.8198688&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4095741&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.001760&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0453106&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -539,7 +539,7 @@ glm(y ~ x + z, data = df, family = binomial()) %&amp;gt;%
 odds.y.ifnotx = mean(subset(df, !x)$y)/mean(!subset(df, 
     !x)$y)
 log(odds.y.ifx/odds.y.ifnotx)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 0.5159407&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.8198688&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;extreme-cases&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Extreme cases&lt;/h3&gt;
@@ -590,7 +590,7 @@ ext.df = do.call(rbind, ext.df)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ext.df %&amp;gt;% filter(term == &amp;quot;xTRUE&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate)) + 
     geom_density(fill = &amp;quot;grey50&amp;quot;) + facet_grid(ss ~ 
     ., scales = &amp;quot;free&amp;quot;) + theme_bw()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-16-Regression_files/figure-html/lrextsimgraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../post/2017-09-16-Regression_files/figure-html/lrextsimgraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;It seems like the estimate “inflation” is problematic mostly when there are only 1 or 2 supporting observations. If there are more than 5 supporting observations the estimate is correctly centered in 0.&lt;/p&gt;
 &lt;p&gt;This problem is in fact called the &lt;a href=&#34;https://en.wikipedia.org/wiki/Separation_(statistics)&#34;&gt;problem of separation&lt;/a&gt;. There are two approaches to deal with it:&lt;/p&gt;
 &lt;ol style=&#34;list-style-type: decimal&#34;&gt;
@@ -617,7 +617,7 @@ extrms.df = do.call(rbind, extrms.df)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;extrms.df %&amp;gt;% filter(term == &amp;quot;x&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate)) + 
     geom_density(fill = &amp;quot;grey50&amp;quot;) + facet_grid(ss ~ 
     penalty, scales = &amp;quot;free&amp;quot;) + theme_bw()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-16-Regression_files/figure-html/lrmsgraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../post/2017-09-16-Regression_files/figure-html/lrmsgraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;It definitely helps: the estimates are now much closer to 0. I don’t see much difference between penalties 1, 3 or 5.&lt;/p&gt;
 &lt;p&gt;The &lt;a href=&#34;https://cran.r-project.org/web/packages/logistf/index.html&#34;&gt;&lt;code&gt;logistf&lt;/code&gt; package&lt;/a&gt;. It implements Firth’s bias reduction method with its &lt;code&gt;logistf&lt;/code&gt; function.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(logistf)
@@ -635,7 +635,7 @@ extstf.df = do.call(rbind, extstf.df)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;extstf.df %&amp;gt;% filter(term == &amp;quot;xTRUE&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate)) + 
     geom_density(fill = &amp;quot;grey50&amp;quot;) + facet_grid(ss ~ 
     ., scales = &amp;quot;free&amp;quot;) + theme_bw()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-16-Regression_files/figure-html/lrreggraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../post/2017-09-16-Regression_files/figure-html/lrreggraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;This works well too.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -649,7 +649,7 @@ df$y = ifelse(df$x &amp;gt; 40, rnorm(nb.samp, 0, 5) - df$x *
     df$x/300 + 20, df$y)
 ggplot(df, aes(x = x, y = y)) + geom_point(alpha = 0.5) + 
     theme_bw()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-16-Regression_files/figure-html/blm-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../post/2017-09-16-Regression_files/figure-html/blm-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;glm.o = glm(y ~ x, data = df)
 loess.o = loess(y ~ x, data = df)
 library(mgcv)
@@ -665,7 +665,7 @@ pred.df = rbind(df %&amp;gt;% mutate(y = predict(glm.o), model = &amp;quot;glm&a
 ggplot(df, aes(x = x, y = y)) + geom_point(alpha = 0.2) + 
     geom_line(aes(colour = model), size = 2, alpha = 0.9, 
         data = pred.df) + theme_bw() + scale_colour_brewer(palette = &amp;quot;Set1&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-16-Regression_files/figure-html/blmmodels-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../post/2017-09-16-Regression_files/figure-html/blmmodels-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 </description>
         </item>
@@ -674,10 +674,10 @@ ggplot(df, aes(x = x, y = y)) + geom_point(alpha = 0.2) +
       
         <item>
           <title>Enrichment between genomic regions</title>
-          <link>/Hippocamplus/2017/09/05/enrichment-between-genomic-regions/</link>
+          <link>/2017/09/05/enrichment-between-genomic-regions/</link>
           <pubDate>Tue, 05 Sep 2017 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2017/09/05/enrichment-between-genomic-regions/</guid>
+          <guid>/2017/09/05/enrichment-between-genomic-regions/</guid>
           <description>&lt;p&gt;Testing if two sets of genomic regions overlap significantly is not straightforward. In the simple situation of regions of 1 bp (e.g. SNVs) we could use a hypergeometric test. When the regions are small enough and there are not too many, the hypergeometric test might also be a fair approximation.&lt;/p&gt;
 &lt;p&gt;But when we manipulate many regions of variable size covering the entire genome it’s not as straightforward. The gene annotation is an example. The repeat annotation is even worse as it covers almost 50% of the genome and contains different families with very different size/location profiles.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
@@ -733,7 +733,7 @@ ht.sim = rbind(data.frame(nb = 1000, size = 1, pv = testHG(rep.r,
     xlab(&amp;quot;P-value&amp;quot;) + scale_color_brewer(palette = &amp;quot;Set1&amp;quot;, 
     name = &amp;quot;regions&amp;quot;) + theme(legend.justification = c(1, 
     0), legend.position = c(0.99, 0.01))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/testhggraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../post/2017-09-05-GenomicRegionEnrichment_files/figure-html/testhggraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;As expected, the hypergeometric test works well for region of 1 bp. Otherwise the distribution of the P-values is biased. The larger the regions the stronger the bias. To a lower extent, more regions also means more bias.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;using-control-regions-with-similar-features&#34; class=&#34;section level2&#34;&gt;
@@ -765,7 +765,7 @@ lr.sim = rbind(data.frame(nb = 1000, size = 1, pv = testLR(rep.r,
     xlab(&amp;quot;P-value&amp;quot;) + scale_color_brewer(palette = &amp;quot;Set1&amp;quot;, 
     name = &amp;quot;regions&amp;quot;) + theme(legend.justification = c(1, 
     0), legend.position = c(0.99, 0.01))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/contreggraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../post/2017-09-05-GenomicRegionEnrichment_files/figure-html/contreggraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;The distribution of the P-values is much better.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;controlling-for-correlated-features&#34; class=&#34;section level2&#34;&gt;
@@ -1074,15 +1074,15 @@ null.df = do.call(rbind, null.df)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;null.df %&amp;gt;% filter(term == &amp;quot;regionTRUE&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw() + 
     geom_vline(xintercept = 0) + ggtitle(&amp;quot;log odds ratio&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvnoassocgraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvnoassocgraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;null.df %&amp;gt;% filter(term == &amp;quot;fold-change&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw() + 
     geom_vline(xintercept = 1) + ggtitle(&amp;quot;fold-change&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvnoassocgraph-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvnoassocgraph-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;null.df %&amp;gt;% filter(term == &amp;quot;diff-change&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw() + 
     geom_vline(xintercept = 0) + ggtitle(&amp;quot;diff-change&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvnoassocgraph-3.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvnoassocgraph-3.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;The three metrics are centered in 0 but the variance of the fold-change metric is much higher for the small CNVs.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;association&#34; class=&#34;section level3&#34;&gt;
@@ -1103,15 +1103,15 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;asso.df %&amp;gt;% filter(term == &amp;quot;regionTRUE&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw() + 
     geom_vline(xintercept = 0) + ggtitle(&amp;quot;log odds ratio&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvassocgraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvassocgraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;asso.df %&amp;gt;% filter(term == &amp;quot;fold-change&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw() + 
     geom_vline(xintercept = 1) + ggtitle(&amp;quot;fold-change&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvassocgraph-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvassocgraph-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;asso.df %&amp;gt;% filter(term == &amp;quot;diff-change&amp;quot;) %&amp;gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw() + 
     geom_vline(xintercept = 0) + ggtitle(&amp;quot;diff-change&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvassocgraph-3.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvassocgraph-3.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;As expected by construction, only the logistic regression estimate are similar. If we used the fold-change metric it would look like the small CNVs are more enriched; with the diff-change metric the large CNVs would.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -1122,10 +1122,10 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
       
         <item>
           <title>Summary epigenetic mark tracks</title>
-          <link>/Hippocamplus/2016/09/06/summary-epigenetic-mark-tracks/</link>
+          <link>/2016/09/06/summary-epigenetic-mark-tracks/</link>
           <pubDate>Tue, 06 Sep 2016 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2016/09/06/summary-epigenetic-mark-tracks/</guid>
+          <guid>/2016/09/06/summary-epigenetic-mark-tracks/</guid>
           <description>&lt;p&gt;To assess the potential impact of variants (SNV, SVs) we might want to use some of the public epigentic datasets. The amount and heterogeneity of this data is a bit overwhelming. I would like to get a summary of which regions of the genome are the most functionally important.&lt;/p&gt;
 &lt;p&gt;The plan is to:&lt;/p&gt;
 &lt;ul&gt;
@@ -1140,7 +1140,7 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
 &lt;h2&gt;AnnotationHub&lt;/h2&gt;
 &lt;p&gt;I’ll use the &lt;a href=&#34;http://bioconductor.org/packages/release/bioc/html/AnnotationHub.html&#34;&gt;AnnotationHub&lt;/a&gt; package, which links Encode and EpigenomeRoadmap data (and more) directly in R.&lt;/p&gt;
 &lt;p&gt;I search for &lt;em&gt;narrowPeak&lt;/em&gt; in &lt;em&gt;hg19&lt;/em&gt; from H3K27ac, H3K27me3, H3K36me3, H3K4me1, H3K4me3 or H3K9me3, in brain, blood, liver, muscle, lung, kidney, skin or heart. I also look for DNase peaks. Let’s see if I can find what I want.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2016-09-06-epigeneticTracks_files/figure-html/ahgraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../post/2016-09-06-epigeneticTracks_files/figure-html/ahgraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Most tissues have more than 3 tracks for each histone mark. I’ll just exclude liver and knidney that don’t. DNase is a bit more rare but there is at least one track per tissue. In total, it represents 360 different tracks, that I want to merge into one track per mark/tissue.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;download-and-merge-tracks&#34; class=&#34;section level2&#34;&gt;
@@ -1151,7 +1151,7 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;overview&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Overview&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2016-09-06-epigeneticTracks_files/figure-html/overview-1.png&#34; width=&#34;672&#34; /&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2016-09-06-epigeneticTracks_files/figure-html/overview-2.png&#34; width=&#34;672&#34; /&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2016-09-06-epigeneticTracks_files/figure-html/overview-3.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../post/2016-09-06-epigeneticTracks_files/figure-html/overview-1.png&#34; width=&#34;672&#34; /&gt;&lt;img src=&#34;../post/2016-09-06-epigeneticTracks_files/figure-html/overview-2.png&#34; width=&#34;672&#34; /&gt;&lt;img src=&#34;../post/2016-09-06-epigeneticTracks_files/figure-html/overview-3.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;limitations&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Limitations&lt;/h2&gt;
@@ -1165,10 +1165,10 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
       
         <item>
           <title>Gencode exploration</title>
-          <link>/Hippocamplus/2016/06/04/gencode-exploration/</link>
+          <link>/2016/06/04/gencode-exploration/</link>
           <pubDate>Sat, 04 Jun 2016 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2016/06/04/gencode-exploration/</guid>
+          <guid>/2016/06/04/gencode-exploration/</guid>
           <description>&lt;div id=&#34;gencode-v19&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Gencode v19&lt;/h2&gt;
 &lt;p&gt;I downloaded Gencode v19 at &lt;a href=&#34;ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz&#34;&gt;&lt;a href=&#34;ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz&#34; class=&#34;uri&#34;&gt;ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz&lt;/a&gt;&lt;/a&gt;.&lt;/p&gt;
@@ -1178,7 +1178,7 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;number&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Number&lt;/h3&gt;
 &lt;p&gt;Focusing on autosomes/X/Y, there are 57,783 “genes” of different types:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2016-06-04-GencodeExploration_files/figure-html/genetypes-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../post/2016-06-04-GencodeExploration_files/figure-html/genetypes-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;I merge the rare types into a &lt;em&gt;other&lt;/em&gt; class and some RNAs.&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;
@@ -1217,7 +1217,7 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;size&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Size&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2016-06-04-GencodeExploration_files/figure-html/genesize-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../post/2016-06-04-GencodeExploration_files/figure-html/genesize-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;The largest annotated genes span more than 2 Mbp:&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;
@@ -1308,7 +1308,7 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;density&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Density&lt;/h3&gt;
 &lt;p&gt;Using non-overlapping windows of 1 Mb the gene density looks like this:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2016-06-04-GencodeExploration_files/figure-html/genedens-1.png&#34; width=&#34;768&#34; /&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2016-06-04-GencodeExploration_files/figure-html/genedens-2.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../post/2016-06-04-GencodeExploration_files/figure-html/genedens-1.png&#34; width=&#34;768&#34; /&gt;&lt;img src=&#34;../post/2016-06-04-GencodeExploration_files/figure-html/genedens-2.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Chr 19, 17 and 11 have more protein-coding genes than the rest.&lt;/li&gt;
 &lt;li&gt;Chr Y has more pseudogene compared to other classes.&lt;/li&gt;
@@ -1320,12 +1320,12 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;number-1&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Number&lt;/h3&gt;
 &lt;p&gt;Focusing on autosomes/X/Y, there are 1,196,256 “exons” from different types of genes:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2016-06-04-GencodeExploration_files/figure-html/exontype-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../post/2016-06-04-GencodeExploration_files/figure-html/exontype-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;For the rest of the analysis, I use only exons from protein-coding genes.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;number-per-gene&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Number per gene&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2016-06-04-GencodeExploration_files/figure-html/exongene-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../post/2016-06-04-GencodeExploration_files/figure-html/exongene-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr class=&#34;header&#34;&gt;
@@ -1377,7 +1377,7 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;size-1&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Size&lt;/h3&gt;
 &lt;p&gt;The average exon size is 232 bp.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2016-06-04-GencodeExploration_files/figure-html/exonsize-1.png&#34; width=&#34;768&#34; /&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2016-06-04-GencodeExploration_files/figure-html/exonsize-2.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../post/2016-06-04-GencodeExploration_files/figure-html/exonsize-1.png&#34; width=&#34;768&#34; /&gt;&lt;img src=&#34;../post/2016-06-04-GencodeExploration_files/figure-html/exonsize-2.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;The first exon seems to be slightly larger than the others. I used genes with at least 10 exons to be sure it’s not due to large single-exon genes.&lt;/p&gt;
 &lt;p&gt;The largest annotated exons are more than 20 Kbp long:&lt;/p&gt;
 &lt;table&gt;
@@ -1462,10 +1462,10 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
       
         <item>
           <title>Preparing some genomic annotations</title>
-          <link>/Hippocamplus/2016/06/03/preparing-some-genomic-annotations/</link>
+          <link>/2016/06/03/preparing-some-genomic-annotations/</link>
           <pubDate>Fri, 03 Jun 2016 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2016/06/03/preparing-some-genomic-annotations/</guid>
+          <guid>/2016/06/03/preparing-some-genomic-annotations/</guid>
           <description>&lt;div id=&#34;mappability-track&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Mappability track&lt;/h2&gt;
 &lt;p&gt;I produced a mappability track from the UCSC track. The &lt;a href=&#34;http://hgdownload.soe.ucsc.edu/gbdb/hg19/bbi/wgEncodeCrgMapabilityAlign100mer.bw&#34;&gt;raw file&lt;/a&gt; contains, for each base in the genome, an estimation of the probability that a read is correctly mapped at this position.&lt;/p&gt;
@@ -1478,7 +1478,7 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
 &lt;li&gt;&lt;strong&gt;low-map&lt;/strong&gt; regions with a non-null mappability but lower than 0.95.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;no-map&lt;/strong&gt; regions with mappability 0.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2016-06-03-annotationPreparation_files/figure-html/summary-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../post/2016-06-03-annotationPreparation_files/figure-html/summary-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr class=&#34;header&#34;&gt;
@@ -1513,10 +1513,10 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
       
         <item>
           <title>Word Cloud in R</title>
-          <link>/Hippocamplus/2016/02/26/word-cloud-in-r/</link>
+          <link>/2016/02/26/word-cloud-in-r/</link>
           <pubDate>Fri, 26 Feb 2016 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2016/02/26/word-cloud-in-r/</guid>
+          <guid>/2016/02/26/word-cloud-in-r/</guid>
           <description>&lt;p&gt;With the &lt;code&gt;wordcloud&lt;/code&gt; package, an example with fake words the command would look like this:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(wordcloud)
 createWords &amp;lt;- function(w.l = 3) paste(sample(letters, 
@@ -1526,10 +1526,10 @@ freq = c(sample(1:50, 190, T), sample(100:150, 10,
     T))
 freq = freq/sum(freq)
 wordcloud(words, freq)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2016-02-26-wordcloud_files/figure-html/example-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../post/2016-02-26-wordcloud_files/figure-html/example-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;wordcloud(words, freq, colors = sample(c(&amp;quot;red&amp;quot;, &amp;quot;blue&amp;quot;), 
     length(words), replace = TRUE), ordered.colors = TRUE)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/Hippocamplus/Hippocamplus/post/2016-02-26-wordcloud_files/figure-html/example-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../post/2016-02-26-wordcloud_files/figure-html/example-2.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 </description>
         </item>
       

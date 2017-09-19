@@ -33,7 +33,7 @@ I had used `mummerplot` with the `-l` layout option to reorder and orient the se
 The delta file is the default output of the [NUCmer alignment script](http://mummer.sourceforge.net/manual/#nucmer).
 The format of the delta file is described more [here](http://mummer.sourceforge.net/manual/#nucmeroutput).
 
-```{r delta}
+```{r delta, cache=TRUE}
 readDelta <- function(deltafile){
   lines = scan(deltafile, 'a', sep='\n', quiet=TRUE)
   lines = lines[-1]

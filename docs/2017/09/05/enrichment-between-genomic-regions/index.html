@@ -15,15 +15,15 @@
   </title>
 
   
-  <link rel="stylesheet" href=/Hippocamplus/css/poole.css>
-  <link rel="stylesheet" href=/Hippocamplus/css/syntax.css>
-  <link rel="stylesheet" href=/Hippocamplus/css/lanyon.css>
-  <link rel="stylesheet" href=/Hippocamplus/css/github.min.css>
+  <link rel="stylesheet" href=/css/poole.css>
+  <link rel="stylesheet" href=/css/syntax.css>
+  <link rel="stylesheet" href=/css/lanyon.css>
+  <link rel="stylesheet" href=/css/github.min.css>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
 
   
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href=/Hippocamplus/assets/hippoPlus-icon.png>
-  <link rel="shortcut icon" href=/Hippocamplus/assets/hippoPlus-icon.png>
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href=/assets/hippoPlus-icon.png>
+  <link rel="shortcut icon" href=/assets/hippoPlus-icon.png>
 
   
   <link rel="alternate" type="application/rss+xml" title="RSS" href=/atom.xml>
@@ -42,45 +42,45 @@
   </div>
 
   <nav class="sidebar-nav">
-    <a class="sidebar-nav-item " href=/Hippocamplus/>Home</a>
-    <a class="sidebar-nav-item " href=/Hippocamplus/post>Posts</a>
+    <a class="sidebar-nav-item " href=/>Home</a>
+    <a class="sidebar-nav-item " href=/post>Posts</a>
 
     
     
       
-        <a class="sidebar-nav-item " href="/Hippocamplus/emacs/">Emacs</a>
+        <a class="sidebar-nav-item " href="../../../../emacs/">Emacs</a>
       
     
       
-        <a class="sidebar-nav-item " href="/Hippocamplus/latex/">LaTeX</a>
+        <a class="sidebar-nav-item " href="../../../../latex/">LaTeX</a>
       
     
       
-        <a class="sidebar-nav-item " href="/Hippocamplus/markdown/">Markdown</a>
+        <a class="sidebar-nav-item " href="../../../../markdown/">Markdown</a>
       
     
       
-        <a class="sidebar-nav-item " href="/Hippocamplus/math/stats/">Math/Stats</a>
+        <a class="sidebar-nav-item " href="../../../../math/stats/">Math/Stats</a>
       
     
       
-        <a class="sidebar-nav-item " href="/Hippocamplus/python/">Python</a>
+        <a class="sidebar-nav-item " href="../../../../python/">Python</a>
       
     
       
-        <a class="sidebar-nav-item " href="/Hippocamplus/r/">R</a>
+        <a class="sidebar-nav-item " href="../../../../r/">R</a>
       
     
       
-        <a class="sidebar-nav-item " href="/Hippocamplus/shell/">Shell</a>
+        <a class="sidebar-nav-item " href="../../../../shell/">Shell</a>
       
     
       
-        <a class="sidebar-nav-item " href="/Hippocamplus/internet/">Internet</a>
+        <a class="sidebar-nav-item " href="../../../../internet/">Internet</a>
       
     
       
-        <a class="sidebar-nav-item " href="/Hippocamplus/about/">About</a>
+        <a class="sidebar-nav-item " href="../../../../about/">About</a>
       
     
       
@@ -135,7 +135,7 @@
       <div class="masthead">
         <div class="container">
           <h3 class="masthead-title">
-            <a href=/Hippocamplus/ title="Home">Hippocamplus</a>
+            <a href=/ title="Home">Hippocamplus</a>
             <small>My Second Memory</small>
           </h3>
         </div>
@@ -152,9 +152,9 @@
   
   
   
-  <a href='/Hippocamplus/tags/genome/' class='label'>genome</a>
+  <a href='../../../../tags/genome/' class='label'>genome</a>
   
-  <a href='/Hippocamplus/tags/stats/' class='label'>stats</a>
+  <a href='../../../../tags/stats/' class='label'>stats</a>
   
   
   
@@ -214,7 +214,7 @@ ht.sim = rbind(data.frame(nb = 1000, size = 1, pv = testHG(rep.r,
     xlab(&quot;P-value&quot;) + scale_color_brewer(palette = &quot;Set1&quot;, 
     name = &quot;regions&quot;) + theme(legend.justification = c(1, 
     0), legend.position = c(0.99, 0.01))</code></pre>
-<p><img src="/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/testhggraph-1.png" width="672" /></p>
+<p><img src="../../../../post/2017-09-05-GenomicRegionEnrichment_files/figure-html/testhggraph-1.png" width="672" /></p>
 <p>As expected, the hypergeometric test works well for region of 1 bp. Otherwise the distribution of the P-values is biased. The larger the regions the stronger the bias. To a lower extent, more regions also means more bias.</p>
 </div>
 <div id="using-control-regions-with-similar-features" class="section level2">
@@ -246,7 +246,7 @@ lr.sim = rbind(data.frame(nb = 1000, size = 1, pv = testLR(rep.r,
     xlab(&quot;P-value&quot;) + scale_color_brewer(palette = &quot;Set1&quot;, 
     name = &quot;regions&quot;) + theme(legend.justification = c(1, 
     0), legend.position = c(0.99, 0.01))</code></pre>
-<p><img src="/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/contreggraph-1.png" width="672" /></p>
+<p><img src="../../../../post/2017-09-05-GenomicRegionEnrichment_files/figure-html/contreggraph-1.png" width="672" /></p>
 <p>The distribution of the P-values is much better.</p>
 </div>
 <div id="controlling-for-correlated-features" class="section level2">
@@ -555,15 +555,15 @@ null.df = do.call(rbind, null.df)</code></pre>
 <pre class="r"><code>null.df %&gt;% filter(term == &quot;regionTRUE&quot;) %&gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw() + 
     geom_vline(xintercept = 0) + ggtitle(&quot;log odds ratio&quot;)</code></pre>
-<p><img src="/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvnoassocgraph-1.png" width="672" /></p>
+<p><img src="../../../../post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvnoassocgraph-1.png" width="672" /></p>
 <pre class="r"><code>null.df %&gt;% filter(term == &quot;fold-change&quot;) %&gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw() + 
     geom_vline(xintercept = 1) + ggtitle(&quot;fold-change&quot;)</code></pre>
-<p><img src="/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvnoassocgraph-2.png" width="672" /></p>
+<p><img src="../../../../post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvnoassocgraph-2.png" width="672" /></p>
 <pre class="r"><code>null.df %&gt;% filter(term == &quot;diff-change&quot;) %&gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw() + 
     geom_vline(xintercept = 0) + ggtitle(&quot;diff-change&quot;)</code></pre>
-<p><img src="/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvnoassocgraph-3.png" width="672" /></p>
+<p><img src="../../../../post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvnoassocgraph-3.png" width="672" /></p>
 <p>The three metrics are centered in 0 but the variance of the fold-change metric is much higher for the small CNVs.</p>
 </div>
 <div id="association" class="section level3">
@@ -584,15 +584,15 @@ asso.df = do.call(rbind, asso.df)</code></pre>
 <pre class="r"><code>asso.df %&gt;% filter(term == &quot;regionTRUE&quot;) %&gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw() + 
     geom_vline(xintercept = 0) + ggtitle(&quot;log odds ratio&quot;)</code></pre>
-<p><img src="/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvassocgraph-1.png" width="672" /></p>
+<p><img src="../../../../post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvassocgraph-1.png" width="672" /></p>
 <pre class="r"><code>asso.df %&gt;% filter(term == &quot;fold-change&quot;) %&gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw() + 
     geom_vline(xintercept = 1) + ggtitle(&quot;fold-change&quot;)</code></pre>
-<p><img src="/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvassocgraph-2.png" width="672" /></p>
+<p><img src="../../../../post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvassocgraph-2.png" width="672" /></p>
 <pre class="r"><code>asso.df %&gt;% filter(term == &quot;diff-change&quot;) %&gt;% ggplot(aes(x = estimate, 
     colour = region)) + geom_density() + theme_bw() + 
     geom_vline(xintercept = 0) + ggtitle(&quot;diff-change&quot;)</code></pre>
-<p><img src="/Hippocamplus/Hippocamplus/post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvassocgraph-3.png" width="672" /></p>
+<p><img src="../../../../post/2017-09-05-GenomicRegionEnrichment_files/figure-html/cnvassocgraph-3.png" width="672" /></p>
 <p>As expected by construction, only the logistic regression estimate are similar. If we used the fold-change metric it would look like the small CNVs are more enriched; with the diff-change metric the large CNVs would.</p>
 </div>
 </div>
@@ -604,8 +604,8 @@ asso.df = do.call(rbind, asso.df)</code></pre>
 
     <label for="sidebar-checkbox" class="sidebar-toggle"></label>
 
-    <script src=/Hippocamplus/assets/highlight.min.js></script>
-    <script src=/Hippocamplus/assets/r.min.js></script>
+    <script src=/assets/highlight.min.js></script>
+    <script src=/assets/r.min.js></script>
     
     <script>
       hljs.configure({languages: ['r']});
