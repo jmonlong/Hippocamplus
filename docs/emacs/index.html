@@ -169,6 +169,7 @@
 </ul></li>
 <li><a href="#for-latex">For LaTeX</a><ul>
 <li><a href="#word-count">Word count</a></li>
+<li><a href="#chunk-folding">Chunk folding</a></li>
 </ul></li>
 <li><a href="#for-markdown">For Markdown</a></li>
 <li><a href="#for-python">For Python</a><ul>
@@ -353,6 +354,22 @@ make</code></pre>
 (string-match &quot;\n$&quot; word-count)
 (message (replace-match &quot;&quot; nil nil word-count))))</code></pre>
 <p>I would like to add a feature to this: counting selected text.</p>
+</div>
+<div id="chunk-folding" class="section level3">
+<h3>Chunk folding</h3>
+<p>Sometimes I like to fold chunk of the document to improve clarity, e.g. frames in beamer document or figure/table in a manuscript. I added to my <code>.emacs</code>:</p>
+<pre class="lisp"><code>(add-hook &#39;LaTeX-mode-hook (lambda ()
+                 (add-to-list &#39;LaTeX-fold-env-spec-list &#39;(&quot;[frame]&quot; (&quot;frame&quot;)))
+                 (setq TeX-fold-macro-spec-list (list ()))
+                 (TeX-fold-mode 1)))</code></pre>
+<p>Then the main key bindings are:</p>
+<ul>
+<li><code>C-c C-o C-e</code> folds an environment.</li>
+<li><code>C-c C-o C-r</code> folds a region.</li>
+<li><code>C-c C-o i</code> unfold an item.</li>
+<li><code>C-c C-o C-f</code> to switch the fold-mode on/off</li>
+</ul>
+<p>Because I added <em>frame</em> in the list, I can select a bunch of frames, press <code>C-c C-o C-r</code> and they all get folded (but not the rest). Otherwise, I manually fold the frames/figures/tables that are distracting.</p>
 </div>
 </div>
 <div id="for-markdown" class="section level2">

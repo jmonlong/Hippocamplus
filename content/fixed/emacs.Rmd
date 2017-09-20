@@ -249,8 +249,8 @@ Then the main key bindings are:
 - `C-c C-o i` unfold an item.
 - `C-c C-o C-f` to switch the fold-mode on/off
 
-Because I added *frame* in the list, I can select a bunch of frames, press `C-c C-o C-r` and they all get folded (but the rest).
-Otherwise I manually fold the frames/figures/tables that are distracting.
+Because I added *frame* in the list, I can select a bunch of frames, press `C-c C-o C-r` and they all get folded (but not the rest).
+Otherwise, I manually fold the frames/figures/tables that are distracting.
 
 ## For Markdown
 
