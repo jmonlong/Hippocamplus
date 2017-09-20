@@ -230,6 +230,28 @@ I found a wrapper around `texcount` that count the number of words in a document
 
 I would like to add a feature to this: counting selected text.
 
+### Chunk folding
+
+Sometimes I like to fold chunk of the document to improve clarity, e.g. frames in beamer document or figure/table in a manuscript.
+I added to my `.emacs`:
+
+~~~lisp
+(add-hook 'LaTeX-mode-hook (lambda ()
+			     (add-to-list 'LaTeX-fold-env-spec-list '("[frame]" ("frame")))
+			     (setq TeX-fold-macro-spec-list (list ()))
+			     (TeX-fold-mode 1)))
+~~~
+
+Then the main key bindings are:
+
+- `C-c C-o C-e` folds an environment.
+- `C-c C-o C-r` folds a region.
+- `C-c C-o i` unfold an item.
+- `C-c C-o C-f` to switch the fold-mode on/off
+
+Because I added *frame* in the list, I can select a bunch of frames, press `C-c C-o C-r` and they all get folded (but the rest).
+Otherwise I manually fold the frames/figures/tables that are distracting.
+
 ## For Markdown
 
 Pressing `TAB` when the cursor is in a heading will cycle through *heading-only/full* view.
