@@ -401,3 +401,7 @@ To add extra slides at the end of the presentation without increasing the total 
 
 \setcounter{framenumber}{\value{finalframe}}
 ~~~
+
+### Link to frame
+
+Using `\hyperlink{frame:foo}{Slide here}`, and putting a `\label{frame:foo}` in the relevant frame. From the `\hyperref` package.
