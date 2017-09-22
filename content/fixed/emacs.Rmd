@@ -142,10 +142,6 @@ In `.emacs`:
             (local-set-key (kbd "C-c C-d C-r") 'renderRmd)))
 ~~~
 
-### Markdown live preview
-
-[`markdown-preview-mode`](https://github.com/ancane/markdown-preview-mode) opens a page on the web browser and update it every time the buffer is saved.
-
 ## For writing
 
 ### Spell checking
@@ -254,9 +250,22 @@ Otherwise, I manually fold the frames/figures/tables that are distracting.
 
 ## For Markdown
 
+- `C-c C-s s` **bold** (**s**trong).
+- `C-c C-s e` *italic* (**e**mphasis).
+- `C-c C-s s` `code` (**c**ode).
+- `C-c C-o` follow a link.
+
+
+### Table formatting
+
 Pressing `TAB` when the cursor is in a heading will cycle through *heading-only/full* view.
 
 `M-x orgtbl-mode` to format markdown tables.
+
+### Markdown live preview
+
+[`markdown-preview-mode`](https://github.com/ancane/markdown-preview-mode) opens a page on the web browser and update it every time the buffer is saved.
+
 
 ## For Python
 	
