@@ -22,7 +22,6 @@ output:
 <li><a href="#smart-underscores">Smart underscores</a></li>
 <li><a href="#poly-mode-for-r-markdown">Poly-mode for R + Markdown</a></li>
 <li><a href="#keyboard-shortcut-to-render-rmarkdown">Keyboard shortcut to render RMarkdown</a></li>
-<li><a href="#markdown-live-preview">Markdown live preview</a></li>
 </ul></li>
 <li><a href="#for-writing">For writing</a><ul>
 <li><a href="#spell-checking">Spell checking</a></li>
@@ -33,7 +32,10 @@ output:
 <li><a href="#word-count">Word count</a></li>
 <li><a href="#chunk-folding">Chunk folding</a></li>
 </ul></li>
-<li><a href="#for-markdown">For Markdown</a></li>
+<li><a href="#for-markdown">For Markdown</a><ul>
+<li><a href="#table-formatting">Table formatting</a></li>
+<li><a href="#markdown-live-preview">Markdown live preview</a></li>
+</ul></li>
 <li><a href="#for-python">For Python</a><ul>
 <li><a href="#elpy-python-mode">Elpy python mode</a></li>
 <li><a href="#add-some-key-bindings">Add some key bindings</a></li>
@@ -157,10 +159,6 @@ make</code></pre>
           (lambda ()
             (local-set-key (kbd &quot;C-c C-d C-r&quot;) &#39;renderRmd)))</code></pre>
 </div>
-<div id="markdown-live-preview" class="section level3">
-<h3>Markdown live preview</h3>
-<p><a href="https://github.com/ancane/markdown-preview-mode"><code>markdown-preview-mode</code></a> opens a page on the web browser and update it every time the buffer is saved.</p>
-</div>
 </div>
 <div id="for-writing" class="section level2">
 <h2>For writing</h2>
@@ -236,8 +234,21 @@ make</code></pre>
 </div>
 <div id="for-markdown" class="section level2">
 <h2>For Markdown</h2>
+<ul>
+<li><code>C-c C-s s</code> <strong>bold</strong> (<strong>s</strong>trong).</li>
+<li><code>C-c C-s e</code> <em>italic</em> (<strong>e</strong>mphasis).</li>
+<li><code>C-c C-s s</code> <code>code</code> (<strong>c</strong>ode).</li>
+<li><code>C-c C-o</code> follow a link.</li>
+</ul>
+<div id="table-formatting" class="section level3">
+<h3>Table formatting</h3>
 <p>Pressing <code>TAB</code> when the cursor is in a heading will cycle through <em>heading-only/full</em> view.</p>
 <p><code>M-x orgtbl-mode</code> to format markdown tables.</p>
+</div>
+<div id="markdown-live-preview" class="section level3">
+<h3>Markdown live preview</h3>
+<p><a href="https://github.com/ancane/markdown-preview-mode"><code>markdown-preview-mode</code></a> opens a page on the web browser and update it every time the buffer is saved.</p>
+</div>
 </div>
 <div id="for-python" class="section level2">
 <h2>For Python</h2>
