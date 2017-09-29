@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Hippocamplus </title>
-    <link>/tags/r/</link>
+    <link>/Hippocamplus/tags/r/</link>
     <language>en-us</language>
     <author></author>
     <rights>(C) 2017</rights>
@@ -11,21 +11,20 @@
     
       
         <item>
-          <title>MUMerplots with ggplot2</title>
-          <link>/2017/09/19/mumerplots-with-ggplot2/</link>
+          <title>MUMmerplots with ggplot2</title>
+          <link>/Hippocamplus/2017/09/19/mummerplots-with-ggplot2/</link>
           <pubDate>Tue, 19 Sep 2017 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/2017/09/19/mumerplots-with-ggplot2/</guid>
+          <guid>/Hippocamplus/2017/09/19/mummerplots-with-ggplot2/</guid>
           <description>&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(dplyr)
 library(magrittr)
 library(GenomicRanges)
 library(knitr)
 library(ggplot2)
 library(tidyr)&lt;/code&gt;&lt;/pre&gt;
-&lt;div id=&#34;mumplot&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;MUMplot&lt;/h2&gt;
-&lt;p&gt;The MUMerplot that I want to reproduce showed three contigs overlapping a region of chr 14. I had filtered the delta file with &lt;code&gt;delta-filter -l 10000 -q -r&lt;/code&gt; to get only the contigs with the best alignments. I had used &lt;code&gt;mummerplot&lt;/code&gt; with the &lt;code&gt;-l&lt;/code&gt; layout option to reorder and orient the sequence to have a nice diagonal.&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;FIND OUT THE MUMPLOT COMMAND OR RERUN&lt;/em&gt;&lt;/p&gt;
+&lt;div id=&#34;mummer-plot&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;MUMmer plot&lt;/h2&gt;
+&lt;p&gt;The MUMmer plot that I want to reproduce showed three contigs overlapping a region of chr 14. I had filtered the delta file with &lt;code&gt;delta-filter -l 10000 -q -r&lt;/code&gt; to get only the contigs with the best alignments. I had used &lt;code&gt;mummerplot&lt;/code&gt; with the &lt;code&gt;-l&lt;/code&gt; layout option to reorder and orient the sequences to have a nice diagonal.&lt;/p&gt;
 &lt;div class=&#34;figure&#34;&gt;
 &lt;img src=&#34;../../imgs/mumplot-example.png&#34; /&gt;
 
@@ -129,7 +128,7 @@ mumgp %&amp;gt;% head %&amp;gt;% kable&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;filter-contigs-with-poor-alignments&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Filter contigs with poor alignments&lt;/h2&gt;
-&lt;p&gt;For now, I filter contigs simply based on the size of the aligned segment. I keep only contigs with at least one aligned segment larger than a minimum size. Smaller alignment in these contigs are conserved if in the same range than the large aligned segments. Eventually I could also filter segment based on the number/proportion of errors.&lt;/p&gt;
+&lt;p&gt;For now, I filter contigs simply based on the size of the aligned segment. I keep only contigs with at least one aligned segment larger than a minimum size. Smaller alignment in these contigs are kept if in the same range as the large aligned segments. Eventually, I could also filter segment based on the number/proportion of errors.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;filterMum &amp;lt;- function(df, minl = 1000, flanks = 10000) {
     coord = df %&amp;gt;% filter(abs(re - rs) &amp;gt; minl) %&amp;gt;% 
         group_by(qid) %&amp;gt;% summarize(qsL = min(qs) - 
@@ -215,7 +214,7 @@ mumgp.filt %&amp;gt;% head %&amp;gt;% kable&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;graph&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Graph&lt;/h2&gt;
-&lt;p&gt;I’m going for the same style as MUMplot to compare.&lt;/p&gt;
+&lt;p&gt;I’m going for the same style as &lt;code&gt;mummerplot&lt;/code&gt; to compare.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(mumgp.filt, aes(x = rs, xend = re, y = qs, yend = qe, 
     colour = strand)) + geom_segment() + geom_point(alpha = 0.5) + 
     facet_grid(qid ~ ., scales = &amp;quot;free&amp;quot;, space = &amp;quot;free&amp;quot;, 
@@ -260,7 +259,7 @@ ggplot(mumgp.filt.diag, aes(x = rs, xend = re, y = qs,
 &lt;/div&gt;
 &lt;div id=&#34;percent-identity-and-coverage&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Percent identity and coverage&lt;/h2&gt;
-&lt;p&gt;Another useful MUMplot represents the position of each aligned segment and its percent similarity.&lt;/p&gt;
+&lt;p&gt;Another useful MUMmerplot represents the position of each aligned segment and its percent similarity.&lt;/p&gt;
 &lt;p&gt;This graph could be useful to decide which size/similarity threshold to use when filtering low alignments.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mumgp %&amp;lt;&amp;gt;% mutate(similarity = 1 - error/abs(qe - qs))
 mumgp.filt %&amp;lt;&amp;gt;% mutate(similarity = 1 - error/abs(qe - 
@@ -350,10 +349,10 @@ mumgp.filt.m %&amp;gt;% select(similarity, start, end, filter) %&amp;gt;%
       
         <item>
           <title>Regression</title>
-          <link>/2017/09/16/regression/</link>
+          <link>/Hippocamplus/2017/09/16/regression/</link>
           <pubDate>Sat, 16 Sep 2017 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/2017/09/16/regression/</guid>
+          <guid>/Hippocamplus/2017/09/16/regression/</guid>
           <description>&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
 library(broom)
 library(magrittr)
@@ -384,17 +383,17 @@ glm(y ~ x, data = df, family = binomial()) %&amp;gt;% tidy %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.8803587&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.2884678&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-3.051844&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0022744&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.7239188&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.3046358&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-2.376342&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0174853&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;xTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.6827052&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4411569&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;3.814301&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0001366&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.6957794&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4373310&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3.877565&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0001055&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -413,17 +412,17 @@ glm(y ~ x, data = df, family = binomial()) %&amp;gt;% tidy %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-1.148623&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.3182973&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-3.608648&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0003078&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.8574502&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.3189538&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-2.688321&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0071812&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;yTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.682705&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4411569&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;3.814301&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0001366&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.6957794&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4373310&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3.877565&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0001055&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -443,24 +442,24 @@ glm(y ~ x + z, data = df, family = binomial()) %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.6738265&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4661109&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-1.4456357&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.1482794&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.3289505&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4382373&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.7506218&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4528803&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;xTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.7197981&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4485592&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;3.8340496&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0001261&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.8237259&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4591405&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3.9720430&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0000713&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;z&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.4267956&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.7683652&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.5554593&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.5785805&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.9547354&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.7817153&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-1.2213339&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.2219596&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -479,24 +478,24 @@ glm(y ~ x + z, data = df, family = binomial()) %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-1.732052&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.5509965&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-3.143490&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0016695&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-1.737544&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.5570081&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-3.119424&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0018121&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;yTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.720894&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4487669&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;3.834717&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0001257&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.830504&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4610714&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3.970111&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0000718&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;z&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.065901&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.7834323&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.360553&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.1736549&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.678898&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.8114453&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.069022&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0385441&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -520,17 +519,17 @@ glm(y ~ x + z, data = df, family = binomial()) %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.8803587&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.2884678&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-3.051844&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0022744&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.7239188&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.3046358&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-2.376342&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0174853&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;xTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.6827052&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4411569&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;3.814301&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0001366&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.6957794&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4373310&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3.877565&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0001055&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -539,7 +538,7 @@ glm(y ~ x + z, data = df, family = binomial()) %&amp;gt;%
 odds.y.ifnotx = mean(subset(df, !x)$y)/mean(!subset(df, 
     !x)$y)
 log(odds.y.ifx/odds.y.ifnotx)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 1.682705&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 1.695779&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;extreme-cases&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Extreme cases&lt;/h3&gt;
@@ -674,10 +673,10 @@ ggplot(df, aes(x = x, y = y)) + geom_point(alpha = 0.2) +
       
         <item>
           <title>Word Cloud in R</title>
-          <link>/2016/02/26/word-cloud-in-r/</link>
+          <link>/Hippocamplus/2016/02/26/word-cloud-in-r/</link>
           <pubDate>Fri, 26 Feb 2016 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/2016/02/26/word-cloud-in-r/</guid>
+          <guid>/Hippocamplus/2016/02/26/word-cloud-in-r/</guid>
           <description>&lt;p&gt;The &lt;a href=&#34;https://cran.r-project.org/web/packages/wordcloud/index.html&#34;&gt;&lt;code&gt;wordcloud&lt;/code&gt; package&lt;/a&gt; is available on CRAN.&lt;/p&gt;
 &lt;div id=&#34;fake-words&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Fake words&lt;/h2&gt;

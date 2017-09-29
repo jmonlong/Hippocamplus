@@ -1,0 +1,47 @@
+---
+title: Comparing distributions
+draft: true
+date: 2017-09-16
+tags: ["stats", "R"]
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(message=FALSE, warning=FALSE, tidy=TRUE, tidy.opts=list(width.cutoff=50))
+```
+
+```{r libs}
+library(ggplot2)
+library(broom)
+library(magrittr)
+library(dplyr)
+library(knitr)
+```
+
+## Kolmogorov-Smirnov vs Wilcoxon
+
+KS can detect any difference in distribution, WC test difference in mean.
+
+```{r kswc}
+x = rnorm(1000)
+y = rnorm(1000, .2)
+z = rnorm(1000, 0, 2)
+ks.test(x, y)
+ks.test(x, z)
+wilcox.test(x,y)
+wilcox.test(x,z)
+```
+
+Low sample size.
+
+```{r kswcLS}
+x = rnorm(100)
+y = rnorm(100, .2)
+z = rnorm(100, 0, 2)
+
+ks.test(x, y)
+wilcox.test(x,y)
+
+ks.test(x, z)
+wilcox.test(x,z)
+```
+

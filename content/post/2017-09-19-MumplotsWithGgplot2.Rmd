@@ -1,5 +1,5 @@
 ---
-title: MUMerplots with ggplot2
+title: MUMmerplots with ggplot2
 date: 2017-09-19
 tags: ["R", "plot"]
 ---
@@ -18,13 +18,11 @@ library(tidyr)
 ```
 
 
-## MUMplot
+## MUMmer plot
 
-The MUMerplot that I want to reproduce showed three contigs overlapping a region of chr 14.
+The MUMmer plot that I want to reproduce showed three contigs overlapping a region of chr 14.
 I had filtered the delta file with `delta-filter -l 10000 -q -r` to get only the contigs with the best alignments.
-I had used `mummerplot` with the `-l` layout option to reorder and orient the sequence to have a nice diagonal.
-
-*FIND OUT THE MUMPLOT COMMAND OR RERUN*
+I had used `mummerplot` with the `-l` layout option to reorder and orient the sequences to have a nice diagonal.
 
 ![](/imgs/mumplot-example.png)
 
@@ -60,8 +58,8 @@ mumgp %>% head %>% kable
 
 For now, I filter contigs simply based on the size of the aligned segment.
 I keep only contigs with at least one aligned segment larger than a minimum size.
-Smaller alignment in these contigs are conserved if in the same range than the large aligned segments.
-Eventually I could also filter segment based on the number/proportion of errors.
+Smaller alignment in these contigs are kept if in the same range as the large aligned segments.
+Eventually, I could also filter segment based on the number/proportion of errors.
 
 ```{r filter}
 filterMum <- function(df, minl=1000, flanks=1e4){
@@ -75,7 +73,7 @@ mumgp.filt %>% head %>% kable
 
 ## Graph
 
-I'm going for the same style as MUMplot to compare.
+I'm going for the same style as `mummerplot` to compare.
 
 ```{r graph}
 ggplot(mumgp.filt, aes(x=rs, xend=re, y=qs, yend=qe, colour=strand)) + geom_segment() + geom_point(alpha=.5) + facet_grid(qid~., scales='free', space='free', switch='y') + theme_bw() + theme(strip.text.y=element_text(angle=180, size=5), strip.background=element_blank(), legend.position=c(.99,.01), legend.justification=c(1,0), axis.text.y=element_blank(), axis.ticks.y=element_blank()) + xlab('reference sequence') + ylab('assembly') + scale_colour_brewer(palette='Set1')
@@ -103,7 +101,7 @@ ggplot(mumgp.filt.diag, aes(x=rs, xend=re, y=qs, yend=qe, colour=strand)) + geom
 
 ## Percent identity and coverage
 
-Another useful MUMplot represents the position of each aligned segment and its percent similarity.
+Another useful MUMmerplot represents the position of each aligned segment and its percent similarity.
 
 This graph could be useful to decide which size/similarity threshold to use when filtering low alignments.
 

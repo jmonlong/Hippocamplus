@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Hippocamplus </title>
-    <link>/tags/plot/</link>
+    <link>/Hippocamplus/tags/plot/</link>
     <language>en-us</language>
     <author></author>
     <rights>(C) 2017</rights>
@@ -11,21 +11,20 @@
     
       
         <item>
-          <title>MUMerplots with ggplot2</title>
-          <link>/2017/09/19/mumerplots-with-ggplot2/</link>
+          <title>MUMmerplots with ggplot2</title>
+          <link>/Hippocamplus/2017/09/19/mummerplots-with-ggplot2/</link>
           <pubDate>Tue, 19 Sep 2017 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/2017/09/19/mumerplots-with-ggplot2/</guid>
+          <guid>/Hippocamplus/2017/09/19/mummerplots-with-ggplot2/</guid>
           <description>&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(dplyr)
 library(magrittr)
 library(GenomicRanges)
 library(knitr)
 library(ggplot2)
 library(tidyr)&lt;/code&gt;&lt;/pre&gt;
-&lt;div id=&#34;mumplot&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;MUMplot&lt;/h2&gt;
-&lt;p&gt;The MUMerplot that I want to reproduce showed three contigs overlapping a region of chr 14. I had filtered the delta file with &lt;code&gt;delta-filter -l 10000 -q -r&lt;/code&gt; to get only the contigs with the best alignments. I had used &lt;code&gt;mummerplot&lt;/code&gt; with the &lt;code&gt;-l&lt;/code&gt; layout option to reorder and orient the sequence to have a nice diagonal.&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;FIND OUT THE MUMPLOT COMMAND OR RERUN&lt;/em&gt;&lt;/p&gt;
+&lt;div id=&#34;mummer-plot&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;MUMmer plot&lt;/h2&gt;
+&lt;p&gt;The MUMmer plot that I want to reproduce showed three contigs overlapping a region of chr 14. I had filtered the delta file with &lt;code&gt;delta-filter -l 10000 -q -r&lt;/code&gt; to get only the contigs with the best alignments. I had used &lt;code&gt;mummerplot&lt;/code&gt; with the &lt;code&gt;-l&lt;/code&gt; layout option to reorder and orient the sequences to have a nice diagonal.&lt;/p&gt;
 &lt;div class=&#34;figure&#34;&gt;
 &lt;img src=&#34;../../imgs/mumplot-example.png&#34; /&gt;
 
@@ -129,7 +128,7 @@ mumgp %&amp;gt;% head %&amp;gt;% kable&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;filter-contigs-with-poor-alignments&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Filter contigs with poor alignments&lt;/h2&gt;
-&lt;p&gt;For now, I filter contigs simply based on the size of the aligned segment. I keep only contigs with at least one aligned segment larger than a minimum size. Smaller alignment in these contigs are conserved if in the same range than the large aligned segments. Eventually I could also filter segment based on the number/proportion of errors.&lt;/p&gt;
+&lt;p&gt;For now, I filter contigs simply based on the size of the aligned segment. I keep only contigs with at least one aligned segment larger than a minimum size. Smaller alignment in these contigs are kept if in the same range as the large aligned segments. Eventually, I could also filter segment based on the number/proportion of errors.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;filterMum &amp;lt;- function(df, minl = 1000, flanks = 10000) {
     coord = df %&amp;gt;% filter(abs(re - rs) &amp;gt; minl) %&amp;gt;% 
         group_by(qid) %&amp;gt;% summarize(qsL = min(qs) - 
@@ -215,7 +214,7 @@ mumgp.filt %&amp;gt;% head %&amp;gt;% kable&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;graph&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Graph&lt;/h2&gt;
-&lt;p&gt;I’m going for the same style as MUMplot to compare.&lt;/p&gt;
+&lt;p&gt;I’m going for the same style as &lt;code&gt;mummerplot&lt;/code&gt; to compare.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(mumgp.filt, aes(x = rs, xend = re, y = qs, yend = qe, 
     colour = strand)) + geom_segment() + geom_point(alpha = 0.5) + 
     facet_grid(qid ~ ., scales = &amp;quot;free&amp;quot;, space = &amp;quot;free&amp;quot;, 
@@ -260,7 +259,7 @@ ggplot(mumgp.filt.diag, aes(x = rs, xend = re, y = qs,
 &lt;/div&gt;
 &lt;div id=&#34;percent-identity-and-coverage&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Percent identity and coverage&lt;/h2&gt;
-&lt;p&gt;Another useful MUMplot represents the position of each aligned segment and its percent similarity.&lt;/p&gt;
+&lt;p&gt;Another useful MUMmerplot represents the position of each aligned segment and its percent similarity.&lt;/p&gt;
 &lt;p&gt;This graph could be useful to decide which size/similarity threshold to use when filtering low alignments.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mumgp %&amp;lt;&amp;gt;% mutate(similarity = 1 - error/abs(qe - qs))
 mumgp.filt %&amp;lt;&amp;gt;% mutate(similarity = 1 - error/abs(qe - 
@@ -350,10 +349,10 @@ mumgp.filt.m %&amp;gt;% select(similarity, start, end, filter) %&amp;gt;%
       
         <item>
           <title>Word Cloud in R</title>
-          <link>/2016/02/26/word-cloud-in-r/</link>
+          <link>/Hippocamplus/2016/02/26/word-cloud-in-r/</link>
           <pubDate>Fri, 26 Feb 2016 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/2016/02/26/word-cloud-in-r/</guid>
+          <guid>/Hippocamplus/2016/02/26/word-cloud-in-r/</guid>
           <description>&lt;p&gt;The &lt;a href=&#34;https://cran.r-project.org/web/packages/wordcloud/index.html&#34;&gt;&lt;code&gt;wordcloud&lt;/code&gt; package&lt;/a&gt; is available on CRAN.&lt;/p&gt;
 &lt;div id=&#34;fake-words&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Fake words&lt;/h2&gt;
