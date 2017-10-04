@@ -10,7 +10,7 @@
 
   <title>
     
-      Preparing some genomic annotations &middot; Hippocamplus
+      Bibliography style for AJHG &middot; Hippocamplus
     
   </title>
 
@@ -149,58 +149,23 @@
 
 
 <div class="post">
-  <h1 class="post-title">Preparing some genomic annotations</h1>
-  <span class="post-date">Jun 3, 2016
+  <h1 class="post-title">Bibliography style for AJHG</h1>
+  <span class="post-date">Oct 4, 2017
   
   
   
   
   
-  <a href='../../../../tags/genome/' class='label'>genome</a>
+  <a href='../../../../tags/latex/' class='label'>latex</a>
   
   
   
   </span>
-  <div id="mappability-track" class="section level2">
-<h2>Mappability track</h2>
-<p>I produced a mappability track from the UCSC track. The <a href="http://hgdownload.soe.ucsc.edu/gbdb/hg19/bbi/wgEncodeCrgMapabilityAlign100mer.bw">raw file</a> contains, for each base in the genome, an estimation of the probability that a read is correctly mapped at this position.</p>
-<p>Using a sliding-window approach, I compute the average mappability in regions of size 1 Kbp. This is a more manageable amount of data and still informative, especially when interested in large regions (e.g. SVs).</p>
-<p>I used a custom Perl script to efficiently parse the bedGraph-transformed original file. See the code on <a href="https://github.com/jmonlong/Hippocamplus/blob/gh-pages/_source/mappabilityBin.pl">GitHub</a>.</p>
-<p>I uploaded the result there: <a href="https://dl.dropboxusercontent.com/s/i537zjs65dpw34n/map100mer-1kbp.bed.gz?dl=0"><a href="https://dl.dropboxusercontent.com/s/i537zjs65dpw34n/map100mer-1kbp.bed.gz?dl=0" class="uri">https://dl.dropboxusercontent.com/s/i537zjs65dpw34n/map100mer-1kbp.bed.gz?dl=0</a></a>.</p>
-<p>We can cut the genome into three mappability classes:</p>
-<ul>
-<li><strong>unique</strong> regions with high mappability estimate (&gt;0.95).</li>
-<li><strong>low-map</strong> regions with a non-null mappability but lower than 0.95.</li>
-<li><strong>no-map</strong> regions with mappability 0.</li>
-</ul>
-<p><img src="../../../../post/2016-06-03-annotationPreparation_files/figure-html/summary-1.png" width="768" /></p>
-<table>
-<thead>
-<tr class="header">
-<th align="left">map.class</th>
-<th align="right">Mb</th>
-<th align="right">prop</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">unique</td>
-<td align="right">2485.972</td>
-<td align="right">0.803</td>
-</tr>
-<tr class="even">
-<td align="left">low-map</td>
-<td align="right">375.608</td>
-<td align="right">0.121</td>
-</tr>
-<tr class="odd">
-<td align="left">no-map</td>
-<td align="right">233.228</td>
-<td align="right">0.075</td>
-</tr>
-</tbody>
-</table>
-</div>
+  <p>I couldn’t find an updated/working LaTeX bibliography style for the American Journal of Human Genetics (AJHG) and output from <code>unsrtnat</code> (my goto style) was quite different from what the journal wanted.</p>
+<p>I found a bibliography style for Cell which is almost what AJHG wants, but I also wanted the references to be ordered by their appearance in the text (like for <code>unsrtnat</code>) and not alphabetically So I downloaded both <a href="https://www.ctan.org/tex-archive/macros/latex/contrib/cell"><code>cell.bst</code></a> and <a href="https://www.ctan.org/tex-archive/macros/latex/contrib/natbib/"><code>unsrtnat.bst</code></a> files and merged them. I don’t understand all the details but after some trial and errors it seems to work.</p>
+<p>In addition to the merging I removed the <em>emphasis</em> on the Journal/Book name which was the only difference I could see between the Cell and AJHG styles.</p>
+<p>I also added some code to automatically compress long author lists into <em>et al.</em>. In the code, the line with <code>max.num.names.before.forced.et.al</code> specifies after how many authors to switch to <em>et al.</em>. The line with <code>num.names.shown.with.forced.et.al</code> specifies how many authors to show when using <em>et al.</em>. They are both set at 10, following AJHG guidelines.</p>
+<p><a href="https://github.com/jmonlong/Hippocamplus/blob/config/LaTeX/ajhg.bst">The <code>ajhg.bst</code> file can be found here.</a> I used it with <code>\usepackage[comma,super]{natbib}</code>.</p>
 
 </div>
 
