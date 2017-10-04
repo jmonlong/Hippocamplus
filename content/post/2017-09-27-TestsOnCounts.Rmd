@@ -19,50 +19,85 @@ library(knitr)
 
 ## Poisson vs Normal distribution
 
-### When lambda is high enough
-
-I think the "rule" is: if lambda is high enough, we can approximate a Poisson distribution with a Normal distribution.
+I think the "rule" is: if lambda is high enough, we can approximate a Poisson distribution with a Normal distribution. By subtracting its mean and normalizing for its variance it should approximate the standard normal distribution.
 
 ```{r poisnorm}
-pois.df = data.frame(lambda=rep(c(1,10,100,500), 1e4))
-pois.df %<>% mutate(x=rpois(n(), lambda))
-ggplot(pois.df, aes(x=x)) + geom_density() + facet_wrap(~lambda, scale='free')
+pois.df = data.frame(lambda=rep(c(1,10,20,50,100,500), 1e5))
+pois.df %<>% mutate(x=(rpois(n(), lambda)-lambda)/sqrt(lambda))
+norm.df = tibble(x=seq(-4,4,.1), y=dnorm(x))
+ggplot(pois.df, aes(x=x)) + geom_line(aes(y=y), data=norm.df, linetype=2) + geom_density() + facet_grid(lambda~., scales='free', labeller=label_both) + theme_bw()
+norm.q = qnorm(ppoints(1e5))
+pois.df %>% group_by(lambda) %>% mutate(norm.exp=norm.q[rank(x, ties.method='random')]) %>% ggplot(aes(x=norm.exp, y=x)) + geom_point(alpha=.3, size=.5) + theme_bw() + facet_wrap(~lambda) + geom_abline(linetype=2) + xlab('expected (Normal)') + ylab('Z-score')
+```
 
+From lambda 20 and higher the distribution of the Z-score seems to fit quite well the standard Normal distribution.
+Using the kurtosis and skewness let's see if there is a more subtle difference.
+
+```{r poisnormks}
 library(moments)
 
-pois.ks = lapply(c(1:10, seq(20,100,10), seq(150,500,50)), function(ll){
-  x = rpois(100000, ll)
+pois.ks = lapply(c(1:29, seq(30,200,10)), function(ll){
+  x = (rpois(1e5, ll)-ll)/sqrt(ll)
   data.frame(lambda=ll, kurtosis=kurtosis(x), skewness=skewness(x))
 })
 pois.ks = do.call(rbind, pois.ks)
 
-ggplot(pois.ks, aes(x=lambda, y=kurtosis)) + geom_point() + theme_bw() + geom_hline(yintercept=3, linetype=2)
-ggplot(pois.ks, aes(x=lambda, y=skewness)) + geom_point() + theme_bw()  + geom_hline(yintercept=0, linetype=2)
+exp.df = lapply(1:100, function(ii){
+  x = rnorm(1e5)
+  data.frame(kurtosis=kurtosis(x), skewness=skewness(x))
+})
+exp.df = do.call(rbind, exp.df)
+
+ggplot(pois.ks, aes(x=lambda, y=kurtosis)) + geom_point(alpha=.7) + theme_bw() + geom_hline(yintercept=3, linetype=2) + geom_hline(yintercept=quantile(exp.df$kurtosis, c(.05, .95)), linetype=3) + ggtitle('N=100K')
+ggplot(pois.ks, aes(x=lambda, y=skewness)) + geom_point() + theme_bw()  + geom_hline(yintercept=0, linetype=2)  + geom_hline(yintercept=quantile(exp.df$skewness, c(.05, .95)), linetype=3) + ggtitle('N=100K')
 ```
 
-### When using mean/variance across enough samples
+In term of kurtosis, the Z-scorized Poisson is similar to a standard Normal for lambda higher than 20.
+However the distribution is consistently skewed, i.e. the right tail is longer.
 
-If we compare a variable to its mean and variance across enough samples, the central limit theorem predicts that the transformed variable should follow a Normal.
+## Central Limit Theorem
+
+If we use the mean across enough samples, the central limit theorem predicts that the transformed variable should follow a Normal.
 
 ```{r centrallimit}
+centlim <- function(x, mu=3){
+  sqrt(length(x)) * (mean(x)-mu) / sd(x)
+}
 
 cl.df = lapply(1:1e4, function(ii){
-  samp1 = rpois(1, 5)
-  samps = rpois(1000, 5)
-  data.frame(nsamp=c(10,100,500,1000),
-      z=c((samp1-mean(samps[1:10]))/sd(samps[1:10]),
-      (samp1-mean(samps[1:100]))/sd(samps[1:100]),
-      (samp1-mean(samps[1:500]))/sd(samps[1:500]),
-      (samp1-mean(samps[1:1000]))/sd(samps[1:1000])))
+  samps = rpois(200, 3)
+  data.frame(nsamp=c(10,50,100,200),
+             z=c(centlim(samps[1:10]),
+                 centlim(samps[1:50]),
+                 centlim(samps[1:100]),
+                 centlim(samps[1:200])))      
 })
 cl.df = do.call(rbind, cl.df)
 
-ggplot(cl.df, aes(z, colour=factor(nsamp))) + geom_density() + theme_bw()
-kurtosis(cl.df$z)
-skewness(cl.df$z)
+ggplot(cl.df) + geom_line(aes(x=x, y=y), data=norm.df, linetype=2) + geom_density(aes(z, colour=factor(nsamp))) + theme_bw() + scale_colour_brewer(name='n', palette='Set1') + xlab('Z') + ylab('density')
+cl.df %>% group_by(nsamp) %>% summarize(kurtosis=kurtosis(z), skewness=skewness(z)) %>% kable
 ```
 
-## To log or not to log ?
+## Log transform ?
+
+Why do we log count data ?
+
+- To limit the effect of outliers. 
+- To limit heteroscedasticity.
+- To make a skewed distribution more "Normal".
+
+The negative binomial distribution is often used for RNA-seq experiments.
+Indeed log-transformation helps:
+
+```{r nbin}
+nb.df = data.frame(x=rnbinom(1e5, 1, .01))
+ggplot(nb.df, aes(x=x)) + geom_density() + theme_bw()
+ggplot(nb.df, aes(x=log(x))) + geom_density() + theme_bw()
+nb.df = data.frame(x=rnbinom(1e5, 2, .001))
+ggplot(nb.df, aes(x=x)) + geom_density() + theme_bw()
+ggplot(nb.df, aes(x=log(x))) + geom_density() + theme_bw()
+```
 
 ## Negative binomial distribution
 
+*Test assuming Normal distribution or Poisson or negative binomial.*
