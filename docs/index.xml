@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Hippocamplus </title>
-    <link>/Hippocamplus/</link>
+    <link>/</link>
     <language>en-us</language>
     <author></author>
     <rights>(C) 2017</rights>
@@ -30,15 +30,15 @@
       
         <item>
           <title>Bibliography style for AJHG</title>
-          <link>/Hippocamplus/2017/10/04/bibliography-style-for-ajhg/</link>
+          <link>/2017/10/04/bibliography-style-for-ajhg/</link>
           <pubDate>Wed, 04 Oct 2017 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2017/10/04/bibliography-style-for-ajhg/</guid>
-          <description>&lt;p&gt;I couldn’t find an updated/working LaTeX bibliography style for the American Journal of Human Genetics (AJHG) and output from &lt;code&gt;unsrtnat&lt;/code&gt; (my goto style) was quite different from what the journal wanted.&lt;/p&gt;
-&lt;p&gt;I found a bibliography style for Cell which is almost what AJHG wants, but I also wanted the references to be ordered by their appearance in the text (like for &lt;code&gt;unsrtnat&lt;/code&gt;) and not alphabetically So I downloaded both &lt;a href=&#34;https://www.ctan.org/tex-archive/macros/latex/contrib/cell&#34;&gt;&lt;code&gt;cell.bst&lt;/code&gt;&lt;/a&gt; and &lt;a href=&#34;https://www.ctan.org/tex-archive/macros/latex/contrib/natbib/&#34;&gt;&lt;code&gt;unsrtnat.bst&lt;/code&gt;&lt;/a&gt; files and merged them. I don’t understand all the details but after some trial and errors it seems to work.&lt;/p&gt;
+          <guid>/2017/10/04/bibliography-style-for-ajhg/</guid>
+          <description>&lt;p&gt;I couldn’t find an up-to-date/working &lt;strong&gt;LaTeX bibliography style for the American Journal of Human Genetics (AJHG)&lt;/strong&gt;. The output from &lt;code&gt;unsrtnat&lt;/code&gt; (my goto style) was also quite different from what the journal wanted.&lt;/p&gt;
+&lt;p&gt;I found a bibliography style for &lt;em&gt;Cell&lt;/em&gt; which is almost what AJHG wants, but I also wanted the references to be &lt;strong&gt;ordered by their appearance in the text&lt;/strong&gt; (like for &lt;code&gt;unsrtnat&lt;/code&gt;) and not alphabetically So I downloaded both &lt;code&gt;cell.bst&lt;/code&gt; (&lt;a href=&#34;https://www.ctan.org/tex-archive/macros/latex/contrib/cell&#34;&gt;here&lt;/a&gt;) and &lt;code&gt;unsrtnat.bst&lt;/code&gt; (&lt;a href=&#34;https://www.ctan.org/tex-archive/macros/latex/contrib/natbib/&#34;&gt;here&lt;/a&gt;) files and merged them. I don’t understand all the details but after some trial and errors it seems to work.&lt;/p&gt;
 &lt;p&gt;In addition to the merging I removed the &lt;em&gt;emphasis&lt;/em&gt; on the Journal/Book name which was the only difference I could see between the Cell and AJHG styles.&lt;/p&gt;
-&lt;p&gt;I also added some code to automatically compress long author lists into &lt;em&gt;et al.&lt;/em&gt;. In the code, the line with &lt;code&gt;max.num.names.before.forced.et.al&lt;/code&gt; specifies after how many authors to switch to &lt;em&gt;et al.&lt;/em&gt;. The line with &lt;code&gt;num.names.shown.with.forced.et.al&lt;/code&gt; specifies how many authors to show when using &lt;em&gt;et al.&lt;/em&gt;. They are both set at 10, following AJHG guidelines.&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/jmonlong/Hippocamplus/blob/config/LaTeX/ajhg.bst&#34;&gt;The &lt;code&gt;ajhg.bst&lt;/code&gt; file can be found here.&lt;/a&gt; I used it with &lt;code&gt;\usepackage[comma,super]{natbib}&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;I also added some code to &lt;strong&gt;automatically compress long author lists&lt;/strong&gt; into “&lt;em&gt;et al.&lt;/em&gt;”. In the code, the line with &lt;code&gt;max.num.names.before.forced.et.al&lt;/code&gt; specifies the maximum number of authors before switching to “&lt;em&gt;et al.&lt;/em&gt;”. The line with &lt;code&gt;num.names.shown.with.forced.et.al&lt;/code&gt; specifies how many authors to show when using &lt;em&gt;et al.&lt;/em&gt;. They are both set at 10, following AJHG guidelines.&lt;/p&gt;
+&lt;p&gt;The final &lt;code&gt;ajhg.bst&lt;/code&gt; file can be found &lt;a href=&#34;https://github.com/jmonlong/Hippocamplus/blob/config/LaTeX/ajhg.bst&#34;&gt;here&lt;/a&gt;. I used it with &lt;code&gt;\usepackage[comma,super]{natbib}&lt;/code&gt;.&lt;/p&gt;
 </description>
         </item>
       
@@ -46,10 +46,10 @@
       
         <item>
           <title>MUMmerplots with ggplot2</title>
-          <link>/Hippocamplus/2017/09/19/mummerplots-with-ggplot2/</link>
+          <link>/2017/09/19/mummerplots-with-ggplot2/</link>
           <pubDate>Tue, 19 Sep 2017 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2017/09/19/mummerplots-with-ggplot2/</guid>
+          <guid>/2017/09/19/mummerplots-with-ggplot2/</guid>
           <description>&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(dplyr)
 library(magrittr)
 library(GenomicRanges)
@@ -383,10 +383,10 @@ mumgp.filt.m %&amp;gt;% select(similarity, start, end, filter) %&amp;gt;%
       
         <item>
           <title>Regression</title>
-          <link>/Hippocamplus/2017/09/16/regression/</link>
+          <link>/2017/09/16/regression/</link>
           <pubDate>Sat, 16 Sep 2017 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2017/09/16/regression/</guid>
+          <guid>/2017/09/16/regression/</guid>
           <description>&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
 library(broom)
 library(magrittr)
@@ -417,17 +417,17 @@ glm(y ~ x, data = df, family = binomial()) %&amp;gt;% tidy %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-1.290984&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.3404541&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-3.791948&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0001495&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.3566749&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.2845213&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-1.253597&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.2099887&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;xTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.747743&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4493038&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;3.889891&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0001003&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.1749853&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4207502&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.792596&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0052287&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -446,17 +446,17 @@ glm(y ~ x, data = df, family = binomial()) %&amp;gt;% tidy %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.7444405&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.2786244&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-2.671843&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0075436&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.6931472&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.3162277&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-2.191924&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0283850&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;yTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.7477426&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4493036&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;3.889892&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0001003&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.1749853&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4207502&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.792596&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0052287&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -476,24 +476,24 @@ glm(y ~ x + z, data = df, family = binomial()) %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-2.051684&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.5945438&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-3.450855&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0005588&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.3384519&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.5406594&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.6259983&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.5313161&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;xTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.844559&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4647376&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;3.969033&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0000722&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.1705839&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4350359&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.6907754&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0071286&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;z&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.319936&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.8014983&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.646836&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0995917&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.0291708&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.7361492&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.0396262&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.9683911&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -512,24 +512,24 @@ glm(y ~ x + z, data = df, family = binomial()) %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.2880065&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4696728&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.6132066&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.5397397&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.3038223&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.5173140&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.5873074&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.5569973&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;yTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.8485194&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4657730&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;3.9687132&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0000723&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.1673062&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4343205&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.6876608&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0071954&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;z&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.9368022&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.7951158&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-1.1781960&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.2387185&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-1.7923109&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.7477030&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-2.3970893&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0165259&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -553,17 +553,17 @@ glm(y ~ x + z, data = df, family = binomial()) %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-1.290984&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.3404541&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-3.791948&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0001495&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.3566749&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.2845213&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-1.253597&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.2099887&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;xTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.747743&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4493038&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;3.889891&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0001003&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.1749853&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4207502&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.792596&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0052287&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -572,7 +572,7 @@ glm(y ~ x + z, data = df, family = binomial()) %&amp;gt;%
 odds.y.ifnotx = mean(subset(df, !x)$y)/mean(!subset(df, 
     !x)$y)
 log(odds.y.ifx/odds.y.ifnotx)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 1.747743&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 1.174985&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;extreme-cases&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Extreme cases&lt;/h3&gt;
@@ -707,10 +707,10 @@ ggplot(df, aes(x = x, y = y)) + geom_point(alpha = 0.2) +
       
         <item>
           <title>Enrichment between genomic regions</title>
-          <link>/Hippocamplus/2017/09/05/enrichment-between-genomic-regions/</link>
+          <link>/2017/09/05/enrichment-between-genomic-regions/</link>
           <pubDate>Tue, 05 Sep 2017 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2017/09/05/enrichment-between-genomic-regions/</guid>
+          <guid>/2017/09/05/enrichment-between-genomic-regions/</guid>
           <description>&lt;p&gt;Testing if two sets of genomic regions overlap significantly is not straightforward. In the simple situation of regions of 1 bp (e.g. SNVs) we could use a hypergeometric test. When the regions are small enough and there are not too many, the hypergeometric test might also be a fair approximation.&lt;/p&gt;
 &lt;p&gt;But when we manipulate many regions of variable size covering the entire genome it’s not as straightforward. The gene annotation is an example. The repeat annotation is even worse as it covers almost 50% of the genome and contains different families with very different size/location profiles.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
@@ -1155,10 +1155,10 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
       
         <item>
           <title>Summary epigenetic mark tracks</title>
-          <link>/Hippocamplus/2016/09/06/summary-epigenetic-mark-tracks/</link>
+          <link>/2016/09/06/summary-epigenetic-mark-tracks/</link>
           <pubDate>Tue, 06 Sep 2016 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2016/09/06/summary-epigenetic-mark-tracks/</guid>
+          <guid>/2016/09/06/summary-epigenetic-mark-tracks/</guid>
           <description>&lt;p&gt;To assess the potential impact of variants (SNV, SVs) we might want to use some of the public epigentic datasets. The amount and heterogeneity of this data is a bit overwhelming. I would like to get a summary of which regions of the genome are the most functionally important.&lt;/p&gt;
 &lt;p&gt;The plan is to:&lt;/p&gt;
 &lt;ul&gt;
@@ -1198,10 +1198,10 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
       
         <item>
           <title>Gencode exploration</title>
-          <link>/Hippocamplus/2016/06/04/gencode-exploration/</link>
+          <link>/2016/06/04/gencode-exploration/</link>
           <pubDate>Sat, 04 Jun 2016 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2016/06/04/gencode-exploration/</guid>
+          <guid>/2016/06/04/gencode-exploration/</guid>
           <description>&lt;div id=&#34;gencode-v19&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Gencode v19&lt;/h2&gt;
 &lt;p&gt;I downloaded Gencode v19 at &lt;a href=&#34;ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz&#34;&gt;&lt;a href=&#34;ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz&#34; class=&#34;uri&#34;&gt;ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz&lt;/a&gt;&lt;/a&gt;.&lt;/p&gt;
@@ -1495,10 +1495,10 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
       
         <item>
           <title>Preparing some genomic annotations</title>
-          <link>/Hippocamplus/2016/06/03/preparing-some-genomic-annotations/</link>
+          <link>/2016/06/03/preparing-some-genomic-annotations/</link>
           <pubDate>Fri, 03 Jun 2016 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2016/06/03/preparing-some-genomic-annotations/</guid>
+          <guid>/2016/06/03/preparing-some-genomic-annotations/</guid>
           <description>&lt;div id=&#34;mappability-track&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Mappability track&lt;/h2&gt;
 &lt;p&gt;I produced a mappability track from the UCSC track. The &lt;a href=&#34;http://hgdownload.soe.ucsc.edu/gbdb/hg19/bbi/wgEncodeCrgMapabilityAlign100mer.bw&#34;&gt;raw file&lt;/a&gt; contains, for each base in the genome, an estimation of the probability that a read is correctly mapped at this position.&lt;/p&gt;
@@ -1546,10 +1546,10 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
       
         <item>
           <title>Word Cloud in R</title>
-          <link>/Hippocamplus/2016/02/26/word-cloud-in-r/</link>
+          <link>/2016/02/26/word-cloud-in-r/</link>
           <pubDate>Fri, 26 Feb 2016 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2016/02/26/word-cloud-in-r/</guid>
+          <guid>/2016/02/26/word-cloud-in-r/</guid>
           <description>&lt;p&gt;The &lt;a href=&#34;https://cran.r-project.org/web/packages/wordcloud/index.html&#34;&gt;&lt;code&gt;wordcloud&lt;/code&gt; package&lt;/a&gt; is available on CRAN.&lt;/p&gt;
 &lt;div id=&#34;fake-words&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Fake words&lt;/h2&gt;

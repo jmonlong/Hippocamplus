@@ -1,0 +1,107 @@
+---
+title: Multiple tests
+draft: true
+date: 2017-09-16
+tags: ["stats", "R"]
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(message=FALSE, warning=FALSE, tidy=TRUE, tidy.opts=list(width.cutoff=50))
+```
+
+```{r libs}
+library(ggplot2)
+library(broom)
+library(magrittr)
+library(dplyr)
+library(knitr)
+library(parallel)
+```
+
+I'm wondering if testing multiple hypothesis in one test is less powerful than testing each hypothesis separately and correcting for multiple tests correction.
+Also how does it help when we want to integrate co-occurence.
+
+For example, let's say we have 10 variants in a region and we want to test if at least one is associated with a phenotype.
+If we don't care about which one is associated but just if there is one, is it better to run on test for this or 10 single-variants tests.
+Then if we want to take into account the cases where two variants interact.
+
+```{r}
+N = 1000
+df = data.frame(pheno=sample(c(F,T), N, TRUE))
+vs = lapply(1:50, function(ii) runif(N) < runif(1))
+vs = c(list(runif(N) < ifelse(df$pheno, .4, .3)),
+       list(runif(N) < ifelse(df$pheno, .1, .3)),
+       list(runif(N) < ifelse(df$pheno, .1, .3)),
+       vs)
+geno = do.call(cbind, vs)
+colnames(geno) = paste0('v', 1:length(vs))
+df = cbind(df, geno)
+
+glm(pheno~., data=df, family=binomial()) %>% tidy
+glm(pheno~., data=df, family=binomial()) %>% tidy %>% summarize(min(p.adjust(p.value)))
+
+df2 = data.frame(pheno=df$pheno, n=apply(df[,-1], 1, sum))
+glm(pheno~n, data=df2, family=binomial()) %>% tidy
+
+df3 = data.frame(pheno=df$pheno, n=apply(df[,-1], 1, paste, collapse='_'))
+chisq.test(df3$pheno, df3$n)
+chisq.test(df3$pheno, df3$n, simulate.p.value = TRUE, B=1e5)
+```
+
+## Machine learning a la rescousse
+
+Instead of asking if any are associated, I ask can we predict the phenotype.
+Hopefully the machine learning will take care of the filtering, interactions etc.
+I just have to test: is the prediction significantly better than a random classifier.
+
+```{r}
+library(glmnet)
+
+cv.lasso = cv.glmnet(as.matrix(df[,-1]) , as.numeric(as.factor(df[,1])), family='binomial', alpha=1, standardize=TRUE)
+
+plot(cv.lasso)
+cc = as.numeric(coef(cv.lasso, s=cv.lasso$lambda.min))[-1]
+which(cc!=0)
+
+cv.s = cv.lasso$cvm[which(cv.lasso$lambda == cv.lasso$lambda.min)]
+
+cv.p = mclapply(1:100, function(ii){
+                   cv.lasso = cv.glmnet(as.matrix(df[,-1]) , sample(as.numeric(as.factor(df[,1]))), family='binomial', alpha=1, standardize=TRUE)
+                   cv.lasso$cvm[which(cv.lasso$lambda == cv.lasso$lambda.min)]
+                 }, mc.cores=3)
+cv.p = unlist(cv.p)
+(sum(cv.s>=cv.p)+1) / (length(cv.p)+1)
+```
+
+### Compound het
+
+```{r}
+N = 1000
+df = data.frame(pheno=sample(c(F,T), N, TRUE))
+vs = lapply(1:50, function(ii) runif(N) < runif(1))
+v1 = runif(N) < ifelse(df$pheno, .4, .3)
+vs = c(list(v1),
+       list(runif(N) < ifelse(df$pheno & v1, .7, .2)),
+       list(runif(N) < ifelse(df$pheno, .1, .3)),
+       vs)
+geno = do.call(cbind, vs)
+colnames(geno) = paste0('v', 1:length(vs))
+df = cbind(df, geno)
+
+
+cv.lasso = cv.glmnet(as.matrix(df[,-1]) , as.numeric(as.factor(df[,1])), family='binomial', alpha=1, standardize=TRUE)
+
+plot(cv.lasso)
+cc = as.numeric(coef(cv.lasso, s=cv.lasso$lambda.min))[-1]
+which(cc!=0)
+
+cv.s = cv.lasso$cvm[which(cv.lasso$lambda == cv.lasso$lambda.min)]
+
+cv.p = mclapply(1:100, function(ii){
+                   cv.lasso = cv.glmnet(as.matrix(df[,-1]) , sample(as.numeric(as.factor(df[,1]))), family='binomial', alpha=1, standardize=TRUE)
+                   cv.lasso$cvm[which(cv.lasso$lambda == cv.lasso$lambda.min)]
+                 }, mc.cores=3)
+cv.p = unlist(cv.p)
+(sum(cv.s>=cv.p)+1) / (length(cv.p)+1)
+
+```

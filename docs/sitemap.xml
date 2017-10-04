@@ -3,147 +3,147 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/Hippocamplus/emacs/</loc>
+    <loc>/emacs/</loc>
   </url>
   
   <url>
-    <loc>/Hippocamplus/latex/</loc>
+    <loc>/latex/</loc>
   </url>
   
   <url>
-    <loc>/Hippocamplus/markdown/</loc>
+    <loc>/markdown/</loc>
   </url>
   
   <url>
-    <loc>/Hippocamplus/math/stats/</loc>
+    <loc>/math/stats/</loc>
   </url>
   
   <url>
-    <loc>/Hippocamplus/python/</loc>
+    <loc>/python/</loc>
   </url>
   
   <url>
-    <loc>/Hippocamplus/r/</loc>
+    <loc>/r/</loc>
   </url>
   
   <url>
-    <loc>/Hippocamplus/shell/</loc>
+    <loc>/shell/</loc>
   </url>
   
   <url>
-    <loc>/Hippocamplus/internet/</loc>
+    <loc>/internet/</loc>
   </url>
   
   <url>
-    <loc>/Hippocamplus/about/</loc>
+    <loc>/about/</loc>
   </url>
   
   <url>
-    <loc>/Hippocamplus/2017/10/04/bibliography-style-for-ajhg/</loc>
+    <loc>/2017/10/04/bibliography-style-for-ajhg/</loc>
     <lastmod>2017-10-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/Hippocamplus/2017/09/19/mummerplots-with-ggplot2/</loc>
+    <loc>/2017/09/19/mummerplots-with-ggplot2/</loc>
     <lastmod>2017-09-19T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/Hippocamplus/2017/09/16/regression/</loc>
+    <loc>/2017/09/16/regression/</loc>
     <lastmod>2017-09-16T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/Hippocamplus/2017/09/05/enrichment-between-genomic-regions/</loc>
+    <loc>/2017/09/05/enrichment-between-genomic-regions/</loc>
     <lastmod>2017-09-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/Hippocamplus/2016/09/06/summary-epigenetic-mark-tracks/</loc>
+    <loc>/2016/09/06/summary-epigenetic-mark-tracks/</loc>
     <lastmod>2016-09-06T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/Hippocamplus/2016/06/04/gencode-exploration/</loc>
+    <loc>/2016/06/04/gencode-exploration/</loc>
     <lastmod>2016-06-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/Hippocamplus/2016/06/03/preparing-some-genomic-annotations/</loc>
+    <loc>/2016/06/03/preparing-some-genomic-annotations/</loc>
     <lastmod>2016-06-03T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/Hippocamplus/2016/02/26/word-cloud-in-r/</loc>
+    <loc>/2016/02/26/word-cloud-in-r/</loc>
     <lastmod>2016-02-26T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/Hippocamplus/categories/</loc>
+    <loc>/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/Hippocamplus/tags/data/</loc>
+    <loc>/tags/data/</loc>
     <lastmod>2016-09-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/Hippocamplus/tags/epigenetic/</loc>
+    <loc>/tags/epigenetic/</loc>
     <lastmod>2016-09-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/Hippocamplus/fixed/</loc>
+    <loc>/fixed/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/Hippocamplus/tags/genome/</loc>
+    <loc>/tags/genome/</loc>
     <lastmod>2017-09-05T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/Hippocamplus/</loc>
+    <loc>/</loc>
     <lastmod>2017-10-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/Hippocamplus/tags/latex/</loc>
+    <loc>/tags/latex/</loc>
     <lastmod>2017-10-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/Hippocamplus/tags/plot/</loc>
+    <loc>/tags/plot/</loc>
     <lastmod>2017-09-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/Hippocamplus/post/</loc>
+    <loc>/post/</loc>
     <lastmod>2017-10-04T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/Hippocamplus/tags/r/</loc>
+    <loc>/tags/r/</loc>
     <lastmod>2017-09-19T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/Hippocamplus/tags/stats/</loc>
+    <loc>/tags/stats/</loc>
     <lastmod>2017-09-16T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/Hippocamplus/tags/</loc>
+    <loc>/tags/</loc>
     <lastmod>2016-09-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>

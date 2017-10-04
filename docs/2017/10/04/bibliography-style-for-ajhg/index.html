@@ -161,11 +161,11 @@
   
   
   </span>
-  <p>I couldn’t find an updated/working LaTeX bibliography style for the American Journal of Human Genetics (AJHG) and output from <code>unsrtnat</code> (my goto style) was quite different from what the journal wanted.</p>
-<p>I found a bibliography style for Cell which is almost what AJHG wants, but I also wanted the references to be ordered by their appearance in the text (like for <code>unsrtnat</code>) and not alphabetically So I downloaded both <a href="https://www.ctan.org/tex-archive/macros/latex/contrib/cell"><code>cell.bst</code></a> and <a href="https://www.ctan.org/tex-archive/macros/latex/contrib/natbib/"><code>unsrtnat.bst</code></a> files and merged them. I don’t understand all the details but after some trial and errors it seems to work.</p>
+  <p>I couldn’t find an up-to-date/working <strong>LaTeX bibliography style for the American Journal of Human Genetics (AJHG)</strong>. The output from <code>unsrtnat</code> (my goto style) was also quite different from what the journal wanted.</p>
+<p>I found a bibliography style for <em>Cell</em> which is almost what AJHG wants, but I also wanted the references to be <strong>ordered by their appearance in the text</strong> (like for <code>unsrtnat</code>) and not alphabetically So I downloaded both <code>cell.bst</code> (<a href="https://www.ctan.org/tex-archive/macros/latex/contrib/cell">here</a>) and <code>unsrtnat.bst</code> (<a href="https://www.ctan.org/tex-archive/macros/latex/contrib/natbib/">here</a>) files and merged them. I don’t understand all the details but after some trial and errors it seems to work.</p>
 <p>In addition to the merging I removed the <em>emphasis</em> on the Journal/Book name which was the only difference I could see between the Cell and AJHG styles.</p>
-<p>I also added some code to automatically compress long author lists into <em>et al.</em>. In the code, the line with <code>max.num.names.before.forced.et.al</code> specifies after how many authors to switch to <em>et al.</em>. The line with <code>num.names.shown.with.forced.et.al</code> specifies how many authors to show when using <em>et al.</em>. They are both set at 10, following AJHG guidelines.</p>
-<p><a href="https://github.com/jmonlong/Hippocamplus/blob/config/LaTeX/ajhg.bst">The <code>ajhg.bst</code> file can be found here.</a> I used it with <code>\usepackage[comma,super]{natbib}</code>.</p>
+<p>I also added some code to <strong>automatically compress long author lists</strong> into “<em>et al.</em>”. In the code, the line with <code>max.num.names.before.forced.et.al</code> specifies the maximum number of authors before switching to “<em>et al.</em>”. The line with <code>num.names.shown.with.forced.et.al</code> specifies how many authors to show when using <em>et al.</em>. They are both set at 10, following AJHG guidelines.</p>
+<p>The final <code>ajhg.bst</code> file can be found <a href="https://github.com/jmonlong/Hippocamplus/blob/config/LaTeX/ajhg.bst">here</a>. I used it with <code>\usepackage[comma,super]{natbib}</code>.</p>
 
 </div>
 
