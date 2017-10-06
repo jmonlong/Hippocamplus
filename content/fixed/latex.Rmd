@@ -130,6 +130,7 @@ Moreover, some journals require the supplementary figures to be named *Supplemen
 
 Side-note: I don't like this style. Ok it looks a bit more fancy but using *S12* is shorter and clearer, and avoids any confusion even when citing multiple figures.
 
+To list tables: `\listoffigures`
 
 ## Tables
 
@@ -149,6 +150,8 @@ Similar to figures I use:
 \setcounter{table}{0}
 \renewcommand{\thetable}{S\arabic{table}}%
 ~~~
+
+To list tables: `\listoftables`
 
 ### Spanning columns/rows
 
@@ -230,21 +233,85 @@ Using `\usepackage{authblk}`, the authors' affiliations can be defined like this
 ~~~
 
 
-### Notes
+### Notes/comments
 
 ~~~latex
 \usepackage{todonotes}
 \newcounter{mycomment}
-\newcommand{\comment}[2][]{
-  \refstepcounter{mycomment}
-  {
+\newcommand{\comment}[2][]{%
+  \refstepcounter{mycomment}%
+  {%
     %\setstretch{0.7}% spacing
-    \todo[color={red!100!green!33},size=\tiny]{
-      \textbf{[\uppercase{#1}\themycomment]:}~#2}
+    \todo[color={red!100!green!33},size=\tiny]{%
+      \textbf{[\uppercase{#1}\themycomment]:}~#2}%
+  }}
+\newcommand{\commentil}[2][]{%
+  \refstepcounter{mycomment}%
+  {%
+    %\setstretch{0.7}% spacing
+    \todo[inline,color={red!100!green!33},size=\tiny]{%
+      \textbf{[\uppercase{#1}\themycomment]:}~#2}%
   }}
 ~~~
 
-By default, for an inline comment: `\todo[inline]{...}`.
+To add a note: `\commentil[NAME]{This is an inline comment}`.
+
+### Main text and supplements in two documents
+
+It's easier to have the two documents separated with their own bibliography.
+Then no need to manually split the pdf (and likely lose links).
+
+Using the `xr` package, we can specify other documents where to find references (figures, tables, sections).
+
+In the `main.tex` document:
+
+~~~latex
+\usepackage{xr}
+\externaldocument{suppmap}
+~~~
+
+And in the `suppmat.tex` document:
+
+~~~latex
+\usepackage{xr}
+\externaldocument{main}
+~~~
+
+On Overleaf, they use [a variant](http://tex.stackexchange.com/a/69832/226) where the `suppmat.tex` is not compiled but its references can still be used in the `main.tex` using:
+
+~~~latex
+\usepackage{xcite}
+\usepackage{xr}
+\makeatletter
+\newcommand*{\addFileDependency}[1]{% argument=file name and extension
+  \typeout{(#1)}
+  \@addtofilelist{#1}
+  \IfFileExists{#1}{}{\typeout{No file #1.}}
+}
+\makeatother
+
+\newcommand*{\myexternaldocument}[1]{%
+    \externaldocument{#1}%
+    \addFileDependency{#1.tex}%
+    \addFileDependency{#1.aux}%
+}
+\myexternaldocument{SuppMat}
+~~~
+
+### Compare versions and highlight revisions
+
+The [`latediff` Perl script](https://ctan.org/pkg/latexdiff) works well.
+For example to compare two versions I use:
+
+~~~sh
+git show COMMIT:main.tex > main-old.tex
+git show COMMIT:suppmat.tex > suppmat-old.tex
+
+latexdiff main-old.tex main.tex > main-diff.tex
+latexdiff suppmat-old.tex suppmat.tex > suppmat-diff.tex
+~~~
+
+Then compile `main-diff.tex` and `suppmat-diff.tex` normally.
 
 ## Bibliography
 
@@ -342,7 +409,6 @@ FUNCTION {format.doi}
 %%  if$
 %%}
 ~~~
-
 
 ## Presentations
 

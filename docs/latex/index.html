@@ -177,7 +177,9 @@
 <li><a href="#abstract">Abstract</a></li>
 <li><a href="#author-affiliation">Author affiliation</a></li>
 <li><a href="#text-formatting">Text formatting</a></li>
-<li><a href="#notes">Notes</a></li>
+<li><a href="#notescomments">Notes/comments</a></li>
+<li><a href="#main-text-and-supplements-in-two-documents">Main text and supplements in two documents</a></li>
+<li><a href="#compare-versions-and-highlight-revisions">Compare versions and highlight revisions</a></li>
 </ul></li>
 <li><a href="#bibliography">Bibliography</a><ul>
 <li><a href="#reduce-long-list-of-authors">Reduce long list of authors</a></li>
@@ -294,6 +296,7 @@ end{subfigure}</code></pre>
 \renewcommand{\thefigure}{S\arabic{figure}}</code></pre>
 <p>Moreover, some journals require the supplementary figures to be named <em>Supplementary Fig. 1</em>. As it is, with the configuration above, it would look like <em>Fig. S1</em> when using <code>Fig. \ref{fig:toto}</code>. The only solution I can think of is to manually write or not the <em>Supplementary</em> and remove the <em>S</em> in the number. But it’s painful. Eventually I could write a small script that does this automatically.</p>
 <p>Side-note: I don’t like this style. Ok it looks a bit more fancy but using <em>S12</em> is shorter and clearer, and avoids any confusion even when citing multiple figures.</p>
+<p>To list tables: <code>\listoffigures</code></p>
 </div>
 </div>
 <div id="tables" class="section level2">
@@ -309,6 +312,7 @@ end{subfigure}</code></pre>
 <p>Similar to figures I use:</p>
 <pre class="latex"><code>\setcounter{table}{0}
 \renewcommand{\thetable}{S\arabic{table}}%</code></pre>
+<p>To list tables: <code>\listoftables</code></p>
 </div>
 <div id="spanning-columnsrows" class="section level3">
 <h3>Spanning columns/rows</h3>
@@ -378,18 +382,63 @@ Genetics has been shown to be important...
 <pre class="latex"><code>\usepackage[modulo]{lineno}
 \linenumbers</code></pre>
 </div>
-<div id="notes" class="section level3">
-<h3>Notes</h3>
+<div id="notescomments" class="section level3">
+<h3>Notes/comments</h3>
 <pre class="latex"><code>\usepackage{todonotes}
 \newcounter{mycomment}
-\newcommand{\comment}[2][]{
-  \refstepcounter{mycomment}
-  {
+\newcommand{\comment}[2][]{%
+  \refstepcounter{mycomment}%
+  {%
     %\setstretch{0.7}% spacing
-    \todo[color={red!100!green!33},size=\tiny]{
-      \textbf{[\uppercase{#1}\themycomment]:}~#2}
+    \todo[color={red!100!green!33},size=\tiny]{%
+      \textbf{[\uppercase{#1}\themycomment]:}~#2}%
+  }}
+\newcommand{\commentil}[2][]{%
+  \refstepcounter{mycomment}%
+  {%
+    %\setstretch{0.7}% spacing
+    \todo[inline,color={red!100!green!33},size=\tiny]{%
+      \textbf{[\uppercase{#1}\themycomment]:}~#2}%
   }}</code></pre>
-<p>By default, for an inline comment: <code>\todo[inline]{...}</code>.</p>
+<p>To add a note: <code>\commentil[NAME]{This is an inline comment}</code>.</p>
+</div>
+<div id="main-text-and-supplements-in-two-documents" class="section level3">
+<h3>Main text and supplements in two documents</h3>
+<p>It’s easier to have the two documents separated with their own bibliography. Then no need to manually split the pdf (and likely lose links).</p>
+<p>Using the <code>xr</code> package, we can specify other documents where to find references (figures, tables, sections).</p>
+<p>In the <code>main.tex</code> document:</p>
+<pre class="latex"><code>\usepackage{xr}
+\externaldocument{suppmap}</code></pre>
+<p>And in the <code>suppmat.tex</code> document:</p>
+<pre class="latex"><code>\usepackage{xr}
+\externaldocument{main}</code></pre>
+<p>On Overleaf, they use <a href="http://tex.stackexchange.com/a/69832/226">a variant</a> where the <code>suppmat.tex</code> is not compiled but its references can still be used in the <code>main.tex</code> using:</p>
+<pre class="latex"><code>\usepackage{xcite}
+\usepackage{xr}
+\makeatletter
+\newcommand*{\addFileDependency}[1]{% argument=file name and extension
+  \typeout{(#1)}
+  \@addtofilelist{#1}
+  \IfFileExists{#1}{}{\typeout{No file #1.}}
+}
+\makeatother
+
+\newcommand*{\myexternaldocument}[1]{%
+    \externaldocument{#1}%
+    \addFileDependency{#1.tex}%
+    \addFileDependency{#1.aux}%
+}
+\myexternaldocument{SuppMat}</code></pre>
+</div>
+<div id="compare-versions-and-highlight-revisions" class="section level3">
+<h3>Compare versions and highlight revisions</h3>
+<p>The <a href="https://ctan.org/pkg/latexdiff"><code>latediff</code> Perl script</a> works well. For example to compare two versions I use:</p>
+<pre class="sh"><code>git show COMMIT:main.tex &gt; main-old.tex
+git show COMMIT:suppmat.tex &gt; suppmat-old.tex
+
+latexdiff main-old.tex main.tex &gt; main-diff.tex
+latexdiff suppmat-old.tex suppmat.tex &gt; suppmat-diff.tex</code></pre>
+<p>Then compile <code>main-diff.tex</code> and <code>suppmat-diff.tex</code> normally.</p>
 </div>
 </div>
 <div id="bibliography" class="section level2">
