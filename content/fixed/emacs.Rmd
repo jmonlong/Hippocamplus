@@ -25,6 +25,7 @@ Some of the basic tweaks on my `.emacs` file:
 + Search for a regular expression in files using `M-x lgrep` command.
 
 Regexp replace :
+
 + Command: `C-M-%`.
 + `\(` and `\)` to define groups.
 + `\1` to refer to the first group.
