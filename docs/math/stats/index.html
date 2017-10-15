@@ -123,6 +123,10 @@
     
       
     
+      
+    
+      
+    
 
     
     
@@ -313,7 +317,7 @@
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/HiddenMarkovModel.svg/600px-HiddenMarkovModel.svg.png" alt="HMM" />
 <p class="caption">HMM</p>
 </div>
-<p>The <a href="https://en.wikipedia.org/wiki/Forward_algorithm">forward algorithm</a> uses <em>dynamic programming</em> to <strong>compute the probability of an observed sequence</strong>, i.e. when the parameters of the HMM are known.</p>
+<p>The <a href="https://en.wikipedia.org/wiki/Forward_algorithm">forward algorithm</a> uses <em>dynamic programming</em> to <strong>compute the probability of a state at a certain time, given the history</strong>, when the parameters of the HMM are known. The backward algorithm is the same idea but given the future history. Using both, we can compute the probability of a state given all the other observations.</p>
 <p><a href="https://en.wikipedia.org/wiki/Viterbi_algorithm">Viterbi algorithm</a> goes further and retrieves the <strong>most likely sequence of states for an observed sequence</strong>. The <em>dynamic programming</em> approach is very similar to the forward algorithm.</p>
 <p><a href="https://en.wikipedia.org/wiki/Baum%E2%80%93Welch_algorithm">Baum-Welch algorithm</a> <strong>finds the unknown parameters of a HMM</strong> from an observed sequence. It’s an <em>Expectation-Maximization method</em>. After initialization of the HMM parameters, the observed sequence and forward-backward are used to compute the probability of being in state <em>i</em> at time <em>t</em>. New parameters are then derived from these probabilities.</p>
 </div>

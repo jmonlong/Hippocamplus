@@ -39,6 +39,11 @@
   </url>
   
   <url>
+    <loc>/2017/10/15/journals-comparison/</loc>
+    <lastmod>2017-10-15T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/2017/10/04/bibliography-style-for-ajhg/</loc>
     <lastmod>2017-10-04T00:00:00+00:00</lastmod>
   </url>
@@ -108,7 +113,7 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2017-10-04T00:00:00+00:00</lastmod>
+    <lastmod>2017-10-15T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -126,7 +131,13 @@
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2017-10-04T00:00:00+00:00</lastmod>
+    <lastmod>2017-10-15T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/tags/pub/</loc>
+    <lastmod>2017-10-15T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
