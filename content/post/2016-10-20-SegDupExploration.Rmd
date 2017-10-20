@@ -1,0 +1,137 @@
+---
+title: Sgemental duplication exploration
+date: 2016-06-04
+tags: ["genome"]
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, fig.width=8)
+```
+
+```{r libs}
+library(ggplot2)
+library(dplyr)
+library(magrittr)
+library(knitr)
+library(GenomicRanges)
+library(rtracklayer)
+## library(waffle)
+library(RColorBrewer)
+## library(ggrepel)
+library(PopSV)
+## library(data.table)
+winsor <- function(x,u=10){
+    if(any(x>=u)) x[x>=u] = u
+    x
+}
+olBins <- function(bins.df, feat.df, label="ol"){
+  bins.gr = makeGRangesFromDataFrame(bins.df)
+  feat.gr = makeGRangesFromDataFrame(feat.df)
+  res.df = data.frame(n=rep(0,nrow(bins.df)), d=rep(0,nrow(bins.df)))
+  colnames(res.df) = paste(label,colnames(res.df), sep=".")
+  res.df[,1] = countOverlaps(bins.gr, feat.gr)
+  feat.gr = reduce(feat.gr)
+  ol = findOverlaps(bins.gr, feat.gr) %>% as.data.frame %>% mutate(qsw=width(pintersect(bins.gr[queryHits], feat.gr[subjectHits]))) %>% group_by(queryHits) %>% summarize(bp=sum(qsw))
+  res.df[ol$queryHits,2] = ol$bp
+  res.df[,2] = res.df[,2] / width(bins.gr)
+  bins.df = cbind(bins.df, res.df)
+  bins.df
+}
+## library(BSgenome.Hsapiens.UCSC.hg19)
+## seql.1.22 = seqlengths(BSgenome.Hsapiens.UCSC.hg19)[paste0("chr",1:22)]
+## rand.gr <- function(widths){
+##     chrs = apply(rmultinom(length(widths), 1, (seql.1.22/1e3)/sum(seql.1.22/1e3)),2,function(e)which(e==1))
+##     starts = runif(length(widths), 0, seql.1.22[chrs]-widths)
+##     return(GRanges(chrs, IRanges(starts, width=widths)))
+## }
+```
+
+## Segmental Duplications (SD)
+
+```{r sddl}
+if(!file.exists("genomicSuperDups.txt.gz")) download.file("http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/genomicSuperDups.txt.gz", "genomicSuperDups.txt.gz")
+sd = read.table('genomicSuperDups.txt.gz', as.is=TRUE)
+sd = sd[,c(2:4,8:10,27)]
+colnames(sd) = c('chr', 'start', 'end', 'chr2', 'start2', 'end2', 'fracMatch')
+sd %<>% mutate(size=end-start)
+```
+
+I downloaded the segmental duplication annotation for hg19 from [UCSC](http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/genomicSuperDups.txt.gz). There are `r nrow(sd)` annotated SD.
+They are defined as regions larger than 1 Kbp with at least 90% similarity with another region in the genome.
+
+## Segmental duplication regions
+
+Many SD are nested of located next to each other. 
+I merge overlapping SDs (or located at <10 bp) to create *SD regions*, i.e. longer stretch of the genome overlapping SDs.
+
+```{r sdreg}
+sdreg = makeGRangesFromDataFrame(sd) %>% reduce(min.gapwidth=10)
+```
+
+There are `r length(sdreg)` SD regions
+
+
+## Size distribution
+
+
+```{r size}
+ggplot(sd, aes(size)) + geom_histogram() + theme_bw() + scale_x_log10(breaks=c(1e3,1e4,1e5,1e6)) + xlab('size (bp)') + ylab('segmental duplication')
+sdreg %>% as.data.frame %>% ggplot(aes(width)) + geom_histogram() + theme_bw() + scale_x_log10(breaks=c(1e3,1e4,1e5,1e6)) + xlab('size (bp)') + ylab('segmental duplication region')
+```
+
+
+## Similarity
+
+```{r sim}
+ggplot(sd, aes(x=fracMatch)) + geom_histogram() + theme_bw() + xlab('similarity') + ylab('segmental duplication')
+```
+
+
+## Distance to the other segment
+
+```{r dist}
+sd %>% mutate(otherSeg=ifelse(chr==chr2, 'same chr', 'different chr')) %>% group_by(otherSeg) %>% summarize(segdup=n()) %>% ungroup %>% mutate(segdup.prop=segdup/sum(segdup)) %>% kable(digits=3)
+sd %>% filter(chr==chr2) %>% mutate(d1=start2-end, d2=end2-start, d=ifelse(d1>d2,d2,d1)) %>% ggplot(aes(x=d)) + geom_histogram() + theme_bw() + scale_x_log10() + xlab('distance to similar region (bp)')
+```
+
+For the majority of SDs, the similar region is in a different chromosome.
+For the others the majority are far from each other.
+
+
+## Gene content
+
+```{r gcdl}
+if(!file.exists("gencode.v19.gtf.gz")) download.file("ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz", "gencode.v19.gtf.gz")
+gtf = import("gencode.v19.gtf.gz")
+gtf = gtf[as.character(seqnames(gtf)) %in% paste0('chr', c(1:22,'X','Y'))]
+genes = subset(gtf, type=='gene')
+```
+
+I downloaded Gencode v19 at [ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz](ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz).
+
+
+Around a thousand protein-coding genes are completely within SD regions. 
+
+```{r gene}
+gene.sd = genes[overlapsAny(genes, sdreg, type='within')]
+gene.sd %>% as.data.frame %>% select(gene_type, gene_name) %>% unique %>% group_by(gene_type) %>% summarize(gene=n()) %>% arrange(desc(gene)) %>% kable
+```
+
+### Gene families
+
+A naive way of looking for gene families is to cluster the gene names. 
+First I remove trailing numbers
+
+```{r genefam}
+genen = subset(gene.sd, gene_type=='protein_coding')$gene_name %>% unique
+genen = gsub('[0-9]*$', '', genen)
+gened = adist(genen)
+colnames(gened) = rownames(gened) = genen
+hc = hclust(as.dist(gened), method='ward.D')
+plot(hc)
+genef = cutree(hc, h=2)
+data.frame(gene=genen, fam=genef) %>% group_by(fam) %>% summarize(example=gene[1], n=n()) %>% arrange(desc(n), fam) %>% filter(n>4) %>% kable
+```
+
+A better way would be to find an annotation of gene families and see if they are enriched in SD regions. 
+Same for biological processes with a GO analysis.
