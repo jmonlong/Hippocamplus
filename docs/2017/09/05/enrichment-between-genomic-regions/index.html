@@ -127,6 +127,8 @@
     
       
     
+      
+    
 
     
     
@@ -467,7 +469,8 @@ glm(ol ~ region, data = df, family = binomial()) %&gt;%
 <pre><code>## [1] 0.1395349</code></pre>
 <pre class="r"><code>mean(overlapsAny(contSize.r, repcor.r))</code></pre>
 <pre><code>## [1] 0.7812231</code></pre>
-<p>There might be another benefits in special situation with extreme overlap distribution. If only a few regions overlap the feature in the simple control regions, the regression might not correct for it as well as if forcing the control regions to be similar. Maybe there would some differences in power in those cases ?</p>
+<p>This could be useful in situation with extreme overlap distribution. If only a few regions overlap the feature in the simple control regions, the regression might not correct for it as well as if forcing the control regions to be similar. Maybe there would some differences in power in those cases ?</p>
+<p>However building these control regions can become computationally intense, especially if the sizes of the regions vary and several features need to be controlled.</p>
 <p>In practice I would do both: include the variable in the regression model and use regions with controlled overlap.</p>
 </div>
 </div>

@@ -1,6 +1,6 @@
 ---
-title: Sgemental duplication exploration
-date: 2016-06-04
+title: Segmental duplication exploration
+date: 2016-10-20
 tags: ["genome"]
 ---
 
@@ -19,6 +19,7 @@ library(rtracklayer)
 library(RColorBrewer)
 ## library(ggrepel)
 library(PopSV)
+library(clusterProfiler)
 ## library(data.table)
 winsor <- function(x,u=10){
     if(any(x>=u)) x[x>=u] = u
@@ -68,7 +69,7 @@ I merge overlapping SDs (or located at <10 bp) to create *SD regions*, i.e. long
 sdreg = makeGRangesFromDataFrame(sd) %>% reduce(min.gapwidth=10)
 ```
 
-There are `r length(sdreg)` SD regions
+There are `r length(sdreg)` SD regions, that account for `r round(sum(width(sdreg)/1e6),1)` Mbp of the genome.
 
 
 ## Size distribution
@@ -79,19 +80,31 @@ ggplot(sd, aes(size)) + geom_histogram() + theme_bw() + scale_x_log10(breaks=c(1
 sdreg %>% as.data.frame %>% ggplot(aes(width)) + geom_histogram() + theme_bw() + scale_x_log10(breaks=c(1e3,1e4,1e5,1e6)) + xlab('size (bp)') + ylab('segmental duplication region')
 ```
 
-
 ## Similarity
 
 ```{r sim}
-ggplot(sd, aes(x=fracMatch)) + geom_histogram() + theme_bw() + xlab('similarity') + ylab('segmental duplication')
+sd %<>% mutate(sim.class=cut(fracMatch, seq(.9, 1, .02), include.lowest = TRUE))
+ggplot(sd, aes(x=fracMatch, fill=sim.class)) + geom_histogram() + theme_bw() + xlab('similarity') + ylab('segmental duplication') + scale_fill_brewer(palette='Set2', name='similarity class') + theme(legend.position=c(.99,.99), legend.justification=c(1,1))
 ```
+
+## Chromosome distribution
+
+```{r chr}
+gfrag.df = fragment.genome.hg19(1e5, XY.chr = TRUE)
+gfrag.df %<>% mutate(chr=factor(chr, levels=c(1:22,"X","Y")))
+sd.d = sd %>% mutate(chr=gsub('chr','',chr)) %>% group_by(sim.class) %>% do(olBins(gfrag.df, ., "sd"))
+sd.d %>% group_by(chr, sim.class) %>% summarize(sd.d=mean(sd.d)) %>% ggplot(aes(x=chr, y=sd.d, colour=sim.class, group=sim.class)) + geom_point() + geom_line() + theme_bw() + ylab("average density of SD") + xlab('chromosome') + theme(legend.position=c(.01,.99), legend.justification=c(0,1)) + scale_colour_brewer(palette='Set2', name='similarity class') 
+sd.d %>% mutate(chr=factor(chr, levels=rev(levels(chr)))) %>% ggplot(aes(x=start, y=chr)) + geom_tile(aes(fill=sd.d)) + theme_bw() + xlab("position") + scale_fill_gradient(name="SD\ndensity") + theme(legend.position=c(.99,.01), legend.justification=c(1,0))
+```
+
+A few chromosomes are more enriched in SD. Some have long stretches of SD, e.g. chr 9 or chr Y. These peaks are mostly created with very recent/similar SDs.
 
 
 ## Distance to the other segment
 
 ```{r dist}
 sd %>% mutate(otherSeg=ifelse(chr==chr2, 'same chr', 'different chr')) %>% group_by(otherSeg) %>% summarize(segdup=n()) %>% ungroup %>% mutate(segdup.prop=segdup/sum(segdup)) %>% kable(digits=3)
-sd %>% filter(chr==chr2) %>% mutate(d1=start2-end, d2=end2-start, d=ifelse(d1>d2,d2,d1)) %>% ggplot(aes(x=d)) + geom_histogram() + theme_bw() + scale_x_log10() + xlab('distance to similar region (bp)')
+sd %>% filter(chr==chr2) %>% mutate(d1=start2-end, d2=end2-start, d=ifelse(d1>d2,d2,d1)) %>% ggplot(aes(x=d)) + geom_histogram() + theme_bw() + scale_x_log10() + xlab('distance to similar region (bp)') + ggtitle('SD with similar region in same chromosome')
 ```
 
 For the majority of SDs, the similar region is in a different chromosome.
@@ -100,7 +113,7 @@ For the others the majority are far from each other.
 
 ## Gene content
 
-```{r gcdl}
+```{r gcdl, cache=TRUE}
 if(!file.exists("gencode.v19.gtf.gz")) download.file("ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz", "gencode.v19.gtf.gz")
 gtf = import("gencode.v19.gtf.gz")
 gtf = gtf[as.character(seqnames(gtf)) %in% paste0('chr', c(1:22,'X','Y'))]
@@ -120,7 +133,7 @@ gene.sd %>% as.data.frame %>% select(gene_type, gene_name) %>% unique %>% group_
 ### Gene families
 
 A naive way of looking for gene families is to cluster the gene names. 
-First I remove trailing numbers
+I also remove any trailing numbers in the gene name.
 
 ```{r genefam}
 genen = subset(gene.sd, gene_type=='protein_coding')$gene_name %>% unique
@@ -128,10 +141,32 @@ genen = gsub('[0-9]*$', '', genen)
 gened = adist(genen)
 colnames(gened) = rownames(gened) = genen
 hc = hclust(as.dist(gened), method='ward.D')
-plot(hc)
 genef = cutree(hc, h=2)
-data.frame(gene=genen, fam=genef) %>% group_by(fam) %>% summarize(example=gene[1], n=n()) %>% arrange(desc(n), fam) %>% filter(n>4) %>% kable
+data.frame(gene=genen, fam=genef) %>% group_by(fam) %>% summarize(example=gene[1], n=n()) %>% arrange(desc(n), fam) %>% select(-fam) %>% filter(n>9) %>% kable
 ```
 
-A better way would be to find an annotation of gene families and see if they are enriched in SD regions. 
-Same for biological processes with a GO analysis.
+### Gene Ontology
+
+```{r go, cache=TRUE}
+genes.all = unique(subset(genes, gene_type=='protein_coding')$gene_name)
+eg = bitr(genes.all, fromType="SYMBOL", toType="ENTREZID", OrgDb="org.Hs.eg.db")
+eg$sd = eg$SYMBOL %in% subset(gene.sd, gene_type=='protein_coding')$gene_name
+go.enr.bp = enrichGO(gene=subset(eg, sd)$ENTREZID, 'org.Hs.eg.db', ont="BP", universe=eg$ENTREZID, readable=TRUE)
+go.enr.cc = enrichGO(gene=subset(eg, sd)$ENTREZID, 'org.Hs.eg.db', ont="CC", universe=eg$ENTREZID, readable=TRUE)
+go.enr.mf = enrichGO(gene=subset(eg, sd)$ENTREZID, 'org.Hs.eg.db', ont="MF", universe=eg$ENTREZID, readable=TRUE)
+```
+
+
+```{r gographs, fig.height=10, fig.width=20}
+## dotplot(go.enr, showCategory=20)
+go.enr.bp.s = summary(go.enr.bp)
+go.enr.bp.s[,c("Description","GeneRatio","qvalue")] %>% kable
+
+go.enr.mf.s = summary(go.enr.mf)
+go.enr.mf.s[,c("Description","GeneRatio","qvalue")] %>% kable
+
+go.enr.cc.s = summary(go.enr.cc)
+go.enr.cc.s[,c("Description","GeneRatio","qvalue")] %>% kable
+
+## enrichMap(go.enr, vertex.label.cex=1)
+```
