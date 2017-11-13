@@ -9,11 +9,13 @@ I'm gathering here info about journals that are publishing papers on my field.
 ## Summary table
 
 
-| Journal                         | Co.    |   IF | OA   | APC      | Pub/year | Received-to-accepted in days. median (75th perc.) |
+| Journal                         | Co.   |   IF | OA   | APC      | Pub/year | Received-to-accepted in days. median (75th perc.)  |
 | ---                             | ---   |  --- | ---  | ---      | ---      | ---                                                |
 | F1000Research                   | -     |  1.2 | Y    | 1000 USD |          |                                                    |
 | PeerJ                           | -     |  2.2 | Y    | 1095 USD | ~1032    | ~88 (132)                                          |
 | eLife                           | -     |  7.8 | Y    | 2500 USD | 915      | 122 (155)                                          |
+| Scientific Reports              | Spr   |  4.3 | Y    | 1110 GBP |          |                                                    |
+| GigaScience                     | OUP   |  4.9 | Y    | 1281 GBP |          |                                                    |
 | PLoS One                        | PLoS  |  2.8 | Y    | 1495 USD |          |                                                    |
 | PLoS Comp Bio                   | PLoS  |  4.5 | Y    | 2250 USD | ~550     | ~159 (217)                                         |
 | PLoS Genetics                   | PLoS  |  6.1 | Y    | 2250 USD | 644      | 150 (202)                                          |
@@ -22,21 +24,20 @@ I'm gathering here info about journals that are publishing papers on my field.
 | BMC Genomics                    | BMC/S |  3.7 | Y    | 1370 GBP | ~915     | ~137 (189)                                         |
 | BMC Biology                     | BMC/S |  6.8 | Y    | 1780 GBP |          |                                                    |
 | Genome Biology                  | BMC/S | 11.9 | Y    | 1900 GBP | ~43      | ~123 (146)                                         |
+| Cell Reports                    | Els   |  8.3 | Y    | 5000 USD |          |                                                    |
+| Nature Communications           | Spr   | 12.1 | Y    | 3150 GBP |          |                                                    |
+| Genetics                        | -     |  4.6 | 12m+ | 2000 USD |          |                                                    |
 | Genome Research                 | CSH   | 11.9 | 6m+  | 2500 USD | 66       | 174 (212)                                          |
 | PNAS                            | HWP   |  9.7 | 6m+  | 1450 USD |          |                                                    |
-| GigaScience                     | OUP   |  4.9 | Y    | 1281 GBP |          |                                                    |
 | Bioinformatics                  | OUP   |  7.3 | +    | 3000 USD |          |                                                    |
 | NAR                             | OUP   | 10.2 | ~    | 2770 USD |          |                                                    |
-| Cell Reports                    | Els     |  8.3 | Y    | 5000 USD |          |                                                    |
-| AJHG                            | Els     |  9.0 | 6m+  | 5000 USD | 134      | 99 (135)                                           |
-| Cell                            | Els     | 30.4 | 12m+ | 5000 USD |          |                                                    |
-| Lancet                          | Els     | 47.8 | 6m+  | 5000 USD |          |                                                    |
-| Scientific Reports              | Spr     |  4.3 | Y    | 1110 GBP |          |                                                    |
-| Nature Communications           | Spr     | 12.1 | Y    | 3150 GBP |          |                                                    |
-| Nature Methods                  | Spr     | 25.1 | N    | -        |          |                                                    |
-| Nature Genetics                 | Spr     | 28.0 | N    | -        |          |                                                    |
-| Nature Biotech                  | Spr     | 41.7 | N    | -        |          |                                                    |
-| Nature                          | Spr     | 40.1 | N    | -        |          |                                                    |
+| AJHG                            | Els   |  9.0 | 6m+  | 5000 USD | 134      | 99 (135)                                           |
+| Cell                            | Els   | 30.4 | 12m+ | 5000 USD |          |                                                    |
+| Lancet                          | Els   | 47.8 | 6m+  | 5000 USD |          |                                                    |
+| Nature Methods                  | Spr   | 25.1 | N    | -        |          |                                                    |
+| Nature Genetics                 | Spr   | 28.0 | N    | -        |          |                                                    |
+| Nature Biotech                  | Spr   | 41.7 | N    | -        |          |                                                    |
+| Nature                          | Spr   | 40.1 | N    | -        |          |                                                    |
 | New England Journal Of Medicine | -     | 72.4 | N    | -        |          |                                                    |
 | Science                         | AAAS  | 37.2 | 12m  | -        |          |                                                    |
 
