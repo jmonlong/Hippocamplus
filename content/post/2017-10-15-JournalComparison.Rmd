@@ -26,7 +26,7 @@ I'm gathering here info about journals that are publishing papers on my field.
 | Genome Biology                  | BMC/S | 11.9 | Y    | 1900 GBP | ~43      | ~123 (146)                                         |
 | Cell Reports                    | Els   |  8.3 | Y    | 5000 USD |          |                                                    |
 | Nature Communications           | Spr   | 12.1 | Y    | 3150 GBP |          |                                                    |
-| Genetics                        | -     |  4.6 | 12m+ | 2000 USD |          |                                                    |
+| Genetics                        | -     |  4.6 | 12m+ | 2000 USD | ~312     | ~97 (166)                                          |
 | Genome Research                 | CSH   | 11.9 | 6m+  | 2500 USD | 66       | 174 (212)                                          |
 | PNAS                            | HWP   |  9.7 | 6m+  | 1450 USD |          |                                                    |
 | Bioinformatics                  | OUP   |  7.3 | +    | 3000 USD |          |                                                    |
