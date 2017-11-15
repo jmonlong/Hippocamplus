@@ -35,6 +35,25 @@ To mount a server I use the following command:
 sshfs jmonlong@guillimin.hpc.mcgill.ca:/ /Users/jeanmonlong/sftp/guillimin -ovolname=NAME
 ~~~
 
+## One-liners
+
+### Perl one-liners
+
+Inspired from these: [Catonmat](http://www.catonmat.net/blog/introduction-to-perl-one-liners/), [Ksplice](https://blogs.oracle.com/ksplice/the-top-10-tricks-of-perl-one-liners)
+
+- `-p` run command on each line and print line.
+- `-n` run command on each line but don't print line.
+- `-i` operates on the file in-place, i.e. updating the input file.
+- `-a` split the lines by white spaces into a `@F` array (`-F` to choose the separator)
+- `-l` removes the trailing new line, and adds it back if `-p` is used.
+- `$_` contains the line.
+- `$.` contains the line number.
+
+- Replace text line-by-line in a file: `perl -pe 's/you/me/g'`
+- Replace text if line contains *foo*: `perl -pe 's/you/me/g if /foo/`
+- Replace text line-by-line with regexp: `perl -pe 's/ID(\d+)/$1/g'`
+- Operations on a CSV file: `perl -F, -ane 'print $F[3]+$F[8]`
+- Operations on a CSV file and print at the end: `perl -F, -ane $t+=$F[3]+$F[8]; END{print $t}`
 
 ## Shell scripting
 
