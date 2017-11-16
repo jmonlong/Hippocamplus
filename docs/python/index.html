@@ -203,6 +203,7 @@ for elt in arr:
 <p><em>numpy</em> arrays are more efficient when the data needs to be manipulated/combined. For example it allows for some vectorized operations:</p>
 <pre class="python"><code>pred_counts = numpy.zeros((4, len(rfc.classes_)))
 pred_counts[0, ] += sum(predprobs &gt; .5)</code></pre>
+<p>To convert a string into an array: <code>numpy.fromstring(line, dtype=int, sep='\t')</code>. The opposite is <code>'\t'.join(map(str, arr))</code></p>
 </div>
 <div id="hash" class="section level3">
 <h3>Hash</h3>

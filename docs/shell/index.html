@@ -164,6 +164,9 @@
 <li><a href="#rsync">rsync</a></li>
 <li><a href="#mount-server-in-osx">Mount server in OSX</a></li>
 </ul></li>
+<li><a href="#one-liners">One-liners</a><ul>
+<li><a href="#perl-one-liners">Perl one-liners</a></li>
+</ul></li>
 <li><a href="#shell-scripting">Shell scripting</a><ul>
 <li><a href="#variables">Variables</a></li>
 <li><a href="#if-then-else">If Then Else</a></li>
@@ -194,6 +197,27 @@
 <p>I created a directory <code>sftp</code> (I don’t know why I choose this name…anyway) and mount the root of the different servers there. Eventually I created a symbolic link at the root of my computer to point there so that paths like <code>/gs/projects/...</code> work directly, as if in the cluster.</p>
 <p>To mount a server I use the following command:</p>
 <pre class="sh"><code>sshfs jmonlong@guillimin.hpc.mcgill.ca:/ /Users/jeanmonlong/sftp/guillimin -ovolname=NAME</code></pre>
+</div>
+</div>
+<div id="one-liners" class="section level2">
+<h2>One-liners</h2>
+<div id="perl-one-liners" class="section level3">
+<h3>Perl one-liners</h3>
+<p>Inspired from these: <a href="http://www.catonmat.net/blog/introduction-to-perl-one-liners/">Catonmat</a>, <a href="https://blogs.oracle.com/ksplice/the-top-10-tricks-of-perl-one-liners">Ksplice</a></p>
+<ul>
+<li><code>-p</code> run command on each line and print line.</li>
+<li><code>-n</code> run command on each line but don’t print line.</li>
+<li><code>-i</code> operates on the file in-place, i.e. updating the input file.</li>
+<li><code>-a</code> split the lines by white spaces into a <code>@F</code> array (<code>-F</code> to choose the separator)</li>
+<li><code>-l</code> removes the trailing new line, and adds it back if <code>-p</code> is used.</li>
+<li><code>$_</code> contains the line.</li>
+<li><p><code>$.</code> contains the line number.</p></li>
+<li>Replace text line-by-line in a file: <code>perl -pe 's/you/me/g'</code></li>
+<li>Replace text if line contains <em>foo</em>: <code>perl -pe 's/you/me/g if /foo/</code></li>
+<li>Replace text line-by-line with regexp: <code>perl -pe 's/ID(\d+)/$1/g'</code></li>
+<li>Operations on a CSV file: <code>perl -F, -ane 'print $F[3]+$F[8]</code></li>
+<li><p>Operations on a CSV file and print at the end: <code>perl -F, -ane $t+=$F[3]+$F[8]; END{print $t}</code></p></li>
+</ul>
 </div>
 </div>
 <div id="shell-scripting" class="section level2">

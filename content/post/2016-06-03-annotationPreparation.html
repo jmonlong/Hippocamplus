@@ -1,0 +1,48 @@
+---
+title: Preparing some genomic annotations
+date: 2016-06-03
+tags: ["genome"]
+---
+
+
+
+<div id="mappability-track" class="section level2">
+<h2>Mappability track</h2>
+<p>I produced a mappability track from the UCSC track. The <a href="http://hgdownload.soe.ucsc.edu/gbdb/hg19/bbi/wgEncodeCrgMapabilityAlign100mer.bw">raw file</a> contains, for each base in the genome, an estimation of the probability that a read is correctly mapped at this position.</p>
+<p>Using a sliding-window approach, I compute the average mappability in regions of size 1 Kbp. This is a more manageable amount of data and still informative, especially when interested in large regions (e.g. SVs).</p>
+<p>I used a custom Perl script to efficiently parse the bedGraph-transformed original file. See the code on <a href="https://github.com/jmonlong/Hippocamplus/blob/gh-pages/_source/mappabilityBin.pl">GitHub</a>.</p>
+<p>I uploaded the result there: <a href="https://dl.dropboxusercontent.com/s/i537zjs65dpw34n/map100mer-1kbp.bed.gz?dl=0"><a href="https://dl.dropboxusercontent.com/s/i537zjs65dpw34n/map100mer-1kbp.bed.gz?dl=0" class="uri">https://dl.dropboxusercontent.com/s/i537zjs65dpw34n/map100mer-1kbp.bed.gz?dl=0</a></a>.</p>
+<p>We can cut the genome into three mappability classes:</p>
+<ul>
+<li><strong>unique</strong> regions with high mappability estimate (&gt;0.95).</li>
+<li><strong>low-map</strong> regions with a non-null mappability but lower than 0.95.</li>
+<li><strong>no-map</strong> regions with mappability 0.</li>
+</ul>
+<p><img src="/post/2016-06-03-annotationPreparation_files/figure-html/summary-1.png" width="768" /></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">map.class</th>
+<th align="right">Mb</th>
+<th align="right">prop</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">unique</td>
+<td align="right">2485.972</td>
+<td align="right">0.803</td>
+</tr>
+<tr class="even">
+<td align="left">low-map</td>
+<td align="right">375.608</td>
+<td align="right">0.121</td>
+</tr>
+<tr class="odd">
+<td align="left">no-map</td>
+<td align="right">233.228</td>
+<td align="right">0.075</td>
+</tr>
+</tbody>
+</table>
+</div>
