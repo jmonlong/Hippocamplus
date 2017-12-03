@@ -6,8 +6,241 @@
     <language>en-us</language>
     <author></author>
     <rights>(C) 2017</rights>
-    <updated>2017-09-19 00:00:00 &#43;0000 UTC</updated>
+    <updated>2017-12-02 00:00:00 &#43;0000 UTC</updated>
 
+    
+      
+        <item>
+          <title>tSNE and clustering</title>
+          <link>/2017/12/02/tsne-and-clustering/</link>
+          <pubDate>Sat, 02 Dec 2017 00:00:00 UTC</pubDate>
+          <author></author>
+          <guid>/2017/12/02/tsne-and-clustering/</guid>
+          <description>&lt;p&gt;tSNE can give really nice results when we want to visualize many groups of multi-dimensional points. Once the 2D graph is done we might want to identify which points cluster in the tSNE blobs.&lt;/p&gt;
+&lt;p&gt;I’ll try different approaches such as hierarchical clustering, K-means, Guassian mixture and density-based clustering.&lt;/p&gt;
+&lt;p&gt;TL;DR Hierarchical clustering is my favorite as it’s robust, easy to use and with reasonable computing time.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
+library(dplyr)
+library(magrittr)
+library(ggrepel)
+library(Rtsne)
+library(mclust)
+library(fpc)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Data&lt;/h2&gt;
+&lt;div id=&#34;normally-distributed-points&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Normally distributed points&lt;/h3&gt;
+&lt;p&gt;First, I’ll simulate an easy situation with 10 different groups. 5,000 points are distributed following Gaussian distributions in 100 dimensions. For each group, points are randomly selected as well as 3 dimensions in which they will differ from the rest.&lt;/p&gt;
+&lt;p&gt;Because there are 10 groups that differ in different dimensions a PCA shouldn’t be able to separate all the groups with the first two components. That’s when the tSNE comes in to do its magic (easily).&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;set.seed(123456)
+N = 5000
+D = 100
+data.norm = matrix(rnorm(N * D, 2), N)
+groups.probs = runif(10)
+groups = sample(1:10, N, TRUE, groups.probs/sum(groups.probs))
+for (gp in unique(groups)) {
+    dev = rep(1, D)
+    dev[sample.int(D, 3)] = runif(3, -10, 10)
+    data.norm[which(groups == gp), ] = data.norm[which(groups == 
+        gp), ] %*% diag(dev)
+}
+info.norm = tibble(truth = factor(groups))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The PCA and tSNE look like this:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;pca.norm = prcomp(data.norm)
+info.norm %&amp;lt;&amp;gt;% cbind(pca.norm$x[, 1:4])
+ggplot(info.norm, aes(x = PC1, y = PC2, colour = truth)) + 
+    geom_point(alpha = 0.3) + theme_bw()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-12-01-tSNEclustering_files/figure-html/pcatsne-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(info.norm, aes(x = PC3, y = PC4, colour = truth)) + 
+    geom_point(alpha = 0.3) + theme_bw()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-12-01-tSNEclustering_files/figure-html/pcatsne-2.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;tsne.norm = Rtsne(pca.norm$x, pca = FALSE)
+info.norm %&amp;lt;&amp;gt;% mutate(tsne1 = tsne.norm$Y[, 1], tsne2 = tsne.norm$Y[, 
+    2])
+ggplot(info.norm, aes(x = tsne1, y = tsne2, colour = truth)) + 
+    geom_point(alpha = 0.3) + theme_bw()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-12-01-tSNEclustering_files/figure-html/pcatsne-3.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;real-data&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Real data&lt;/h3&gt;
+&lt;p&gt;As a real-life example, I use the data that motivated this exploration. It contains a bit more than 26K points and the tSNE looks like that:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;tsne.real = read.csv(&amp;quot;https://docs.google.com/uc?id=1KArwfOd5smzuCsrpgW9Xpf9I06VOW4ga&amp;amp;export=download&amp;quot;)
+info.real = tsne.real
+ggplot(tsne.real, aes(x = tsne1, y = tsne2)) + geom_point(alpha = 0.1) + 
+    theme_bw()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-12-01-tSNEclustering_files/figure-html/real-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;hierarchical-clustering&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Hierarchical clustering&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;+&lt;/strong&gt; Once built, it’s fast to try different number clusters.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;+&lt;/strong&gt; Different linkage criteria to match the behavior we want.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;-&lt;/strong&gt; Doesn’t scale well. High memory usage and computation time when &amp;gt;30K.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;hc.norm = hclust(dist(tsne.norm$Y))
+info.norm$hclust = factor(cutree(hc.norm, 9))
+hc.norm.cent = info.norm %&amp;gt;% group_by(hclust) %&amp;gt;% select(tsne1, 
+    tsne2) %&amp;gt;% summarize_all(mean)
+ggplot(info.norm, aes(x = tsne1, y = tsne2, colour = hclust)) + 
+    geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = hclust), 
+    data = hc.norm.cent) + guides(colour = FALSE) + 
+    ggtitle(&amp;quot;Linkage criterion: Complete&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-12-01-tSNEclustering_files/figure-html/hcnorm-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;hc.norm = hclust(dist(tsne.norm$Y), method = &amp;quot;ward.D&amp;quot;)
+info.norm$hclust = factor(cutree(hc.norm, 9))
+hc.norm.cent = info.norm %&amp;gt;% group_by(hclust) %&amp;gt;% select(tsne1, 
+    tsne2) %&amp;gt;% summarize_all(mean)
+ggplot(info.norm, aes(x = tsne1, y = tsne2, colour = hclust)) + 
+    geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = hclust), 
+    data = hc.norm.cent) + guides(colour = FALSE) + 
+    ggtitle(&amp;quot;Linkage criterion: Ward&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-12-01-tSNEclustering_files/figure-html/hcnorm-2.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Now on real data:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;hc.real = hclust(dist(tsne.real))
+info.real$hclust = factor(cutree(hc.real, 18))
+hc.real.cent = info.real %&amp;gt;% group_by(hclust) %&amp;gt;% select(tsne1, 
+    tsne2) %&amp;gt;% summarize_all(mean)
+ggplot(info.real, aes(x = tsne1, y = tsne2, colour = hclust)) + 
+    geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = hclust), 
+    data = hc.real.cent) + guides(colour = FALSE) + 
+    ggtitle(&amp;quot;Linkage criterion: Complete&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-12-01-tSNEclustering_files/figure-html/hcreal-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;hc.real = hclust(dist(tsne.real), method = &amp;quot;ward.D&amp;quot;)
+info.real$hclust = factor(cutree(hc.real, 18))
+hc.real.cent = info.real %&amp;gt;% group_by(hclust) %&amp;gt;% select(tsne1, 
+    tsne2) %&amp;gt;% summarize_all(mean)
+ggplot(info.real, aes(x = tsne1, y = tsne2, colour = hclust)) + 
+    geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = hclust), 
+    data = hc.real.cent) + guides(colour = FALSE) + 
+    ggtitle(&amp;quot;Linkage criterion: Ward&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-12-01-tSNEclustering_files/figure-html/hcreal2-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Time for this code chunk: 26.06 s&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;For both data, Ward gives the best clusters. For example it splits the top-left clusters better in the real data.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;kmeans&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Kmeans&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;+&lt;/strong&gt; Very fast.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;-&lt;/strong&gt; Simple.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;km.norm = kmeans(tsne.norm$Y, 9, nstart = 100)
+info.norm$kmeans = factor(km.norm$cluster)
+km.cent = info.norm %&amp;gt;% group_by(kmeans) %&amp;gt;% select(tsne1, 
+    tsne2) %&amp;gt;% summarize_all(mean)
+ggplot(info.norm, aes(x = tsne1, y = tsne2, colour = kmeans)) + 
+    geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = kmeans), 
+    data = km.cent) + guides(colour = FALSE) + ggtitle(&amp;quot;9 clusters&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-12-01-tSNEclustering_files/figure-html/kmnorm-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;km.norm = kmeans(tsne.norm$Y, 10, nstart = 100)
+info.norm$kmeans = factor(km.norm$cluster)
+km.cent = info.norm %&amp;gt;% group_by(kmeans) %&amp;gt;% select(tsne1, 
+    tsne2) %&amp;gt;% summarize_all(mean)
+ggplot(info.norm, aes(x = tsne1, y = tsne2, colour = kmeans)) + 
+    geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = kmeans), 
+    data = km.cent) + guides(colour = FALSE) + ggtitle(&amp;quot;10 clusters&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-12-01-tSNEclustering_files/figure-html/kmnorm-2.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Because it’s not working well for cluster that are not “round”, we need to ask for more clusters. In practice we’ll need to merge back together the clusters that were fragmented.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;set.seed(123456)
+km.real = kmeans(tsne.real, 24, nstart = 200, iter.max = 100)
+info.real$kmeans = factor(km.real$cluster)
+km.cent = info.real %&amp;gt;% group_by(kmeans) %&amp;gt;% select(tsne1, 
+    tsne2) %&amp;gt;% summarize_all(mean)
+ggplot(info.real, aes(x = tsne1, y = tsne2, colour = kmeans)) + 
+    geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = kmeans), 
+    data = km.cent) + guides(colour = FALSE)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-12-01-tSNEclustering_files/figure-html/kmreal-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Not perfect in the middle-left big cluster: cluster 11 is grabbing points from the bottom blob. Maybe increasing the number of clusters could fix this?&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;set.seed(123456)
+km.real = kmeans(tsne.real, 25, nstart = 200, iter.max = 100)
+info.real$kmeans = factor(km.real$cluster)
+km.cent = info.real %&amp;gt;% group_by(kmeans) %&amp;gt;% select(tsne1, 
+    tsne2) %&amp;gt;% summarize_all(mean)
+ggplot(info.real, aes(x = tsne1, y = tsne2, colour = kmeans)) + 
+    geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = kmeans), 
+    data = km.cent) + guides(colour = FALSE)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-12-01-tSNEclustering_files/figure-html/kmrealmore-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Time for this code chunk: 9.79 s&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Better. Same as with the other methods: we need to manually tweak the parameters to obtain the clustering we want…&lt;/p&gt;
+&lt;p&gt;Note: using several starting points help getting more robust results (&lt;code&gt;nstart=&lt;/code&gt;). Increasing the number of iterations helps too (&lt;code&gt;iter.max=&lt;/code&gt;).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;mclust&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Mclust&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;+&lt;/strong&gt; Better clusters.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;-&lt;/strong&gt; Slow.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;-&lt;/strong&gt; Need to be recomputed for each choice of K (number of clusters).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mc.norm = Mclust(tsne.norm$Y, 9)
+info.norm$mclust = factor(mc.norm$classification)
+mc.cent = info.norm %&amp;gt;% group_by(mclust) %&amp;gt;% select(tsne1, 
+    tsne2) %&amp;gt;% summarize_all(mean)
+ggplot(info.norm, aes(x = tsne1, y = tsne2, colour = mclust)) + 
+    geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = mclust), 
+    data = mc.cent) + guides(colour = FALSE)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-12-01-tSNEclustering_files/figure-html/mcnorm-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Even the elongated cluster is nicely identified and we don’t need to split it.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;set.seed(123456)
+mc.real = Mclust(tsne.real, 20, initialization = list(subset = sample.int(nrow(tsne.real), 
+    1000)))
+info.real$mclust = factor(mc.real$classification)
+mc.cent = info.real %&amp;gt;% group_by(mclust) %&amp;gt;% select(tsne1, 
+    tsne2) %&amp;gt;% summarize_all(mean)
+ggplot(info.real, aes(x = tsne1, y = tsne2, colour = mclust)) + 
+    geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = mclust), 
+    data = mc.cent) + guides(colour = FALSE)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-12-01-tSNEclustering_files/figure-html/mcreal-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Sometimes the results are a bit surprising. For example, points are assigned to cluster far away or there is another cluster in between (e.g. clusters 6 and 17). As usual changing the number of clusters helps.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;set.seed(123456)
+mc.real = Mclust(tsne.real, 24, initialization = list(subset = sample.int(nrow(tsne.real), 
+    1000)))
+info.real$mclust = factor(mc.real$classification)
+mc.cent = info.real %&amp;gt;% group_by(mclust) %&amp;gt;% select(tsne1, 
+    tsne2) %&amp;gt;% summarize_all(mean)
+ggplot(info.real, aes(x = tsne1, y = tsne2, colour = mclust)) + 
+    geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = mclust), 
+    data = mc.cent) + guides(colour = FALSE)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-12-01-tSNEclustering_files/figure-html/mcreal2-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Time for this code chunk: 40.51 s&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Note: I had to use the sub-sampling trick to speed up the process, it was taking too long. Using &lt;code&gt;initialization=list(subset=sample.int(nrow(tsne.real), 1000))&lt;/code&gt;, only a 1K points are used for the EM (but all the points are assigned to a cluster at the end).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;density-based-clustering&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Density-based clustering&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;+&lt;/strong&gt; Can find clusters with different “shapes”.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;-&lt;/strong&gt; More limited on real/noisy data.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;-&lt;/strong&gt; Slow when many points.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ds.norm = dbscan(tsne.norm$Y, 2)
+info.norm$density = factor(ds.norm$cluster)
+ds.cent = info.norm %&amp;gt;% group_by(density) %&amp;gt;% select(tsne1, 
+    tsne2) %&amp;gt;% summarize_all(mean)
+ggplot(info.norm, aes(x = tsne1, y = tsne2, colour = density)) + 
+    geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = density), 
+    data = ds.cent) + guides(colour = FALSE)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-12-01-tSNEclustering_files/figure-html/densnorm-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Woah, it found the small cluster !&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ds.real = dbscan(tsne.real, 1)
+info.real$density = factor(ds.real$cluster)
+ds.cent = info.real %&amp;gt;% group_by(density) %&amp;gt;% select(tsne1, 
+    tsne2) %&amp;gt;% summarize_all(mean)
+ggplot(info.real, aes(x = tsne1, y = tsne2, colour = density)) + 
+    geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = density), 
+    data = ds.cent) + guides(colour = FALSE)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-12-01-tSNEclustering_files/figure-html/densreal-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Time for this code chunk: 104.61 s&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Ouch…&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;conclusions&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Conclusions&lt;/h2&gt;
+&lt;p&gt;If possible, &lt;strong&gt;I’ll try to use hierarchical clustering&lt;/strong&gt;. Especially with the Ward criterion, it worked well for both simulated and real data. Once the hierarchy is built, it’s fast to try different values for the number of clusters. Also, in the real data, I could get satisfactory results using a lower number of clusters than for the K-means (18 vs 25).&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;If there are too many points&lt;/strong&gt; (e.g. &amp;gt;30K), hierarchical clustering might be too demanding and I would fall back to &lt;strong&gt;K-means&lt;/strong&gt;. It’s fast and easy to get what we want if we accept over-fragmentation. In this cae, we might need to merged the fragments that we believe belong together but that’s not so hard to do.&lt;/p&gt;
+&lt;p&gt;The more advanced methods are good to keep in mind if the points ever form diverse or unusual shapes.&lt;/p&gt;
+&lt;p&gt;I learned two &lt;strong&gt;tricks to improve the performance&lt;/strong&gt; of the methods: increasing the number of iterations and starting points for the K-means, and sub-sampling for the EM clustering.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+        </item>
+      
     
       
         <item>
