@@ -67,4 +67,39 @@ I use [MathJax](http://docs.mathjax.org/en/latest/mathjax.html) JavaScript displ
 
 Then inline formulas are defined by `\\(...\\)` (for equations, use `\\[...\\]`), and they follow [LaTeX syntax](https://en.wikibooks.org/wiki/LaTeX/Mathematics).
 
-For example, `\\(\int_{-\infty}^\infty e^{-x^2}\mathrm{d}x = \sqrt{\pi}\\)` produces \\(\int_{-\infty}^\infty e^{-x^2}\mathrm{d}x = \sqrt{\pi}\\).
+For example, `\\(\int_{-\infty}^\infty e^{-x^2}\mathrm{d}x = \sqrt{\pi}\\)` produces $\int_{-\infty}^\infty e^{-x^2}\mathrm{d}x = \sqrt{\pi}$.
+
+
+## blogdown websites
+
+[blogdown](https://github.com/rstudio/blogdown) is a R package extending [R Markdown](http://rmarkdown.rstudio.com/) to build [Hugo](https://gohugo.io/) static websites.
+Hugo is easier to install than Jekyll and apparently fast. Most importantly blogdown makes it easier to write posts with R code like in a RMarkdown document.
+
+I still use GitHub Pages to deploy the website. Because GH Pages doesn't support Hugo, I build the website in a `docs` folder (`publishDir = "docs"` in `config.toml`) which I set up in the website settings to be the source of the static website. 
+
+### Themes
+
+There are several themes [available](https://themes.gohugo.io/). I keep using the [Poole](http://getpoole.com/) themes, Hyde and Lanyon, that have been [made available for Hugo](https://github.com/tummychow/lanyon-hugo).
+
+### Table of Contents
+
+In the YAML header of a page:
+
+~~~yaml
+output:
+  blogdown::html_page:
+    toc: true
+~~~
+
+
+### Math formulas
+
+Using [MathJax](http://docs.mathjax.org/en/latest/mathjax.html) JavaScript display engine, I followed the instruction in the [blogdown documentation](https://bookdown.org/yihui/blogdown/templates.html#how-to) and added to the footer partial:
+
+~~~html
+<script src="//yihui.name/js/math-code.js"></script>
+<script async src="//cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+~~~
+
+Then inline formulas are surronded by \$ (for equations use two \$), and they follow [LaTeX syntax](https://en.wikibooks.org/wiki/LaTeX/Mathematics).

@@ -4,62 +4,87 @@ date: 2017-10-15
 tags: ["pub"]
 ---
 
-I'm gathering here info about journals that are publishing papers on my field.
+Some info about journals in my field.
 
 ## Summary table
 
 
-| Journal                         | Co.   |   IF | OA   | APC      | Pub/year | Received-to-accepted in days. median (75th perc.)  |
-| ---                             | ---   |  --- | ---  | ---      | ---      | ---                                                |
-| F1000Research                   | -     |  1.2 | Y    | 1000 USD |          |                                                    |
-| PeerJ                           | -     |  2.2 | Y    | 1095 USD | ~1032    | ~88 (132)                                          |
-| eLife                           | -     |  7.8 | Y    | 2500 USD | 915      | 122 (155)                                          |
-| Scientific Reports              | Spr   |  4.3 | Y    | 1110 GBP |          |                                                    |
-| GigaScience                     | OUP   |  4.9 | Y    | 1281 GBP |          |                                                    |
-| PLoS One                        | PLoS  |  2.8 | Y    | 1495 USD |          |                                                    |
-| PLoS Comp Bio                   | PLoS  |  4.5 | Y    | 2250 USD | ~550     | ~159 (217)                                         |
-| PLoS Genetics                   | PLoS  |  6.1 | Y    | 2250 USD | 644      | 150 (202)                                          |
-| PLoS Biology                    | PLoS  |  9.8 | Y    | 2900 USD |          |                                                    |
-| BMC Bioinformatics              | BMC/S |  2.5 | Y    | 1370 GBP |          |                                                    |
-| BMC Genomics                    | BMC/S |  3.7 | Y    | 1370 GBP | ~915     | ~137 (189)                                         |
-| BMC Biology                     | BMC/S |  6.8 | Y    | 1780 GBP |          |                                                    |
-| Genome Biology                  | BMC/S | 11.9 | Y    | 1900 GBP | ~43      | ~123 (146)                                         |
-| Cell Reports                    | Els   |  8.3 | Y    | 5000 USD |          |                                                    |
-| Nature Communications           | Spr   | 12.1 | Y    | 3150 GBP |          |                                                    |
-| Genetics                        | -     |  4.6 | 12m+ | 2000 USD | ~312     | ~97 (166)                                          |
-| Genome Research                 | CSH   | 11.9 | 6m+  | 2500 USD | 66       | 174 (212)                                          |
-| PNAS                            | HWP   |  9.7 | 6m+  | 1450 USD |          |                                                    |
-| Bioinformatics                  | OUP   |  7.3 | +    | 3000 USD |          |                                                    |
-| NAR                             | OUP   | 10.2 | ~    | 2770 USD |          |                                                    |
-| AJHG                            | Els   |  9.0 | 6m+  | 5000 USD | 134      | 99 (135)                                           |
-| Cell                            | Els   | 30.4 | 12m+ | 5000 USD |          |                                                    |
-| Lancet                          | Els   | 47.8 | 6m+  | 5000 USD |          |                                                    |
-| Nature Methods                  | Spr   | 25.1 | N    | -        |          |                                                    |
-| Nature Genetics                 | Spr   | 28.0 | N    | -        |          |                                                    |
-| Nature Biotech                  | Spr   | 41.7 | N    | -        |          |                                                    |
-| Nature                          | Spr   | 40.1 | N    | -        |          |                                                    |
-| New England Journal Of Medicine | -     | 72.4 | N    | -        |          |                                                    |
-| Science                         | AAAS  | 37.2 | 12m  | -        |          |                                                    |
+| Journal                         | Co.   |   IF | OA      | APC       | Pub/year | Received-to-accepted in days. median (75th perc.) |
+| ---                             | ---   |  --- | ---     | ---       | ---      | ---                                               |
+| F1000Research                   | -     |  1.2 | Y       | 1000 USD  |          |                                                   |
+| PeerJ                           | -     |  2.2 | Y       | 1095 USD  | ~1290    | ~88 (139)                                         |
+| eLife                           | -     |  7.8 | Y       | 2500 USD  | 1018     | 121 (155)                                         |
+| GigaScience                     | OUP   |  4.9 | Y       | ~1800 USD | ~50      | ~126 (195)                                        |
+| PLoS One                        | PLoS  |  2.8 | Y       | 1495 USD  | ~22K     | ~122 (182)                                        |
+| PLoS Comp Bio                   | PLoS  |  4.5 | Y       | 2250 USD  | ~550     | ~159 (217)                                        |
+| PLoS Genetics                   | PLoS  |  6.1 | Y       | 2250 USD  | 644      | 150 (202)                                         |
+| PLoS Biology                    | PLoS  |  9.8 | Y       | 2900 USD  | ~176     | ~141 (175)                                        |
+| BMC Bioinformatics              | BMC/S |  2.5 | Y       | ~2000 USD | ~333     | ~169 (231)                                        |
+| BMC Genomics                    | BMC/S |  3.7 | Y       | ~2000 USD | ~985     | ~138 (190)                                        |
+| BMC Biology                     | BMC/S |  6.8 | Y       | ~2500 USD | ~85      | ~70 (108)                                         |
+| Genome Biology                  | BMC/S | 11.9 | Y       | ~2700 USD | ~156     | ~106 (143)                                        |
+| Cell Reports                    | Els   |  8.3 | Y       | 5000 USD  | ~1005    | ~168 (241)                                        |
+| Scientific Reports              | Spr   |  4.3 | Y       | ~1600 USD | ~20K     | ~104 (151)                                        |
+| Nature Communications           | Spr   | 12.1 | Y       | ~4500 USD | ~3519    | ~168 (228)                                        |
+| NAR                             | OUP   | 10.2 | Y       | 2770 USD  | ~1359    | ~82 (131)                                         |
+| Genetics                        | -     |  4.6 | 12m/+   | 2000 USD  | ~374     | ~104 (163)                                        |
+| AJHG                            | Els   |  9.0 | 6m/+    | 5000 USD  | 237      | 89 (121)                                          |
+| PNAS                            | HWP   |  9.7 | 6m/+    | 1450 USD  |          |                                                   |
+| Genome Research                 | CSH   | 11.9 | 6m/+    | 2500 USD  | ~179     | ~188 (242)                                        |
+| Cell                            | Els   | 30.4 | (12m/+) | 5000 USD  | ~351     | ~149 (193)                                        |
+| Lancet                          | Els   | 47.8 | 6m/+    | 5000 USD  |          |                                                   |
+| Science                         | AAAS  | 37.2 | 12m     | -         | ~720     | ~112 (162)                                        |
+| Bioinformatics                  | OUP   |  7.3 | +       | 3000 USD  | ~868     | ~126 (180)                                        |
+| Nature Methods                  | Spr   | 25.1 | N       | -         | ~130     | ~146 (187)                                        |
+| Nature Genetics                 | Spr   | 28.0 | N       | -         | 202      | 147 (203)                                         |
+| Nature Biotech                  | Spr   | 41.7 | N       | -         | 80       | 202 (262)                                         |
+| Nature                          | Spr   | 40.1 | N       | -         | ~855     | ~175 (246)                                        |
+| New England Journal Of Medicine | -     | 72.4 | N       | -         |          |                                                   |
 
-Sources:
+Open Access (OA) journal:
+
+- `Y`: Yes.
+- `+`: Authors can pay additional Article Processing Charges (column APC) to make it accessible immediately upon publication.
+- `12m`: Articles are accessible after 12 months, either from the journal or [PubMed Central](https://www.ncbi.nlm.nih.gov/pmc/)/
+- `6m`: Articles are accessible after 6 months, either from the journal or [PubMed Central](https://www.ncbi.nlm.nih.gov/pmc/).
+- `()`: Depending on the funding agencies.
+- `N`: No.
+
+## Sources
 
 - Impact Factor for 2016/2017 from [bioxbio](http://www.bioxbio.com/if/).
 - APC from [Directory of Open Access Journals](https://doaj.org/).
-- *Received-to-accepted time* and *Pub/year* based on all articles published in 2016. `~` means that it's based on a subset of the publications (~200).
 
-Todo:
+*Received-to-accepted time* and *Pub/year* are based on articles published in 2016. After a PubMed search, the publication page was crawled to get the article type and dates of reception/acceptance. Only research articles/letters are considered (no method/tools/resource/editorial/perspective/erratum/opinion/...). Sometimes the DOI was not present in the PubMed results or there was a lot a publications to crawl so I analyzed a subset and extrapolated the numbers (`~` marks approximated numbers). I still see some suspicious numbers (articles with very short/negative acceptance time). Hopefully the medians are still close to reality but these numbers should be taken with a grain of salt.
 
-- Add publication fee.
-- Maybe I could rank the journals for each column and compute a master rank.
-- More journals.
-- Show fees in USD for all.
+## Median time to acceptance/publication
 
-## "Good" ones:
+```{r, echo=FALSE, message=FALSE, fig.width=10}
+library(ggplot2)
+library(dplyr)
+library(tidyr)
 
-- [eLife](https://elifesciences.org/) is non-profit, open and more modern.
+load("../../data/journalComp.RData")
+art.types = c('Article','Research Article','Research article', 'Research', 'PEER-REVIEWED', 'INVESTIGATIONS','Feature Article','Meta-Research Article')
+meth.types = c('Methodology article','Methodology Article', 'METHOD', 'Method','Methodolgy article')
+letter.types = c('Letter', 'Brief Communication')
+report.types = c('Registered Report', 'Report', 'Short Report', 'Technical Report')
+
+pub.s = pub.df %>% filter(type %in% c(art.types, meth.types, letter.types, report.types)) %>% group_by(journal) %>% summarize(n=sum(ss), ra=median(ra, na.rm=TRUE), rp=median(rp, na.rm=TRUE)) %>% gather(type,days, -n, -journal) %>% mutate(type=factor(type, levels=c('ra','rp'),labels=c('accepted', 'published')), pubs=cut(n, c(0,300,1000,2e4,Inf), labels=c('<300','300-1000','1000-20K','>20K')))
+## ggplot(pub.s, aes(x=reorder(journal,days, min), y=days, colour=type, size=pubs)) + geom_point() + theme_bw() + theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5), legend.position=c(.99,.01), legend.justification = c(1,0), legend.box='horizontal') + scale_y_continuous(breaks=seq(0,max(pub.s$days),25), limits=c(0,max(pub.s$days))) + xlab('') + ylab('median time (days)') + scale_colour_brewer(palette='Set1', name='received to', direction=-1) + scale_size_manual(name='research article/year', values=c(2,4,6)) + guides(colour = guide_legend(override.aes = list(size=3)))
+
+ggplot(pub.s, aes(x=reorder(journal,days, min), y=days)) + geom_point(aes(colour=type, size=pubs)) + theme_bw() + geom_hline(yintercept=0) + 
+  theme(legend.background = element_rect(colour='black'),
+      ##axis.text.x=element_text(angle=90, hjust=1, vjust=.5),
+      legend.position=c(.01,.99), legend.justification = c(0,1), legend.box='horizontal',, axis.text.x=element_blank()) + scale_y_continuous(breaks=seq(0,max(pub.s$days),25), limits=c(0,max(pub.s$days))) + xlab('') + ylab('median time (days)') + scale_colour_brewer(palette='Set1', name='received to', direction=-1) + scale_size_manual(name='research articles in 2016', values=c(2,4,6,9)) + guides(colour = guide_legend(direction='horizontal', override.aes = list(size=3)), size=guide_legend(direction='horizontal')) + geom_text(aes(label=journal), data=subset(pub.s, type=='accepted'), angle=90, hjust=1, nudge_y = -8)
+```
+
+## "Good" journals
+
+- [eLife](https://elifesciences.org/) is non-profit, open and modern.
 - [PLOS](https://www.plos.org/which-journal-is-right-for-me) the pioneer in open-access.
 - [BMC](http://www.biomedcentral.com/p/the-bmc-series-journals#journallist), although it's owned by Springer Nature publishing group.
-- [F1000](https://f1000research.com/) where the manuscript is "published" right away and then transparently peer-reviewed. Once PR, it is indexed in PubMed etc.
+- [F1000](https://f1000research.com/) where the manuscript is "published" right away and then transparently peer-reviewed. Once peer-reviewed, it is indexed in PubMed etc.
 - [PeerJ](https://peerj.com/) is about open-access and cost-efficient publishing.
 
 ## "Evil" publishing companies
@@ -70,4 +95,4 @@ Todo:
 ## Further reading
 
 - [Does it take too long to publish research? (Nature News Feature)](http://www.nature.com/news/does-it-take-too-long-to-publish-research-1.19320)
-
+- ["Why I still won’t review for or publish with Elsevier–and think you shouldn’t either" by Tal Yarkoni](https://www.talyarkoni.org/blog/2016/12/12/why-i-still-wont-review-for-or-publish-with-elsevier-and-think-you-shouldnt-either/)

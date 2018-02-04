@@ -18,6 +18,11 @@ output:
 <li><a href="#table-of-contents">Table of Contents</a></li>
 <li><a href="#math-formulas">Math formulas</a></li>
 </ul></li>
+<li><a href="#blogdown-websites">blogdown websites</a><ul>
+<li><a href="#themes-1">Themes</a></li>
+<li><a href="#table-of-contents-1">Table of Contents</a></li>
+<li><a href="#math-formulas-1">Math formulas</a></li>
+</ul></li>
 </ul>
 </div>
 
@@ -62,6 +67,30 @@ output:
 <p>I use <a href="http://docs.mathjax.org/en/latest/mathjax.html">MathJax</a> JavaScript display engine. I added to the <em>head</em> of the pages:</p>
 <pre class="html"><code>&lt;script type=&quot;text/javascript&quot; src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot; &gt;&lt;/script&gt;</code></pre>
 <p>Then inline formulas are defined by <code>\\(...\\)</code> (for equations, use <code>\\[...\\]</code>), and they follow <a href="https://en.wikibooks.org/wiki/LaTeX/Mathematics">LaTeX syntax</a>.</p>
-<p>For example, <code>\\(\int_{-\infty}^\infty e^{-x^2}\mathrm{d}x = \sqrt{\pi}\\)</code> produces \(_{-}<sup>e</sup>{-x^2}x = \).</p>
+<p>For example, <code>\\(\int_{-\infty}^\infty e^{-x^2}\mathrm{d}x = \sqrt{\pi}\\)</code> produces <span class="math">\(\int_{-\infty}^\infty e^{-x^2}\mathrm{d}x = \sqrt{\pi}\)</span>.</p>
+</div>
+</div>
+<div id="blogdown-websites" class="section level2">
+<h2>blogdown websites</h2>
+<p><a href="https://github.com/rstudio/blogdown">blogdown</a> is a R package extending <a href="http://rmarkdown.rstudio.com/">R Markdown</a> to build <a href="https://gohugo.io/">Hugo</a> static websites. Hugo is easier to install than Jekyll and apparently fast. Most importantly blogdown makes it easier to write posts with R code like in a RMarkdown document.</p>
+<p>I still use GitHub Pages to deploy the website. Because GH Pages doesn’t support Hugo, I build the website in a <code>docs</code> folder (<code>publishDir = &quot;docs&quot;</code> in <code>config.toml</code>) which I set up in the website settings to be the source of the static website.</p>
+<div id="themes-1" class="section level3">
+<h3>Themes</h3>
+<p>There are several themes <a href="https://themes.gohugo.io/">available</a>. I keep using the <a href="http://getpoole.com/">Poole</a> themes, Hyde and Lanyon, that have been <a href="https://github.com/tummychow/lanyon-hugo">made available for Hugo</a>.</p>
+</div>
+<div id="table-of-contents-1" class="section level3">
+<h3>Table of Contents</h3>
+<p>In the YAML header of a page:</p>
+<pre class="yaml"><code>output:
+  blogdown::html_page:
+    toc: true</code></pre>
+</div>
+<div id="math-formulas-1" class="section level3">
+<h3>Math formulas</h3>
+<p>Using <a href="http://docs.mathjax.org/en/latest/mathjax.html">MathJax</a> JavaScript display engine, I followed the instruction in the <a href="https://bookdown.org/yihui/blogdown/templates.html#how-to">blogdown documentation</a> and added to the footer partial:</p>
+<pre class="html"><code>&lt;script src=&quot;//yihui.name/js/math-code.js&quot;&gt;&lt;/script&gt;
+&lt;script async src=&quot;//cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML&quot;&gt;
+&lt;/script&gt;</code></pre>
+<p>Then inline formulas are surronded by $ (for equations use two $), and they follow <a href="https://en.wikibooks.org/wiki/LaTeX/Mathematics">LaTeX syntax</a>.</p>
 </div>
 </div>
