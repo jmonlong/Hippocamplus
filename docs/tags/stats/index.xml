@@ -244,11 +244,11 @@ ggplot(info.real, aes(x = tsne1, y = tsne2, colour = density)) +
     
       
         <item>
-          <title>Regression</title>
-          <link>/2017/09/16/regression/</link>
+          <title>Regression sandbox</title>
+          <link>/2017/09/16/regression-sandbox/</link>
           <pubDate>Sat, 16 Sep 2017 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/2017/09/16/regression/</guid>
+          <guid>/2017/09/16/regression-sandbox/</guid>
           <description>&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
 library(broom)
 library(magrittr)
@@ -279,17 +279,17 @@ glm(y ~ x, data = df, family = binomial()) %&amp;gt;% tidy %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.3566749&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.2845213&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-1.253597&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.2099887&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.2336149&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.3070802&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.7607617&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4467994&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;xTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.1749853&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4207502&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;2.792596&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0052287&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.1745982&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4256623&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.7594604&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0057897&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -308,17 +308,17 @@ glm(y ~ x, data = df, family = binomial()) %&amp;gt;% tidy %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.6931472&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.3162277&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-2.191924&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0283850&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.4054651&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.3227486&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-1.256288&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.2090117&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;yTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.1749853&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4207502&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;2.792596&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0052287&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.1745982&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4256624&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.759460&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0057897&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -338,24 +338,24 @@ glm(y ~ x + z, data = df, family = binomial()) %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.3384519&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.5406594&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.6259983&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.5313161&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.5930811&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.5436028&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-1.0910191&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.2752645&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;xTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.1705839&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4350359&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;2.6907754&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0071286&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.2012521&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4293265&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.7979921&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0051421&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;z&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.0291708&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.7361492&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.0396262&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.9683911&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.6601875&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.8199692&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.8051369&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4207407&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -374,24 +374,24 @@ glm(y ~ x + z, data = df, family = binomial()) %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.3038223&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.5173140&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.5873074&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.5569973&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.1246648&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.5141828&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.2424523&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.8084297&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;yTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.1673062&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4343205&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;2.6876608&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0071954&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.1996170&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4291206&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.7955243&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0051816&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;z&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-1.7923109&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.7477030&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-2.3970893&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0165259&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.5586854&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.8023449&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.6963157&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4862311&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -399,7 +399,7 @@ glm(y ~ x + z, data = df, family = binomial()) %&amp;gt;%
 &lt;/div&gt;
 &lt;div id=&#34;interpretation&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Interpretation&lt;/h3&gt;
-&lt;p&gt;Just to make I understand the estimates correctly. It represents the log odds ratio change for each “unit” of the predictor. In the case of a binary variable, the log odds ratio between the two groups.&lt;/p&gt;
+&lt;p&gt;Just to make sure I understand the estimates correctly. It represents the log odds ratio change for each “unit” of the predictor. In the case of a binary variable, the log odds ratio between the two groups.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;glm(y ~ x, data = df, family = binomial()) %&amp;gt;% tidy %&amp;gt;% 
     kable&lt;/code&gt;&lt;/pre&gt;
 &lt;table&gt;
@@ -415,17 +415,17 @@ glm(y ~ x + z, data = df, family = binomial()) %&amp;gt;%
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;(Intercept)&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.3566749&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.2845213&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-1.253597&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.2099887&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.2336149&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.3070802&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;-0.7607617&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4467994&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;xTRUE&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1.1749853&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.4207502&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;2.792596&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.0052287&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.1745982&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.4256623&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2.7594604&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0057897&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
@@ -434,11 +434,11 @@ glm(y ~ x + z, data = df, family = binomial()) %&amp;gt;%
 odds.y.ifnotx = mean(subset(df, !x)$y)/mean(!subset(df, 
     !x)$y)
 log(odds.y.ifx/odds.y.ifnotx)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 1.174985&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 1.174598&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;extreme-cases&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Extreme cases&lt;/h3&gt;
-&lt;p&gt;How efficient is the logistic regression in cases where there is an imbalance between different types of observations ? For example if just a few genomic regions overlap an interesting annotation and I want to test is the overlap is significant.&lt;/p&gt;
+&lt;p&gt;How efficient is the logistic regression when there is an imbalance between different types of observations ? For example if just a few genomic regions overlap an interesting annotation and I want to test is the overlap is significant.&lt;/p&gt;
 &lt;p&gt;Let’s look at the worst cases when there are only 1 observation for a particular class.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df = data.frame(y = sample(c(FALSE, TRUE), 100, TRUE))
 df$x = 1:nrow(df) %in% sample.int(nrow(df), 1)

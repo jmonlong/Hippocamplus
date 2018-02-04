@@ -1,5 +1,5 @@
 ---
-title: Regression
+title: Regression sandbox
 date: 2017-09-16
 tags: ["stats", "R"]
 ---
@@ -42,7 +42,7 @@ Adding another predictor doesn't change the estimates either.
 
 ### Interpretation
 
-Just to make I understand the estimates correctly.
+Just to make sure I understand the estimates correctly.
 It represents the log odds ratio change for each "unit" of the predictor.
 In the case of a binary variable, the log odds ratio between the two groups.
 
@@ -55,7 +55,7 @@ log(odds.y.ifx / odds.y.ifnotx)
 
 ### Extreme cases
 
-How efficient is the logistic regression in cases where there is an imbalance between different types of observations ?
+How efficient is the logistic regression when there is an imbalance between different types of observations ?
 For example if just a few genomic regions overlap an interesting annotation and I want to test is the overlap is significant.
 
 Let's look at the worst cases when there are only 1 observation for a particular class.
