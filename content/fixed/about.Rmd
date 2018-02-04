@@ -10,11 +10,8 @@ This is where I put all the useful information I keep on forgetting. Instead of 
 
 ## About me
 
-+ [GitHub profile](https://github.com/jmonlong).
-+ [PubMed](http://www.ncbi.nlm.nih.gov/pubmed/?term=Monlong%2C%20Jean[Full%20Author%20Name]%20OR%20Monlong%2C%20Jean[Full%20Investigator%20Name]&cmd=DetailsSearch).
-+ [ResearchGate](https://www.researchgate.net/profile/Jean_Monlong).
-+ [LinkedIn](https://www.linkedin.com/in/jeanmonlong).
-+ [Twitter](https://twitter.com/JMonlong/) (in passive mode).
++ [Personal page with links](https://jmonlong.github.io/).
++ [Twitter](https://twitter.com/JMonlong/).
 
 ### My current lab
 
