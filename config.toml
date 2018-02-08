@@ -5,6 +5,7 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$", "\\.RData", "\\
 publishDir = "docs"
 canonifyurls = true
 relativeURLs = true
+GoogleAnalytics = "UA-113785126-1"
 
 [params]
 title = "Hippocamplus"
