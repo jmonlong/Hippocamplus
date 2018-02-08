@@ -19,11 +19,26 @@ output:
 
 ### rsync
 
-`rsync` is not completely intuitive to me. Let's say I would like to recurrently sync all the files that match the patterns in `rsyncIncludes.txt`, I would have to use:
+`rsync` is not completely intuitive to me. 
+Hera some of the commands I could make work.
+
+--- 
+
+To recurrently sync all the files that match the patterns in `rsyncIncludes.txt`:
 
 ~~~sh
-rsync -r --include='*/' --include-from=../rsyncIncludes.txt --exclude='*' --prune-empty-dirs SRC DEST
+rsync -r --include='*/' --include-from=rsyncIncludes.txt --exclude='*' --prune-empty-dirs SRC DEST
 ~~~
+
+---
+
+To recurrently sync all the files that match the patterns in `rsyncIncludes.txt` EXCEPT some with a specific pattern.
+Practical example: all the R scripts but not the ones created by BatchJobs in `*-files` directories:
+
+~~~sh
+rsync -r --exclude="*-files" --include='*/' --include='*.R' --exclude='*' --prune-empty-dirs SRC DEST
+~~~
+
 
 ### Mount server in OSX
 

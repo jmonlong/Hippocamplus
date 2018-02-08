@@ -191,8 +191,13 @@
 </div>
 <div id="rsync" class="section level3">
 <h3>rsync</h3>
-<p><code>rsync</code> is not completely intuitive to me. Let’s say I would like to recurrently sync all the files that match the patterns in <code>rsyncIncludes.txt</code>, I would have to use:</p>
-<pre class="sh"><code>rsync -r --include=&#39;*/&#39; --include-from=../rsyncIncludes.txt --exclude=&#39;*&#39; --prune-empty-dirs SRC DEST</code></pre>
+<p><code>rsync</code> is not completely intuitive to me. Hera some of the commands I could make work.</p>
+<hr />
+<p>To recurrently sync all the files that match the patterns in <code>rsyncIncludes.txt</code>:</p>
+<pre class="sh"><code>rsync -r --include=&#39;*/&#39; --include-from=rsyncIncludes.txt --exclude=&#39;*&#39; --prune-empty-dirs SRC DEST</code></pre>
+<hr />
+<p>To recurrently sync all the files that match the patterns in <code>rsyncIncludes.txt</code> EXCEPT some with a specific pattern. Practical example: all the R scripts but not the ones created by BatchJobs in <code>*-files</code> directories:</p>
+<pre class="sh"><code>rsync -r --exclude=&quot;*-files&quot; --include=&#39;*/&#39; --include=&#39;*.R&#39; --exclude=&#39;*&#39; --prune-empty-dirs SRC DEST</code></pre>
 </div>
 <div id="mount-server-in-osx" class="section level3">
 <h3>Mount server in OSX</h3>

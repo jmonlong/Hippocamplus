@@ -34,7 +34,7 @@ pred_counts[0, ] += sum(predprobs > .5)
 ~~~
 
 To convert a string into an array: `numpy.fromstring(line, dtype=int, sep='\t')`.
-The opposite is `'\t'.join(map(str, arr))`
+The opposite would be `'\t'.join(map(str, arr))`
 
 ### Hash
 
