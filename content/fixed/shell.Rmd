@@ -7,11 +7,16 @@ output:
     toc: true
 ---
 
-## Misc
 
-### Add headers with cat
+### Colors in `less`
 
-`cat file.txt | cat headers.txt -` concatenated end of the pipe after `headers.txt`.
+Use the `-r` or `-R` option. Sometimes the previous command needs a parameter make sure the output includes color codes.
+
+~~~sh
+tree -C | less -R
+ls --color | less -R
+grep --color=always | less -R
+~~~
 
 ### Avoid killing ssh jobs
 
@@ -52,6 +57,14 @@ sshfs jmonlong@guillimin.hpc.mcgill.ca:/ /Users/jeanmonlong/sftp/guillimin -ovol
 
 ## One-liners
 
+### Add headers with cat
+
+`cat file.txt | cat headers.txt -` concatenated end of the pipe after `headers.txt`.
+
+### Remove empty directories
+
+`find . -type d | xargs rmdir`
+
 ### Perl one-liners
 
 Inspired from these: [Catonmat](http://www.catonmat.net/blog/introduction-to-perl-one-liners/), [Ksplice](https://blogs.oracle.com/ksplice/the-top-10-tricks-of-perl-one-liners)
@@ -69,6 +82,7 @@ Inspired from these: [Catonmat](http://www.catonmat.net/blog/introduction-to-per
 - Replace text line-by-line with regexp: `perl -pe 's/ID(\d+)/$1/g'`
 - Operations on a CSV file: `perl -F, -ane 'print $F[3]+$F[8]`
 - Operations on a CSV file and print at the end: `perl -F, -ane $t+=$F[3]+$F[8]; END{print $t}`
+- Print matches from regular expression: `perl -ne 'print "$1\n" if /foo=([^;]*)/'`
 
 ## Shell scripting
 
