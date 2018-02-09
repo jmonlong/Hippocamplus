@@ -91,6 +91,16 @@ output:
     toc: true
 ~~~
 
+### Draft posts
+
+Most of the time I would like to build the website with minimal recompilation and I don't want the draft posts to show (except for previews).
+
+`build_site()` builds the site without showing posts with YAML `draft: true`. 
+But it also recompiles everything and that can be a pain. 
+
+`serve_site()` recompiles only the *Rmd* documents newer than the corresponding *HTML* but it builds all posts, even if they have the *draft* parameter.
+
+For minimal recompilation and hidden draft posts I do `hugo_build()` after a `serve_site()`. 
 
 ### Math formulas
 

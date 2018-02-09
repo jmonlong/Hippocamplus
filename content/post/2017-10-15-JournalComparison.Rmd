@@ -2,6 +2,7 @@
 title: Journals comparison
 date: 2017-10-15
 tags: ["pub"]
+draft: true
 ---
 
 Some info about journals in my field.

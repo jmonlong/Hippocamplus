@@ -2,6 +2,7 @@
 title: tSNE and clustering
 date: 2017-12-02
 tags: ["R", "stats"]
+draft: true
 ---
 
 
@@ -105,7 +106,7 @@ ggplot(info.real, aes(x = tsne1, y = tsne2, colour = hclust)) +
     data = hc.real.cent) + guides(colour = FALSE) + 
     ggtitle(&quot;Linkage criterion: Ward&quot;)</code></pre>
 <p><img src="/post/2017-12-01-tSNEclustering_files/figure-html/hcreal2-1.png" width="768" /></p>
-<p><em>Time for this code chunk: 26.06 s</em></p>
+<p><em>Time for this code chunk: 67.21 s</em></p>
 <p>For both data, Ward gives the best clusters. For example it splits the top-left clusters better in the real data.</p>
 </div>
 <div id="kmeans" class="section level2">
@@ -150,7 +151,7 @@ ggplot(info.real, aes(x = tsne1, y = tsne2, colour = kmeans)) +
     geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = kmeans), 
     data = km.cent) + guides(colour = FALSE)</code></pre>
 <p><img src="/post/2017-12-01-tSNEclustering_files/figure-html/kmrealmore-1.png" width="768" /></p>
-<p><em>Time for this code chunk: 9.79 s</em></p>
+<p><em>Time for this code chunk: 10.73 s</em></p>
 <p>Better. Same as with the other methods: we need to manually tweak the parameters to obtain the clustering we want…</p>
 <p>Note: using several starting points help getting more robust results (<code>nstart=</code>). Increasing the number of iterations helps too (<code>iter.max=</code>).</p>
 </div>
@@ -191,7 +192,7 @@ ggplot(info.real, aes(x = tsne1, y = tsne2, colour = mclust)) +
     geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = mclust), 
     data = mc.cent) + guides(colour = FALSE)</code></pre>
 <p><img src="/post/2017-12-01-tSNEclustering_files/figure-html/mcreal2-1.png" width="768" /></p>
-<p><em>Time for this code chunk: 40.51 s</em></p>
+<p><em>Time for this code chunk: 44.13 s</em></p>
 <p>Note: I had to use the sub-sampling trick to speed up the process, it was taking too long. Using <code>initialization=list(subset=sample.int(nrow(tsne.real), 1000))</code>, only a 1K points are used for the EM (but all the points are assigned to a cluster at the end).</p>
 </div>
 <div id="density-based-clustering" class="section level2">
@@ -218,7 +219,7 @@ ggplot(info.real, aes(x = tsne1, y = tsne2, colour = density)) +
     geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = density), 
     data = ds.cent) + guides(colour = FALSE)</code></pre>
 <p><img src="/post/2017-12-01-tSNEclustering_files/figure-html/densreal-1.png" width="768" /></p>
-<p><em>Time for this code chunk: 104.61 s</em></p>
+<p><em>Time for this code chunk: 115.14 s</em></p>
 <p>Ouch…</p>
 </div>
 <div id="conclusions" class="section level2">

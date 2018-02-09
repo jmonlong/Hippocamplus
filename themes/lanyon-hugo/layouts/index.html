@@ -18,7 +18,11 @@
   {{ range .Paginator.Pages }}
     <!-- <div class="post"> -->
         <h3 class="post-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
-        <span class="post-date">{{ .Site.Params.DateForm | default "Jan 2, 2006" | .Date.Format }}
+        <span class="post-date">
+	{{ if .Draft }}
+	(DRAFT)
+	{{ end }}
+	{{ .Site.Params.DateForm | default "Jan 2, 2006" | .Date.Format }}
 	{{ if isset .Params "tags"}}
 	<i class="fa fa-tags"></i>
 	{{ range .Params.tags }}

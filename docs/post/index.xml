@@ -2,626 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Hippocamplus </title>
-    <link>/post/</link>
+    <link>/Hippocamplus/post/</link>
     <language>en-us</language>
     <author></author>
     <rights>(C) 2017</rights>
-    <updated>2017-12-02 00:00:00 &#43;0000 UTC</updated>
+    <updated>2017-10-04 00:00:00 &#43;0000 UTC</updated>
 
     
       
         <item>
-          <title>tSNE and clustering</title>
-          <link>/2017/12/02/tsne-and-clustering/</link>
-          <pubDate>Sat, 02 Dec 2017 00:00:00 UTC</pubDate>
-          <author></author>
-          <guid>/2017/12/02/tsne-and-clustering/</guid>
-          <description>&lt;p&gt;tSNE can give really nice results when we want to visualize many groups of multi-dimensional points. Once the 2D graph is done we might want to identify which points cluster in the tSNE blobs.&lt;/p&gt;
-&lt;p&gt;I’ll try different approaches such as hierarchical clustering, K-means, Guassian mixture and density-based clustering.&lt;/p&gt;
-&lt;p&gt;TL;DR Hierarchical clustering is my favorite as it’s robust, easy to use and with reasonable computing time.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
-library(dplyr)
-library(magrittr)
-library(ggrepel)
-library(Rtsne)
-library(mclust)
-library(fpc)&lt;/code&gt;&lt;/pre&gt;
-&lt;div id=&#34;data&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Data&lt;/h2&gt;
-&lt;div id=&#34;normally-distributed-points&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Normally distributed points&lt;/h3&gt;
-&lt;p&gt;First, I’ll simulate an easy situation with 10 different groups. 5,000 points are distributed following Gaussian distributions in 100 dimensions. For each group, points are randomly selected as well as 3 dimensions in which they will differ from the rest.&lt;/p&gt;
-&lt;p&gt;Because there are 10 groups that differ in different dimensions a PCA shouldn’t be able to separate all the groups with the first two components. That’s when the tSNE comes in to do its magic (easily).&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;set.seed(123456)
-N = 5000
-D = 100
-data.norm = matrix(rnorm(N * D, 2), N)
-groups.probs = runif(10)
-groups = sample(1:10, N, TRUE, groups.probs/sum(groups.probs))
-for (gp in unique(groups)) {
-    dev = rep(1, D)
-    dev[sample.int(D, 3)] = runif(3, -10, 10)
-    data.norm[which(groups == gp), ] = data.norm[which(groups == 
-        gp), ] %*% diag(dev)
-}
-info.norm = tibble(truth = factor(groups))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The PCA and tSNE look like this:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;pca.norm = prcomp(data.norm)
-info.norm %&amp;lt;&amp;gt;% cbind(pca.norm$x[, 1:4])
-ggplot(info.norm, aes(x = PC1, y = PC2, colour = truth)) + 
-    geom_point(alpha = 0.3) + theme_bw()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;../post/2017-12-01-tSNEclustering_files/figure-html/pcatsne-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(info.norm, aes(x = PC3, y = PC4, colour = truth)) + 
-    geom_point(alpha = 0.3) + theme_bw()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;../post/2017-12-01-tSNEclustering_files/figure-html/pcatsne-2.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;tsne.norm = Rtsne(pca.norm$x, pca = FALSE)
-info.norm %&amp;lt;&amp;gt;% mutate(tsne1 = tsne.norm$Y[, 1], tsne2 = tsne.norm$Y[, 
-    2])
-ggplot(info.norm, aes(x = tsne1, y = tsne2, colour = truth)) + 
-    geom_point(alpha = 0.3) + theme_bw()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;../post/2017-12-01-tSNEclustering_files/figure-html/pcatsne-3.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;real-data&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Real data&lt;/h3&gt;
-&lt;p&gt;As a real-life example, I use the data that motivated this exploration. It contains a bit more than 26K points and the tSNE looks like that:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;tsne.real = read.csv(&amp;quot;https://docs.google.com/uc?id=1KArwfOd5smzuCsrpgW9Xpf9I06VOW4ga&amp;amp;export=download&amp;quot;)
-info.real = tsne.real
-ggplot(tsne.real, aes(x = tsne1, y = tsne2)) + geom_point(alpha = 0.1) + 
-    theme_bw()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;../post/2017-12-01-tSNEclustering_files/figure-html/real-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;hierarchical-clustering&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Hierarchical clustering&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;+&lt;/strong&gt; Once built, it’s fast to try different number clusters.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;+&lt;/strong&gt; Different linkage criteria to match the behavior we want.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;-&lt;/strong&gt; Doesn’t scale well. High memory usage and computation time when &amp;gt;30K.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;hc.norm = hclust(dist(tsne.norm$Y))
-info.norm$hclust = factor(cutree(hc.norm, 9))
-hc.norm.cent = info.norm %&amp;gt;% group_by(hclust) %&amp;gt;% select(tsne1, 
-    tsne2) %&amp;gt;% summarize_all(mean)
-ggplot(info.norm, aes(x = tsne1, y = tsne2, colour = hclust)) + 
-    geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = hclust), 
-    data = hc.norm.cent) + guides(colour = FALSE) + 
-    ggtitle(&amp;quot;Linkage criterion: Complete&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;../post/2017-12-01-tSNEclustering_files/figure-html/hcnorm-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;hc.norm = hclust(dist(tsne.norm$Y), method = &amp;quot;ward.D&amp;quot;)
-info.norm$hclust = factor(cutree(hc.norm, 9))
-hc.norm.cent = info.norm %&amp;gt;% group_by(hclust) %&amp;gt;% select(tsne1, 
-    tsne2) %&amp;gt;% summarize_all(mean)
-ggplot(info.norm, aes(x = tsne1, y = tsne2, colour = hclust)) + 
-    geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = hclust), 
-    data = hc.norm.cent) + guides(colour = FALSE) + 
-    ggtitle(&amp;quot;Linkage criterion: Ward&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;../post/2017-12-01-tSNEclustering_files/figure-html/hcnorm-2.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;Now on real data:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;hc.real = hclust(dist(tsne.real))
-info.real$hclust = factor(cutree(hc.real, 18))
-hc.real.cent = info.real %&amp;gt;% group_by(hclust) %&amp;gt;% select(tsne1, 
-    tsne2) %&amp;gt;% summarize_all(mean)
-ggplot(info.real, aes(x = tsne1, y = tsne2, colour = hclust)) + 
-    geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = hclust), 
-    data = hc.real.cent) + guides(colour = FALSE) + 
-    ggtitle(&amp;quot;Linkage criterion: Complete&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;../post/2017-12-01-tSNEclustering_files/figure-html/hcreal-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;hc.real = hclust(dist(tsne.real), method = &amp;quot;ward.D&amp;quot;)
-info.real$hclust = factor(cutree(hc.real, 18))
-hc.real.cent = info.real %&amp;gt;% group_by(hclust) %&amp;gt;% select(tsne1, 
-    tsne2) %&amp;gt;% summarize_all(mean)
-ggplot(info.real, aes(x = tsne1, y = tsne2, colour = hclust)) + 
-    geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = hclust), 
-    data = hc.real.cent) + guides(colour = FALSE) + 
-    ggtitle(&amp;quot;Linkage criterion: Ward&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;../post/2017-12-01-tSNEclustering_files/figure-html/hcreal2-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;Time for this code chunk: 26.06 s&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;For both data, Ward gives the best clusters. For example it splits the top-left clusters better in the real data.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;kmeans&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Kmeans&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;+&lt;/strong&gt; Very fast.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;-&lt;/strong&gt; Simple.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;km.norm = kmeans(tsne.norm$Y, 9, nstart = 100)
-info.norm$kmeans = factor(km.norm$cluster)
-km.cent = info.norm %&amp;gt;% group_by(kmeans) %&amp;gt;% select(tsne1, 
-    tsne2) %&amp;gt;% summarize_all(mean)
-ggplot(info.norm, aes(x = tsne1, y = tsne2, colour = kmeans)) + 
-    geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = kmeans), 
-    data = km.cent) + guides(colour = FALSE) + ggtitle(&amp;quot;9 clusters&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;../post/2017-12-01-tSNEclustering_files/figure-html/kmnorm-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;km.norm = kmeans(tsne.norm$Y, 10, nstart = 100)
-info.norm$kmeans = factor(km.norm$cluster)
-km.cent = info.norm %&amp;gt;% group_by(kmeans) %&amp;gt;% select(tsne1, 
-    tsne2) %&amp;gt;% summarize_all(mean)
-ggplot(info.norm, aes(x = tsne1, y = tsne2, colour = kmeans)) + 
-    geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = kmeans), 
-    data = km.cent) + guides(colour = FALSE) + ggtitle(&amp;quot;10 clusters&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;../post/2017-12-01-tSNEclustering_files/figure-html/kmnorm-2.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;Because it’s not working well for cluster that are not “round”, we need to ask for more clusters. In practice we’ll need to merge back together the clusters that were fragmented.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;set.seed(123456)
-km.real = kmeans(tsne.real, 24, nstart = 200, iter.max = 100)
-info.real$kmeans = factor(km.real$cluster)
-km.cent = info.real %&amp;gt;% group_by(kmeans) %&amp;gt;% select(tsne1, 
-    tsne2) %&amp;gt;% summarize_all(mean)
-ggplot(info.real, aes(x = tsne1, y = tsne2, colour = kmeans)) + 
-    geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = kmeans), 
-    data = km.cent) + guides(colour = FALSE)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;../post/2017-12-01-tSNEclustering_files/figure-html/kmreal-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;Not perfect in the middle-left big cluster: cluster 11 is grabbing points from the bottom blob. Maybe increasing the number of clusters could fix this?&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;set.seed(123456)
-km.real = kmeans(tsne.real, 25, nstart = 200, iter.max = 100)
-info.real$kmeans = factor(km.real$cluster)
-km.cent = info.real %&amp;gt;% group_by(kmeans) %&amp;gt;% select(tsne1, 
-    tsne2) %&amp;gt;% summarize_all(mean)
-ggplot(info.real, aes(x = tsne1, y = tsne2, colour = kmeans)) + 
-    geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = kmeans), 
-    data = km.cent) + guides(colour = FALSE)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;../post/2017-12-01-tSNEclustering_files/figure-html/kmrealmore-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;Time for this code chunk: 9.79 s&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Better. Same as with the other methods: we need to manually tweak the parameters to obtain the clustering we want…&lt;/p&gt;
-&lt;p&gt;Note: using several starting points help getting more robust results (&lt;code&gt;nstart=&lt;/code&gt;). Increasing the number of iterations helps too (&lt;code&gt;iter.max=&lt;/code&gt;).&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;mclust&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Mclust&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;+&lt;/strong&gt; Better clusters.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;-&lt;/strong&gt; Slow.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;-&lt;/strong&gt; Need to be recomputed for each choice of K (number of clusters).&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mc.norm = Mclust(tsne.norm$Y, 9)
-info.norm$mclust = factor(mc.norm$classification)
-mc.cent = info.norm %&amp;gt;% group_by(mclust) %&amp;gt;% select(tsne1, 
-    tsne2) %&amp;gt;% summarize_all(mean)
-ggplot(info.norm, aes(x = tsne1, y = tsne2, colour = mclust)) + 
-    geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = mclust), 
-    data = mc.cent) + guides(colour = FALSE)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;../post/2017-12-01-tSNEclustering_files/figure-html/mcnorm-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;Even the elongated cluster is nicely identified and we don’t need to split it.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;set.seed(123456)
-mc.real = Mclust(tsne.real, 20, initialization = list(subset = sample.int(nrow(tsne.real), 
-    1000)))
-info.real$mclust = factor(mc.real$classification)
-mc.cent = info.real %&amp;gt;% group_by(mclust) %&amp;gt;% select(tsne1, 
-    tsne2) %&amp;gt;% summarize_all(mean)
-ggplot(info.real, aes(x = tsne1, y = tsne2, colour = mclust)) + 
-    geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = mclust), 
-    data = mc.cent) + guides(colour = FALSE)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;../post/2017-12-01-tSNEclustering_files/figure-html/mcreal-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;Sometimes the results are a bit surprising. For example, points are assigned to cluster far away or there is another cluster in between (e.g. clusters 6 and 17). As usual changing the number of clusters helps.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;set.seed(123456)
-mc.real = Mclust(tsne.real, 24, initialization = list(subset = sample.int(nrow(tsne.real), 
-    1000)))
-info.real$mclust = factor(mc.real$classification)
-mc.cent = info.real %&amp;gt;% group_by(mclust) %&amp;gt;% select(tsne1, 
-    tsne2) %&amp;gt;% summarize_all(mean)
-ggplot(info.real, aes(x = tsne1, y = tsne2, colour = mclust)) + 
-    geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = mclust), 
-    data = mc.cent) + guides(colour = FALSE)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;../post/2017-12-01-tSNEclustering_files/figure-html/mcreal2-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;Time for this code chunk: 40.51 s&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Note: I had to use the sub-sampling trick to speed up the process, it was taking too long. Using &lt;code&gt;initialization=list(subset=sample.int(nrow(tsne.real), 1000))&lt;/code&gt;, only a 1K points are used for the EM (but all the points are assigned to a cluster at the end).&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;density-based-clustering&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Density-based clustering&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;+&lt;/strong&gt; Can find clusters with different “shapes”.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;-&lt;/strong&gt; More limited on real/noisy data.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;-&lt;/strong&gt; Slow when many points.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ds.norm = dbscan(tsne.norm$Y, 2)
-info.norm$density = factor(ds.norm$cluster)
-ds.cent = info.norm %&amp;gt;% group_by(density) %&amp;gt;% select(tsne1, 
-    tsne2) %&amp;gt;% summarize_all(mean)
-ggplot(info.norm, aes(x = tsne1, y = tsne2, colour = density)) + 
-    geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = density), 
-    data = ds.cent) + guides(colour = FALSE)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;../post/2017-12-01-tSNEclustering_files/figure-html/densnorm-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;Woah, it found the small cluster !&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ds.real = dbscan(tsne.real, 1)
-info.real$density = factor(ds.real$cluster)
-ds.cent = info.real %&amp;gt;% group_by(density) %&amp;gt;% select(tsne1, 
-    tsne2) %&amp;gt;% summarize_all(mean)
-ggplot(info.real, aes(x = tsne1, y = tsne2, colour = density)) + 
-    geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = density), 
-    data = ds.cent) + guides(colour = FALSE)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;../post/2017-12-01-tSNEclustering_files/figure-html/densreal-1.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;Time for this code chunk: 104.61 s&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Ouch…&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;conclusions&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Conclusions&lt;/h2&gt;
-&lt;p&gt;If possible, &lt;strong&gt;I’ll try to use hierarchical clustering&lt;/strong&gt;. Especially with the Ward criterion, it worked well for both simulated and real data. Once the hierarchy is built, it’s fast to try different values for the number of clusters. Also, in the real data, I could get satisfactory results using a lower number of clusters than for the K-means (18 vs 25).&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;If there are too many points&lt;/strong&gt; (e.g. &amp;gt;30K), hierarchical clustering might be too demanding and I would fall back to &lt;strong&gt;K-means&lt;/strong&gt;. It’s fast and easy to get what we want if we accept over-fragmentation. In this cae, we might need to merged the fragments that we believe belong together but that’s not so hard to do.&lt;/p&gt;
-&lt;p&gt;The more advanced methods are good to keep in mind if the points ever form diverse or unusual shapes.&lt;/p&gt;
-&lt;p&gt;I learned two &lt;strong&gt;tricks to improve the performance&lt;/strong&gt; of the methods: increasing the number of iterations and starting points for the K-means, and sub-sampling for the EM clustering.&lt;/p&gt;
-&lt;/div&gt;
-</description>
-        </item>
-      
-    
-      
-        <item>
-          <title>Journals comparison</title>
-          <link>/2017/10/15/journals-comparison/</link>
-          <pubDate>Sun, 15 Oct 2017 00:00:00 UTC</pubDate>
-          <author></author>
-          <guid>/2017/10/15/journals-comparison/</guid>
-          <description>&lt;p&gt;Some info about journals in my field.&lt;/p&gt;
-&lt;div id=&#34;summary-table&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Summary table&lt;/h2&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr class=&#34;header&#34;&gt;
-&lt;th align=&#34;left&#34;&gt;Journal&lt;/th&gt;
-&lt;th align=&#34;left&#34;&gt;Co.&lt;/th&gt;
-&lt;th align=&#34;left&#34;&gt;IF&lt;/th&gt;
-&lt;th align=&#34;left&#34;&gt;OA&lt;/th&gt;
-&lt;th align=&#34;left&#34;&gt;APC&lt;/th&gt;
-&lt;th align=&#34;left&#34;&gt;Other fees&lt;/th&gt;
-&lt;th align=&#34;left&#34;&gt;Pub/year&lt;/th&gt;
-&lt;th align=&#34;left&#34;&gt;Received-to-accepted in days. median (75th perc.)&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;&lt;a href=&#34;https://f1000research.com/for-authors/publish-your-research&#34;&gt;F1000Research&lt;/a&gt;&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;-&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;1.2&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Y&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;1000 USD&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;-&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;&lt;a href=&#34;https://peerj.com/about/author-instructions/&#34;&gt;PeerJ&lt;/a&gt;&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;-&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;2.2&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Y&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;1095 USD&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;-&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;~1290&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;~88 (139)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;&lt;a href=&#34;https://submit.elifesciences.org/html/elife_author_instructions.html#process&#34;&gt;eLife&lt;/a&gt;&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;-&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;7.8&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Y&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;2500 USD&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;-&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;1018&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;121 (155)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;&lt;a href=&#34;https://academic.oup.com/gigascience/pages/instructions_to_authors&#34;&gt;GigaScience&lt;/a&gt;&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;OUP&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;4.9&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Y&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;2050 USD&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;-&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;~50&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;~126 (195)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;&lt;a href=&#34;http://journals.plos.org/plosone/s/criteria-for-publication&#34;&gt;PLoS One&lt;/a&gt;&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;PLoS&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;2.8&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Y&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;1495 USD&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;-&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;~22K&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;~122 (182)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;&lt;a href=&#34;http://journals.plos.org/ploscompbiol/s/journal-information&#34;&gt;PLoS Comp Bio&lt;/a&gt;&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;PLoS&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;4.5&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Y&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;2250 USD&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;-&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;~550&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;~159 (217)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;&lt;a href=&#34;http://journals.plos.org/plosgenetics/s/journal-information&#34;&gt;PLoS Genetics&lt;/a&gt;&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;PLoS&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;6.1&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Y&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;2250 USD&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;-&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;644&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;150 (202)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;&lt;a href=&#34;http://journals.plos.org/plosbiology/s/journal-information&#34;&gt;PLoS Biology&lt;/a&gt;&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;PLoS&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;9.8&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Y&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;2900 USD&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;-&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;~176&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;~141 (175)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;&lt;a href=&#34;https://bmcbioinformatics.biomedcentral.com/submission-guidelines&#34;&gt;BMC Bioinformatics&lt;/a&gt;&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;BMC/S&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;2.5&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Y&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;2145 USD&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;-&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;~333&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;~169 (231)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;&lt;a href=&#34;https://bmcgenomics.biomedcentral.com/submission-guidelines&#34;&gt;BMC Genomics&lt;/a&gt;&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;BMC/S&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;3.7&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Y&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;2145 USD&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;-&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;~985&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;~138 (190)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;&lt;a href=&#34;https://bmcbiol.biomedcentral.com/submission-guidelines&#34;&gt;BMC Biology&lt;/a&gt;&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;BMC/S&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;6.8&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Y&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;2785 USD&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;-&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;~85&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;~70 (108)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;&lt;a href=&#34;https://genomebiology.biomedcentral.com/submission-guidelines&#34;&gt;Genome Biology&lt;/a&gt;&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;BMC/S&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;11.9&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Y&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;2975 USD&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;-&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;~156&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;~106 (143)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;&lt;a href=&#34;http://www.cell.com/cell-reports/authors&#34;&gt;Cell Reports&lt;/a&gt;&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Els&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;8.3&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Y&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;5000 USD&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;-&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;~1005&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;~168 (241)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;&lt;a href=&#34;https://www.nature.com/srep/publish/guidelines&#34;&gt;Scientific Reports&lt;/a&gt;&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Spr&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;4.3&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Y&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;1760 USD&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;-&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;~20K&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;~104 (151)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;&lt;a href=&#34;https://www.nature.com/ncomms/submit/guide-to-authors&#34;&gt;Nature Communications&lt;/a&gt;&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Spr&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;12.1&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Y&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;5200 USD&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;-&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;~3519&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;~168 (228)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;&lt;a href=&#34;https://academic.oup.com/nar/pages/Policies&#34;&gt;NAR&lt;/a&gt;&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;OUP&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;10.2&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Y&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;2770 USD&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;pp9&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;~1359&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;~82 (131)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;&lt;a href=&#34;http://www.genetics.org/content/prep-manuscript&#34;&gt;Genetics&lt;/a&gt;&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;-&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;4.6&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;12m/+&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;2000 USD&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;pp/pf/psf&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;~374&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;~104 (163)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;&lt;a href=&#34;http://www.cell.com/ajhg/authors&#34;&gt;AJHG&lt;/a&gt;&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Els&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;9.0&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;6m/+&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;5000 USD&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;850 USD + pf&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;237&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;89 (121)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;&lt;a href=&#34;http://www.pnas.org/page/authors/submission&#34;&gt;PNAS&lt;/a&gt;&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;HWP&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;9.7&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;6m/+&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;1450 USD&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;1700 USD&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;&lt;a href=&#34;http://genome.cshlp.org/site/misc/ifora.xhtml&#34;&gt;Genome Research&lt;/a&gt;&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;CSH&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;11.9&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;6m/+&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;2500 USD&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;2500 USD&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;~179&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;~188 (242)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;&lt;a href=&#34;http://www.cell.com/cell/authors&#34;&gt;Cell&lt;/a&gt;&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Els&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;30.4&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;(12m/+)&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;5000 USD&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;pf&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;~351&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;~149 (193)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;&lt;a href=&#34;http://www.thelancet.com/lancet/information-for-authors&#34;&gt;Lancet&lt;/a&gt;&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Els&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;47.8&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;6m/+&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;5000 USD&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;Science&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;AAAS&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;37.2&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;12m&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;-&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;~720&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;~112 (162)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;Bioinformatics&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;OUP&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;7.3&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;+&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;3000 USD&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;~868&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;~126 (180)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;Nature Methods&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Spr&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;25.1&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;N&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;-&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;~130&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;~146 (187)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;Nature Genetics&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Spr&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;28.0&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;N&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;-&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;202&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;147 (203)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;Nature Biotech&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Spr&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;41.7&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;N&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;-&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;80&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;202 (262)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;Nature&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Spr&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;40.1&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;N&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;-&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;~855&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;~175 (246)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;New England Journal Of Medicine&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;-&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;72.4&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;N&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;-&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;Open Access (OA) journal:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;Y&lt;/code&gt;: Yes.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;+&lt;/code&gt;: Authors can pay additional Article Processing Charges (column APC) to make it accessible immediately upon publication.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;12m&lt;/code&gt;: Articles are accessible after 12 months, either from the journal or &lt;a href=&#34;https://www.ncbi.nlm.nih.gov/pmc/&#34;&gt;PubMed Central&lt;/a&gt;/&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;6m&lt;/code&gt;: Articles are accessible after 6 months, either from the journal or &lt;a href=&#34;https://www.ncbi.nlm.nih.gov/pmc/&#34;&gt;PubMed Central&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;()&lt;/code&gt;: Depending on the funding agencies.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;N&lt;/code&gt;: No.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Fees:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;pp&lt;/code&gt;: Per page.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;ppX&lt;/code&gt;: Per page in excess of X (if more than X pages).&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;pf&lt;/code&gt;: Per figure.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;psf&lt;/code&gt;: Per supplementary file.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div id=&#34;sources&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Sources&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Impact Factor for 2016/2017 from &lt;a href=&#34;http://www.bioxbio.com/if/&#34;&gt;bioxbio&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;APC from &lt;a href=&#34;https://doaj.org/&#34;&gt;Directory of Open Access Journals&lt;/a&gt;, or the journal.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;em&gt;Received-to-accepted time&lt;/em&gt; and &lt;em&gt;Pub/year&lt;/em&gt; are based on articles published in 2016. After a PubMed search, the publication page was crawled to get the article type and dates of reception/acceptance. Only research articles/letters are considered (no method/tools/resource/editorial/perspective/erratum/opinion/…). Sometimes the DOI was not present in the PubMed results or there was a lot a publications to crawl so I analyzed a subset and extrapolated the numbers (&lt;code&gt;~&lt;/code&gt; marks approximated numbers). I still see some suspicious numbers (articles with very short/negative acceptance time). Hopefully the medians are still close to reality but these numbers should be taken with a grain of salt.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;median-time-to-acceptancepublication&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Median time to acceptance/publication&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;../post/2017-10-15-JournalComparison_files/figure-html/unnamed-chunk-1-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;good-journals&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;“Good” journals&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://elifesciences.org/&#34;&gt;eLife&lt;/a&gt; is non-profit, open and modern.&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.plos.org/which-journal-is-right-for-me&#34;&gt;PLOS&lt;/a&gt; the pioneer in open-access.&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.biomedcentral.com/p/the-bmc-series-journals#journallist&#34;&gt;BMC&lt;/a&gt;, although it’s owned by Springer Nature publishing group.&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://f1000research.com/&#34;&gt;F1000&lt;/a&gt; where the manuscript is “published” right away and then transparently peer-reviewed. Once peer-reviewed, it is indexed in PubMed etc.&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://peerj.com/&#34;&gt;PeerJ&lt;/a&gt; is about open-access and cost-efficient publishing.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div id=&#34;evil-publishing-companies&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;“Evil” publishing companies&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Elsevier.&lt;/li&gt;
-&lt;li&gt;Springer Nature.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div id=&#34;further-reading&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Further reading&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.nature.com/news/does-it-take-too-long-to-publish-research-1.19320&#34;&gt;Does it take too long to publish research? (Nature News Feature)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://www.talyarkoni.org/blog/2016/12/12/why-i-still-wont-review-for-or-publish-with-elsevier-and-think-you-shouldnt-either/&#34;&gt;“Why I still won’t review for or publish with Elsevier–and think you shouldn’t either” by Tal Yarkoni&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-</description>
-        </item>
-      
-    
-      
-        <item>
           <title>Bibliography style for AJHG</title>
-          <link>/2017/10/04/bibliography-style-for-ajhg/</link>
+          <link>/Hippocamplus/2017/10/04/bibliography-style-for-ajhg/</link>
           <pubDate>Wed, 04 Oct 2017 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/2017/10/04/bibliography-style-for-ajhg/</guid>
+          <guid>/Hippocamplus/2017/10/04/bibliography-style-for-ajhg/</guid>
           <description>&lt;p&gt;I couldn’t find an up-to-date/working &lt;strong&gt;LaTeX bibliography style for the American Journal of Human Genetics (AJHG)&lt;/strong&gt;. The output from &lt;code&gt;unsrtnat&lt;/code&gt; (my goto style) was also quite different from what the journal wanted.&lt;/p&gt;
 &lt;p&gt;I found a bibliography style for &lt;em&gt;Cell&lt;/em&gt; which is almost what AJHG wants, but I also wanted the references to be &lt;strong&gt;ordered by their appearance in the text&lt;/strong&gt; (like for &lt;code&gt;unsrtnat&lt;/code&gt;) and not alphabetically. So I downloaded both &lt;code&gt;cell.bst&lt;/code&gt; (&lt;a href=&#34;https://www.ctan.org/tex-archive/macros/latex/contrib/cell&#34;&gt;here&lt;/a&gt;) and &lt;code&gt;unsrtnat.bst&lt;/code&gt; (&lt;a href=&#34;https://www.ctan.org/tex-archive/macros/latex/contrib/natbib/&#34;&gt;here&lt;/a&gt;) files and merged them. I don’t understand all the details but after some trial-and-errors it seems to work.&lt;/p&gt;
 &lt;p&gt;After merging, I removed the &lt;em&gt;emphasis&lt;/em&gt; on the Journal/Book name which was the only difference I could see between the Cell and AJHG styles.&lt;/p&gt;
@@ -634,10 +28,10 @@ ggplot(info.real, aes(x = tsne1, y = tsne2, colour = density)) +
       
         <item>
           <title>MUMmerplots with ggplot2</title>
-          <link>/2017/09/19/mummerplots-with-ggplot2/</link>
+          <link>/Hippocamplus/2017/09/19/mummerplots-with-ggplot2/</link>
           <pubDate>Tue, 19 Sep 2017 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/2017/09/19/mummerplots-with-ggplot2/</guid>
+          <guid>/Hippocamplus/2017/09/19/mummerplots-with-ggplot2/</guid>
           <description>&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(dplyr)
 library(magrittr)
 library(GenomicRanges)
@@ -971,10 +365,10 @@ mumgp.filt.m %&amp;gt;% select(similarity, start, end, filter) %&amp;gt;%
       
         <item>
           <title>Regression sandbox</title>
-          <link>/2017/09/16/regression-sandbox/</link>
+          <link>/Hippocamplus/2017/09/16/regression-sandbox/</link>
           <pubDate>Sat, 16 Sep 2017 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/2017/09/16/regression-sandbox/</guid>
+          <guid>/Hippocamplus/2017/09/16/regression-sandbox/</guid>
           <description>&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
 library(broom)
 library(magrittr)
@@ -1295,10 +689,10 @@ ggplot(df, aes(x = x, y = y)) + geom_point(alpha = 0.2) +
       
         <item>
           <title>Enrichment between genomic regions</title>
-          <link>/2017/09/05/enrichment-between-genomic-regions/</link>
+          <link>/Hippocamplus/2017/09/05/enrichment-between-genomic-regions/</link>
           <pubDate>Tue, 05 Sep 2017 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/2017/09/05/enrichment-between-genomic-regions/</guid>
+          <guid>/Hippocamplus/2017/09/05/enrichment-between-genomic-regions/</guid>
           <description>&lt;p&gt;Testing if two sets of genomic regions overlap significantly is not straightforward. In the simple situation of regions of 1 bp (e.g. SNVs) we could use a hypergeometric test. When the regions are small enough and there are not too many, the hypergeometric test might also be a fair approximation.&lt;/p&gt;
 &lt;p&gt;But when we manipulate many regions of variable size covering the entire genome it’s not as straightforward. The gene annotation is an example. The repeat annotation is even worse as it covers almost 50% of the genome and contains different families with very different size/location profiles.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
@@ -1744,10 +1138,10 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
       
         <item>
           <title>Segmental duplication exploration</title>
-          <link>/2016/10/20/segmental-duplication-exploration/</link>
+          <link>/Hippocamplus/2016/10/20/segmental-duplication-exploration/</link>
           <pubDate>Thu, 20 Oct 2016 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/2016/10/20/segmental-duplication-exploration/</guid>
+          <guid>/Hippocamplus/2016/10/20/segmental-duplication-exploration/</guid>
           <description>&lt;div id=&#34;segmental-duplications-sd&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Segmental Duplications (SD)&lt;/h2&gt;
 &lt;p&gt;I downloaded the segmental duplication annotation for hg19 from &lt;a href=&#34;http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/genomicSuperDups.txt.gz&#34;&gt;UCSC&lt;/a&gt;. There are 51599 annotated SD. They are defined as regions larger than 1 Kbp with at least 90% similarity with another region in the genome.&lt;/p&gt;
@@ -2493,10 +1887,10 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
       
         <item>
           <title>Summary epigenetic mark tracks</title>
-          <link>/2016/09/06/summary-epigenetic-mark-tracks/</link>
+          <link>/Hippocamplus/2016/09/06/summary-epigenetic-mark-tracks/</link>
           <pubDate>Tue, 06 Sep 2016 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/2016/09/06/summary-epigenetic-mark-tracks/</guid>
+          <guid>/Hippocamplus/2016/09/06/summary-epigenetic-mark-tracks/</guid>
           <description>&lt;p&gt;To assess the potential impact of variants (SNV, SVs) we might want to use some of the public epigentic datasets. The amount and heterogeneity of this data is a bit overwhelming. I would like to get a summary of which regions of the genome are the most functionally important.&lt;/p&gt;
 &lt;p&gt;The plan is to:&lt;/p&gt;
 &lt;ul&gt;
@@ -2536,10 +1930,10 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
       
         <item>
           <title>Gencode exploration</title>
-          <link>/2016/06/04/gencode-exploration/</link>
+          <link>/Hippocamplus/2016/06/04/gencode-exploration/</link>
           <pubDate>Sat, 04 Jun 2016 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/2016/06/04/gencode-exploration/</guid>
+          <guid>/Hippocamplus/2016/06/04/gencode-exploration/</guid>
           <description>&lt;div id=&#34;gencode-v19&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Gencode v19&lt;/h2&gt;
 &lt;p&gt;I downloaded Gencode v19 at &lt;a href=&#34;ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz&#34;&gt;&lt;a href=&#34;ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz&#34; class=&#34;uri&#34;&gt;ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz&lt;/a&gt;&lt;/a&gt;.&lt;/p&gt;
@@ -2833,10 +2227,10 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
       
         <item>
           <title>Preparing some genomic annotations</title>
-          <link>/2016/06/03/preparing-some-genomic-annotations/</link>
+          <link>/Hippocamplus/2016/06/03/preparing-some-genomic-annotations/</link>
           <pubDate>Fri, 03 Jun 2016 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/2016/06/03/preparing-some-genomic-annotations/</guid>
+          <guid>/Hippocamplus/2016/06/03/preparing-some-genomic-annotations/</guid>
           <description>&lt;div id=&#34;mappability-track&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Mappability track&lt;/h2&gt;
 &lt;p&gt;I produced a mappability track from the UCSC track. The &lt;a href=&#34;http://hgdownload.soe.ucsc.edu/gbdb/hg19/bbi/wgEncodeCrgMapabilityAlign100mer.bw&#34;&gt;raw file&lt;/a&gt; contains, for each base in the genome, an estimation of the probability that a read is correctly mapped at this position.&lt;/p&gt;
@@ -2884,10 +2278,10 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
       
         <item>
           <title>Word Cloud in R</title>
-          <link>/2016/02/26/word-cloud-in-r/</link>
+          <link>/Hippocamplus/2016/02/26/word-cloud-in-r/</link>
           <pubDate>Fri, 26 Feb 2016 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/2016/02/26/word-cloud-in-r/</guid>
+          <guid>/Hippocamplus/2016/02/26/word-cloud-in-r/</guid>
           <description>&lt;p&gt;The &lt;a href=&#34;https://cran.r-project.org/web/packages/wordcloud/index.html&#34;&gt;&lt;code&gt;wordcloud&lt;/code&gt; package&lt;/a&gt; is available on CRAN.&lt;/p&gt;
 &lt;div id=&#34;fake-words&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Fake words&lt;/h2&gt;

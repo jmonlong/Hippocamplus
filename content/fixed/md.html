@@ -21,6 +21,7 @@ output:
 <li><a href="#blogdown-websites">blogdown websites</a><ul>
 <li><a href="#themes-1">Themes</a></li>
 <li><a href="#table-of-contents-1">Table of Contents</a></li>
+<li><a href="#draft-posts">Draft posts</a></li>
 <li><a href="#math-formulas-1">Math formulas</a></li>
 </ul></li>
 </ul>
@@ -84,6 +85,13 @@ output:
 <pre class="yaml"><code>output:
   blogdown::html_page:
     toc: true</code></pre>
+</div>
+<div id="draft-posts" class="section level3">
+<h3>Draft posts</h3>
+<p>Most of the time I would like to build the website with minimal recompilation and I don’t want the draft posts to show (except for previews).</p>
+<p><code>build_site()</code> builds the site without showing posts with YAML <code>draft: true</code>. But it also recompiles everything and that can be a pain.</p>
+<p><code>serve_site()</code> recompiles only the <em>Rmd</em> documents newer than the corresponding <em>HTML</em> but it builds all posts, even if they have the <em>draft</em> parameter.</p>
+<p>For minimal recompilation and hidden draft posts I do <code>hugo_build()</code> after a <code>serve_site()</code>.</p>
 </div>
 <div id="math-formulas-1" class="section level3">
 <h3>Math formulas</h3>
