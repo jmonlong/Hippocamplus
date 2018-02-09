@@ -255,6 +255,7 @@ Otherwise, I manually fold the frames/figures/tables that are distracting.
 - `C-c C-s e` *italic* (**e**mphasis).
 - `C-c C-s s` `code` (**c**ode).
 - `C-c C-o` follow a link.
+- `C-c C-x C-l` to toggle the *hide-url* mode to get shorter links.
 
 
 ### Table formatting
