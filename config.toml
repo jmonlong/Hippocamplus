@@ -6,6 +6,7 @@ publishDir = "docs"
 canonifyurls = true
 relativeURLs = true
 GoogleAnalytics = "UA-113785126-1"
+paginate = 10
 
 [params]
 title = "Hippocamplus"

@@ -13,14 +13,16 @@
   {{ end }}
 </div>
 
+
 <div class="posts">
-  <h2 class="post-title">Posts</h2>
+  <h2 class="post-title">Posts <a href="/index.xml"><small><i class="fa fa-rss"></i></small></a></h2>
+  
   {{ range .Paginator.Pages }}
     <!-- <div class="post"> -->
         <h3 class="post-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
         <span class="post-date">
 	{{ if .Draft }}
-	(DRAFT)
+	<i class="fa fa-file-text" aria-hidden="true"></i>
 	{{ end }}
 	{{ .Site.Params.DateForm | default "Jan 2, 2006" | .Date.Format }}
 	{{ if isset .Params "tags"}}
@@ -35,18 +37,18 @@
   {{ end }}
 </div>
 
-<!-- <div class="pagination"> -->
-<!--   {{ if $paginator.HasNext }} -->
-<!--   <a class="pagination-item older" href="{{ $paginator.Next.URL }}">Older</a> -->
-<!--   {{ else }} -->
-<!--   <span class="pagination-item older">Older</span> -->
-<!--   {{ end }} -->
+<div class="pagination">
+  {{ if $paginator.HasNext }}
+  <a class="pagination-item older" href="{{ $paginator.Next.URL }}">Older</a>
+  {{ else }}
+  <span class="pagination-item older">Older</span>
+  {{ end }}
 
-<!--   {{ if $paginator.HasPrev }} -->
-<!--   <a class="pagination-item newer" href="{{ $paginator.Prev.URL }}">Newer</a> -->
-<!--   {{ else }} -->
-<!--   <span class="pagination-item newer">Newer</span> -->
-<!--   {{ end }} -->
-<!-- </div> -->
+  {{ if $paginator.HasPrev }}
+  <a class="pagination-item newer" href="{{ $paginator.Prev.URL }}">Newer</a>
+  {{ else }}
+  <span class="pagination-item newer">Newer</span>
+  {{ end }}
+</div>
 
 {{ partial "default_foot.html" . }}
