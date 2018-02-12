@@ -12,9 +12,11 @@ By making DDG the default search engine these bangs can be used directly in the 
 
 - `!pub` PubMed.
 - `!scholar` Google Scholar.
-- `!w` Wikipedia.
+- `!bioc` Bioconductor.
 - `!so` Stack Overflow.
 - `!git` GitHub.
+- `!w` Wikipedia.
+- `!syn` synonyms from thesaurus.com.
 - `!dgi` DuckDuckGo Images.
 - `!i` Google Images.
 - `!imd` IMDb.
