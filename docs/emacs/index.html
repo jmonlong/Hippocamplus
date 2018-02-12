@@ -203,6 +203,7 @@
 <li><a href="#for-shell">For Shell</a></li>
 <li><a href="#for-file-manipulation">For file manipulation</a><ul>
 <li><a href="#csvtsv">CSV/TSV</a></li>
+<li><a href="#dired-mode">Dired mode</a></li>
 </ul></li>
 <li><a href="#for-version-control">For Version Control</a></li>
 <li><a href="#for-online-notes">For online notes</a><ul>
@@ -468,6 +469,17 @@ make</code></pre>
 <div id="csvtsv" class="section level3">
 <h3>CSV/TSV</h3>
 <p>I use the <code>csv-mode</code> and the command <code>c-c c-a</code> to align columns. By default it understand <code>,</code>, <code>;</code> and <code>\t</code> as separator. If not I think the variable to customize is <code>csv-separators</code>.</p>
+</div>
+<div id="dired-mode" class="section level3">
+<h3>Dired mode</h3>
+<p>When opening a directory (<code>C-x C-f</code>), Emacs shows the files in Dired mode:</p>
+<ul>
+<li><code>d</code>/<code>u</code> mark/unmark files for deletion.</li>
+<li><code>x</code> deletes files marked for deletion.</li>
+<li><code>% d regexp &lt;RET&gt;</code> flags file matching a regexp.</li>
+<li><code>R</code> rename a file.</li>
+<li><code>C</code> copy a file.</li>
+</ul>
 </div>
 </div>
 <div id="for-version-control" class="section level2">
