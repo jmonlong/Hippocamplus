@@ -337,6 +337,16 @@ I use the `csv-mode` and the command `c-c c-a` to align columns.
 By default it understand `,`, `;` and `\t` as separator.
 If not I think the variable to customize is `csv-separators`.
 
+### Dired mode
+
+When opening a directory (`C-x C-f`), Emacs shows the files in Dired mode:
+
+- `d`/`u` mark/unmark files for deletion.
+- `x` deletes files marked for deletion.
+- `% d regexp <RET>` flags file matching a regexp.
+- `R` rename a file.
+- `C` copy a file.
+
 ## For Version Control
 
 The built-in interface supports Git:
