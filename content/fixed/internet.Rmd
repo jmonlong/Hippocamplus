@@ -17,6 +17,7 @@ By making DDG the default search engine these bangs can be used directly in the 
 - `!git` GitHub.
 - `!w` Wikipedia.
 - `!syn` synonyms from thesaurus.com.
+- `!tz` Time Zone, time in other places.
 - `!dgi` DuckDuckGo Images.
 - `!i` Google Images.
 - `!imd` IMDb.
