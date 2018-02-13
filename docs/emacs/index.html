@@ -239,6 +239,7 @@
 <li>Counting words: select a region and press <code>M-=</code>. There are other ways for LaTeX.</li>
 <li>In a console (R, Shell), previous/next line in the history is accessed by <code>M-p</code>/<code>M-n</code>. (Useful when ssh-tunneling with broken key-bindings).</li>
 <li>Search for a regular expression in files using <code>M-x lgrep</code> command.</li>
+<li>Evaluate lisp commands: <code>C-M-x</code>.</li>
 </ul>
 <p>Regexp replace :</p>
 <ul>
@@ -370,17 +371,14 @@ make</code></pre>
 (setq LaTeX-verbatim-environments-local &#39;(&quot;lstlisting&quot;))</code></pre>
 <div id="word-count" class="section level3">
 <h3>Word count</h3>
-<p>I found a wrapper around <code>texcount</code> that count the number of words in a document. It can be called with <code>M-x latex-word-count</code> after adding this to your <code>.emacs</code> configuration:</p>
+<p>To count the full document, including <code>\include</code>/<code>\input</code> documents, I call <code>texcount</code> with <code>M-x latex-word-count</code> after adding this to the <code>.emacs</code> configuration:</p>
 <pre class="lisp"><code>(defun latex-word-count ()
- (interactive)
-  (let* ((this-file (buffer-file-name))
-     (word-count
-      (with-output-to-string
-        (with-current-buffer standard-output
-          (call-process &quot;texcount&quot; nil t nil &quot;-inc&quot; &quot;-brief&quot; this-file)))))
-(string-match &quot;\n$&quot; word-count)
-(message (replace-match &quot;&quot; nil nil word-count))))</code></pre>
-<p>I would like to add a feature to this: counting selected text.</p>
+  (interactive)
+  (shell-command (concat &quot;texcount &quot; &quot;-sum -inc -sub=section &quot; (buffer-file-name))))</code></pre>
+<p>To count words in a selected region, I use <code>detex</code> to strip LaTeX commands and <code>wc</code> to count words:</p>
+<pre class="lisp"><code>(defun latex-wc-region (&amp;optional b e) 
+  (interactive &quot;r&quot;)
+  (shell-command-on-region b e &quot;detex | wc -w&quot;))</code></pre>
 </div>
 <div id="chunk-folding" class="section level3">
 <h3>Chunk folding</h3>

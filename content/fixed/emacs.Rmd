@@ -23,6 +23,7 @@ Some of the basic tweaks on my `.emacs` file:
 + Counting words: select a region and press `M-=`. There are other ways for LaTeX.
 + In a console (R, Shell), previous/next line in the history is accessed by `M-p`/`M-n`. (Useful when ssh-tunneling with broken key-bindings).
 + Search for a regular expression in files using `M-x lgrep` command.
++ Evaluate lisp commands: `C-M-x`.
 
 Regexp replace :
 
@@ -211,21 +212,22 @@ My configuration is:
 
 ### Word count
 
-I found a wrapper around `texcount` that count the number of words in a document. It can be called with `M-x latex-word-count` after adding this to your `.emacs` configuration:
+To count the full document, including `\include`/`\input` documents, I call `texcount` with `M-x latex-word-count` after adding this to the `.emacs` configuration:
 
 ~~~lisp
 (defun latex-word-count ()
- (interactive)
-  (let* ((this-file (buffer-file-name))
-     (word-count
-      (with-output-to-string
-        (with-current-buffer standard-output
-          (call-process "texcount" nil t nil "-inc" "-brief" this-file)))))
-(string-match "\n$" word-count)
-(message (replace-match "" nil nil word-count))))
+  (interactive)
+  (shell-command (concat "texcount " "-sum -inc -sub=section " (buffer-file-name))))
 ~~~
 
-I would like to add a feature to this: counting selected text.
+To count words in a selected region, I use `detex` to strip LaTeX commands and `wc` to count words:
+
+~~~lisp
+(defun latex-wc-region (&optional b e) 
+  (interactive "r")
+  (shell-command-on-region b e "detex | wc -w"))
+~~~
+
 
 ### Chunk folding
 
