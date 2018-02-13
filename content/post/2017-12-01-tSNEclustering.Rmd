@@ -2,7 +2,6 @@
 title: tSNE and clustering
 date: 2018-02-13
 tags: ["R", "stats"]
-draft: true
 ---
 
 ```{r, include=FALSE}
@@ -21,9 +20,17 @@ knitr::knit_hooks$set(timeit = function(before) {
 tSNE can give really nice results when we want to visualize many groups of multi-dimensional  points.
 Once the 2D graph is done we might want to identify which points cluster in the tSNE blobs.
 
-I'll try different methods such as hierarchical clustering, K-means, Guassian mixture, density-based clustering and Louvain community detection.
+Using simulated and real data, I'll try different methods: 
 
-TL;DR If <30K points, hierarchical clustering is robust, easy to use and with reasonable computing time. KNN + Louvain is fast and works well in general.
+- Hierarchical clustering
+- K-means
+- Gaussian mixture
+- Density-based clustering
+- Louvain community detection.
+
+**TL;DR** If <30K points, hierarchical clustering is robust, easy to use and with reasonable computing time. KNN + Louvain is fast and works well in general.
+
+---
 
 ```{r libs}
 library(ggplot2)
@@ -38,9 +45,10 @@ library(ggrepel)
 
 First, I'll simulate an easy situation with 10 different groups.
 5,000 points are distributed following Gaussian distributions in 100 dimensions.
-For each group, points are randomly selected as well as 3 dimensions in which they will differ from the rest.
+Points are randomly assigned a group.
+For each group, 3 dimensions are randomly selected and the points shifted.
 
-Because there are 10 groups that differ in different dimensions a PCA shouldn't be able to separate all the groups with the first two components.
+Because there are 10 groups that differ in different dimensions, a PCA shouldn't be able to separate all the groups with the first two components.
 That's when the tSNE comes in to do its magic (easily).
 
 ```{r normal}
@@ -66,6 +74,8 @@ info.norm %<>% cbind(pca.norm$x[,1:4])
 ggplot(info.norm, aes(x=PC1, y=PC2, colour=truth)) + geom_point(alpha=.3) + theme_bw()
 ggplot(info.norm, aes(x=PC3, y=PC4, colour=truth)) + geom_point(alpha=.3) + theme_bw()
 ```
+
+We see something but it's not so clear, let's run the tSNE.
 
 ```{r tsne, timeit=TRUE}
 library(Rtsne)
@@ -273,7 +283,7 @@ ggplot(info.real, aes(x=tsne1, y=tsne2, colour=louvain)) + geom_point(alpha=.3) 
 
 Pretty good.
 
-PS: I added the resolution parameter `gamma` in the *igraph* function for the Louvain clustering. It was easy to change in the C code. Compiling *igraph* from source, however, is a pain and I couldn't get it to work on OSX. I managed to install this modified version of igraph on Linux following [these instructions](https://github.com/jmonlong/Hippocamplus/tree/config/R/rigraph_gammalouvain).
+*PS:* I added the resolution parameter `gamma` in the *igraph* function for the Louvain clustering. While it was easy to change in the C code, compiling *igraph* from source was a pain. I couldn't get it to work on OSX but I managed to install this modified version of igraph on Linux (see [instructions](https://github.com/jmonlong/Hippocamplus/tree/config/R/rigraph_gammalouvain)).
 
 
 ## Conclusions
@@ -290,5 +300,5 @@ The more advanced methods are good to keep in mind if the points ever form diver
 
 I learned two **tricks to improve the performance** of the methods: increasing the number of iterations and starting points for the K-means, and sub-sampling for the EM clustering.
 
-Clustering points from the tSNE is good to explore the groups that we visually see in the tSNE but if we want more meaningful clusters we could run these methods in the PC space directly.
+Clustering points from the tSNE is good to explore the groups that we visually see in the tSNE but **if we want more meaningful clusters** we could run these methods **in the PC space directly**.
 The KNN + Louvain community clustering, for example, is used in single cell sequencing analysis.

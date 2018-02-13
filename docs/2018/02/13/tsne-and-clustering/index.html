@@ -138,10 +138,6 @@
     
       
     
-      
-    
-      
-    
 
     
     
@@ -187,8 +183,16 @@
   
   </span>
   <p>tSNE can give really nice results when we want to visualize many groups of multi-dimensional points. Once the 2D graph is done we might want to identify which points cluster in the tSNE blobs.</p>
-<p>I’ll try different methods such as hierarchical clustering, K-means, Guassian mixture, density-based clustering and Louvain community detection.</p>
-<p>TL;DR If &lt;30K points, hierarchical clustering is robust, easy to use and with reasonable computing time. KNN + Louvain is fast and works well in general.</p>
+<p>Using simulated and real data, I’ll try different methods:</p>
+<ul>
+<li>Hierarchical clustering</li>
+<li>K-means</li>
+<li>Gaussian mixture</li>
+<li>Density-based clustering</li>
+<li>Louvain community detection.</li>
+</ul>
+<p><strong>TL;DR</strong> If &lt;30K points, hierarchical clustering is robust, easy to use and with reasonable computing time. KNN + Louvain is fast and works well in general.</p>
+<hr />
 <pre class="r"><code>library(ggplot2)
 library(dplyr)
 library(magrittr)
@@ -197,8 +201,8 @@ library(ggrepel)</code></pre>
 <h2>Data</h2>
 <div id="normally-distributed-points" class="section level3">
 <h3>Normally distributed points</h3>
-<p>First, I’ll simulate an easy situation with 10 different groups. 5,000 points are distributed following Gaussian distributions in 100 dimensions. For each group, points are randomly selected as well as 3 dimensions in which they will differ from the rest.</p>
-<p>Because there are 10 groups that differ in different dimensions a PCA shouldn’t be able to separate all the groups with the first two components. That’s when the tSNE comes in to do its magic (easily).</p>
+<p>First, I’ll simulate an easy situation with 10 different groups. 5,000 points are distributed following Gaussian distributions in 100 dimensions. Points are randomly assigned a group. For each group, 3 dimensions are randomly selected and the points shifted.</p>
+<p>Because there are 10 groups that differ in different dimensions, a PCA shouldn’t be able to separate all the groups with the first two components. That’s when the tSNE comes in to do its magic (easily).</p>
 <pre class="r"><code>set.seed(123456)
 N = 5000
 D = 100
@@ -221,6 +225,7 @@ ggplot(info.norm, aes(x = PC1, y = PC2, colour = truth)) +
 <pre class="r"><code>ggplot(info.norm, aes(x = PC3, y = PC4, colour = truth)) + 
     geom_point(alpha = 0.3) + theme_bw()</code></pre>
 <p><img src="../../../../post/2017-12-01-tSNEclustering_files/figure-html/pcatsne-2.png" width="768" /></p>
+<p>We see something but it’s not so clear, let’s run the tSNE.</p>
 <pre class="r"><code>library(Rtsne)
 tsne.norm = Rtsne(pca.norm$x, pca = FALSE)
 info.norm %&lt;&gt;% mutate(tsne1 = tsne.norm$Y[, 1], tsne2 = tsne.norm$Y[, 
@@ -228,7 +233,7 @@ info.norm %&lt;&gt;% mutate(tsne1 = tsne.norm$Y[, 1], tsne2 = tsne.norm$Y[,
 ggplot(info.norm, aes(x = tsne1, y = tsne2, colour = truth)) + 
     geom_point(alpha = 0.3) + theme_bw()</code></pre>
 <p><img src="../../../../post/2017-12-01-tSNEclustering_files/figure-html/tsne-1.png" width="768" /></p>
-<p><em>Time for this code chunk: 82.27 s</em></p>
+<p><em>Time for this code chunk: 83.76 s</em></p>
 </div>
 <div id="real-data" class="section level3">
 <h3>Real data</h3>
@@ -284,7 +289,7 @@ ggplot(info.real, aes(x = tsne1, y = tsne2, colour = hclust)) +
     data = hc.real.cent) + guides(colour = FALSE) + 
     ggtitle(&quot;Linkage criterion: Ward&quot;)</code></pre>
 <p><img src="../../../../post/2017-12-01-tSNEclustering_files/figure-html/hcreal2-1.png" width="768" /></p>
-<p><em>Time for this code chunk: 49.08 s</em></p>
+<p><em>Time for this code chunk: 38.01 s</em></p>
 <p>For both data, Ward gives the best clusters. For example it splits the top-left clusters better in the real data.</p>
 </div>
 <div id="kmeans" class="section level2">
@@ -329,7 +334,7 @@ ggplot(info.real, aes(x = tsne1, y = tsne2, colour = kmeans)) +
     geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = kmeans), 
     data = km.cent) + guides(colour = FALSE)</code></pre>
 <p><img src="../../../../post/2017-12-01-tSNEclustering_files/figure-html/kmrealmore-1.png" width="768" /></p>
-<p><em>Time for this code chunk: 15.5 s</em></p>
+<p><em>Time for this code chunk: 15.48 s</em></p>
 <p>Better. Same as with the other methods: we need to manually tweak the parameters to obtain the clustering we want…</p>
 <p>Note: using several starting points help getting more robust results (<code>nstart=</code>). Increasing the number of iterations helps too (<code>iter.max=</code>).</p>
 </div>
@@ -372,7 +377,7 @@ ggplot(info.real, aes(x = tsne1, y = tsne2, colour = mclust)) +
     geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = mclust), 
     data = mc.cent) + guides(colour = FALSE)</code></pre>
 <p><img src="../../../../post/2017-12-01-tSNEclustering_files/figure-html/mcreal2-1.png" width="768" /></p>
-<p><em>Time for this code chunk: 90.59 s</em></p>
+<p><em>Time for this code chunk: 90.61 s</em></p>
 <p>Note: I had to use the sub-sampling trick to speed up the process, otherwise it was taking too long. Using <code>initialization=list(subset=sample.int(nrow(tsne.real), 1000))</code>, only a thousand points are used for the EM (but all the points are assigned to a cluster at the end).</p>
 </div>
 <div id="density-based-clustering" class="section level2">
@@ -400,7 +405,7 @@ ggplot(info.real, aes(x = tsne1, y = tsne2, colour = density)) +
     geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = density), 
     data = ds.cent) + guides(colour = FALSE)</code></pre>
 <p><img src="../../../../post/2017-12-01-tSNEclustering_files/figure-html/densreal-1.png" width="768" /></p>
-<p><em>Time for this code chunk: 99.72 s</em></p>
+<p><em>Time for this code chunk: 100.98 s</em></p>
 <p>Ouch…</p>
 </div>
 <div id="knn-graph-and-louvain-community-detection" class="section level2">
@@ -447,9 +452,9 @@ ggplot(info.real, aes(x = tsne1, y = tsne2, colour = louvain)) +
     geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = louvain), 
     data = lc.cent) + guides(colour = FALSE)</code></pre>
 <p><img src="../../../../post/2017-12-01-tSNEclustering_files/figure-html/louvreal-1.png" width="768" /></p>
-<p><em>Time for this code chunk: 18.9 s</em></p>
+<p><em>Time for this code chunk: 18.86 s</em></p>
 <p>Pretty good.</p>
-<p>PS: I added the resolution parameter <code>gamma</code> in the <em>igraph</em> function for the Louvain clustering. It was easy to change in the C code. Compiling <em>igraph</em> from source, however, is a pain and I couldn’t get it to work on OSX. I managed to install this modified version of igraph on Linux following <a href="https://github.com/jmonlong/Hippocamplus/tree/config/R/rigraph_gammalouvain">these instructions</a>.</p>
+<p><em>PS:</em> I added the resolution parameter <code>gamma</code> in the <em>igraph</em> function for the Louvain clustering. While it was easy to change in the C code, compiling <em>igraph</em> from source was a pain. I couldn’t get it to work on OSX but I managed to install this modified version of igraph on Linux (see <a href="https://github.com/jmonlong/Hippocamplus/tree/config/R/rigraph_gammalouvain">instructions</a>).</p>
 </div>
 <div id="conclusions" class="section level2">
 <h2>Conclusions</h2>
@@ -457,7 +462,7 @@ ggplot(info.real, aes(x = tsne1, y = tsne2, colour = louvain)) +
 <p><strong>If there are too many points</strong> (e.g. &gt;30K), hierarchical clustering might be too demanding and I would fall back to <strong>KNN+Louvain</strong>. It’s fast enough and the results are pretty good.</p>
 <p>The more advanced methods are good to keep in mind if the points ever form diverse or unusual shapes.</p>
 <p>I learned two <strong>tricks to improve the performance</strong> of the methods: increasing the number of iterations and starting points for the K-means, and sub-sampling for the EM clustering.</p>
-<p>Clustering points from the tSNE is good to explore the groups that we visually see in the tSNE but if we want more meaningful clusters we could run these methods in the PC space directly. The KNN + Louvain community clustering, for example, is used in single cell sequencing analysis.</p>
+<p>Clustering points from the tSNE is good to explore the groups that we visually see in the tSNE but <strong>if we want more meaningful clusters</strong> we could run these methods <strong>in the PC space directly</strong>. The KNN + Louvain community clustering, for example, is used in single cell sequencing analysis.</p>
 </div>
 
 </div>
