@@ -30,9 +30,6 @@ library(ggplot2)
 library(dplyr)
 library(magrittr)
 library(ggrepel)
-library(Rtsne)
-library(mclust)
-library(fpc)
 ```
 
 ## Data
@@ -68,6 +65,10 @@ pca.norm = prcomp(data.norm)
 info.norm %<>% cbind(pca.norm$x[,1:4])
 ggplot(info.norm, aes(x=PC1, y=PC2, colour=truth)) + geom_point(alpha=.3) + theme_bw()
 ggplot(info.norm, aes(x=PC3, y=PC4, colour=truth)) + geom_point(alpha=.3) + theme_bw()
+```
+
+```{r tsne, timeit=TRUE}
+library(Rtsne)
 tsne.norm = Rtsne(pca.norm$x, pca=FALSE)
 info.norm %<>% mutate(tsne1=tsne.norm$Y[,1], tsne2=tsne.norm$Y[,2])
 ggplot(info.norm, aes(x=tsne1, y=tsne2, colour=truth)) + geom_point(alpha=.3) + theme_bw()
@@ -167,10 +168,12 @@ Increasing the number of iterations helps too (`iter.max=`).
 ## Mclust
 
 - **+** Better clusters.
+- **+** Can find the best K (number of clusters (although slowly).
 - **-** Slow.
 - **-** Need to be recomputed for each choice of K (number of clusters).
 
 ```{r mcnorm}
+library(mclust)
 mc.norm = Mclust(tsne.norm$Y, 9)
 info.norm$mclust = factor(mc.norm$classification)
 mc.cent = info.norm %>% group_by(mclust) %>% select(tsne1, tsne2) %>% summarize_all(mean)
@@ -199,17 +202,18 @@ mc.cent = info.real %>% group_by(mclust) %>% select(tsne1, tsne2) %>% summarize_
 ggplot(info.real, aes(x=tsne1, y=tsne2, colour=mclust)) + geom_point(alpha=.3) + theme_bw() + geom_label_repel(aes(label=mclust), data=mc.cent) + guides(colour=FALSE)
 ```
 
-Note: I had to use the sub-sampling trick to speed up the process, it was taking too long.
-Using `initialization=list(subset=sample.int(nrow(tsne.real), 1000))`, only a 1K points are used for the EM (but all the points are assigned to a cluster at the end).
+Note: I had to use the sub-sampling trick to speed up the process, otherwise it was taking too long.
+Using `initialization=list(subset=sample.int(nrow(tsne.real), 1000))`, only a thousand points are used for the EM (but all the points are assigned to a cluster at the end).
 
 
 ## Density-based clustering
 
 - **+** Can find clusters with different "shapes".
-- **-** More limited on real/noisy data.
+- **-** Bad on real/noisy data.
 - **-** Slow when many points.
 
 ```{r densnorm}
+library(fpc)
 ds.norm = dbscan(tsne.norm$Y, 2)
 info.norm$density = factor(ds.norm$cluster)
 ds.cent = info.norm %>% group_by(density) %>% select(tsne1, tsne2) %>% summarize_all(mean)
@@ -226,6 +230,50 @@ ggplot(info.real, aes(x=tsne1, y=tsne2, colour=density)) + geom_point(alpha=.3) 
 ```
 
 Ouch...
+
+## KNN graph and Louvain community detection
+
+```{r louvnorm}
+library(igraph)
+library(FNN)
+k = 100
+knn.norm = get.knn(as.matrix(tsne.norm$Y), k = k)
+knn.norm = data.frame(from=rep(1:nrow(knn.norm$nn.index), k), to=as.vector(knn.norm$nn.index), weight=1/(1+as.vector(knn.norm$nn.dist)))
+nw.norm = graph_from_data_frame(knn.norm, directed=FALSE)
+nw.norm = simplify(nw.norm)
+lc.norm = cluster_louvain(nw.norm)
+info.norm$louvain = as.factor(membership(lc.norm))
+lc.cent = info.norm %>% group_by(louvain) %>% select(tsne1, tsne2) %>% summarize_all(mean)
+ggplot(info.norm, aes(x=tsne1, y=tsne2, colour=louvain)) + geom_point(alpha=.3) + theme_bw() + geom_label_repel(aes(label=louvain), data=lc.cent) + guides(colour=FALSE)
+```
+
+Playing with the resolution parameter we can get more/less communities.
+For `gamma=.3`:
+
+```{r gamma}
+lc.norm = cluster_louvain(nw.norm, gamma=.3)
+info.norm$louvain = as.factor(membership(lc.norm))
+lc.cent = info.norm %>% group_by(louvain) %>% select(tsne1, tsne2) %>% summarize_all(mean)
+ggplot(info.norm, aes(x=tsne1, y=tsne2, colour=louvain)) + geom_point(alpha=.3) + theme_bw() + geom_label_repel(aes(label=louvain), data=lc.cent) + guides(colour=FALSE)
+```
+
+On real data and using `gamma=.1`:
+
+```{r louvreal, timeit=TRUE}
+k = 100
+knn.real = get.knn(as.matrix(tsne.real), k = k)
+knn.real = data.frame(from=rep(1:nrow(knn.real$nn.index), k), to=as.vector(knn.real$nn.index), weight=1/(1+as.vector(knn.real$nn.dist)))
+nw.real = graph_from_data_frame(knn.real, directed=FALSE)
+nw.real = simplify(nw.real)
+lc.real = cluster_louvain(nw.real, gamma=.1)
+info.real$louvain = as.factor(membership(lc.real))
+lc.cent = info.real %>% group_by(louvain) %>% select(tsne1, tsne2) %>% summarize_all(mean)
+ggplot(info.real, aes(x=tsne1, y=tsne2, colour=louvain)) + geom_point(alpha=.3) + theme_bw() + geom_label_repel(aes(label=louvain), data=lc.cent) + guides(colour=FALSE)
+```
+
+Pretty good.
+
+PS: I added the resolution parameter `gamma` in the *igraph* function for the Louvain clustering. It was easy to change in the C code. Compiling *igraph* from source, however, is a pain and I couldn't get it to work on OSX. I managed to install this modified version of igraph on Linux following [these instructions]().
 
 ## Conclusions
 
