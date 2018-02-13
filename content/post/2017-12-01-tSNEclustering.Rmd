@@ -1,6 +1,6 @@
 ---
 title: tSNE and clustering
-date: 2017-12-02
+date: 2018-02-13
 tags: ["R", "stats"]
 draft: true
 ---
@@ -21,9 +21,9 @@ knitr::knit_hooks$set(timeit = function(before) {
 tSNE can give really nice results when we want to visualize many groups of multi-dimensional  points.
 Once the 2D graph is done we might want to identify which points cluster in the tSNE blobs.
 
-I'll try different approaches such as hierarchical clustering, K-means, Guassian mixture and density-based clustering.
+I'll try different methods such as hierarchical clustering, K-means, Guassian mixture, density-based clustering and Louvain community detection.
 
-TL;DR Hierarchical clustering is my favorite as it's robust, easy to use and with reasonable computing time.
+TL;DR If <30K points, hierarchical clustering is robust, easy to use and with reasonable computing time. KNN + Louvain is fast and works well in general.
 
 ```{r libs}
 library(ggplot2)
@@ -273,20 +273,22 @@ ggplot(info.real, aes(x=tsne1, y=tsne2, colour=louvain)) + geom_point(alpha=.3) 
 
 Pretty good.
 
-PS: I added the resolution parameter `gamma` in the *igraph* function for the Louvain clustering. It was easy to change in the C code. Compiling *igraph* from source, however, is a pain and I couldn't get it to work on OSX. I managed to install this modified version of igraph on Linux following [these instructions]().
+PS: I added the resolution parameter `gamma` in the *igraph* function for the Louvain clustering. It was easy to change in the C code. Compiling *igraph* from source, however, is a pain and I couldn't get it to work on OSX. I managed to install this modified version of igraph on Linux following [these instructions](https://github.com/jmonlong/Hippocamplus/tree/config/R/rigraph_gammalouvain).
+
 
 ## Conclusions
 
-If possible, **I'll try to use hierarchical clustering**.
+If not too many points or too many groups, **hierarchical clustering** might be enough.
 Especially with the Ward criterion, it worked well for both simulated and real data.
 Once the hierarchy is built, it's fast to try different values for the number of clusters.
 Also, in the real data, I could get satisfactory results using a lower number of clusters than for the K-means (18 vs 25).
 
-**If there are too many points** (e.g. >30K), hierarchical clustering might be too demanding and I would fall back to **K-means**.
-It's fast and easy to get what we want if we accept over-fragmentation.
-In this cae, we might need to merged the fragments that we believe belong together but that's not so hard to do.
+**If there are too many points** (e.g. >30K), hierarchical clustering might be too demanding and I would fall back to **KNN+Louvain**.
+It's fast enough and the results are pretty good.
 
 The more advanced methods are good to keep in mind if the points ever form diverse or unusual shapes.
 
 I learned two **tricks to improve the performance** of the methods: increasing the number of iterations and starting points for the K-means, and sub-sampling for the EM clustering.
 
+Clustering points from the tSNE is good to explore the groups that we visually see in the tSNE but if we want more meaningful clusters we could run these methods in the PC space directly.
+The KNN + Louvain community clustering, for example, is used in single cell sequencing analysis.

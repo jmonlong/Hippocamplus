@@ -1,13 +1,192 @@
----
-title: tSNE and clustering
-date: 2018-02-13
-tags: ["R", "stats"]
-draft: true
----
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      tSNE and clustering &middot; Hippocamplus
+    
+  </title>
+
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113785126-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    
+    gtag('config', "UA-113785126-1");
+  </script>
+  
+  
+  <link rel="stylesheet" href="../../../../css/poole.css">
+  <link rel="stylesheet" href="../../../../css/syntax.css">
+  <link rel="stylesheet" href="../../../../css/lanyon.css">
+  <link rel="stylesheet" href="../../../../css/github.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
+  <link rel="stylesheet" href="../../../../fa/css/font-awesome.min.css">
+  
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../../../assets/hippoPlus-icon.png">
+  <link rel="shortcut icon" href="../../../../assets/hippoPlus-icon.png">
+
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="../../../../atom.xml">
+</head>
+
+  
+  <body>
+
+    
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
 
 
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>A place to gather useful information I keep on forgetting.</p>
+  </div>
 
-<p>tSNE can give really nice results when we want to visualize many groups of multi-dimensional points. Once the 2D graph is done we might want to identify which points cluster in the tSNE blobs.</p>
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item " href="../../../../">Home</a>
+    <a class="sidebar-nav-item " href="../../../../post">Posts</a>
+
+    
+    
+      
+        <a class="sidebar-nav-item " href="../../../../emacs/">Emacs</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../latex/">LaTeX</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../markdown/">Markdown</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../math/stats/">Math/Stats</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../python/">Python</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../r/">R</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../shell/">Shell</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../internet/">Internet</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../about/">About</a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+    
+  </nav>
+
+  <div class="sidebar-item">
+  </div>
+  
+  <div class="sidebar-item">
+    <a href="../../../../index.xml">RSS <i class="fa fa-rss-square" aria-hidden="true"></i></a>
+    <p>&copy; 2018 Jean Monlong. All rights reserved.</p>
+  </div>
+</div>
+
+
+    
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="../../../../" title="Home">Hippocamplus</a>
+            <small>My Second Memory</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+
+
+<div class="post">
+  <h1 class="post-title">tSNE and clustering</h1>
+  <span class="post-date">Feb 13, 2018
+  
+  
+  
+  
+  
+  <a href='../../../../tags/r/' class='label'>R</a>
+  
+  <a href='../../../../tags/stats/' class='label'>stats</a>
+  
+  
+  
+  </span>
+  <p>tSNE can give really nice results when we want to visualize many groups of multi-dimensional points. Once the 2D graph is done we might want to identify which points cluster in the tSNE blobs.</p>
 <p>I’ll try different methods such as hierarchical clustering, K-means, Guassian mixture, density-based clustering and Louvain community detection.</p>
 <p>TL;DR If &lt;30K points, hierarchical clustering is robust, easy to use and with reasonable computing time. KNN + Louvain is fast and works well in general.</p>
 <pre class="r"><code>library(ggplot2)
@@ -38,17 +217,17 @@ info.norm = tibble(truth = factor(groups))</code></pre>
 info.norm %&lt;&gt;% cbind(pca.norm$x[, 1:4])
 ggplot(info.norm, aes(x = PC1, y = PC2, colour = truth)) + 
     geom_point(alpha = 0.3) + theme_bw()</code></pre>
-<p><img src="/post/2017-12-01-tSNEclustering_files/figure-html/pcatsne-1.png" width="768" /></p>
+<p><img src="../../../../post/2017-12-01-tSNEclustering_files/figure-html/pcatsne-1.png" width="768" /></p>
 <pre class="r"><code>ggplot(info.norm, aes(x = PC3, y = PC4, colour = truth)) + 
     geom_point(alpha = 0.3) + theme_bw()</code></pre>
-<p><img src="/post/2017-12-01-tSNEclustering_files/figure-html/pcatsne-2.png" width="768" /></p>
+<p><img src="../../../../post/2017-12-01-tSNEclustering_files/figure-html/pcatsne-2.png" width="768" /></p>
 <pre class="r"><code>library(Rtsne)
 tsne.norm = Rtsne(pca.norm$x, pca = FALSE)
 info.norm %&lt;&gt;% mutate(tsne1 = tsne.norm$Y[, 1], tsne2 = tsne.norm$Y[, 
     2])
 ggplot(info.norm, aes(x = tsne1, y = tsne2, colour = truth)) + 
     geom_point(alpha = 0.3) + theme_bw()</code></pre>
-<p><img src="/post/2017-12-01-tSNEclustering_files/figure-html/tsne-1.png" width="768" /></p>
+<p><img src="../../../../post/2017-12-01-tSNEclustering_files/figure-html/tsne-1.png" width="768" /></p>
 <p><em>Time for this code chunk: 82.27 s</em></p>
 </div>
 <div id="real-data" class="section level3">
@@ -58,7 +237,7 @@ ggplot(info.norm, aes(x = tsne1, y = tsne2, colour = truth)) +
 info.real = tsne.real
 ggplot(tsne.real, aes(x = tsne1, y = tsne2)) + geom_point(alpha = 0.1) + 
     theme_bw()</code></pre>
-<p><img src="/post/2017-12-01-tSNEclustering_files/figure-html/real-1.png" width="768" /></p>
+<p><img src="../../../../post/2017-12-01-tSNEclustering_files/figure-html/real-1.png" width="768" /></p>
 </div>
 </div>
 <div id="hierarchical-clustering" class="section level2">
@@ -76,7 +255,7 @@ ggplot(info.norm, aes(x = tsne1, y = tsne2, colour = hclust)) +
     geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = hclust), 
     data = hc.norm.cent) + guides(colour = FALSE) + 
     ggtitle(&quot;Linkage criterion: Complete&quot;)</code></pre>
-<p><img src="/post/2017-12-01-tSNEclustering_files/figure-html/hcnorm-1.png" width="768" /></p>
+<p><img src="../../../../post/2017-12-01-tSNEclustering_files/figure-html/hcnorm-1.png" width="768" /></p>
 <pre class="r"><code>hc.norm = hclust(dist(tsne.norm$Y), method = &quot;ward.D&quot;)
 info.norm$hclust = factor(cutree(hc.norm, 9))
 hc.norm.cent = info.norm %&gt;% group_by(hclust) %&gt;% select(tsne1, 
@@ -85,7 +264,7 @@ ggplot(info.norm, aes(x = tsne1, y = tsne2, colour = hclust)) +
     geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = hclust), 
     data = hc.norm.cent) + guides(colour = FALSE) + 
     ggtitle(&quot;Linkage criterion: Ward&quot;)</code></pre>
-<p><img src="/post/2017-12-01-tSNEclustering_files/figure-html/hcnorm-2.png" width="768" /></p>
+<p><img src="../../../../post/2017-12-01-tSNEclustering_files/figure-html/hcnorm-2.png" width="768" /></p>
 <p>Now on real data:</p>
 <pre class="r"><code>hc.real = hclust(dist(tsne.real))
 info.real$hclust = factor(cutree(hc.real, 18))
@@ -95,7 +274,7 @@ ggplot(info.real, aes(x = tsne1, y = tsne2, colour = hclust)) +
     geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = hclust), 
     data = hc.real.cent) + guides(colour = FALSE) + 
     ggtitle(&quot;Linkage criterion: Complete&quot;)</code></pre>
-<p><img src="/post/2017-12-01-tSNEclustering_files/figure-html/hcreal-1.png" width="768" /></p>
+<p><img src="../../../../post/2017-12-01-tSNEclustering_files/figure-html/hcreal-1.png" width="768" /></p>
 <pre class="r"><code>hc.real = hclust(dist(tsne.real), method = &quot;ward.D&quot;)
 info.real$hclust = factor(cutree(hc.real, 18))
 hc.real.cent = info.real %&gt;% group_by(hclust) %&gt;% select(tsne1, 
@@ -104,7 +283,7 @@ ggplot(info.real, aes(x = tsne1, y = tsne2, colour = hclust)) +
     geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = hclust), 
     data = hc.real.cent) + guides(colour = FALSE) + 
     ggtitle(&quot;Linkage criterion: Ward&quot;)</code></pre>
-<p><img src="/post/2017-12-01-tSNEclustering_files/figure-html/hcreal2-1.png" width="768" /></p>
+<p><img src="../../../../post/2017-12-01-tSNEclustering_files/figure-html/hcreal2-1.png" width="768" /></p>
 <p><em>Time for this code chunk: 49.08 s</em></p>
 <p>For both data, Ward gives the best clusters. For example it splits the top-left clusters better in the real data.</p>
 </div>
@@ -121,7 +300,7 @@ km.cent = info.norm %&gt;% group_by(kmeans) %&gt;% select(tsne1,
 ggplot(info.norm, aes(x = tsne1, y = tsne2, colour = kmeans)) + 
     geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = kmeans), 
     data = km.cent) + guides(colour = FALSE) + ggtitle(&quot;9 clusters&quot;)</code></pre>
-<p><img src="/post/2017-12-01-tSNEclustering_files/figure-html/kmnorm-1.png" width="768" /></p>
+<p><img src="../../../../post/2017-12-01-tSNEclustering_files/figure-html/kmnorm-1.png" width="768" /></p>
 <pre class="r"><code>km.norm = kmeans(tsne.norm$Y, 10, nstart = 100)
 info.norm$kmeans = factor(km.norm$cluster)
 km.cent = info.norm %&gt;% group_by(kmeans) %&gt;% select(tsne1, 
@@ -129,7 +308,7 @@ km.cent = info.norm %&gt;% group_by(kmeans) %&gt;% select(tsne1,
 ggplot(info.norm, aes(x = tsne1, y = tsne2, colour = kmeans)) + 
     geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = kmeans), 
     data = km.cent) + guides(colour = FALSE) + ggtitle(&quot;10 clusters&quot;)</code></pre>
-<p><img src="/post/2017-12-01-tSNEclustering_files/figure-html/kmnorm-2.png" width="768" /></p>
+<p><img src="../../../../post/2017-12-01-tSNEclustering_files/figure-html/kmnorm-2.png" width="768" /></p>
 <p>Because it’s not working well for cluster that are not “round”, we need to ask for more clusters. In practice we’ll need to merge back together the clusters that were fragmented.</p>
 <pre class="r"><code>set.seed(123456)
 km.real = kmeans(tsne.real, 24, nstart = 200, iter.max = 100)
@@ -139,7 +318,7 @@ km.cent = info.real %&gt;% group_by(kmeans) %&gt;% select(tsne1,
 ggplot(info.real, aes(x = tsne1, y = tsne2, colour = kmeans)) + 
     geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = kmeans), 
     data = km.cent) + guides(colour = FALSE)</code></pre>
-<p><img src="/post/2017-12-01-tSNEclustering_files/figure-html/kmreal-1.png" width="768" /></p>
+<p><img src="../../../../post/2017-12-01-tSNEclustering_files/figure-html/kmreal-1.png" width="768" /></p>
 <p>Not perfect in the middle-left big cluster: cluster 11 is grabbing points from the bottom blob. Maybe increasing the number of clusters could fix this?</p>
 <pre class="r"><code>set.seed(123456)
 km.real = kmeans(tsne.real, 25, nstart = 200, iter.max = 100)
@@ -149,7 +328,7 @@ km.cent = info.real %&gt;% group_by(kmeans) %&gt;% select(tsne1,
 ggplot(info.real, aes(x = tsne1, y = tsne2, colour = kmeans)) + 
     geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = kmeans), 
     data = km.cent) + guides(colour = FALSE)</code></pre>
-<p><img src="/post/2017-12-01-tSNEclustering_files/figure-html/kmrealmore-1.png" width="768" /></p>
+<p><img src="../../../../post/2017-12-01-tSNEclustering_files/figure-html/kmrealmore-1.png" width="768" /></p>
 <p><em>Time for this code chunk: 15.5 s</em></p>
 <p>Better. Same as with the other methods: we need to manually tweak the parameters to obtain the clustering we want…</p>
 <p>Note: using several starting points help getting more robust results (<code>nstart=</code>). Increasing the number of iterations helps too (<code>iter.max=</code>).</p>
@@ -170,7 +349,7 @@ mc.cent = info.norm %&gt;% group_by(mclust) %&gt;% select(tsne1,
 ggplot(info.norm, aes(x = tsne1, y = tsne2, colour = mclust)) + 
     geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = mclust), 
     data = mc.cent) + guides(colour = FALSE)</code></pre>
-<p><img src="/post/2017-12-01-tSNEclustering_files/figure-html/mcnorm-1.png" width="768" /></p>
+<p><img src="../../../../post/2017-12-01-tSNEclustering_files/figure-html/mcnorm-1.png" width="768" /></p>
 <p>Even the elongated cluster is nicely identified and we don’t need to split it.</p>
 <pre class="r"><code>set.seed(123456)
 mc.real = Mclust(tsne.real, 20, initialization = list(subset = sample.int(nrow(tsne.real), 
@@ -181,7 +360,7 @@ mc.cent = info.real %&gt;% group_by(mclust) %&gt;% select(tsne1,
 ggplot(info.real, aes(x = tsne1, y = tsne2, colour = mclust)) + 
     geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = mclust), 
     data = mc.cent) + guides(colour = FALSE)</code></pre>
-<p><img src="/post/2017-12-01-tSNEclustering_files/figure-html/mcreal-1.png" width="768" /></p>
+<p><img src="../../../../post/2017-12-01-tSNEclustering_files/figure-html/mcreal-1.png" width="768" /></p>
 <p>Sometimes the results are a bit surprising. For example, points are assigned to cluster far away or there is another cluster in between (e.g. clusters 6 and 17). As usual changing the number of clusters helps.</p>
 <pre class="r"><code>set.seed(123456)
 mc.real = Mclust(tsne.real, 24, initialization = list(subset = sample.int(nrow(tsne.real), 
@@ -192,7 +371,7 @@ mc.cent = info.real %&gt;% group_by(mclust) %&gt;% select(tsne1,
 ggplot(info.real, aes(x = tsne1, y = tsne2, colour = mclust)) + 
     geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = mclust), 
     data = mc.cent) + guides(colour = FALSE)</code></pre>
-<p><img src="/post/2017-12-01-tSNEclustering_files/figure-html/mcreal2-1.png" width="768" /></p>
+<p><img src="../../../../post/2017-12-01-tSNEclustering_files/figure-html/mcreal2-1.png" width="768" /></p>
 <p><em>Time for this code chunk: 90.59 s</em></p>
 <p>Note: I had to use the sub-sampling trick to speed up the process, otherwise it was taking too long. Using <code>initialization=list(subset=sample.int(nrow(tsne.real), 1000))</code>, only a thousand points are used for the EM (but all the points are assigned to a cluster at the end).</p>
 </div>
@@ -211,7 +390,7 @@ ds.cent = info.norm %&gt;% group_by(density) %&gt;% select(tsne1,
 ggplot(info.norm, aes(x = tsne1, y = tsne2, colour = density)) + 
     geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = density), 
     data = ds.cent) + guides(colour = FALSE)</code></pre>
-<p><img src="/post/2017-12-01-tSNEclustering_files/figure-html/densnorm-1.png" width="768" /></p>
+<p><img src="../../../../post/2017-12-01-tSNEclustering_files/figure-html/densnorm-1.png" width="768" /></p>
 <p>Woah, it found the small cluster !</p>
 <pre class="r"><code>ds.real = dbscan(tsne.real, 1)
 info.real$density = factor(ds.real$cluster)
@@ -220,7 +399,7 @@ ds.cent = info.real %&gt;% group_by(density) %&gt;% select(tsne1,
 ggplot(info.real, aes(x = tsne1, y = tsne2, colour = density)) + 
     geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = density), 
     data = ds.cent) + guides(colour = FALSE)</code></pre>
-<p><img src="/post/2017-12-01-tSNEclustering_files/figure-html/densreal-1.png" width="768" /></p>
+<p><img src="../../../../post/2017-12-01-tSNEclustering_files/figure-html/densreal-1.png" width="768" /></p>
 <p><em>Time for this code chunk: 99.72 s</em></p>
 <p>Ouch…</p>
 </div>
@@ -242,7 +421,7 @@ lc.cent = info.norm %&gt;% group_by(louvain) %&gt;% select(tsne1,
 ggplot(info.norm, aes(x = tsne1, y = tsne2, colour = louvain)) + 
     geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = louvain), 
     data = lc.cent) + guides(colour = FALSE)</code></pre>
-<p><img src="/post/2017-12-01-tSNEclustering_files/figure-html/louvnorm-1.png" width="768" /></p>
+<p><img src="../../../../post/2017-12-01-tSNEclustering_files/figure-html/louvnorm-1.png" width="768" /></p>
 <p>Playing with the resolution parameter we can get more/less communities. For <code>gamma=.3</code>:</p>
 <pre class="r"><code>lc.norm = cluster_louvain(nw.norm, gamma = 0.3)
 info.norm$louvain = as.factor(membership(lc.norm))
@@ -251,7 +430,7 @@ lc.cent = info.norm %&gt;% group_by(louvain) %&gt;% select(tsne1,
 ggplot(info.norm, aes(x = tsne1, y = tsne2, colour = louvain)) + 
     geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = louvain), 
     data = lc.cent) + guides(colour = FALSE)</code></pre>
-<p><img src="/post/2017-12-01-tSNEclustering_files/figure-html/gamma-1.png" width="768" /></p>
+<p><img src="../../../../post/2017-12-01-tSNEclustering_files/figure-html/gamma-1.png" width="768" /></p>
 <p>On real data and using <code>gamma=.1</code>:</p>
 <pre class="r"><code>k = 100
 knn.real = get.knn(as.matrix(tsne.real), k = k)
@@ -267,7 +446,7 @@ lc.cent = info.real %&gt;% group_by(louvain) %&gt;% select(tsne1,
 ggplot(info.real, aes(x = tsne1, y = tsne2, colour = louvain)) + 
     geom_point(alpha = 0.3) + theme_bw() + geom_label_repel(aes(label = louvain), 
     data = lc.cent) + guides(colour = FALSE)</code></pre>
-<p><img src="/post/2017-12-01-tSNEclustering_files/figure-html/louvreal-1.png" width="768" /></p>
+<p><img src="../../../../post/2017-12-01-tSNEclustering_files/figure-html/louvreal-1.png" width="768" /></p>
 <p><em>Time for this code chunk: 18.9 s</em></p>
 <p>Pretty good.</p>
 <p>PS: I added the resolution parameter <code>gamma</code> in the <em>igraph</em> function for the Louvain clustering. It was easy to change in the C code. Compiling <em>igraph</em> from source, however, is a pain and I couldn’t get it to work on OSX. I managed to install this modified version of igraph on Linux following <a href="https://github.com/jmonlong/Hippocamplus/tree/config/R/rigraph_gammalouvain">these instructions</a>.</p>
@@ -280,3 +459,26 @@ ggplot(info.real, aes(x = tsne1, y = tsne2, colour = louvain)) +
 <p>I learned two <strong>tricks to improve the performance</strong> of the methods: increasing the number of iterations and starting points for the K-means, and sub-sampling for the EM clustering.</p>
 <p>Clustering points from the tSNE is good to explore the groups that we visually see in the tSNE but if we want more meaningful clusters we could run these methods in the PC space directly. The KNN + Louvain community clustering, for example, is used in single cell sequencing analysis.</p>
 </div>
+
+</div>
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src="../../../../assets/highlight.min.js"></script>
+    <script src="../../../../assets/r.min.js"></script>
+    
+    <script>
+      hljs.configure({languages: ['r']});
+      hljs.initHighlightingOnLoad();
+    </script>
+
+    <script src="//yihui.name/js/math-code.js"></script>
+    <script async src="//cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    
+  </body>
+</html>
+
