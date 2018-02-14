@@ -313,6 +313,20 @@ latexdiff suppmat-old.tex suppmat.tex > suppmat-diff.tex
 
 Then compile `main-diff.tex` and `suppmat-diff.tex` normally.
 
+### One figure = one file
+
+[I'd like to do some observational humor for you now, I hope you can identify with it: hey ! Don't you hate...](https://youtu.be/oHgFBxUitj8?t=2m40s) when you have finished preparing a submission and you realize you have to save every supplementary figure in its own file ?
+
+Joke/frustration aside, a quick way to do that keeping the sub-figures organization together and the PDF format, is to reformat the latex file to remove the figures' `\caption` and the page numbers (`\pagestyle{empty}`) and run something like:
+
+~~~sh
+for ii in `seq 1 20`
+do
+    pdfjam SuppFigs.pdf $ii -o temp.pdf
+    pdfcrop --margins 10 temp.pdf FigureS$ii.pdf
+done
+~~~
+
 ## Bibliography
 
 I use `\usepackage[comma,super]{natbib}`.
