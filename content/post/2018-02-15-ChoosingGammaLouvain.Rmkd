@@ -1,0 +1,117 @@
+---
+title: Choosing a resolution gamma for Louvain clustering
+date: 2018-02-15
+tags: ["stat","R"]
+draft: true
+---
+
+
+```{r include=FALSE}
+knitr::opts_chunk$set(fig.width=15, echo=FALSE, message=FALSE, warning=FALSE)
+```
+
+```{r init}
+library(dplyr)
+library(magrittr)
+library(Rtsne)
+library(ggplot2)
+library(FNN)
+library(parallel)
+library(tidyr)
+library(ggrepel)
+library(igraph)
+adjRandInd <- function(x,y){
+  cont = table(x,y)
+  xsums.ch2 = sum(sapply(rowSums(cont), choose, k=2))
+  ysums.ch2 = sum(sapply(colSums(cont), choose, k=2))
+  n = length(x)
+  index = sum(sapply(as.vector(cont), choose, k=2))
+  expindex = xsums.ch2*ysums.ch2/choose(n,2)
+  maxindex = (xsums.ch2+ysums.ch2)/2
+  (index-expindex)/(maxindex-expindex)
+}
+```
+
+
+## Simulated data
+
+
+```{r data}
+simData <- function(N=500, D=100, G=5, D.diff=3, max.diff=3){
+  data.norm = matrix(rnorm(N*D,2), N)
+  groups.probs = runif(G)
+  groups = sample(1:G, N, TRUE, groups.probs/sum(groups.probs))
+  for(gp in unique(groups)){
+    dev = rep(1, D)
+    dev[sample.int(D, D.diff)] = runif(D.diff,1,max.diff)
+    data.norm[which(groups==gp),] = data.norm[which(groups==gp),] %*% diag(dev)
+  }
+  info.norm = tibble(truth=factor(groups))
+  pca.norm = prcomp(data.norm)
+  info.norm %<>% cbind(pca.norm$x[,1:4])
+  tsne.norm = Rtsne(pca.norm$x[,1:30], pca=FALSE)
+  info.norm %<>% mutate(tsne1=tsne.norm$Y[,1], tsne2=tsne.norm$Y[,2])
+  list(pca=pca.norm, info=info.norm)
+}
+plotPCAtSNE <- function(dat){
+  cent.df = dat$info %>% group_by(truth) %>% summarize_all(mean)
+  graphs = list(pc12 = ggplot(dat$info, aes(x=PC1, y=PC2, colour=truth)) + geom_point(alpha=.3) + theme_bw() + scale_colour_brewer(palette='Set1') + geom_label_repel(aes(label=truth), data=cent.df),
+       pc34 = ggplot(dat$info, aes(x=PC3, y=PC4, colour=truth)) + geom_point(alpha=.3) + theme_bw() + scale_colour_brewer(palette='Set1') + geom_label_repel(aes(label=truth), data=cent.df),
+       tsne = ggplot(dat$info, aes(x=tsne1, y=tsne2, colour=truth)) + geom_point(alpha=.3) + theme_bw() + scale_colour_brewer(palette='Set1') + geom_label_repel(aes(label=truth), data=cent.df))
+  lapply(graphs, print)
+  graphs
+}
+```
+
+For example:
+
+```{r dataex}
+dat = simData()
+graphs = plotPCAtSNE(dat)
+```
+
+- Number of groups.
+- Maximum difference.
+- KNN or full graph.
+
+## KNN graph and Louvain
+
+```{r knn}
+k = 100
+pcs = 30
+knn.o = get.knn(as.matrix(dat$pca$x[,1:pcs]), k = k)
+knn.df = data.frame(from=rep(1:nrow(knn.o$nn.index), k), to=as.vector(knn.o$nn.index), weight=1/(1+as.vector(knn.o$nn.dist)))
+nw = graph_from_data_frame(knn.df, directed=FALSE)
+nw = simplify(nw)
+```
+
+
+```{r gamma}
+gammas = c(seq(.01,.1,.01), seq(.2,1.4,.1),seq(1.5,3,.2))
+nreps = 10
+cl.l = mclapply(gammas, function(gamma){
+  res = lapply(1:nreps, function(rep){
+    neworder = sample.int(length(V(nw)))
+    nwp = permute(nw, neworder)
+    wcp <- cluster_louvain(nwp, gamma=gamma)
+    nws = sample_degseq(degree(nw))
+    wcs <- cluster_louvain(nws, gamma=gamma)
+    list(modularity=modularity(wcp), modularity.null=modularity(wcs), membership=as.factor(membership(wcp))[neworder])
+  })
+  list(modularity=sapply(res, function(e)e$modularity),
+       modularity.null=sapply(res, function(e)e$modularity.null),
+       membership=do.call(cbind, lapply(res, function(e)e$membership)))
+}, mc.cores=4)
+
+ri.df = mclapply(1:length(cl.l), function(gamma.ii){
+  cl.mat = cl.l[[gamma.ii]]$membership
+  pw.ij = combn(ncol(cl.mat),2)
+  ##pw.ij = pw.ij[, sample.int(ncol(pw.ij), pw.ss)]
+  ari = sapply(1:ncol(pw.ij), function(ij) adjRandInd(cl.mat[,pw.ij[1,ij]], cl.mat[,pw.ij[2,ij]]))
+  data.frame(gamma=gammas[gamma.ii], ari.mean=mean(ari), ari.sd=sd(ari), nb.com=mean(apply(cl.mat, 2, function(x)length(unique(x)))), modularity=mean(cl.l[[gamma.ii]]$modularity), modularity.null=mean(cl.l[[gamma.ii]]$modularity.null))
+}, mc.cores=3)
+
+ri.df = do.call(rbind, ri.df)
+
+ri.df %>% mutate(nb.com=round(nb.com), modularity.diff=modularity-modularity.null, modularity.ratio=modularity/modularity.null) %>% select(-modularity.null, -modularity) %>% gather(measure, value, -gamma) %>% ggplot(aes(x=gamma, y=value)) + geom_line() + theme_bw() + facet_grid(measure~., scales='free')
+```
