@@ -34,13 +34,13 @@ Some info about journals in my field.
 | [Genome Research](http://genome.cshlp.org/site/misc/ifora.xhtml)            | CSH   | 11.9 | 6m/+    | 2500 USD | 2500 USD     | ~179     | ~188 (242)                                        |
 | [Cell](http://www.cell.com/cell/authors)                       | Els   | 30.4 | (12m/+) | 5000 USD | pf           | ~351     | ~149 (193)                                        |
 | [Lancet](http://www.thelancet.com/lancet/information-for-authors)                     | Els   | 47.8 | 6m/+    | 5000 USD |              |          |                                                   |
-| Science                         | AAAS  | 37.2 | 12m     | -        |              | ~720     | ~112 (162)                                        |
-| Bioinformatics                  | OUP   |  7.3 | +       | 3000 USD |              | ~868     | ~126 (180)                                        |
-| Nature Methods                  | Spr   | 25.1 | N       | -        |              | ~130     | ~146 (187)                                        |
-| Nature Genetics                 | Spr   | 28.0 | N       | -        |              | 202      | 147 (203)                                         |
-| Nature Biotech                  | Spr   | 41.7 | N       | -        |              | 80       | 202 (262)                                         |
-| Nature                          | Spr   | 40.1 | N       | -        |              | ~855     | ~175 (246)                                        |
-| New England Journal Of Medicine | -     | 72.4 | N       | -        |              |          |                                                   |
+| [Science](http://www.sciencemag.org/authors/science-journals-editorial-policies)                    | AAAS  | 37.2 | 12m     | -        | surprise     | ~720     | ~112 (162)                                        |
+| [Bioinformatics](https://academic.oup.com/bioinformatics/pages/instructions_for_authors)             | OUP   |  7.3 | +       | 3000 USD | pp7/pf       | ~868     | ~126 (180)                                        |
+| New England Journal Of Medicine | -     | 72.4 | 6m      | -        |              |          |                                                   |
+| [Nature Methods](https://www.nature.com/nmeth/for-authors)_            | Spr   | 25.1 | N       | -        | pf           | ~130     | ~146 (187)                                        |
+| [Nature Genetics](https://www.nature.com/ng/for-authors)            | Spr   | 28.0 | N       | -        | pf           | 202      | 147 (203)                                         |
+| [Nature Biotech](https://www.nature.com/nbt/for-authors)             | Spr   | 41.7 | N       | -        | pp5/pf       | 80       | 202 (262)                                         |
+| [Nature](https://www.nature.com/nature/for-authors)                     | Spr   | 40.1 | N       | -        |              | ~855     | ~175 (246)                                        |
 
 Open Access (OA) journal:
 
