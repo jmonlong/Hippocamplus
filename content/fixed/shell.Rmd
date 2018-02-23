@@ -182,6 +182,23 @@ git config --global alias.br branch
 + Delete remote branch: `git push origin :hotfix`
 
 
+#### Check status of all repos
+
+I have an alias calling the following commands:
+
+~~~sh
+WD=`pwd`
+for ff in `find . -maxdepth 5 -name .git`
+do
+    GDIR=`dirname $ff`
+    echo $GDIR
+    cd $WD/$GDIR
+    git st -s
+done
+cd $WD
+~~~
+
+
 ## Docker cheatsheet
 
 I'm still learning Docker but here are commands/parameters that seem relevant for me:
