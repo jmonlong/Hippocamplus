@@ -194,6 +194,7 @@ do
     echo $GDIR
     cd $WD/$GDIR
     git st -s
+    git st | grep ahead
 done
 cd $WD
 ~~~
