@@ -1,8 +1,7 @@
 ---
 title: Journals comparison
-date: 2017-10-15
+date: 2018-02-23
 tags: ["pub"]
-draft: true
 ---
 
 
@@ -340,10 +339,21 @@ draft: true
 <li>APC from <a href="https://doaj.org/">Directory of Open Access Journals</a>, or the journal.</li>
 </ul>
 <p><em>Received-to-accepted time</em> and <em>Pub/year</em> are based on articles published in 2016. After a PubMed search, the publication page was crawled to get the article type and dates of reception/acceptance. Only research articles/letters are considered (no method/tools/resource/editorial/perspective/erratum/opinion/…). Sometimes the DOI was not present in the PubMed results or there was a lot a publications to crawl so I analyzed a subset and extrapolated the numbers (<code>~</code> marks approximated numbers). I still see some suspicious numbers (articles with very short/negative acceptance time). Hopefully the medians are still close to reality but these numbers should be taken with a grain of salt.</p>
+<p>Now that some data has been produced it’s graph time !</p>
 </div>
 <div id="median-time-to-acceptancepublication" class="section level2">
 <h2>Median time to acceptance/publication</h2>
-<p><img src="/post/2017-10-15-JournalComparison_files/figure-html/unnamed-chunk-1-1.png" width="960" /></p>
+<p><img src="/post/2017-10-15-JournalComparison_files/figure-html/time-1.png" width="960" /></p>
+</div>
+<div id="median-time-to-acceptancepublication-vs-number-of-article-published" class="section level2">
+<h2>Median time to acceptance/publication vs number of article published</h2>
+<p><img src="/post/2017-10-15-JournalComparison_files/figure-html/timenb-1.png" width="960" /></p>
+</div>
+<div id="median-time-to-acceptancepublication-vs-impact-factor" class="section level2">
+<h2>Median time to acceptance/publication vs impact factor</h2>
+<p>I’m curious to see if it takes more time in some cases because a journal is more “picky” ?</p>
+<p>The impact factor is not a good indicator of research impact but maybe it can be a proxy for a journal’s pickiness. Looking at the correlation with the impact factor, there’s a trend (with or without the first tier journals). Still the journals are quite spread out.</p>
+<p><img src="/post/2017-10-15-JournalComparison_files/figure-html/timeif-1.png" width="960" /><img src="/post/2017-10-15-JournalComparison_files/figure-html/timeif-2.png" width="960" /></p>
 </div>
 <div id="good-journals" class="section level2">
 <h2>“Good” journals</h2>

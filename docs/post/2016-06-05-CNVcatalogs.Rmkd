@@ -216,10 +216,16 @@ On average, `r round(mean(dgv.gen$mb),2)` Mbp of a genome is annotated as CNV.
 ```{r tkgp}
 if(DOWNLOAD & !file.exists("ALL.wgs.mergedSV.v8.20130502.svs.genotypes.vcf.gz")) download.file("ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/phase3/integrated_sv_map/ALL.wgs.mergedSV.v8.20130502.svs.genotypes.vcf.gz", "ALL.wgs.mergedSV.v8.20130502.svs.genotypes.vcf.gz")
 tgp = readVcf('ALL.wgs.mergedSV.v8.20130502.svs.genotypes.vcf.gz', 'hg19')
-tgp %>% info %>% as.data.frame %>% mutate(type=SVTYPE, end=END,imprecise=IMPRECISE) %>% head
+tgp %>% info %>% as.data.frame %>% head
 allNA <- function(x) unlist(lapply(x, function(y) all(is.na(y))))
 tgp.info = tgp %>% info %>% as.data.frame %>% mutate(CIPOS=allNA(CIPOS), CIEND=allNA(CIEND))
 tgp.info %>% group_by(SVTYPE) %>% summarize(nb.precise=sum(!IMPRECISE), nb.precise.noCI=sum(CIPOS&CIEND), prop.precise=nb.precise/n(), prop.precise.noCI=nb.precise.noCI/n()) %>% arrange(desc(nb.precise)) %>% kable  
+```
+
+## Call sets and SV type
+
+```{r}
+tgp.info %>% group_by(CS, SVTYPE) %>% summarize(n=n()) %>% kable
 ```
 
 
