@@ -1,5 +1,5 @@
 ---
-title: Journals comparison
+title: Journal comparison
 date: 2018-02-23
 tags: ["pub"]
 ---
@@ -53,7 +53,7 @@ Open Access (OA) journal:
 Fees:
 
 - `pp`: Per page.
-- `ppX`: Per page in excess of X (if more than X pages).
+- `ppX`: Per pages in excess of X (if more than X pages).
 - `pf`: Per figure.
 - `psf`: Per supplementary file.
 
@@ -62,9 +62,9 @@ Fees:
 - Impact Factor for 2016/2017 from [bioxbio](http://www.bioxbio.com/if/).
 - APC from [Directory of Open Access Journals](https://doaj.org/), or the journal.
 
-*Received-to-accepted time* and *Pub/year* are based on articles published in 2016. After a PubMed search, the publication page was crawled to get the article type and dates of reception/acceptance. Only research articles/letters are considered (no method/tools/resource/editorial/perspective/erratum/opinion/...). Sometimes the DOI was not present in the PubMed results or there was a lot a publications to crawl so I analyzed a subset and extrapolated the numbers (`~` marks approximated numbers). I still see some suspicious numbers (articles with very short/negative acceptance time). Hopefully the medians are still close to reality but these numbers should be taken with a grain of salt.
+*Received-to-accepted time* and *Pub/year* are based on articles published in 2016. After a PubMed search, the publication web-page was crawled to get the article type and dates of reception/acceptance. I considered research articles/letters/methods/reports but not reviews/editorial/perspective/erratum/opinion. Sometimes the DOI was not present in the PubMed results or there was a lot of publications to crawl so I analyzed a subset and extrapolated the numbers (`~` marks approximated numbers). I still see some suspicious numbers (articles with very short/negative acceptance time). Hopefully the medians are still close to reality but these numbers should be taken with a grain of salt.
 
-Now that some data has been produced it's graph time !
+Some data has been produced, now it's graph time !
 
 ## Median time to acceptance/publication
 
@@ -112,7 +112,7 @@ ggplot(pub.s, aes(y=days, x=winsor(n,2000))) + geom_point() + theme_bw() + geom_
 
 I'm curious to see if it takes more time in some cases because a journal is more "picky" ? 
 
-The impact factor is not a good indicator of research impact but maybe it can be a proxy for a journal's pickiness. Looking at the correlation with the impact factor, there's a trend (with or without the first tier journals). Still the journals are quite spread out.
+The impact factor is not a good indicator of research impact but maybe it can be a proxy for a journal's pickiness. Looking at the correlation with the impact factor, there's a trend (with or without the first tier journals). Still, the journals are quite spread out.
 
 ```{r timeif}
 ggplot(pub.s, aes(x=IF, y=days)) + theme_bw() + geom_smooth(se=FALSE, method=lm, colour='indianred2') + geom_label_repel(aes(label=journal), size=2.5) + facet_grid(.~type2) + ylab('median time (days)') + scale_colour_brewer(palette='Set1', name='Open Access', labels=c('no','yes')) + geom_point(aes(colour=oa=='Y'),alpha=.8) + xlab('impact factor') + theme(legend.background = element_rect(colour='black'), legend.position=c(.01,.99), legend.justification=c(0,1)) + guides(colour=guide_legend(direction='horizontal'))

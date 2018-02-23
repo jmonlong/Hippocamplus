@@ -11,11 +11,11 @@
     
       
         <item>
-          <title>Journals comparison</title>
-          <link>/Hippocamplus/2018/02/23/journals-comparison/</link>
+          <title>Journal comparison</title>
+          <link>/Hippocamplus/2018/02/23/journal-comparison/</link>
           <pubDate>Fri, 23 Feb 2018 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2018/02/23/journals-comparison/</guid>
+          <guid>/Hippocamplus/2018/02/23/journal-comparison/</guid>
           <description>&lt;p&gt;Some info about journals in my field.&lt;/p&gt;
 &lt;div id=&#34;summary-table&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Summary table&lt;/h2&gt;
@@ -337,7 +337,7 @@
 &lt;p&gt;Fees:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;pp&lt;/code&gt;: Per page.&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;ppX&lt;/code&gt;: Per page in excess of X (if more than X pages).&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ppX&lt;/code&gt;: Per pages in excess of X (if more than X pages).&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;pf&lt;/code&gt;: Per figure.&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;psf&lt;/code&gt;: Per supplementary file.&lt;/li&gt;
 &lt;/ul&gt;
@@ -348,8 +348,8 @@
 &lt;li&gt;Impact Factor for 2016/2017 from &lt;a href=&#34;http://www.bioxbio.com/if/&#34;&gt;bioxbio&lt;/a&gt;.&lt;/li&gt;
 &lt;li&gt;APC from &lt;a href=&#34;https://doaj.org/&#34;&gt;Directory of Open Access Journals&lt;/a&gt;, or the journal.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;em&gt;Received-to-accepted time&lt;/em&gt; and &lt;em&gt;Pub/year&lt;/em&gt; are based on articles published in 2016. After a PubMed search, the publication page was crawled to get the article type and dates of reception/acceptance. Only research articles/letters are considered (no method/tools/resource/editorial/perspective/erratum/opinion/…). Sometimes the DOI was not present in the PubMed results or there was a lot a publications to crawl so I analyzed a subset and extrapolated the numbers (&lt;code&gt;~&lt;/code&gt; marks approximated numbers). I still see some suspicious numbers (articles with very short/negative acceptance time). Hopefully the medians are still close to reality but these numbers should be taken with a grain of salt.&lt;/p&gt;
-&lt;p&gt;Now that some data has been produced it’s graph time !&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Received-to-accepted time&lt;/em&gt; and &lt;em&gt;Pub/year&lt;/em&gt; are based on articles published in 2016. After a PubMed search, the publication web-page was crawled to get the article type and dates of reception/acceptance. I considered research articles/letters/methods/reports but not reviews/editorial/perspective/erratum/opinion. Sometimes the DOI was not present in the PubMed results or there was a lot of publications to crawl so I analyzed a subset and extrapolated the numbers (&lt;code&gt;~&lt;/code&gt; marks approximated numbers). I still see some suspicious numbers (articles with very short/negative acceptance time). Hopefully the medians are still close to reality but these numbers should be taken with a grain of salt.&lt;/p&gt;
+&lt;p&gt;Some data has been produced, now it’s graph time !&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;median-time-to-acceptancepublication&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Median time to acceptance/publication&lt;/h2&gt;
@@ -362,7 +362,7 @@
 &lt;div id=&#34;median-time-to-acceptancepublication-vs-impact-factor&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Median time to acceptance/publication vs impact factor&lt;/h2&gt;
 &lt;p&gt;I’m curious to see if it takes more time in some cases because a journal is more “picky” ?&lt;/p&gt;
-&lt;p&gt;The impact factor is not a good indicator of research impact but maybe it can be a proxy for a journal’s pickiness. Looking at the correlation with the impact factor, there’s a trend (with or without the first tier journals). Still the journals are quite spread out.&lt;/p&gt;
+&lt;p&gt;The impact factor is not a good indicator of research impact but maybe it can be a proxy for a journal’s pickiness. Looking at the correlation with the impact factor, there’s a trend (with or without the first tier journals). Still, the journals are quite spread out.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;../post/2017-10-15-JournalComparison_files/figure-html/timeif-1.png&#34; width=&#34;960&#34; /&gt;&lt;img src=&#34;../post/2017-10-15-JournalComparison_files/figure-html/timeif-2.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;good-journals&#34; class=&#34;section level2&#34;&gt;
