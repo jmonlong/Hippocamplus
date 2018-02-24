@@ -184,7 +184,8 @@
   
   
   </span>
-  <p>Some info about journals in my field.</p>
+  <p><em>Edit Feb 24: Added variance graph and some examples of suspiciously fast publications.</em></p>
+<p>Some info about journals in my field.</p>
 <div id="summary-table" class="section level2">
 <h2>Summary table</h2>
 <table>
@@ -532,6 +533,155 @@
 <p>I’m curious to see if it takes more time in some cases because a journal is more “picky” ?</p>
 <p>The impact factor is not a good indicator of research impact but maybe it can be a proxy for a journal’s pickiness. Looking at the correlation with the impact factor, there’s a trend (with or without the first tier journals). Still, the journals are quite spread out.</p>
 <p><img src="../../../../post/2017-10-15-JournalComparison_files/figure-html/timeif-1.png" width="960" /><img src="../../../../post/2017-10-15-JournalComparison_files/figure-html/timeif-2.png" width="960" /></p>
+</div>
+<div id="variance-in-time-to-acceptance" class="section level2">
+<h2>Variance in time to acceptance</h2>
+<p>The ranking using the 75th percentile is not so different than the one using the median.</p>
+<p><img src="../../../../post/2017-10-15-JournalComparison_files/figure-html/timevar-1.png" width="960" /></p>
+<p>We see some publications with suspiciously short received-to-accepted times…</p>
+</div>
+<div id="suspiciously-short-received-to-accepted-times" class="section level2">
+<h2>Suspiciously short received-to-accepted times</h2>
+<p>I’m not sure how each journal defines <em>“received”</em>. Some publications have acceptance times too short to be the peer-review time.</p>
+<p>I even found two papers that have negative received-to-accepted times… In both the webpage and the PDFs, these papers were <strong>published 3 months before they were submitted</strong>: <a href="http://www.genetics.org/content/203/3/1249.article-info">10.1534/genetics.115.183194</a> and <a href="http://www.genetics.org/content/203/3/1425.article-info">10.1534/genetics.115.185181</a>.</p>
+<p>Anyway, looking at a few examples for each journal, some of the “fast” publications are about <strong>resources (databases, portal, websites)</strong> which makes sense, others look like research that would require peer-review longer than a few days…</p>
+<p>For example, the “fastest” publications for each journal (among the publications I considered):</p>
+<table>
+<thead>
+<tr class="header">
+<th align="right">Days to acceptance</th>
+<th align="left">Journal</th>
+<th align="left">Title</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="left">Genome Biology</td>
+<td align="left"><a href="http://doi.org/10.1186/s13059-016-0929-9">OncoNEM: inferring tumor evolution from single-cell sequencing data.</a></td>
+</tr>
+<tr class="even">
+<td align="right">3</td>
+<td align="left">PLoS Genet.</td>
+<td align="left"><a href="http://doi.org/10.1371/journal.pgen.1006521">Tbx5 Buffers Inherent Left/Right Asymmetry Ensuring Symmetric Forelimb Formation.</a></td>
+</tr>
+<tr class="odd">
+<td align="right">4</td>
+<td align="left">eLife</td>
+<td align="left"><a href="http://doi.org/10.7554/eLife.21635">Lysosomal membrane glycoproteins bind cholesterol and contribute to lysosomal cholesterol export.</a></td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="left">PeerJ</td>
+<td align="left"><a href="http://doi.org/10.7717/peerj.1969">Ectopic expression of Jatropha curcas APETALA1 (JcAP1) caused early flowering in Arabidopsis, but not in Jatropha.</a></td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="left">Genetics</td>
+<td align="left"><a href="http://doi.org/10.1534/genetics.115.183137">Identifying Regulators of Morphogenesis Common to Vertebrate Neural Tube Closure and Caenorhabditis elegans Gastrulation.</a></td>
+</tr>
+<tr class="even">
+<td align="right">9</td>
+<td align="left">NAR</td>
+<td align="left"><a href="http://doi.org/10.1093/nar/gkv1047">PDBe: improved accessibility of macromolecular structure data from PDB and EMDB.</a></td>
+</tr>
+<tr class="odd">
+<td align="right">10</td>
+<td align="left">GigaScience</td>
+<td align="left"><a href="http://doi.org/10.1186/s13742-016-0143-4">RES-Scanner: a software package for genome-wide identification of RNA-editing sites.</a></td>
+</tr>
+<tr class="even">
+<td align="right">11</td>
+<td align="left">PLoS ONE</td>
+<td align="left"><a href="http://doi.org/10.1371/journal.pone.0149986">Time-Resolved Visualisation of Nearly-Native Influenza A Virus Progeny Ribonucleoproteins and Their Individual Components in Live Infected Cells.</a></td>
+</tr>
+<tr class="odd">
+<td align="right">15</td>
+<td align="left">PLoS Biology</td>
+<td align="left"><a href="http://doi.org/10.1371/journal.pbio.1002480">The DEAD-box Protein Rok1 Orchestrates 40S and 60S Ribosome Assembly by Promoting the Release of Rrp5 from Pre-40S Ribosomes to Allow for 60S Maturation.</a></td>
+</tr>
+<tr class="even">
+<td align="right">15</td>
+<td align="left">BMC Biology</td>
+<td align="left"><a href="http://doi.org/10.1186/s12915-016-0253-6">Nuclear fallout provides a new link between aPKC and polarized cell trafficking.</a></td>
+</tr>
+<tr class="odd">
+<td align="right">17</td>
+<td align="left">Bioinformatics</td>
+<td align="left"><a href="http://doi.org/10.1093/bioinformatics/btv604">iEnhancer-2L: a two-layer predictor for identifying enhancers and their strength by pseudo k-tuple nucleotide composition.</a></td>
+</tr>
+<tr class="even">
+<td align="right">19</td>
+<td align="left">Science</td>
+<td align="left"><a href="http://doi.org/10.1126/science.aaf1835">Selective conversion of syngas to light olefins.</a></td>
+</tr>
+<tr class="odd">
+<td align="right">20</td>
+<td align="left">Am J Hum Genet.</td>
+<td align="left"><a href="http://doi.org/10.1016/j.ajhg.2016.07.014">The Power of Human Protective Modifiers: PLS3 and CORO1C Unravel Impaired Endocytosis in Spinal Muscular Atrophy and Rescue SMA Phenotype.</a></td>
+</tr>
+<tr class="even">
+<td align="right">20</td>
+<td align="left">Cell Reports</td>
+<td align="left"><a href="http://doi.org/10.1016/j.celrep.2016.08.091">Structures of NS5 Methyltransferase from Zika Virus.</a></td>
+</tr>
+<tr class="odd">
+<td align="right">22</td>
+<td align="left">PLoS Comput Biol</td>
+<td align="left"><a href="http://doi.org/10.1371/journal.pcbi.1005041">Direct Correlation between Motile Behavior and Protein Abundance in Single Cells.</a></td>
+</tr>
+<tr class="even">
+<td align="right">22</td>
+<td align="left">Nature Communications</td>
+<td align="left"><a href="http://doi.org/10.1038/ncomms10745">Switchable friction enabled by nanoscale self-assembly on graphene.</a></td>
+</tr>
+<tr class="odd">
+<td align="right">24</td>
+<td align="left">Scientific Reports</td>
+<td align="left"><a href="http://doi.org/10.1038/srep28849">Aero-Thermo-Dynamic Mass Analysis.</a></td>
+</tr>
+<tr class="even">
+<td align="right">25</td>
+<td align="left">Nature</td>
+<td align="left"><a href="http://doi.org/10.1038/nature16536">Non-classical correlations between single photons and phonons from a mechanical oscillator.</a></td>
+</tr>
+<tr class="odd">
+<td align="right">26</td>
+<td align="left">Cell</td>
+<td align="left"><a href="http://doi.org/10.1016/j.cell.2016.11.014">Atomic Structure of the Cystic Fibrosis Transmembrane Conductance Regulator.</a></td>
+</tr>
+<tr class="even">
+<td align="right">28</td>
+<td align="left">Nature Methods</td>
+<td align="left"><a href="http://doi.org/10.1038/nmeth.4031">ATAC-see reveals the accessible genome by transposase-mediated imaging and sequencing.</a></td>
+</tr>
+<tr class="odd">
+<td align="right">30</td>
+<td align="left">BMC Genomics</td>
+<td align="left"><a href="http://doi.org/10.1186/s12864-016-2393-z">Suboptimal culture conditions induce more deviations in gene expression in male than female bovine blastocysts.</a></td>
+</tr>
+<tr class="even">
+<td align="right">38</td>
+<td align="left">Nature Genetics</td>
+<td align="left"><a href="http://doi.org/10.1038/ng.3611">Genomic analysis of 6,000-year-old cultivated grain illuminates the domestication history of barley.</a></td>
+</tr>
+<tr class="odd">
+<td align="right">43</td>
+<td align="left">BMC Bioinformatics</td>
+<td align="left"><a href="http://doi.org/10.1186/s12859-016-0931-y">ksRepo: a generalized platform for computational drug repositioning.</a></td>
+</tr>
+<tr class="even">
+<td align="right">59</td>
+<td align="left">Nature Biotech</td>
+<td align="left"><a href="http://doi.org/10.1038/nbt.3663">Blood pressure regulation by CD4(+) lymphocytes expressing choline acetyltransferase.</a></td>
+</tr>
+<tr class="odd">
+<td align="right">94</td>
+<td align="left">Genome Research</td>
+<td align="left"><a href="http://doi.org/10.1101/gr.215293.116">Large-scale reduction of the Bacillus subtilis genome: consequences for the transcriptional network, resource allocation, and metabolism.</a></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="good-journals" class="section level2">
 <h2>“Good” journals</h2>

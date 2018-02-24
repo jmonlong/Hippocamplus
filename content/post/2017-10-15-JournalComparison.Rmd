@@ -5,6 +5,8 @@ tags: ["pub"]
 slug: journals-comparison
 ---
 
+*Edit Feb 24: Added variance graph and some examples of suspiciously fast publications.*
+
 Some info about journals in my field.
 
 ## Summary table
@@ -86,7 +88,7 @@ winsor <- function(x, u){
 }
 
 load("../../data/journalComp.RData")
-art.types = c('Article','Research Article','Research article', 'Research', 'PEER-REVIEWED', 'INVESTIGATIONS','Feature Article','Meta-Research Article')
+art.types = c('Article','Research Article','Research article', 'Research', 'PEER-REVIEWED', 'INVESTIGATIONS','Meta-Research Article')
 meth.types = c('Methodology article','Methodology Article', 'METHOD', 'Method','Methodolgy article')
 letter.types = c('Letter', 'Brief Communication')
 report.types = c('Registered Report', 'Report', 'Short Report', 'Technical Report')
@@ -121,6 +123,36 @@ ggplot(pub.s, aes(x=IF, y=days)) + theme_bw() + geom_smooth(se=FALSE, method=lm,
 
 ggplot(subset(pub.s, IF<20), aes(x=IF, y=days)) + theme_bw() + geom_smooth(se=FALSE, method=lm, colour='indianred2') + geom_label_repel(aes(label=journal), size=2.5) + facet_grid(.~type2) + ylab('median time (days)') + scale_colour_brewer(palette='Set1', name='Open Access', labels=c('no','yes')) + geom_point(aes(colour=oa=='Y'),alpha=.8) + xlab('impact factor') + theme(legend.background = element_rect(colour='black'), legend.position=c(.01,.99), legend.justification=c(0,1)) + guides(colour=guide_legend(direction='horizontal'))
 ```
+
+## Variance in time to acceptance
+
+The ranking using the 75th percentile is not so different than the one using the median.
+
+```{r timevar, fig.height=6}
+pub.df %>% filter(ra>=0) %>% ggplot(aes(x=reorder(journal, ra, quantile, probs=.75, na.rm=TRUE), y=ra)) + geom_boxplot() + theme_bw() + ylab('received to accepted (days)') + xlab('') + theme(axis.text.x=element_text(angle=90, hjust=1, vjust=.5))
+```
+
+We see some publications with suspiciously short received-to-accepted times...
+
+## Suspiciously short received-to-accepted times
+
+I'm not sure how each journal defines *"received"*. 
+Some publications have acceptance times too short to be the peer-review time. 
+
+I even found two papers that have negative received-to-accepted times... 
+In both the webpage and the PDFs, these papers were **published 3 months before they were submitted**: [10.1534/genetics.115.183194](http://www.genetics.org/content/203/3/1249.article-info) and [10.1534/genetics.115.185181](http://www.genetics.org/content/203/3/1425.article-info).
+
+Anyway, looking at a few examples for each journal, some of the "fast" publications are about **resources (databases, portal, websites)** which makes sense, others look like research that would require peer-review longer than a few days...
+
+For example, the "fastest" publications for each journal (among the publications I considered):
+
+```{r suspicious}
+library(knitr)
+
+pub.df %>% filter(ra>=0) %>% arrange(ra) %>% filter(!duplicated(journal)) %>% mutate(Title=paste0('[',Title,'](http://doi.org/',doi,')')) %>% select(ra, journal, Title) %>% kable(col.names=c('Days to acceptance', 'Journal', 'Title'))
+```
+
+
 
 
 ## "Good" journals
