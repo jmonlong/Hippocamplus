@@ -162,6 +162,20 @@ git config --global alias.br branch</code></pre>
 <li>Delete remote branch: <code>git push origin :hotfix</code></li>
 </ul>
 </div>
+<div id="check-status-of-all-repos" class="section level4">
+<h4>Check status of all repos</h4>
+<p>I have an alias calling the following commands:</p>
+<pre class="sh"><code>WD=`pwd`
+for ff in `find . -maxdepth 5 -name .git`
+do
+    GDIR=`dirname $ff`
+    echo $GDIR
+    cd $WD/$GDIR
+    git st -s
+    git st | grep ahead
+done
+cd $WD</code></pre>
+</div>
 </div>
 <div id="docker-cheatsheet" class="section level2">
 <h2>Docker cheatsheet</h2>
