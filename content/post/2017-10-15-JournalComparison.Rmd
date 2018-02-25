@@ -7,6 +7,8 @@ slug: journals-comparison
 
 *Edit Feb 24: Added variance graph and some examples of suspiciously fast publications.*
 
+*Edit Feb 25: Added [script and data](https://github.com/jmonlong/Hippocamplus/tree/config/R/journalPubTime) to GitHub.*
+
 Some info about journals in my field.
 
 ## Summary table
@@ -152,8 +154,10 @@ library(knitr)
 pub.df %>% filter(ra>=0) %>% arrange(ra) %>% filter(!duplicated(journal)) %>% mutate(Title=paste0('[',Title,'](http://doi.org/',doi,')')) %>% select(ra, journal, Title) %>% kable(col.names=c('Days to acceptance', 'Journal', 'Title'))
 ```
 
+## Script and data
 
-
+I someone wants to do the same for other journals, I put my script [there](https://github.com/jmonlong/Hippocamplus/tree/config/R/journalPubTime).
+The data I used is also there in a [TSV file](https://github.com/jmonlong/Hippocamplus/raw/config/R/journalPubTime/journalPubTime.tsv).
 
 ## "Good" journals
 

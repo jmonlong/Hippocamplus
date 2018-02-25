@@ -35,6 +35,7 @@
           <author></author>
           <guid>/Hippocamplus/2018/02/23/journals-comparison/</guid>
           <description>&lt;p&gt;&lt;em&gt;Edit Feb 24: Added variance graph and some examples of suspiciously fast publications.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Edit Feb 25: Added &lt;a href=&#34;https://github.com/jmonlong/Hippocamplus/tree/config/R/journalPubTime&#34;&gt;script and data&lt;/a&gt; to GitHub.&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;Some info about journals in my field.&lt;/p&gt;
 &lt;div id=&#34;summary-table&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Summary table&lt;/h2&gt;
@@ -532,6 +533,10 @@
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;script-and-data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Script and data&lt;/h2&gt;
+&lt;p&gt;I someone wants to do the same for other journals, I put my script &lt;a href=&#34;https://github.com/jmonlong/Hippocamplus/tree/config/R/journalPubTime&#34;&gt;there&lt;/a&gt;. The data I used is also there in a &lt;a href=&#34;https://github.com/jmonlong/Hippocamplus/raw/config/R/journalPubTime/journalPubTime.tsv&#34;&gt;TSV file&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;good-journals&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;“Good” journals&lt;/h2&gt;
