@@ -22,11 +22,11 @@ More details in the code.
 
 The data for *Am J Hum Genet.*, *Bioinformatics*, *BMC Bioinformatics*, *BMC Biology*, *BMC Genomics*, *Cell*, *Cell Reports*, *eLife*, *Genetics*, *Genome Biology*, *Genome Research*, *GigaScience*, *NAR*, *Nature*, *Nature Biotech*, *Nature Communications*, *Nature Genetics*, *Nature Methods*, *PeerJ*, *PLoS Biology*, *PLoS Comput Biol*, *PLoS Genet.*, *PLoS ONE*, *Science*, *Scientific Reports*.
 
-In `journalPubTime.tsv`:
+The non-self-explanatory columns in `journalPubTime.tsv`:
 
 - *ra*: received-to-accepted time in days.
 - *rp*: received-to-published time in days.
 - *ss*: how much sub-sampling occurred. Extrapolate total number of pubs by summing the ss.
 - *typec*: manually standardized article types (see end of `journalPubTimeCrawler.R`).
 
-In R, read with `read.table('journalPubTime.tsv', header=TRUE, as.is=TRUE, sep='\t', quote=NULL)`. 
+Note: in R, import with `read.table('journalPubTime.tsv', header=TRUE, as.is=TRUE, sep='\t', quote=NULL)`. 
