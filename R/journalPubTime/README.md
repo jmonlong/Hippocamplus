@@ -18,6 +18,8 @@ For some journals I could reuse scrape functions: same function for all PLoS jou
 
 More details in the code.
 
+I also put a script to keep only research papers and reproduce the main figure: `graphs.R`.
+
 ## Data
 
 The data for *Am J Hum Genet.*, *Bioinformatics*, *BMC Bioinformatics*, *BMC Biology*, *BMC Genomics*, *Cell*, *Cell Reports*, *eLife*, *Genetics*, *Genome Biology*, *Genome Research*, *GigaScience*, *NAR*, *Nature*, *Nature Biotech*, *Nature Communications*, *Nature Genetics*, *Nature Methods*, *PeerJ*, *PLoS Biology*, *PLoS Comput Biol*, *PLoS Genet.*, *PLoS ONE*, *Science*, *Scientific Reports*.
