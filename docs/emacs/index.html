@@ -346,23 +346,23 @@ make</code></pre>
 </div>
 <div id="thesaurus-and-synonyms" class="section level3">
 <h3>Thesaurus and synonyms</h3>
-<p>I use the <code>synonyms</code> package available in MELPA. It’s not as user friendly as some online resources but a good off-line alternative. I downloaded the Gutenberg thesaurus <a href="https://archive.org/download/mobythesauruslis03202gut/mthesaur.txt">here</a>. In my <code>.emacs</code>:</p>
-<pre class="lisp"><code>(setq synonyms-file &quot;/Users/jeanmonlong/.emacs.d/mthesaur.txt&quot;)
-(setq synonyms-cache-file &quot;/Users/jeanmonlong/.emacs.d/synonyms.cache&quot;)
-(require &#39;synonyms)</code></pre>
+<p>I use the <code>synosaurus</code> package available in MELPA. It’s not as user friendly as some online resources but a good offline alternative. It uses the <a href="https://en.wikipedia.org/wiki/WordNet">WordNet</a> database through the <code>wn</code> command line. The shortcut to list synonyms is <code>C-c C-s l</code>.</p>
+<p>In my <code>.emacs</code> I added the <code>synosaurus-mode</code> minor mode:</p>
+<pre class="lisp"><code>(add-hook &#39;LaTeX-mode-hook &#39;synosaurus-mode)</code></pre>
 </div>
 <div id="grammar-checking" class="section level3">
 <h3>Grammar checking</h3>
-<p>Apparently <code>langtool</code> package available in MELPA. In my <code>.emacs</code>:</p>
+<p>The <code>langtool</code> package is available in MELPA. It uses the <a href="https://languagetool.org/">LanguageTool</a> JAR to highlight potential grammar problems. In my <code>.emacs</code>:</p>
 <pre class="lisp"><code>(require &#39;langtool)
 (setq langtool-language-tool-jar &quot;/usr/local/Cellar/languagetool/3.8/libexec/languagetool-commandline.jar&quot;)
 (setq langtool-default-language &quot;en-US&quot;)
 (setq langtool-mother-tongue &quot;fr&quot;)
 (setq langtool-disabled-rules &#39;(&quot;MORFOLOGIK_RULE_EN_US&quot;))</code></pre>
+<p><em>MORFOLOGIK_RULE_EN_US</em> corresponds to spelling mistakes, which I don’t want to see because I do the spell-checking separately better with ispell. The list of rules is <a href="https://community.languagetool.org/rule/list?lang=en-US">here</a>. For example, I could be disabled <em>WHITESPACE_RULE</em> for LaTeX.</p>
 <p>Then:</p>
 <ul>
 <li><code>M-x langtool-check</code> to highlight problems.</li>
-<li><code>M-x langtool-check-done</code> to stop.</li>
+<li><code>M-x langtool-check-done</code> to remove highlighting.</li>
 </ul>
 </div>
 </div>

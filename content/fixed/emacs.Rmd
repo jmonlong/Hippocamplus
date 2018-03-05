@@ -166,20 +166,21 @@ I use the *american* dictionary by default:
 
 ### Thesaurus and synonyms
 
-I use the `synonyms` package available in MELPA.
-It's not as user friendly as some online resources but a good off-line alternative.
-I downloaded the Gutenberg thesaurus [here](https://archive.org/download/mobythesauruslis03202gut/mthesaur.txt).
-In my `.emacs`:
+I use the `synosaurus` package available in MELPA.
+It's not as user friendly as some online resources but a good offline alternative.
+It uses the [WordNet](https://en.wikipedia.org/wiki/WordNet) database through the `wn` command line.
+The shortcut to list synonyms is `C-c C-s l`.
+
+In my `.emacs` I added the `synosaurus-mode` minor mode:
 
 ~~~lisp
-(setq synonyms-file "/Users/jeanmonlong/.emacs.d/mthesaur.txt")
-(setq synonyms-cache-file "/Users/jeanmonlong/.emacs.d/synonyms.cache")
-(require 'synonyms)
+(add-hook 'LaTeX-mode-hook 'synosaurus-mode)
 ~~~
 
 ### Grammar checking
 
-Apparently `langtool` package available in MELPA.
+The `langtool` package is available in MELPA. 
+It uses the [LanguageTool](https://languagetool.org/) JAR to highlight potential grammar problems.
 In my `.emacs`:
 
 ~~~lisp
@@ -190,10 +191,14 @@ In my `.emacs`:
 (setq langtool-disabled-rules '("MORFOLOGIK_RULE_EN_US"))
 ~~~
 
+*MORFOLOGIK_RULE_EN_US* corresponds to spelling mistakes, which I don't want to see because I do the spell-checking separately better with ispell. 
+The list of rules is [here](https://community.languagetool.org/rule/list?lang=en-US). 
+For example, I could be disabled *WHITESPACE_RULE* for LaTeX.
+
 Then:
 
 - `M-x langtool-check` to highlight problems.
-- `M-x langtool-check-done` to stop.
+- `M-x langtool-check-done` to remove highlighting.
 
 ## For LaTeX
 
