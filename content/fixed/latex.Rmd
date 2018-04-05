@@ -24,7 +24,7 @@ This is my default (more or less) :
 \usepackage{fullpage}
 ~~~
 
-## Basics
+## Misc
 
 ### Font sizes
 
@@ -65,6 +65,51 @@ and
 ~~~
 
 An accent was specified as `\'i`.
+
+### Links
+
+I prefer the links to be colored rather than boxed, but with darker color than the default:
+
+~~~latex
+\usepackage{hyperref}
+\usepackage{xcolor}
+\hypersetup{
+    colorlinks,
+    linkcolor={red!70!black},
+    citecolor={blue!40!black},
+    urlcolor={magenta!80!black}
+}
+~~~
+
+### Table of contents
+
+
+Changing the title of the section created by `\tableofcontents`:
+
+~~~latex
+\renewcommand{\contentsname}{Table of Contents}
+~~~
+
+To manually add an un-numbered section to the TOC (here at the *chapter* level):
+
+~~~latex
+\addcontentsline{toc}{chapter}{Disclaimer}
+~~~
+
+To set the depth of the TOC:
+
+~~~latex
+\usepackage{tocbibind}
+\setcounter{tocdepth}{2}
+~~~
+
+To set the space between the number and the title in list of figures/tables (e.g. if custom long numbers):
+
+~~~latex
+\usepackage{tocloft}
+\setlength{\cftfignumwidth}{3em}
+~~~
+
 
 ## Figures
 

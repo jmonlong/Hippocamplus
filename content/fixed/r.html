@@ -22,8 +22,8 @@ output:
 <li><a href="#waffle-graphs">Waffle graphs</a></li>
 </ul></li>
 <li><a href="#rmarkdown">Rmarkdown</a><ul>
-<li><a href="#jekyll-website">Jekyll website</a></li>
 <li><a href="#beamer-presentation">Beamer presentation</a></li>
+<li><a href="#jekyll-website">Jekyll website</a></li>
 </ul></li>
 </ul>
 </div>
@@ -91,13 +91,10 @@ grid.arrange(p1, p2, heights = c(3, 2))</code></pre>
 </div>
 <div id="rmarkdown" class="section level2">
 <h2>Rmarkdown</h2>
-<div id="jekyll-website" class="section level3">
-<h3>Jekyll website</h3>
-<p>The <code>Rmd</code> files located in the <code>_source</code> folder get automatically compiled by <code>servr</code> package using this command:</p>
-<pre class="sh"><code>Rscript -e &quot;servr::jekyll(script=&#39;build.R&#39;, serve=FALSE)&quot;</code></pre>
-<p>To define <em>knitr</em> parameters, I add a chunk at the beginning of the Rmarkdown document:</p>
-<pre class="md"><code></code></pre>
-</div>
+<p>To define <em>knitr</em> parameters, I add a chunk at the beginning of the Rmarkdown document. For example:</p>
+<pre class="md"><code>```{r include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, fig.width=10)
+```</code></pre>
 <div id="beamer-presentation" class="section level3">
 <h3>Beamer presentation</h3>
 <p>Some useful options to put in the YAML header:</p>
@@ -112,6 +109,7 @@ output:
     includes:
       in_header: header.tex
     toc: true
+    dev: png
     keep_tex: true</code></pre>
 <ul>
 <li><code>slide_level</code> defines the header level to be considered as a new slide.</li>
@@ -119,5 +117,31 @@ output:
 <p>To add slide count I put this on the <code>header.tex</code>:</p>
 <pre class="tex"><code>\setbeamertemplate{navigation symbols}{}
 \setbeamertemplate{footline}[page number]</code></pre>
+<div id="wide-tables" class="section level4">
+<h4>Wide tables</h4>
+<p>To resize wide tables I use a hook that surround a chunk with <code>\resizebox</code> command, defined in the non-included chunk:</p>
+<pre class="md"><code>```{r, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE)
+knitr::knit_hooks$set(resize = function(before, options, envir) {
+    if (before) {
+      return(&#39;\\resizebox{\\textwidth}{!}{&#39;)
+    } else {
+      return(&#39;}&#39;)
+    }
+})
+```
+
+## Wide table
+
+```{r, resize=TRUE}}
+knitr::kable(matrix(rnorm(10),10,10), format=&#39;latex&#39;)
+```</code></pre>
+</div>
+</div>
+<div id="jekyll-website" class="section level3">
+<h3>Jekyll website</h3>
+<p>The <code>Rmd</code> files located in the <code>_source</code> folder get automatically compiled by <code>servr</code> package using this command:</p>
+<pre class="sh"><code>Rscript -e &quot;servr::jekyll(script=&#39;build.R&#39;, serve=FALSE)&quot;</code></pre>
+<p>Note: I now use <a href="https://bookdown.org/yihui/blogdown/">blogdown</a> which automatically compile the R Markdown documents (every page is a R Markdown actually).</p>
 </div>
 </div>

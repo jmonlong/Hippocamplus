@@ -113,3 +113,7 @@ Using [MathJax](http://docs.mathjax.org/en/latest/mathjax.html) JavaScript displ
 ~~~
 
 Then inline formulas are surronded by \$ (for equations use two \$), and they follow [LaTeX syntax](https://en.wikibooks.org/wiki/LaTeX/Mathematics).
+
+## R Markdown
+
+I put R Markdown content in the [R section](../r/#rmarkdown).

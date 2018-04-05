@@ -176,11 +176,13 @@
   <div id="TOC">
 <ul>
 <li><a href="#standard-packages">Standard packages</a></li>
-<li><a href="#basics">Basics</a><ul>
+<li><a href="#misc">Misc</a><ul>
 <li><a href="#font-sizes">Font sizes</a></li>
 <li><a href="#change-the-symbol-in-lists">Change the symbol in lists</a></li>
 <li><a href="#math-calligraphy">Math calligraphy</a></li>
 <li><a href="#languages-and-encoding">Languages and encoding</a></li>
+<li><a href="#links">Links</a></li>
+<li><a href="#table-of-contents">Table of contents</a></li>
 </ul></li>
 <li><a href="#figures">Figures</a><ul>
 <li><a href="#position">Position</a></li>
@@ -235,8 +237,8 @@
 \usepackage{subcaption}
 \usepackage{fullpage}</code></pre>
 </div>
-<div id="basics" class="section level2">
-<h2>Basics</h2>
+<div id="misc" class="section level2">
+<h2>Misc</h2>
 <div id="font-sizes" class="section level3">
 <h3>Font sizes</h3>
 <p><code>\tiny</code>, <code>\scriptsize</code>, <code>\footnotesize</code>, <code>\small</code>, <code>\normalsize</code>, <code>\large</code>, <code>\Large</code>, <code>\LARGE</code>, <code>\huge</code>, <code>\Huge</code>.</p>
@@ -266,6 +268,31 @@
 \usepackage[T1]{fontenc}
 \usepackage[spanish]{babel}</code></pre>
 <p>An accent was specified as <code>\'i</code>.</p>
+</div>
+<div id="links" class="section level3">
+<h3>Links</h3>
+<p>I prefer the links to be colored rather than boxed, but with darker color than the default:</p>
+<pre class="latex"><code>\usepackage{hyperref}
+\usepackage{xcolor}
+\hypersetup{
+    colorlinks,
+    linkcolor={red!70!black},
+    citecolor={blue!40!black},
+    urlcolor={magenta!80!black}
+}</code></pre>
+</div>
+<div id="table-of-contents" class="section level3">
+<h3>Table of contents</h3>
+<p>Changing the title of the section created by <code>\tableofcontents</code>:</p>
+<pre class="latex"><code>\renewcommand{\contentsname}{Table of Contents}</code></pre>
+<p>To manually add an un-numbered section to the TOC (here at the <em>chapter</em> level):</p>
+<pre class="latex"><code>\addcontentsline{toc}{chapter}{Disclaimer}</code></pre>
+<p>To set the depth of the TOC:</p>
+<pre class="latex"><code>\usepackage{tocbibind}
+\setcounter{tocdepth}{2}</code></pre>
+<p>To set the space between the number and the title in list of figures/tables (e.g. if custom long numbers):</p>
+<pre class="latex"><code>\usepackage{tocloft}
+\setlength{\cftfignumwidth}{3em}</code></pre>
 </div>
 </div>
 <div id="figures" class="section level2">

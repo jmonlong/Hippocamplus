@@ -79,19 +79,11 @@ iron(
 
 ## Rmarkdown
 
-### Jekyll website
-
-The `Rmd` files located in the `_source` folder get automatically compiled by `servr` package using this command:
-
-~~~sh
-Rscript -e "servr::jekyll(script='build.R', serve=FALSE)"
-~~~
-
-To define *knitr* parameters, I add a chunk at the beginning of the Rmarkdown document:
+To define *knitr* parameters, I add a chunk at the beginning of the Rmarkdown document. For example:
 
 ~~~md
-```{r include=FALSE}
-knitr::opts_chunk$set(fig.width=10)
+```{r include=FALSE}`r ''`
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, fig.width=10)
 ```
 ~~~
 
@@ -111,6 +103,7 @@ output:
     includes:
       in_header: header.tex
     toc: true
+    dev: png
     keep_tex: true
 ~~~
 
@@ -122,3 +115,36 @@ To add slide count I put this on the `header.tex`:
 \setbeamertemplate{navigation symbols}{}
 \setbeamertemplate{footline}[page number]
 ~~~
+
+#### Wide tables
+
+To resize wide tables I use a hook that surround a chunk with `\resizebox` command, defined in the non-included chunk:
+
+~~~md
+```{r, include=FALSE}`r ''`
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE)
+knitr::knit_hooks$set(resize = function(before, options, envir) {
+    if (before) {
+      return('\\resizebox{\\textwidth}{!}{')
+    } else {
+      return('}')
+    }
+})
+```
+
+## Wide table
+
+```{r, resize=TRUE}}`r ''`
+knitr::kable(matrix(rnorm(10),10,10), format='latex')
+```
+~~~
+
+### Jekyll website
+
+The `Rmd` files located in the `_source` folder get automatically compiled by `servr` package using this command:
+
+~~~sh
+Rscript -e "servr::jekyll(script='build.R', serve=FALSE)"
+~~~
+
+Note: I now use [blogdown](https://bookdown.org/yihui/blogdown/) which automatically compile the R Markdown documents (every page is a R Markdown actually).
