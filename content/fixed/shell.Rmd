@@ -7,6 +7,7 @@ output:
     toc: true
 ---
 
+## Misc
 
 ### Colors in `less`
 
@@ -42,17 +43,6 @@ Practical example: all the R scripts but not the ones created by BatchJobs in `*
 
 ~~~sh
 rsync -r --exclude="*-files" --include='*/' --include='*.R' --exclude='*' --prune-empty-dirs SRC DEST
-~~~
-
-
-### Mount server in OSX
-
-I created a directory `sftp` (I don't know why I choose this name...anyway) and mount the root of the different servers there. Eventually I created a symbolic link at the root of my computer to point there so that paths like `/gs/projects/...` work directly, as if in the cluster.
-
-To mount a server I use the following command:
-
-~~~sh
-sshfs jmonlong@guillimin.hpc.mcgill.ca:/ /Users/jeanmonlong/sftp/guillimin -ovolname=NAME
 ~~~
 
 ## One-liners
@@ -245,3 +235,24 @@ docker-machine start
 
 - [Makefile basics from Isaacs](https://gist.github.com/isaacs/62a2d1825d04437c6f08).
 
+## OSX
+
+### Mount server
+
+I created a directory `sftp` (I don't know why I choose this name...anyway) and mount the root of the different servers there. Eventually I created a symbolic link at the root of my computer to point there so that paths like `/gs/projects/...` work directly, as if in the cluster.
+
+To mount a server I use the following command:
+
+~~~sh
+sshfs jmonlong@guillimin.hpc.mcgill.ca:/ /Users/jeanmonlong/sftp/guillimin -ovolname=NAME
+~~~
+
+### Setup WD Elements external hard drive
+
+By default the disk is formatted in NTFS, which OSX could read only. To write, the solution that worked for me was to add this line to `/etc/fstab`:
+
+~~~sh
+LABEL=Elements none ntfs rw,auto,nobrowse
+~~~
+
+The disk can then be accessed through the *Volumes* folder (`/Volumes`).

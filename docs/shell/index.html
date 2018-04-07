@@ -175,10 +175,11 @@
   <h1 class="page-title">Shell</h1>
   <div id="TOC">
 <ul>
+<li><a href="#misc">Misc</a><ul>
 <li><a href="#colors-in-less">Colors in <code>less</code></a></li>
 <li><a href="#avoid-killing-ssh-jobs">Avoid killing ssh jobs</a></li>
 <li><a href="#rsync">rsync</a></li>
-<li><a href="#mount-server-in-osx">Mount server in OSX</a></li>
+</ul></li>
 <li><a href="#one-liners">One-liners</a><ul>
 <li><a href="#add-headers-with-cat">Add headers with cat</a></li>
 <li><a href="#remove-empty-directories">Remove empty directories</a></li>
@@ -192,9 +193,15 @@
 <li><a href="#git">Git</a></li>
 <li><a href="#docker-cheatsheet">Docker cheatsheet</a></li>
 <li><a href="#makefile">Makefile</a></li>
+<li><a href="#osx">OSX</a><ul>
+<li><a href="#mount-server">Mount server</a></li>
+<li><a href="#setup-wd-elements-external-hard-drive">Setup WD Elements external hard drive</a></li>
+</ul></li>
 </ul>
 </div>
 
+<div id="misc" class="section level2">
+<h2>Misc</h2>
 <div id="colors-in-less" class="section level3">
 <h3>Colors in <code>less</code></h3>
 <p>Use the <code>-r</code> or <code>-R</code> option. Sometimes the previous command needs a parameter make sure the output includes color codes.</p>
@@ -216,11 +223,6 @@ grep --color=always | less -R</code></pre>
 <p>To recurrently sync all the files that match the patterns in <code>rsyncIncludes.txt</code> EXCEPT some with a specific pattern. Practical example: all the R scripts but not the ones created by BatchJobs in <code>*-files</code> directories:</p>
 <pre class="sh"><code>rsync -r --exclude=&quot;*-files&quot; --include=&#39;*/&#39; --include=&#39;*.R&#39; --exclude=&#39;*&#39; --prune-empty-dirs SRC DEST</code></pre>
 </div>
-<div id="mount-server-in-osx" class="section level3">
-<h3>Mount server in OSX</h3>
-<p>I created a directory <code>sftp</code> (I don’t know why I choose this name…anyway) and mount the root of the different servers there. Eventually I created a symbolic link at the root of my computer to point there so that paths like <code>/gs/projects/...</code> work directly, as if in the cluster.</p>
-<p>To mount a server I use the following command:</p>
-<pre class="sh"><code>sshfs jmonlong@guillimin.hpc.mcgill.ca:/ /Users/jeanmonlong/sftp/guillimin -ovolname=NAME</code></pre>
 </div>
 <div id="one-liners" class="section level2">
 <h2>One-liners</h2>
@@ -380,6 +382,21 @@ docker-machine start</code></pre>
 <ul>
 <li><a href="https://gist.github.com/isaacs/62a2d1825d04437c6f08">Makefile basics from Isaacs</a>.</li>
 </ul>
+</div>
+<div id="osx" class="section level2">
+<h2>OSX</h2>
+<div id="mount-server" class="section level3">
+<h3>Mount server</h3>
+<p>I created a directory <code>sftp</code> (I don’t know why I choose this name…anyway) and mount the root of the different servers there. Eventually I created a symbolic link at the root of my computer to point there so that paths like <code>/gs/projects/...</code> work directly, as if in the cluster.</p>
+<p>To mount a server I use the following command:</p>
+<pre class="sh"><code>sshfs jmonlong@guillimin.hpc.mcgill.ca:/ /Users/jeanmonlong/sftp/guillimin -ovolname=NAME</code></pre>
+</div>
+<div id="setup-wd-elements-external-hard-drive" class="section level3">
+<h3>Setup WD Elements external hard drive</h3>
+<p>By default the disk is formatted in NTFS, which OSX could read only. To write, the solution that worked for me was to add this line to <code>/etc/fstab</code>:</p>
+<pre class="sh"><code>LABEL=Elements none ntfs rw,auto,nobrowse</code></pre>
+<p>The disk can then be accessed through the <em>Volumes</em> folder (<code>/Volumes</code>).</p>
+</div>
 </div>
 
 </div>
