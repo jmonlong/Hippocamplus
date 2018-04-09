@@ -9,4 +9,4 @@ Rscript epubify-annualreviews.R review-I-manually-downloaded.html
 ### Dependencies: 
 
 - [pandoc](http://pandoc.org/installing.html) command line.
-- [rvest](https://github.com/hadley/rvest) R package (install with `install.packages('rvest')`.
+- [rvest](https://github.com/hadley/rvest) R package (install with `install.packages('rvest')`).
