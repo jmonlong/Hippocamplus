@@ -18,7 +18,7 @@ In my experience, this is the best strategy to get a review in EPUB format:
 
 ## First, check on PubMed Central
 
-On the top-right corner of the article page on PMC there is a *ePub* option ([example](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3612533/)).
+In the top-right corner of the article page there is a *ePub* option ([example](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3612533/)).
 This feature has been in *beta* version for years but the EPUB files are really good.
 
 Unfortunately, many articles/reviews are not available through PMC, including the majority of reviews from dedicated journals like [Nature Reviews Genetics](https://www.nature.com/nrg/) and [Annual Review of Genetics](https://www.annualreviews.org/journal/genet).
@@ -54,7 +54,7 @@ For *Nature Reviews* and *Annual Reviews*, I wrote a small R script that reads t
 1. Shows the content of a *box* even if hidden in the webpage.
 1. Replaces low-resolution figure with high-resolution (for Annual Reviews).
 
-I put the [two R scripts on GitHub]().
+I put the [two R scripts on GitHub](https://github.com/jmonlong/Hippocamplus/tree/config/R/epubifyReviews).
 After downloading the HTML page, run this to clean up the HTML and call Pandoc:
 
 ```sh
@@ -76,3 +76,8 @@ So **for Annual Reviews, the command should be run when using the university's V
 
 - Tables are not converted properly by Pandoc, they appear flattened.
 - If/when the websites change, the scripts will need to be adapted.
+
+## Other EPUB resources 
+
+- Books from the [Methods in Molecular Biology](https://link.springer.com/bookseries/7651) series can be downloaded in EPUB format.
+- The [Translational Bioinformatics collection](http://collections.plos.org/translational-bioinformatics) in PLoS Computational Biology.

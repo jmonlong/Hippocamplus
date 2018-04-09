@@ -19,7 +19,7 @@ slug: epub-reviews
 </ol>
 <div id="first-check-on-pubmed-central" class="section level2">
 <h2>First, check on PubMed Central</h2>
-<p>On the top-right corner of the article page on PMC there is a <em>ePub</em> option (<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3612533/">example</a>). This feature has been in <em>beta</em> version for years but the EPUB files are really good.</p>
+<p>In the top-right corner of the article page there is a <em>ePub</em> option (<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3612533/">example</a>). This feature has been in <em>beta</em> version for years but the EPUB files are really good.</p>
 <p>Unfortunately, many articles/reviews are not available through PMC, including the majority of reviews from dedicated journals like <a href="https://www.nature.com/nrg/">Nature Reviews Genetics</a> and <a href="https://www.annualreviews.org/journal/genet">Annual Review of Genetics</a>. For example, there are more than a thousand reviews from Nature Reviews Genetics on PubMed, but only <a href="https://www.ncbi.nlm.nih.gov/pmc/?term=%22nat+rev+genet%22%5BJournal%5D">200-300 available on PubMed Central</a>. Same for Annual Review of Genetics which has <a href="https://www.ncbi.nlm.nih.gov/pmc/?term=%22annual+review+of+genetics%22%5BJournal%5D">~70 reviews available on PMC</a> but almost 1K indexed on PubMed.</p>
 <p>If it’s not available in PMC, no choice but to manually convert to EPUB.</p>
 </div>
@@ -42,7 +42,7 @@ slug: epub-reviews
 <li>Shows the content of a <em>box</em> even if hidden in the webpage.</li>
 <li>Replaces low-resolution figure with high-resolution (for Annual Reviews).</li>
 </ol>
-<p>I put the <a href="">two R scripts on GitHub</a>. After downloading the HTML page, run this to clean up the HTML and call Pandoc:</p>
+<p>I put the <a href="https://github.com/jmonlong/Hippocamplus/tree/config/R/epubifyReviews">two R scripts on GitHub</a>. After downloading the HTML page, run this to clean up the HTML and call Pandoc:</p>
 <pre class="sh"><code>Rscript epubify-annualreviews.R annualreviews-manually-downloaded.html
 ## or
 Rscript epubify-naturereviews.R naturereviews-manually-downloaded.html</code></pre>
@@ -57,5 +57,12 @@ Rscript epubify-naturereviews.R naturereviews-manually-downloaded.html</code></p
 <ul>
 <li>Tables are not converted properly by Pandoc, they appear flattened.</li>
 <li>If/when the websites change, the scripts will need to be adapted.</li>
+</ul>
+</div>
+<div id="other-epub-resources" class="section level2">
+<h2>Other EPUB resources</h2>
+<ul>
+<li>Books from the <a href="https://link.springer.com/bookseries/7651">Methods in Molecular Biology</a> series can be downloaded in EPUB format.</li>
+<li>The <a href="http://collections.plos.org/translational-bioinformatics">Translational Bioinformatics collection</a> in PLoS Computational Biology.</li>
 </ul>
 </div>
