@@ -1,0 +1,61 @@
+---
+title: Converting scientific reviews to EPUB
+date: 2018-04-08
+tags: ["pub"]
+draft: true
+slug: epub-reviews
+---
+
+
+
+<p>To read reviews, that are longer and often more wordy than original research articles, I sometimes prefer to use my e-reader. It’s more compact and the e-ink is more comfortable to read, especially outside. But I find PDFs a bit awkward to use on a e-reader so it would be better to have the reviews in a e-reader format like EPUB.</p>
+<p>In my experience, this is the best strategy to get a review in EPUB format:</p>
+<ol style="list-style-type: decimal">
+<li>Check if available on PubMed Central.</li>
+<li>If not, download HTML page and convert with Pandoc.
+<ul>
+<li>If <em>Nature Reviews</em> or <em>Annual Reviews</em>, clean up the HTML file before conversion.</li>
+</ul></li>
+</ol>
+<div id="first-check-on-pubmed-central" class="section level2">
+<h2>First, check on PubMed Central</h2>
+<p>On the top-right corner of the article page on PMC there is a <em>ePub</em> option (<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3612533/">example</a>). This feature has been in <em>beta</em> version for years but the EPUB files are really good.</p>
+<p>Unfortunately, many articles/reviews are not available through PMC, including the majority of reviews from dedicated journals like <a href="https://www.nature.com/nrg/">Nature Reviews Genetics</a> and <a href="https://www.annualreviews.org/journal/genet">Annual Review of Genetics</a>. For example, there are more than a thousand reviews from Nature Reviews Genetics on PubMed, but only <a href="https://www.ncbi.nlm.nih.gov/pmc/?term=%22nat+rev+genet%22%5BJournal%5D">200-300 available on PubMed Central</a>. Same for Annual Review of Genetics which has <a href="https://www.ncbi.nlm.nih.gov/pmc/?term=%22annual+review+of+genetics%22%5BJournal%5D">~70 reviews available on PMC</a> but almost 1K indexed on PubMed.</p>
+<p>If it’s not available in PMC, no choice but to manually convert to EPUB.</p>
+</div>
+<div id="convert-the-html-page-to-epub" class="section level2">
+<h2>Convert the HTML page to EPUB</h2>
+<p>Rather than trying to convert the PDF, I found it easier to convert the HTML page. EPUB is a XML-based format which is quite close to the HTML anyway so it should be the way to go.</p>
+<p>After saving the webpage locally, the HTML file can be converted with <a href="http://pandoc.org/index.html">Pandoc</a>:</p>
+<pre class="sh"><code>pandoc webpage-i-manually-downloaded.html -o webpage-i-manually-downloaded.epub</code></pre>
+<p>Usually, the result is <strong>readable but not very practical</strong> because the interface of the website is polluting the ebook, many links are external (pointing at webpages), and content is sometimes missing. It’s annoying not being able to click on reference/figure links (or clicking inadvertently and opening a web browser), having to skip dozens of pages to get to the content, or missing information because they needed to be “expanded” on the website.</p>
+</div>
+<div id="cleanup-the-html-before-conversion" class="section level2">
+<h2>Cleanup the HTML before conversion</h2>
+<p>For <em>Nature Reviews</em> and <em>Annual Reviews</em>, I wrote a small R script that reads the HTML file and:</p>
+<ol style="list-style-type: decimal">
+<li>Keeps only the article content (remove the rest of the webpage).</li>
+<li>Fixes the table of content.</li>
+<li>Fixes links to reference/figure/glossary in the text.</li>
+<li>Makes the figures not clickable.</li>
+<li>Removes external links around references and images.</li>
+<li>Shows the content of a <em>box</em> even if hidden in the webpage.</li>
+<li>Replaces low-resolution figure with high-resolution (for Annual Reviews).</li>
+</ol>
+<p>I put the <a href="">two R scripts on GitHub</a>. After downloading the HTML page, run this to clean up the HTML and call Pandoc:</p>
+<pre class="sh"><code>Rscript epubify-annualreviews.R annualreviews-manually-downloaded.html
+## or
+Rscript epubify-naturereviews.R naturereviews-manually-downloaded.html</code></pre>
+<p><em>The scripts rely on the <a href="https://github.com/hadley/rvest">rvest package</a> (<code>install.packages('rvest')</code> to install in <code>R</code>).</em> <em>It also assumes that <code>pandoc</code> is installed.</em></p>
+</div>
+<div id="vpn-paywall-and-pandoc" class="section level2">
+<h2>VPN, paywall and Pandoc</h2>
+<p>Pandoc might download images from the web, for example the high-resolution images for the Annual Reviews. If the articles are accessed by logging in through the web browser (e.g. McGill’s <a href="http://www.mcgill.ca/library/services/connect">EZproxy system</a>), the paywall will still block Pandoc from downloading high-res images. So <strong>for Annual Reviews, the command should be run when using the university’s VPN (or at the university).</strong></p>
+</div>
+<div id="limitations" class="section level2">
+<h2>Limitations</h2>
+<ul>
+<li>Tables are not converted properly by Pandoc, they appear flattened.</li>
+<li>If/when the websites change, the scripts will need to be adapted.</li>
+</ul>
+</div>
