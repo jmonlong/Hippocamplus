@@ -24,6 +24,8 @@ Some of the basic tweaks on my `.emacs` file:
 + In a console (R, Shell), previous/next line in the history is accessed by `M-p`/`M-n`. (Useful when ssh-tunneling with broken key-bindings).
 + Search for a regular expression in files using `M-x lgrep` command.
 + Evaluate lisp commands: `C-M-x`.
++ List key bindings currently available: `C-h b`.
++ List key bindings currently available starting with `C-c`: `C-c C-h`.
 
 Regexp replace :
 
