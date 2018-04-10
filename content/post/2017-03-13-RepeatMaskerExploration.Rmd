@@ -38,13 +38,13 @@ olBins <- function(bins.df, feat.df, label="ol"){
   bins.df = cbind(bins.df, res.df)
   bins.df
 }
-## library(BSgenome.Hsapiens.UCSC.hg19)
-## seql.1.22 = seqlengths(BSgenome.Hsapiens.UCSC.hg19)[paste0("chr",1:22)]
-## rand.gr <- function(widths){
-##     chrs = apply(rmultinom(length(widths), 1, (seql.1.22/1e3)/sum(seql.1.22/1e3)),2,function(e)which(e==1))
-##     starts = runif(length(widths), 0, seql.1.22[chrs]-widths)
-##     return(GRanges(chrs, IRanges(starts, width=widths)))
-## }
+library(BSgenome.Hsapiens.UCSC.hg19)
+seql.1.22 = seqlengths(BSgenome.Hsapiens.UCSC.hg19)[paste0("chr",1:22)]
+rand.gr <- function(widths){
+    chrs = apply(rmultinom(length(widths), 1, (seql.1.22/1e3)/sum(seql.1.22/1e3)),2,function(e)which(e==1))
+    starts = runif(length(widths), 0, seql.1.22[chrs]-widths)
+    return(GRanges(chrs, IRanges(starts, width=widths)))
+}
 ```
 
 ## Repeat Masker
@@ -75,17 +75,38 @@ If we include segmental duplication, `r round(sum(width(reduce(c(rm.gr, sd.gr)))
 
 ### TE Density
 
-How many 500bp windows contain a TE ?
+Using different window size, how many regions contain a TE ?
 
 ```{r tedens}
-bins500 = fragment.genome.hg19(500)
 tes = c("LINE","DNA","SINE","LTR","DNA?","Other","SINE?","LTR?","LINE?")
-bins500$te = overlapsAny(makeGRangesFromDataFrame(bins500), makeGRangesFromDataFrame(subset(rm.df, repClass %in% tes)))
-mean(bins500$te)
+tes.gr = makeGRangesFromDataFrame(subset(rm.df, repClass %in% tes))
+tes.null = rand.gr(width(tes.gr))
+sd.gr = makeGRangesFromDataFrame(sd)
+sd.null = rand.gr(width(sd.gr))
 
-bins1000 = fragment.genome.hg19(1000)
-bins1000$te = overlapsAny(makeGRangesFromDataFrame(bins1000), makeGRangesFromDataFrame(subset(rm.df, repClass %in% tes)))
-mean(bins1000$te)
+bins.rep = lapply(c(500,1000,1e4,1e5), function(winsize){
+  bins = fragment.genome.hg19(winsize)
+  bins$te = overlapsAny(makeGRangesFromDataFrame(bins), tes.gr)
+  bins$te.null = overlapsAny(makeGRangesFromDataFrame(bins), tes.null)
+  bins$sd = overlapsAny(makeGRangesFromDataFrame(bins), sd.gr)
+  bins$sd.null = overlapsAny(makeGRangesFromDataFrame(bins), sd.null)
+  data.frame(size=winsize,
+             prop=c(mean(bins$te), mean(bins$sd)),
+             prop.null=c(mean(bins$te.null), mean(bins$sd.null)),
+             rep=c('TE','SD'), stringsAsFactors=FALSE)
+})
+bins.rep = do.call(rbind, bins.rep)
+
+ggplot(bins.rep, aes(x=factor(size), y=prop, fill=rep)) + geom_bar(stat='identity', position='dodge') + theme_bw() + ylim(0,1)
+
+ggplot(bins.rep, aes(x=factor(size), y=prop/prop.null, fill=rep)) + geom_bar(stat='identity', position='dodge') + theme_bw() + ylim(0,1)
+
+
+bins = fragment.genome.hg19(1e4)
+bins$sd = overlapsAny(makeGRangesFromDataFrame(bins), sd.gr)
+mean(bins$sd)
+
+
 ```
 
 ### Alpha satellites
