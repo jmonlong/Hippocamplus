@@ -1,0 +1,48 @@
+---
+title: Checking text similarity between two documents
+date: 2018-04-16
+tags: ["pub"]
+slug: text-similarity
+---
+
+
+
+<p>To start the series of <em>“Things I did instead of writing my thesis to help me write my thesis”</em>, a small Python script that compares two text documents and output similar parts. I did that to avoid auto-plagiarism of my manuscripts’ introduction in the main thesis introduction.</p>
+<p>It’s a very naive approach but sped up the checking process (<a href="https://xkcd.com/1319/">maybe worth the time</a>). It first looks for short exact matches between the two documents, then extends these exact matches and uses the <a href="https://docs.python.org/2/library/difflib.html">difflib</a> module to keep text with a minimum similarity score (default 80%).</p>
+<p>I put the <code>simText.py</code> Python script <a href="https://github.com/jmonlong/Hippocamplus/tree/config/python/simText">on GitHub here</a>.</p>
+<div id="usage" class="section level2">
+<h2>Usage</h2>
+<p>Basic command:</p>
+<p><code>python simText.py -1 text1.txt -2 text2.txt</code></p>
+<p>The help page:</p>
+<pre class="sh"><code>&gt; python simText.py -h
+usage: simText.py [-h] -1 D1 -2 D2 [-k K] [-e EXT] [-s MINSIM] [-tex]
+
+Find similar text between two documents.
+
+optional arguments:
+  -h, --help  show this help message and exit
+  -1 D1       Text document 1
+  -2 D2       Text document 2
+  -k K        The number of char for 1st pass. Default 20
+  -e EXT      The number of additional char. Default 70
+  -s MINSIM   The minimum similarity to define a match. Default 0.8
+  -tex        Skip LaTeX header and lines starting with %</code></pre>
+<div id="latex-documents" class="section level3">
+<h3>LaTeX documents</h3>
+<p>The <code>-tex</code> option skips the header in LaTeX documents and lines starting with a <code>%</code>:</p>
+<p><code>python simText.py -1 text1.tex -2 text2.tex -tex</code></p>
+<p>I implemented this because the header and commented lines were annoying me in the output. More would be needed to have a good LaTeX mode but I submitted my thesis already so it will be for another time.</p>
+</div>
+<div id="playing-with-the-stringency" class="section level3">
+<h3>Playing with the stringency</h3>
+<p>By default, the script outputs text that are <strong>at least 80% similar</strong> (change with <code>-s</code> argument). To run more or less stringent checks, I play with <code>-e</code> which controls how long the 80% match must be.</p>
+</div>
+</div>
+<div id="output" class="section level2">
+<h2>Output</h2>
+<p>The output contains a paragraph for each match. Each paragraph has three lines with the similarity score, the text in the first document, the text in the second document, respectively. For example (with <code>-e 50</code>):</p>
+<pre class="txt"><code>S:0.87
+T1: tions of a genomic region, which affect DNA copy number, are collectively known as copy number varia
+T2: eletions and duplications, which affect DNA copy number, are collectively known as copy number varia</code></pre>
+</div>
