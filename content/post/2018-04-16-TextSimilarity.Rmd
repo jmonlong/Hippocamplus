@@ -1,7 +1,7 @@
 ---
 title: Checking text similarity between two documents
 date: 2018-04-16
-tags: ["pub"]
+tags: ["pub","thesis"]
 slug: text-similarity
 ---
 
@@ -20,7 +20,7 @@ Basic command:
 
 The help page:
 
-```sh
+```
 > python simText.py -h
 usage: simText.py [-h] -1 D1 -2 D2 [-k K] [-e EXT] [-s MINSIM] [-tex]
 

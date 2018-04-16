@@ -42,7 +42,7 @@
 &lt;p&gt;Basic command:&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;python simText.py -1 text1.txt -2 text2.txt&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;The help page:&lt;/p&gt;
-&lt;pre class=&#34;sh&#34;&gt;&lt;code&gt;&amp;gt; python simText.py -h
+&lt;pre&gt;&lt;code&gt;&amp;gt; python simText.py -h
 usage: simText.py [-h] -1 D1 -2 D2 [-k K] [-e EXT] [-s MINSIM] [-tex]
 
 Find similar text between two documents.

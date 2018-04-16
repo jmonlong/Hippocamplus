@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hippocamplus </title>
+    <link>/Hippocamplus/tags/thesis/</link>
+    <language>en-us</language>
+    <author></author>
+    <rights>(C) 2018</rights>
+    <updated>2018-04-16 00:00:00 &#43;0000 UTC</updated>
+
+    
+      
+        <item>
+          <title>Checking text similarity between two documents</title>
+          <link>/Hippocamplus/2018/04/16/text-similarity/</link>
+          <pubDate>Mon, 16 Apr 2018 00:00:00 UTC</pubDate>
+          <author></author>
+          <guid>/Hippocamplus/2018/04/16/text-similarity/</guid>
+          <description>&lt;p&gt;To start the series of &lt;em&gt;“Things I did instead of writing my thesis to help me write my thesis”&lt;/em&gt;, a small Python script that compares two text documents and output similar parts. I did that to avoid auto-plagiarism of my manuscripts’ introduction in the main thesis introduction.&lt;/p&gt;
+&lt;p&gt;It’s a very naive approach but sped up the checking process (&lt;a href=&#34;https://xkcd.com/1319/&#34;&gt;maybe worth the time&lt;/a&gt;). It first looks for short exact matches between the two documents, then extends these exact matches and uses the &lt;a href=&#34;https://docs.python.org/2/library/difflib.html&#34;&gt;difflib&lt;/a&gt; module to keep text with a minimum similarity score (default 80%).&lt;/p&gt;
+&lt;p&gt;I put the &lt;code&gt;simText.py&lt;/code&gt; Python script &lt;a href=&#34;https://github.com/jmonlong/Hippocamplus/tree/config/python/simText&#34;&gt;on GitHub here&lt;/a&gt;.&lt;/p&gt;
+&lt;div id=&#34;usage&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Usage&lt;/h2&gt;
+&lt;p&gt;Basic command:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;python simText.py -1 text1.txt -2 text2.txt&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;The help page:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt; python simText.py -h
+usage: simText.py [-h] -1 D1 -2 D2 [-k K] [-e EXT] [-s MINSIM] [-tex]
+
+Find similar text between two documents.
+
+optional arguments:
+  -h, --help  show this help message and exit
+  -1 D1       Text document 1
+  -2 D2       Text document 2
+  -k K        The number of char for 1st pass. Default 20
+  -e EXT      The number of additional char. Default 70
+  -s MINSIM   The minimum similarity to define a match. Default 0.8
+  -tex        Skip LaTeX header and lines starting with %&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;latex-documents&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;LaTeX documents&lt;/h3&gt;
+&lt;p&gt;The &lt;code&gt;-tex&lt;/code&gt; option skips the header in LaTeX documents and lines starting with a &lt;code&gt;%&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;python simText.py -1 text1.tex -2 text2.tex -tex&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;I implemented this because the header and commented lines were annoying me in the output. More would be needed to have a good LaTeX mode but I submitted my thesis already so it will be for another time.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;playing-with-the-stringency&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Playing with the stringency&lt;/h3&gt;
+&lt;p&gt;By default, the script outputs text that are &lt;strong&gt;at least 80% similar&lt;/strong&gt; (change with &lt;code&gt;-s&lt;/code&gt; argument). To run more or less stringent checks, I play with &lt;code&gt;-e&lt;/code&gt; which controls how long the 80% match must be.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;output&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Output&lt;/h2&gt;
+&lt;p&gt;The output contains a paragraph for each match. Each paragraph has three lines with the similarity score, the text in the first document, the text in the second document, respectively. For example (with &lt;code&gt;-e 50&lt;/code&gt;):&lt;/p&gt;
+&lt;pre class=&#34;txt&#34;&gt;&lt;code&gt;S:0.87
+T1: tions of a genomic region, which affect DNA copy number, are collectively known as copy number varia
+T2: eletions and duplications, which affect DNA copy number, are collectively known as copy number varia&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+        </item>
+      
+    
+
+  </channel>
+</rss>
