@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Additional checks for a LaTeX manuscript &middot; Hippocamplus
+    
+  </title>
+
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113785126-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    
+    gtag('config', "UA-113785126-1");
+  </script>
+  
+  
+  <link rel="stylesheet" href="../../../../css/poole.css">
+  <link rel="stylesheet" href="../../../../css/syntax.css">
+  <link rel="stylesheet" href="../../../../css/lanyon.css">
+  <link rel="stylesheet" href="../../../../css/github.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
+  <link rel="stylesheet" href="../../../../fa/css/font-awesome.min.css">
+  
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../../../assets/hippoPlus-icon.png">
+  <link rel="shortcut icon" href="../../../../assets/hippoPlus-icon.png">
+
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="../../../../atom.xml">
+</head>
+
+  
+  <body>
+
+    
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>A place to gather useful information I keep on forgetting.</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item " href="../../../../">Home</a>
+    <a class="sidebar-nav-item " href="../../../../post">Posts</a>
+
+    
+    
+      
+        <a class="sidebar-nav-item " href="../../../../emacs/">Emacs</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../latex/">LaTeX</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../markdown/">Markdown</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../math/stats/">Math/Stats</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../python/">Python</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../r/">R</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../shell/">Shell</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../internet/">Internet</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../about/">About</a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+    
+  </nav>
+
+  <div class="sidebar-item">
+  </div>
+  
+  <div class="sidebar-item">
+    <a href="../../../../index.xml">RSS <i class="fa fa-rss-square" aria-hidden="true"></i></a>
+    <p>&copy; 2018 Jean Monlong. All rights reserved.</p>
+  </div>
+</div>
+
+
+    
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="../../../../" title="Home">Hippocamplus</a>
+            <small>My Second Memory</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+
+
+<div class="post">
+  <h1 class="post-title">Additional checks for a LaTeX manuscript</h1>
+  <span class="post-date">Apr 18, 2018
+  
+  
+  
+  
+  
+  <a href='../../../../tags/pub/' class='label'>pub</a>
+  
+  <a href='../../../../tags/latex/' class='label'>latex</a>
+  
+  <a href='../../../../tags/thesis/' class='label'>thesis</a>
+  
+  
+  
+  </span>
+  <p>To continue on the series of <em>“Things I did instead of writing my thesis to help me write my thesis”</em>, another Python script that reads a LaTeX manuscript and helps check that everything is fine. More specifically, the <code>checkLatex.py</code> script (<a href="https://github.com/jmonlong/Hippocamplus/tree/config/python/checkLatex">on GitHub</a>) will:</p>
+<ol style="list-style-type: decimal">
+<li>List missing references.</li>
+<li>List multi-references to reorder.</li>
+<li>List duplicated labels.</li>
+<li>List labels that don’t start by <code>fig:</code> or <code>tab:</code>.</li>
+<li>List figures/tables that are not in order.</li>
+<li>List <em>??</em>, <em>REF</em> or <em>XX</em>.</li>
+<li>List acronyms in italic (for gene names).</li>
+<li>List acronyms in serif (for method names).</li>
+<li>List acronyms not in italic nor in serif.</li>
+<li>Shows the first usage of each acronym (not in italic/serif).</li>
+</ol>
+<p>This was particularly useful for my thesis because I combined three manuscripts and a general intro. I had to make sure that the labels, acronyms, references were all correct and consistent throughout the thesis. I might still use this again on smaller documents like research manuscripts.</p>
+<div id="why-this-output" class="section level2">
+<h2>Why this output?</h2>
+<p>“<em>List missing references</em>” because <code>bibtex</code> output was sandwiched between long latex logs and it was easy to do. “<em>List multi-references to reorder</em>” is to transform “something<sup>19,3,12</sup>” into “something<sup>3,12,19</sup>”. Not a big deal but I prefer when it’s ordered…</p>
+<p>“<em>List duplicated labels</em>” helped merge manuscripts in the thesis but won’t be very useful in general. “<em>List labels that don’t start by <code>fig:</code> or <code>tab:</code></em>” to make sure that figures and tables have labels starting with <code>fig:</code> or <code>tab:</code> (it helps for the next check). “<em>List figures/tables that are not in order</em>” to make sure the figure/table numbers are in ascending order in the text. It checks for the order of labels in each file separately. That way if the supplementary material is in a separate file (using <code>\input</code>), the supp figs are considered separately from other figures. It’s not perfect though, because the script doesn’t “understand” sub-figures.</p>
+<p>“<em>List ??, REF or XX</em>” because that’s what I use when I’m writing and missing a number or reference.</p>
+<p>“<em>List acronyms in italic (for gene names)</em>” to make sure that acronyms in italic are gene names. “<em>List acronyms in serif (for method names)</em>” to make sure that acronyms in serif are methods names. “<em>List acronyms not in italic nor in serif</em>” to check if I forgot to put a gene name in italic or a method in serif. It also helped listing the abbreviations at the beginning of the thesis. “<em>Shows the first usage of an acronym (not in italic/serif)</em>” to make sure acronyms are defined properly.</p>
+</div>
+<div id="practical-details" class="section level2">
+<h2>Practical details</h2>
+<p>The script <strong>assumes that the document is compiled</strong>. For example, it will use the <code>.bbl</code> file for the checks on the references.</p>
+<p>It will follow <strong>one level of <code>\input{}</code></strong>. It was enough for my thesis: I had one <code>main.tex</code> file with <code>\input</code> commands calling the different chapters. It should be enough for a manuscript in general.</p>
+<p>Acronyms are defined by the regular expression <code>[A-Za-z0-9]*[A-Z]{2}[A-Za-z0-9]*</code>, i.e. at least two consecutive uppercase letters and any letter/number around.</p>
+<p>Some arguments to switch on/off the acronym mode and internal references as explained in the help output:</p>
+<pre class="txt"><code>&gt; python checkLatex.py -h
+usage: checkLatex.py [-h] -i TEX [-inrefs] [-noacro]
+
+Check for problems in a LaTeX manuscript.
+
+optional arguments:
+  -h, --help  show this help message and exit
+  -i TEX      the input tex file
+  -inrefs     list non-fig/table internal refs
+  -noacro     don&#39;t list acronyms</code></pre>
+</div>
+<div id="final-check" class="section level2">
+<h2>Final check</h2>
+<p>I used <code>pdfgrep</code> to check the final PDF for quotation marks that could result from missing reference/figure/table.</p>
+<pre class="sh"><code>pdfgrep &#39;\?&#39; main.pdf</code></pre>
+</div>
+
+</div>
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src="../../../../assets/highlight.min.js"></script>
+    <script src="../../../../assets/r.min.js"></script>
+    
+    <script>
+      hljs.configure({languages: ['r']});
+      hljs.initHighlightingOnLoad();
+    </script>
+
+    <script src="//yihui.name/js/math-code.js"></script>
+    <script async src="//cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    
+  </body>
+</html>
+

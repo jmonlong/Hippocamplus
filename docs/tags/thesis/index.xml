@@ -2,20 +2,74 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Hippocamplus </title>
-    <link>/Hippocamplus/tags/thesis/</link>
+    <link>/tags/thesis/</link>
     <language>en-us</language>
     <author></author>
     <rights>(C) 2018</rights>
-    <updated>2018-04-16 00:00:00 &#43;0000 UTC</updated>
+    <updated>2018-04-18 00:00:00 &#43;0000 UTC</updated>
 
     
       
         <item>
+          <title>Additional checks for a LaTeX manuscript</title>
+          <link>/2018/04/18/check-latex-pub/</link>
+          <pubDate>Wed, 18 Apr 2018 00:00:00 UTC</pubDate>
+          <author></author>
+          <guid>/2018/04/18/check-latex-pub/</guid>
+          <description>&lt;p&gt;To continue on the series of &lt;em&gt;“Things I did instead of writing my thesis to help me write my thesis”&lt;/em&gt;, another Python script that reads a LaTeX manuscript and helps check that everything is fine. More specifically, the &lt;code&gt;checkLatex.py&lt;/code&gt; script (&lt;a href=&#34;https://github.com/jmonlong/Hippocamplus/tree/config/python/checkLatex&#34;&gt;on GitHub&lt;/a&gt;) will:&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;List missing references.&lt;/li&gt;
+&lt;li&gt;List multi-references to reorder.&lt;/li&gt;
+&lt;li&gt;List duplicated labels.&lt;/li&gt;
+&lt;li&gt;List labels that don’t start by &lt;code&gt;fig:&lt;/code&gt; or &lt;code&gt;tab:&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;List figures/tables that are not in order.&lt;/li&gt;
+&lt;li&gt;List &lt;em&gt;??&lt;/em&gt;, &lt;em&gt;REF&lt;/em&gt; or &lt;em&gt;XX&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;List acronyms in italic (for gene names).&lt;/li&gt;
+&lt;li&gt;List acronyms in serif (for method names).&lt;/li&gt;
+&lt;li&gt;List acronyms not in italic nor in serif.&lt;/li&gt;
+&lt;li&gt;Shows the first usage of each acronym (not in italic/serif).&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This was particularly useful for my thesis because I combined three manuscripts and a general intro. I had to make sure that the labels, acronyms, references were all correct and consistent throughout the thesis. I might still use this again on smaller documents like research manuscripts.&lt;/p&gt;
+&lt;div id=&#34;why-this-output&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Why this output?&lt;/h2&gt;
+&lt;p&gt;“&lt;em&gt;List missing references&lt;/em&gt;” because &lt;code&gt;bibtex&lt;/code&gt; output was sandwiched between long latex logs and it was easy to do. “&lt;em&gt;List multi-references to reorder&lt;/em&gt;” is to transform “something&lt;sup&gt;19,3,12&lt;/sup&gt;” into “something&lt;sup&gt;3,12,19&lt;/sup&gt;”. Not a big deal but I prefer when it’s ordered…&lt;/p&gt;
+&lt;p&gt;“&lt;em&gt;List duplicated labels&lt;/em&gt;” helped merge manuscripts in the thesis but won’t be very useful in general. “&lt;em&gt;List labels that don’t start by &lt;code&gt;fig:&lt;/code&gt; or &lt;code&gt;tab:&lt;/code&gt;&lt;/em&gt;” to make sure that figures and tables have labels starting with &lt;code&gt;fig:&lt;/code&gt; or &lt;code&gt;tab:&lt;/code&gt; (it helps for the next check). “&lt;em&gt;List figures/tables that are not in order&lt;/em&gt;” to make sure the figure/table numbers are in ascending order in the text. It checks for the order of labels in each file separately. That way if the supplementary material is in a separate file (using &lt;code&gt;\input&lt;/code&gt;), the supp figs are considered separately from other figures. It’s not perfect though, because the script doesn’t “understand” sub-figures.&lt;/p&gt;
+&lt;p&gt;“&lt;em&gt;List ??, REF or XX&lt;/em&gt;” because that’s what I use when I’m writing and missing a number or reference.&lt;/p&gt;
+&lt;p&gt;“&lt;em&gt;List acronyms in italic (for gene names)&lt;/em&gt;” to make sure that acronyms in italic are gene names. “&lt;em&gt;List acronyms in serif (for method names)&lt;/em&gt;” to make sure that acronyms in serif are methods names. “&lt;em&gt;List acronyms not in italic nor in serif&lt;/em&gt;” to check if I forgot to put a gene name in italic or a method in serif. It also helped listing the abbreviations at the beginning of the thesis. “&lt;em&gt;Shows the first usage of an acronym (not in italic/serif)&lt;/em&gt;” to make sure acronyms are defined properly.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;practical-details&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Practical details&lt;/h2&gt;
+&lt;p&gt;The script &lt;strong&gt;assumes that the document is compiled&lt;/strong&gt;. For example, it will use the &lt;code&gt;.bbl&lt;/code&gt; file for the checks on the references.&lt;/p&gt;
+&lt;p&gt;It will follow &lt;strong&gt;one level of &lt;code&gt;\input{}&lt;/code&gt;&lt;/strong&gt;. It was enough for my thesis: I had one &lt;code&gt;main.tex&lt;/code&gt; file with &lt;code&gt;\input&lt;/code&gt; commands calling the different chapters. It should be enough for a manuscript in general.&lt;/p&gt;
+&lt;p&gt;Acronyms are defined by the regular expression &lt;code&gt;[A-Za-z0-9]*[A-Z]{2}[A-Za-z0-9]*&lt;/code&gt;, i.e. at least two consecutive uppercase letters and any letter/number around.&lt;/p&gt;
+&lt;p&gt;Some arguments to switch on/off the acronym mode and internal references as explained in the help output:&lt;/p&gt;
+&lt;pre class=&#34;txt&#34;&gt;&lt;code&gt;&amp;gt; python checkLatex.py -h
+usage: checkLatex.py [-h] -i TEX [-inrefs] [-noacro]
+
+Check for problems in a LaTeX manuscript.
+
+optional arguments:
+  -h, --help  show this help message and exit
+  -i TEX      the input tex file
+  -inrefs     list non-fig/table internal refs
+  -noacro     don&amp;#39;t list acronyms&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;final-check&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Final check&lt;/h2&gt;
+&lt;p&gt;I used &lt;code&gt;pdfgrep&lt;/code&gt; to check the final PDF for quotation marks that could result from missing reference/figure/table.&lt;/p&gt;
+&lt;pre class=&#34;sh&#34;&gt;&lt;code&gt;pdfgrep &amp;#39;\?&amp;#39; main.pdf&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+        </item>
+      
+    
+      
+        <item>
           <title>Checking text similarity between two documents</title>
-          <link>/Hippocamplus/2018/04/16/text-similarity/</link>
+          <link>/2018/04/16/text-similarity/</link>
           <pubDate>Mon, 16 Apr 2018 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2018/04/16/text-similarity/</guid>
+          <guid>/2018/04/16/text-similarity/</guid>
           <description>&lt;p&gt;To start the series of &lt;em&gt;“Things I did instead of writing my thesis to help me write my thesis”&lt;/em&gt;, a small Python script that compares two text documents and output similar parts. I did that to avoid auto-plagiarism of my manuscripts’ introduction in the main thesis introduction.&lt;/p&gt;
 &lt;p&gt;It’s a very naive approach but sped up the checking process (&lt;a href=&#34;https://xkcd.com/1319/&#34;&gt;maybe worth the time&lt;/a&gt;). It first looks for short exact matches between the two documents, then extends these exact matches and uses the &lt;a href=&#34;https://docs.python.org/2/library/difflib.html&#34;&gt;difflib&lt;/a&gt; module to keep text with a minimum similarity score (default 80%).&lt;/p&gt;
 &lt;p&gt;I put the &lt;code&gt;simText.py&lt;/code&gt; Python script &lt;a href=&#34;https://github.com/jmonlong/Hippocamplus/tree/config/python/simText&#34;&gt;on GitHub here&lt;/a&gt;.&lt;/p&gt;

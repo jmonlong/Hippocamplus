@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Hippocamplus </title>
-    <link>/Hippocamplus/tags/genome/</link>
+    <link>/tags/genome/</link>
     <language>en-us</language>
     <author></author>
     <rights>(C) 2018</rights>
@@ -12,10 +12,10 @@
       
         <item>
           <title>Enrichment between genomic regions</title>
-          <link>/Hippocamplus/2017/09/05/enrichment-between-genomic-regions/</link>
+          <link>/2017/09/05/enrichment-between-genomic-regions/</link>
           <pubDate>Tue, 05 Sep 2017 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2017/09/05/enrichment-between-genomic-regions/</guid>
+          <guid>/2017/09/05/enrichment-between-genomic-regions/</guid>
           <description>&lt;p&gt;Testing if two sets of genomic regions overlap significantly is not straightforward. In the simple situation of regions of 1 bp (e.g. SNVs) we could use a hypergeometric test. When the regions are small enough and there are not too many, the hypergeometric test might also be a fair approximation.&lt;/p&gt;
 &lt;p&gt;But when we manipulate many regions of variable size covering the entire genome it’s not as straightforward. The gene annotation is an example. The repeat annotation is even worse as it covers almost 50% of the genome and contains different families with very different size/location profiles.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
@@ -461,10 +461,10 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
       
         <item>
           <title>Segmental duplication exploration</title>
-          <link>/Hippocamplus/2016/10/20/segmental-duplication-exploration/</link>
+          <link>/2016/10/20/segmental-duplication-exploration/</link>
           <pubDate>Thu, 20 Oct 2016 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2016/10/20/segmental-duplication-exploration/</guid>
+          <guid>/2016/10/20/segmental-duplication-exploration/</guid>
           <description>&lt;div id=&#34;segmental-duplications-sd&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Segmental Duplications (SD)&lt;/h2&gt;
 &lt;p&gt;I downloaded the segmental duplication annotation for hg19 from &lt;a href=&#34;http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/genomicSuperDups.txt.gz&#34;&gt;UCSC&lt;/a&gt;. There are 51599 annotated SD. They are defined as regions larger than 1 Kbp with at least 90% similarity with another region in the genome.&lt;/p&gt;
@@ -1210,10 +1210,10 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
       
         <item>
           <title>Summary epigenetic mark tracks</title>
-          <link>/Hippocamplus/2016/09/06/summary-epigenetic-mark-tracks/</link>
+          <link>/2016/09/06/summary-epigenetic-mark-tracks/</link>
           <pubDate>Tue, 06 Sep 2016 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2016/09/06/summary-epigenetic-mark-tracks/</guid>
+          <guid>/2016/09/06/summary-epigenetic-mark-tracks/</guid>
           <description>&lt;p&gt;To assess the potential impact of variants (SNV, SVs) we might want to use some of the public epigentic datasets. The amount and heterogeneity of this data is a bit overwhelming. I would like to get a summary of which regions of the genome are the most functionally important.&lt;/p&gt;
 &lt;p&gt;The plan is to:&lt;/p&gt;
 &lt;ul&gt;
@@ -1253,10 +1253,10 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
       
         <item>
           <title>Gencode exploration</title>
-          <link>/Hippocamplus/2016/06/04/gencode-exploration/</link>
+          <link>/2016/06/04/gencode-exploration/</link>
           <pubDate>Sat, 04 Jun 2016 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2016/06/04/gencode-exploration/</guid>
+          <guid>/2016/06/04/gencode-exploration/</guid>
           <description>&lt;div id=&#34;gencode-v19&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Gencode v19&lt;/h2&gt;
 &lt;p&gt;I downloaded Gencode v19 at &lt;a href=&#34;ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz&#34;&gt;&lt;a href=&#34;ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz&#34; class=&#34;uri&#34;&gt;ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz&lt;/a&gt;&lt;/a&gt;.&lt;/p&gt;
@@ -1549,11 +1549,131 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
     
       
         <item>
+          <title>Repeat Masker exploration</title>
+          <link>/2016/06/04/repeat-masker-exploration/</link>
+          <pubDate>Sat, 04 Jun 2016 00:00:00 UTC</pubDate>
+          <author></author>
+          <guid>/2016/06/04/repeat-masker-exploration/</guid>
+          <description>&lt;div id=&#34;repeat-masker&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Repeat Masker&lt;/h2&gt;
+&lt;p&gt;I downloaded Repeat Masker at &lt;a href=&#34;http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/rmsk.txt.gz&#34;&gt;&lt;a href=&#34;http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/rmsk.txt.gz&#34; class=&#34;uri&#34;&gt;http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/rmsk.txt.gz&lt;/a&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;chr&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;start&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;end&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;repName&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;repClass&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;repFamily&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;17&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;37428219&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;37428344&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;AluJo&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;SINE&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Alu&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;12&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;95320593&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;95320702&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;(TTC)n&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Simple_repeat&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Simple_repeat&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;150405857&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;150405892&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;(TA)n&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Simple_repeat&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Simple_repeat&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;10&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;46954002&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;46954311&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;AluSp&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;SINE&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Alu&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;223575250&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;223575286&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;(TAA)n&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Simple_repeat&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Simple_repeat&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;4&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;149535979&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;149536275&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;AluSc&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;SINE&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Alu&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;4&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;81625836&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;81625865&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;AT_rich&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Low_complexity&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Low_complexity&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;107075978&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;107076275&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;AluSx1&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;SINE&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Alu&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;114092998&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;114093116&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;MIRb&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;SINE&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;MIR&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;16&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;59345225&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;59345528&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;AluSz&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;SINE&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Alu&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;The annotation spans a total of 1.45 Gbp. If we include segmental duplication, 1.53 Gbp are annotated as repeat in the human genome.&lt;/p&gt;
+&lt;div id=&#34;te-density&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;TE Density&lt;/h3&gt;
+&lt;p&gt;Using different window size, how many regions contain a TE ?&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../../post/2017-03-13-RepeatMaskerExploration_files/figure-html/tedens-1.png&#34; width=&#34;768&#34; /&gt;&lt;img src=&#34;../../post/2017-03-13-RepeatMaskerExploration_files/figure-html/tedens-2.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.06533548&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;alpha-satellites&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Alpha satellites&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 5553.278&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+        </item>
+      
+    
+      
+        <item>
           <title>Preparing some genomic annotations</title>
-          <link>/Hippocamplus/2016/06/03/preparing-some-genomic-annotations/</link>
+          <link>/2016/06/03/preparing-some-genomic-annotations/</link>
           <pubDate>Fri, 03 Jun 2016 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2016/06/03/preparing-some-genomic-annotations/</guid>
+          <guid>/2016/06/03/preparing-some-genomic-annotations/</guid>
           <description>&lt;div id=&#34;mappability-track&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Mappability track&lt;/h2&gt;
 &lt;p&gt;I produced a mappability track from the UCSC track. The &lt;a href=&#34;http://hgdownload.soe.ucsc.edu/gbdb/hg19/bbi/wgEncodeCrgMapabilityAlign100mer.bw&#34;&gt;raw file&lt;/a&gt; contains, for each base in the genome, an estimation of the probability that a read is correctly mapped at this position.&lt;/p&gt;

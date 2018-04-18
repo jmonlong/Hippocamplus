@@ -1,17 +1,16 @@
 ---
 title: Additional checks for a LaTeX manuscript
 date: 2018-04-18
-tags: ["pub","latex"]
-draft: true
+tags: ["pub","latex","thesis"]
 slug: check-latex-pub
 ---
 
 
 
-<p>To continue on the series of <em>“Things I did instead of writing my thesis to help me write my thesis”</em>, another Python script reads a LaTeX manuscript and helps checking that everything is fine. More specifically, the <code>checkLatex.py</code> script (<a href="https://github.com/jmonlong/Hippocamplus/tree/config/python/checkLatex">on GitHub</a>) will:</p>
+<p>To continue on the series of <em>“Things I did instead of writing my thesis to help me write my thesis”</em>, another Python script that reads a LaTeX manuscript and helps check that everything is fine. More specifically, the <code>checkLatex.py</code> script (<a href="https://github.com/jmonlong/Hippocamplus/tree/config/python/checkLatex">on GitHub</a>) will:</p>
 <ol style="list-style-type: decimal">
 <li>List missing references.</li>
-<li>Find multi-references to reorder.</li>
+<li>List multi-references to reorder.</li>
 <li>List duplicated labels.</li>
 <li>List labels that don’t start by <code>fig:</code> or <code>tab:</code>.</li>
 <li>List figures/tables that are not in order.</li>
@@ -19,15 +18,15 @@ slug: check-latex-pub
 <li>List acronyms in italic (for gene names).</li>
 <li>List acronyms in serif (for method names).</li>
 <li>List acronyms not in italic nor in serif.</li>
-<li>Shows the first usage of an acronym (not in italic/serif).</li>
+<li>Shows the first usage of each acronym (not in italic/serif).</li>
 </ol>
-<p>This was particularly useful for my thesis because I had to combine three manuscripts plus a general intro that shared some references. I had to make sure that the labels, acronyms, references were all correct and consistent throughout the thesis. I might use it again on smaller documents like research manuscripts.</p>
+<p>This was particularly useful for my thesis because I combined three manuscripts and a general intro. I had to make sure that the labels, acronyms, references were all correct and consistent throughout the thesis. I might still use this again on smaller documents like research manuscripts.</p>
 <div id="why-this-output" class="section level2">
 <h2>Why this output?</h2>
-<p>“<em>List missing references</em>” is redundant with <code>bibtex</code> output but this output was sandwiched between long latex logs. “<em>Find multi-references to reorder</em>” is to transform “something<sup>19,3,12</sup>” into “something<sup>3,12,19</sup>”. Not a big deal but I prefer when it’s ordered…</p>
-<p>“<em>List duplicated labels</em>” helped merge manuscripts in the thesis but won’t be very useful in general. “<em>List labels that don’t start by <code>fig:</code> or <code>tab:</code></em>” to make sure that figures and tables have labels starting with <code>fig:</code> or <code>tab:</code> (it helps for the next check). “<em>List figures/tables that are not in order</em>” to make sure the figure numbers are in ascending order in the text. It checks for the order of labels in each file separately. That way if the supplementary material is in a separate file (using <code>\input</code>), the supp figs are considered separately from other figures. It’s not perfect though, because the script doesn’t “understand” sub-figures.</p>
+<p>“<em>List missing references</em>” because <code>bibtex</code> output was sandwiched between long latex logs and it was easy to do. “<em>List multi-references to reorder</em>” is to transform “something<sup>19,3,12</sup>” into “something<sup>3,12,19</sup>”. Not a big deal but I prefer when it’s ordered…</p>
+<p>“<em>List duplicated labels</em>” helped merge manuscripts in the thesis but won’t be very useful in general. “<em>List labels that don’t start by <code>fig:</code> or <code>tab:</code></em>” to make sure that figures and tables have labels starting with <code>fig:</code> or <code>tab:</code> (it helps for the next check). “<em>List figures/tables that are not in order</em>” to make sure the figure/table numbers are in ascending order in the text. It checks for the order of labels in each file separately. That way if the supplementary material is in a separate file (using <code>\input</code>), the supp figs are considered separately from other figures. It’s not perfect though, because the script doesn’t “understand” sub-figures.</p>
 <p>“<em>List ??, REF or XX</em>” because that’s what I use when I’m writing and missing a number or reference.</p>
-<p>“<em>List acronyms in italic (for gene names)</em>” to make sure that acronyms in italic are gene names. “<em>List acronyms in serif (for method names)</em>” to make sure that acronyms in serif are methods. “<em>List acronyms not in italic nor in serif</em>” to check if I forgot to put a gene name in italic or a method in serif. It also helped listing the abbreviations at the beginning of the thesis. “<em>Shows the first usage of an acronym (not in italic/serif)</em>” to make sure acronyms are defined properly.</p>
+<p>“<em>List acronyms in italic (for gene names)</em>” to make sure that acronyms in italic are gene names. “<em>List acronyms in serif (for method names)</em>” to make sure that acronyms in serif are methods names. “<em>List acronyms not in italic nor in serif</em>” to check if I forgot to put a gene name in italic or a method in serif. It also helped listing the abbreviations at the beginning of the thesis. “<em>Shows the first usage of an acronym (not in italic/serif)</em>” to make sure acronyms are defined properly.</p>
 </div>
 <div id="practical-details" class="section level2">
 <h2>Practical details</h2>
