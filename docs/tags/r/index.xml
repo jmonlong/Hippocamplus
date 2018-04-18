@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Hippocamplus </title>
-    <link>/tags/r/</link>
+    <link>/Hippocamplus/tags/r/</link>
     <language>en-us</language>
     <author></author>
     <rights>(C) 2018</rights>
@@ -12,10 +12,10 @@
       
         <item>
           <title>tSNE and clustering</title>
-          <link>/2018/02/13/tsne-and-clustering/</link>
+          <link>/Hippocamplus/2018/02/13/tsne-and-clustering/</link>
           <pubDate>Tue, 13 Feb 2018 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/2018/02/13/tsne-and-clustering/</guid>
+          <guid>/Hippocamplus/2018/02/13/tsne-and-clustering/</guid>
           <description>&lt;p&gt;tSNE can give really nice results when we want to visualize many groups of multi-dimensional points. Once the 2D graph is done we might want to identify which points cluster in the tSNE blobs.&lt;/p&gt;
 &lt;p&gt;Using simulated and real data, I’ll try different methods:&lt;/p&gt;
 &lt;ul&gt;
@@ -305,10 +305,10 @@ ggplot(info.real, aes(x = tsne1, y = tsne2, colour = louvain)) +
       
         <item>
           <title>MUMmerplots with ggplot2</title>
-          <link>/2017/09/19/mummerplots-with-ggplot2/</link>
+          <link>/Hippocamplus/2017/09/19/mummerplots-with-ggplot2/</link>
           <pubDate>Tue, 19 Sep 2017 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/2017/09/19/mummerplots-with-ggplot2/</guid>
+          <guid>/Hippocamplus/2017/09/19/mummerplots-with-ggplot2/</guid>
           <description>&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(dplyr)
 library(magrittr)
 library(GenomicRanges)
@@ -642,10 +642,10 @@ mumgp.filt.m %&amp;gt;% select(similarity, start, end, filter) %&amp;gt;%
       
         <item>
           <title>Regression sandbox</title>
-          <link>/2017/09/16/regression-sandbox/</link>
+          <link>/Hippocamplus/2017/09/16/regression-sandbox/</link>
           <pubDate>Sat, 16 Sep 2017 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/2017/09/16/regression-sandbox/</guid>
+          <guid>/Hippocamplus/2017/09/16/regression-sandbox/</guid>
           <description>&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
 library(broom)
 library(magrittr)
@@ -966,10 +966,10 @@ ggplot(df, aes(x = x, y = y)) + geom_point(alpha = 0.2) +
       
         <item>
           <title>Word Cloud in R</title>
-          <link>/2016/02/26/word-cloud-in-r/</link>
+          <link>/Hippocamplus/2016/02/26/word-cloud-in-r/</link>
           <pubDate>Fri, 26 Feb 2016 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/2016/02/26/word-cloud-in-r/</guid>
+          <guid>/Hippocamplus/2016/02/26/word-cloud-in-r/</guid>
           <description>&lt;p&gt;The &lt;a href=&#34;https://cran.r-project.org/web/packages/wordcloud/index.html&#34;&gt;&lt;code&gt;wordcloud&lt;/code&gt; package&lt;/a&gt; is available on CRAN.&lt;/p&gt;
 &lt;div id=&#34;fake-words&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Fake words&lt;/h2&gt;

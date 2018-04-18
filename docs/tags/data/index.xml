@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Hippocamplus </title>
-    <link>/tags/data/</link>
+    <link>/Hippocamplus/tags/data/</link>
     <language>en-us</language>
     <author></author>
     <rights>(C) 2018</rights>
@@ -12,10 +12,10 @@
       
         <item>
           <title>Summary epigenetic mark tracks</title>
-          <link>/2016/09/06/summary-epigenetic-mark-tracks/</link>
+          <link>/Hippocamplus/2016/09/06/summary-epigenetic-mark-tracks/</link>
           <pubDate>Tue, 06 Sep 2016 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/2016/09/06/summary-epigenetic-mark-tracks/</guid>
+          <guid>/Hippocamplus/2016/09/06/summary-epigenetic-mark-tracks/</guid>
           <description>&lt;p&gt;To assess the potential impact of variants (SNV, SVs) we might want to use some of the public epigentic datasets. The amount and heterogeneity of this data is a bit overwhelming. I would like to get a summary of which regions of the genome are the most functionally important.&lt;/p&gt;
 &lt;p&gt;The plan is to:&lt;/p&gt;
 &lt;ul&gt;
