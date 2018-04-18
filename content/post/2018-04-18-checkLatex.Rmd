@@ -1,0 +1,81 @@
+---
+title: Additional checks for a LaTeX manuscript
+date: 2018-04-18
+tags: ["pub","latex"]
+draft: true
+slug: check-latex-pub
+---
+
+To continue on the series of *"Things I did instead of writing my thesis to help me write my thesis"*, another Python script reads a LaTeX manuscript and helps checking that everything is fine.
+More specifically, the `checkLatex.py` script ([on GitHub](https://github.com/jmonlong/Hippocamplus/tree/config/python/checkLatex)) will:
+
+1. List missing references.
+1. Find multi-references to reorder.
+1. List duplicated labels.
+1. List labels that don't start by `fig:` or `tab:`.
+1. List figures/tables that are not in order.
+1. List *??*, *REF* or *XX*.
+1. List acronyms in italic (for gene names).
+1. List acronyms in serif (for method names).
+1. List acronyms not in italic nor in serif.
+1. Shows the first usage of an acronym (not in italic/serif).
+
+This was particularly useful for my thesis because I had to combine three manuscripts plus a general intro that shared some references. 
+I had to make sure that the labels, acronyms, references were all correct and consistent throughout the thesis.
+I might use it again on smaller documents like research manuscripts.
+
+## Why this output?
+
+"*List missing references*" is redundant with `bibtex` output but this output was sandwiched between long latex logs.
+"*Find multi-references to reorder*" is to transform "something<sup>19,3,12</sup>" into "something<sup>3,12,19</sup>". 
+Not a big deal but I prefer when it's ordered...
+
+"*List duplicated labels*" helped merge manuscripts in the thesis but won't be very useful in general.
+"*List labels that don't start by `fig:` or `tab:`*" to make sure that figures and tables have labels starting with `fig:` or `tab:` (it helps for the next check).
+"*List figures/tables that are not in order*" to make sure the figure numbers are in ascending order in the text. 
+It checks for the order of labels in each file separately. 
+That way if the supplementary material is in a separate file (using `\input`), the supp figs are considered separately from other figures.
+It's not perfect though, because the script doesn't "understand" sub-figures.
+
+"*List ??, REF or XX*" because that's what I use when I'm writing and missing a number or reference.
+
+"*List acronyms in italic (for gene names)*" to make sure that acronyms in italic are gene names.
+"*List acronyms in serif (for method names)*" to make sure that acronyms in serif are methods.
+"*List acronyms not in italic nor in serif*" to check if I forgot to put a gene name in italic or a method in serif. 
+It also helped listing the abbreviations at the beginning of the thesis.
+"*Shows the first usage of an acronym (not in italic/serif)*" to make sure acronyms are defined properly.
+
+## Practical details
+
+The script **assumes that the document is compiled**. 
+For example, it will use the `.bbl` file for the checks on the references.
+
+It will follow **one level of `\input{}`**. 
+It was enough for my thesis: I had one `main.tex` file with `\input` commands calling the different chapters.
+It should be enough for a manuscript in general.
+
+Acronyms are defined by the regular expression `[A-Za-z0-9]*[A-Z]{2}[A-Za-z0-9]*`, i.e. at least two consecutive uppercase letters and any letter/number around.
+
+Some arguments to switch on/off the acronym mode and internal references as explained in the help output:
+
+```txt
+> python checkLatex.py -h
+usage: checkLatex.py [-h] -i TEX [-inrefs] [-noacro]
+
+Check for problems in a LaTeX manuscript.
+
+optional arguments:
+  -h, --help  show this help message and exit
+  -i TEX      the input tex file
+  -inrefs     list non-fig/table internal refs
+  -noacro     don't list acronyms
+```
+
+
+## Final check
+
+I used `pdfgrep` to check the final PDF for quotation marks that could result from missing reference/figure/table.
+
+```sh
+pdfgrep '\?' main.pdf
+```
