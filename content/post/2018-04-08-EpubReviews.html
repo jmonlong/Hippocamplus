@@ -1,14 +1,15 @@
 ---
 title: Converting scientific reviews to EPUB
-date: 2018-04-08
-tags: ["pub"]
+date: 2018-04-19
+tags: ["pub","thesis"]
 draft: true
 slug: epub-reviews
 ---
 
 
 
-<p>To read reviews, that are longer and often more wordy than original research articles, I sometimes prefer to use my e-reader. It’s more compact and the e-ink is more comfortable to read, especially outside. But I find PDFs a bit awkward to use on a e-reader so it would be better to have the reviews in a e-reader format like EPUB.</p>
+<p>Third post on the series of <em>“Things I did instead of writing my thesis to help me write my thesis”</em>: how to find/convert reviews in the EPUB format to read in a ebook reader.</p>
+<p>To motivate myself to write the thesis introduction and get some “style” inspiration, I read a few reviews. Reviews are longer and often more wordy than original research articles so I’d sometimes prefer to use my e-reader. It’s more compact and the e-ink is more comfortable to read, especially outside. But I find PDFs a bit awkward to use on an e-reader so it would be better to have the reviews in a e-reader format like EPUB.</p>
 <p>In my experience, this is the best strategy to get a review in EPUB format:</p>
 <ol style="list-style-type: decimal">
 <li>Check if available on PubMed Central.</li>
@@ -21,7 +22,7 @@ slug: epub-reviews
 <h2>First, check on PubMed Central</h2>
 <p>In the top-right corner of the article page there is a <em>ePub</em> option (<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3612533/">example</a>). This feature has been in <em>beta</em> version for years but the EPUB files are really good.</p>
 <p>Unfortunately, many articles/reviews are not available through PMC, including the majority of reviews from dedicated journals like <a href="https://www.nature.com/nrg/">Nature Reviews Genetics</a> and <a href="https://www.annualreviews.org/journal/genet">Annual Review of Genetics</a>. For example, there are more than a thousand reviews from Nature Reviews Genetics on PubMed, but only <a href="https://www.ncbi.nlm.nih.gov/pmc/?term=%22nat+rev+genet%22%5BJournal%5D">200-300 available on PubMed Central</a>. Same for Annual Review of Genetics which has <a href="https://www.ncbi.nlm.nih.gov/pmc/?term=%22annual+review+of+genetics%22%5BJournal%5D">~70 reviews available on PMC</a> but almost 1K indexed on PubMed.</p>
-<p>If it’s not available in PMC, no choice but to manually convert to EPUB.</p>
+<p>If it’s not available in PMC (and the journal doesn’t provide an EPUB file), no choice but to manually convert to EPUB.</p>
 </div>
 <div id="convert-the-html-page-to-epub" class="section level2">
 <h2>Convert the HTML page to EPUB</h2>
@@ -29,10 +30,14 @@ slug: epub-reviews
 <p>After saving the webpage locally, the HTML file can be converted with <a href="http://pandoc.org/index.html">Pandoc</a>:</p>
 <pre class="sh"><code>pandoc webpage-i-manually-downloaded.html -o webpage-i-manually-downloaded.epub</code></pre>
 <p>Usually, the result is <strong>readable but not very practical</strong> because the interface of the website is polluting the ebook, many links are external (pointing at webpages), and content is sometimes missing. It’s annoying not being able to click on reference/figure links (or clicking inadvertently and opening a web browser), having to skip dozens of pages to get to the content, or missing information because they needed to be “expanded” on the website.</p>
+<p>An exception: the <strong>“<em>Opportunities and obstacles for deep learning in biology and medicine</em>”</strong>, a cool (and long) review which was published in <a href="http://rsif.royalsocietypublishing.org/content/15/141/20170387">the Journal of the Royal Society</a>, is also formatted in <a href="https://greenelab.github.io/deep-review/">a GitHub HTML page</a>. The manuscript is actually written and build using Markdown/GitHub, I want to learn how to do that at some point. Anyway, the GitHub webpage was straightforward to convert with Pandoc and produced a perfect EPUB version of the review.</p>
+<pre class="sh"><code>wget -p https://greenelab.github.io/deep-review/
+cd greenelab.github.io/deep-review
+pandoc index.html -o DeepLearningBioMed.epub</code></pre>
 </div>
 <div id="cleanup-the-html-before-conversion" class="section level2">
 <h2>Cleanup the HTML before conversion</h2>
-<p>For <em>Nature Reviews</em> and <em>Annual Reviews</em>, I wrote a small R script that reads the HTML file and:</p>
+<p>For <em>Nature Reviews</em> and <em>Annual Reviews</em>, I wrote a small R script that downloads a HTML page and:</p>
 <ol style="list-style-type: decimal">
 <li>Keeps only the article content (remove the rest of the webpage).</li>
 <li>Fixes the table of content.</li>
@@ -42,27 +47,34 @@ slug: epub-reviews
 <li>Shows the content of a <em>box</em> even if hidden in the webpage.</li>
 <li>Replaces low-resolution figure with high-resolution (for Annual Reviews).</li>
 </ol>
-<p>I put the <a href="https://github.com/jmonlong/Hippocamplus/tree/config/R/epubifyReviews">two R scripts on GitHub</a>. After downloading the HTML page, run this to clean up the HTML and call Pandoc:</p>
-<pre class="sh"><code>Rscript epubify-annualreviews.R annualreviews-manually-downloaded.html
+<p>I put the <a href="https://github.com/jmonlong/Hippocamplus/tree/config/R/epubifyReviews">two R scripts on GitHub</a>. Using the URL of the review, run this to clean up the HTML and call Pandoc:</p>
+<pre class="sh"><code>Rscript epubify-annualreviews.R -i https://www.annualreviews.org/doi/full/10.1146/annurev-genet-120215-034854
 ## or
-Rscript epubify-naturereviews.R naturereviews-manually-downloaded.html</code></pre>
+Rscript epubify-naturereviews.R -i https://www.nature.com/articles/nrg.2015.16</code></pre>
 <p><em>The scripts rely on the <a href="https://github.com/hadley/rvest">rvest package</a> (<code>install.packages('rvest')</code> to install in <code>R</code>).</em> <em>It also assumes that <code>pandoc</code> is installed.</em></p>
 </div>
 <div id="vpn-paywall-and-pandoc" class="section level2">
 <h2>VPN, paywall and Pandoc</h2>
-<p>Pandoc might download images from the web, for example the high-resolution images for the Annual Reviews. If the articles are accessed by logging in through the web browser (e.g. McGill’s <a href="http://www.mcgill.ca/library/services/connect">EZproxy system</a>), the paywall will still block Pandoc from downloading high-res images. So <strong>for Annual Reviews, the command should be run when using the university’s VPN (or at the university).</strong></p>
+<p>The script and Pandoc will try to download the text/images so <strong>they should be used behind the university’s VPN (or at the university).</strong> For Nature Reviews, the page can also be downloaded locally and used instead of the URL argument. That might be useful if the articles are accessed by logging in through the web browser (e.g. McGill’s <a href="http://www.mcgill.ca/library/services/connect">EZproxy system</a>). For Annual Reviews however, the Pandoc command will try to download high-res figures so it’s better to run with a VPN.</p>
+</div>
+<div id="compiling-several-reviews-into-one-epub-document" class="section level2">
+<h2>Compiling several reviews into one EPUB document</h2>
+<p>Some reviews or articles are part of collections, like the “Point of significance” serie in Nature Methods. It would be nice to convert these articles into one EPUB.</p>
+<p>To do this both scripts can loop over URLs in a list and produce one EPUB. The <code>-i</code> argument should be a text file with one URL per line, and the <code>-list</code> argument should be added to switch on the “list” mode. Optional, you can specify a title using the <code>-title</code> argument.</p>
+<p>I don’t think I’m allowed to share publicly the <strong>“Point of Significance” EPUB</strong> but I can share the commands I used so I put <a href="https://github.com/jmonlong/Hippocamplus/tree/config/R/epubifyReviews">the instructions on GitHub</a>. There are also commands to download collections of Nature Reviews (e.g. Genome Editing or Computational Tools) or search results for Annual Reviews (e.g. Microbiome &amp; Sequencing).</p>
 </div>
 <div id="limitations" class="section level2">
 <h2>Limitations</h2>
 <ul>
-<li>Tables are not converted properly by Pandoc, they appear flattened.</li>
+<li>Most of the time, tables are not converted properly by Pandoc, they appear flattened.</li>
 <li>If/when the websites change, the scripts will need to be adapted.</li>
+<li>This is <a href="https://togelius.blogspot.ca/2016/04/the-differences-between-tinkering-and.html">tinkering</a> so it’s possible that some pages won’t work properly. The ones I tried worked but I didn’t test that many.</li>
 </ul>
 </div>
 <div id="other-epub-resources" class="section level2">
 <h2>Other EPUB resources</h2>
 <ul>
-<li>Books from the <a href="https://link.springer.com/bookseries/7651">Methods in Molecular Biology</a> series can be downloaded in EPUB format.</li>
+<li><strong>Books</strong> from the <a href="https://link.springer.com/bookseries/7651">Methods in Molecular Biology</a> series can be downloaded in EPUB format.</li>
 <li>The <a href="http://collections.plos.org/translational-bioinformatics">Translational Bioinformatics collection</a> in PLoS Computational Biology.</li>
 </ul>
 </div>
