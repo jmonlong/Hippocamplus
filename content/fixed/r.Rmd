@@ -122,7 +122,6 @@ To resize wide tables I use a hook that surround a chunk with `\resizebox` comma
 
 ~~~md
 ```{r, include=FALSE}`r ''`
-knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE)
 knitr::knit_hooks$set(resize = function(before, options, envir) {
     if (before) {
       return('\\resizebox{\\textwidth}{!}{')

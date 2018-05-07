@@ -121,7 +121,6 @@ output:
 <h4>Wide tables</h4>
 <p>To resize wide tables I use a hook that surround a chunk with <code>\resizebox</code> command, defined in the non-included chunk:</p>
 <pre class="md"><code>```{r, include=FALSE}
-knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE)
 knitr::knit_hooks$set(resize = function(before, options, envir) {
     if (before) {
       return(&#39;\\resizebox{\\textwidth}{!}{&#39;)

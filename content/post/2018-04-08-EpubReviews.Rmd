@@ -1,12 +1,14 @@
 ---
 title: Converting scientific reviews to EPUB
-date: 2018-04-19
+date: 2018-05-07
 tags: ["pub","thesis"]
-draft: true
 slug: epub-reviews
+output:
+  blogdown::html_page:
+    toc: true
 ---
 
-Third post on the series of *"Things I did instead of writing my thesis to help me write my thesis"*: how to find/convert reviews in the EPUB format to read in a ebook reader.
+Third post on the series of *"Things I did instead of writing my thesis to help me write my thesis"*: how to find/convert reviews in the EPUB format to read in an ebook reader.
 
 To motivate myself to write the thesis introduction and get some "style" inspiration, I read a few reviews.
 Reviews are longer and often more wordy than original research articles so I'd sometimes prefer to use my e-reader.
@@ -18,6 +20,8 @@ In my experience, this is the best strategy to get a review in EPUB format:
 1. Check if available on PubMed Central.
 1. If not, download HTML page and convert with Pandoc.
     - If *Nature Reviews* or *Annual Reviews*, clean up the HTML file before conversion.
+
+For *Nature Reviews* and *Annual Reviews*, the script I wrote can also merge several reviews into one EPUB ebook.
 
 ## First, check on PubMed Central
 
@@ -42,10 +46,11 @@ pandoc webpage-i-manually-downloaded.html -o webpage-i-manually-downloaded.epub
 ```
 
 Usually, the result is **readable but not very practical** because the interface of the website is polluting the ebook,  many links are external (pointing at webpages), and content is sometimes missing.
-It's annoying not being able to click on reference/figure links (or clicking inadvertently and opening a web browser), having to skip dozens of pages to get to the content, or missing information because they needed to be "expanded" on the website.
+It's annoying not being able to click on the reference/figure links (or clicking inadvertently and opening a web browser), having to skip dozens of pages to get to the content, or missing information because they needed to be "expanded" on the website.
 
-An exception: the **"*Opportunities and obstacles for deep learning in biology and medicine*"**, a cool (and long) review which was published in [the Journal of the Royal Society Interface](http://rsif.royalsocietypublishing.org/content/15/141/20170387), is also formatted in [a GitHub HTML page](https://greenelab.github.io/deep-review/).
-The manuscript is actually written and build using Markdown/GitHub, I want to learn how to do that at some point.
+There are exceptions. 
+For example the **"*Opportunities and obstacles for deep learning in biology and medicine*"**, a cool (and long) review which was published in [the Journal of the Royal Society Interface](http://rsif.royalsocietypublishing.org/content/15/141/20170387), is also formatted in [a GitHub HTML page](https://greenelab.github.io/deep-review/).
+The manuscript is actually written and build using Markdown/GitHub (I want to learn how to do that at some point).
 Anyway, the GitHub webpage was straightforward to convert with Pandoc and produced a perfect EPUB version of the review.
 
 ```sh
@@ -55,15 +60,16 @@ pandoc index.html -o DeepLearningBioMed.epub
 ```
 
 
-## Cleanup the HTML before conversion
+## Clean up the HTML before conversion
 
-For *Nature Reviews* and *Annual Reviews*, I wrote a small R script that downloads a HTML page and:
+**For Nature Reviews and Annual Reviews**, I wrote a small R script that downloads a HTML page and:
 
 1. Keeps only the article content (remove the rest of the webpage).
 1. Fixes the table of content.
 1. Fixes links to reference/figure/glossary in the text.
 1. Makes the figures not clickable.
 1. Removes external links around references and images.
+1. Simplify complex tables to allow for EPUB display.
 1. Shows the content of a *box* even if hidden in the webpage.
 1. Replaces low-resolution figure with high-resolution (for Annual Reviews).
 
@@ -76,36 +82,48 @@ Rscript epubify-annualreviews.R -i https://www.annualreviews.org/doi/full/10.114
 Rscript epubify-naturereviews.R -i https://www.nature.com/articles/nrg.2015.16
 ```
 
-*The scripts rely on the [rvest package](https://github.com/hadley/rvest) (`install.packages('rvest')` to install in `R`).*
+*The scripts rely on the [rvest package](https://github.com/hadley/rvest) (`install.packages('rvest')` to install in `R`) and the [knitr package](https://yihui.name/knitr/) (`install.packages('knitr')` to install in `R`).*
 *It also assumes that `pandoc` is installed.*
 
-## VPN, paywall and Pandoc
+### Compiling several reviews into one EPUB document
 
-The script and Pandoc will try to download the text/images so **they should be used behind the university's VPN (or at the university).**
-For Nature Reviews, the page can also be downloaded locally and used instead of the URL argument.
-That might be useful if the articles are accessed by logging in through the web browser (e.g. McGill's [EZproxy system](http://www.mcgill.ca/library/services/connect)).
-For Annual Reviews however, the Pandoc command will try to download high-res figures so it's better to run with a VPN.
-
-## Compiling several reviews into one EPUB document
-
-Some reviews or articles are part of collections, like the "Point of significance" serie in Nature Methods. 
+Some reviews or articles are part of collections, like the "Points of significance" serie in Nature Methods. 
 It would be nice to convert these articles into one EPUB.
 
 To do this both scripts can loop over URLs in a list and produce one EPUB. 
 The `-i` argument should be a text file with one URL per line, and the `-list` argument should be added to switch on the "list" mode.
 Optional, you can specify a title using the `-title` argument.
 
-I don't think I'm allowed to share publicly the **"Point of Significance" EPUB** but I can share the commands I used so I put [the instructions on GitHub](https://github.com/jmonlong/Hippocamplus/tree/config/R/epubifyReviews).
-There are also commands to download collections of Nature Reviews (e.g. Genome Editing or Computational Tools) or search results for Annual Reviews (e.g. Microbiome & Sequencing).
+I don't think I'm allowed to share publicly the **"Points of Significance" EPUB** but I can share the commands I used (see [instructions on GitHub](https://github.com/jmonlong/Hippocamplus/tree/config/R/epubifyReviews)).
+There are also commands to download **collections** of Nature Reviews (e.g. Genome Editing or Computational Tools) or search results for Annual Reviews (e.g. Microbiome & Sequencing).
 
+### VPN, paywall and Pandoc
 
-## Limitations
+The script and Pandoc will try to download the text/images so **they should be used behind the university's VPN (or at the university).**
+For Nature Reviews, the page can also be downloaded locally and used instead of the URL argument.
+That might be useful if the articles are accessed by logging in through the web browser (e.g. McGill's [EZproxy system](http://www.mcgill.ca/library/services/connect)).
+For Annual Reviews however, the Pandoc command will try to download high-res figures so it's better to run with a VPN.
 
-- Most of the time, tables are not converted properly by Pandoc, they appear flattened.
+### Limitations
+
+- Tables are "simplified" which makes them uglier but compatible with EPUB. For example, a multi-rows label is repeated in each row.
 - If/when the websites change, the scripts will need to be adapted.
 - This is [tinkering](https://togelius.blogspot.ca/2016/04/the-differences-between-tinkering-and.html) so it's possible that some pages won't work properly. The ones I tried worked but I didn't test that many.
 
+### Methods
+
+The scripts use functions from the [*rvest*](https://github.com/hadley/rvest) package to download the HTML code of a webpage.
+Then they use three different strategies to clean up the HTML code.
+Sometimes *rvest*'s functions can directly select the relevant parts.
+Many times, the HTML code is modified using `gsub` and regular expressions.
+A few times the script writes new HTML code based on information retrieved using *rvest*.
+
+Tables are converted into *data.frames* with `html_table`, then converted back to HTML usint [*knitr*](https://yihui.name/knitr/)'s `kable` function.
+In *list* mode, the script loops through URLs from the input file and concatenate the cleaned HTML code.
+At the end, the final HTML code is written in a file which is converted to EPUB by [Pandoc](http://pandoc.org/index.html). 
+
 ## Other EPUB resources 
 
-- **Books** from the [Methods in Molecular Biology](https://link.springer.com/bookseries/7651) series can be downloaded in EPUB format.
-- The [Translational Bioinformatics collection](http://collections.plos.org/translational-bioinformatics) in PLoS Computational Biology.
+- **Books** from the [Methods in Molecular Biology](https://link.springer.com/bookseries/7651) series can be downloaded in the EPUB format.
+- The [Translational Bioinformatics collection](http://collections.plos.org/translational-bioinformatics) in PLoS Computational Biology has [an ePub option](http://www.ploscollections.org/downloads/TranslationalBioinformatics.epub).
+
