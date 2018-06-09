@@ -1,0 +1,98 @@
+---
+title: Clustering into same size clusters
+tags: ["stats","R"]
+date: 2018-06-09
+slug: cluster-same-size
+output:
+  blogdown::html_page:
+    toc: true
+---
+
+
+<div id="TOC">
+<ul>
+<li><a href="#iterative-dichotomy">Iterative dichotomy</a></li>
+<li><a href="#iterative-nearest-neighbor">Iterative nearest neighbor</a></li>
+<li><a href="#same-size-k-means-variation">Same-size k-Means Variation</a></li>
+<li><a href="#test-data">Test data</a></li>
+<li><a href="#results">Results</a><ul>
+<li><a href="#test-data-1">Test data 1</a></li>
+<li><a href="#test-data-2">Test data 2</a></li>
+</ul></li>
+<li><a href="#conclusions">Conclusions</a></li>
+<li><a href="#extra-optimization">Extra: optimization</a></li>
+<li><a href="#code">Code</a></li>
+</ul>
+</div>
+
+<p>I would like to cluster points into groups of similar size. For example I would like to group 1000 points into clusters of around 10 points each. The two aspects that are important here are:</p>
+<ol style="list-style-type: decimal">
+<li>The cluster size distribution, or the deviation from the desired cluster size.</li>
+<li>The quality of the clusters, i.e. how similar are points within a cluster.</li>
+</ol>
+<p>In addition to the typical hierarchical clustering approach, I will test the following iterative approaches:</p>
+<ol style="list-style-type: decimal">
+<li>Iterative dichotomy: large clusters are split in two until around the desired size (using hierarchical clustering).</li>
+<li>Iterative nearest neighbor: a point and its closest neighboring points are assigned to a cluster and removed before processing another point.</li>
+<li><a href="https://elki-project.github.io/tutorial/same-size_k_means">Same-size k-Means Variation</a> that some quick googling returned.</li>
+</ol>
+<p>As a baseline, points will be randomly clustered into same-size clusters.</p>
+<p>In the following <span class="math">\(s\)</span> is the target cluster size.</p>
+<div id="iterative-dichotomy" class="section level2">
+<h2>Iterative dichotomy</h2>
+<p>Starting with one cluster containing all the points, a cluster is split in two if larger that <span class="math">\(1.5*s\)</span>. When all clusters are smaller than <span class="math">\(1.5*s\)</span>, the process stops.</p>
+<p>The points are split in two using hierarchical clustering. I will try different linkage criteria. My guess is that the Ward criterion will be good at this because it tends to produce balanced dendrograms.</p>
+</div>
+<div id="iterative-nearest-neighbor" class="section level2">
+<h2>Iterative nearest neighbor</h2>
+<p>While there are more than <span class="math">\(s\)</span> unassigned points:</p>
+<ol style="list-style-type: decimal">
+<li>A point is selected. Randomly or following a rule (see below).</li>
+<li>The <span class="math">\(s-1\)</span> closest points are found and assigned to a new cluster.</li>
+<li>These points are removed.</li>
+</ol>
+<p>If the total number of points is not a multiple of <span class="math">\(s\)</span>, the remaining points could be either assigned to their own clusters or to an existing cluster. Actually, we completely control the cluster sizes here so we could fix the size of some clusters to <span class="math">\(s+1\)</span> beforehand to avoid leftovers and ensure balanced sizes.</p>
+<p>In the first step, a point is selected. I’ll start by choosing a point randomly (out of the unassigned points). Eventually I could try picking the points with close neighbors, or the opposite, far from other points. I’ll use the mean distance between a point and the others to define the order at which points are processed.</p>
+</div>
+<div id="same-size-k-means-variation" class="section level2">
+<h2>Same-size k-Means Variation</h2>
+<p>As explained in a few pages online (e.g. <a href="https://elki-project.github.io/tutorial/same-size_k_means">here</a>), one approach consists of using K-means to derive centers and then assigning the same amount of points to each center/cluster.</p>
+<p>In the proposed approach the points are ordered by their distance to the closest center minus the distance to the farthest cluster. Each point is assigned to the best cluster in this order. If the best cluster is full, the second best is chosen, etc.</p>
+<p>I’ll also try to order the points by the distance to the closest center, by the distance to the farthest cluster, or using a random order.</p>
+</div>
+<div id="test-data" class="section level2">
+<h2>Test data</h2>
+<p>I’ll test the different approaches on dummy data with Gaussian distributions and some outliers. Both test datasets contains, 1000 points in two dimensions and includes 100 outliers. The second test dataset contains two groups, one larger than the other.</p>
+<p><img src="/post/2018-06-09-ClusterEqualSize_files/figure-html/unnamed-chunk-3-1.png" width="960" /></p>
+</div>
+<div id="results" class="section level2">
+<h2>Results</h2>
+<p>Let’s aim at clusters of around <span class="math">\(s=21\)</span> points. Not 20 because that way there will be left-over points (more realistic).</p>
+<div id="test-data-1" class="section level3">
+<h3>Test data 1</h3>
+<p><img src="/post/2018-06-09-ClusterEqualSize_files/figure-html/unnamed-chunk-4-1.png" width="960" /><img src="/post/2018-06-09-ClusterEqualSize_files/figure-html/unnamed-chunk-4-2.png" width="960" /><img src="/post/2018-06-09-ClusterEqualSize_files/figure-html/unnamed-chunk-4-3.png" width="960" /><img src="/post/2018-06-09-ClusterEqualSize_files/figure-html/unnamed-chunk-4-4.png" width="960" /></p>
+</div>
+<div id="test-data-2" class="section level3">
+<h3>Test data 2</h3>
+<p><img src="/post/2018-06-09-ClusterEqualSize_files/figure-html/unnamed-chunk-5-1.png" width="960" /><img src="/post/2018-06-09-ClusterEqualSize_files/figure-html/unnamed-chunk-5-2.png" width="960" /><img src="/post/2018-06-09-ClusterEqualSize_files/figure-html/unnamed-chunk-5-3.png" width="960" /><img src="/post/2018-06-09-ClusterEqualSize_files/figure-html/unnamed-chunk-5-4.png" width="960" /></p>
+</div>
+</div>
+<div id="conclusions" class="section level2">
+<h2>Conclusions</h2>
+<p>The <em>iterative dichotomy</em> approach is not as bad as I thought, especially using Ward linkage criterion, but it doesn’t really controls for the final cluster size. We end up with most clusters around the desired size but the size of some clusters still vary by a factor of 2 or more.</p>
+<p><strong>The nearest neighbor approach (<em>maxD</em> variant), is the best approach in my opinion.</strong> The cluster size is completely controlled and the mean/maximum pairwise distance for points in the same cluster is similar (or better) to other approaches.</p>
+<p>The K-means approach didn’t perform as well but we can keep it in mind if the number of points is very large, as it is much more memory efficient (no need for a pairwise distance matrix).</p>
+</div>
+<div id="extra-optimization" class="section level2">
+<h2>Extra: optimization</h2>
+<p>The nearest neighbor approach requires a <code>while</code> loop, which is not efficient in R. Maybe implementing the loop with Rcpp could speed up the computation (in practice I would like to run this on up to 10K points).</p>
+<p><img src="/post/2018-06-09-ClusterEqualSize_files/figure-html/unnamed-chunk-7-1.png" width="960" /><img src="/post/2018-06-09-ClusterEqualSize_files/figure-html/unnamed-chunk-7-2.png" width="960" /></p>
+<p>Three times faster with Rcpp!</p>
+<p>Safety check, are the results actually the same ?</p>
+<p><img src="/post/2018-06-09-ClusterEqualSize_files/figure-html/unnamed-chunk-8-1.png" width="960" /></p>
+<p>Yes. Ouf…</p>
+</div>
+<div id="code" class="section level2">
+<h2>Code</h2>
+<p>The source code of this page can be found <a href="https://github.com/jmonlong/Hippocamplus/tree/master/content/post/2018-06-09-ClusterEqualSize.Rmd">here</a>.</p>
+</div>
