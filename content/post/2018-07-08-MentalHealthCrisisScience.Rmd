@@ -3,9 +3,7 @@ title: Mental health crisis in science...but careful with nonresponse bias
 tags: ["pub", "science"]
 date: 2018-07-08
 slug: mental-health-crisis-science
-output:
-  blogdown::html_page:
-    toc: true
+output: blogdown::html_page
 ---
 
 
