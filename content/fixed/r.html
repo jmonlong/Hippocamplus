@@ -25,6 +25,7 @@ output:
 <li><a href="#beamer-presentation">Beamer presentation</a></li>
 <li><a href="#jekyll-website">Jekyll website</a></li>
 </ul></li>
+<li><a href="#data.table-package"><em>data.table</em> package</a></li>
 </ul>
 </div>
 
@@ -143,4 +144,33 @@ knitr::kable(matrix(rnorm(10),10,10), format=&#39;latex&#39;)
 <pre class="sh"><code>Rscript -e &quot;servr::jekyll(script=&#39;build.R&#39;, serve=FALSE)&quot;</code></pre>
 <p>Note: I now use <a href="https://bookdown.org/yihui/blogdown/">blogdown</a> which automatically compile the R Markdown documents (every page is a R Markdown actually).</p>
 </div>
+</div>
+<div id="data.table-package" class="section level2">
+<h2><em>data.table</em> package</h2>
+<p>I’m more of a tidyverse person but for very large data the <a href="https://cran.r-project.org/web/packages/data.table/">data.table</a> package is more efficient.</p>
+<ul>
+<li><a href="https://s3.amazonaws.com/assets.datacamp.com/blog_assets/datatable_Cheat_Sheet_R.pdf">Cheatsheet from DataCamp</a></li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th align="left"><em>tidyverse</em></th>
+<th align="left"><em>data.table</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>group_by(col1,col2) %&gt;% summarize(nb=n())</code></td>
+<td align="left"><code>dt[,.(nb=.N),by=.(col1,col2)]</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>group_by(col1,col2) %&gt;% mutate(nb=n())</code></td>
+<td align="left"><code>dt[,nb:=.N,by=.(col1,col2)]</code></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>filter(nb==2)</code></td>
+<td align="left"><code>dt[nb==2]</code></td>
+</tr>
+</tbody>
+</table>
 </div>

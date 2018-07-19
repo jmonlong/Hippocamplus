@@ -147,3 +147,15 @@ Rscript -e "servr::jekyll(script='build.R', serve=FALSE)"
 ~~~
 
 Note: I now use [blogdown](https://bookdown.org/yihui/blogdown/) which automatically compile the R Markdown documents (every page is a R Markdown actually).
+
+## *data.table* package
+
+I'm more of a tidyverse person but for very large data the [data.table](https://cran.r-project.org/web/packages/data.table/) package is more efficient.
+
+- [Cheatsheet from DataCamp](https://s3.amazonaws.com/assets.datacamp.com/blog_assets/datatable_Cheat_Sheet_R.pdf)
+
+| *tidyverse* | *data.table* |
+| --- | --- |
+| `group_by(col1,col2) %>% summarize(nb=n())` | `dt[,.(nb=.N),by=.(col1,col2)]` |
+| `group_by(col1,col2) %>% mutate(nb=n())` | `dt[,nb:=.N,by=.(col1,col2)]` |
+| `filter(nb==2)` | `dt[nb==2]` |
