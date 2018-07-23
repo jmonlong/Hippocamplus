@@ -209,6 +209,7 @@
 <li><a href="#git">Git</a></li>
 <li><a href="#docker-cheatsheet">Docker cheatsheet</a></li>
 <li><a href="#makefile">Makefile</a></li>
+<li><a href="#modules">Modules</a></li>
 <li><a href="#osx">OSX</a><ul>
 <li><a href="#mount-server">Mount server</a></li>
 <li><a href="#setup-wd-elements-external-hard-drive">Setup WD Elements external hard drive</a></li>
@@ -411,6 +412,23 @@ docker-machine start</code></pre>
 <ul>
 <li><a href="https://gist.github.com/isaacs/62a2d1825d04437c6f08">Makefile basics from Isaacs</a>.</li>
 </ul>
+</div>
+<div id="modules" class="section level2">
+<h2>Modules</h2>
+<p>For example installing Emacs as a module on a HPC. After installing Emacs locally in a <code>~/softwares/emacs/emacs-24.4</code> I create a file <code>~/myModules/jmonlong/emacs/24.4</code> with:</p>
+<pre class="shell"><code>#%Module1.0
+proc ModulesHelp { } {
+  puts stderr &quot;\tMUMmer &quot;
+}
+module-whatis &quot;mummer&quot;
+
+set             root                /home/jmonlong/softwares/emacs/emacs-24.4
+prepend-path    PATH                $root/bin
+prepend-path    LIBRARY_PATH        $root/lib/
+prepend-path    LD_LIBRARY_PATH     $root/lib/</code></pre>
+<p>Then to use the module:</p>
+<pre class="shell"><code>module use ~/myModules
+module load jmonlong/emacs</code></pre>
 </div>
 <div id="osx" class="section level2">
 <h2>OSX</h2>

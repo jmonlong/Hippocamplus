@@ -258,6 +258,32 @@ docker-machine start
 
 - [Makefile basics from Isaacs](https://gist.github.com/isaacs/62a2d1825d04437c6f08).
 
+## Modules
+
+For example installing Emacs as a module on a HPC.
+After installing Emacs locally in a `~/softwares/emacs/emacs-24.4` I create a file `~/myModules/jmonlong/emacs/24.4` with:
+
+~~~shell
+#%Module1.0
+proc ModulesHelp { } {
+  puts stderr "\tMUMmer "
+}
+module-whatis "mummer"
+
+set             root                /home/jmonlong/softwares/emacs/emacs-24.4
+prepend-path    PATH                $root/bin
+prepend-path    LIBRARY_PATH        $root/lib/
+prepend-path    LD_LIBRARY_PATH     $root/lib/
+~~~
+
+Then to use the module:
+
+~~~shell
+module use ~/myModules
+module load jmonlong/emacs
+~~~
+
+
 ## OSX
 
 ### Mount server
