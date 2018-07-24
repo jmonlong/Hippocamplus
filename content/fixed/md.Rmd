@@ -10,6 +10,8 @@ output:
 ## Tips
 
 + `/` to add some vertical space/break.
++ Use two `` ` `` and a space to escape `` ` `` in inline code. E.g ``` `` `pwd` `` ``` gives `` `pwd` ``.
++ `---` to add horizontal line/separation.
 
 ## Converting Markdown into nice HTML pages
 
@@ -21,7 +23,7 @@ Rscript -e 'rmarkdown::render("document.md")'
 
 ## Converting Markdown into slides
 
-I use [MarkdownSlides](https://github.com/asanzdiego/markdownslides).
+I use RMarkdown or [MarkdownSlides](https://github.com/asanzdiego/markdownslides).
 
 ## Jekyll websites
 
