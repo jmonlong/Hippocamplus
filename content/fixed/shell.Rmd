@@ -304,4 +304,6 @@ By default the disk is formatted in NTFS, which OSX could read only. To write, t
 LABEL=Elements none ntfs rw,auto,nobrowse
 ~~~
 
+*Note: If there are spaces in the label, replace them by `\040`.*
+
 The disk can then be accessed through the *Volumes* folder (`/Volumes`).
