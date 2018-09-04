@@ -351,3 +351,26 @@ for aln in bamfile.fetch(until_eof=True):
 ~~~
 
 If the BAM is indexed, the **number of mapped and unmapped reads** is stored in `bamfile.mapped` and `bamfile.unmapped`.
+
+### VCF
+
+Using the [PyVCF](https://pyvcf.readthedocs.io/en/latest/INTRO.html) module.
+
+~~~python
+import vcf
+vcf_reader = vcf.Reader(open('var.vcf', 'r'))
+for record in vcf_reader:
+	if(record.INFO['AF'][0] < 0.1):
+		print record.ID
+~~~
+
+The fields are accessed through:
+
+- `record.CHROM`
+- `record.POS`
+- `record.ID`
+- `record.REF`
+- `record.ALT`
+- `record.QUAL`
+- `record.FILTER`
+- `record.INFO`

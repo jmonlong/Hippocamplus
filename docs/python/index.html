@@ -163,7 +163,8 @@
   </div>
   
   <div class="sidebar-item">
-    <a href="../index.xml">RSS <i class="fa fa-rss-square" aria-hidden="true"></i></a>
+    <div><a href="../index.xml"><i class="fa fa-rss-square" aria-hidden="true"></i> RSS</a></div>
+    <div><a href="https://twitter.com/JMonlong"><i class="fa fa-twitter" aria-hidden="true"></i> @JMonlong</a></div>
     <p>&copy; 2018 Jean Monlong. All rights reserved.</p>
   </div>
 </div>
@@ -208,6 +209,7 @@
 <li><a href="#sequences">Sequences</a></li>
 <li><a href="#fasta">Fasta</a></li>
 <li><a href="#sam-files">SAM files</a></li>
+<li><a href="#vcf">VCF</a></li>
 </ul></li>
 </ul>
 </div>
@@ -448,12 +450,35 @@ for read in reads_reg:
     ...</code></pre>
 <p>If the BAM is indexed, the <strong>number of mapped and unmapped reads</strong> is stored in <code>bamfile.mapped</code> and <code>bamfile.unmapped</code>.</p>
 </div>
+<div id="vcf" class="section level3">
+<h3>VCF</h3>
+<p>Using the <a href="https://pyvcf.readthedocs.io/en/latest/INTRO.html">PyVCF</a> module.</p>
+<pre class="python"><code>import vcf
+vcf_reader = vcf.Reader(open(&#39;var.vcf&#39;, &#39;r&#39;))
+for record in vcf_reader:
+    if(record.INFO[&#39;AF&#39;][0] &lt; 0.1):
+        print record.ID</code></pre>
+<p>The fields are accessed through:</p>
+<ul>
+<li><code>record.CHROM</code></li>
+<li><code>record.POS</code></li>
+<li><code>record.ID</code></li>
+<li><code>record.REF</code></li>
+<li><code>record.ALT</code></li>
+<li><code>record.QUAL</code></li>
+<li><code>record.FILTER</code></li>
+<li><code>record.INFO</code></li>
+</ul>
+</div>
 </div>
 
 </div>
 
       </div>
     </div>
+
+    
+    
 
     <label for="sidebar-checkbox" class="sidebar-toggle"></label>
 

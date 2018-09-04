@@ -41,9 +41,9 @@ Now it won't try to do `x<10` if `!is.null(x)` is not true (because what's the p
 
 `options(rpubs.upload.method = "internal")`
 
-## ggplot2
+## Graphs
 
-### Tricks
+### ggplot2 tricks
 
 + To plot a density distribution without the x-axis line, use `stat_density(geom="line")` (and eventually `position="dodge"` if plotting several groups).
 
@@ -65,6 +65,19 @@ p1$widths[2:3] <- maxWidth
 p2$widths[2:3] <- maxWidth
 grid.arrange(p1, p2, heights = c(3, 2))
 ~~~
+
+### Change font in ggplot2
+
+~~~r
+library(extrafont)
+font_import(pattern='Comic')
+loadfonts()
+qplot(x=rnorm(100)) + geom_histogram() + theme(text=element_text(family="Comic Sans MS")) + ggtitle('Ouch')
+~~~
+
+`fonts()` to check which fonts are imported by *extrafont*, `names(pdfFonts())` to list the fonts available (loaded).
+
+More in [this blog post](http://blog.revolutionanalytics.com/2012/09/how-to-use-your-favorite-fonts-in-r-charts.html).
 
 ### Waffle graphs
 
@@ -147,3 +160,15 @@ Rscript -e "servr::jekyll(script='build.R', serve=FALSE)"
 ~~~
 
 Note: I now use [blogdown](https://bookdown.org/yihui/blogdown/) which automatically compile the R Markdown documents (every page is a R Markdown actually).
+
+## *data.table* package
+
+I'm more of a tidyverse person but for very large data the [data.table](https://cran.r-project.org/web/packages/data.table/) package is more efficient.
+
+- [Cheatsheet from DataCamp](https://s3.amazonaws.com/assets.datacamp.com/blog_assets/datatable_Cheat_Sheet_R.pdf)
+
+| *tidyverse* | *data.table* |
+| --- | --- |
+| `group_by(col1,col2) %>% summarize(nb=n())` | `dt[,.(nb=.N),by=.(col1,col2)]` |
+| `group_by(col1,col2) %>% mutate(nb=n())` | `dt[,nb:=.N,by=.(col1,col2)]` |
+| `filter(nb==2)` | `dt[nb==2]` |

@@ -129,7 +129,9 @@ The spacing is quite important, and the conditions can be built with:
 + `-r` file readable.
 
 
-## Converting PDF into EPS
+## Convert PDF 
+
+### to EPS
 
 I ended up using Inkscape in command-line mode. The result is not so bad (better than the `pdf2eps` etc).
 
@@ -142,6 +144,27 @@ inkscape document.pdf --export-eps=document.eps
 ~~~sh
 pdftops -eps document.pdf
 ~~~
+
+### to PDF/A
+
+In the end I had to use Acrobat Reader Pro...
+Still, converting the PDF using the following commands beforehand helped (otherwise Acrobat Reader Pro couldn't convert it):
+
+~~~sh
+gs -dPDFA=1 -dBATCH -dNOPAUSE -dEmbedAllFonts=true -dSubsetFonts=false -dHaveTrueTypes=true -dPDFSETTINGS=/prepress -sProcessColorModel=DeviceRGB -sDEVICE=pdfwrite -sPDFACompatibilityPolicy=1 -sOutputFile=mainPDFA.pdf main.pdf
+~~~
+
+On the other hand, passing by a `.ps` stage as recommended [here](https://superuser.com/questions/188953/how-to-convert-a-pdf-to-a-pdf-a), produced a smaller PDF that was directly PDF/A compliant (no need for Acrobat Reader Pro) but lost all cross-reference links :(
+
+~~~sh
+pdftops main.pdf main.ps
+gs -dPDFA -dBATCH -dNOPAUSE -dNOOUTERSAVE -dUseCIEColor -sProcessColorModel=DeviceCMYK -sDEVICE=pdfwrite -sPDFACompatibilityPolicy=1 -sOutputFile=mainPDFA.pdf main.ps
+~~~
+
+To check for PDF/A compliance I used [this online validator](https://www.pdf-online.com/osa/validate.aspx) or Acrobat Reader Pro.
+Another way to check for problems is to look at the *emb* column of `pdffonts main.pdf` (should be all embedded) and the *type* column of `pdfimages -list main.pdf` (should be all *image*).
+
+*Note: this is based only on my one-time experience with the PDF of my thesis.*
 
 ## Git
 
@@ -235,6 +258,32 @@ docker-machine start
 
 - [Makefile basics from Isaacs](https://gist.github.com/isaacs/62a2d1825d04437c6f08).
 
+## Modules
+
+For example installing Emacs as a module on a HPC.
+After installing Emacs locally in a `~/softwares/emacs/emacs-24.4` I create a file `~/myModules/jmonlong/emacs/24.4` with:
+
+~~~shell
+#%Module1.0
+proc ModulesHelp { } {
+  puts stderr "\tMUMmer "
+}
+module-whatis "mummer"
+
+set             root                /home/jmonlong/softwares/emacs/emacs-24.4
+prepend-path    PATH                $root/bin
+prepend-path    LIBRARY_PATH        $root/lib/
+prepend-path    LD_LIBRARY_PATH     $root/lib/
+~~~
+
+Then to use the module:
+
+~~~shell
+module use ~/myModules
+module load jmonlong/emacs
+~~~
+
+
 ## OSX
 
 ### Mount server
@@ -254,5 +303,7 @@ By default the disk is formatted in NTFS, which OSX could read only. To write, t
 ~~~sh
 LABEL=Elements none ntfs rw,auto,nobrowse
 ~~~
+
+*Note: If there are spaces in the label, replace them by `\040`.*
 
 The disk can then be accessed through the *Volumes* folder (`/Volumes`).

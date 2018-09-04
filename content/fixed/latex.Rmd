@@ -110,6 +110,14 @@ To set the space between the number and the title in list of figures/tables (e.g
 \setlength{\cftfignumwidth}{3em}
 ~~~
 
+### Metadata
+
+To specify the PDF's metadata (title, author, etc):
+
+~~~latex
+\usepackage[pdfauthor={AUTHOR},pdftitle={TITLE},pdfsubject={SUBJECT},pdfkeywords={KEYWORDS},pdfproducer={LaTeX},pdfcreator={pdflatex}]{hyperref}
+~~~
+
 
 ## Figures
 

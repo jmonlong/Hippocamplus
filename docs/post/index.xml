@@ -2,106 +2,60 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Hippocamplus </title>
-    <link>/post/</link>
+    <link>/Hippocamplus/post/</link>
     <language>en-us</language>
     <author></author>
     <rights>(C) 2018</rights>
-    <updated>2018-06-09 00:00:00 &#43;0000 UTC</updated>
+    <updated>2018-07-08 00:00:00 &#43;0000 UTC</updated>
 
     
       
         <item>
-          <title>Clustering into same size clusters</title>
-          <link>/2018/06/09/cluster-same-size/</link>
-          <pubDate>Sat, 09 Jun 2018 00:00:00 UTC</pubDate>
+          <title>Mental health crisis in science...but careful with nonresponse bias</title>
+          <link>/Hippocamplus/2018/07/08/mental-health-crisis-science/</link>
+          <pubDate>Sun, 08 Jul 2018 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/2018/06/09/cluster-same-size/</guid>
-          <description>&lt;div id=&#34;TOC&#34;&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;#iterative-dichotomy&#34;&gt;Iterative dichotomy&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#iterative-nearest-neighbor&#34;&gt;Iterative nearest neighbor&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#same-size-k-means-variation&#34;&gt;Same-size k-Means Variation&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#test-data&#34;&gt;Test data&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#results&#34;&gt;Results&lt;/a&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;#test-data-1&#34;&gt;Test data 1&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#test-data-2&#34;&gt;Test data 2&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#conclusions&#34;&gt;Conclusions&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#extra-optimization&#34;&gt;Extra: optimization&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#code&#34;&gt;Code&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
+          <guid>/Hippocamplus/2018/07/08/mental-health-crisis-science/</guid>
+          <description>&lt;p&gt;A few month ago, a short paper was published in Nature Biotechnology&lt;a href=&#34;#fn1&#34; class=&#34;footnoteRef&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; about the mental health crisis in science. It attracted a bit of attention on the news and social media, which is good because it’s an important matter. The article was very good at putting the subject on the table and proposing some solutions, but it picked my curiosity about nonresponse bias.&lt;/p&gt;
+&lt;div id=&#34;issues-with-the-nature-biotech-article&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Issues with the Nature Biotech article&lt;/h2&gt;
+&lt;p&gt;The numbers are based on an email survey so &lt;strong&gt;one issue is the nonresponse bias&lt;/strong&gt;: the individuals that responded might not be representative of the population. The authors quickly mention it:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Although this is a convenience sample in which respondents who have had a history of anxiety or depression may have been more apt to respond to the survey, the data should prompt both academia and policy makers to consider intervention strategies.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;However, in the next paragraph, this number is directly compared with the population number from a study that used a “nationally representative face-to-face household survey”&lt;a href=&#34;#fn2&#34; class=&#34;footnoteRef&#34; id=&#34;fnref2&#34;&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Our results show that graduate students are more than six times as likely to experience depression and anxiety as compared to the general population. Forty-one percent of graduate students scored as having moderate to severe anxiety on the GAD07 scale as compared to 6% of the general population, as demonstrated previously.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;I find it a bit misleading to put both numbers in the same sentence without explaining that they were derived from different methods.&lt;/p&gt;
+&lt;p&gt;On a side note, I was also surprised that the figures are incorrectly described in the text. Saying &lt;em&gt;“56% of students experiencing anxiety have an unhealthy work-life balance”&lt;/em&gt; is different from saying &lt;em&gt;“56% of students with unhealthy work-life balance experience anxiety”&lt;/em&gt;. Still, all the numbers about work-life balance and relationship with mentor are incorrectly described like this… A shame because at least these comparisons shouldn’t be affected by nonresponse bias as much. End of rant.&lt;/p&gt;
 &lt;/div&gt;
-
-&lt;p&gt;I would like to cluster points into groups of similar size. For example I would like to group 1000 points into clusters of around 10 points each. The two aspects that are important here are:&lt;/p&gt;
+&lt;div id=&#34;better-studies&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Better studies&lt;/h2&gt;
+&lt;p&gt;Although not cited in the Nature Biotech paper, I found two studies that are quite similar but were more careful with their methods/conclusions.&lt;/p&gt;
+&lt;p&gt;The first was published in the American Journal of Orthopsychiatry in 2010&lt;a href=&#34;#fn3&#34; class=&#34;footnoteRef&#34; id=&#34;fnref3&#34;&gt;&lt;sup&gt;3&lt;/sup&gt;&lt;/a&gt; and looked at mental health in university students (graduate students included). The PHQ-9 questionnaire was also used to assess depression and ~1,700 graduate students responded to their email survey. In this study, the authors tried to &lt;strong&gt;account for nonresponse bias&lt;/strong&gt; by computing weights based on two types of information:&lt;/p&gt;
 &lt;ol style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;The cluster size distribution, or the deviation from the desired cluster size.&lt;/li&gt;
-&lt;li&gt;The quality of the clusters, i.e. how similar are points within a cluster.&lt;/li&gt;
+&lt;li&gt;Demographic and academic representation compared to the university’s registar.&lt;/li&gt;
+&lt;li&gt;Results from nonrespondents that were recontacted and given larger incentive to respond.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;In addition to the typical hierarchical clustering approach, I will test the following iterative approaches:&lt;/p&gt;
-&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;Iterative dichotomy: large clusters are split in two until around the desired size (using hierarchical clustering).&lt;/li&gt;
-&lt;li&gt;Iterative nearest neighbor: a point and its closest neighboring points are assigned to a cluster and removed before processing another point.&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://elki-project.github.io/tutorial/same-size_k_means&#34;&gt;Same-size k-Means Variation&lt;/a&gt; that some quick googling returned.&lt;/li&gt;
+&lt;p&gt;The proportion of students with depression was significantly higher in the respondents than the non-respondents (&lt;strong&gt;14.1% vs 6.1%&lt;/strong&gt;). After correcting for the nonresponse bias they found that 11.3% of graduate students were positive for a depressive or anxiety disorder.&lt;/p&gt;
+&lt;p&gt;The second study was published in Academic Psychiatry in 2014&lt;a href=&#34;#fn4&#34; class=&#34;footnoteRef&#34; id=&#34;fnref4&#34;&gt;&lt;sup&gt;4&lt;/sup&gt;&lt;/a&gt;. This one is not really saying much about the estimates for the graduate student population but shows &lt;strong&gt;what can (and cannot) be said&lt;/strong&gt; when the nonresponse bias is not controlled. It used the same questionnaire for depression (PHQ-9) and screened ~300 students with an email survey. However, the goal was essentially to find factors that correlate with the questionnaire score. Although they describe the global number in the cohort, most of the study focuses on the association with other factors like substance use and eating problems. The discussion makes it clear too:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Therefore, the results of this study should not be generalized to the entire graduate student population on this campus or to graduate students outside of the study institution. As the goal of the screening was to identify and triage at-risk students into treatment, survey respondents may have represented students with more severe mental health needs who responded to the survey as a means of seeking help.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/div&gt;
+&lt;div id=&#34;conclusion&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;The 40% number might be a bit over-estimated. &lt;strong&gt;Is that a problem?&lt;/strong&gt; &lt;strong&gt;No&lt;/strong&gt; because mental health is a problem and we should talk about it and try to fix it. I just wanted to cite and put these two good studies somewhere I can remember (and also rant).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+&lt;hr /&gt;
+&lt;ol&gt;
+&lt;li id=&#34;fn1&#34;&gt;&lt;p&gt;Evans, T. M., Bira, L., Gastelum, J. B., Weiss, L. T., &amp;amp; Vanderford, N. L. (2018). Evidence for a mental health crisis in graduate education. &lt;em&gt;Nature Biotechnology&lt;/em&gt;, volume 36, pages 282–284. &lt;a href=&#34;https://www.nature.com/articles/nbt.4089&#34;&gt;Link&lt;/a&gt;&lt;a href=&#34;#fnref1&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&#34;fn2&#34;&gt;&lt;p&gt;Kocalevent, R. D., Hinz, A., &amp;amp; Brähler, E. (2013). Standardization of the depression screener Patient Health Questionnaire (PHQ-9) in the general population. &lt;em&gt;General Hospital Psychiatry&lt;/em&gt;, 35(5), 551–555. &lt;a href=&#34;https://doi.org/10.1016/j.genhosppsych.2013.04.006&#34;&gt;Link&lt;/a&gt;&lt;a href=&#34;#fnref2&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&#34;fn3&#34;&gt;&lt;p&gt;Eisenberg, D. , Gollust, S. E., Golberstein, E. and Hefner, J. L. (2007). Prevalence and Correlates of Depression, Anxiety, and Suicidality Among University Students. &lt;em&gt;American Journal of Orthopsychiatry&lt;/em&gt;, 77: 534-542. &lt;a href=&#34;https://doi.org/10.1037/0002-9432.77.4.534&#34;&gt;Link&lt;/a&gt;&lt;a href=&#34;#fnref3&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li id=&#34;fn4&#34;&gt;&lt;p&gt;Garcia-Williams, A.G., Moffitt, L. &amp;amp; Kaslow, N.J. (2014). Mental Health and Suicidal Behavior Among Graduate Students. &lt;em&gt;Acad Psychiatry&lt;/em&gt;, 38: 554. &lt;a href=&#34;https://doi.org/10.1007/s40596-014-0041-y&#34;&gt;Link&lt;/a&gt;&lt;a href=&#34;#fnref4&#34;&gt;↩&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;As a baseline, points will be randomly clustered into same-size clusters.&lt;/p&gt;
-&lt;p&gt;In the following &lt;span class=&#34;math&#34;&gt;\(s\)&lt;/span&gt; is the target cluster size.&lt;/p&gt;
-&lt;div id=&#34;iterative-dichotomy&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Iterative dichotomy&lt;/h2&gt;
-&lt;p&gt;Starting with one cluster containing all the points, a cluster is split in two if larger that &lt;span class=&#34;math&#34;&gt;\(1.5*s\)&lt;/span&gt;. When all clusters are smaller than &lt;span class=&#34;math&#34;&gt;\(1.5*s\)&lt;/span&gt;, the process stops.&lt;/p&gt;
-&lt;p&gt;The points are split in two using hierarchical clustering. I will try different linkage criteria. My guess is that the Ward criterion will be good at this because it tends to produce balanced dendrograms.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;iterative-nearest-neighbor&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Iterative nearest neighbor&lt;/h2&gt;
-&lt;p&gt;While there are more than &lt;span class=&#34;math&#34;&gt;\(s\)&lt;/span&gt; unassigned points:&lt;/p&gt;
-&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;A point is selected. Randomly or following a rule (see below).&lt;/li&gt;
-&lt;li&gt;The &lt;span class=&#34;math&#34;&gt;\(s-1\)&lt;/span&gt; closest points are found and assigned to a new cluster.&lt;/li&gt;
-&lt;li&gt;These points are removed.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;If the total number of points is not a multiple of &lt;span class=&#34;math&#34;&gt;\(s\)&lt;/span&gt;, the remaining points could be either assigned to their own clusters or to an existing cluster. Actually, we completely control the cluster sizes here so we could fix the size of some clusters to &lt;span class=&#34;math&#34;&gt;\(s+1\)&lt;/span&gt; beforehand to avoid leftovers and ensure balanced sizes.&lt;/p&gt;
-&lt;p&gt;In the first step, a point is selected. I’ll start by choosing a point randomly (out of the unassigned points). Eventually I could try picking the points with close neighbors, or the opposite, far from other points. I’ll use the mean distance between a point and the others to define the order at which points are processed.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;same-size-k-means-variation&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Same-size k-Means Variation&lt;/h2&gt;
-&lt;p&gt;As explained in a few pages online (e.g. &lt;a href=&#34;https://elki-project.github.io/tutorial/same-size_k_means&#34;&gt;here&lt;/a&gt;), one approach consists of using K-means to derive centers and then assigning the same amount of points to each center/cluster.&lt;/p&gt;
-&lt;p&gt;In the proposed approach the points are ordered by their distance to the closest center minus the distance to the farthest cluster. Each point is assigned to the best cluster in this order. If the best cluster is full, the second best is chosen, etc.&lt;/p&gt;
-&lt;p&gt;I’ll also try to order the points by the distance to the closest center, by the distance to the farthest cluster, or using a random order.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;test-data&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Test data&lt;/h2&gt;
-&lt;p&gt;I’ll test the different approaches on dummy data with Gaussian distributions and some outliers. Both test datasets contains, 1000 points in two dimensions and includes 100 outliers. The second test dataset contains two groups, one larger than the other.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;../post/2018-06-09-ClusterEqualSize_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;results&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Results&lt;/h2&gt;
-&lt;p&gt;Let’s aim at clusters of around &lt;span class=&#34;math&#34;&gt;\(s=21\)&lt;/span&gt; points. Not 20 because that way there will be left-over points (more realistic).&lt;/p&gt;
-&lt;div id=&#34;test-data-1&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Test data 1&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&#34;../post/2018-06-09-ClusterEqualSize_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;960&#34; /&gt;&lt;img src=&#34;../post/2018-06-09-ClusterEqualSize_files/figure-html/unnamed-chunk-4-2.png&#34; width=&#34;960&#34; /&gt;&lt;img src=&#34;../post/2018-06-09-ClusterEqualSize_files/figure-html/unnamed-chunk-4-3.png&#34; width=&#34;960&#34; /&gt;&lt;img src=&#34;../post/2018-06-09-ClusterEqualSize_files/figure-html/unnamed-chunk-4-4.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;test-data-2&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Test data 2&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&#34;../post/2018-06-09-ClusterEqualSize_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;960&#34; /&gt;&lt;img src=&#34;../post/2018-06-09-ClusterEqualSize_files/figure-html/unnamed-chunk-5-2.png&#34; width=&#34;960&#34; /&gt;&lt;img src=&#34;../post/2018-06-09-ClusterEqualSize_files/figure-html/unnamed-chunk-5-3.png&#34; width=&#34;960&#34; /&gt;&lt;img src=&#34;../post/2018-06-09-ClusterEqualSize_files/figure-html/unnamed-chunk-5-4.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;conclusions&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Conclusions&lt;/h2&gt;
-&lt;p&gt;The &lt;em&gt;iterative dichotomy&lt;/em&gt; approach is not as bad as I thought, especially using Ward linkage criterion, but it doesn’t really controls for the final cluster size. We end up with most clusters around the desired size but the size of some clusters still vary by a factor of 2 or more.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;The nearest neighbor approach (&lt;em&gt;maxD&lt;/em&gt; variant), is the best approach in my opinion.&lt;/strong&gt; The cluster size is completely controlled and the mean/maximum pairwise distance for points in the same cluster is similar (or better) to other approaches.&lt;/p&gt;
-&lt;p&gt;The K-means approach didn’t perform as well but we can keep it in mind if the number of points is very large, as it is much more memory efficient (no need for a pairwise distance matrix).&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;extra-optimization&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Extra: optimization&lt;/h2&gt;
-&lt;p&gt;The nearest neighbor approach requires a &lt;code&gt;while&lt;/code&gt; loop, which is not efficient in R. Maybe implementing the loop with Rcpp could speed up the computation (in practice I would like to run this on up to 10K points).&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;../post/2018-06-09-ClusterEqualSize_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;960&#34; /&gt;&lt;img src=&#34;../post/2018-06-09-ClusterEqualSize_files/figure-html/unnamed-chunk-7-2.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;Three times faster with Rcpp!&lt;/p&gt;
-&lt;p&gt;Safety check, are the results actually the same ?&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;../post/2018-06-09-ClusterEqualSize_files/figure-html/unnamed-chunk-8-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;Yes. Ouf…&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;code&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Code&lt;/h2&gt;
-&lt;p&gt;The source code of this page can be found &lt;a href=&#34;https://github.com/jmonlong/Hippocamplus/tree/master/content/post/2018-06-09-ClusterEqualSize.Rmd&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 </description>
         </item>
@@ -110,10 +64,10 @@
       
         <item>
           <title>Converting scientific reviews to EPUB</title>
-          <link>/2018/05/07/epub-reviews/</link>
+          <link>/Hippocamplus/2018/05/07/epub-reviews/</link>
           <pubDate>Mon, 07 May 2018 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/2018/05/07/epub-reviews/</guid>
+          <guid>/Hippocamplus/2018/05/07/epub-reviews/</guid>
           <description>&lt;div id=&#34;TOC&#34;&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;#first-check-on-pubmed-central&#34;&gt;First, check on PubMed Central&lt;/a&gt;&lt;/li&gt;
@@ -212,10 +166,10 @@ Rscript epubify-naturereviews.R -i https://www.nature.com/articles/nrg.2015.16&l
       
         <item>
           <title>Additional checks for a LaTeX manuscript</title>
-          <link>/2018/04/18/check-latex-pub/</link>
+          <link>/Hippocamplus/2018/04/18/check-latex-pub/</link>
           <pubDate>Wed, 18 Apr 2018 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/2018/04/18/check-latex-pub/</guid>
+          <guid>/Hippocamplus/2018/04/18/check-latex-pub/</guid>
           <description>&lt;p&gt;To continue on the series of &lt;em&gt;“Things I did instead of writing my thesis to help me write my thesis”&lt;/em&gt;, another Python script that reads a LaTeX manuscript and helps check that everything is fine. More specifically, the &lt;code&gt;checkLatex.py&lt;/code&gt; script (&lt;a href=&#34;https://github.com/jmonlong/Hippocamplus/tree/config/python/checkLatex&#34;&gt;on GitHub&lt;/a&gt;) will:&lt;/p&gt;
 &lt;ol style=&#34;list-style-type: decimal&#34;&gt;
 &lt;li&gt;List missing references.&lt;/li&gt;
@@ -266,10 +220,10 @@ optional arguments:
       
         <item>
           <title>Checking text similarity between two documents</title>
-          <link>/2018/04/16/text-similarity/</link>
+          <link>/Hippocamplus/2018/04/16/text-similarity/</link>
           <pubDate>Mon, 16 Apr 2018 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/2018/04/16/text-similarity/</guid>
+          <guid>/Hippocamplus/2018/04/16/text-similarity/</guid>
           <description>&lt;p&gt;To start the series of &lt;em&gt;“Things I did instead of writing my thesis to help me write my thesis”&lt;/em&gt;, a small Python script that compares two text documents and output similar parts. I did that to avoid auto-plagiarism of my manuscripts’ introduction in the main thesis introduction.&lt;/p&gt;
 &lt;p&gt;It’s a very naive approach but sped up the checking process (&lt;a href=&#34;https://xkcd.com/1319/&#34;&gt;maybe worth the time&lt;/a&gt;). It first looks for short exact matches between the two documents, then extends these exact matches and uses the &lt;a href=&#34;https://docs.python.org/2/library/difflib.html&#34;&gt;difflib&lt;/a&gt; module to keep text with a minimum similarity score (default 80%).&lt;/p&gt;
 &lt;p&gt;I put the &lt;code&gt;simText.py&lt;/code&gt; Python script &lt;a href=&#34;https://github.com/jmonlong/Hippocamplus/tree/config/python/simText&#34;&gt;on GitHub here&lt;/a&gt;.&lt;/p&gt;
@@ -316,10 +270,10 @@ T2: eletions and duplications, which affect DNA copy number, are collectively kn
       
         <item>
           <title>Journal comparison</title>
-          <link>/2018/02/23/journals-comparison/</link>
+          <link>/Hippocamplus/2018/02/23/journals-comparison/</link>
           <pubDate>Fri, 23 Feb 2018 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/2018/02/23/journals-comparison/</guid>
+          <guid>/Hippocamplus/2018/02/23/journals-comparison/</guid>
           <description>&lt;p&gt;&lt;em&gt;Edit Feb 24: Added variance graph and some examples of suspiciously fast publications.&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Edit Feb 25: Added &lt;a href=&#34;https://github.com/jmonlong/Hippocamplus/tree/config/R/journalPubTime&#34;&gt;script and data&lt;/a&gt; to GitHub.&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;Some info about journals in my field.&lt;/p&gt;
@@ -855,10 +809,10 @@ T2: eletions and duplications, which affect DNA copy number, are collectively kn
       
         <item>
           <title>tSNE and clustering</title>
-          <link>/2018/02/13/tsne-and-clustering/</link>
+          <link>/Hippocamplus/2018/02/13/tsne-and-clustering/</link>
           <pubDate>Tue, 13 Feb 2018 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/2018/02/13/tsne-and-clustering/</guid>
+          <guid>/Hippocamplus/2018/02/13/tsne-and-clustering/</guid>
           <description>&lt;p&gt;tSNE can give really nice results when we want to visualize many groups of multi-dimensional points. Once the 2D graph is done we might want to identify which points cluster in the tSNE blobs.&lt;/p&gt;
 &lt;p&gt;Using simulated and real data, I’ll try different methods:&lt;/p&gt;
 &lt;ul&gt;
@@ -1148,10 +1102,10 @@ ggplot(info.real, aes(x = tsne1, y = tsne2, colour = louvain)) +
       
         <item>
           <title>Bibliography style for AJHG</title>
-          <link>/2017/10/04/bibliography-style-for-ajhg/</link>
+          <link>/Hippocamplus/2017/10/04/bibliography-style-for-ajhg/</link>
           <pubDate>Wed, 04 Oct 2017 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/2017/10/04/bibliography-style-for-ajhg/</guid>
+          <guid>/Hippocamplus/2017/10/04/bibliography-style-for-ajhg/</guid>
           <description>&lt;p&gt;I couldn’t find an up-to-date/working &lt;strong&gt;LaTeX bibliography style for the American Journal of Human Genetics (AJHG)&lt;/strong&gt;. The output from &lt;code&gt;unsrtnat&lt;/code&gt; (my goto style) was also quite different from what the journal wanted.&lt;/p&gt;
 &lt;p&gt;I found a bibliography style for &lt;em&gt;Cell&lt;/em&gt; which is almost what AJHG wants, but I also wanted the references to be &lt;strong&gt;ordered by their appearance in the text&lt;/strong&gt; (like for &lt;code&gt;unsrtnat&lt;/code&gt;) and not alphabetically. So I downloaded both &lt;code&gt;cell.bst&lt;/code&gt; (&lt;a href=&#34;https://www.ctan.org/tex-archive/macros/latex/contrib/cell&#34;&gt;here&lt;/a&gt;) and &lt;code&gt;unsrtnat.bst&lt;/code&gt; (&lt;a href=&#34;https://www.ctan.org/tex-archive/macros/latex/contrib/natbib/&#34;&gt;here&lt;/a&gt;) files and merged them. I don’t understand all the details but after some trial-and-errors it seems to work.&lt;/p&gt;
 &lt;p&gt;After merging, I removed the &lt;em&gt;emphasis&lt;/em&gt; on the Journal/Book name which was the only difference I could see between the Cell and AJHG styles.&lt;/p&gt;
@@ -1164,10 +1118,10 @@ ggplot(info.real, aes(x = tsne1, y = tsne2, colour = louvain)) +
       
         <item>
           <title>MUMmerplots with ggplot2</title>
-          <link>/2017/09/19/mummerplots-with-ggplot2/</link>
+          <link>/Hippocamplus/2017/09/19/mummerplots-with-ggplot2/</link>
           <pubDate>Tue, 19 Sep 2017 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/2017/09/19/mummerplots-with-ggplot2/</guid>
+          <guid>/Hippocamplus/2017/09/19/mummerplots-with-ggplot2/</guid>
           <description>&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(dplyr)
 library(magrittr)
 library(GenomicRanges)
@@ -1501,10 +1455,10 @@ mumgp.filt.m %&amp;gt;% select(similarity, start, end, filter) %&amp;gt;%
       
         <item>
           <title>Regression sandbox</title>
-          <link>/2017/09/16/regression-sandbox/</link>
+          <link>/Hippocamplus/2017/09/16/regression-sandbox/</link>
           <pubDate>Sat, 16 Sep 2017 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/2017/09/16/regression-sandbox/</guid>
+          <guid>/Hippocamplus/2017/09/16/regression-sandbox/</guid>
           <description>&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
 library(broom)
 library(magrittr)
@@ -1825,10 +1779,10 @@ ggplot(df, aes(x = x, y = y)) + geom_point(alpha = 0.2) +
       
         <item>
           <title>Enrichment between genomic regions</title>
-          <link>/2017/09/05/enrichment-between-genomic-regions/</link>
+          <link>/Hippocamplus/2017/09/05/enrichment-between-genomic-regions/</link>
           <pubDate>Tue, 05 Sep 2017 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/2017/09/05/enrichment-between-genomic-regions/</guid>
+          <guid>/Hippocamplus/2017/09/05/enrichment-between-genomic-regions/</guid>
           <description>&lt;p&gt;Testing if two sets of genomic regions overlap significantly is not straightforward. In the simple situation of regions of 1 bp (e.g. SNVs) we could use a hypergeometric test. When the regions are small enough and there are not too many, the hypergeometric test might also be a fair approximation.&lt;/p&gt;
 &lt;p&gt;But when we manipulate many regions of variable size covering the entire genome it’s not as straightforward. The gene annotation is an example. The repeat annotation is even worse as it covers almost 50% of the genome and contains different families with very different size/location profiles.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
@@ -2274,10 +2228,10 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
       
         <item>
           <title>Segmental duplication exploration</title>
-          <link>/2016/10/20/segmental-duplication-exploration/</link>
+          <link>/Hippocamplus/2016/10/20/segmental-duplication-exploration/</link>
           <pubDate>Thu, 20 Oct 2016 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/2016/10/20/segmental-duplication-exploration/</guid>
+          <guid>/Hippocamplus/2016/10/20/segmental-duplication-exploration/</guid>
           <description>&lt;div id=&#34;segmental-duplications-sd&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Segmental Duplications (SD)&lt;/h2&gt;
 &lt;p&gt;I downloaded the segmental duplication annotation for hg19 from &lt;a href=&#34;http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/genomicSuperDups.txt.gz&#34;&gt;UCSC&lt;/a&gt;. There are 51599 annotated SD. They are defined as regions larger than 1 Kbp with at least 90% similarity with another region in the genome.&lt;/p&gt;
@@ -3023,10 +2977,10 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
       
         <item>
           <title>Summary epigenetic mark tracks</title>
-          <link>/2016/09/06/summary-epigenetic-mark-tracks/</link>
+          <link>/Hippocamplus/2016/09/06/summary-epigenetic-mark-tracks/</link>
           <pubDate>Tue, 06 Sep 2016 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/2016/09/06/summary-epigenetic-mark-tracks/</guid>
+          <guid>/Hippocamplus/2016/09/06/summary-epigenetic-mark-tracks/</guid>
           <description>&lt;p&gt;To assess the potential impact of variants (SNV, SVs) we might want to use some of the public epigentic datasets. The amount and heterogeneity of this data is a bit overwhelming. I would like to get a summary of which regions of the genome are the most functionally important.&lt;/p&gt;
 &lt;p&gt;The plan is to:&lt;/p&gt;
 &lt;ul&gt;
@@ -3066,10 +3020,10 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
       
         <item>
           <title>Gencode exploration</title>
-          <link>/2016/06/04/gencode-exploration/</link>
+          <link>/Hippocamplus/2016/06/04/gencode-exploration/</link>
           <pubDate>Sat, 04 Jun 2016 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/2016/06/04/gencode-exploration/</guid>
+          <guid>/Hippocamplus/2016/06/04/gencode-exploration/</guid>
           <description>&lt;div id=&#34;gencode-v19&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Gencode v19&lt;/h2&gt;
 &lt;p&gt;I downloaded Gencode v19 at &lt;a href=&#34;ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz&#34;&gt;&lt;a href=&#34;ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz&#34; class=&#34;uri&#34;&gt;ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz&lt;/a&gt;&lt;/a&gt;.&lt;/p&gt;
@@ -3362,131 +3316,11 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
     
       
         <item>
-          <title>Repeat Masker exploration</title>
-          <link>/2016/06/04/repeat-masker-exploration/</link>
-          <pubDate>Sat, 04 Jun 2016 00:00:00 UTC</pubDate>
-          <author></author>
-          <guid>/2016/06/04/repeat-masker-exploration/</guid>
-          <description>&lt;div id=&#34;repeat-masker&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Repeat Masker&lt;/h2&gt;
-&lt;p&gt;I downloaded Repeat Masker at &lt;a href=&#34;http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/rmsk.txt.gz&#34;&gt;&lt;a href=&#34;http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/rmsk.txt.gz&#34; class=&#34;uri&#34;&gt;http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/rmsk.txt.gz&lt;/a&gt;&lt;/a&gt;.&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr class=&#34;header&#34;&gt;
-&lt;th align=&#34;left&#34;&gt;chr&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;start&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;end&lt;/th&gt;
-&lt;th align=&#34;left&#34;&gt;repName&lt;/th&gt;
-&lt;th align=&#34;left&#34;&gt;repClass&lt;/th&gt;
-&lt;th align=&#34;left&#34;&gt;repFamily&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;17&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;37428219&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;37428344&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;AluJo&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;SINE&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Alu&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;12&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;95320593&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;95320702&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;(TTC)n&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Simple_repeat&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Simple_repeat&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;1&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;150405857&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;150405892&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;(TA)n&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Simple_repeat&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Simple_repeat&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;10&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;46954002&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;46954311&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;AluSp&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;SINE&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Alu&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;2&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;223575250&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;223575286&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;(TAA)n&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Simple_repeat&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Simple_repeat&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;4&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;149535979&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;149536275&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;AluSc&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;SINE&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Alu&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;4&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;81625836&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;81625865&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;AT_rich&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Low_complexity&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Low_complexity&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;2&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;107075978&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;107076275&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;AluSx1&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;SINE&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Alu&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;2&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;114092998&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;114093116&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;MIRb&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;SINE&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;MIR&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;16&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;59345225&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;59345528&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;AluSz&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;SINE&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Alu&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;The annotation spans a total of 1.45 Gbp. If we include segmental duplication, 1.53 Gbp are annotated as repeat in the human genome.&lt;/p&gt;
-&lt;div id=&#34;te-density&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;TE Density&lt;/h3&gt;
-&lt;p&gt;Using different window size, how many regions contain a TE ?&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;../post/2017-03-13-RepeatMaskerExploration_files/figure-html/tedens-1.png&#34; width=&#34;768&#34; /&gt;&lt;img src=&#34;../post/2017-03-13-RepeatMaskerExploration_files/figure-html/tedens-2.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 0.06533548&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;alpha-satellites&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Alpha satellites&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 5553.278&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-</description>
-        </item>
-      
-    
-      
-        <item>
           <title>Preparing some genomic annotations</title>
-          <link>/2016/06/03/preparing-some-genomic-annotations/</link>
+          <link>/Hippocamplus/2016/06/03/preparing-some-genomic-annotations/</link>
           <pubDate>Fri, 03 Jun 2016 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/2016/06/03/preparing-some-genomic-annotations/</guid>
+          <guid>/Hippocamplus/2016/06/03/preparing-some-genomic-annotations/</guid>
           <description>&lt;div id=&#34;mappability-track&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Mappability track&lt;/h2&gt;
 &lt;p&gt;I produced a mappability track from the UCSC track. The &lt;a href=&#34;http://hgdownload.soe.ucsc.edu/gbdb/hg19/bbi/wgEncodeCrgMapabilityAlign100mer.bw&#34;&gt;raw file&lt;/a&gt; contains, for each base in the genome, an estimation of the probability that a read is correctly mapped at this position.&lt;/p&gt;
@@ -3534,10 +3368,10 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
       
         <item>
           <title>Word Cloud in R</title>
-          <link>/2016/02/26/word-cloud-in-r/</link>
+          <link>/Hippocamplus/2016/02/26/word-cloud-in-r/</link>
           <pubDate>Fri, 26 Feb 2016 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/2016/02/26/word-cloud-in-r/</guid>
+          <guid>/Hippocamplus/2016/02/26/word-cloud-in-r/</guid>
           <description>&lt;p&gt;The &lt;a href=&#34;https://cran.r-project.org/web/packages/wordcloud/index.html&#34;&gt;&lt;code&gt;wordcloud&lt;/code&gt; package&lt;/a&gt; is available on CRAN.&lt;/p&gt;
 &lt;div id=&#34;fake-words&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Fake words&lt;/h2&gt;

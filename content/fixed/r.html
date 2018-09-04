@@ -16,15 +16,17 @@ output:
 <li><a href="#order-in-condition-assessment">Order in condition assessment</a></li>
 <li><a href="#get-rpubs-working">Get RPubs working</a></li>
 </ul></li>
-<li><a href="#ggplot2">ggplot2</a><ul>
-<li><a href="#tricks">Tricks</a></li>
+<li><a href="#graphs">Graphs</a><ul>
+<li><a href="#ggplot2-tricks">ggplot2 tricks</a></li>
 <li><a href="#alignstack-two-ggplots">Align/stack two ggplots</a></li>
+<li><a href="#change-font-in-ggplot2">Change font in ggplot2</a></li>
 <li><a href="#waffle-graphs">Waffle graphs</a></li>
 </ul></li>
 <li><a href="#rmarkdown">Rmarkdown</a><ul>
 <li><a href="#beamer-presentation">Beamer presentation</a></li>
 <li><a href="#jekyll-website">Jekyll website</a></li>
 </ul></li>
+<li><a href="#data.table-package"><em>data.table</em> package</a></li>
 </ul>
 </div>
 
@@ -57,10 +59,10 @@ if(!is.null(x) &amp;&amp; x&gt;10) message(&quot;so big !&quot;)</code></pre>
 <p><code>options(rpubs.upload.method = &quot;internal&quot;)</code></p>
 </div>
 </div>
-<div id="ggplot2" class="section level2">
-<h2>ggplot2</h2>
-<div id="tricks" class="section level3">
-<h3>Tricks</h3>
+<div id="graphs" class="section level2">
+<h2>Graphs</h2>
+<div id="ggplot2-tricks" class="section level3">
+<h3>ggplot2 tricks</h3>
 <ul>
 <li>To plot a density distribution without the x-axis line, use <code>stat_density(geom=&quot;line&quot;)</code> (and eventually <code>position=&quot;dodge&quot;</code> if plotting several groups).</li>
 </ul>
@@ -79,6 +81,15 @@ maxWidth = unit.pmax(p1$widths[2:3], p2$widths[2:3])
 p1$widths[2:3] &lt;- maxWidth
 p2$widths[2:3] &lt;- maxWidth
 grid.arrange(p1, p2, heights = c(3, 2))</code></pre>
+</div>
+<div id="change-font-in-ggplot2" class="section level3">
+<h3>Change font in ggplot2</h3>
+<pre class="r"><code>library(extrafont)
+font_import(pattern=&#39;Comic&#39;)
+loadfonts()
+qplot(x=rnorm(100)) + geom_histogram() + theme(text=element_text(family=&quot;Comic Sans MS&quot;)) + ggtitle(&#39;Ouch&#39;)</code></pre>
+<p><code>fonts()</code> to check which fonts are imported by <em>extrafont</em>, <code>names(pdfFonts())</code> to list the fonts available (loaded).</p>
+<p>More in <a href="http://blog.revolutionanalytics.com/2012/09/how-to-use-your-favorite-fonts-in-r-charts.html">this blog post</a>.</p>
 </div>
 <div id="waffle-graphs" class="section level3">
 <h3>Waffle graphs</h3>
@@ -143,4 +154,33 @@ knitr::kable(matrix(rnorm(10),10,10), format=&#39;latex&#39;)
 <pre class="sh"><code>Rscript -e &quot;servr::jekyll(script=&#39;build.R&#39;, serve=FALSE)&quot;</code></pre>
 <p>Note: I now use <a href="https://bookdown.org/yihui/blogdown/">blogdown</a> which automatically compile the R Markdown documents (every page is a R Markdown actually).</p>
 </div>
+</div>
+<div id="data.table-package" class="section level2">
+<h2><em>data.table</em> package</h2>
+<p>I’m more of a tidyverse person but for very large data the <a href="https://cran.r-project.org/web/packages/data.table/">data.table</a> package is more efficient.</p>
+<ul>
+<li><a href="https://s3.amazonaws.com/assets.datacamp.com/blog_assets/datatable_Cheat_Sheet_R.pdf">Cheatsheet from DataCamp</a></li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th><em>tidyverse</em></th>
+<th><em>data.table</em></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>group_by(col1,col2) %&gt;% summarize(nb=n())</code></td>
+<td><code>dt[,.(nb=.N),by=.(col1,col2)]</code></td>
+</tr>
+<tr class="even">
+<td><code>group_by(col1,col2) %&gt;% mutate(nb=n())</code></td>
+<td><code>dt[,nb:=.N,by=.(col1,col2)]</code></td>
+</tr>
+<tr class="odd">
+<td><code>filter(nb==2)</code></td>
+<td><code>dt[nb==2]</code></td>
+</tr>
+</tbody>
+</table>
 </div>

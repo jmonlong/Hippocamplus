@@ -163,7 +163,8 @@
   </div>
   
   <div class="sidebar-item">
-    <a href="../index.xml">RSS <i class="fa fa-rss-square" aria-hidden="true"></i></a>
+    <div><a href="../index.xml"><i class="fa fa-rss-square" aria-hidden="true"></i> RSS</a></div>
+    <div><a href="https://twitter.com/JMonlong"><i class="fa fa-twitter" aria-hidden="true"></i> @JMonlong</a></div>
     <p>&copy; 2018 Jean Monlong. All rights reserved.</p>
   </div>
 </div>
@@ -201,10 +202,14 @@
 <li><a href="#variables">Variables</a></li>
 <li><a href="#if-then-else">If Then Else</a></li>
 </ul></li>
-<li><a href="#converting-pdf-into-eps">Converting PDF into EPS</a></li>
+<li><a href="#convert-pdf">Convert PDF</a><ul>
+<li><a href="#to-eps">to EPS</a></li>
+<li><a href="#to-pdfa">to PDF/A</a></li>
+</ul></li>
 <li><a href="#git">Git</a></li>
 <li><a href="#docker-cheatsheet">Docker cheatsheet</a></li>
 <li><a href="#makefile">Makefile</a></li>
+<li><a href="#modules">Modules</a></li>
 <li><a href="#osx">OSX</a><ul>
 <li><a href="#mount-server">Mount server</a></li>
 <li><a href="#setup-wd-elements-external-hard-drive">Setup WD Elements external hard drive</a></li>
@@ -307,12 +312,25 @@ fi</code></pre>
 </ul>
 </div>
 </div>
-<div id="converting-pdf-into-eps" class="section level2">
-<h2>Converting PDF into EPS</h2>
+<div id="convert-pdf" class="section level2">
+<h2>Convert PDF</h2>
+<div id="to-eps" class="section level3">
+<h3>to EPS</h3>
 <p>I ended up using Inkscape in command-line mode. The result is not so bad (better than the <code>pdf2eps</code> etc).</p>
 <pre class="sh"><code>inkscape document.pdf --export-eps=document.eps</code></pre>
 <p><a href="http://blm.io/blog/convert-pdf-eps-osx/">Apparently</a>, <code>pdftops</code> is even better.</p>
 <pre class="sh"><code>pdftops -eps document.pdf</code></pre>
+</div>
+<div id="to-pdfa" class="section level3">
+<h3>to PDF/A</h3>
+<p>In the end I had to use Acrobat Reader Pro… Still, converting the PDF using the following commands beforehand helped (otherwise Acrobat Reader Pro couldn’t convert it):</p>
+<pre class="sh"><code>gs -dPDFA=1 -dBATCH -dNOPAUSE -dEmbedAllFonts=true -dSubsetFonts=false -dHaveTrueTypes=true -dPDFSETTINGS=/prepress -sProcessColorModel=DeviceRGB -sDEVICE=pdfwrite -sPDFACompatibilityPolicy=1 -sOutputFile=mainPDFA.pdf main.pdf</code></pre>
+<p>On the other hand, passing by a <code>.ps</code> stage as recommended <a href="https://superuser.com/questions/188953/how-to-convert-a-pdf-to-a-pdf-a">here</a>, produced a smaller PDF that was directly PDF/A compliant (no need for Acrobat Reader Pro) but lost all cross-reference links :(</p>
+<pre class="sh"><code>pdftops main.pdf main.ps
+gs -dPDFA -dBATCH -dNOPAUSE -dNOOUTERSAVE -dUseCIEColor -sProcessColorModel=DeviceCMYK -sDEVICE=pdfwrite -sPDFACompatibilityPolicy=1 -sOutputFile=mainPDFA.pdf main.ps</code></pre>
+<p>To check for PDF/A compliance I used <a href="https://www.pdf-online.com/osa/validate.aspx">this online validator</a> or Acrobat Reader Pro. Another way to check for problems is to look at the <em>emb</em> column of <code>pdffonts main.pdf</code> (should be all embedded) and the <em>type</em> column of <code>pdfimages -list main.pdf</code> (should be all <em>image</em>).</p>
+<p><em>Note: this is based only on my one-time experience with the PDF of my thesis.</em></p>
+</div>
 </div>
 <div id="git" class="section level2">
 <h2>Git</h2>
@@ -395,6 +413,23 @@ docker-machine start</code></pre>
 <li><a href="https://gist.github.com/isaacs/62a2d1825d04437c6f08">Makefile basics from Isaacs</a>.</li>
 </ul>
 </div>
+<div id="modules" class="section level2">
+<h2>Modules</h2>
+<p>For example installing Emacs as a module on a HPC. After installing Emacs locally in a <code>~/softwares/emacs/emacs-24.4</code> I create a file <code>~/myModules/jmonlong/emacs/24.4</code> with:</p>
+<pre class="shell"><code>#%Module1.0
+proc ModulesHelp { } {
+  puts stderr &quot;\tMUMmer &quot;
+}
+module-whatis &quot;mummer&quot;
+
+set             root                /home/jmonlong/softwares/emacs/emacs-24.4
+prepend-path    PATH                $root/bin
+prepend-path    LIBRARY_PATH        $root/lib/
+prepend-path    LD_LIBRARY_PATH     $root/lib/</code></pre>
+<p>Then to use the module:</p>
+<pre class="shell"><code>module use ~/myModules
+module load jmonlong/emacs</code></pre>
+</div>
 <div id="osx" class="section level2">
 <h2>OSX</h2>
 <div id="mount-server" class="section level3">
@@ -415,6 +450,9 @@ docker-machine start</code></pre>
 
       </div>
     </div>
+
+    
+    
 
     <label for="sidebar-checkbox" class="sidebar-toggle"></label>
 

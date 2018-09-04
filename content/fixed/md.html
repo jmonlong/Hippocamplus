@@ -32,6 +32,8 @@ output:
 <h2>Tips</h2>
 <ul>
 <li><code>/</code> to add some vertical space/break.</li>
+<li>Use two <code>`</code> and a space to escape <code>`</code> in inline code. E.g <code>`` `pwd` ``</code> gives <code>`pwd`</code>.</li>
+<li><code>---</code> to add horizontal line/separation.</li>
 </ul>
 </div>
 <div id="converting-markdown-into-nice-html-pages" class="section level2">
@@ -41,7 +43,7 @@ output:
 </div>
 <div id="converting-markdown-into-slides" class="section level2">
 <h2>Converting Markdown into slides</h2>
-<p>I use <a href="https://github.com/asanzdiego/markdownslides">MarkdownSlides</a>.</p>
+<p>I use RMarkdown or <a href="https://github.com/asanzdiego/markdownslides">MarkdownSlides</a>.</p>
 </div>
 <div id="jekyll-websites" class="section level2">
 <h2>Jekyll websites</h2>
@@ -74,7 +76,8 @@ output:
 </div>
 <div id="blogdown-websites" class="section level2">
 <h2>blogdown websites</h2>
-<p><a href="https://github.com/rstudio/blogdown">blogdown</a> is a R package extending <a href="http://rmarkdown.rstudio.com/">R Markdown</a> to build <a href="https://gohugo.io/">Hugo</a> static websites. Hugo is easier to install than Jekyll and apparently fast. Most importantly blogdown makes it easier to write posts with R code like in a RMarkdown document.</p>
+<p><a href="https://github.com/rstudio/blogdown">blogdown</a> is a R package extending <a href="http://rmarkdown.rstudio.com/">R Markdown</a> to build <a href="https://gohugo.io/">Hugo</a> static websites.
+Hugo is easier to install than Jekyll and apparently fast. Most importantly blogdown makes it easier to write posts with R code like in a RMarkdown document.</p>
 <p>I still use GitHub Pages to deploy the website. Because GH Pages doesn’t support Hugo, I build the website in a <code>docs</code> folder (<code>publishDir = &quot;docs&quot;</code> in <code>config.toml</code>) which I set up in the website settings to be the source of the static website.</p>
 <div id="themes-1" class="section level3">
 <h3>Themes</h3>
@@ -90,7 +93,8 @@ output:
 <div id="draft-posts" class="section level3">
 <h3>Draft posts</h3>
 <p>Most of the time I would like to build the website with minimal recompilation and I don’t want the draft posts to show (except for previews).</p>
-<p><code>build_site()</code> builds the site without showing posts with YAML <code>draft: true</code>. But it also recompiles everything and that can be a pain.</p>
+<p><code>build_site()</code> builds the site without showing posts with YAML <code>draft: true</code>.
+But it also recompiles everything and that can be a pain.</p>
 <p><code>serve_site()</code> recompiles only the <em>Rmd</em> documents newer than the corresponding <em>HTML</em> but it builds all posts, even if they have the <em>draft</em> parameter.</p>
 <p>For minimal recompilation and hidden draft posts I do <code>hugo_build()</code> after a <code>serve_site()</code>.</p>
 </div>

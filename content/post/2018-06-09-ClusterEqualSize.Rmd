@@ -70,6 +70,8 @@ library(ggplot2)
 library(dplyr)
 library(magrittr)
 library(tidyr)
+library(cluster)
+
 winsor <- function(x, u){
   if(any(x>u)) x[x>u] = u
   x
@@ -87,10 +89,12 @@ hclustit <- function(mat, clsize = 10, method='ward.D', split.th=1.5){
   lab
 }
 clstats <- function(mat, cls){
+  dmat = as.matrix(dist(mat))
+  sk <- silhouette(as.numeric(factor(cls)), dmatrix=dmat)
   ll = lapply(unique(cls), function(cl){
     cl.ii = which(cls==cl)
-    d = dist(mat[cl.ii, ])
-    tibble(lab=cl, max.dist=max(d), mean.dist=mean(d), size=length(cl.ii))
+    d = as.dist(dmat[cl.ii, cl.ii])
+    tibble(lab=cl, max.dist=max(d), mean.dist=mean(d), size=length(cl.ii), mean.sil=mean(sk[,3]))
   })
   do.call(rbind, ll)
 }
@@ -153,6 +157,30 @@ kmvar <- function(mat, clsize=10, method=c('rand','maxd', 'mind', 'elki')){
   }
   return(labs)
 }
+hcbottom <- function(mat, clsize = 10, method='ward.D'){
+  dmat = as.matrix(dist(mat))
+  clsize.rle = rle(as.numeric(cut(1:nrow(mat), ceiling(nrow(mat)/clsize))))
+  clsizes = clsize.rle$lengths
+  cpt = 1
+  lab = rep(NA, nrow(mat))
+  for(clss in clsizes[-1]){
+    lab.ii = which(is.na(lab))
+    hc.o = hclust(as.dist(dmat[lab.ii, lab.ii]), method=method)
+    clt = 0
+    ct = length(lab.ii)-clss
+    while(max(clt)<clss){
+      cls = cutree(hc.o, ct)
+      clt = table(cls)
+      ct = ct - 1
+    }
+    cl.sel = which(cls == as.numeric(names(clt)[which.max(clt)]))
+    lab[lab.ii[head(cl.sel, clss)]] = cpt
+    cpt = cpt + 1
+  }
+  lab[which(is.na(lab))] = cpt
+  lab
+}
+
 ```
 
 
@@ -201,10 +229,11 @@ clsize = 21
 hc.l = lapply(c('average', 'complete', 'ward.D', 'single'), function(meth){
   lab = hclustit(mat, clsize, meth, split.th=1.5)
   hc.o = hclust(dist(mat), method=meth)
-  rbind(clstats(mat, lab) %>% mutate(method=meth, strategy='iterative'),
+  rbind(clstats(mat, lab) %>% mutate(method=meth, strategy='dichotomy'),
         clstats(mat, cutree(hc.o, N/clsize)) %>% mutate(method=meth, strategy='hclust-cutree'))
 })
 
+hcb.o = hcbottom(mat, clsize)
 kmv.o = kmvar(mat, clsize)
 kmv2.o = kmvar(mat, clsize, method='maxd')
 kmv3.o = kmvar(mat, clsize, method='mind')
@@ -214,6 +243,7 @@ nn2.o = nnit(mat, clsize, method='maxd')
 nn3.o = nnit(mat, clsize, method='mind')
 
 cls.df = do.call(rbind, hc.l)
+cls.df = rbind(cls.df, clstats(mat, hcb.o) %>% mutate(method='hcbottom', strategy='nearest neighbor'))
 cls.df = rbind(cls.df, clstats(mat, sample(rep(1:ceiling(nrow(mat)/clsize), each=clsize)[1:nrow(mat)])) %>% mutate(method='random', strategy='baseline'))
 cls.df = rbind(cls.df, clstats(mat, kmv.o) %>% mutate(method='random', strategy='Kmeans-var'))
 cls.df = rbind(cls.df, clstats(mat, kmv2.o) %>% mutate(method='maxD', strategy='Kmeans-var'))
@@ -228,6 +258,8 @@ ggplot(cls.df, aes(x=method, y=winsor(size, 5*clsize))) + geom_boxplot() + theme
 ggplot(cls.df, aes(x=method, y=mean.dist)) + geom_boxplot() + theme_bw() + facet_grid(.~strategy, space='free', scales='free') + ylab('average pairwise distance')
 
 ggplot(cls.df, aes(x=method, y=max.dist)) + geom_boxplot() + theme_bw() + facet_grid(.~strategy, space='free', scales='free') + ylab('maximum pairwise distance')
+
+cls.df %>% select(strategy, method, mean.sil) %>% unique %>% ggplot(aes(x=method, y=mean.sil)) + geom_bar(stat='identity') + theme_bw() + facet_grid(.~strategy, space='free', scales='free') + ylab('mean silhouette score')
 
 cls.df %>% select(-lab, -size) %>% group_by(method, strategy) %>% summarize_all(median) %>% gather(variable, value, -method, -strategy) %>% ggplot(aes(x=paste(strategy, method), y=value, fill=strategy)) + geom_bar(stat='identity') + facet_wrap(~variable, scales='free') + theme_bw() + theme(axis.text.x=element_text(hjust=1, vjust=.5, angle=90)) + xlab('method') + ylab('median per-cluster value')
 ```
@@ -384,3 +416,54 @@ Yes. Ouf...
 ## Code
 
 The source code of this page can be found [here](https://github.com/jmonlong/Hippocamplus/tree/master/content/post/2018-06-09-ClusterEqualSize.Rmd).
+
+
+```{r eval=FALSE}
+
+N = 70
+mat = matrix(rnorm(50*N), N)
+gp1 = sample.int(N, N/2)
+dev=6
+mat[gp1, 1] = rnorm(length(gp1), dev)
+##mat[gp1, 3] = rnorm(length(gp1), dev/2)
+gp12 = sample(gp1, length(gp1)/2)
+mat[gp12, 2] = rnorm(length(gp12), -dev)
+##mat[gp12, 6] = rnorm(length(gp12), -dev/2)
+
+df = mat %>% as.data.frame %>% mutate(sample=1:nrow(mat)) %>% gather(dim, value, -sample)
+hc.o = hclust(dist(mat))
+df %>% mutate(sample=factor(sample, levels=hc.o$order)) %>% ggplot(aes(x=dim, y=sample, fill=value)) + geom_tile() + theme_bw() + scale_fill_gradient2()
+
+lab.df = tibble(sample=1:N, cl=nnit(mat, clsize=10))
+df %>% merge(lab.df) %>% mutate(sample=factor(sample, levels=hc.o$order)) %>% ggplot(aes(x=dim, y=sample, fill=value)) + geom_tile() + theme_bw() + scale_fill_gradient2() + facet_grid(cl~., scales='free')
+
+lab.df = tibble(sample=1:N, cl=hcbottom(mat, clsize=10))
+df %>% merge(lab.df) %>% mutate(sample=factor(sample, levels=hc.o$order)) %>% ggplot(aes(x=dim, y=sample, fill=value)) + geom_tile() + theme_bw() + scale_fill_gradient2() + facet_grid(cl~., scales='free')
+
+perm.df = lapply(1:500, function(perm){
+  N = 70
+  mat = matrix(rnorm(100*N), N)
+  gp1 = sample.int(N, N/2)
+  dev=6
+  mat[gp1, 1] = rnorm(length(gp1), dev)
+  ##mat[gp1, 3] = rnorm(length(gp1), dev/2)
+  gp12 = sample.int(N, N/2)
+  ##gp12 = sample(gp1, length(gp1)/2)
+  mat[gp12, 2] = rnorm(length(gp12), -dev)
+  ##mat[gp12, 6] = rnorm(length(gp12), -dev/2)
+  lab.nnit = tibble(sample=1:N, cl=nnit(mat, clsize=10))
+  stat.nnit = clstats(mat, lab.nnit$cl)
+  lab.hcb = tibble(sample=1:N, cl=hcbottom(mat, clsize=10))
+  stat.hcb = clstats(mat, lab.hcb$cl)
+  rbind(tibble(gp1.cl=length(unique(subset(lab.hcb, sample %in% gp1)$cl)), gp12.cl=length(unique(subset(lab.hcb, sample %in% gp12)$cl)), method='hcbottom', mean.sil=stat.hcb$mean.sil[1]),
+        tibble(gp1.cl=length(unique(subset(lab.nnit, sample %in% gp1)$cl)), gp12.cl=length(unique(subset(lab.nnit, sample %in% gp12)$cl)), method='nnit', mean.sil=stat.nnit$mean.sil[1]))
+})
+
+perm.df = do.call(rbind, perm.df)
+
+ggplot(perm.df, aes(x=gp1.cl, fill=method)) + geom_bar(position='dodge') + theme_bw()
+ggplot(perm.df, aes(x=gp12.cl, fill=method)) + geom_bar(position='dodge') + theme_bw()
+
+ggplot(perm.df, aes(x=method, y=mean.sil)) + geom_boxplot() + theme_bw()
+
+```

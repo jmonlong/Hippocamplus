@@ -163,7 +163,8 @@
   </div>
   
   <div class="sidebar-item">
-    <a href="../index.xml">RSS <i class="fa fa-rss-square" aria-hidden="true"></i></a>
+    <div><a href="../index.xml"><i class="fa fa-rss-square" aria-hidden="true"></i> RSS</a></div>
+    <div><a href="https://twitter.com/JMonlong"><i class="fa fa-twitter" aria-hidden="true"></i> @JMonlong</a></div>
     <p>&copy; 2018 Jean Monlong. All rights reserved.</p>
   </div>
 </div>
@@ -195,6 +196,7 @@
 <li><a href="#languages-and-encoding">Languages and encoding</a></li>
 <li><a href="#links">Links</a></li>
 <li><a href="#table-of-contents">Table of contents</a></li>
+<li><a href="#metadata">Metadata</a></li>
 </ul></li>
 <li><a href="#figures">Figures</a><ul>
 <li><a href="#position">Position</a></li>
@@ -305,6 +307,11 @@
 <p>To set the space between the number and the title in list of figures/tables (e.g. if custom long numbers):</p>
 <pre class="latex"><code>\usepackage{tocloft}
 \setlength{\cftfignumwidth}{3em}</code></pre>
+</div>
+<div id="metadata" class="section level3">
+<h3>Metadata</h3>
+<p>To specify the PDF’s metadata (title, author, etc):</p>
+<pre class="latex"><code>\usepackage[pdfauthor={AUTHOR},pdftitle={TITLE},pdfsubject={SUBJECT},pdfkeywords={KEYWORDS},pdfproducer={LaTeX},pdfcreator={pdflatex}]{hyperref}</code></pre>
 </div>
 </div>
 <div id="figures" class="section level2">
@@ -651,6 +658,9 @@ FUNCTION {format.doi}
 
       </div>
     </div>
+
+    
+    
 
     <label for="sidebar-checkbox" class="sidebar-toggle"></label>
 

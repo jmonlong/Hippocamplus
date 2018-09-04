@@ -1,0 +1,70 @@
+---
+title: Mental health crisis in science...but careful with nonresponse bias
+tags: ["pub", "science"]
+date: 2018-07-08
+slug: mental-health-crisis-science
+output: blogdown::html_page
+---
+
+
+A few month ago, a short paper was published in Nature Biotechnology[^nbt] about the mental health crisis in science. 
+It attracted a bit of attention on the news and social media, which is good because it's an important matter.
+The article was very good at putting the subject on the table and proposing some solutions, but it picked my curiosity about nonresponse bias.
+
+## Issues with the Nature Biotech article
+
+The numbers are based on an email survey so **one issue is the nonresponse bias**: the individuals that responded might not be representative of the population.
+The authors quickly mention it:
+
+> Although this is a convenience sample in which respondents who have had a history of anxiety or depression may have been more apt to respond to the survey, the data should prompt both academia and policy makers to consider intervention strategies.
+
+However, in the next paragraph, this number is directly compared with the population number from a study that used a "nationally representative face-to-face household survey"[^pop].
+
+> Our results show that graduate students are more than six times as likely to experience depression and anxiety as compared to the general population. Forty-one percent of graduate students scored as having moderate to severe anxiety on the GAD07 scale as compared to 6% of the general population, as demonstrated previously.
+
+I find it a bit misleading to put both numbers in the same sentence without explaining that they were derived from different methods.
+
+On a side note, I was also surprised that the figures are incorrectly described in the text.
+Saying *"56% of students experiencing anxiety have an unhealthy work-life balance"* is different from saying *"56% of students with unhealthy work-life balance experience anxiety"*.
+Still, all the numbers about work-life balance and relationship with mentor are incorrectly described like this...
+A shame because at least these comparisons shouldn't be affected by nonresponse bias as much.
+End of rant.
+
+## Better studies
+
+Although not cited in the Nature Biotech paper, I found two studies that are quite similar but were more careful with their methods/conclusions.
+
+The first was published in the American Journal of Orthopsychiatry in 2010[^g] and looked at mental health in university students (graduate students included).
+The PHQ-9 questionnaire was also used to assess depression and ~1,700 graduate students responded to their email survey.
+In this study, the authors tried to **account for nonresponse bias** by computing weights based on two types of information:
+
+1. Demographic and academic representation compared to the university's registar.
+1. Results from nonrespondents that were recontacted and given larger incentive to respond.
+
+The proportion of students with depression was significantly higher in the respondents than the non-respondents (**14.1% vs 6.1%**).
+After correcting for the nonresponse bias they found that 11.3% of graduate students were positive for a depressive or anxiety disorder.
+
+The second study was published in Academic Psychiatry in 2014[^g2].
+This one is not really saying much about the estimates for the graduate student population but shows **what can (and cannot) be said** when the nonresponse bias is not controlled.
+It used the same questionnaire for depression (PHQ-9) and screened ~300 students with an email survey.
+However, the goal was essentially to find factors that correlate with the questionnaire score. 
+Although they describe the global number in the cohort, most of the study focuses on the association with other factors like substance use and eating problems.
+The discussion makes it clear too:
+
+> Therefore, the results of this study should not be generalized to the entire graduate student population on this campus or to graduate students outside of the study institution. As the goal of the screening was to identify and triage at-risk students into treatment, survey respondents may have represented students with more severe mental health needs who responded to the survey as a means of seeking help.
+
+## Conclusion
+
+The 40% number might be a bit over-estimated.
+**Is that a problem?**
+**No** because mental health is a problem and we should talk about it and try to fix it.
+I just wanted to cite and put these two good studies somewhere I can remember (and also rant).
+
+
+[^nbt]: Evans, T. M., Bira, L., Gastelum, J. B., Weiss, L. T., & Vanderford, N. L. (2018). Evidence for a mental health crisis in graduate education. *Nature Biotechnology*, volume 36, pages 282–284. [Link](https://www.nature.com/articles/nbt.4089)
+
+[^pop]: Kocalevent, R. D., Hinz, A., & Brähler, E. (2013). Standardization of the depression screener Patient Health Questionnaire (PHQ-9) in the general population. *General Hospital Psychiatry*, 35(5), 551–555. [Link](https://doi.org/10.1016/j.genhosppsych.2013.04.006)
+
+[^g]: Eisenberg, D. , Gollust, S. E., Golberstein, E. and Hefner, J. L. (2007). Prevalence and Correlates of Depression, Anxiety, and Suicidality Among University Students. *American Journal of Orthopsychiatry*, 77: 534-542. [Link](https://doi.org/10.1037/0002-9432.77.4.534)
+
+[^g2]: Garcia-Williams, A.G., Moffitt, L. & Kaslow, N.J. (2014). Mental Health and Suicidal Behavior Among Graduate Students. *Acad Psychiatry*, 38: 554. [Link](https://doi.org/10.1007/s40596-014-0041-y)
