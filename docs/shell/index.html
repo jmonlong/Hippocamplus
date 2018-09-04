@@ -232,7 +232,7 @@ grep --color=always | less -R</code></pre>
 </div>
 <div id="rsync" class="section level3">
 <h3>rsync</h3>
-<p><code>rsync</code> is not completely intuitive to me. Hera some of the commands I could make work.</p>
+<p><code>rsync</code> is not completely intuitive to me. Here are some of the commands I could make work.</p>
 <hr />
 <p>To recurrently sync all the files that match the patterns in <code>rsyncIncludes.txt</code>:</p>
 <pre class="sh"><code>rsync -r --include=&#39;*/&#39; --include-from=rsyncIncludes.txt --exclude=&#39;*&#39; --prune-empty-dirs SRC DEST</code></pre>
@@ -442,6 +442,7 @@ module load jmonlong/emacs</code></pre>
 <h3>Setup WD Elements external hard drive</h3>
 <p>By default the disk is formatted in NTFS, which OSX could read only. To write, the solution that worked for me was to add this line to <code>/etc/fstab</code>:</p>
 <pre class="sh"><code>LABEL=Elements none ntfs rw,auto,nobrowse</code></pre>
+<p><em>Note: If there are spaces in the label, replace them by <code>\040</code>.</em></p>
 <p>The disk can then be accessed through the <em>Volumes</em> folder (<code>/Volumes</code>).</p>
 </div>
 </div>

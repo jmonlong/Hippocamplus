@@ -26,7 +26,7 @@ grep --color=always | less -R
 ### rsync
 
 `rsync` is not completely intuitive to me. 
-Hera some of the commands I could make work.
+Here are some of the commands I could make work.
 
 --- 
 
