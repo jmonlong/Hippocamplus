@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Hippocamplus </title>
-    <link>/Hippocamplus/post/</link>
+    <link>/post/</link>
     <language>en-us</language>
     <author></author>
     <rights>(C) 2018</rights>
@@ -12,10 +12,10 @@
       
         <item>
           <title>Clustering into same size clusters</title>
-          <link>/Hippocamplus/2018/06/09/cluster-same-size/</link>
+          <link>/2018/06/09/cluster-same-size/</link>
           <pubDate>Sat, 09 Jun 2018 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2018/06/09/cluster-same-size/</guid>
+          <guid>/2018/06/09/cluster-same-size/</guid>
           <description>&lt;div id=&#34;TOC&#34;&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;#iterative-dichotomy&#34;&gt;Iterative dichotomy&lt;/a&gt;&lt;/li&gt;
@@ -110,10 +110,10 @@
       
         <item>
           <title>Converting scientific reviews to EPUB</title>
-          <link>/Hippocamplus/2018/05/07/epub-reviews/</link>
+          <link>/2018/05/07/epub-reviews/</link>
           <pubDate>Mon, 07 May 2018 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2018/05/07/epub-reviews/</guid>
+          <guid>/2018/05/07/epub-reviews/</guid>
           <description>&lt;div id=&#34;TOC&#34;&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;#first-check-on-pubmed-central&#34;&gt;First, check on PubMed Central&lt;/a&gt;&lt;/li&gt;
@@ -212,10 +212,10 @@ Rscript epubify-naturereviews.R -i https://www.nature.com/articles/nrg.2015.16&l
       
         <item>
           <title>Additional checks for a LaTeX manuscript</title>
-          <link>/Hippocamplus/2018/04/18/check-latex-pub/</link>
+          <link>/2018/04/18/check-latex-pub/</link>
           <pubDate>Wed, 18 Apr 2018 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2018/04/18/check-latex-pub/</guid>
+          <guid>/2018/04/18/check-latex-pub/</guid>
           <description>&lt;p&gt;To continue on the series of &lt;em&gt;“Things I did instead of writing my thesis to help me write my thesis”&lt;/em&gt;, another Python script that reads a LaTeX manuscript and helps check that everything is fine. More specifically, the &lt;code&gt;checkLatex.py&lt;/code&gt; script (&lt;a href=&#34;https://github.com/jmonlong/Hippocamplus/tree/config/python/checkLatex&#34;&gt;on GitHub&lt;/a&gt;) will:&lt;/p&gt;
 &lt;ol style=&#34;list-style-type: decimal&#34;&gt;
 &lt;li&gt;List missing references.&lt;/li&gt;
@@ -266,10 +266,10 @@ optional arguments:
       
         <item>
           <title>Checking text similarity between two documents</title>
-          <link>/Hippocamplus/2018/04/16/text-similarity/</link>
+          <link>/2018/04/16/text-similarity/</link>
           <pubDate>Mon, 16 Apr 2018 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2018/04/16/text-similarity/</guid>
+          <guid>/2018/04/16/text-similarity/</guid>
           <description>&lt;p&gt;To start the series of &lt;em&gt;“Things I did instead of writing my thesis to help me write my thesis”&lt;/em&gt;, a small Python script that compares two text documents and output similar parts. I did that to avoid auto-plagiarism of my manuscripts’ introduction in the main thesis introduction.&lt;/p&gt;
 &lt;p&gt;It’s a very naive approach but sped up the checking process (&lt;a href=&#34;https://xkcd.com/1319/&#34;&gt;maybe worth the time&lt;/a&gt;). It first looks for short exact matches between the two documents, then extends these exact matches and uses the &lt;a href=&#34;https://docs.python.org/2/library/difflib.html&#34;&gt;difflib&lt;/a&gt; module to keep text with a minimum similarity score (default 80%).&lt;/p&gt;
 &lt;p&gt;I put the &lt;code&gt;simText.py&lt;/code&gt; Python script &lt;a href=&#34;https://github.com/jmonlong/Hippocamplus/tree/config/python/simText&#34;&gt;on GitHub here&lt;/a&gt;.&lt;/p&gt;
@@ -316,10 +316,10 @@ T2: eletions and duplications, which affect DNA copy number, are collectively kn
       
         <item>
           <title>Journal comparison</title>
-          <link>/Hippocamplus/2018/02/23/journals-comparison/</link>
+          <link>/2018/02/23/journals-comparison/</link>
           <pubDate>Fri, 23 Feb 2018 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2018/02/23/journals-comparison/</guid>
+          <guid>/2018/02/23/journals-comparison/</guid>
           <description>&lt;p&gt;&lt;em&gt;Edit Feb 24: Added variance graph and some examples of suspiciously fast publications.&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Edit Feb 25: Added &lt;a href=&#34;https://github.com/jmonlong/Hippocamplus/tree/config/R/journalPubTime&#34;&gt;script and data&lt;/a&gt; to GitHub.&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;Some info about journals in my field.&lt;/p&gt;
@@ -855,10 +855,10 @@ T2: eletions and duplications, which affect DNA copy number, are collectively kn
       
         <item>
           <title>tSNE and clustering</title>
-          <link>/Hippocamplus/2018/02/13/tsne-and-clustering/</link>
+          <link>/2018/02/13/tsne-and-clustering/</link>
           <pubDate>Tue, 13 Feb 2018 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2018/02/13/tsne-and-clustering/</guid>
+          <guid>/2018/02/13/tsne-and-clustering/</guid>
           <description>&lt;p&gt;tSNE can give really nice results when we want to visualize many groups of multi-dimensional points. Once the 2D graph is done we might want to identify which points cluster in the tSNE blobs.&lt;/p&gt;
 &lt;p&gt;Using simulated and real data, I’ll try different methods:&lt;/p&gt;
 &lt;ul&gt;
@@ -1148,10 +1148,10 @@ ggplot(info.real, aes(x = tsne1, y = tsne2, colour = louvain)) +
       
         <item>
           <title>Bibliography style for AJHG</title>
-          <link>/Hippocamplus/2017/10/04/bibliography-style-for-ajhg/</link>
+          <link>/2017/10/04/bibliography-style-for-ajhg/</link>
           <pubDate>Wed, 04 Oct 2017 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2017/10/04/bibliography-style-for-ajhg/</guid>
+          <guid>/2017/10/04/bibliography-style-for-ajhg/</guid>
           <description>&lt;p&gt;I couldn’t find an up-to-date/working &lt;strong&gt;LaTeX bibliography style for the American Journal of Human Genetics (AJHG)&lt;/strong&gt;. The output from &lt;code&gt;unsrtnat&lt;/code&gt; (my goto style) was also quite different from what the journal wanted.&lt;/p&gt;
 &lt;p&gt;I found a bibliography style for &lt;em&gt;Cell&lt;/em&gt; which is almost what AJHG wants, but I also wanted the references to be &lt;strong&gt;ordered by their appearance in the text&lt;/strong&gt; (like for &lt;code&gt;unsrtnat&lt;/code&gt;) and not alphabetically. So I downloaded both &lt;code&gt;cell.bst&lt;/code&gt; (&lt;a href=&#34;https://www.ctan.org/tex-archive/macros/latex/contrib/cell&#34;&gt;here&lt;/a&gt;) and &lt;code&gt;unsrtnat.bst&lt;/code&gt; (&lt;a href=&#34;https://www.ctan.org/tex-archive/macros/latex/contrib/natbib/&#34;&gt;here&lt;/a&gt;) files and merged them. I don’t understand all the details but after some trial-and-errors it seems to work.&lt;/p&gt;
 &lt;p&gt;After merging, I removed the &lt;em&gt;emphasis&lt;/em&gt; on the Journal/Book name which was the only difference I could see between the Cell and AJHG styles.&lt;/p&gt;
@@ -1164,10 +1164,10 @@ ggplot(info.real, aes(x = tsne1, y = tsne2, colour = louvain)) +
       
         <item>
           <title>MUMmerplots with ggplot2</title>
-          <link>/Hippocamplus/2017/09/19/mummerplots-with-ggplot2/</link>
+          <link>/2017/09/19/mummerplots-with-ggplot2/</link>
           <pubDate>Tue, 19 Sep 2017 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2017/09/19/mummerplots-with-ggplot2/</guid>
+          <guid>/2017/09/19/mummerplots-with-ggplot2/</guid>
           <description>&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(dplyr)
 library(magrittr)
 library(GenomicRanges)
@@ -1501,10 +1501,10 @@ mumgp.filt.m %&amp;gt;% select(similarity, start, end, filter) %&amp;gt;%
       
         <item>
           <title>Regression sandbox</title>
-          <link>/Hippocamplus/2017/09/16/regression-sandbox/</link>
+          <link>/2017/09/16/regression-sandbox/</link>
           <pubDate>Sat, 16 Sep 2017 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2017/09/16/regression-sandbox/</guid>
+          <guid>/2017/09/16/regression-sandbox/</guid>
           <description>&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
 library(broom)
 library(magrittr)
@@ -1825,10 +1825,10 @@ ggplot(df, aes(x = x, y = y)) + geom_point(alpha = 0.2) +
       
         <item>
           <title>Enrichment between genomic regions</title>
-          <link>/Hippocamplus/2017/09/05/enrichment-between-genomic-regions/</link>
+          <link>/2017/09/05/enrichment-between-genomic-regions/</link>
           <pubDate>Tue, 05 Sep 2017 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2017/09/05/enrichment-between-genomic-regions/</guid>
+          <guid>/2017/09/05/enrichment-between-genomic-regions/</guid>
           <description>&lt;p&gt;Testing if two sets of genomic regions overlap significantly is not straightforward. In the simple situation of regions of 1 bp (e.g. SNVs) we could use a hypergeometric test. When the regions are small enough and there are not too many, the hypergeometric test might also be a fair approximation.&lt;/p&gt;
 &lt;p&gt;But when we manipulate many regions of variable size covering the entire genome it’s not as straightforward. The gene annotation is an example. The repeat annotation is even worse as it covers almost 50% of the genome and contains different families with very different size/location profiles.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
@@ -2274,10 +2274,10 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
       
         <item>
           <title>Segmental duplication exploration</title>
-          <link>/Hippocamplus/2016/10/20/segmental-duplication-exploration/</link>
+          <link>/2016/10/20/segmental-duplication-exploration/</link>
           <pubDate>Thu, 20 Oct 2016 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2016/10/20/segmental-duplication-exploration/</guid>
+          <guid>/2016/10/20/segmental-duplication-exploration/</guid>
           <description>&lt;div id=&#34;segmental-duplications-sd&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Segmental Duplications (SD)&lt;/h2&gt;
 &lt;p&gt;I downloaded the segmental duplication annotation for hg19 from &lt;a href=&#34;http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/genomicSuperDups.txt.gz&#34;&gt;UCSC&lt;/a&gt;. There are 51599 annotated SD. They are defined as regions larger than 1 Kbp with at least 90% similarity with another region in the genome.&lt;/p&gt;
@@ -3023,10 +3023,10 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
       
         <item>
           <title>Summary epigenetic mark tracks</title>
-          <link>/Hippocamplus/2016/09/06/summary-epigenetic-mark-tracks/</link>
+          <link>/2016/09/06/summary-epigenetic-mark-tracks/</link>
           <pubDate>Tue, 06 Sep 2016 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2016/09/06/summary-epigenetic-mark-tracks/</guid>
+          <guid>/2016/09/06/summary-epigenetic-mark-tracks/</guid>
           <description>&lt;p&gt;To assess the potential impact of variants (SNV, SVs) we might want to use some of the public epigentic datasets. The amount and heterogeneity of this data is a bit overwhelming. I would like to get a summary of which regions of the genome are the most functionally important.&lt;/p&gt;
 &lt;p&gt;The plan is to:&lt;/p&gt;
 &lt;ul&gt;
@@ -3066,10 +3066,10 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
       
         <item>
           <title>Gencode exploration</title>
-          <link>/Hippocamplus/2016/06/04/gencode-exploration/</link>
+          <link>/2016/06/04/gencode-exploration/</link>
           <pubDate>Sat, 04 Jun 2016 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2016/06/04/gencode-exploration/</guid>
+          <guid>/2016/06/04/gencode-exploration/</guid>
           <description>&lt;div id=&#34;gencode-v19&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Gencode v19&lt;/h2&gt;
 &lt;p&gt;I downloaded Gencode v19 at &lt;a href=&#34;ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz&#34;&gt;&lt;a href=&#34;ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz&#34; class=&#34;uri&#34;&gt;ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz&lt;/a&gt;&lt;/a&gt;.&lt;/p&gt;
@@ -3362,11 +3362,131 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
     
       
         <item>
+          <title>Repeat Masker exploration</title>
+          <link>/2016/06/04/repeat-masker-exploration/</link>
+          <pubDate>Sat, 04 Jun 2016 00:00:00 UTC</pubDate>
+          <author></author>
+          <guid>/2016/06/04/repeat-masker-exploration/</guid>
+          <description>&lt;div id=&#34;repeat-masker&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Repeat Masker&lt;/h2&gt;
+&lt;p&gt;I downloaded Repeat Masker at &lt;a href=&#34;http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/rmsk.txt.gz&#34;&gt;&lt;a href=&#34;http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/rmsk.txt.gz&#34; class=&#34;uri&#34;&gt;http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/rmsk.txt.gz&lt;/a&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;chr&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;start&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;end&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;repName&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;repClass&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;repFamily&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;17&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;37428219&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;37428344&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;AluJo&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;SINE&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Alu&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;12&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;95320593&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;95320702&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;(TTC)n&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Simple_repeat&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Simple_repeat&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;150405857&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;150405892&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;(TA)n&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Simple_repeat&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Simple_repeat&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;10&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;46954002&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;46954311&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;AluSp&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;SINE&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Alu&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;223575250&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;223575286&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;(TAA)n&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Simple_repeat&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Simple_repeat&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;4&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;149535979&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;149536275&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;AluSc&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;SINE&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Alu&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;4&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;81625836&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;81625865&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;AT_rich&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Low_complexity&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Low_complexity&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;107075978&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;107076275&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;AluSx1&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;SINE&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Alu&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;114092998&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;114093116&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;MIRb&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;SINE&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;MIR&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;16&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;59345225&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;59345528&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;AluSz&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;SINE&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Alu&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;The annotation spans a total of 1.45 Gbp. If we include segmental duplication, 1.53 Gbp are annotated as repeat in the human genome.&lt;/p&gt;
+&lt;div id=&#34;te-density&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;TE Density&lt;/h3&gt;
+&lt;p&gt;Using different window size, how many regions contain a TE ?&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../post/2017-03-13-RepeatMaskerExploration_files/figure-html/tedens-1.png&#34; width=&#34;768&#34; /&gt;&lt;img src=&#34;../post/2017-03-13-RepeatMaskerExploration_files/figure-html/tedens-2.png&#34; width=&#34;768&#34; /&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.06533548&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;alpha-satellites&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Alpha satellites&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 5553.278&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+        </item>
+      
+    
+      
+        <item>
           <title>Preparing some genomic annotations</title>
-          <link>/Hippocamplus/2016/06/03/preparing-some-genomic-annotations/</link>
+          <link>/2016/06/03/preparing-some-genomic-annotations/</link>
           <pubDate>Fri, 03 Jun 2016 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2016/06/03/preparing-some-genomic-annotations/</guid>
+          <guid>/2016/06/03/preparing-some-genomic-annotations/</guid>
           <description>&lt;div id=&#34;mappability-track&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Mappability track&lt;/h2&gt;
 &lt;p&gt;I produced a mappability track from the UCSC track. The &lt;a href=&#34;http://hgdownload.soe.ucsc.edu/gbdb/hg19/bbi/wgEncodeCrgMapabilityAlign100mer.bw&#34;&gt;raw file&lt;/a&gt; contains, for each base in the genome, an estimation of the probability that a read is correctly mapped at this position.&lt;/p&gt;
@@ -3414,10 +3534,10 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
       
         <item>
           <title>Word Cloud in R</title>
-          <link>/Hippocamplus/2016/02/26/word-cloud-in-r/</link>
+          <link>/2016/02/26/word-cloud-in-r/</link>
           <pubDate>Fri, 26 Feb 2016 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2016/02/26/word-cloud-in-r/</guid>
+          <guid>/2016/02/26/word-cloud-in-r/</guid>
           <description>&lt;p&gt;The &lt;a href=&#34;https://cran.r-project.org/web/packages/wordcloud/index.html&#34;&gt;&lt;code&gt;wordcloud&lt;/code&gt; package&lt;/a&gt; is available on CRAN.&lt;/p&gt;
 &lt;div id=&#34;fake-words&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Fake words&lt;/h2&gt;

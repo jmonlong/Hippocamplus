@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Hippocamplus </title>
-    <link>/Hippocamplus/tags/pub/</link>
+    <link>/tags/pub/</link>
     <language>en-us</language>
     <author></author>
     <rights>(C) 2018</rights>
@@ -12,10 +12,10 @@
       
         <item>
           <title>Converting scientific reviews to EPUB</title>
-          <link>/Hippocamplus/2018/05/07/epub-reviews/</link>
+          <link>/2018/05/07/epub-reviews/</link>
           <pubDate>Mon, 07 May 2018 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2018/05/07/epub-reviews/</guid>
+          <guid>/2018/05/07/epub-reviews/</guid>
           <description>&lt;div id=&#34;TOC&#34;&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;#first-check-on-pubmed-central&#34;&gt;First, check on PubMed Central&lt;/a&gt;&lt;/li&gt;
@@ -114,10 +114,10 @@ Rscript epubify-naturereviews.R -i https://www.nature.com/articles/nrg.2015.16&l
       
         <item>
           <title>Additional checks for a LaTeX manuscript</title>
-          <link>/Hippocamplus/2018/04/18/check-latex-pub/</link>
+          <link>/2018/04/18/check-latex-pub/</link>
           <pubDate>Wed, 18 Apr 2018 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2018/04/18/check-latex-pub/</guid>
+          <guid>/2018/04/18/check-latex-pub/</guid>
           <description>&lt;p&gt;To continue on the series of &lt;em&gt;“Things I did instead of writing my thesis to help me write my thesis”&lt;/em&gt;, another Python script that reads a LaTeX manuscript and helps check that everything is fine. More specifically, the &lt;code&gt;checkLatex.py&lt;/code&gt; script (&lt;a href=&#34;https://github.com/jmonlong/Hippocamplus/tree/config/python/checkLatex&#34;&gt;on GitHub&lt;/a&gt;) will:&lt;/p&gt;
 &lt;ol style=&#34;list-style-type: decimal&#34;&gt;
 &lt;li&gt;List missing references.&lt;/li&gt;
@@ -168,10 +168,10 @@ optional arguments:
       
         <item>
           <title>Checking text similarity between two documents</title>
-          <link>/Hippocamplus/2018/04/16/text-similarity/</link>
+          <link>/2018/04/16/text-similarity/</link>
           <pubDate>Mon, 16 Apr 2018 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2018/04/16/text-similarity/</guid>
+          <guid>/2018/04/16/text-similarity/</guid>
           <description>&lt;p&gt;To start the series of &lt;em&gt;“Things I did instead of writing my thesis to help me write my thesis”&lt;/em&gt;, a small Python script that compares two text documents and output similar parts. I did that to avoid auto-plagiarism of my manuscripts’ introduction in the main thesis introduction.&lt;/p&gt;
 &lt;p&gt;It’s a very naive approach but sped up the checking process (&lt;a href=&#34;https://xkcd.com/1319/&#34;&gt;maybe worth the time&lt;/a&gt;). It first looks for short exact matches between the two documents, then extends these exact matches and uses the &lt;a href=&#34;https://docs.python.org/2/library/difflib.html&#34;&gt;difflib&lt;/a&gt; module to keep text with a minimum similarity score (default 80%).&lt;/p&gt;
 &lt;p&gt;I put the &lt;code&gt;simText.py&lt;/code&gt; Python script &lt;a href=&#34;https://github.com/jmonlong/Hippocamplus/tree/config/python/simText&#34;&gt;on GitHub here&lt;/a&gt;.&lt;/p&gt;
@@ -218,10 +218,10 @@ T2: eletions and duplications, which affect DNA copy number, are collectively kn
       
         <item>
           <title>Journal comparison</title>
-          <link>/Hippocamplus/2018/02/23/journals-comparison/</link>
+          <link>/2018/02/23/journals-comparison/</link>
           <pubDate>Fri, 23 Feb 2018 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2018/02/23/journals-comparison/</guid>
+          <guid>/2018/02/23/journals-comparison/</guid>
           <description>&lt;p&gt;&lt;em&gt;Edit Feb 24: Added variance graph and some examples of suspiciously fast publications.&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Edit Feb 25: Added &lt;a href=&#34;https://github.com/jmonlong/Hippocamplus/tree/config/R/journalPubTime&#34;&gt;script and data&lt;/a&gt; to GitHub.&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;Some info about journals in my field.&lt;/p&gt;

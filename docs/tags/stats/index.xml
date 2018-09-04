@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Hippocamplus </title>
-    <link>/Hippocamplus/tags/stats/</link>
+    <link>/tags/stats/</link>
     <language>en-us</language>
     <author></author>
     <rights>(C) 2018</rights>
@@ -12,10 +12,10 @@
       
         <item>
           <title>Clustering into same size clusters</title>
-          <link>/Hippocamplus/2018/06/09/cluster-same-size/</link>
+          <link>/2018/06/09/cluster-same-size/</link>
           <pubDate>Sat, 09 Jun 2018 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2018/06/09/cluster-same-size/</guid>
+          <guid>/2018/06/09/cluster-same-size/</guid>
           <description>&lt;div id=&#34;TOC&#34;&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;#iterative-dichotomy&#34;&gt;Iterative dichotomy&lt;/a&gt;&lt;/li&gt;
@@ -110,10 +110,10 @@
       
         <item>
           <title>tSNE and clustering</title>
-          <link>/Hippocamplus/2018/02/13/tsne-and-clustering/</link>
+          <link>/2018/02/13/tsne-and-clustering/</link>
           <pubDate>Tue, 13 Feb 2018 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2018/02/13/tsne-and-clustering/</guid>
+          <guid>/2018/02/13/tsne-and-clustering/</guid>
           <description>&lt;p&gt;tSNE can give really nice results when we want to visualize many groups of multi-dimensional points. Once the 2D graph is done we might want to identify which points cluster in the tSNE blobs.&lt;/p&gt;
 &lt;p&gt;Using simulated and real data, I’ll try different methods:&lt;/p&gt;
 &lt;ul&gt;
@@ -403,10 +403,10 @@ ggplot(info.real, aes(x = tsne1, y = tsne2, colour = louvain)) +
       
         <item>
           <title>Regression sandbox</title>
-          <link>/Hippocamplus/2017/09/16/regression-sandbox/</link>
+          <link>/2017/09/16/regression-sandbox/</link>
           <pubDate>Sat, 16 Sep 2017 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2017/09/16/regression-sandbox/</guid>
+          <guid>/2017/09/16/regression-sandbox/</guid>
           <description>&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
 library(broom)
 library(magrittr)
@@ -727,10 +727,10 @@ ggplot(df, aes(x = x, y = y)) + geom_point(alpha = 0.2) +
       
         <item>
           <title>Enrichment between genomic regions</title>
-          <link>/Hippocamplus/2017/09/05/enrichment-between-genomic-regions/</link>
+          <link>/2017/09/05/enrichment-between-genomic-regions/</link>
           <pubDate>Tue, 05 Sep 2017 00:00:00 UTC</pubDate>
           <author></author>
-          <guid>/Hippocamplus/2017/09/05/enrichment-between-genomic-regions/</guid>
+          <guid>/2017/09/05/enrichment-between-genomic-regions/</guid>
           <description>&lt;p&gt;Testing if two sets of genomic regions overlap significantly is not straightforward. In the simple situation of regions of 1 bp (e.g. SNVs) we could use a hypergeometric test. When the regions are small enough and there are not too many, the hypergeometric test might also be a fair approximation.&lt;/p&gt;
 &lt;p&gt;But when we manipulate many regions of variable size covering the entire genome it’s not as straightforward. The gene annotation is an example. The repeat annotation is even worse as it covers almost 50% of the genome and contains different families with very different size/location profiles.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
