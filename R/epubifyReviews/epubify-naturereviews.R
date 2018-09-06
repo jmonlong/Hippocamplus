@@ -27,6 +27,7 @@ if(is.na(html.urls)){
 }
 
 library(rvest)
+library(knitr)
 filterAttr <- function(x, name, value){
   values = html_attr(x, name)
   x[which(values==value)]
@@ -35,6 +36,17 @@ if(htmllist){
   html.urls = scan(html.urls, 'a')
 }
 
+outfile = ifelse(is.na(title), html.urls[1], title)
+if(grepl('http', outfile)){
+  outfile = gsub('.*/([^/]*)', '\\1', outfile)
+}
+if(!grepl('.html', outfile)){
+  outfile = paste0(outfile, '.html')
+}
+outfile = gsub('\\.html$','-v2.html', outfile)
+outfile = gsub(' ', '_', outfile)
+outfile = gsub('\\|', '_', outfile)
+outfile = gsub('\\:', '_', outfile)
 new.html = '<!DOCTYPE html>\n<html class="js svg" lang="en"><head>'
 cpt = 1
 for(html.url in html.urls){
@@ -43,17 +55,6 @@ for(html.url in html.urls){
   page = read_html(html.url)
   html.title = page %>% html_node('title') %>% html_text
   if(cpt == 1){
-    outfile = ifelse(is.na(title), html.url, title)
-    if(grepl('http', outfile)){
-      outfile = gsub('.*/([^/]*)', '\\1', outfile)
-    }
-    if(!grepl('.html', outfile)){
-      outfile = paste0(outfile, '.html')
-    }
-    outfile = gsub('\\.html$','-v2.html', outfile)
-    outfile = gsub(' ', '_', outfile)
-    outfile = gsub('\\|', '_', outfile)
-    outfile = gsub('\\:', '_', outfile)
     if(is.na(title)) {
       title = html.title
     }
@@ -86,7 +87,7 @@ for(html.url in html.urls){
     if(is.na(sec.head)){
       sec.head = sec.div[1] %>% html_node('h2') %>% html_text
     }
-    if(sec.title == 'references'){ # Add h4 with link
+    if(sec.title %in%  c('Bib1', 'references')){ # Add h4 with link
       refs = sec.div[2] %>% html_nodes('p')
       ids = refs %>% html_attr('id')
       sec.cont = lapply(which(grepl('ref[0-9]', ids)), function(ii){
@@ -125,9 +126,9 @@ for(html.url in html.urls){
           html.root = gsub('(https?://[^/]+)/.*', '\\1', html.url)
           table.links[ii] = paste0(html.root, table.links[ii])
         }
-        tab.ii = read_html(table.links[ii]) %>% html_nodes('table') %>% as.character
+        tab.ii = read_html(table.links[ii]) %>% html_nodes('table') %>% html_table(fill=TRUE) %>% .[[1]] %>% kable(format='html') %>% as.character
         tabcaption = tabs[ii] %>% html_nodes('figcaption') %>% as.character
-        sec.content = gsub(tabcaption, paste0(tabcaption, tab.ii), sec.content, fixed=TRUE)
+        sec.content = gsub(tabcaption, paste0(tabcaption, tab.ii)[1], sec.content, fixed=TRUE)
       }
     }
     ## Clean up
@@ -163,5 +164,5 @@ new.html = c(new.html, '</body>\n</html>\n')
 cat(new.html, file=outfile)
 
 message('Pandoc conversion: HTML -> EPUB')
-system2('pandoc', args=c(outfile, '-o', gsub('\\.html$','.epub', outfile)))
-message(gsub('\\.html$','.epub', outfile), ' written.')
+system2('pandoc', args=c(outfile, '-o', gsub('\\-v2.html$','.epub', outfile)))
+message(gsub('\\-v2.html$','.epub', outfile), ' written.')

@@ -27,6 +27,7 @@ if(is.na(html.urls)){
 }
 
 library(rvest)
+library(knitr)
 filterAttr <- function(x, name, value){
   values = html_attr(x, name)
   x[which(values==value)]
@@ -36,6 +37,18 @@ if(htmllist){
   html.urls = scan(html.urls, 'a')
 }
 
+outfile = ifelse(is.na(title), html.urls[1], title)
+if(grepl('http', outfile)){
+  outfile = gsub('.*/([^/]*)', '\\1', outfile)
+}
+if(!grepl('.html', outfile)){
+  outfile = paste0(outfile, '.html')
+}
+outfile = gsub('\\.html$','-v2.html', outfile)
+outfile = gsub(' ', '_', outfile)
+outfile = gsub('\\|', '_', outfile)
+outfile = gsub('\\:', '_', outfile)
+
 new.html = '<!DOCTYPE html>\n<html class="js svg" lang="en"><head>'
 cpt = 1
 for(html.url in html.urls){
@@ -44,17 +57,6 @@ for(html.url in html.urls){
   page = read_html(html.url)
   html.title = page %>% html_node('title') %>% html_text
   if(cpt == 1){
-    outfile = ifelse(is.na(title), html.url, title)
-    if(grepl('http', outfile)){
-      outfile = gsub('.*/([^/]*)', '\\1', outfile)
-    }
-    if(!grepl('.html', outfile)){
-      outfile = paste0(outfile, '.html')
-    }
-    outfile = gsub('\\.html$','-v2.html', outfile)
-    outfile = gsub(' ', '_', outfile)
-    outfile = gsub('\\|', '_', outfile)
-    outfile = gsub('\\:', '_', outfile)
     if(is.na(title)) {
       title = html.title
     }
@@ -89,7 +91,7 @@ for(html.url in html.urls){
       tab.old = tabs.intext[[ii]] %>% as.character
       tab.id = gsub('.*id="([^"]+)".*', '\\1', tab.old)
       tab.new = paste0('<figcaption><h4 id="', linklab, tab.id,'">', tab.title,'</h4></figcaption>')
-      tab.content = tabs[[which(tabs.title==tab.title)]] %>% as.character
+      tab.content = tabs[[which(tabs.title==tab.title)]] %>% as.character %>% gsub(' colspan="[^"]*"','',.) %>% read_html %>% html_table(fill=TRUE) %>% .[[1]] %>% kable(format='html') %>% as.character
       main.content = gsub(tab.old, paste0(tab.new,tab.content), main.content, fixed=TRUE)
     }
   }
@@ -130,5 +132,5 @@ new.html = c(new.html, '</body>\n</html>\n')
 cat(new.html, file=outfile)
 
 message('Pandoc conversion: HTML -> EPUB')
-system2('pandoc', args=c(outfile, '-o', gsub('\\.html$','.epub', outfile)))
-message(gsub('\\.html$','.epub', outfile), ' written.')
+system2('pandoc', args=c(outfile, '-o', gsub('\\-v2.html$','.epub', outfile)))
+message(gsub('\\-v2.html$','.epub', outfile), ' written.')

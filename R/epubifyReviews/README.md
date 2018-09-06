@@ -21,6 +21,7 @@ optional arguments:
 
 - [pandoc](http://pandoc.org/installing.html) command line.
 - [rvest](https://github.com/hadley/rvest) R package (install with `install.packages('rvest')`).
+- [knitr](https://yihui.name/knitr/) R package (install with `install.packages('knitr')`).
 
 ### Collections
 
