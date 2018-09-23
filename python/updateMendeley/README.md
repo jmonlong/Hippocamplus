@@ -1,4 +1,5 @@
 To update a local folder (`-local`) and a folder synced to the remote location (`-remote`) like Google Drive.
+More information on [this post](http://jmonlong.github.io/Hippocamplus/2018/09/22/sync-mendeley/).
 
 ```sh
 python updateMendeley.py -local PATH/TO/MendeleyDesktop -remote PATH/TO/GoogleDrive/ArticlesPDF
