@@ -1,7 +1,7 @@
 To update a local folder (`-local`) and a folder synced to the remote location (`-remote`) like Google Drive.
 
 ```sh
-python python updateMendeley.py -local PATH/TO/MendeleyDesktop -remote PATH/TO/GoogleDrive/ArticlesPDF
+python updateMendeley.py -local PATH/TO/MendeleyDesktop -remote PATH/TO/GoogleDrive/ArticlesPDF
 ```
 
 *I tend to do a dry run first using `-dry`.*
