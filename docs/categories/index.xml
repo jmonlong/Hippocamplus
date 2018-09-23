@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Hippocamplus </title>
+    <title>Categories on </title>
     <link>/Hippocamplus/categories/</link>
+    <description>Recent content in Categories on </description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <author></author>
-    <rights>(C) 2018</rights>
-    <updated>0001-01-01 00:00:00 &#43;0000 UTC</updated>
-
     
-
+	<atom:link href="/Hippocamplus/categories/index.xml" rel="self" type="application/rss+xml" />
+    
+    
   </channel>
 </rss>

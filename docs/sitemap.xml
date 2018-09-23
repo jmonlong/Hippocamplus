@@ -39,6 +39,11 @@
   </url>
   
   <url>
+    <loc>/Hippocamplus/2018/09/22/sync-mendeley/</loc>
+    <lastmod>2018-09-22T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/Hippocamplus/2018/07/08/mental-health-crisis-science/</loc>
     <lastmod>2018-07-08T00:00:00+00:00</lastmod>
   </url>
@@ -114,6 +119,12 @@
   </url>
   
   <url>
+    <loc>/Hippocamplus/</loc>
+    <lastmod>2018-09-22T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>/Hippocamplus/categories/</loc>
     <priority>0</priority>
   </url>
@@ -142,12 +153,6 @@
   </url>
   
   <url>
-    <loc>/Hippocamplus/</loc>
-    <lastmod>2018-07-08T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/Hippocamplus/tags/latex/</loc>
     <lastmod>2018-04-18T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -161,13 +166,13 @@
   
   <url>
     <loc>/Hippocamplus/post/</loc>
-    <lastmod>2018-07-08T00:00:00+00:00</lastmod>
+    <lastmod>2018-09-22T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/Hippocamplus/tags/pub/</loc>
-    <lastmod>2018-07-08T00:00:00+00:00</lastmod>
+    <lastmod>2018-09-22T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

@@ -1,32 +1,98 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Hippocamplus </title>
+    <title>Fixeds on </title>
     <link>/Hippocamplus/fixed/</link>
+    <description>Recent content in Fixeds on </description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <author></author>
-    <rights>(C) 2018</rights>
-    <updated>0001-01-01 00:00:00 &#43;0000 UTC</updated>
-
     
+	<atom:link href="/Hippocamplus/fixed/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Emacs</title>
+      <link>/Hippocamplus/emacs/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
+      <guid>/Hippocamplus/emacs/</guid>
+      <description>Basic configuration General commands Console-size split screen  MELPA package repository Solarized theme For R Emacs Speaks Statistics Auto-complete Smart underscores Poly-mode for R + Markdown Keyboard shortcut to render RMarkdown  For writing Spell checking Thesaurus and synonyms Grammar checking  For LaTeX Word count Chunk folding  For Markdown Table formatting Markdown live preview  For Python Elpy python mode Add some key bindings Send commands to a specific buffer  For Shell For file manipulation CSV/TSV Dired mode  For Version Control For online notes Evernote Simplenote  File encryption For OSX Maximize window at opening Keybindings Ispell Explicit path definition    I use Emacs for almost everything: coding, writing, taking notes, preparing presentations.</description>
+    </item>
     
+    <item>
+      <title>LaTeX</title>
+      <link>/Hippocamplus/latex/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
+      <guid>/Hippocamplus/latex/</guid>
+      <description>Standard packages Misc Font sizes Change the symbol in lists Math calligraphy Languages and encoding Links Table of contents Metadata  Figures Position Sub-figures Supplementary figures  Tables Control tabular width Supplementary tables Spanning columns/rows Align columns Rectangular selection/cut/paste Tables from R  Code blocks For manuscripts Abstract Author affiliation Text formatting Notes/comments Main text and supplements in two documents Compare versions and highlight revisions One figure = one file  Bibliography Reduce long list of authors “Name Year” style Order of initials No URL or DOI  Presentations Changing the font Section slides Themes Backup slides Link to frame    Standard packages This is my default (more or less) :</description>
+    </item>
     
+    <item>
+      <title>Markdown</title>
+      <link>/Hippocamplus/markdown/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
+      <guid>/Hippocamplus/markdown/</guid>
+      <description>Tips Converting Markdown into nice HTML pages Converting Markdown into slides Jekyll websites Themes Table of Contents Math formulas  blogdown websites Themes Table of Contents Draft posts Math formulas  R Markdown   Tips  / to add some vertical space/break. Use two ` and a space to escape ` in inline code. E.g `` `pwd` `` gives `pwd`. --- to add horizontal line/separation.   Converting Markdown into nice HTML pages I use RMarkdown.</description>
+    </item>
     
+    <item>
+      <title>Math/Stats</title>
+      <link>/Hippocamplus/math/stats/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
+      <guid>/Hippocamplus/math/stats/</guid>
+      <description>Probability distributions Binomial Hypergeometric Normal Poisson Beta-binomial Beta  Statistical tests Student t-test Fisher’s exact test \(\chi^2\) test Wilcoxon test ANOVA  Regression &amp;amp; Machine Learning Linear regression LASSO LOESS Machine Learning basics CART Neural Networks SVM  Misc stats Markov Model Monte Carlo methods MCMC Hidden Markov Model Maximum Likelihood Estimation Expectation-Maximization Greedy algorithm Bayesian vs Frequentist  Graph theory De Bruijn graphs Hamiltonian path Euclidian path  Algebra SVD decomposition PCA    All of this is mostly extracted from Wikipedia.</description>
+    </item>
     
+    <item>
+      <title>Python</title>
+      <link>/Hippocamplus/python/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
+      <guid>/Hippocamplus/python/</guid>
+      <description>Naming and formatting Data structures Array Hash Class  Strings Function  Input/Output Files structure, packages and imports Install a module locally  Passing arguments to a script Graphs Tricks Shell integration Bioinfo Sequences Fasta SAM files VCF    Some notes on my recent attempt to learn Python.
+Naming and formatting  Use lowercase _-separated for modules and functions name. E.g. my_function. Use CapsWord for classes. E.g. MyClass.</description>
+    </item>
     
+    <item>
+      <title>R</title>
+      <link>/Hippocamplus/r/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
+      <guid>/Hippocamplus/r/</guid>
+      <description>Optimization Details to remember Run a OS command Order in condition assessment Get RPubs working  Graphs ggplot2 tricks Align/stack two ggplots Change font in ggplot2 Waffle graphs  Rmarkdown Beamer presentation Jekyll website  data.table package   Optimization  Use rbindlist from data.table package for a memory-optimized and faster do.call(rbind, list(..)).   Details to remember Run a OS command Use system2 instead of system. It’s more portable apparently.</description>
+    </item>
     
+    <item>
+      <title>Shell</title>
+      <link>/Hippocamplus/shell/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
+      <guid>/Hippocamplus/shell/</guid>
+      <description>Misc Colors in less Avoid killing ssh jobs rsync  One-liners Add headers with cat Remove empty directories Perl one-liners  Shell scripting Variables If Then Else  Convert PDF to EPS to PDF/A  Git Docker cheatsheet Makefile Modules OSX Mount server Setup WD Elements external hard drive    Misc Colors in less Use the -r or -R option. Sometimes the previous command needs a parameter make sure the output includes color codes.</description>
+    </item>
     
+    <item>
+      <title>Internet</title>
+      <link>/Hippocamplus/internet/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
+      <guid>/Hippocamplus/internet/</guid>
+      <description>DuckDuckGo Ubuntu Sync a specific Google Drive folder on Ubuntu Sync PDFs between Mendeley and Google Drive Host HTML documents in Dropbox   DuckDuckGo DuckDuckGo is a “search engine that doesn’t track you”. It provides nice “bangs” to search directly specific websites. By making DDG the default search engine these bangs can be used directly in the address bar.
+ !pub PubMed. !scholar Google Scholar. !bioc Bioconductor. !so Stack Overflow.</description>
+    </item>
     
+    <item>
+      <title>About</title>
+      <link>/Hippocamplus/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
+      <guid>/Hippocamplus/about/</guid>
+      <description>About this website This is where I put all the useful information I keep on forgetting. Instead of googling the same things over and over, wasting time and server energy I put them here. It’s like a second memory, better than my hippocampus, my hippocamPLUS…
+ About me  Personal page with links. Twitter.  My current lab  Bourque’s Lab. McGill Genome Centre. Canadian Centre for Computational Genomics (C3G).   My previous lab  Guigo’s Lab.</description>
+    </item>
     
-
   </channel>
 </rss>

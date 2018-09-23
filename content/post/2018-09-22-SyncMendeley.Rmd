@@ -1,0 +1,64 @@
+---
+title: Syncing Mendeley and PDFs across devices
+tags: ["pub"]
+date: 2018-09-22
+slug: sync-mendeley
+output: blogdown::html_page
+---
+
+Recently, I've been setting up new computers from scratch as I moved from Montreal to Santa Cruz.
+Like for spring cleaning, it might be a good idea to clarify the system I've been using to manage bibliography and PDF annotation.
+
+Briefly I use Mendeley Desktop and also put all PDF files in a Google Drive. 
+Both are synced with my Android tablet.
+On the tablet, I use the Mendeley app to get information, search etc, but I read/annotate the PDFs from the Google Drive.
+On a computer I use a custom Python script to update the PDFs if necessary.
+
+## The `updateMendeley.py` script
+
+I wrote a Python script that checks the Google Drive folder and Mendeley's local folder, matches PDF files and syncs them.
+The `updateMendeley.py` script is on [the GitHub repo](https://github.com/jmonlong/Hippocamplus/tree/config/python/updateMendeley).
+
+I needed something slightly better than a `rsync` because it's possible that the filenames are not the same between the two folders. 
+This might not be a big problem for new files but at some point Mendeley Desktop and the app I used on the tablet produced slightly different file names for the same article.
+I don't use the Android app to download PDFs anymore but I still have old PDFs that I didn't take the time to rename.
+
+The *matching* part of the script compares each file name in the Google Drive with the file names in the local Mendeley folder.
+It uses the *SequenceMatcher* function from the [difflib](https://docs.python.org/2/library/difflib.html) module.
+If two file names have more than 90% match, it assumes that it's the same article.
+The result of the matching step is saved locally in a "cache" file to speed up future runs.
+
+Then it's just a question of copying the new articles to the Google Drive or updating the local Mendeley folder (if files have different sizes).
+
+In practice, I run the following command when I feel a sync is needed (first a dry run, then without the `-dry`):
+
+```sh
+python updateMendeley.py -local PATH/TO/MendeleyDesktop -remote PATH/TO/GoogleDrive/ArticlesPDF -dry
+```
+
+## Why Mendeley?
+
+1. That's what I started using a while ago (before Elsevier acquired it).
+1. It has an Android app (I have an Android tablet).
+1. It does what I need: tagging system, export to BibTeX, search in PDFs, online portal.
+
+Maybe I could find a good system with EndNote or Zotero but that would take some time and work.
+The idea of Zotero is appealing and I would prefer an open-source software (not owned by Elsevier).
+I tried to make the switch but it froze when importing my entire library.
+I should try again.
+There is still the problem of the Android app: I don't know what they are worth for Zotero.
+There are two unofficial apps.
+Maybe I could pay the $2 and test them.
+
+## Why not use the PDF syncing mechanism from Mendeley?
+
+1. Google Drive is more user-friendly: quickly access from different devices, easy to share PDF with others.
+1. Control over the files.
+1. Easy to update PDFs annotated on the tablet. Useful because I prefer to use a separate Android application to annotate PDFs (RepliGo).
+1. Bad experience this summer with [a bug in Mendeley](https://blog.mendeley.com/2018/06/01/support-update-pdfs-missing-from-desktop-and-web-library/) (blocked for more than a month and lost many PDFs, some of which were annotated).
+
+## Syncing the Google Drive folder
+
+- On Android I use [FolderSync](https://play.google.com/store/apps/details?id=dk.tacit.android.foldersync.lite&hl=en_US). 
+- On Ubuntu I use [grive](/internet#sync-a-specific-google-drive-folder-on-ubuntu).
+- On OSX I use the official Google Drive app: [Backup and Sync](https://www.google.com/drive/download/).

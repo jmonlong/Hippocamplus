@@ -195,7 +195,7 @@ In my `.emacs`:
 
 *MORFOLOGIK_RULE_EN_US* corresponds to spelling mistakes, which I don't want to see because I do the spell-checking separately better with ispell. 
 The list of rules is [here](https://community.languagetool.org/rule/list?lang=en-US). 
-For example, I could be disabled *WHITESPACE_RULE* for LaTeX.
+For example, I could disabled *WHITESPACE_RULE* for LaTeX.
 
 Then:
 

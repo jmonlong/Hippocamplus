@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Syncing Mendeley and PDFs across devices &middot; Hippocamplus
+    
+  </title>
+
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113785126-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    
+    gtag('config', "UA-113785126-1");
+  </script>
+  
+  
+  <link rel="stylesheet" href="../../../../css/poole.css">
+  <link rel="stylesheet" href="../../../../css/syntax.css">
+  <link rel="stylesheet" href="../../../../css/lanyon.css">
+  <link rel="stylesheet" href="../../../../css/github.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
+  <link rel="stylesheet" href="../../../../fa/css/font-awesome.min.css">
+  
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../../../assets/hippoPlus-icon.png">
+  <link rel="shortcut icon" href="../../../../assets/hippoPlus-icon.png">
+
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="../../../../atom.xml">
+</head>
+
+  
+  <body>
+
+    
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>A place to gather useful information I keep on forgetting.</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item " href="../../../../">Home</a>
+    <a class="sidebar-nav-item " href="../../../../post">Posts</a>
+
+    
+    
+      
+        <a class="sidebar-nav-item " href="../../../../emacs/">Emacs</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../latex/">LaTeX</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../markdown/">Markdown</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../math/stats/">Math/Stats</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../python/">Python</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../r/">R</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../shell/">Shell</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../internet/">Internet</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../about/">About</a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+    
+  </nav>
+
+  <div class="sidebar-item">
+  </div>
+  
+  <div class="sidebar-item">
+    <div><a href="../../../../index.xml"><i class="fa fa-rss-square" aria-hidden="true"></i> RSS</a></div>
+    <div><a href="https://twitter.com/JMonlong"><i class="fa fa-twitter" aria-hidden="true"></i> @JMonlong</a></div>
+    <p>&copy; 2018 Jean Monlong. All rights reserved.</p>
+  </div>
+</div>
+
+
+    
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="../../../../" title="Home">Hippocamplus</a>
+            <small>My Second Memory</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+
+
+<div class="post">
+  <h1 class="post-title">Syncing Mendeley and PDFs across devices</h1>
+  <span class="post-date">Sep 22 2018
+  
+  
+  
+  
+  
+  <a href='../../../../tags/pub/' class='label'>pub</a>
+  
+  
+  
+  </span>
+  <p>Recently, I’ve been setting up new computers from scratch as I moved from Montreal to Santa Cruz. Like for spring cleaning, it might be a good idea to clarify the system I’ve been using to manage bibliography and PDF annotation.</p>
+<p>Briefly I use Mendeley Desktop and also put all PDF files in a Google Drive. Both are synced with my Android tablet. On the tablet, I use the Mendeley app to get information, search etc, but I read/annotate the PDFs from the Google Drive. On a computer I use a custom Python script to update the PDFs if necessary.</p>
+<div id="the-updatemendeley.py-script" class="section level2">
+<h2>The <code>updateMendeley.py</code> script</h2>
+<p>I wrote a Python script that checks the Google Drive folder and Mendeley’s local folder, matches PDF files and syncs them. The <code>updateMendeley.py</code> script is on <a href="https://github.com/jmonlong/Hippocamplus/tree/config/python/updateMendeley">the GitHub repo</a>.</p>
+<p>I needed something slightly better than a <code>rsync</code> because it’s possible that the filenames are not the same between the two folders. This might not be a big problem for new files but at some point Mendeley Desktop and the app I used on the tablet produced slightly different file names for the same article. I don’t use the Android app to download PDFs anymore but I still have old PDFs that I didn’t take the time to rename.</p>
+<p>The <em>matching</em> part of the script compares each file name in the Google Drive with the file names in the local Mendeley folder. It uses the <em>SequenceMatcher</em> function from the <a href="https://docs.python.org/2/library/difflib.html">difflib</a> module. If two file names have more than 90% match, it assumes that it’s the same article. The result of the matching step is saved locally in a “cache” file to speed up future runs.</p>
+<p>Then it’s just a question of copying the new articles to the Google Drive or updating the local Mendeley folder (if files have different sizes).</p>
+<p>In practice, I run the following command when I feel a sync is needed (first a dry run, then without the <code>-dry</code>):</p>
+<pre class="sh"><code>python updateMendeley.py -local PATH/TO/MendeleyDesktop -remote PATH/TO/GoogleDrive/ArticlesPDF -dry</code></pre>
+</div>
+<div id="why-mendeley" class="section level2">
+<h2>Why Mendeley?</h2>
+<ol style="list-style-type: decimal">
+<li>That’s what I started using a while ago (before Elsevier acquired it).</li>
+<li>It has an Android app (I have an Android tablet).</li>
+<li>It does what I need: tagging system, export to BibTeX, search in PDFs, online portal.</li>
+</ol>
+<p>Maybe I could find a good system with EndNote or Zotero but that would take some time and work. The idea of Zotero is appealing and I would prefer an open-source software (not owned by Elsevier). I tried to make the switch but it froze when importing my entire library. I should try again. There is still the problem of the Android app: I don’t know what they are worth for Zotero. There are two unofficial apps. Maybe I could pay the $2 and test them.</p>
+</div>
+<div id="why-not-use-the-pdf-syncing-mechanism-from-mendeley" class="section level2">
+<h2>Why not use the PDF syncing mechanism from Mendeley?</h2>
+<ol style="list-style-type: decimal">
+<li>Google Drive is more user-friendly: quickly access from different devices, easy to share PDF with others.</li>
+<li>Control over the files.</li>
+<li>Easy to update PDFs annotated on the tablet. Useful because I prefer to use a separate Android application to annotate PDFs (RepliGo).</li>
+<li>Bad experience this summer with <a href="https://blog.mendeley.com/2018/06/01/support-update-pdfs-missing-from-desktop-and-web-library/">a bug in Mendeley</a> (blocked for more than a month and lost many PDFs, some of which were annotated).</li>
+</ol>
+</div>
+<div id="syncing-the-google-drive-folder" class="section level2">
+<h2>Syncing the Google Drive folder</h2>
+<ul>
+<li>On Android I use <a href="https://play.google.com/store/apps/details?id=dk.tacit.android.foldersync.lite&amp;hl=en_US">FolderSync</a>.</li>
+<li>On Ubuntu I use <a href="../../../../internet#sync-a-specific-google-drive-folder-on-ubuntu">grive</a>.</li>
+<li>On OSX I use the official Google Drive app: <a href="https://www.google.com/drive/download/">Backup and Sync</a>.</li>
+</ul>
+</div>
+
+</div>
+
+      </div>
+    </div>
+
+    
+    
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src="../../../../assets/highlight.min.js"></script>
+    <script src="../../../../assets/r.min.js"></script>
+    
+    <script>
+      hljs.configure({languages: ['r']});
+      hljs.initHighlightingOnLoad();
+    </script>
+
+    <script src="//yihui.name/js/math-code.js"></script>
+    <script async src="//cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    
+  </body>
+</html>
+

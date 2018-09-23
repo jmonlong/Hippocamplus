@@ -1,57 +1,26 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Hippocamplus </title>
+    <title>Data on </title>
     <link>/Hippocamplus/tags/data/</link>
+    <description>Recent content in Data on </description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <author></author>
-    <rights>(C) 2018</rights>
-    <updated>2016-09-06 00:00:00 &#43;0000 UTC</updated>
-
+    <lastBuildDate>Tue, 06 Sep 2016 00:00:00 +0000</lastBuildDate>
     
-      
-        <item>
-          <title>Summary epigenetic mark tracks</title>
-          <link>/Hippocamplus/2016/09/06/summary-epigenetic-mark-tracks/</link>
-          <pubDate>Tue, 06 Sep 2016 00:00:00 UTC</pubDate>
-          <author></author>
-          <guid>/Hippocamplus/2016/09/06/summary-epigenetic-mark-tracks/</guid>
-          <description>&lt;p&gt;To assess the potential impact of variants (SNV, SVs) we might want to use some of the public epigentic datasets. The amount and heterogeneity of this data is a bit overwhelming. I would like to get a summary of which regions of the genome are the most functionally important.&lt;/p&gt;
-&lt;p&gt;The plan is to:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;get annotated &lt;strong&gt;peaks&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;for the 6 &lt;strong&gt;typical histone marks&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;in &lt;strong&gt;5-6 tissues&lt;/strong&gt;, merging sub-tissues (e.g. brain subregions)&lt;/li&gt;
-&lt;li&gt;keep regions &lt;strong&gt;supported by enough replicates&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Eventually, I could also annotate the regions that are tissue-specific or shared across tissues.&lt;/p&gt;
-&lt;p&gt;The R-markdown source code is in the website’s &lt;a href=&#34;https://github.com/jmonlong/Hippocamplus/blob/gh-pages/_source/2016-09-06-epigeneticTracks.Rmd&#34;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
-&lt;div id=&#34;annotationhub&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;AnnotationHub&lt;/h2&gt;
-&lt;p&gt;I’ll use the &lt;a href=&#34;http://bioconductor.org/packages/release/bioc/html/AnnotationHub.html&#34;&gt;AnnotationHub&lt;/a&gt; package, which links Encode and EpigenomeRoadmap data (and more) directly in R.&lt;/p&gt;
-&lt;p&gt;I search for &lt;em&gt;narrowPeak&lt;/em&gt; in &lt;em&gt;hg19&lt;/em&gt; from H3K27ac, H3K27me3, H3K36me3, H3K4me1, H3K4me3 or H3K9me3, in brain, blood, liver, muscle, lung, kidney, skin or heart. I also look for DNase peaks. Let’s see if I can find what I want.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;../../post/2016-09-06-epigeneticTracks_files/figure-html/ahgraph-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;Most tissues have more than 3 tracks for each histone mark. I’ll just exclude liver and knidney that don’t. DNase is a bit more rare but there is at least one track per tissue. In total, it represents 360 different tracks, that I want to merge into one track per mark/tissue.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;download-and-merge-tracks&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Download and merge tracks&lt;/h2&gt;
-&lt;p&gt;For each mark/tissue, I download the available tracks, overlap the peaks into sub-peaks (&lt;em&gt;disjoin&lt;/em&gt;) and keep the pieces supported by more than half the tracks. Finally, these recurrent sub-peaks are stitched (&lt;em&gt;reduce&lt;/em&gt;) if closer than 500 bp.&lt;/p&gt;
-&lt;p&gt;Afterwards, the regions for each mark is annotated with the number of tissues with overlapping regions.&lt;/p&gt;
-&lt;p&gt;The results were uploaded there: &lt;a href=&#34;https://dl.dropboxusercontent.com/s/8c412u1ug2lwrc2/epiTracks.RData?dl=0&#34;&gt;&lt;a href=&#34;https://dl.dropboxusercontent.com/s/8c412u1ug2lwrc2/epiTracks.RData?dl=0&#34; class=&#34;uri&#34;&gt;https://dl.dropboxusercontent.com/s/8c412u1ug2lwrc2/epiTracks.RData?dl=0&lt;/a&gt;&lt;/a&gt;.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;overview&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Overview&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;../../post/2016-09-06-epigeneticTracks_files/figure-html/overview-1.png&#34; width=&#34;672&#34; /&gt;&lt;img src=&#34;../../post/2016-09-06-epigeneticTracks_files/figure-html/overview-2.png&#34; width=&#34;672&#34; /&gt;&lt;img src=&#34;../../post/2016-09-06-epigeneticTracks_files/figure-html/overview-3.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;limitations&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Limitations&lt;/h2&gt;
-&lt;p&gt;I searched all tracks with keywords &lt;em&gt;&lt;span class=&#34;math&#34;&gt;\(tissue*, *\)&lt;/span&gt;mark&lt;/em&gt; (and &lt;em&gt;narrowPeak&lt;/em&gt;, &lt;em&gt;hg19&lt;/em&gt;). I’m &lt;strong&gt;not completely sure that the different tracks come from different replicates.&lt;/strong&gt; I think I avoided the “bioinformatics” replicates by taking only the &lt;em&gt;narrowPeaks&lt;/em&gt;. And when there are different sub-tissues (e.g. for brain), I decided to keep only regions supported by half the tracks, but then I &lt;strong&gt;might miss the specific a sub-tissue regions&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;I also made &lt;strong&gt;some arbitrary choices&lt;/strong&gt;. For example, in for a particular mark/tissue, I stitch together regions that are at 500 bp or less. The main motivation is to reduce the amount of data. Also, I’m interested in large variants (SVs), so this resolution is fine.&lt;/p&gt;
-&lt;/div&gt;
-</description>
-        </item>
-      
+	<atom:link href="/Hippocamplus/tags/data/index.xml" rel="self" type="application/rss+xml" />
     
-
+    
+    <item>
+      <title>Summary epigenetic mark tracks</title>
+      <link>/Hippocamplus/2016/09/06/summary-epigenetic-mark-tracks/</link>
+      <pubDate>Tue, 06 Sep 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/Hippocamplus/2016/09/06/summary-epigenetic-mark-tracks/</guid>
+      <description>To assess the potential impact of variants (SNV, SVs) we might want to use some of the public epigentic datasets. The amount and heterogeneity of this data is a bit overwhelming. I would like to get a summary of which regions of the genome are the most functionally important.
+The plan is to:
+ get annotated peaks for the 6 typical histone marks in 5-6 tissues, merging sub-tissues (e.g. brain subregions) keep regions supported by enough replicates  Eventually, I could also annotate the regions that are tissue-specific or shared across tissues.</description>
+    </item>
+    
   </channel>
 </rss>

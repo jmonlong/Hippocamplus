@@ -2,9 +2,21 @@
 sidebar: true
 title: Internet
 weight: 2
+output:
+  blogdown::html_page:
+    toc: true
 ---
 
 
+<div id="TOC">
+<ul>
+<li><a href="#duckduckgo">DuckDuckGo</a></li>
+<li><a href="#ubuntu">Ubuntu</a></li>
+<li><a href="#sync-a-specific-google-drive-folder-on-ubuntu">Sync a specific Google Drive folder on Ubuntu</a></li>
+<li><a href="#sync-pdfs-between-mendeley-and-google-drive">Sync PDFs between Mendeley and Google Drive</a></li>
+<li><a href="#host-html-documents-in-dropbox">Host HTML documents in Dropbox</a></li>
+</ul>
+</div>
 
 <div id="duckduckgo" class="section level2">
 <h2>DuckDuckGo</h2>
@@ -40,6 +52,24 @@ weight: 2
 <li>To force the second screen to follow the workspace of the primary screen I found <a href="http://gregcor.com/2011/05/07/fix-dual-monitors-in-gnome-3-aka-my-workspaces-are-broken/">this</a>:</li>
 </ul>
 <p><code>gsettings set org.gnome.shell.overrides workspaces-only-on-primary false</code></p>
+</div>
+<div id="sync-a-specific-google-drive-folder-on-ubuntu" class="section level2">
+<h2>Sync a specific Google Drive folder on Ubuntu</h2>
+<p>I use <em>grive</em> and followed <a href="https://www.howtoforge.com/tutorial/sync-documents-with-google-drive-on-ubuntu-linux/">these instructions</a>.</p>
+<p>To install:</p>
+<pre class="sh"><code>sudo apt-add-repository ppa:nilarimogard/webupd8
+sudo apt-get update
+sudo apt-get install grive</code></pre>
+<p>To configure in a directory DIR, syncing the Drive folder “ArticlesPDF”:</p>
+<pre class="sh"><code>cd DIR
+grive -a -s ArticlesPDF</code></pre>
+<p>In the future just sync by running the following command (in the DIR folder):</p>
+<pre class="sh"><code>grive -s ArticlesPDF</code></pre>
+<p><em>I usually try with the <code>--dry-run</code> option first because there are some glitches sometimes.</em></p>
+</div>
+<div id="sync-pdfs-between-mendeley-and-google-drive" class="section level2">
+<h2>Sync PDFs between Mendeley and Google Drive</h2>
+<p>See <a href="/2018/09/22/sync-mendeley/">this post</a>.</p>
 </div>
 <div id="host-html-documents-in-dropbox" class="section level2">
 <h2>Host HTML documents in Dropbox</h2>

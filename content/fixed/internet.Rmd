@@ -2,6 +2,9 @@
 sidebar: true
 title: Internet
 weight: 2
+output:
+  blogdown::html_page:
+    toc: true
 ---
 
 ## DuckDuckGo
@@ -39,6 +42,37 @@ I'm using [Ubuntu Gnome 16.04](https://wiki.ubuntu.com/UbuntuGNOME/GetUbuntuGNOM
 + To force the second screen to follow the workspace of the primary screen I found [this](http://gregcor.com/2011/05/07/fix-dual-monitors-in-gnome-3-aka-my-workspaces-are-broken/): 
 
 `gsettings set org.gnome.shell.overrides workspaces-only-on-primary false`
+
+## Sync a specific Google Drive folder on Ubuntu
+
+I use *grive* and followed [these instructions](https://www.howtoforge.com/tutorial/sync-documents-with-google-drive-on-ubuntu-linux/).
+
+To install:
+
+```sh
+sudo apt-add-repository ppa:nilarimogard/webupd8
+sudo apt-get update
+sudo apt-get install grive
+```
+
+To configure in a directory DIR, syncing the Drive folder "ArticlesPDF":
+
+```sh 
+cd DIR
+grive -a -s ArticlesPDF
+```
+
+In the future just sync by running the following command (in the DIR folder):
+
+```sh
+grive -s ArticlesPDF
+```
+
+*I usually try with the `--dry-run` option first because there are some glitches sometimes.*
+
+## Sync PDFs between Mendeley and Google Drive
+
+See [this post](/2018/09/22/sync-mendeley/).
 
 ## Host HTML documents in Dropbox
 

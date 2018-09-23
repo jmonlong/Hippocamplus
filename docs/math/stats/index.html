@@ -154,6 +154,8 @@
     
       
     
+      
+    
 
     
     
@@ -199,7 +201,7 @@
 <li><a href="#statistical-tests">Statistical tests</a><ul>
 <li><a href="#student-t-test">Student t-test</a></li>
 <li><a href="#fishers-exact-test">Fisher’s exact test</a></li>
-<li><a href="#chi2-test"><span class="math">\(\chi^2\)</span> test</a></li>
+<li><a href="#chi2-test"><span class="math inline">\(\chi^2\)</span> test</a></li>
 <li><a href="#wilcoxon-test">Wilcoxon test</a></li>
 <li><a href="#anova">ANOVA</a></li>
 </ul></li>
@@ -239,30 +241,30 @@
 <h2>Probability distributions</h2>
 <div id="binomial" class="section level3">
 <h3>Binomial</h3>
-<p>Binomial distribution models the <strong>number of successes in <em>n</em> tries</strong>, knowing the <strong>probability <em>p</em> of success</strong>, <span class="math">\(\mathcal{B}(n,p)\)</span>. It has <em>np</em> mean and <span class="math">\(np(1-p)\)</span> variance.</p>
-<p><span class="math">\[\mathrm{Pr}(X=k) = \binom{n}{k}p^k (1-p)^{n-k} \]</span></p>
+<p>Binomial distribution models the <strong>number of successes in <em>n</em> tries</strong>, knowing the <strong>probability <em>p</em> of success</strong>, <span class="math inline">\(\mathcal{B}(n,p)\)</span>. It has <em>np</em> mean and <span class="math inline">\(np(1-p)\)</span> variance.</p>
+<p><span class="math display">\[\mathrm{Pr}(X=k) = \binom{n}{k}p^k (1-p)^{n-k} \]</span></p>
 </div>
 <div id="hypergeometric" class="section level3">
 <h3>Hypergeometric</h3>
-<p>Hypergeometric distribution models the <strong>number of successes</strong> when drawing, <strong>without replacement, <em>n</em> elements from a population of size <em>N</em> containing <em>K</em> successes</strong>. It can be used to analyze over-/under-representation of a sub-population in a sample. Its mean is <span class="math">\(n\frac{K}{N}\)</span>.</p>
-<p><span class="math">\[\mathrm{Pr}(X=k) = \frac{\binom{K}{k}\binom{N-K}{n-k}}{\binom{N}{n}} \]</span></p>
+<p>Hypergeometric distribution models the <strong>number of successes</strong> when drawing, <strong>without replacement, <em>n</em> elements from a population of size <em>N</em> containing <em>K</em> successes</strong>. It can be used to analyze over-/under-representation of a sub-population in a sample. Its mean is <span class="math inline">\(n\frac{K}{N}\)</span>.</p>
+<p><span class="math display">\[\mathrm{Pr}(X=k) = \frac{\binom{K}{k}\binom{N-K}{n-k}}{\binom{N}{n}} \]</span></p>
 </div>
 <div id="normal" class="section level3">
 <h3>Normal</h3>
 </div>
 <div id="poisson" class="section level3">
 <h3>Poisson</h3>
-<p>Poisson distribution models the <strong>number of events occurring in an interval of time</strong>, knowing the rate <span class="math">\(\lambda\)</span>. It has <span class="math">\(\lambda\)</span> mean and variance. Of note a binomial distribution with large <em>n</em> and small <em>p</em> can be approximated by a Poisson with parameter <em>np</em>.</p>
-<p><span class="math">\[\mathrm{Pr}(X=k) = \frac{\lambda^k e^{-\lambda}}{k!} \]</span></p>
+<p>Poisson distribution models the <strong>number of events occurring in an interval of time</strong>, knowing the rate <span class="math inline">\(\lambda\)</span>. It has <span class="math inline">\(\lambda\)</span> mean and variance. Of note a binomial distribution with large <em>n</em> and small <em>p</em> can be approximated by a Poisson with parameter <em>np</em>.</p>
+<p><span class="math display">\[\mathrm{Pr}(X=k) = \frac{\lambda^k e^{-\lambda}}{k!} \]</span></p>
 <p><em>Example:</em> number of mutation on a strand of DNA</p>
 </div>
 <div id="beta-binomial" class="section level3">
 <h3>Beta-binomial</h3>
-<p>Beta-binomial distribution is a <strong>binomial</strong> distribution in which the <strong>probability of success follows a beta distribution</strong>. It’s often used as an over-dispersed binomial distribution. The three parameters are <em>n</em>, <span class="math">\(\alpha\)</span> and <span class="math">\(\beta\)</span>.</p>
+<p>Beta-binomial distribution is a <strong>binomial</strong> distribution in which the <strong>probability of success follows a beta distribution</strong>. It’s often used as an over-dispersed binomial distribution. The three parameters are <em>n</em>, <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span>.</p>
 </div>
 <div id="beta" class="section level3">
 <h3>Beta</h3>
-<p>Beta distribution is defined on interval [0,1] by two shape parameters, <span class="math">\(\alpha\)</span> and <span class="math">\(\beta\)</span>. It is often used as prior for binomial distributions.</p>
+<p>Beta distribution is defined on interval [0,1] by two shape parameters, <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span>. It is often used as prior for binomial distributions.</p>
 <p><em>Example:</em> allele frequencies in population.</p>
 </div>
 </div>
@@ -280,7 +282,7 @@
 <p>One difference with other test is that it assumes that the total are fixed before the sampling. <em>Is it a problem?</em></p>
 </div>
 <div id="chi2-test" class="section level3">
-<h3><span class="math">\(\chi^2\)</span> test</h3>
+<h3><span class="math inline">\(\chi^2\)</span> test</h3>
 <p>Also used to test association between two categorical classifications. However it is <strong>only suited when sample size is large and the expected values are not too low</strong>.</p>
 </div>
 <div id="wilcoxon-test" class="section level3">
