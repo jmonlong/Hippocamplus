@@ -41,6 +41,9 @@ output:
 <li><a href="#add-some-key-bindings">Add some key bindings</a></li>
 <li><a href="#send-commands-to-a-specific-buffer">Send commands to a specific buffer</a></li>
 </ul></li>
+<li><a href="#for-ccpp">For C/CPP</a><ul>
+<li><a href="#tags">Tags</a></li>
+</ul></li>
 <li><a href="#for-shell">For Shell</a></li>
 <li><a href="#for-file-manipulation">For file manipulation</a><ul>
 <li><a href="#csvtsv">CSV/TSV</a></li>
@@ -183,19 +186,26 @@ make</code></pre>
 </div>
 <div id="thesaurus-and-synonyms" class="section level3">
 <h3>Thesaurus and synonyms</h3>
-<p>I use the <code>synosaurus</code> package available in MELPA. It’s not as user friendly as some online resources but a good offline alternative. It uses the <a href="https://en.wikipedia.org/wiki/WordNet">WordNet</a> database through the <code>wn</code> command line. The shortcut to list synonyms is <code>C-c C-s l</code>.</p>
+<p>I use the <code>synosaurus</code> package available in MELPA.
+It’s not as user friendly as some online resources but a good offline alternative.
+It uses the <a href="https://en.wikipedia.org/wiki/WordNet">WordNet</a> database through the <code>wn</code> command line.
+The shortcut to list synonyms is <code>C-c C-s l</code>.</p>
 <p>In my <code>.emacs</code> I added the <code>synosaurus-mode</code> minor mode:</p>
 <pre class="lisp"><code>(add-hook &#39;LaTeX-mode-hook &#39;synosaurus-mode)</code></pre>
 </div>
 <div id="grammar-checking" class="section level3">
 <h3>Grammar checking</h3>
-<p>The <code>langtool</code> package is available in MELPA. It uses the <a href="https://languagetool.org/">LanguageTool</a> JAR to highlight potential grammar problems. In my <code>.emacs</code>:</p>
+<p>The <code>langtool</code> package is available in MELPA.
+It uses the <a href="https://languagetool.org/">LanguageTool</a> JAR to highlight potential grammar problems.
+In my <code>.emacs</code>:</p>
 <pre class="lisp"><code>(require &#39;langtool)
 (setq langtool-language-tool-jar &quot;/usr/local/Cellar/languagetool/3.8/libexec/languagetool-commandline.jar&quot;)
 (setq langtool-default-language &quot;en-US&quot;)
 (setq langtool-mother-tongue &quot;fr&quot;)
 (setq langtool-disabled-rules &#39;(&quot;MORFOLOGIK_RULE_EN_US&quot;))</code></pre>
-<p><em>MORFOLOGIK_RULE_EN_US</em> corresponds to spelling mistakes, which I don’t want to see because I do the spell-checking separately better with ispell. The list of rules is <a href="https://community.languagetool.org/rule/list?lang=en-US">here</a>. For example, I could disabled <em>WHITESPACE_RULE</em> for LaTeX.</p>
+<p><em>MORFOLOGIK_RULE_EN_US</em> corresponds to spelling mistakes, which I don’t want to see because I do the spell-checking separately better with ispell.
+The list of rules is <a href="https://community.languagetool.org/rule/list?lang=en-US">here</a>.
+For example, I could disabled <em>WHITESPACE_RULE</em> for LaTeX.</p>
 <p>Then:</p>
 <ul>
 <li><code>M-x langtool-check</code> to highlight problems.</li>
@@ -206,7 +216,9 @@ make</code></pre>
 <div id="for-latex" class="section level2">
 <h2>For LaTeX</h2>
 <p>I put some Emacs tricks (e.g. for table manipulation) on the <a href="https://jmonlong.github.io/Hippocamplus/latex">LaTeX page</a>.</p>
-<p>I general I prefer to use AUCTeX (available through MELPA). It handles multi-file documents and keeps the annoying compilation buffer closed. My configuration is:</p>
+<p>I general I prefer to use AUCTeX (available through MELPA).
+It handles multi-file documents and keeps the annoying compilation buffer closed.
+My configuration is:</p>
 <pre class="lisp"><code>(setq TeX-PDF-mode t)
 (setq-default TeX-master nil)
 (setq LaTeX-verbatim-environments-local &#39;(&quot;lstlisting&quot;))</code></pre>
@@ -223,7 +235,8 @@ make</code></pre>
 </div>
 <div id="chunk-folding" class="section level3">
 <h3>Chunk folding</h3>
-<p>Sometimes I like to fold chunk of the document to improve clarity, e.g. frames in beamer document or figure/table in a manuscript. I added to my <code>.emacs</code>:</p>
+<p>Sometimes I like to fold chunk of the document to improve clarity, e.g. frames in beamer document or figure/table in a manuscript.
+I added to my <code>.emacs</code>:</p>
 <pre class="lisp"><code>(add-hook &#39;LaTeX-mode-hook (lambda ()
                  (add-to-list &#39;LaTeX-fold-env-spec-list &#39;(&quot;[frame]&quot; (&quot;frame&quot;)))
                  (setq TeX-fold-macro-spec-list (list ()))
@@ -235,7 +248,8 @@ make</code></pre>
 <li><code>C-c C-o i</code> unfold an item.</li>
 <li><code>C-c C-o C-f</code> to switch the fold-mode on/off</li>
 </ul>
-<p>Because I added <em>frame</em> in the list, I can select a bunch of frames, press <code>C-c C-o C-r</code> and they all get folded (but not the rest). Otherwise, I manually fold the frames/figures/tables that are distracting.</p>
+<p>Because I added <em>frame</em> in the list, I can select a bunch of frames, press <code>C-c C-o C-r</code> and they all get folded (but not the rest).
+Otherwise, I manually fold the frames/figures/tables that are distracting.</p>
 </div>
 </div>
 <div id="for-markdown" class="section level2">
@@ -280,6 +294,39 @@ make</code></pre>
 <p>I installed <em>isend</em> from MELPA. Then I simply go to the <em>code</em> buffer and run <code>M-x isend-associate RET *shell* RET</code>. At this point <code>C-Enter</code> will send the command to the <em>shell</em> buffer.</p>
 </div>
 </div>
+<div id="for-ccpp" class="section level2">
+<h2>For C/CPP</h2>
+<p>I’m following <a href="https://tuhdo.github.io/c-ide.html">this tutorial</a>.</p>
+<ul>
+<li>The speedbar is nice to get an overview of the files. <code>M-x speedbar</code>.</li>
+</ul>
+<div id="tags" class="section level3">
+<h3>Tags</h3>
+<p>I installed <a href="http://www.gnu.org/software/global/">GNU Global</a> and the <em>ggtags</em> package from MELPA.
+Then added to <code>.emacs</code>:</p>
+<pre class="lisp"><code>(require &#39;ggtags)
+(add-hook &#39;c-mode-common-hook
+          (lambda ()
+            (when (derived-mode-p &#39;c-mode &#39;c++-mode &#39;java-mode &#39;asm-mode)
+              (ggtags-mode 1))))
+
+(define-key ggtags-mode-map (kbd &quot;C-c g s&quot;) &#39;ggtags-find-other-symbol)
+(define-key ggtags-mode-map (kbd &quot;C-c g h&quot;) &#39;ggtags-view-tag-history)
+(define-key ggtags-mode-map (kbd &quot;C-c g r&quot;) &#39;ggtags-find-reference)
+(define-key ggtags-mode-map (kbd &quot;C-c g f&quot;) &#39;ggtags-find-file)
+(define-key ggtags-mode-map (kbd &quot;C-c g c&quot;) &#39;ggtags-create-tags)
+(define-key ggtags-mode-map (kbd &quot;C-c g u&quot;) &#39;ggtags-update-tags)</code></pre>
+<p>Useful shortcuts:</p>
+<ul>
+<li><code>M-.</code> to jump to a definition or reference file.
+<ul>
+<li><code>M-&lt;</code>/<code>M-&gt;</code> to switch among files with results.</li>
+<li><code>M-,</code> to go back to the original position.</li>
+</ul></li>
+</ul>
+<p><em>More soon…</em></p>
+</div>
+</div>
 <div id="for-shell" class="section level2">
 <h2>For Shell</h2>
 <p>To open a <em>shell</em> buffer, type <code>M-x shell</code>.</p>
@@ -309,7 +356,9 @@ make</code></pre>
 <p>To visualize blanks (tabs, spaces, new lines) I use the minor mode <code>whitespace-mode</code>.</p>
 <div id="csvtsv" class="section level3">
 <h3>CSV/TSV</h3>
-<p>I use the <code>csv-mode</code> and the command <code>c-c c-a</code> to align columns. By default it understand <code>,</code>, <code>;</code> and <code>\t</code> as separator. If not I think the variable to customize is <code>csv-separators</code>.</p>
+<p>I use the <code>csv-mode</code> and the command <code>c-c c-a</code> to align columns.
+By default it understand <code>,</code>, <code>;</code> and <code>\t</code> as separator.
+If not I think the variable to customize is <code>csv-separators</code>.</p>
 </div>
 <div id="dired-mode" class="section level3">
 <h3>Dired mode</h3>

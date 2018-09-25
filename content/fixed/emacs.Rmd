@@ -306,6 +306,40 @@ Sometimes I want to send the commands to a specific buffer. For example, when te
 
 I installed *isend* from MELPA. Then I simply go to the *code* buffer and run `M-x isend-associate RET *shell* RET`. At this point `C-Enter` will send the command to the *shell* buffer.
 
+## For C/CPP
+
+I'm following [this tutorial](https://tuhdo.github.io/c-ide.html).
+
+- The speedbar is nice to get an overview of the files. `M-x speedbar`.
+
+### Tags
+
+I installed [GNU Global](http://www.gnu.org/software/global/) and the *ggtags* package from MELPA.
+Then added to `.emacs`:
+
+```lisp
+(require 'ggtags)
+(add-hook 'c-mode-common-hook
+          (lambda ()
+            (when (derived-mode-p 'c-mode 'c++-mode 'java-mode 'asm-mode)
+              (ggtags-mode 1))))
+
+(define-key ggtags-mode-map (kbd "C-c g s") 'ggtags-find-other-symbol)
+(define-key ggtags-mode-map (kbd "C-c g h") 'ggtags-view-tag-history)
+(define-key ggtags-mode-map (kbd "C-c g r") 'ggtags-find-reference)
+(define-key ggtags-mode-map (kbd "C-c g f") 'ggtags-find-file)
+(define-key ggtags-mode-map (kbd "C-c g c") 'ggtags-create-tags)
+(define-key ggtags-mode-map (kbd "C-c g u") 'ggtags-update-tags)
+```
+
+Useful shortcuts:
+
+- `M-.` to jump to a definition or reference file. 
+    - `M-<`/`M->` to switch among files with results.
+    - `M-,` to go back to the original position.
+
+*More soon...*
+
 ## For Shell
 
 To open a *shell* buffer, type `M-x shell`.
