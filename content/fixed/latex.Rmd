@@ -382,7 +382,12 @@ done
 
 ## Bibliography
 
-I use `\usepackage[comma,super]{natbib}`.
+I use `\usepackage[comma,super]{natbib}` and the commands:
+
+~~~latex
+\bibliographystyle{unsrtnat}
+\bibliography{library.bib}
+~~~
 
 ### Reduce long list of authors
 
