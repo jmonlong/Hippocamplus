@@ -68,10 +68,14 @@ if(args.rl):
         else:
             filen = str.replace(remf, '..', '.')
             filen = str.replace(filen, '_', '')
+            filen = filen.lower()
             best = ''
             bestscore = 0
             for locf in locfiles:
-                score = SequenceMatcher(None, locf, filen).ratio()
+                locfn = str.replace(locf, '..', '.')
+                locfn = str.replace(locfn, '_', '')
+                locfn = locfn.lower()
+                score = SequenceMatcher(None, locfn, filen).ratio()
                 if(score > bestscore):
                     bestscore = score
                     best = locf
