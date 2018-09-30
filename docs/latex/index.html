@@ -156,6 +156,8 @@
     
       
     
+      
+    
 
     
     
@@ -476,7 +478,8 @@ Genetics has been shown to be important...
 </div>
 <div id="main-text-and-supplements-in-two-documents" class="section level3">
 <h3>Main text and supplements in two documents</h3>
-<p>It’s easier to have the two documents separated with their own bibliography. Then no need to manually split the pdf (and likely lose links).</p>
+<p>It’s easier to have the two documents separated with their own bibliography.
+Then no need to manually split the pdf (and likely lose links).</p>
 <p>Using the <code>xr</code> package, we can specify other documents where to find references (figures, tables, sections).</p>
 <p>In the <code>main.tex</code> document:</p>
 <pre class="latex"><code>\usepackage{xr}
@@ -504,7 +507,8 @@ Genetics has been shown to be important...
 </div>
 <div id="compare-versions-and-highlight-revisions" class="section level3">
 <h3>Compare versions and highlight revisions</h3>
-<p>The <a href="https://ctan.org/pkg/latexdiff"><code>latediff</code> Perl script</a> works well. For example to compare two versions I use:</p>
+<p>The <a href="https://ctan.org/pkg/latexdiff"><code>latediff</code> Perl script</a> works well.
+For example to compare two versions I use:</p>
 <pre class="sh"><code>git show COMMIT:main.tex &gt; main-old.tex
 git show COMMIT:suppmat.tex &gt; suppmat-old.tex
 
@@ -525,7 +529,9 @@ done</code></pre>
 </div>
 <div id="bibliography" class="section level2">
 <h2>Bibliography</h2>
-<p>I use <code>\usepackage[comma,super]{natbib}</code>.</p>
+<p>I use <code>\usepackage[comma,super]{natbib}</code> and the commands:</p>
+<pre class="latex"><code>\bibliographystyle{unsrtnat}
+\bibliography{library.bib}</code></pre>
 <div id="reduce-long-list-of-authors" class="section level3">
 <h3>Reduce long list of authors</h3>
 <p>To change a long list of authors into <em>“First Author et al”</em> in the references, use a custom <code>.bst</code> file.</p>

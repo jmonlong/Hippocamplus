@@ -1,0 +1,110 @@
+
+---
+title: La formation de l'esprit scientifique, Gaston Bacherlard
+tags: ["science"]
+date: 2018-09-29
+draft: true
+slug: bachelard-formation-esprit-scientifique
+output: blogdown::html_page
+---
+
+These are notes from my reading of [*La formation de l'esprit scientifique*](https://fr.wikipedia.org/wiki/La_Formation_de_l%27esprit_scientifique) by [Gaston Bachelard](https://en.wikipedia.org/wiki/Gaston_Bachelard).
+I hesitated a bit but finally decided to write the notes in English because in the end this blog is as much a place to save things I want to remember as a place to practice writing in English and share with other people.
+There are a lot of quotes that I liked. 
+I tried to translate them as best I could.
+
+
+## Quotes about science
+
+> La connaissance du reel est une lumiere qui projette toujours quelque part des ombres.
+
+"Knowledge of reality is a light that always throws shadows somewhere."
+
+---
+
+On seeking knowledge:
+
+> En resume, l'homme anime par l'esprit scientifique desire sans doute savoir, mais c'est aussitot pour mieux interroger.
+
+"In summary, the person moved by the scientific spirit surely desires knowledge, but it is to better immediately interrogate." 
+
+---
+
+> Toute culture scientifique doit commencer [...] par une catharsis intelectuelle et affective.
+
+Naturally...
+
+---
+
+> En fait, l'histoire des mathematiques est une merveille de regularite. Elle connait des periodes d'arret. Elle ne connait pas de periodes d'erreurs.
+
+## Epistemological obstacle
+
+You have 2 hours, discuss.
+
+## On the obstacle of close-mindedness
+
+> Acceder a la science, c'est, spirituellement rajeunir, c'est accepter une mutation brusque qui doit contredire un passe.
+
+"To access science is to spiritually rejuvenate, it's accepting an abrupt mutation that must contradict a past."
+
+---
+
+> On ne peut rien fonder sur l'opinion: il faut d'abord la detruire. Elle est le premier obstacle a surmonter.
+
+"We cannot base anything on opinion: it must first be destroyed. It's the first obstacle to overcome."
+
+---
+
+> Les grands hommes sont utiles a la science dans la premere moitie de leur vie, nuisibles dans la second moitie.
+
+"Great men are useful to science in the first half of their life, harmful in the second half."
+
+## On trappings of empirical observations
+
+> Comme le dit si bien d'Alembert, on generalise ses premieres remarques, l'instant d'apres qu'on ne remarquait rien.
+
+"Like d'Alembert nicely stated, we generalize our first observations, the moment after we didn't observe anything."
+
+---
+
+> Il est si doux a la paresse intelectuelle d'etre cantonnee dans l'empirisme, d'appeler un fait un fait et d'interdire la recherche d'une loi!
+
+## On the danger of images and metaphors
+
+> On remplace la connaisance par l'admiration, les idees par les images.
+
+"We replace knowledge with admiration, ideas with images."
+
+---
+
+On detrimental curiosity (I think):
+
+> Elle cherche non pas la variation mais la variete.
+
+---
+
+> Une science qui accepte les images est, plus que toute autre, victime des metaphores. Aussi l'esprit scientifique doit-il sans cesse lutter contre les images, contre les analogies, contre les metaphores.
+
+---
+
+> Mieux vaudrait une ignorance complete qu'une connaissance privee de son principe fondamental.
+
+"Complete ignorance would be better than knowledge deprived of its fundamental principle."
+
+
+## Education
+
+> Les professeurs de sciences, plus encore que les autres si c'est possible, ne comprennent pas qu'on ne comprenne pas.
+
+"Science teachers, even more than others if that is possible, don't understand that one doesn't understand."
+
+## Interesting stories
+
+- How people were fascinated by [Leyden jars](https://www.youtube.com/watch?v=xjW-isgOijs).
+
+## Sick burns
+
+> On imagine assez facilement qu'un enfant de huit ans, a la seule condition d'avoir a sa disposition un vocabulaire pedant, pourrait developper de telles billevesees.
+
+"We can imagine quite easily that an eight years old child, if only he had a pedantic vocabulary at his disposal, would develop similar nonsense."
