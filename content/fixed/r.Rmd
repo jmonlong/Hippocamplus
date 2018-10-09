@@ -172,3 +172,13 @@ I'm more of a tidyverse person but for very large data the [data.table](https://
 | `group_by(col1,col2) %>% summarize(nb=n())` | `dt[,.(nb=.N),by=.(col1,col2)]` |
 | `group_by(col1,col2) %>% mutate(nb=n())` | `dt[,nb:=.N,by=.(col1,col2)]` |
 | `filter(nb==2)` | `dt[nb==2]` |
+
+## Linux setup
+
+Necessary to compile some R packages:
+
+~~~sh
+sudo apt-get install libxml2-dev libssl-dev libmariadbclient-dev
+~~~
+
+*Related toXML, OpenSSL, MySQL, respectively.*
