@@ -55,6 +55,10 @@ rsync -r --exclude="*-files" --include='*/' --include='*.R' --exclude='*' --prun
 
 `find . -type d | xargs rmdir`
 
+### AWK
+
+- Capture group in string regexp using `match($0, /xxx(.*)yyy/, a); print a[1]'`
+
 ### Perl one-liners
 
 Inspired from these: [Catonmat](http://www.catonmat.net/blog/introduction-to-perl-one-liners/), [Ksplice](https://blogs.oracle.com/ksplice/the-top-10-tricks-of-perl-one-liners)
