@@ -402,6 +402,14 @@ The built-in interface supports Git:
 + `C-x v =` to see differences.
 
 A more popular Git interface is [Magit](https://www.emacswiki.org/emacs/Magit).
+After installing *magit* using MELPA, invoke the main buffer with `M-x magit-status` (or `C-x g`) and then:
+
+- `?` to list keystroke/commands.
+- `F u` to pull.
+- `g` to refresh.
+- `s` to stage file.
+- `c c` to commit.
+- `P u` to push.
 
 ## For online notes
 
