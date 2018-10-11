@@ -211,6 +211,7 @@ plt.show()
 + Find indexes in array: `numpy.where(x > 0)`.
 + `quit()` to stop a program.
 + `myVar is None` to test if a variable is *None*.
++ Print the working directory with `os.getcwd()` (after importing *os*).
 
 When filling a nested dictionary, it's painful to always test if the key exists before updating it's value. One trick is to use `try`/`except`. It's not that much quicker but it looks fancier so you forget about the *pain*:
 
