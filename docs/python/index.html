@@ -191,21 +191,20 @@
   <div id="TOC">
 <ul>
 <li><a href="#naming-and-formatting">Naming and formatting</a></li>
-<li><a href="#data-structures">Data structures</a><ul>
+<li><a href="#objects">Objects</a><ul>
 <li><a href="#array">Array</a></li>
 <li><a href="#hash">Hash</a></li>
 <li><a href="#class">Class</a></li>
-</ul></li>
-<li><a href="#strings">Strings</a><ul>
+<li><a href="#string">String</a></li>
 <li><a href="#function">Function</a></li>
 </ul></li>
 <li><a href="#inputoutput">Input/Output</a></li>
-<li><a href="#files-structure-packages-and-imports">Files structure, packages and imports</a><ul>
+<li><a href="#module-files-imports">Module, files, imports</a><ul>
+<li><a href="#packaging-code">Packaging code</a></li>
 <li><a href="#install-a-module-locally">Install a module locally</a></li>
 </ul></li>
 <li><a href="#passing-arguments-to-a-script">Passing arguments to a script</a></li>
 <li><a href="#graphs">Graphs</a></li>
-<li><a href="#tricks">Tricks</a></li>
 <li><a href="#shell-integration">Shell integration</a></li>
 <li><a href="#bioinfo">Bioinfo</a><ul>
 <li><a href="#sequences">Sequences</a></li>
@@ -213,6 +212,7 @@
 <li><a href="#sam-files">SAM files</a></li>
 <li><a href="#vcf">VCF</a></li>
 </ul></li>
+<li><a href="#tricks">Tricks</a></li>
 </ul>
 </div>
 
@@ -225,8 +225,8 @@
 <li>Use <code>_</code> prefix for private variable. E.g. <code>_secret_variable</code>.</li>
 </ul>
 </div>
-<div id="data-structures" class="section level2">
-<h2>Data structures</h2>
+<div id="objects" class="section level2">
+<h2>Objects</h2>
 <div id="array" class="section level3">
 <h3>Array</h3>
 <pre class="python"><code>arr = [3]
@@ -246,9 +246,8 @@ pred_counts[0, ] += sum(predprobs &gt; .5)</code></pre>
 <div id="class" class="section level3">
 <h3>Class</h3>
 </div>
-</div>
-<div id="strings" class="section level2">
-<h2>Strings</h2>
+<div id="string" class="section level3">
+<h3>String</h3>
 <pre class="python"><code>&#39;tempString&#39; + another_string + str(an_integer)
 line.split(&#39;\t&#39;)</code></pre>
 <ul>
@@ -261,6 +260,7 @@ line.split(&#39;\t&#39;)</code></pre>
 pattern = re.compile(&#39;something:(.+)&#39;)
 mres = pattern.search(line)
 mres.group(1)</code></pre>
+</div>
 <div id="function" class="section level3">
 <h3>Function</h3>
 <pre class="python"><code>def functionname( parameters ):
@@ -290,11 +290,24 @@ f.close()</code></pre>
 obj1 = pickle.load(open(&quot;obj1.pkl&quot;, &quot;rb&quot;))</code></pre>
 <p>Note the <em>b</em> that specifies <em>binary mode</em> which is slightly more efficient for non-text files.</p>
 </div>
-<div id="files-structure-packages-and-imports" class="section level2">
-<h2>Files structure, packages and imports</h2>
+<div id="module-files-imports" class="section level2">
+<h2>Module, files, imports</h2>
 <p>There should be a <code>__init__.py</code> file <strong>in each directory containing modules</strong> to import. It can be empty. If not the code inside is run on import.</p>
 <p>To import the classes/functions defined in file <code>module1.py</code>, simply do</p>
-<pre class="python"><code>import module1</code></pre>
+<pre class="python"><code>import module1
+module1.fun()</code></pre>
+<div id="packaging-code" class="section level3">
+<h3>Packaging code</h3>
+<p>Minimal structure:</p>
+<pre><code>├── __init__.py
+├── mypackage
+│   ├── __init__.py
+│   ├── submod1.py
+│   ├── submod2.py
+├── setup.py</code></pre>
+<p><code>__init__.py</code> files can be (and usually are) empty. The <code>setup.py</code> contains metadata about the package and list dependencies and files to includes. Once setup, the package can be installed locally with <code>pip install .</code>. Other functions exist to produce a tarball or upload the code to <a href="https://pypi.org">pypi</a>.</p>
+<p>More details at “<a href="https://python-packaging.readthedocs.io/en/latest/index.html">How to package your python code</a>”.</p>
+</div>
 <div id="install-a-module-locally" class="section level3">
 <h3>Install a module locally</h3>
 <p>For example when running a script on a HPC cluster, it’s often easier to install modules in your home.</p>
@@ -342,29 +355,6 @@ plt.show()</code></pre>
 <p>Scatterplot:</p>
 <pre class="python"><code>plt.plot(xy[1], xy[0])
 plt.show()</code></pre>
-</div>
-<div id="tricks" class="section level2">
-<h2>Tricks</h2>
-<ul>
-<li>When iterating, use <code>xrange</code> instead of <code>range</code>. It’s faster and more memory efficient.</li>
-<li>Sort elements with <code>sorted(a_list, key=lambda k: -something[k])</code>.</li>
-<li>Count unique elements in an array: <code>unique, counts = numpy.unique(array1, return_counts=True)</code>.</li>
-<li>Sub-sample with <code>random.sample(a_list, 10)</code>.</li>
-<li>In a loop, jump to the next iteration with <code>continue</code>, or leave the loop with <code>break</code>.</li>
-<li>Find indexes in array: <code>numpy.where(x &gt; 0)</code>.</li>
-<li><code>quit()</code> to stop a program.</li>
-<li><code>myVar is None</code> to test if a variable is <em>None</em>.</li>
-</ul>
-<p>When filling a nested dictionary, it’s painful to always test if the key exists before updating it’s value. One trick is to use <code>try</code>/<code>except</code>. It’s not that much quicker but it looks fancier so you forget about the <em>pain</em>:</p>
-<pre class="python"><code>try:
-    dict[lev1].append(i)
-except KeyError:
-    dict[lev1] = [i]</code></pre>
-<p>To time a function, one simple way is to use <code>time.time()</code> before and after the function and report the difference. There might be issues with Windows but I use timing for internal benchmarks, never in final code.</p>
-<p>To convert a <strong>binary number into a decimal number</strong>: <code>int('11011011', 2)</code>.</p>
-<p>To get the index as well as the value in a list, use <code>enumerate</code>:</p>
-<pre class="python"><code>for id, val in enumerate(myList):
-    print(id, val)</code></pre>
 </div>
 <div id="shell-integration" class="section level2">
 <h2>Shell integration</h2>
@@ -472,6 +462,30 @@ for record in vcf_reader:
 <li><code>record.INFO</code></li>
 </ul>
 </div>
+</div>
+<div id="tricks" class="section level2">
+<h2>Tricks</h2>
+<ul>
+<li>When iterating, use <code>xrange</code> instead of <code>range</code>. It’s faster and more memory efficient.</li>
+<li>Sort elements with <code>sorted(a_list, key=lambda k: -something[k])</code>.</li>
+<li>Count unique elements in an array: <code>unique, counts = numpy.unique(array1, return_counts=True)</code>.</li>
+<li>Sub-sample with <code>random.sample(a_list, 10)</code>.</li>
+<li>In a loop, jump to the next iteration with <code>continue</code>, or leave the loop with <code>break</code>.</li>
+<li>Find indexes in array: <code>numpy.where(x &gt; 0)</code>.</li>
+<li><code>quit()</code> to stop a program.</li>
+<li><code>myVar is None</code> to test if a variable is <em>None</em>.</li>
+<li>Print the working directory with <code>os.getcwd()</code> (after importing <em>os</em>).</li>
+</ul>
+<p>When filling a nested dictionary, it’s painful to always test if the key exists before updating it’s value. One trick is to use <code>try</code>/<code>except</code>. It’s not that much quicker but it looks fancier so you forget about the <em>pain</em>:</p>
+<pre class="python"><code>try:
+    dict[lev1].append(i)
+except KeyError:
+    dict[lev1] = [i]</code></pre>
+<p>To time a function, one simple way is to use <code>time.time()</code> before and after the function and report the difference. There might be issues with Windows but I use timing for internal benchmarks, never in final code.</p>
+<p>To convert a <strong>binary number into a decimal number</strong>: <code>int('11011011', 2)</code>.</p>
+<p>To get the index as well as the value in a list, use <code>enumerate</code>:</p>
+<pre class="python"><code>for id, val in enumerate(myList):
+    print(id, val)</code></pre>
 </div>
 
 </div>

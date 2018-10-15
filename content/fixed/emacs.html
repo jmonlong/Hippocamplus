@@ -186,26 +186,19 @@ make</code></pre>
 </div>
 <div id="thesaurus-and-synonyms" class="section level3">
 <h3>Thesaurus and synonyms</h3>
-<p>I use the <code>synosaurus</code> package available in MELPA.
-It’s not as user friendly as some online resources but a good offline alternative.
-It uses the <a href="https://en.wikipedia.org/wiki/WordNet">WordNet</a> database through the <code>wn</code> command line.
-The shortcut to list synonyms is <code>C-c C-s l</code>.</p>
+<p>I use the <code>synosaurus</code> package available in MELPA. It’s not as user friendly as some online resources but a good offline alternative. It uses the <a href="https://en.wikipedia.org/wiki/WordNet">WordNet</a> database through the <code>wn</code> command line. The shortcut to list synonyms is <code>C-c C-s l</code>.</p>
 <p>In my <code>.emacs</code> I added the <code>synosaurus-mode</code> minor mode:</p>
 <pre class="lisp"><code>(add-hook &#39;LaTeX-mode-hook &#39;synosaurus-mode)</code></pre>
 </div>
 <div id="grammar-checking" class="section level3">
 <h3>Grammar checking</h3>
-<p>The <code>langtool</code> package is available in MELPA.
-It uses the <a href="https://languagetool.org/">LanguageTool</a> JAR to highlight potential grammar problems.
-In my <code>.emacs</code>:</p>
+<p>The <code>langtool</code> package is available in MELPA. It uses the <a href="https://languagetool.org/">LanguageTool</a> JAR to highlight potential grammar problems. In my <code>.emacs</code>:</p>
 <pre class="lisp"><code>(require &#39;langtool)
 (setq langtool-language-tool-jar &quot;/usr/local/Cellar/languagetool/3.8/libexec/languagetool-commandline.jar&quot;)
 (setq langtool-default-language &quot;en-US&quot;)
 (setq langtool-mother-tongue &quot;fr&quot;)
 (setq langtool-disabled-rules &#39;(&quot;MORFOLOGIK_RULE_EN_US&quot;))</code></pre>
-<p><em>MORFOLOGIK_RULE_EN_US</em> corresponds to spelling mistakes, which I don’t want to see because I do the spell-checking separately better with ispell.
-The list of rules is <a href="https://community.languagetool.org/rule/list?lang=en-US">here</a>.
-For example, I could disabled <em>WHITESPACE_RULE</em> for LaTeX.</p>
+<p><em>MORFOLOGIK_RULE_EN_US</em> corresponds to spelling mistakes, which I don’t want to see because I do the spell-checking separately better with ispell. The list of rules is <a href="https://community.languagetool.org/rule/list?lang=en-US">here</a>. For example, I could disabled <em>WHITESPACE_RULE</em> for LaTeX.</p>
 <p>Then:</p>
 <ul>
 <li><code>M-x langtool-check</code> to highlight problems.</li>
@@ -216,9 +209,7 @@ For example, I could disabled <em>WHITESPACE_RULE</em> for LaTeX.</p>
 <div id="for-latex" class="section level2">
 <h2>For LaTeX</h2>
 <p>I put some Emacs tricks (e.g. for table manipulation) on the <a href="https://jmonlong.github.io/Hippocamplus/latex">LaTeX page</a>.</p>
-<p>I general I prefer to use AUCTeX (available through MELPA).
-It handles multi-file documents and keeps the annoying compilation buffer closed.
-My configuration is:</p>
+<p>I general I prefer to use AUCTeX (available through MELPA). It handles multi-file documents and keeps the annoying compilation buffer closed. My configuration is:</p>
 <pre class="lisp"><code>(setq TeX-PDF-mode t)
 (setq-default TeX-master nil)
 (setq LaTeX-verbatim-environments-local &#39;(&quot;lstlisting&quot;))</code></pre>
@@ -235,8 +226,7 @@ My configuration is:</p>
 </div>
 <div id="chunk-folding" class="section level3">
 <h3>Chunk folding</h3>
-<p>Sometimes I like to fold chunk of the document to improve clarity, e.g. frames in beamer document or figure/table in a manuscript.
-I added to my <code>.emacs</code>:</p>
+<p>Sometimes I like to fold chunk of the document to improve clarity, e.g. frames in beamer document or figure/table in a manuscript. I added to my <code>.emacs</code>:</p>
 <pre class="lisp"><code>(add-hook &#39;LaTeX-mode-hook (lambda ()
                  (add-to-list &#39;LaTeX-fold-env-spec-list &#39;(&quot;[frame]&quot; (&quot;frame&quot;)))
                  (setq TeX-fold-macro-spec-list (list ()))
@@ -248,8 +238,7 @@ I added to my <code>.emacs</code>:</p>
 <li><code>C-c C-o i</code> unfold an item.</li>
 <li><code>C-c C-o C-f</code> to switch the fold-mode on/off</li>
 </ul>
-<p>Because I added <em>frame</em> in the list, I can select a bunch of frames, press <code>C-c C-o C-r</code> and they all get folded (but not the rest).
-Otherwise, I manually fold the frames/figures/tables that are distracting.</p>
+<p>Because I added <em>frame</em> in the list, I can select a bunch of frames, press <code>C-c C-o C-r</code> and they all get folded (but not the rest). Otherwise, I manually fold the frames/figures/tables that are distracting.</p>
 </div>
 </div>
 <div id="for-markdown" class="section level2">
@@ -302,8 +291,7 @@ Otherwise, I manually fold the frames/figures/tables that are distracting.</p>
 </ul>
 <div id="tags" class="section level3">
 <h3>Tags</h3>
-<p>I installed <a href="http://www.gnu.org/software/global/">GNU Global</a> and the <em>ggtags</em> package from MELPA.
-Then added to <code>.emacs</code>:</p>
+<p>I installed <a href="http://www.gnu.org/software/global/">GNU Global</a> and the <em>ggtags</em> package from MELPA. Then added to <code>.emacs</code>:</p>
 <pre class="lisp"><code>(require &#39;ggtags)
 (add-hook &#39;c-mode-common-hook
           (lambda ()
@@ -356,9 +344,7 @@ Then added to <code>.emacs</code>:</p>
 <p>To visualize blanks (tabs, spaces, new lines) I use the minor mode <code>whitespace-mode</code>.</p>
 <div id="csvtsv" class="section level3">
 <h3>CSV/TSV</h3>
-<p>I use the <code>csv-mode</code> and the command <code>c-c c-a</code> to align columns.
-By default it understand <code>,</code>, <code>;</code> and <code>\t</code> as separator.
-If not I think the variable to customize is <code>csv-separators</code>.</p>
+<p>I use the <code>csv-mode</code> and the command <code>c-c c-a</code> to align columns. By default it understand <code>,</code>, <code>;</code> and <code>\t</code> as separator. If not I think the variable to customize is <code>csv-separators</code>.</p>
 </div>
 <div id="dired-mode" class="section level3">
 <h3>Dired mode</h3>
@@ -383,7 +369,15 @@ If not I think the variable to customize is <code>csv-separators</code>.</p>
 <li><code>C-x v i</code> to add.</li>
 <li><code>C-x v =</code> to see differences.</li>
 </ul>
-<p>A more popular Git interface is <a href="https://www.emacswiki.org/emacs/Magit">Magit</a>.</p>
+<p>A more popular Git interface is <a href="https://www.emacswiki.org/emacs/Magit">Magit</a>. After installing <em>magit</em> using MELPA, invoke the main buffer with <code>M-x magit-status</code> (or <code>C-x g</code>) and then:</p>
+<ul>
+<li><code>?</code> to list keystroke/commands.</li>
+<li><code>F u</code> to pull.</li>
+<li><code>g</code> to refresh.</li>
+<li><code>s</code> to stage file.</li>
+<li><code>c c</code> to commit.</li>
+<li><code>P u</code> to push.</li>
+</ul>
 </div>
 <div id="for-online-notes" class="section level2">
 <h2>For online notes</h2>

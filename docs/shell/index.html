@@ -198,6 +198,7 @@
 <li><a href="#one-liners">One-liners</a><ul>
 <li><a href="#add-headers-with-cat">Add headers with cat</a></li>
 <li><a href="#remove-empty-directories">Remove empty directories</a></li>
+<li><a href="#awk">AWK</a></li>
 <li><a href="#perl-one-liners">Perl one-liners</a></li>
 </ul></li>
 <li><a href="#shell-scripting">Shell scripting</a><ul>
@@ -252,6 +253,12 @@ grep --color=always | less -R</code></pre>
 <div id="remove-empty-directories" class="section level3">
 <h3>Remove empty directories</h3>
 <p><code>find . -type d | xargs rmdir</code></p>
+</div>
+<div id="awk" class="section level3">
+<h3>AWK</h3>
+<ul>
+<li>Capture group in string regexp using <code>match($0, /xxx(.*)yyy/, a); print a[1]'</code></li>
+</ul>
 </div>
 <div id="perl-one-liners" class="section level3">
 <h3>Perl one-liners</h3>
@@ -340,6 +347,7 @@ gs -dPDFA -dBATCH -dNOPAUSE -dNOOUTERSAVE -dUseCIEColor -sProcessColorModel=Devi
 <li>Commit all modification and added files: <code>git commit -am &quot;informative message&quot;</code></li>
 <li>To show all the history of a file: <code>git log -p -- file</code>.</li>
 <li>To retrieve a specific version of a file: <code>git show COMMIT:file</code>.</li>
+<li>Update sub-modules: <code>git submodule update --init --recursive</code></li>
 </ul>
 <div id="aliases" class="section level4">
 <h4>Aliases</h4>

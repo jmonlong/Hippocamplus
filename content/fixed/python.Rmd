@@ -15,7 +15,7 @@ Some notes on my recent attempt to learn Python.
 + Use CapsWord for classes. E.g. `MyClass`.
 + Use `_` prefix for private variable. E.g. `_secret_variable`.
 
-## Data structures
+## Objects
 
 ### Array
 
@@ -46,7 +46,7 @@ a_hash = {'bob': 42, 'kevin': 7}
 
 ### Class
 
-## Strings
+### String
 
 ~~~python
 'tempString' + another_string + str(an_integer)
@@ -117,7 +117,7 @@ obj1 = pickle.load(open("obj1.pkl", "rb"))
 
 Note the *b* that specifies *binary mode* which is slightly more efficient for non-text files.
 
-## Files structure, packages and imports
+## Module, files, imports
 
 There should be a `__init__.py` file **in each directory containing modules** to import. It can be empty. If not the code inside is run on import.
 
@@ -125,7 +125,28 @@ To import the classes/functions defined in file `module1.py`, simply do
 
 ~~~python
 import module1
+module1.fun()
 ~~~
+
+### Packaging code
+
+Minimal structure:
+
+~~~
+├── __init__.py
+├── mypackage
+│   ├── __init__.py
+│   ├── submod1.py
+│   ├── submod2.py
+├── setup.py
+~~~
+
+`__init__.py` files can be (and usually are) empty.
+The `setup.py` contains metadata about the package and list dependencies and files to includes.
+Once setup, the package can be installed locally with `pip install .`.
+Other functions exist to produce a tarball or upload the code to [pypi](https://pypi.org).
+
+More details at "[How to package your python code](https://python-packaging.readthedocs.io/en/latest/index.html)".
 
 ### Install a module locally
 
@@ -199,38 +220,6 @@ Scatterplot:
 ~~~python
 plt.plot(xy[1], xy[0])
 plt.show()
-~~~
-
-## Tricks
-
-+ When iterating, use `xrange` instead of `range`. It's faster and more memory efficient.
-+ Sort elements with `sorted(a_list, key=lambda k: -something[k])`.
-+ Count unique elements in an array: `unique, counts = numpy.unique(array1, return_counts=True)`.
-+ Sub-sample with `random.sample(a_list, 10)`.
-+ In a loop, jump to the next iteration with `continue`, or leave the loop with `break`.
-+ Find indexes in array: `numpy.where(x > 0)`.
-+ `quit()` to stop a program.
-+ `myVar is None` to test if a variable is *None*.
-+ Print the working directory with `os.getcwd()` (after importing *os*).
-
-When filling a nested dictionary, it's painful to always test if the key exists before updating it's value. One trick is to use `try`/`except`. It's not that much quicker but it looks fancier so you forget about the *pain*:
-
-~~~python
-try:
-    dict[lev1].append(i)
-except KeyError:
-    dict[lev1] = [i]
-~~~
-
-To time a function, one simple way is to use `time.time()` before and after the function and report the difference. There might be issues with Windows but I use timing for internal benchmarks, never in final code.
-
-To convert a **binary number into a decimal number**: `int('11011011', 2)`.
-
-To get the index as well as the value in a list, use `enumerate`:
-
-~~~python
-for id, val in enumerate(myList):
-	print(id, val)
 ~~~
 
 ## Shell integration
@@ -375,3 +364,37 @@ The fields are accessed through:
 - `record.QUAL`
 - `record.FILTER`
 - `record.INFO`
+
+
+## Tricks
+
++ When iterating, use `xrange` instead of `range`. It's faster and more memory efficient.
++ Sort elements with `sorted(a_list, key=lambda k: -something[k])`.
++ Count unique elements in an array: `unique, counts = numpy.unique(array1, return_counts=True)`.
++ Sub-sample with `random.sample(a_list, 10)`.
++ In a loop, jump to the next iteration with `continue`, or leave the loop with `break`.
++ Find indexes in array: `numpy.where(x > 0)`.
++ `quit()` to stop a program.
++ `myVar is None` to test if a variable is *None*.
++ Print the working directory with `os.getcwd()` (after importing *os*).
+
+When filling a nested dictionary, it's painful to always test if the key exists before updating it's value. One trick is to use `try`/`except`. It's not that much quicker but it looks fancier so you forget about the *pain*:
+
+~~~python
+try:
+    dict[lev1].append(i)
+except KeyError:
+    dict[lev1] = [i]
+~~~
+
+To time a function, one simple way is to use `time.time()` before and after the function and report the difference. There might be issues with Windows but I use timing for internal benchmarks, never in final code.
+
+To convert a **binary number into a decimal number**: `int('11011011', 2)`.
+
+To get the index as well as the value in a list, use `enumerate`:
+
+~~~python
+for id, val in enumerate(myList):
+	print(id, val)
+~~~
+
