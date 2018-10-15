@@ -218,7 +218,6 @@
 </ul></li>
 <li><a href="#for-python">For Python</a><ul>
 <li><a href="#elpy-python-mode">Elpy python mode</a></li>
-<li><a href="#add-some-key-bindings">Add some key bindings</a></li>
 <li><a href="#send-commands-to-a-specific-buffer">Send commands to a specific buffer</a></li>
 </ul></li>
 <li><a href="#for-ccpp">For C/CPP</a><ul>
@@ -247,7 +246,7 @@
 <p>I use Emacs for almost everything: <strong>coding, writing, taking notes, preparing presentations</strong>. I’m using it right now ! Well I mean, at the time I’m writing this. There is also a good chance I’m using it now <em>now</em>.</p>
 <div id="basic-configuration" class="section level2">
 <h2>Basic configuration</h2>
-<p>Some of the basic tweaks on my <code>.emacs</code> file:</p>
+<p>Some of the basic tweaks in my <code>.emacs</code> file:</p>
 <ul>
 <li>Disable startup screen with <code>(setq inhibit-splash-screen t)</code>.</li>
 <li>Turn the blinking off with <code>(blink-cursor-mode 0)</code>.</li>
@@ -294,7 +293,9 @@
 </div>
 <div id="solarized-theme" class="section level2">
 <h2>Solarized theme</h2>
-<p>I use <a href="http://ethanschoonover.com/solarized">Solarized</a> theme palette. I installed the <em>color-theme-sanityinc-solarized</em> pacakge directly from <a href="#melpa-package-repository">MELPA</a>. I added the dark version as default with <code>(load-theme 'sanityinc-solarized-dark t)</code>. To change it interactively I run <code>M-x load-theme</code> and then for example <code>sanityinc-solarized-light</code>.</p>
+<p>I use <a href="http://ethanschoonover.com/solarized">Solarized</a> theme palette. I installed the <em>color-theme-sanityinc-solarized</em> pacakge directly from <a href="#melpa-package-repository">MELPA</a>. Then I added the dark version as default with <code>(load-theme 'sanityinc-solarized-dark t)</code>. To change it interactively I run <code>M-x load-theme</code> and then for example <code>sanityinc-solarized-light</code>.</p>
+<p>I also have an alias in my <code>.bashrc</code> to open emacs directly in <em>light</em> mode:</p>
+<pre class="sh"><code>alias emacsl=&quot;emacs --eval \&quot;(load-theme &#39;sanityinc-solarized-light t)\&quot;&quot;</code></pre>
 </div>
 <div id="for-r" class="section level2">
 <h2>For R</h2>
@@ -445,17 +446,30 @@ make</code></pre>
 <div id="elpy-python-mode" class="section level3">
 <h3>Elpy python mode</h3>
 <p><a href="https://github.com/jorgenschaefer/elpy">Elpy</a> combines several packages to provide a lot of nice features, e.g. code coloring, completion, syntax checks, formatting recommendations.</p>
-<p>To install, follow instructions on the <a href="https://github.com/jorgenschaefer/elpy">GitHub page</a> and add to <code>.emacs</code>:</p>
-<pre class="lisp"><code>(package-initialize)
-(elpy-enable)</code></pre>
-</div>
-<div id="add-some-key-bindings" class="section level3">
-<h3>Add some key bindings</h3>
-<p>I added key bindings to send regions or the entire buffer to the opened Python shell. In <code>.emacs</code>:</p>
-<pre class="lisp"><code>(add-hook &#39;python-mode-hook &#39;my-python)
-(defun my-python ()
-  (define-key python-mode-map (kbd &quot;C-c r&quot;) &#39;python-shell-send-region)
-  (define-key python-mode-map (kbd &quot;C-c b&quot;) &#39;python-shell-send-buffer))</code></pre>
+<p>To install the dependencies for elpy:</p>
+<pre class="sh"><code>pip install jedi autopep8 flake8</code></pre>
+<p>Then I have in my <code>.emacs</code>:</p>
+<pre class="lisp"><code>(package-initialize) ;; if not present already
+(elpy-enable)
+(setq elpy-company-add-completion-from-shell t)
+(setq elpy-shell-use-project-root nil)
+(setq elpy-shell-display-buffer-after-send t)</code></pre>
+<p>Keybindings that I use:</p>
+<ul>
+<li><code>C-RET</code> or <code>C-c C-y C-e</code> to send line to python and step.</li>
+<li><code>C-c C-y r</code> sends region to python. Same for <strong>f</strong>unction, <strong>c</strong>lass or <strong>b</strong>uffer.</li>
+<li><code>C-up</code>/<code>C-down</code> navigates between lines with same indentation as the current line.</li>
+<li><code>C-c C-d</code> open doc for symbol on point.</li>
+<li><code>C-c C-z</code> switch to <em>Python</em> shell (or start one).</li>
+<li><code>C-c C-n</code> go to next flymake error (previous with <em>p</em>).</li>
+<li><code>C-c C-e</code> edit all occurrences of symbol on point for refactoring.</li>
+</ul>
+<p>Of note, I use the Jupyter console instead of the default interpreter. So <code>pip install jupyter</code> and in my <code>.emacs</code>:</p>
+<pre class="lisp"><code>(setq python-shell-interpreter &quot;jupyter&quot;
+      python-shell-interpreter-args &quot;console --simple-prompt&quot;
+      python-shell-prompt-detect-failure-warning nil)
+(add-to-list &#39;python-shell-completion-native-disabled-interpreters
+             &quot;jupyter&quot;)</code></pre>
 </div>
 <div id="send-commands-to-a-specific-buffer" class="section level3">
 <h3>Send commands to a specific buffer</h3>

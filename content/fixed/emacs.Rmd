@@ -11,7 +11,7 @@ I use Emacs for almost everything: **coding, writing, taking notes, preparing pr
 
 ## Basic configuration
 
-Some of the basic tweaks on my `.emacs` file:
+Some of the basic tweaks in my `.emacs` file:
 
 + Disable startup screen with `(setq inhibit-splash-screen t)`.
 + Turn the blinking off with `(blink-cursor-mode 0)`.
@@ -64,7 +64,16 @@ Then to find and install a new package, use `M-x list-packages`, find the packag
 
 ## Solarized theme
 
-I use [Solarized](http://ethanschoonover.com/solarized) theme palette. I installed the *color-theme-sanityinc-solarized* pacakge directly from [MELPA](#melpa-package-repository). I added the dark version as default with `(load-theme 'sanityinc-solarized-dark t)`. To change it interactively I run `M-x load-theme` and then for example `sanityinc-solarized-light`.
+I use [Solarized](http://ethanschoonover.com/solarized) theme palette. 
+I installed the *color-theme-sanityinc-solarized* pacakge directly from [MELPA](#melpa-package-repository). 
+Then I added the dark version as default with `(load-theme 'sanityinc-solarized-dark t)`. 
+To change it interactively I run `M-x load-theme` and then for example `sanityinc-solarized-light`.
+
+I also have an alias in my `.bashrc` to open emacs directly in *light* mode: 
+
+~~~sh
+alias emacsl="emacs --eval \"(load-theme 'sanityinc-solarized-light t)\""
+~~~
 
 
 ## For R
@@ -283,28 +292,50 @@ Pressing `TAB` when the cursor is in a heading will cycle through *heading-only/
 ### Elpy python mode
 [Elpy](https://github.com/jorgenschaefer/elpy) combines several packages to provide a lot of nice features, e.g. code coloring, completion, syntax checks, formatting recommendations.
 
-To install, follow instructions on the [GitHub page](https://github.com/jorgenschaefer/elpy) and add to `.emacs`:
+To install the dependencies for elpy:
 
-~~~lisp
-(package-initialize)
-(elpy-enable)
+~~~sh
+pip install jedi autopep8 flake8
 ~~~
 
-### Add some key bindings
-I added key bindings to send regions or the entire buffer to the opened Python shell. In `.emacs`:
+Then I have in my `.emacs`:
 
 ~~~lisp
-(add-hook 'python-mode-hook 'my-python)
-(defun my-python ()
-  (define-key python-mode-map (kbd "C-c r") 'python-shell-send-region)
-  (define-key python-mode-map (kbd "C-c b") 'python-shell-send-buffer))
+(package-initialize) ;; if not present already
+(elpy-enable)
+(setq elpy-company-add-completion-from-shell t)
+(setq elpy-shell-use-project-root nil)
+(setq elpy-shell-display-buffer-after-send t)
+~~~
+
+Keybindings that I use:
+
+- `C-RET` or `C-c C-y C-e` to send line to python and step.
+- `C-c C-y r` sends region to python. Same for **f**unction, **c**lass or **b**uffer.
+- `C-up`/`C-down` navigates between lines with same indentation as the current line.
+- `C-c C-d` open doc for symbol on point.
+- `C-c C-z` switch to *Python* shell (or start one).
+- `C-c C-n` go to next flymake error (previous with *p*).
+- `C-c C-e` edit all occurrences of symbol on point for refactoring.
+
+Of note, I use the Jupyter console instead of the default interpreter. 
+So `pip install jupyter` and in my `.emacs`:
+
+~~~lisp
+(setq python-shell-interpreter "jupyter"
+      python-shell-interpreter-args "console --simple-prompt"
+      python-shell-prompt-detect-failure-warning nil)
+(add-to-list 'python-shell-completion-native-disabled-interpreters
+             "jupyter")
 ~~~
 
 ### Send commands to a specific buffer
 
 Sometimes I want to send the commands to a specific buffer. For example, when testing new packages within a Docker container, I start a *shell* buffer, run docker and python.
 
-I installed *isend* from MELPA. Then I simply go to the *code* buffer and run `M-x isend-associate RET *shell* RET`. At this point `C-Enter` will send the command to the *shell* buffer.
+I installed *isend* from MELPA. 
+Then I simply go to the *code* buffer and run `M-x isend-associate RET *shell* RET`. 
+At this point `C-Enter` will send the command to the *shell* buffer.
 
 ## For C/CPP
 
