@@ -263,6 +263,7 @@
 <li>Evaluate lisp commands: <code>C-M-x</code>.</li>
 <li>List key bindings currently available: <code>C-h b</code>.</li>
 <li>List key bindings currently available starting with <code>C-c</code>: <code>C-c C-h</code>.</li>
+<li>Narrow down to a region with <code>C-x n n</code> and widen back to the entire buffer with <code>C-x n w</code> (e.g. when refactoring).</li>
 </ul>
 <p>Regexp replace :</p>
 <ul>
@@ -462,7 +463,7 @@ make</code></pre>
 <li><code>C-c C-d</code> open doc for symbol on point.</li>
 <li><code>C-c C-z</code> switch to <em>Python</em> shell (or start one).</li>
 <li><code>C-c C-n</code> go to next flymake error (previous with <em>p</em>).</li>
-<li><code>C-c C-e</code> edit all occurrences of symbol on point for refactoring.</li>
+<li><code>C-c C-e</code> edit all occurrences of symbol on point for refactoring (narrow if needed).</li>
 </ul>
 <p>Of note, I use the Jupyter console instead of the default interpreter. So <code>pip install jupyter</code> and in my <code>.emacs</code>:</p>
 <pre class="lisp"><code>(setq python-shell-interpreter &quot;jupyter&quot;
