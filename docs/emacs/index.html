@@ -573,6 +573,9 @@ make</code></pre>
 <li><code>c c</code> to commit.</li>
 <li><code>P u</code> to push.</li>
 </ul>
+<p>Magit configuration in my <code>.emacs</code>:</p>
+<pre class="lisp"><code>(setq vc-handled-backends (delq &#39;Git vc-handled-backends))
+(global-set-key (kbd &quot;C-x g&quot;) &#39;magit-status)</code></pre>
 </div>
 <div id="for-online-notes" class="section level2">
 <h2>For online notes</h2>
