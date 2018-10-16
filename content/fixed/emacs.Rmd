@@ -443,6 +443,13 @@ After installing *magit* using MELPA, invoke the main buffer with `M-x magit-sta
 - `c c` to commit.
 - `P u` to push.
 
+Magit configuration in my `.emacs`:
+
+~~~lisp
+(setq vc-handled-backends (delq 'Git vc-handled-backends))
+(global-set-key (kbd "C-x g") 'magit-status)
+~~~
+
 ## For online notes
 
 ### Evernote
