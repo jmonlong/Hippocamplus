@@ -247,12 +247,16 @@
 <div id="basic-configuration" class="section level2">
 <h2>Basic configuration</h2>
 <p>Some of the basic tweaks in my <code>.emacs</code> file:</p>
-<ul>
-<li>Disable startup screen with <code>(setq inhibit-splash-screen t)</code>.</li>
-<li>Turn the blinking off with <code>(blink-cursor-mode 0)</code>.</li>
-<li>Turn off the tool bar with <code>(tool-bar-mode 0)</code>.</li>
-<li>Change the font with <code>(set-default-font &quot;DejaVu Sans Mono 12&quot;)</code>.</li>
-</ul>
+<pre class="lisp"><code>;; Disable startup screen
+(setq inhibit-splash-screen t)
+;; Turn the blinking off
+(blink-cursor-mode 0)
+;; Turn off the tool bar
+(tool-bar-mode 0)
+;; Change the font
+(set-default-font &quot;DejaVu Sans Mono 12&quot;)
+;; Show column number
+(setq column-number-mode t)</code></pre>
 </div>
 <div id="general-commands" class="section level2">
 <h2>General commands</h2>

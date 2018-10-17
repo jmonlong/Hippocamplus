@@ -13,10 +13,19 @@ I use Emacs for almost everything: **coding, writing, taking notes, preparing pr
 
 Some of the basic tweaks in my `.emacs` file:
 
-+ Disable startup screen with `(setq inhibit-splash-screen t)`.
-+ Turn the blinking off with `(blink-cursor-mode 0)`.
-+ Turn off the tool bar with `(tool-bar-mode 0)`.
-+ Change the font with `(set-default-font "DejaVu Sans Mono 12")`.
+~~~lisp
+;; Disable startup screen
+(setq inhibit-splash-screen t)
+;; Turn the blinking off
+(blink-cursor-mode 0)
+;; Turn off the tool bar
+(tool-bar-mode 0)
+;; Change the font
+(set-default-font "DejaVu Sans Mono 12")
+;; Show column number
+(setq column-number-mode t)
+~~~
+
 
 ## General commands
 

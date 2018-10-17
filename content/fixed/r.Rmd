@@ -181,4 +181,4 @@ Necessary to compile some R packages:
 sudo apt-get install libxml2-dev libssl-dev libmariadbclient-dev
 ~~~
 
-*Related toXML, OpenSSL, MySQL, respectively.*
+*Related to XML, OpenSSL, MySQL, respectively.*
