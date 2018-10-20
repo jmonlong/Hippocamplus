@@ -252,6 +252,18 @@ bwa_out = subprocess.check_output(bwa_cmd, stderr=dump)
 dump.close()
 ~~~
 
+## Timing 
+
+Example with *timeit*:
+
+~~~python
+from timeit import Timer
+def test():
+	global myobj
+	myobj.fun()
+Timer(test).timeit(number=10)
+~~~
+
 ## Bioinfo
 
 BioPython main documentation is available [here](http://biopython.org/DIST/docs/tutorial/Tutorial.html). What I ended up using are the following.
