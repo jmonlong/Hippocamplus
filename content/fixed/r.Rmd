@@ -19,7 +19,10 @@ Use `system2` instead of `system`. It's more portable apparently.
 
 ### Order in condition assessment
 
-Using `&` and `|` operators, *R* tries all the conditions and then performs the operations. However sometimes in sequential assessment is preferable. Especially with `&`. For example, we get an error if we run:
+Using `&` and `|` operators, *R* tries all the conditions and then performs the operations. 
+However sometimes in sequential assessment is preferable. 
+Especially with `&`. 
+For example, we get an error if we run:
 
 ~~~r
 x = NULL
@@ -43,9 +46,13 @@ Now it won't try to do `x<10` if `!is.null(x)` is not true (because what's the p
 
 ## Graphs
 
+- `pdf("g.pdf", 9, 7)`
+- `png("g.png", 1300, 1000, res=200)`
+
 ### ggplot2 tricks
 
-+ To plot a density distribution without the x-axis line, use `stat_density(geom="line")` (and eventually `position="dodge"` if plotting several groups).
+- To plot a density distribution without the x-axis line, use `stat_density(geom="line")` (and eventually `position="dodge"` if plotting several groups).
+- To override the legend's aes: `guides(colour=guide_legend(override.aes=list(alpha=1)))`
 
 ### Align/stack two ggplots
 
@@ -91,6 +98,8 @@ iron(
 ~~~
 
 ## Rmarkdown
+
+- `\ ` to force a line break and add vertical spacing (e.g. in slides).
 
 To define *knitr* parameters, I add a chunk at the beginning of the Rmarkdown document. For example:
 

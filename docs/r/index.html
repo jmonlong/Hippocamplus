@@ -242,10 +242,15 @@ if(!is.null(x) &amp;&amp; x&gt;10) message(&quot;so big !&quot;)</code></pre>
 </div>
 <div id="graphs" class="section level2">
 <h2>Graphs</h2>
+<ul>
+<li><code>pdf(&quot;g.pdf&quot;, 9, 7)</code></li>
+<li><code>png(&quot;g.png&quot;, 1300, 1000, res=200)</code></li>
+</ul>
 <div id="ggplot2-tricks" class="section level3">
 <h3>ggplot2 tricks</h3>
 <ul>
 <li>To plot a density distribution without the x-axis line, use <code>stat_density(geom=&quot;line&quot;)</code> (and eventually <code>position=&quot;dodge&quot;</code> if plotting several groups).</li>
+<li>To override the legend’s aes: <code>guides(colour=guide_legend(override.aes=list(alpha=1)))</code></li>
 </ul>
 </div>
 <div id="alignstack-two-ggplots" class="section level3">
@@ -283,6 +288,9 @@ qplot(x=rnorm(100)) + geom_histogram() + theme(text=element_text(family=&quot;Co
 </div>
 <div id="rmarkdown" class="section level2">
 <h2>Rmarkdown</h2>
+<ul>
+<li><code>\</code> to force a line break and add vertical spacing (e.g. in slides).</li>
+</ul>
 <p>To define <em>knitr</em> parameters, I add a chunk at the beginning of the Rmarkdown document. For example:</p>
 <pre class="md"><code>```{r include=FALSE}
 knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, fig.width=10)
