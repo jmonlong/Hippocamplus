@@ -65,6 +65,7 @@ if(!is.null(x) &amp;&amp; x&gt;10) message(&quot;so big !&quot;)</code></pre>
 <ul>
 <li><code>pdf(&quot;g.pdf&quot;, 9, 7)</code></li>
 <li><code>png(&quot;g.png&quot;, 1300, 1000, res=200)</code></li>
+<li><code>options(device=function() pdf(width=9, height=7))</code> to set the default device (e.g. remote graphs).</li>
 </ul>
 <div id="ggplot2-tricks" class="section level3">
 <h3>ggplot2 tricks</h3>

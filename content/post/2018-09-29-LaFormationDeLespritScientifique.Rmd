@@ -1,4 +1,3 @@
-
 ---
 title: La formation de l'esprit scientifique, Gaston Bacherlard
 tags: ["science"]
@@ -16,7 +15,7 @@ I tried to translate them as best I could.
 
 ## Quotes about science
 
-> La connaissance du reel est une lumiere qui projette toujours quelque part des ombres.
+> La connaissance du réel est une lumière qui projette toujours quelque part des ombres.
 
 "Knowledge of reality is a light that always throws shadows somewhere."
 
@@ -24,55 +23,94 @@ I tried to translate them as best I could.
 
 On seeking knowledge:
 
-> En resume, l'homme anime par l'esprit scientifique desire sans doute savoir, mais c'est aussitot pour mieux interroger.
+> En résumé, l'homme animé par l'esprit scientifique désire sans doute savoir, mais c'est aussitôt pour mieux interroger.
 
 "In summary, the person moved by the scientific spirit surely desires knowledge, but it is to better immediately interrogate." 
 
 ---
 
-> Toute culture scientifique doit commencer [...] par une catharsis intelectuelle et affective.
-
-Naturally...
-
----
-
-> En fait, l'histoire des mathematiques est une merveille de regularite. Elle connait des periodes d'arret. Elle ne connait pas de periodes d'erreurs.
+> En fait, l'histoire des mathématiques est une merveille de régularité. Elle connaît des périodes d'arrêt. Elle ne connaît pas des périodes d'erreurs.
 
 ## Epistemological obstacle
 
-You have 2 hours, discuss.
+This is the central concept of this work.
+The obstacle is not external, it is not caused by observed phenomenon that are too mysterious or complex, or technological limitations.
+The epistemological obstacle is internal and ideological.
+When ideas stagnate or regress, we are facing an epistemological obstacle.
+
+Epistemological obstacle is studied in two settings: the development of scientific thinking throughout history and in the educational practice.
+
+The difference between an historian and an epistemologist is that the historian takes ideas as fact, while the epistemologist takes fact as ideas and place them in a system of thoughts.
+Through the notion of epistemological obstacle, the history of scientific thinking gains a spiritual value.
+
+The first experiment/observation is the first epistemological obstacle.
+It looks easy to understand or generalize, seducing us into believing that we understand the beauty of nature.
+It usually comes with a sense of marvel as it's the first time it's observed or "understood".
+We think we understand and that's the obstacle.
+
+The second obstacle is to follow hasty generalizations like the ones that emerge from the first obstacle.
+
+Other obstacles in not particular order:
+
+- Using the unity of Nature as an explanation.
+- Using the utility of natural phenomenon as an explanation.
+- The verbal obstacle that uses explanatory words.
+- Substantialism/realism ?
+- "The animist obstacle in physical sciences".
+- False geometrization and rigor.
 
 ## On the obstacle of close-mindedness
 
-> Acceder a la science, c'est, spirituellement rajeunir, c'est accepter une mutation brusque qui doit contredire un passe.
+Instincts or opinions contribute to epistemological obstacles.
+Similarly education and previous knowledge play a role and a researcher must be able to rethink, to make abstraction of what she thinks is true, when fighting against an epistemological obstacle.
+
+
+> Accéder à la science, c'est, spirituellement rajeunir, c'est accepter une mutation brusque qui doit contredire un passé.
 
 "To access science is to spiritually rejuvenate, it's accepting an abrupt mutation that must contradict a past."
 
 ---
 
-> On ne peut rien fonder sur l'opinion: il faut d'abord la detruire. Elle est le premier obstacle a surmonter.
+> On ne peut rien fonder sur l'opinion: il faut d'abord la détruire. Elle est le premier obstacle à surmonter.
 
 "We cannot base anything on opinion: it must first be destroyed. It's the first obstacle to overcome."
 
 ---
 
-> Les grands hommes sont utiles a la science dans la premere moitie de leur vie, nuisibles dans la second moitie.
+> Les grands hommes sont utiles à la science dans la première moitié de leur vie, nuisibles dans la seconde moitié.
 
 "Great men are useful to science in the first half of their life, harmful in the second half."
 
+--- 
+
+> [...] l'homme devient une espèce mutante, ou pour mieux dire encore, une espèce qui a besoin de muter, qui souffre de ne pas changer.
+
+"Man becomes a mutant species, or better said still, a species that needs to mutate, that suffers of not changing."
+
+---
+
+> Toute culture scientifique doit commencer [...] par une catharsis intelectuelle et affective.
+
+"Any scientific culture must begin with an intellectual and emotional catharsis."
+
+Yes, catharsis of course...*googling*...ah yes, catharsis, that makes sense.
+
+
 ## On trappings of empirical observations
 
-> Comme le dit si bien d'Alembert, on generalise ses premieres remarques, l'instant d'apres qu'on ne remarquait rien.
+Second obstacle.
+
+> Comme le dit si bien d'Alembert, on généralise ses premières remarques, l'instant d'après qu'on ne remarquait rien.
 
 "Like d'Alembert nicely stated, we generalize our first observations, the moment after we didn't observe anything."
 
 ---
 
-> Il est si doux a la paresse intelectuelle d'etre cantonnee dans l'empirisme, d'appeler un fait un fait et d'interdire la recherche d'une loi!
+> Il est si doux à la paresse intellectuelle d'être cantonnée dans l'empirisme, d'appeler un fait un fait et d'interdire la recherche d'une loi!
 
 ## On the danger of images and metaphors
 
-> On remplace la connaisance par l'admiration, les idees par les images.
+> On remplace la connaissance par l'admiration, les idées par les images.
 
 "We replace knowledge with admiration, ideas with images."
 
@@ -80,24 +118,37 @@ You have 2 hours, discuss.
 
 On detrimental curiosity (I think):
 
-> Elle cherche non pas la variation mais la variete.
+> Elle cherche non pas la variation, mais la variété.
 
 ---
 
-> Une science qui accepte les images est, plus que toute autre, victime des metaphores. Aussi l'esprit scientifique doit-il sans cesse lutter contre les images, contre les analogies, contre les metaphores.
+> Une science qui accepte les images est, plus que toute autre, victime des métaphores. Aussi l'esprit scientifique doit-il sans cesse lutter contre les images, contre les analogies, contre les métaphores.
 
 ---
 
-> Mieux vaudrait une ignorance complete qu'une connaissance privee de son principe fondamental.
+> Mieux vaudrait une ignorance complète qu'une connaissance privée de son principe fondamental.
 
 "Complete ignorance would be better than knowledge deprived of its fundamental principle."
 
 
 ## Education
 
+Little effort has been directed toward the study of the psychology of ignorance and error.
+People think it's just a matter of giving a lesson, repeating it until it's grasped by the student, often using the same approach each time (e.g. retaking the class).
+The problem is that the student already has previous knowledge that impedes the understanding of the "lesson".
+So the teacher needs first to break down these obstacles, that come from the student's previous observations, in order to efficiently teach the new concepts.
+We spend too much effort on adding new concepts that will not always sort themselves out nicely in the student's mind.
+We should spend more time guiding this conceptual readjustments when teaching science.
+
 > Les professeurs de sciences, plus encore que les autres si c'est possible, ne comprennent pas qu'on ne comprenne pas.
 
 "Science teachers, even more than others if that is possible, don't understand that one doesn't understand."
+
+---
+
+> Un educateur n'a pas le sens de l'echec precisement parce qu'il se croit un maitre.
+
+"A teacher doesn't have a sense of failure precisely because he believes himself to be a master."
 
 ## Interesting stories
 
@@ -105,6 +156,6 @@ On detrimental curiosity (I think):
 
 ## Sick burns
 
-> On imagine assez facilement qu'un enfant de huit ans, a la seule condition d'avoir a sa disposition un vocabulaire pedant, pourrait developper de telles billevesees.
+> On imagine assez facilement qu'un enfant de huit ans, à la seule condition d'avoir à sa disposition un vocabulaire pédant, pourrait développer de telles billevesées.
 
 "We can imagine quite easily that an eight years old child, if only he had a pedantic vocabulary at his disposal, would develop similar nonsense."
