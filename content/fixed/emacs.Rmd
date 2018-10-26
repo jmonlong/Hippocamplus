@@ -36,6 +36,7 @@ Some of the basic tweaks in my `.emacs` file:
 + List key bindings currently available: `C-h b`.
 + List key bindings currently available starting with `C-c`: `C-c C-h`.
 + Narrow down to a region with `C-x n n` and widen back to the entire buffer with `C-x n w` (e.g. when refactoring).
++ Accents with `C-x 8` (`C-x 8 C-h` for list).
 
 Regexp replace :
 

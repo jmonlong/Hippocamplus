@@ -48,6 +48,7 @@ Now it won't try to do `x<10` if `!is.null(x)` is not true (because what's the p
 
 - `pdf("g.pdf", 9, 7)`
 - `png("g.png", 1300, 1000, res=200)`
+- `options(device=function() pdf(width=9, height=7))` to set the default device (e.g. remote graphs).
 
 ### ggplot2 tricks
 
