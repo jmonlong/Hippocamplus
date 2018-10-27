@@ -24,6 +24,14 @@ This is my default (more or less) :
 \usepackage{fullpage}
 ~~~
 
+## TinyTeX
+
+[TinyTeX](https://yihui.name/tinytex/) is a lightweight LaTeX distribution where we download only what we need. 
+It's a R package.
+Once installed, run `install_tinytex()` to install a first version of TinyTeX.
+Then install additional packages with `tlmgr_install("pkg")`. 
+To find which package provides a particular *xxx.sty* run `tlmgr_search("/xxx.sty")`.
+
 ## Misc
 
 ### Font sizes
