@@ -59,6 +59,45 @@ Other obstacles in not particular order:
 - "The animist obstacle in physical sciences".
 - False geometrization and rigor.
 
+## The first obstacle: the primary experiment
+
+The scientific mind must develop *against* Nature.
+During the pre-scientific period (XVIII century), scientific books were not checked for accuracy, it was about the authors ideas.
+More importance was given to the "story" or how it explained daily phenomenons.
+Bachelard then describe a few of these books and their (funny) explanations.
+Although he agrees that these were picked as bad examples, he argues that the science at a particular time is not the science that survives time (especially in the pre-scientific period). 
+
+There is a danger on relying too much on primary experiments, on selected observations and images, and on easy explanations.
+
+> On remplace la connaissance par l'admiration, les idées par les images.
+
+"We replace knowledge with admiration, ideas with images."
+
+---
+
+> Une science qui accepte les images est, plus que toute autre, victime des métaphores. Aussi l'esprit scientifique doit-il sans cesse lutter contre les images, contre les analogies, contre les métaphores.
+
+"A science that accepts images is, more than any other, victim of metaphors. Hence the scientific mind must continuously fight agains images, against analogies, against metaphors."
+
+---
+
+Coupled with curiosity this can lead to listing observations and their independent explanations without digging deeper and testing variation of the experiments.
+These easy solutions satisfy quick curiosity but destroy the sense of *problem* that is vital for progress.
+
+> Elle cherche non pas la variation, mais la variété.
+
+"It's not looking for variation, but for variety."
+
+
+He gives the example of electricity, its "easy" explanations at the beginning and its entertaining experiments.
+
+> Il est si doux à la paresse intellectuelle d'être cantonnée dans l'empirisme, d'appeler un fait un fait et d'interdire la recherche d'une loi!
+
+"It is so attractive to intellectual laziness to keep to empirism, to call a fact a fact and forbid the search of a law!"
+
+
+
+
 ## On the obstacle of close-mindedness
 
 Instincts or opinions contribute to epistemological obstacles.
@@ -106,29 +145,6 @@ Second obstacle.
 
 ---
 
-> Il est si doux à la paresse intellectuelle d'être cantonnée dans l'empirisme, d'appeler un fait un fait et d'interdire la recherche d'une loi!
-
-## On the danger of images and metaphors
-
-> On remplace la connaissance par l'admiration, les idées par les images.
-
-"We replace knowledge with admiration, ideas with images."
-
----
-
-On detrimental curiosity (I think):
-
-> Elle cherche non pas la variation, mais la variété.
-
----
-
-> Une science qui accepte les images est, plus que toute autre, victime des métaphores. Aussi l'esprit scientifique doit-il sans cesse lutter contre les images, contre les analogies, contre les métaphores.
-
----
-
-> Mieux vaudrait une ignorance complète qu'une connaissance privée de son principe fondamental.
-
-"Complete ignorance would be better than knowledge deprived of its fundamental principle."
 
 
 ## Education
@@ -149,6 +165,17 @@ We should spend more time guiding this conceptual readjustments when teaching sc
 > Un educateur n'a pas le sens de l'echec precisement parce qu'il se croit un maitre.
 
 "A teacher doesn't have a sense of failure precisely because he believes himself to be a master."
+
+---
+
+When performing experiments in class, the teacher should switch as fast as possible from experiment to abstract concepts, going back and forth between experiment and theory.
+Otherwise, the students will remember the most colorful and impressive experiments but not for the right reason. 
+Sure they'll remember when the tube exploded but not why or in which context.
+
+> Mieux vaudrait une ignorance complète qu'une connaissance privée de son principe fondamental.
+
+"Complete ignorance would be better than knowledge deprived of its fundamental principle."
+
 
 ## Interesting stories
 
