@@ -206,6 +206,7 @@
 <li><a href="#passing-arguments-to-a-script">Passing arguments to a script</a></li>
 <li><a href="#graphs">Graphs</a></li>
 <li><a href="#shell-integration">Shell integration</a></li>
+<li><a href="#timing">Timing</a></li>
 <li><a href="#bioinfo">Bioinfo</a><ul>
 <li><a href="#sequences">Sequences</a></li>
 <li><a href="#fasta">Fasta</a></li>
@@ -233,6 +234,9 @@
 arr.append(19)
 for elt in arr:
     print elt</code></pre>
+<ul>
+<li><code>list(myarray)</code> to make a copy of the array without going through the <em>copy</em> module.</li>
+</ul>
 <p><em>numpy</em> arrays are more efficient when the data needs to be manipulated/combined. For example it allows for some vectorized operations:</p>
 <pre class="python"><code>pred_counts = numpy.zeros((4, len(rfc.classes_)))
 pred_counts[0, ] += sum(predprobs &gt; .5)</code></pre>
@@ -378,6 +382,15 @@ bwa_cmd = [&#39;bwa&#39;, &#39;mem&#39;, bwaidx_file, fastq_file]
 dump = open(&#39;/dev/null&#39;)
 bwa_out = subprocess.check_output(bwa_cmd, stderr=dump)
 dump.close()</code></pre>
+</div>
+<div id="timing" class="section level2">
+<h2>Timing</h2>
+<p>Example with <em>timeit</em>:</p>
+<pre class="python"><code>from timeit import Timer
+def test():
+    global myobj
+    myobj.fun()
+Timer(test).timeit(number=10)</code></pre>
 </div>
 <div id="bioinfo" class="section level2">
 <h2>Bioinfo</h2>

@@ -11,6 +11,7 @@ output:
 <div id="TOC">
 <ul>
 <li><a href="#standard-packages">Standard packages</a></li>
+<li><a href="#tinytex">TinyTeX</a></li>
 <li><a href="#misc">Misc</a><ul>
 <li><a href="#font-sizes">Font sizes</a></li>
 <li><a href="#change-the-symbol-in-lists">Change the symbol in lists</a></li>
@@ -72,6 +73,10 @@ output:
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{fullpage}</code></pre>
+</div>
+<div id="tinytex" class="section level2">
+<h2>TinyTeX</h2>
+<p><a href="https://yihui.name/tinytex/">TinyTeX</a> is a lightweight LaTeX distribution where we download only what we need. It’s a R package. Once installed, run <code>install_tinytex()</code> to install a first version of TinyTeX. Then install additional packages with <code>tlmgr_install(&quot;pkg&quot;)</code>. To find which package provides a particular <em>xxx.sty</em> run <code>tlmgr_search(&quot;/xxx.sty&quot;)</code>.</p>
 </div>
 <div id="misc" class="section level2">
 <h2>Misc</h2>
@@ -296,8 +301,7 @@ Genetics has been shown to be important...
 </div>
 <div id="main-text-and-supplements-in-two-documents" class="section level3">
 <h3>Main text and supplements in two documents</h3>
-<p>It’s easier to have the two documents separated with their own bibliography.
-Then no need to manually split the pdf (and likely lose links).</p>
+<p>It’s easier to have the two documents separated with their own bibliography. Then no need to manually split the pdf (and likely lose links).</p>
 <p>Using the <code>xr</code> package, we can specify other documents where to find references (figures, tables, sections).</p>
 <p>In the <code>main.tex</code> document:</p>
 <pre class="latex"><code>\usepackage{xr}
@@ -325,8 +329,7 @@ Then no need to manually split the pdf (and likely lose links).</p>
 </div>
 <div id="compare-versions-and-highlight-revisions" class="section level3">
 <h3>Compare versions and highlight revisions</h3>
-<p>The <a href="https://ctan.org/pkg/latexdiff"><code>latediff</code> Perl script</a> works well.
-For example to compare two versions I use:</p>
+<p>The <a href="https://ctan.org/pkg/latexdiff"><code>latediff</code> Perl script</a> works well. For example to compare two versions I use:</p>
 <pre class="sh"><code>git show COMMIT:main.tex &gt; main-old.tex
 git show COMMIT:suppmat.tex &gt; suppmat-old.tex
 
