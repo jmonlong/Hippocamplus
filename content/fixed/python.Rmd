@@ -26,6 +26,8 @@ for elt in arr:
     print elt
 ~~~
 
+- `list(myarray)` to make a copy of the array without going through the *copy* module.
+
 *numpy* arrays are more efficient when the data needs to be manipulated/combined. For example it allows for some vectorized operations:
 
 ~~~python
