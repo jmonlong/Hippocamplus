@@ -1316,14 +1316,12 @@ mumgp %&amp;gt;% head %&amp;gt;% kable&lt;/code&gt;&lt;/pre&gt;
 &lt;h2&gt;Filter contigs with poor alignments&lt;/h2&gt;
 &lt;p&gt;For now, I filter contigs simply based on the size of the aligned segment. I keep only contigs with at least one aligned segment larger than a minimum size. Smaller alignment in these contigs are kept if in the same range as the large aligned segments. Eventually, I could also filter segment based on the number/proportion of errors.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;filterMum &amp;lt;- function(df, minl=1000, flanks=1e4){
-  coord = df %&amp;gt;% filter(abs(re-rs)&amp;gt;minl) %&amp;gt;% group_by(qid, rid) %&amp;gt;%
-      summarize(qsL=min(qs)-flanks, qeL=max(qe)+flanks, rs=min(rs)) %&amp;gt;%
-      ungroup %&amp;gt;% arrange(desc(rs)) %&amp;gt;%
-      mutate(qid=factor(qid, levels=unique(qid)),
-             rid=factor(rid, levels=unique(rid))) %&amp;gt;% select(-rs)
-  merge(df, coord) %&amp;gt;% filter(qs&amp;gt;qsL, qe&amp;lt;qeL) %&amp;gt;%
-      mutate(qid=factor(qid, levels=levels(coord$qid)),
-             rid=factor(rid, levels=levels(coord$rid))) %&amp;gt;% select(-qsL, -qeL)
+    coord = df %&amp;gt;% filter(abs(re-rs)&amp;gt;minl) %&amp;gt;% group_by(qid, rid) %&amp;gt;%
+        summarize(qsL=min(qs)-flanks, qeL=max(qe)+flanks, rs=median(rs)) %&amp;gt;%
+        ungroup %&amp;gt;% arrange(desc(rs)) %&amp;gt;%
+        mutate(qid=factor(qid, levels=unique(qid))) %&amp;gt;% select(-rs)
+    merge(df, coord) %&amp;gt;% filter(qs&amp;gt;qsL, qe&amp;lt;qeL) %&amp;gt;%
+        mutate(qid=factor(qid, levels=levels(coord$qid))) %&amp;gt;% select(-qsL, -qeL)
 }
 
 mumgp.filt = filterMum(mumgp, minl=1e4)
@@ -1420,14 +1418,21 @@ mumgp.filt %&amp;gt;% head %&amp;gt;% kable&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;diagonalize&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Diagonalize&lt;/h2&gt;
-&lt;p&gt;For each contig, I compute the major strand (strand with most bases aligned) and flip if necessary.&lt;/p&gt;
+&lt;p&gt;For each contig, I compute the major strand (strand with most bases aligned) and flip if necessary. The contigs are also ordered based on the reference region with most bases and the weighted means of the start position in this matched reference region.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;diagMum &amp;lt;- function(df){
-  major.strand = df %&amp;gt;% group_by(qid) %&amp;gt;%
-      summarize(major.strand=ifelse(sum(sign(qe-qs)*abs(qe-qs))&amp;gt;0, &amp;#39;+&amp;#39;, &amp;#39;-&amp;#39;),
-                maxQ=max(c(qe, qs)))
-  merge(df, major.strand) %&amp;gt;% mutate(qs2=ifelse(major.strand==&amp;#39;-&amp;#39;, maxQ-qs, qs),
-                                     qe2=ifelse(major.strand==&amp;#39;-&amp;#39;, maxQ-qe, qe),
-                                     qs=qs2, qe=qe2) %&amp;gt;% select(-qe2,-qs2, maxQ)
+    ## Find best qid order
+    rid.o = df %&amp;gt;% group_by(qid, rid) %&amp;gt;% summarize(base=sum(abs(qe-qs)),
+                                                    rs=weighted.mean(rs, abs(qe-qs))) %&amp;gt;%
+        ungroup %&amp;gt;% arrange(desc(base)) %&amp;gt;% group_by(qid) %&amp;gt;% do(head(., 1)) %&amp;gt;%
+        ungroup %&amp;gt;% arrange(desc(rid), desc(rs)) %&amp;gt;%
+        mutate(qid=factor(qid, levels=unique(qid)))
+    ## Find best qid strand
+    major.strand = df %&amp;gt;% group_by(qid) %&amp;gt;%
+        summarize(major.strand=ifelse(sum(sign(qe-qs)*abs(qe-qs))&amp;gt;0, &amp;#39;+&amp;#39;, &amp;#39;-&amp;#39;),
+                  maxQ=max(c(qe, qs)))
+    merge(df, major.strand) %&amp;gt;% mutate(qs=ifelse(major.strand==&amp;#39;-&amp;#39;, maxQ-qs, qs),
+                                       qe=ifelse(major.strand==&amp;#39;-&amp;#39;, maxQ-qe, qe),
+                                       qid=factor(qid, levels=levels(rid.o$qid)))
 }
 
 mumgp.filt.diag = diagMum(mumgp.filt)
@@ -1440,10 +1445,13 @@ ggplot(mumgp.filt.diag, aes(x=rs, xend=re, y=qs, yend=qe, colour=strand)) +
           axis.text.y=element_blank(), axis.ticks.y=element_blank()) +
     xlab(&amp;#39;reference sequence&amp;#39;) + ylab(&amp;#39;assembly&amp;#39;) + scale_colour_brewer(palette=&amp;#39;Set1&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;./post/2017-09-19-MumplotsWithGgplot2_files/figure-html/diag-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;What we were aiming at:&lt;/p&gt;
 &lt;div class=&#34;figure&#34;&gt;
 &lt;img src=&#34;./imgs/mumplot-example.png&#34; /&gt;
 
 &lt;/div&gt;
+&lt;p&gt;Pretty good.&lt;/p&gt;
+&lt;hr /&gt;
 &lt;p&gt;To also represent multiple reference regions in separate facets, change the &lt;em&gt;facet_grid&lt;/em&gt; commands. Here we have only one reference region but the command would be:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(mumgp.filt.diag, aes(x=rs, xend=re, y=qs, yend=qe, colour=strand)) +
     geom_segment() + geom_point(alpha=.5) + theme_bw() + 

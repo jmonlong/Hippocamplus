@@ -78,14 +78,12 @@ Eventually, I could also filter segment based on the number/proportion of errors
 
 ```{r filter}
 filterMum <- function(df, minl=1000, flanks=1e4){
-  coord = df %>% filter(abs(re-rs)>minl) %>% group_by(qid, rid) %>%
-      summarize(qsL=min(qs)-flanks, qeL=max(qe)+flanks, rs=min(rs)) %>%
-      ungroup %>% arrange(desc(rs)) %>%
-      mutate(qid=factor(qid, levels=unique(qid)),
-             rid=factor(rid, levels=unique(rid))) %>% select(-rs)
-  merge(df, coord) %>% filter(qs>qsL, qe<qeL) %>%
-      mutate(qid=factor(qid, levels=levels(coord$qid)),
-             rid=factor(rid, levels=levels(coord$rid))) %>% select(-qsL, -qeL)
+    coord = df %>% filter(abs(re-rs)>minl) %>% group_by(qid, rid) %>%
+        summarize(qsL=min(qs)-flanks, qeL=max(qe)+flanks, rs=median(rs)) %>%
+        ungroup %>% arrange(desc(rs)) %>%
+        mutate(qid=factor(qid, levels=unique(qid))) %>% select(-rs)
+    merge(df, coord) %>% filter(qs>qsL, qe<qeL) %>%
+        mutate(qid=factor(qid, levels=levels(coord$qid))) %>% select(-qsL, -qeL)
 }
 
 mumgp.filt = filterMum(mumgp, minl=1e4)
@@ -111,15 +109,24 @@ Not bad but it would look nicer if we flipped the contigs to have more or less a
 ## Diagonalize
 
 For each contig, I compute the major strand (strand with most bases aligned) and flip if necessary.
+The contigs are also ordered based on the reference region with most bases and the weighted means of the start position in this matched reference region.
+
 
 ```{r diag, fig.height=8}
 diagMum <- function(df){
-  major.strand = df %>% group_by(qid) %>%
-      summarize(major.strand=ifelse(sum(sign(qe-qs)*abs(qe-qs))>0, '+', '-'),
-                maxQ=max(c(qe, qs)))
-  merge(df, major.strand) %>% mutate(qs2=ifelse(major.strand=='-', maxQ-qs, qs),
-                                     qe2=ifelse(major.strand=='-', maxQ-qe, qe),
-                                     qs=qs2, qe=qe2) %>% select(-qe2,-qs2, maxQ)
+    ## Find best qid order
+    rid.o = df %>% group_by(qid, rid) %>% summarize(base=sum(abs(qe-qs)),
+                                                    rs=weighted.mean(rs, abs(qe-qs))) %>%
+        ungroup %>% arrange(desc(base)) %>% group_by(qid) %>% do(head(., 1)) %>%
+        ungroup %>% arrange(desc(rid), desc(rs)) %>%
+        mutate(qid=factor(qid, levels=unique(qid)))
+    ## Find best qid strand
+    major.strand = df %>% group_by(qid) %>%
+        summarize(major.strand=ifelse(sum(sign(qe-qs)*abs(qe-qs))>0, '+', '-'),
+                  maxQ=max(c(qe, qs)))
+    merge(df, major.strand) %>% mutate(qs=ifelse(major.strand=='-', maxQ-qs, qs),
+                                       qe=ifelse(major.strand=='-', maxQ-qe, qe),
+                                       qid=factor(qid, levels=levels(rid.o$qid)))
 }
 
 mumgp.filt.diag = diagMum(mumgp.filt)
@@ -133,8 +140,13 @@ ggplot(mumgp.filt.diag, aes(x=rs, xend=re, y=qs, yend=qe, colour=strand)) +
     xlab('reference sequence') + ylab('assembly') + scale_colour_brewer(palette='Set1')
 ```
 
+What we were aiming at:
+
 ![](/imgs/mumplot-example.png)
 
+Pretty good.
+
+---
 
 To also represent multiple reference regions in separate facets, change the *facet_grid* commands. 
 Here we have only one reference region but the command would be:

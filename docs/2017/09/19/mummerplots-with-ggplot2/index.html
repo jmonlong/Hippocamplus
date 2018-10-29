@@ -329,14 +329,12 @@ mumgp %&gt;% head %&gt;% kable</code></pre>
 <h2>Filter contigs with poor alignments</h2>
 <p>For now, I filter contigs simply based on the size of the aligned segment. I keep only contigs with at least one aligned segment larger than a minimum size. Smaller alignment in these contigs are kept if in the same range as the large aligned segments. Eventually, I could also filter segment based on the number/proportion of errors.</p>
 <pre class="r"><code>filterMum &lt;- function(df, minl=1000, flanks=1e4){
-  coord = df %&gt;% filter(abs(re-rs)&gt;minl) %&gt;% group_by(qid, rid) %&gt;%
-      summarize(qsL=min(qs)-flanks, qeL=max(qe)+flanks, rs=min(rs)) %&gt;%
-      ungroup %&gt;% arrange(desc(rs)) %&gt;%
-      mutate(qid=factor(qid, levels=unique(qid)),
-             rid=factor(rid, levels=unique(rid))) %&gt;% select(-rs)
-  merge(df, coord) %&gt;% filter(qs&gt;qsL, qe&lt;qeL) %&gt;%
-      mutate(qid=factor(qid, levels=levels(coord$qid)),
-             rid=factor(rid, levels=levels(coord$rid))) %&gt;% select(-qsL, -qeL)
+    coord = df %&gt;% filter(abs(re-rs)&gt;minl) %&gt;% group_by(qid, rid) %&gt;%
+        summarize(qsL=min(qs)-flanks, qeL=max(qe)+flanks, rs=median(rs)) %&gt;%
+        ungroup %&gt;% arrange(desc(rs)) %&gt;%
+        mutate(qid=factor(qid, levels=unique(qid))) %&gt;% select(-rs)
+    merge(df, coord) %&gt;% filter(qs&gt;qsL, qe&lt;qeL) %&gt;%
+        mutate(qid=factor(qid, levels=levels(coord$qid))) %&gt;% select(-qsL, -qeL)
 }
 
 mumgp.filt = filterMum(mumgp, minl=1e4)
@@ -433,14 +431,21 @@ mumgp.filt %&gt;% head %&gt;% kable</code></pre>
 </div>
 <div id="diagonalize" class="section level2">
 <h2>Diagonalize</h2>
-<p>For each contig, I compute the major strand (strand with most bases aligned) and flip if necessary.</p>
+<p>For each contig, I compute the major strand (strand with most bases aligned) and flip if necessary. The contigs are also ordered based on the reference region with most bases and the weighted means of the start position in this matched reference region.</p>
 <pre class="r"><code>diagMum &lt;- function(df){
-  major.strand = df %&gt;% group_by(qid) %&gt;%
-      summarize(major.strand=ifelse(sum(sign(qe-qs)*abs(qe-qs))&gt;0, &#39;+&#39;, &#39;-&#39;),
-                maxQ=max(c(qe, qs)))
-  merge(df, major.strand) %&gt;% mutate(qs2=ifelse(major.strand==&#39;-&#39;, maxQ-qs, qs),
-                                     qe2=ifelse(major.strand==&#39;-&#39;, maxQ-qe, qe),
-                                     qs=qs2, qe=qe2) %&gt;% select(-qe2,-qs2, maxQ)
+    ## Find best qid order
+    rid.o = df %&gt;% group_by(qid, rid) %&gt;% summarize(base=sum(abs(qe-qs)),
+                                                    rs=weighted.mean(rs, abs(qe-qs))) %&gt;%
+        ungroup %&gt;% arrange(desc(base)) %&gt;% group_by(qid) %&gt;% do(head(., 1)) %&gt;%
+        ungroup %&gt;% arrange(desc(rid), desc(rs)) %&gt;%
+        mutate(qid=factor(qid, levels=unique(qid)))
+    ## Find best qid strand
+    major.strand = df %&gt;% group_by(qid) %&gt;%
+        summarize(major.strand=ifelse(sum(sign(qe-qs)*abs(qe-qs))&gt;0, &#39;+&#39;, &#39;-&#39;),
+                  maxQ=max(c(qe, qs)))
+    merge(df, major.strand) %&gt;% mutate(qs=ifelse(major.strand==&#39;-&#39;, maxQ-qs, qs),
+                                       qe=ifelse(major.strand==&#39;-&#39;, maxQ-qe, qe),
+                                       qid=factor(qid, levels=levels(rid.o$qid)))
 }
 
 mumgp.filt.diag = diagMum(mumgp.filt)
@@ -453,10 +458,13 @@ ggplot(mumgp.filt.diag, aes(x=rs, xend=re, y=qs, yend=qe, colour=strand)) +
           axis.text.y=element_blank(), axis.ticks.y=element_blank()) +
     xlab(&#39;reference sequence&#39;) + ylab(&#39;assembly&#39;) + scale_colour_brewer(palette=&#39;Set1&#39;)</code></pre>
 <p><img src="../../../../post/2017-09-19-MumplotsWithGgplot2_files/figure-html/diag-1.png" width="960" /></p>
+<p>What we were aiming at:</p>
 <div class="figure">
 <img src="../../../../imgs/mumplot-example.png" />
 
 </div>
+<p>Pretty good.</p>
+<hr />
 <p>To also represent multiple reference regions in separate facets, change the <em>facet_grid</em> commands. Here we have only one reference region but the command would be:</p>
 <pre class="r"><code>ggplot(mumgp.filt.diag, aes(x=rs, xend=re, y=qs, yend=qe, colour=strand)) +
     geom_segment() + geom_point(alpha=.5) + theme_bw() + 
