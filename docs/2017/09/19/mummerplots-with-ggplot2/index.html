@@ -201,7 +201,8 @@
   
   
   </span>
-  <pre class="r"><code>library(dplyr)
+  <p><em>Update Oct 28 2018: added reference id (rid) to be able to visualize multiple reference regions. Also uploaded the example data somewhere.</em></p>
+<pre class="r"><code>library(dplyr)
 library(magrittr)
 library(GenomicRanges)
 library(knitr)
@@ -215,30 +216,36 @@ library(tidyr)</code></pre>
 
 </div>
 </div>
+<div id="delta-file" class="section level2">
+<h2>Delta file</h2>
+<p>The delta file is the default output of the <a href="http://mummer.sourceforge.net/manual/#nucmer">NUCmer alignment script</a>. The format of the delta file is described more <a href="http://mummer.sourceforge.net/manual/#nucmeroutput">here</a>.</p>
+<p>The delta file used in this post can be downloaded <a href="https://www.dropbox.com/s/3zscsbbex6rgemo/mumplot-example.delta?dl=0">here</a>. Otherwise, in R:</p>
+<pre class="r"><code>if(!file.exists(&#39;mumplot-example.delta&#39;)){
+    download.file(&#39;https://dl.dropboxusercontent.com/s/3zscsbbex6rgemo/mumplot-example.delta?dl0&#39;,
+                  &#39;mumplot-example.delta&#39;)
+}</code></pre>
+</div>
 <div id="read-a-delta-file" class="section level2">
 <h2>Read a delta file</h2>
-<p>The delta file is the default output of the <a href="http://mummer.sourceforge.net/manual/#nucmer">NUCmer alignment script</a>. The format of the delta file is described more <a href="http://mummer.sourceforge.net/manual/#nucmeroutput">here</a>.</p>
-<pre class="r"><code>readDelta &lt;- function(deltafile) {
-    lines = scan(deltafile, &quot;a&quot;, sep = &quot;\n&quot;, quiet = TRUE)
-    lines = lines[-1]
-    lines.l = strsplit(lines, &quot; &quot;)
-    lines.len = lapply(lines.l, length) %&gt;% as.numeric
-    lines.l = lines.l[lines.len != 1]
-    lines.len = lines.len[lines.len != 1]
-    head.pos = which(lines.len == 4)
-    head.id = rep(head.pos, c(head.pos[-1], length(lines.l) + 
-        1) - head.pos)
-    mat = matrix(as.numeric(unlist(lines.l[lines.len == 
-        7])), 7)
-    res = as.data.frame(t(mat[1:5, ]))
-    colnames(res) = c(&quot;rs&quot;, &quot;re&quot;, &quot;qs&quot;, &quot;qe&quot;, &quot;error&quot;)
-    res$qid = unlist(lapply(lines.l[head.id[lines.len == 
-        7]], &quot;[&quot;, 2))
-    res$strand = ifelse(res$qe - res$qs &gt; 0, &quot;+&quot;, &quot;-&quot;)
-    res
+<pre class="r"><code>readDelta &lt;- function(deltafile){
+  lines = scan(deltafile, &#39;a&#39;, sep=&#39;\n&#39;, quiet=TRUE)
+  lines = lines[-1]
+  lines.l = strsplit(lines, &#39; &#39;)
+  lines.len = lapply(lines.l, length) %&gt;% as.numeric
+  lines.l = lines.l[lines.len != 1]
+  lines.len = lines.len[lines.len != 1]
+  head.pos = which(lines.len == 4)
+  head.id = rep(head.pos, c(head.pos[-1], length(lines.l)+1)-head.pos)
+  mat = matrix(as.numeric(unlist(lines.l[lines.len==7])), 7)
+  res = as.data.frame(t(mat[1:5,]))
+  colnames(res) = c(&#39;rs&#39;,&#39;re&#39;,&#39;qs&#39;,&#39;qe&#39;,&#39;error&#39;)
+  res$qid = unlist(lapply(lines.l[head.id[lines.len==7]], &#39;[&#39;, 2))
+  res$rid = unlist(lapply(lines.l[head.id[lines.len==7]], &#39;[&#39;, 1)) %&gt;% gsub(&#39;^&gt;&#39;, &#39;&#39;, .)
+  res$strand = ifelse(res$qe-res$qs &gt; 0, &#39;+&#39;, &#39;-&#39;)
+  res
 }
 
-mumgp = readDelta(&quot;../../data/mumplot-example.delta&quot;)
+mumgp = readDelta(&quot;mumplot-example.delta&quot;)
 
 mumgp %&gt;% head %&gt;% kable</code></pre>
 <table>
@@ -250,6 +257,7 @@ mumgp %&gt;% head %&gt;% kable</code></pre>
 <th align="right">qe</th>
 <th align="right">error</th>
 <th align="left">qid</th>
+<th align="left">rid</th>
 <th align="left">strand</th>
 </tr>
 </thead>
@@ -261,6 +269,7 @@ mumgp %&gt;% head %&gt;% kable</code></pre>
 <td align="right">108254</td>
 <td align="right">46</td>
 <td align="left">Contig0</td>
+<td align="left">chr14:105095800-107043718</td>
 <td align="left">-</td>
 </tr>
 <tr class="even">
@@ -270,6 +279,7 @@ mumgp %&gt;% head %&gt;% kable</code></pre>
 <td align="right">106172</td>
 <td align="right">46</td>
 <td align="left">Contig0</td>
+<td align="left">chr14:105095800-107043718</td>
 <td align="left">-</td>
 </tr>
 <tr class="odd">
@@ -279,6 +289,7 @@ mumgp %&gt;% head %&gt;% kable</code></pre>
 <td align="right">138515</td>
 <td align="right">31</td>
 <td align="left">Contig0</td>
+<td align="left">chr14:105095800-107043718</td>
 <td align="left">+</td>
 </tr>
 <tr class="even">
@@ -288,6 +299,7 @@ mumgp %&gt;% head %&gt;% kable</code></pre>
 <td align="right">27394</td>
 <td align="right">62</td>
 <td align="left">Contig0</td>
+<td align="left">chr14:105095800-107043718</td>
 <td align="left">-</td>
 </tr>
 <tr class="odd">
@@ -297,6 +309,7 @@ mumgp %&gt;% head %&gt;% kable</code></pre>
 <td align="right">33845</td>
 <td align="right">26</td>
 <td align="left">Contig0</td>
+<td align="left">chr14:105095800-107043718</td>
 <td align="left">-</td>
 </tr>
 <tr class="even">
@@ -306,6 +319,7 @@ mumgp %&gt;% head %&gt;% kable</code></pre>
 <td align="right">34123</td>
 <td align="right">24</td>
 <td align="left">Contig0</td>
+<td align="left">chr14:105095800-107043718</td>
 <td align="left">+</td>
 </tr>
 </tbody>
@@ -314,23 +328,22 @@ mumgp %&gt;% head %&gt;% kable</code></pre>
 <div id="filter-contigs-with-poor-alignments" class="section level2">
 <h2>Filter contigs with poor alignments</h2>
 <p>For now, I filter contigs simply based on the size of the aligned segment. I keep only contigs with at least one aligned segment larger than a minimum size. Smaller alignment in these contigs are kept if in the same range as the large aligned segments. Eventually, I could also filter segment based on the number/proportion of errors.</p>
-<pre class="r"><code>filterMum &lt;- function(df, minl = 1000, flanks = 10000) {
-    coord = df %&gt;% filter(abs(re - rs) &gt; minl) %&gt;% 
-        group_by(qid) %&gt;% summarize(qsL = min(qs) - 
-        flanks, qeL = max(qe) + flanks, rs = min(rs)) %&gt;% 
-        ungroup %&gt;% arrange(desc(rs)) %&gt;% mutate(qid = factor(qid, 
-        levels = unique(qid))) %&gt;% select(-rs)
-    merge(df, coord) %&gt;% filter(qs &gt; qsL, qe &lt; qeL) %&gt;% 
-        mutate(qid = factor(qid, levels = levels(coord$qid))) %&gt;% 
-        select(-qsL, -qeL)
+<pre class="r"><code>filterMum &lt;- function(df, minl=1000, flanks=1e4){
+    coord = df %&gt;% filter(abs(re-rs)&gt;minl) %&gt;% group_by(qid, rid) %&gt;%
+        summarize(qsL=min(qs)-flanks, qeL=max(qe)+flanks, rs=median(rs)) %&gt;%
+        ungroup %&gt;% arrange(desc(rs)) %&gt;%
+        mutate(qid=factor(qid, levels=unique(qid))) %&gt;% select(-rs)
+    merge(df, coord) %&gt;% filter(qs&gt;qsL, qe&lt;qeL) %&gt;%
+        mutate(qid=factor(qid, levels=levels(coord$qid))) %&gt;% select(-qsL, -qeL)
 }
 
-mumgp.filt = filterMum(mumgp, minl = 10000)
+mumgp.filt = filterMum(mumgp, minl=1e4)
 mumgp.filt %&gt;% head %&gt;% kable</code></pre>
 <table>
 <thead>
 <tr class="header">
 <th align="left">qid</th>
+<th align="left">rid</th>
 <th align="right">rs</th>
 <th align="right">re</th>
 <th align="right">qs</th>
@@ -342,6 +355,7 @@ mumgp.filt %&gt;% head %&gt;% kable</code></pre>
 <tbody>
 <tr class="odd">
 <td align="left">Contig1475</td>
+<td align="left">chr14:105095800-107043718</td>
 <td align="right">1663946</td>
 <td align="right">1665485</td>
 <td align="right">331648</td>
@@ -351,6 +365,7 @@ mumgp.filt %&gt;% head %&gt;% kable</code></pre>
 </tr>
 <tr class="even">
 <td align="left">Contig1475</td>
+<td align="left">chr14:105095800-107043718</td>
 <td align="right">1662200</td>
 <td align="right">1684396</td>
 <td align="right">126037</td>
@@ -360,6 +375,7 @@ mumgp.filt %&gt;% head %&gt;% kable</code></pre>
 </tr>
 <tr class="odd">
 <td align="left">Contig1475</td>
+<td align="left">chr14:105095800-107043718</td>
 <td align="right">1581333</td>
 <td align="right">1582738</td>
 <td align="right">244635</td>
@@ -369,6 +385,7 @@ mumgp.filt %&gt;% head %&gt;% kable</code></pre>
 </tr>
 <tr class="even">
 <td align="left">Contig1475</td>
+<td align="left">chr14:105095800-107043718</td>
 <td align="right">1597381</td>
 <td align="right">1610746</td>
 <td align="right">145948</td>
@@ -378,6 +395,7 @@ mumgp.filt %&gt;% head %&gt;% kable</code></pre>
 </tr>
 <tr class="odd">
 <td align="left">Contig1475</td>
+<td align="left">chr14:105095800-107043718</td>
 <td align="right">1610278</td>
 <td align="right">1623358</td>
 <td align="right">130561</td>
@@ -387,6 +405,7 @@ mumgp.filt %&gt;% head %&gt;% kable</code></pre>
 </tr>
 <tr class="even">
 <td align="left">Contig1475</td>
+<td align="left">chr14:105095800-107043718</td>
 <td align="right">1616542</td>
 <td align="right">1618080</td>
 <td align="right">331648</td>
@@ -400,132 +419,133 @@ mumgp.filt %&gt;% head %&gt;% kable</code></pre>
 <div id="graph" class="section level2">
 <h2>Graph</h2>
 <p>I’m going for the same style as <code>mummerplot</code> to compare.</p>
-<pre class="r"><code>ggplot(mumgp.filt, aes(x = rs, xend = re, y = qs, yend = qe, 
-    colour = strand)) + geom_segment() + geom_point(alpha = 0.5) + 
-    facet_grid(qid ~ ., scales = &quot;free&quot;, space = &quot;free&quot;, 
-        switch = &quot;y&quot;) + theme_bw() + theme(strip.text.y = element_text(angle = 180, 
-    size = 5), strip.background = element_blank(), 
-    legend.position = c(0.99, 0.01), legend.justification = c(1, 
-        0), axis.text.y = element_blank(), axis.ticks.y = element_blank()) + 
-    xlab(&quot;reference sequence&quot;) + ylab(&quot;assembly&quot;) + 
-    scale_colour_brewer(palette = &quot;Set1&quot;)</code></pre>
-<p><img src="../../../../post/2017-09-19-MumplotsWithGgplot2_files/figure-html/graph-1.png" width="672" /></p>
+<pre class="r"><code>ggplot(mumgp.filt, aes(x=rs, xend=re, y=qs, yend=qe, colour=strand)) + geom_segment() +
+    geom_point(alpha=.5) + facet_grid(qid~., scales=&#39;free&#39;, space=&#39;free&#39;, switch=&#39;y&#39;) +
+    theme_bw() + theme(strip.text.y=element_text(angle=180, size=5),
+                       legend.position=c(.99,.01), legend.justification=c(1,0),
+                       strip.background=element_blank(),
+                       axis.text.y=element_blank(), axis.ticks.y=element_blank()) +
+    xlab(&#39;reference sequence&#39;) + ylab(&#39;assembly&#39;) + scale_colour_brewer(palette=&#39;Set1&#39;)</code></pre>
+<p><img src="../../../../post/2017-09-19-MumplotsWithGgplot2_files/figure-html/graph-1.png" width="960" /></p>
 <p>Not bad but it would look nicer if we flipped the contigs to have more or less a diagonal.</p>
 </div>
 <div id="diagonalize" class="section level2">
 <h2>Diagonalize</h2>
-<p>For each contig, I compute the major strand (strand with most bases aligned) and flip if necessary.</p>
-<pre class="r"><code>diagMum &lt;- function(df) {
-    major.strand = df %&gt;% group_by(qid) %&gt;% summarize(major.strand = ifelse(sum(sign(qe - 
-        qs) * abs(qe - qs)) &gt; 0, &quot;+&quot;, &quot;-&quot;), maxQ = max(c(qe, 
-        qs)))
-    merge(df, major.strand) %&gt;% mutate(qs2 = ifelse(major.strand == 
-        &quot;-&quot;, maxQ - qs, qs), qe2 = ifelse(major.strand == 
-        &quot;-&quot;, maxQ - qe, qe), qs = qs2, qe = qe2) %&gt;% 
-        select(-qe2, -qs2, maxQ)
+<p>For each contig, I compute the major strand (strand with most bases aligned) and flip if necessary. The contigs are also ordered based on the reference region with most bases and the weighted means of the start position in this matched reference region.</p>
+<pre class="r"><code>diagMum &lt;- function(df){
+    ## Find best qid order
+    rid.o = df %&gt;% group_by(qid, rid) %&gt;% summarize(base=sum(abs(qe-qs)),
+                                                    rs=weighted.mean(rs, abs(qe-qs))) %&gt;%
+        ungroup %&gt;% arrange(desc(base)) %&gt;% group_by(qid) %&gt;% do(head(., 1)) %&gt;%
+        ungroup %&gt;% arrange(desc(rid), desc(rs)) %&gt;%
+        mutate(qid=factor(qid, levels=unique(qid)))
+    ## Find best qid strand
+    major.strand = df %&gt;% group_by(qid) %&gt;%
+        summarize(major.strand=ifelse(sum(sign(qe-qs)*abs(qe-qs))&gt;0, &#39;+&#39;, &#39;-&#39;),
+                  maxQ=max(c(qe, qs)))
+    merge(df, major.strand) %&gt;% mutate(qs=ifelse(major.strand==&#39;-&#39;, maxQ-qs, qs),
+                                       qe=ifelse(major.strand==&#39;-&#39;, maxQ-qe, qe),
+                                       qid=factor(qid, levels=levels(rid.o$qid)))
 }
 
 mumgp.filt.diag = diagMum(mumgp.filt)
 
-ggplot(mumgp.filt.diag, aes(x = rs, xend = re, y = qs, 
-    yend = qe, colour = strand)) + geom_segment() + 
-    geom_point(alpha = 0.5) + facet_grid(qid ~ ., scales = &quot;free&quot;, 
-    space = &quot;free&quot;, switch = &quot;y&quot;) + theme_bw() + theme(strip.text.y = element_text(angle = 180, 
-    size = 5), strip.background = element_blank(), 
-    legend.position = c(0.99, 0.01), legend.justification = c(1, 
-        0), axis.text.y = element_blank(), axis.ticks.y = element_blank()) + 
-    xlab(&quot;reference sequence&quot;) + ylab(&quot;assembly&quot;) + 
-    scale_colour_brewer(palette = &quot;Set1&quot;)</code></pre>
-<p><img src="../../../../post/2017-09-19-MumplotsWithGgplot2_files/figure-html/diag-1.png" width="672" /></p>
+ggplot(mumgp.filt.diag, aes(x=rs, xend=re, y=qs, yend=qe, colour=strand)) +
+    geom_segment() + geom_point(alpha=.5) + theme_bw() + 
+    facet_grid(qid~., scales=&#39;free&#39;, space=&#39;free&#39;, switch=&#39;y&#39;) +
+    theme(strip.text.y=element_text(angle=180, size=5), strip.background=element_blank(),
+          legend.position=c(.99,.01), legend.justification=c(1,0),
+          axis.text.y=element_blank(), axis.ticks.y=element_blank()) +
+    xlab(&#39;reference sequence&#39;) + ylab(&#39;assembly&#39;) + scale_colour_brewer(palette=&#39;Set1&#39;)</code></pre>
+<p><img src="../../../../post/2017-09-19-MumplotsWithGgplot2_files/figure-html/diag-1.png" width="960" /></p>
+<p>What we were aiming at:</p>
 <div class="figure">
 <img src="../../../../imgs/mumplot-example.png" />
 
 </div>
+<p>Pretty good.</p>
+<hr />
+<p>To also represent multiple reference regions in separate facets, change the <em>facet_grid</em> commands. Here we have only one reference region but the command would be:</p>
+<pre class="r"><code>ggplot(mumgp.filt.diag, aes(x=rs, xend=re, y=qs, yend=qe, colour=strand)) +
+    geom_segment() + geom_point(alpha=.5) + theme_bw() + 
+    facet_grid(qid~rid, scales=&#39;free&#39;, space=&#39;free&#39;, switch=&#39;y&#39;) +
+    theme(strip.text.y=element_text(angle=180, size=5), strip.background=element_blank(),
+          legend.position=c(.99,.01), legend.justification=c(1,0),
+          axis.text.y=element_blank(), axis.ticks.y=element_blank()) +
+    xlab(&#39;reference sequence&#39;) + ylab(&#39;assembly&#39;) + scale_colour_brewer(palette=&#39;Set1&#39;)</code></pre>
+<p><img src="../../../../post/2017-09-19-MumplotsWithGgplot2_files/figure-html/rid-1.png" width="960" /></p>
 </div>
 <div id="percent-identity-and-coverage" class="section level2">
 <h2>Percent identity and coverage</h2>
 <p>Another useful MUMmerplot represents the position of each aligned segment and its percent similarity.</p>
 <p>This graph could be useful to decide which size/similarity threshold to use when filtering low alignments.</p>
-<pre class="r"><code>mumgp %&lt;&gt;% mutate(similarity = 1 - error/abs(qe - qs))
-mumgp.filt %&lt;&gt;% mutate(similarity = 1 - error/abs(qe - 
-    qs))
+<pre class="r"><code>mumgp %&lt;&gt;% mutate(similarity=1-error/abs(qe-qs))
+mumgp.filt %&lt;&gt;% mutate(similarity=1-error/abs(qe-qs))
 
-ggplot(mumgp, aes(x = rs, xend = re, y = similarity, 
-    yend = similarity)) + geom_segment() + theme_bw() + 
-    xlab(&quot;reference sequence&quot;) + ylab(&quot;similarity&quot;) + 
-    ggtitle(&quot;All contigs&quot;) + ylim(0, 1)</code></pre>
-<p><img src="../../../../post/2017-09-19-MumplotsWithGgplot2_files/figure-html/simgraph-1.png" width="672" /></p>
-<pre class="r"><code>ggplot(mumgp.filt, aes(x = rs, xend = re, y = similarity, 
-    yend = similarity)) + geom_segment() + theme_bw() + 
-    xlab(&quot;reference sequence&quot;) + ylab(&quot;similarity&quot;) + 
-    ggtitle(&quot;At least 10 Kbp aligned&quot;) + ylim(0, 1)</code></pre>
-<p><img src="../../../../post/2017-09-19-MumplotsWithGgplot2_files/figure-html/simgraph-2.png" width="672" /></p>
+ggplot(mumgp, aes(x=rs, xend=re, y=similarity, yend=similarity)) + geom_segment() +
+    theme_bw() + xlab(&#39;reference sequence&#39;) + ylab(&#39;similarity&#39;) + ggtitle(&#39;All contigs&#39;) +
+    ylim(0,1)</code></pre>
+<p><img src="../../../../post/2017-09-19-MumplotsWithGgplot2_files/figure-html/simgraph-1.png" width="960" /></p>
+<pre class="r"><code>ggplot(mumgp.filt, aes(x=rs, xend=re, y=similarity, yend=similarity)) + geom_segment() +
+    theme_bw() + xlab(&#39;reference sequence&#39;) + ylab(&#39;similarity&#39;) +
+    ggtitle(&#39;At least 10 Kbp aligned&#39;) + ylim(0,1)</code></pre>
+<p><img src="../../../../post/2017-09-19-MumplotsWithGgplot2_files/figure-html/simgraph-2.png" width="960" /></p>
 <p>To better highlighted which region in the reference is covered, I annotate each base of the reference with the maximum similarity.</p>
-<pre class="r"><code>maxSimilarityDisjoin &lt;- function(df) {
-    ref.ir = GRanges(&quot;X&quot;, IRanges(df$rs, df$re), similarity = df$similarity)
-    ## Efficient clean up of low similarity within high
-    ## similarity
-    step = 1
-    while (step &gt; 0) {
-        largealign = ref.ir[head(order(rank(-ref.ir$similarity), 
-            rank(-width(ref.ir))), step * 1000)]
-        ol = findOverlaps(ref.ir, largealign, type = &quot;within&quot;) %&gt;% 
-            as.data.frame %&gt;% mutate(simW = ref.ir$similarity[queryHits], 
-            simL = largealign$similarity[subjectHits]) %&gt;% 
-            filter(simW &lt; simL)
-        if (length(largealign) == length(ref.ir)) {
-            step = 0
-        } else {
-            step = step + 1
-        }
-        ref.ir = ref.ir[-ol$queryHits]
+<pre class="r"><code>maxSimilarityDisjoin &lt;- function(df){
+  ref.ir = GRanges(&#39;X&#39;, IRanges(df$rs, df$re), similarity=df$similarity)
+  ## Efficient clean up of low similarity within high similarity
+  step = 1
+  while(step&gt;0){
+    largealign = ref.ir[head(order(rank(-ref.ir$similarity), rank(-width(ref.ir))),step*1000)]
+    ol = findOverlaps(ref.ir, largealign, type=&#39;within&#39;) %&gt;% as.data.frame %&gt;%
+        mutate(simW=ref.ir$similarity[queryHits],
+               simL=largealign$similarity[subjectHits]) %&gt;% filter(simW&lt;simL)
+    if(length(largealign) == length(ref.ir)){
+      step = 0
+    } else {
+      step = step + 1
     }
-    ## Disjoin and annotate with the max similarity
-    ref.dj = disjoin(c(ref.ir, GRanges(&quot;X&quot;, IRanges(min(df$rs), 
-        max(df$rs)), similarity = 0)))
-    ol = findOverlaps(ref.ir, ref.dj) %&gt;% as.data.frame %&gt;% 
-        mutate(similarity = ref.ir$similarity[queryHits]) %&gt;% 
-        group_by(subjectHits) %&gt;% summarize(similarity = max(similarity))
-    ref.dj$similarity = 0
-    ref.dj$similarity[ol$subjectHits] = ol$similarity
-    as.data.frame(ref.dj)
+    ref.ir = ref.ir[-ol$queryHits]
+  }
+  ## Disjoin and annotate with the max similarity
+  ref.dj = disjoin(c(ref.ir, GRanges(&#39;X&#39;, IRanges(min(df$rs), max(df$rs)), similarity=0)))
+  ol = findOverlaps(ref.ir, ref.dj) %&gt;% as.data.frame %&gt;%
+      mutate(similarity=ref.ir$similarity[queryHits]) %&gt;%
+      group_by(subjectHits) %&gt;% summarize(similarity=max(similarity))
+  ref.dj$similarity = 0
+  ref.dj$similarity[ol$subjectHits] = ol$similarity
+  as.data.frame(ref.dj)
 }
 
 mumgp.sim = maxSimilarityDisjoin(mumgp)
 
-mumgp.sim %&gt;% select(similarity, start, end) %&gt;% gather(end, 
-    pos, 2:3) %&gt;% ggplot() + geom_line(aes(x = pos, 
-    y = similarity), alpha = 0.5, color = &quot;red&quot;) + 
-    theme_bw() + xlab(&quot;reference sequence&quot;) + ylab(&quot;similarity&quot;) + 
-    ggtitle(&quot;All contigs&quot;) + ylim(0, 1) + geom_segment(aes(x = rs, 
-    xend = re, y = similarity, yend = similarity), 
-    data = mumgp)</code></pre>
-<p><img src="../../../../post/2017-09-19-MumplotsWithGgplot2_files/figure-html/simcov-1.png" width="672" /></p>
-<pre class="r"><code>ggplot(mumgp.sim) + geom_segment(aes(x = start, xend = end, 
-    yend = similarity, y = similarity), color = &quot;red&quot;, 
-    size = 2) + theme_bw() + xlab(&quot;reference sequence&quot;) + 
-    ylab(&quot;similarity&quot;) + ylim(0, 1) + geom_segment(aes(x = rs, 
-    xend = re, y = similarity, yend = similarity), 
-    data = mumgp)</code></pre>
-<p><img src="../../../../post/2017-09-19-MumplotsWithGgplot2_files/figure-html/simcov-2.png" width="672" /></p>
+mumgp.sim %&gt;% select(similarity, start, end) %&gt;% gather(end, pos, 2:3) %&gt;%
+    ggplot() + geom_line(aes(x=pos, y=similarity), alpha=.5, color=&#39;red&#39;) + theme_bw() +
+    xlab(&#39;reference sequence&#39;) + ylab(&#39;similarity&#39;) + ggtitle(&#39;All contigs&#39;) + ylim(0,1) +
+    geom_segment(aes(x=rs, xend=re, y=similarity, yend=similarity), data=mumgp)</code></pre>
+<p><img src="../../../../post/2017-09-19-MumplotsWithGgplot2_files/figure-html/simcov-1.png" width="960" /></p>
+<pre class="r"><code>ggplot(mumgp.sim) + geom_segment(aes(x=start, xend=end, yend=similarity, y=similarity),
+                                 color=&#39;red&#39;, size=2) +
+    theme_bw() + xlab(&#39;reference sequence&#39;) + ylab(&#39;similarity&#39;) + ylim(0,1) +
+    geom_segment(aes(x=rs, xend=re, y=similarity, yend=similarity), data=mumgp)</code></pre>
+<p><img src="../../../../post/2017-09-19-MumplotsWithGgplot2_files/figure-html/simcov-2.png" width="960" /></p>
 <p>With this graph we could compare different assemblies or before/after filtering:</p>
 <pre class="r"><code>mumgp.filt.sim = maxSimilarityDisjoin(mumgp.filt)
 
-mumgp.filt.m = rbind(mumgp.sim %&gt;% mutate(filter = &quot;before&quot;), 
-    mumgp.filt.sim %&gt;% mutate(filter = &quot;after&quot;))
+mumgp.filt.m = rbind(mumgp.sim %&gt;% mutate(filter=&#39;before&#39;),
+                     mumgp.filt.sim %&gt;% mutate(filter=&#39;after&#39;))
 
-mumgp.filt.m %&gt;% select(similarity, start, end, filter) %&gt;% 
-    gather(end, pos, 2:3) %&gt;% ggplot(aes(x = pos, y = similarity, 
-    colour = filter)) + geom_line(alpha = 0.8) + theme_bw() + 
-    xlab(&quot;reference sequence&quot;) + ylab(&quot;similarity&quot;) + 
-    ylim(0, 1) + scale_colour_brewer(palette = &quot;Set1&quot;)</code></pre>
-<p><img src="../../../../post/2017-09-19-MumplotsWithGgplot2_files/figure-html/simcovcomp-1.png" width="672" /></p>
+mumgp.filt.m %&gt;% select(similarity, start, end, filter) %&gt;% gather(end, pos, 2:3) %&gt;%
+    ggplot(aes(x=pos, y=similarity, colour=filter)) + geom_line(alpha=.8) + theme_bw() +
+    xlab(&#39;reference sequence&#39;) + ylab(&#39;similarity&#39;) + ylim(0,1) +
+    scale_colour_brewer(palette=&#39;Set1&#39;)</code></pre>
+<p><img src="../../../../post/2017-09-19-MumplotsWithGgplot2_files/figure-html/simcovcomp-1.png" width="960" /></p>
 <p>Not so pretty but we see that a few region are not covered any more after our filtering. Maybe something like this instead :</p>
-<pre class="r"><code>mumgp.filt.m %&gt;% filter(similarity == 0) %&gt;% ggplot(aes(x = start, 
-    xend = end, y = filter, yend = filter)) + geom_segment(size = 10) + 
-    theme_bw() + xlab(&quot;reference sequence&quot;) + ylab(&quot;filter&quot;) + 
-    scale_colour_brewer(palette = &quot;Set1&quot;) + ggtitle(&quot;Reference regions not covered&quot;)</code></pre>
-<p><img src="../../../../post/2017-09-19-MumplotsWithGgplot2_files/figure-html/simcovcomptrack-1.png" width="672" /></p>
+<pre class="r"><code>mumgp.filt.m %&gt;% filter(similarity==0) %&gt;%
+    ggplot(aes(x=start, xend=end, y=filter, yend=filter)) + geom_segment(size=10) +
+    theme_bw() + xlab(&#39;reference sequence&#39;) + ylab(&#39;filter&#39;) +
+    scale_colour_brewer(palette=&#39;Set1&#39;) + ggtitle(&#39;Reference regions not covered&#39;)</code></pre>
+<p><img src="../../../../post/2017-09-19-MumplotsWithGgplot2_files/figure-html/simcovcomptrack-1.png" width="960" /></p>
 </div>
 
 </div>

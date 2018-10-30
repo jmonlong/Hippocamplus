@@ -28,8 +28,8 @@ Using simulated and real data, I’ll try different methods:
       <pubDate>Tue, 19 Sep 2017 00:00:00 +0000</pubDate>
       
       <guid>/Hippocamplus/2017/09/19/mummerplots-with-ggplot2/</guid>
-      <description>library(dplyr) library(magrittr) library(GenomicRanges) library(knitr) library(ggplot2) library(tidyr) MUMmer plot The MUMmer plot that I want to reproduce showed three contigs overlapping a region of chr 14. I had filtered the delta file with delta-filter -l 10000 -q -r to get only the contigs with the best alignments. I had used mummerplot with the -l layout option to reorder and orient the sequences to have a nice diagonal.
-  Read a delta file The delta file is the default output of the NUCmer alignment script.</description>
+      <description>Update Oct 28 2018: added reference id (rid) to be able to visualize multiple reference regions. Also uploaded the example data somewhere.
+library(dplyr) library(magrittr) library(GenomicRanges) library(knitr) library(ggplot2) library(tidyr) MUMmer plot The MUMmer plot that I want to reproduce showed three contigs overlapping a region of chr 14. I had filtered the delta file with delta-filter -l 10000 -q -r to get only the contigs with the best alignments. I had used mummerplot with the -l layout option to reorder and orient the sequences to have a nice diagonal.</description>
     </item>
     
     <item>
