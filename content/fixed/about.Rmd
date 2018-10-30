@@ -15,11 +15,18 @@ This is where I put all the useful information I keep on forgetting. Instead of 
 
 ### My current lab
 
-+ [Bourque's Lab](http://www.computationalgenomics.ca/BourqueLab/).
++ [Computational Genomics Lab at UCSC](https://cgl.genomics.ucsc.edu/).
++ [Genomics Institute at UCSC](https://ucscgenomics.soe.ucsc.edu/)
+
+### My previous labs
+
++ [Bourque Lab](http://www.computationalgenomics.ca/BourqueLab/).
 + [McGill Genome Centre](http://www.mcgillgenomecentre.org/).
 + [Canadian Centre for Computational Genomics (C3G)](http://computationalgenomics.ca/).
 
-### My previous lab
-
-+ [Guigo's Lab](http://big.crg.cat/computational_biology_of_rna_processing).
++ [Guigo Lab](http://big.crg.cat/computational_biology_of_rna_processing).
 + [Center for Genomic Regulation (CRG)](http://www.crg.eu/).
+
+### My dream lab
+
+![](/imgs/labrador-3403486_640.jpg)

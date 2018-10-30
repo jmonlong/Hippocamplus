@@ -7,7 +7,6 @@
 *.gz
 *.toc
 auto
-static
 .Rhistory
 Gemfile.lock
 docs/*/*Rmkd
