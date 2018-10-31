@@ -9,6 +9,8 @@ output:
 
 ## Misc
 
+- Redirect stderr to stdout: `2>&1` (when *screen* doesn't let me scroll).
+
 ### Colors in `less`
 
 Use the `-r` or `-R` option. Sometimes the previous command needs a parameter make sure the output includes color codes.
