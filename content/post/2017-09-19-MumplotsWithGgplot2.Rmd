@@ -161,6 +161,8 @@ ggplot(mumgp.filt.diag, aes(x=rs, xend=re, y=qs, yend=qe, colour=strand)) +
     xlab('reference sequence') + ylab('assembly') + scale_colour_brewer(palette='Set1')
 ```
 
+See also [this GitHub issue](https://github.com/jmonlong/Hippocamplus/issues/2).
+
 
 ## Percent identity and coverage
 

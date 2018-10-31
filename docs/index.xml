@@ -1461,6 +1461,7 @@ ggplot(mumgp.filt.diag, aes(x=rs, xend=re, y=qs, yend=qe, colour=strand)) +
           axis.text.y=element_blank(), axis.ticks.y=element_blank()) +
     xlab(&amp;#39;reference sequence&amp;#39;) + ylab(&amp;#39;assembly&amp;#39;) + scale_colour_brewer(palette=&amp;#39;Set1&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;./post/2017-09-19-MumplotsWithGgplot2_files/figure-html/rid-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;See also &lt;a href=&#34;https://github.com/jmonlong/Hippocamplus/issues/2&#34;&gt;this GitHub issue&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;percent-identity-and-coverage&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Percent identity and coverage&lt;/h2&gt;
