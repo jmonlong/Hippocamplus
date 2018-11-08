@@ -6,10 +6,21 @@
     <description>Recent content in Posts on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 22 Sep 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 07 Nov 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/Hippocamplus/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Peer-review opportunities for early career researchers</title>
+      <link>/Hippocamplus/2018/11/07/ecr-peerreview/</link>
+      <pubDate>Wed, 07 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/Hippocamplus/2018/11/07/ecr-peerreview/</guid>
+      <description>Some notes from today’s workshop organized by USPA with bio-protocol and eLife ambassadors.
+Bio-protocol Data is uploaded to databases, code to repos like GitHub but protocols are still just in the Methods section of papers. And the Methods of a paper often omits many details which makes it difficult to reuse the experiment or reproduce results.
+Dennis Bua introduced bio-protocol, a platform to peer-review protocols. Here the goal is to make sure all the information is provided to reproduce an experiment.</description>
+    </item>
     
     <item>
       <title>Syncing Mendeley and PDFs across devices</title>

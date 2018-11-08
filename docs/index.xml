@@ -6,7 +6,7 @@
     <language>en-us</language>
     <author>Mark Otto</author>
     <rights>(C) 2018</rights>
-    <updated>2018-09-22 00:00:00 &#43;0000 UTC</updated>
+    <updated>2018-11-07 00:00:00 &#43;0000 UTC</updated>
 
     
       
@@ -25,6 +25,60 @@
     
       
     
+      
+    
+      
+        <item>
+          <title>Peer-review opportunities for early career researchers</title>
+          <link>/Hippocamplus/2018/11/07/ecr-peerreview/</link>
+          <pubDate>Wed, 07 Nov 2018 00:00:00 UTC</pubDate>
+          <author>Mark Otto</author>
+          <guid>/Hippocamplus/2018/11/07/ecr-peerreview/</guid>
+          <description>&lt;p&gt;Some notes from &lt;a href=&#34;https://uspa.ucsc.edu/2018/10/31/peer-review-workshop-117-12-pm-in-biomed-200/&#34;&gt;today’s workshop organized by USPA&lt;/a&gt; with bio-protocol and eLife ambassadors.&lt;/p&gt;
+&lt;div id=&#34;bio-protocol&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Bio-protocol&lt;/h2&gt;
+&lt;p&gt;Data is uploaded to databases, code to repos like GitHub but protocols are still just in the &lt;em&gt;Methods&lt;/em&gt; section of papers. And the &lt;em&gt;Methods&lt;/em&gt; of a paper often omits many details which makes it difficult to reuse the experiment or reproduce results.&lt;/p&gt;
+&lt;p&gt;Dennis Bua introduced &lt;a href=&#34;https://bio-protocol.org/&#34;&gt;bio-protocol&lt;/a&gt;, a platform to peer-review protocols. Here the goal is to make sure all the information is provided to reproduce an experiment. Videos can also be uploaded to better show the manipulations. There is no access or publication fee in bio-protocol, and reviewers are early-careers researchers.&lt;/p&gt;
+&lt;p&gt;Currently it’s mostly used for wet lab experiments but Dennis said it was mostly because of a lack of expertise in the current pool of reviewers. At first, it doesn’t feel as essential for dry lab experiments because we can already put the code in repos. It’s also easier (in theory) to ask for assistance with code problems to the authors or in online forums. That covers the situation when someone wants to use the code but not specifically to reproduce the results of the primary article. So most of the time the code linked to a paper is still not really peer-reviewed (I think). And we’ve all seen examples where the “code” is just a bunch of scripts with no comprehensive instructions or README.&lt;/p&gt;
+&lt;p&gt;Dennis mentioned the &lt;a href=&#34;https://en.wikipedia.org/wiki/Curse_of_knowledge&#34;&gt;curse of knowledge&lt;/a&gt; which is when we can’t imagine that other people don’t know what we know. It sounds like the kind of flaw we easily imagine others having but not to us. I’m sure it happens in bioinformatics too. Some scripts are simple or self-explanatory IF the user has the same knowledge (tools, favorite command lines, programming language, organization habits) as the original author.&lt;/p&gt;
+&lt;p&gt;Another step that is often left aside it the data preparation. The main method is often described in more detail because it’s usually novel. How the data was downloaded or preprocessed is sometimes just mentioned in the method section.&lt;/p&gt;
+&lt;p&gt;The more I think about it, the more I think bio-protocol could be useful to &lt;em&gt;vet&lt;/em&gt; a bioinformatics analysis.&lt;/p&gt;
+&lt;p&gt;I’ve tried to make an effort to provide usable scripts to reproduce the results in my papers. At least I (will) try to comment the scripts, even “trivial” commands to limit the &lt;em&gt;curse of knowledge&lt;/em&gt;. For figures/numbers, I found that R-Markdown reports were pretty good because they show the code next to the output so it’s easier to find the code for a particular result. Having the analysis as a &lt;em&gt;protocol&lt;/em&gt; would be an extra step but I feel like it wouldn’t be that much of an effort. Just a reformatting of a comprehensive README/tutorial. The benefit would be:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;having someone external having a second look at the code and instructions.&lt;/li&gt;
+&lt;li&gt;making the methods accessible to a larger audience hence making it more likely to be used.&lt;/li&gt;
+&lt;li&gt;getting something official (a “publication”) out of the reproducibility effort.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;elife&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;eLife&lt;/h2&gt;
+&lt;p&gt;Jason Fernandez and Jordan Ward, two of the three eLife ambassadors at UCSC with Daniel Kim, talked about eLife. I was already quite familiar with eLife and really like the idea of not just a more efficient peer-reviewing but also a better one. Especially better for authors because there is a discussion between reviewers that helps get more useful reviews.&lt;/p&gt;
+&lt;p&gt; &lt;/p&gt;
+
+&lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;
+  &lt;iframe src=&#34;//www.youtube.com/embed/3pjXfgeOCho&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; allowfullscreen title=&#34;YouTube Video&#34;&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+
+&lt;p&gt; &lt;/p&gt;
+&lt;p&gt;eLife is also very active (YouTube videos, podcasts, blogs, innovations) and the ambassadors mentioned &lt;a href=&#34;https://elifesciences.org/inside-elife/ae2cc6b5/early-career-researcher-travel-grants-2018-open-for-applications&#34;&gt;travel grants&lt;/a&gt; for authors and &lt;a href=&#34;https://elifesciences.org/inside-elife/31a5173b/elife-promotes-early-career-involvement-in-peer-review&#34;&gt;review opportunities for early-careers researchers&lt;/a&gt;. Although it might look &lt;em&gt;closed&lt;/em&gt; on the website, they recommended to contact eLife anyway. To have a chance to be included in the pool of reviewers, we should submit a letter of support from a supervisor and a few representative publications.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;other-resources-mentioned-during-the-workshop&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Other resources mentioned during the workshop&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://masterclasses.nature.com/users/4925-claire-hodge/posts/20006-free-online-course-on-peer-review&#34;&gt;Course on peer review from Nature&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;“&lt;a href=&#34;https://www.nature.com/articles/d41586-018-06991-0&#34;&gt;How to write a thorough peer review&lt;/a&gt;” by Matthew Stiller-Reeve explaining his three reading methods.&lt;/li&gt;
+&lt;li&gt;“&lt;a href=&#34;https://jbiol.biomedcentral.com/articles/10.1186/jbiol125&#34;&gt;Are we training pit bulls to review our manuscripts?&lt;/a&gt;” by Virginia Walbot.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.prereview.org/users/8850/articles/198235-welcome-to-prereview&#34;&gt;PREreview&lt;/a&gt; reviews preprints. Part of the &lt;a href=&#34;http://asapbio.org/&#34;&gt;ASAPbio&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://publons.com/home/&#34;&gt;Publons Academy&lt;/a&gt; to learn how to peer review and connect with journal editors&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;
+  &lt;iframe src=&#34;//player.vimeo.com/video/218452887&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; webkitallowfullscreen mozallowfullscreen allowfullscreen&gt;&lt;/iframe&gt;
+ &lt;/div&gt;
+
+&lt;/div&gt;
+</description>
+        </item>
       
     
       

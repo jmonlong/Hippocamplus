@@ -1,0 +1,79 @@
+---
+title: Peer-review opportunities for early career researchers
+tags: ["pub", "science"]
+date: 2018-11-07
+slug: ecr-peerreview
+output: blogdown::html_page
+---
+
+Some notes from [today's workshop organized by USPA](https://uspa.ucsc.edu/2018/10/31/peer-review-workshop-117-12-pm-in-biomed-200/) with bio-protocol and eLife ambassadors.
+
+## Bio-protocol
+
+Data is uploaded to databases, code to repos like GitHub but protocols are still just in the *Methods* section of papers.
+And the *Methods* of a paper often omits many details which makes it difficult to reuse the experiment or reproduce results.
+
+Dennis Bua introduced [bio-protocol](https://bio-protocol.org/), a platform to peer-review protocols. 
+Here the goal is to make sure all the information is provided to reproduce an experiment.
+Videos can also be uploaded to better show the manipulations.
+There is no access or publication fee in bio-protocol, and reviewers are early-careers researchers.
+
+Currently it's mostly used for wet lab experiments but Dennis said it was mostly because of a lack of expertise in the current pool of reviewers.
+At first, it doesn't feel as essential for dry lab experiments because we can already put the code in repos.
+It's also easier (in theory) to ask for assistance with code problems to the authors or in online forums.
+That covers the situation when someone wants to use the code but not specifically to reproduce the results of the primary article.
+So most of the time the code linked to a paper is still not really peer-reviewed (I think). 
+And we've all seen examples where the "code" is just a bunch of scripts with no comprehensive instructions or README. 
+
+Dennis mentioned the [curse of knowledge](https://en.wikipedia.org/wiki/Curse_of_knowledge) which is when we can't imagine that other people don't know what we know. 
+It sounds like the kind of flaw we easily imagine others having but not to us. 
+I'm sure it happens in bioinformatics too.
+Some scripts are simple or self-explanatory IF the user has the same knowledge (tools, favorite command lines, programming language, organization habits) as the original author.
+
+Another step that is often left aside it the data preparation. 
+The main method is often described in more detail because it's usually novel.
+How the data was downloaded or preprocessed is sometimes just mentioned in the method section.
+
+The more I think about it, the more I think bio-protocol could be useful to *vet* a bioinformatics analysis.
+
+I've tried to make an effort to provide usable scripts to reproduce the results in my papers.
+At least I (will) try to comment the scripts, even "trivial" commands to limit the *curse of knowledge*.
+For figures/numbers, I found that R-Markdown reports were pretty good because they show the code next to the output so it's easier to find the code for a particular result.
+Having the analysis as a *protocol* would be an extra step but I feel like it wouldn't be that much of an effort.
+Just a reformatting of a comprehensive README/tutorial.
+The benefit would be:
+
+- having someone external having a second look at the code and instructions.
+- making the methods accessible to a larger audience hence making it more likely to be used.
+- getting something official (a "publication") out of the reproducibility effort.
+
+## eLife
+
+Jason Fernandez and Jordan Ward, two of the three eLife ambassadors at UCSC with Daniel Kim, talked about eLife.
+I was already quite familiar with eLife and really like the idea of not just a more efficient peer-reviewing but also a better one.
+Especially better for authors because there is a discussion between reviewers that helps get more useful reviews.
+
+\ 
+
+```{r echo=FALSE}
+blogdown::shortcode('youtube', '3pjXfgeOCho')
+```
+
+\ 
+
+eLife is also very active (YouTube videos, podcasts, blogs, innovations) and the ambassadors mentioned [travel grants](https://elifesciences.org/inside-elife/ae2cc6b5/early-career-researcher-travel-grants-2018-open-for-applications) for authors and [review opportunities for early-careers researchers](https://elifesciences.org/inside-elife/31a5173b/elife-promotes-early-career-involvement-in-peer-review).
+Although it might look *closed* on the website, they recommended to contact eLife anyway. 
+To have a chance to be included in the pool of reviewers, we should submit a letter of support from a supervisor and a few representative publications.
+
+
+## Other resources mentioned during the workshop
+
+- [Course on peer review from Nature](https://masterclasses.nature.com/users/4925-claire-hodge/posts/20006-free-online-course-on-peer-review)
+- "[How to write a thorough peer review](https://www.nature.com/articles/d41586-018-06991-0)" by Matthew Stiller-Reeve explaining his three reading methods.
+- "[Are we training pit bulls to review our manuscripts?](https://jbiol.biomedcentral.com/articles/10.1186/jbiol125)" by Virginia Walbot.
+- [PREreview](https://www.prereview.org/users/8850/articles/198235-welcome-to-prereview) reviews preprints. Part of the [ASAPbio](http://asapbio.org/).
+- [Publons Academy](https://publons.com/home/) to learn how to peer review and connect with journal editors
+
+```{r echo=FALSE}
+blogdown::shortcode('vimeo', '218452887')
+```
