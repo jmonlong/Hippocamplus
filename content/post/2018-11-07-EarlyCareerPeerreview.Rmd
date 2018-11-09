@@ -71,6 +71,8 @@ To have a chance to be included in the pool of reviewers, we should submit a let
 - [Course on peer review from Nature](https://masterclasses.nature.com/users/4925-claire-hodge/posts/20006-free-online-course-on-peer-review)
 - "[How to write a thorough peer review](https://www.nature.com/articles/d41586-018-06991-0)" by Matthew Stiller-Reeve explaining his three reading methods.
 - "[Are we training pit bulls to review our manuscripts?](https://jbiol.biomedcentral.com/articles/10.1186/jbiol125)" by Virginia Walbot.
+- "[Are you aware of gender bias in peer review?](http://blogs.nature.com/ofschemesandmemes/2017/12/21/are-you-aware-of-gender-bias-in-peer-review)" by Elizabeth Moylan and Elisa de Ranieri.
+- "[How To Become Good At Peer-Review](https://peerj.com/blog/post/73296165864/how-to-become-good-at-peer-review/)" on PeerJ blog.
 - [PREreview](https://www.prereview.org/users/8850/articles/198235-welcome-to-prereview) reviews preprints. Part of the [ASAPbio](http://asapbio.org/).
 - [Publons Academy](https://publons.com/home/) to learn how to peer review and connect with journal editors
 
