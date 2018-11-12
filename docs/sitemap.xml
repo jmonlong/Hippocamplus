@@ -39,6 +39,11 @@
   </url>
   
   <url>
+    <loc>/Hippocamplus/2018/11/12/bachelard-formation-esprit-scientifique-part1/</loc>
+    <lastmod>2018-11-12T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/Hippocamplus/2018/11/07/ecr-peerreview/</loc>
     <lastmod>2018-11-07T00:00:00+00:00</lastmod>
   </url>
@@ -125,7 +130,13 @@
   
   <url>
     <loc>/Hippocamplus/</loc>
-    <lastmod>2018-11-07T00:00:00+00:00</lastmod>
+    <lastmod>2018-11-12T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/Hippocamplus/tags/book/</loc>
+    <lastmod>2018-11-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -171,7 +182,7 @@
   
   <url>
     <loc>/Hippocamplus/post/</loc>
-    <lastmod>2018-11-07T00:00:00+00:00</lastmod>
+    <lastmod>2018-11-12T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -188,7 +199,7 @@
   
   <url>
     <loc>/Hippocamplus/tags/science/</loc>
-    <lastmod>2018-11-07T00:00:00+00:00</lastmod>
+    <lastmod>2018-11-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -200,7 +211,7 @@
   
   <url>
     <loc>/Hippocamplus/tags/</loc>
-    <lastmod>2016-09-06T00:00:00+00:00</lastmod>
+    <lastmod>2018-11-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

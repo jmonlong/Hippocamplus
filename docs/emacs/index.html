@@ -158,6 +158,10 @@
     
       
     
+      
+    
+      
+    
 
     
     
@@ -317,6 +321,11 @@ make</code></pre>
 <p>Then add these lines to <code>~/.emacs</code>:</p>
 <pre class="lisp"><code>(add-to-list &#39;load-path &quot;~/.emacs.d/lisp/ess/lisp/&quot;)
 (load &quot;ess-site&quot;)</code></pre>
+<p>I also have these ESS config:</p>
+<pre class="lisp"><code>(setq ess-default-style &#39;DEFAULT)
+(setq ess-indent-level 2)
+(setq ess-r-package-auto-set-evaluation-env nil)</code></pre>
+<p>The last one took me some times to figure out: when developing a R package, commands were evaluated in another environment so the objects didn’t exist in the usual R buffer (which was driving me crazy).</p>
 </div>
 <div id="auto-complete" class="section level3">
 <h3>Auto-complete</h3>

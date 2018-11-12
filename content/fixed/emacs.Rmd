@@ -108,6 +108,16 @@ Then add these lines to `~/.emacs`:
 (load "ess-site")
 ~~~
 
+I also have these ESS config:
+
+~~~lisp
+(setq ess-default-style 'DEFAULT)
+(setq ess-indent-level 2)
+(setq ess-r-package-auto-set-evaluation-env nil)
+~~~
+
+The last one took me some times to figure out: when developing a R package, commands were evaluated in another environment so the objects didn't exist in the usual R buffer (which was driving me crazy).
+
 ### Auto-complete
 
 To get auto-completion (with objects, functions or parameters) I use *auto-complete*. It's also available through MELPA.

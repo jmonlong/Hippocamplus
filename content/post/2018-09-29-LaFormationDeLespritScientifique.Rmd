@@ -1,153 +1,258 @@
 ---
-title: La formation de l'esprit scientifique, Gaston Bacherlard
-tags: ["science"]
-date: 2018-09-29
-draft: true
-slug: bachelard-formation-esprit-scientifique
-output: blogdown::html_page
+title: "The Formation of the Scientific Mind, Gaston Bachelard - part 1"
+tags: ["science", "book"]
+date: 2018-11-12
+slug: bachelard-formation-esprit-scientifique-part1
+output:
+  blogdown::html_page:
+    toc: true
 ---
 
 These are notes from my reading of [*La formation de l'esprit scientifique*](https://fr.wikipedia.org/wiki/La_Formation_de_l%27esprit_scientifique) by [Gaston Bachelard](https://en.wikipedia.org/wiki/Gaston_Bachelard).
-I hesitated a bit but finally decided to write the notes in English because in the end this blog is as much a place to save things I want to remember as a place to practice writing in English and share with other people.
-There are a lot of quotes that I liked. 
+I hesitated a bit but finally decided to write the notes in English.
+In the end this blog is as much a place to save things I want to remember as a place to practice writing in English and share with other people.
+There are lots of quotes that I liked. 
 I tried to translate them as best I could.
 
+This is "part 1" which covers the concept of epistemological obstacle and the first chapters about the primary experiment, images and generalization as obstacles.
 
 ## Quotes about science
 
+Let's warm up with some positive quotes from the opening chapter before focusing on the obstacles.
+
 > La connaissance du réel est une lumière qui projette toujours quelque part des ombres.
 
-"Knowledge of reality is a light that always throws shadows somewhere."
+*"Real-world knowledge is a light that always throws shadows somewhere."*
 
 ---
 
-On seeking knowledge:
-
 > En résumé, l'homme animé par l'esprit scientifique désire sans doute savoir, mais c'est aussitôt pour mieux interroger.
 
-"In summary, the person moved by the scientific spirit surely desires knowledge, but it is to better immediately interrogate." 
+*"In summary, the individual moved by the scientific mind surely wants to know, but it's to better question immediately after." *
 
 ---
 
 > En fait, l'histoire des mathématiques est une merveille de régularité. Elle connaît des périodes d'arrêt. Elle ne connaît pas des périodes d'erreurs.
 
-## Epistemological obstacle
+*"In reality, history of mathematics is a marvel of regularity. It knows some interruption periods. It doesn't know any error periods."*
+
+## The concept of epistemological obstacle
 
 This is the central concept of this work.
-The obstacle is not external, it is not caused by observed phenomenon that are too mysterious or complex, or technological limitations.
+The obstacle is not external, it is not caused by observed phenomenon that are too mysterious or complex, or by technological limitations.
 The epistemological obstacle is internal and ideological.
 When ideas stagnate or regress, we are facing an epistemological obstacle.
 
-Epistemological obstacle is studied in two settings: the development of scientific thinking throughout history and in the educational practice.
+The epistemological obstacle is studied in two settings: the development of scientific thinking throughout history and in the educational practice.
 
-The difference between an historian and an epistemologist is that the historian takes ideas as fact, while the epistemologist takes fact as ideas and place them in a system of thoughts.
+The difference between a historian and an epistemologist is that the historian takes ideas as fact, while the epistemologist takes fact as ideas and place them in a system of thoughts.
 Through the notion of epistemological obstacle, the history of scientific thinking gains a spiritual value.
 
 The first experiment/observation is the first epistemological obstacle.
-It looks easy to understand or generalize, seducing us into believing that we understand the beauty of nature.
+It looks easy to understand or to generalize, seducing us into believing that we understand the beauty of nature.
 It usually comes with a sense of marvel as it's the first time it's observed or "understood".
 We think we understand and that's the obstacle.
 
-The second obstacle is to follow hasty generalizations like the ones that emerge from the first obstacle.
+The second obstacle is to follow hasty generalizations like the ones that emerge from the primary experiment.
 
-Other obstacles in not particular order:
+> Comme le dit si bien d'Alembert, on généralise ses premières remarques, l'instant d'après qu'on ne remarquait rien.
+
+*"Like d'Alembert nicely stated, we generalize our first observations, the moment after we didn't observe anything."*
+
+
+Other obstacles in no particular order (that will be covered in other posts):
 
 - Using the unity of Nature as an explanation.
 - Using the utility of natural phenomenon as an explanation.
 - The verbal obstacle that uses explanatory words.
-- Substantialism/realism ?
+- Substantialism/realism.
 - "The animist obstacle in physical sciences".
 - False geometrization and rigor.
+
+In the opening chapter Bachelard mentions the obstacles of close-mindedness and prior knowledge.
+Instincts, opinions, as well as education and previous knowledge are obstacles.
+A researcher must be able to rethink, to make abstraction of what she thinks is true, when battling an epistemological obstacle.
+
+> Accéder à la science, c'est, spirituellement rajeunir, c'est accepter une mutation brusque qui doit contredire un passé.
+
+*"To access science is to spiritually rejuvenate, it's accepting an abrupt mutation that must contradict a past."*
+
+---
+
+> On ne peut rien fonder sur l'opinion: il faut d'abord la détruire. Elle est le premier obstacle à surmonter.
+
+*"We cannot base anything on opinion: it must be destroyed first. It's the first obstacle to overcome."*
+
+---
+
+> Les grands hommes sont utiles à la science dans la première moitié de leur vie, nuisibles dans la seconde moitié.
+
+*"Great men are useful to science in the first half of their life, harmful in the second half."*
+
+--- 
+
+> [...] l'homme devient une espèce mutante, ou pour mieux dire encore, une espèce qui a besoin de muter, qui souffre de ne pas changer.
+
+*"Man becomes a mutant species, or better said still, a species that needs to mutate, that suffers from not changing."*
+
+---
+
+> Toute culture scientifique doit commencer [...] par une catharsis intelectuelle et affective.
+
+*"Any scientific culture must begin with an intellectual and emotional catharsis."*
+
+Yes, catharsis of course...*googling*...ah yes, [catharsis](https://en.wikipedia.org/wiki/Catharsis), that makes sense.
+
 
 ## The first obstacle: the primary experiment
 
 The scientific mind must develop *against* Nature.
-During the pre-scientific period (XVIII century), scientific books were not checked for accuracy, it was about the authors ideas.
-More importance was given to the "story" or how it explained daily phenomenons.
-Bachelard then describe a few of these books and their (funny) explanations.
+During the pre-scientific period (XVIII century), scientific books were not based on peer-reviewed science, it was more about the author's ideas than accuracy.
+More importance was given to the "story" or how it explained daily phenomena.
+Bachelard then describes a few of these books and their (funny) explanations.
 Although he agrees that these were picked as bad examples, he argues that the science at a particular time is not the science that survives time (especially in the pre-scientific period). 
 
 There is a danger on relying too much on primary experiments, on selected observations and images, and on easy explanations.
 
 > On remplace la connaissance par l'admiration, les idées par les images.
 
-"We replace knowledge with admiration, ideas with images."
+*"We replace knowledge with admiration, ideas with images."*
 
 ---
 
 > Une science qui accepte les images est, plus que toute autre, victime des métaphores. Aussi l'esprit scientifique doit-il sans cesse lutter contre les images, contre les analogies, contre les métaphores.
 
-"A science that accepts images is, more than any other, victim of metaphors. Hence the scientific mind must continuously fight agains images, against analogies, against metaphors."
+*"A science that accepts images is, more than any other, victim of metaphors. Hence, the scientific mind must continuously fight against images, against analogies, against metaphors."*
 
 ---
 
-Coupled with curiosity this can lead to listing observations and their independent explanations without digging deeper and testing variation of the experiments.
-These easy solutions satisfy quick curiosity but destroy the sense of *problem* that is vital for progress.
+Coupled with general curiosity, we might end up listing observations and their independent explanations without digging deeper or testing variation of the experiments.
+These easy solutions satisfy our primal curiosity but destroy the sense of *problem* that is vital for progress.
 
 > Elle cherche non pas la variation, mais la variété.
 
-"It's not looking for variation, but for variety."
+*"It's not looking for variation, but for variety."*
 
 
-He gives the example of electricity, its "easy" explanations at the beginning and its entertaining experiments.
+He gives the example of electricity, its "easy" explanations at the beginning and its entertaining experiments (people were fascinated by [Leyden jars](https://www.youtube.com/watch?v=xjW-isgOijs)).
 
 > Il est si doux à la paresse intellectuelle d'être cantonnée dans l'empirisme, d'appeler un fait un fait et d'interdire la recherche d'une loi!
 
-"It is so attractive to intellectual laziness to keep to empirism, to call a fact a fact and forbid the search of a law!"
+*"It is so attractive to intellectual laziness to keep to empiricism, to call a fact a fact and forbid the search of a law!"*
+
+With these experiments, the answers are clearer than the questions.
+They promote some sort of *subconscious of the scientific mind* that is difficult to get rid of.
+I imagine this as all these experiments/observations, all independent, all subconsciously accepted, with no clear link or structure, floating around and clouding the scientific mind.
+He quotes M. Édouard Le Roy:
+
+> La connaissance commune est inconscience de soi.
+
+*"Common knowledge is unconsciousness of oneself"*
+
+Bachelard concludes this chapter with the example of alchemy.
+With its strong images and symbols, alchemy seems to touch us deep within our subconscious and represented a formidable epistemological obstacle.
+
+> En vérité, l'amour d'une Chimère est le plus fidèle des amours.
+
+*"The truth is: love for a Chimera is the most faithful love."*
+
+## General knowledge as an obstacle
+
+We have to go beyond the primary experiment and its images.
+Doing so the scientist faces another obstacle which is to generalize too quickly or too far.
+
+Quoting Marcel Boll on what characterizes the modern scientist:
+
+> C'est l'objectivité et non pas l'universalisme: la pensée doit être objective, elle ne sera universelle que si elle le peut, que si la réalité l'y autorise.
+
+*"It's objectivity and not universalism: the mind must be objective, it will be universal only if it can, if reality allows it to be."*
+
+Beyond being sometimes false, general rules tend to stop the scientific endeavor.
+A general rule is sometimes satisfying enough that the scientist might not feel the need to explore further. 
+Other times it is just difficult to "attack" what's left of the problem, to find the right angle to study further.
+
+A general rule tend to rely on the meaning of its words which are often vague or subjective.
+The more useful rule uses objective terms and describes precisely the conditions in which it applies.
+Sometimes these conditions are more interesting than the rule.
+
+> Ce qui limite une connaissance est souvent plus important, pour les progrès de la pensée, que ce qui étend vaguement la connaissance.
+
+*"What limits a principle is often more important, to advance our understanding, than something that vaguely extends knowledge"*
+
+> Une connaissance générale est presque fatalement une connaissance vague.
+
+*"A general knowledge is almost inevitably a vague knowledge."*
+
+General rules seem good in the short term as they rebuke older theories, but they are also stopping further characterization in the long term.
+
+> Autour d'une connaissance trop générale, la zone d'inconnu ne se résout pas en problèmes précis.
+
+*"Around a knowledge that is too general, the area of unknown is not formed of precise problems."*
+
+He gives the example of the following statement: *everything falls*.
+Although more accurate than older theories (like the ancient Greeks and their heavy vs light objects), it's difficult to go further.
+Experiments in vacuums show that everything falls. 
+Case closed, what do we do now?
+The rule seems sufficient to explain the observations but often it is not the most important concept that is put forward.
+In the example above, the movement/speed might be what's usually described but acceleration is at the root of the law.
+
+In the second part of this chapter, Bachelard gives two examples of over-generalization: fermentation and coagulation.
+Basically, at some point many phenomena were grouped together and assumed to involve the same general mechanism.
+At this time, coagulation explained blood coagulation but also milk curdling, metal solidification, water freezing, or ocean froth.
+Similar story for fermentation that also explained digestion, metal formation, or electricity.
+
+Once general concepts explained that many things, it was frowned upon to go the other way.
+Why try to differentiate phenomena if we can explain everything with coagulation?
+
+> Cette méfiance des variations, cette paresse de la distinction, voilà précisément des marques du concept sclérosé !
+
+*"This distrust for variations, this laziness for distinction, this is precisely the signs of the sclerosed concept!"*
+
+Echoing the previous obstacle, general concepts often gave birth to higher-level symbols and philosophy.
+For example, the source the fermentation that was everywhere obtained a new value, the started/pre-ferment became a symbol.
+
+> [...] toute trace de valorisation est un mauvais signe pour une connaissance qui vise l'objectivité.
+
+*"Any trace of valorization is a bad sign for a knowledge that aspires for objectivity."*
 
 
+## An example of verbal obstacle: the *sponge*
+
+Here, Bachelard presents a special case of the obstacles described above. 
+The image of the *sponge* was used extensively to explain many phenomena in a typical example of over-generalization.
+This word was so useful that it infiltrated different fields and later hindered correct explanations.
+The *sponge* described phenomena so elegantly that they believed it explained it.
+
+> Ces phénomènes, on les exprime: on croit donc les expliquer. On les reconnaît: on croit donc les connaître.
+
+*"These phenomena, we express them: hence we think we explain them. We recognize them: hence we think we know them."*
+
+Essentially, verbal habits constrains scientific thinking, so we should be wary of the words and expressions we use when thinking about science.
+In science, we should use images and analogies only *after* establishing the theory.
+In contrast, the image of the *sponge* actually made people come up with new explanations or theories.
+
+> Voilà la preuve d'un mouvement purement et simplement linguistique qui, en associant, à un mot concret, un mot abstrait, croit avoir fait avancer la pensée.
+
+*"Here is the proof of a movement purely and simply linguistic which, by associating an abstract word to a concrete word, thinks it has advanced our understanding."*
+
+Once a word like the *sponge* had been attached to a phenomenon, it was difficult to get rid of it.
+Even if some details didn't match the image, people kept using the *sponge* because it elegantly explained the rest.
+
+> Le doute général est plus facile que le doute particulier.
+
+*"The general doubt is easier than the particular doubt."*
+
+Descartes fell for it:
+
+> La métaphysique de l'espace chez Descartes est la métaphysique de l'éponge.
+
+*"For Descartes, the metaphysics of space is the metaphysics of the sponge."*
 
 
-## On the obstacle of close-mindedness
+## Aside on education
 
-Instincts or opinions contribute to epistemological obstacles.
-Similarly education and previous knowledge play a role and a researcher must be able to rethink, to make abstraction of what she thinks is true, when fighting against an epistemological obstacle.
-
-
-> Accéder à la science, c'est, spirituellement rajeunir, c'est accepter une mutation brusque qui doit contredire un passé.
-
-"To access science is to spiritually rejuvenate, it's accepting an abrupt mutation that must contradict a past."
-
----
-
-> On ne peut rien fonder sur l'opinion: il faut d'abord la détruire. Elle est le premier obstacle à surmonter.
-
-"We cannot base anything on opinion: it must first be destroyed. It's the first obstacle to overcome."
-
----
-
-> Les grands hommes sont utiles à la science dans la première moitié de leur vie, nuisibles dans la seconde moitié.
-
-"Great men are useful to science in the first half of their life, harmful in the second half."
-
---- 
-
-> [...] l'homme devient une espèce mutante, ou pour mieux dire encore, une espèce qui a besoin de muter, qui souffre de ne pas changer.
-
-"Man becomes a mutant species, or better said still, a species that needs to mutate, that suffers of not changing."
-
----
-
-> Toute culture scientifique doit commencer [...] par une catharsis intelectuelle et affective.
-
-"Any scientific culture must begin with an intellectual and emotional catharsis."
-
-Yes, catharsis of course...*googling*...ah yes, catharsis, that makes sense.
-
-
-## On trappings of empirical observations
-
-Second obstacle.
-
-> Comme le dit si bien d'Alembert, on généralise ses premières remarques, l'instant d'après qu'on ne remarquait rien.
-
-"Like d'Alembert nicely stated, we generalize our first observations, the moment after we didn't observe anything."
-
----
-
-
-
-## Education
+*In the introduction, Bachelard also talks about education. *
+*I don't think there is a chapter on that particular subject so here it is.*
 
 Little effort has been directed toward the study of the psychology of ignorance and error.
 People think it's just a matter of giving a lesson, repeating it until it's grasped by the student, often using the same approach each time (e.g. retaking the class).
@@ -158,13 +263,13 @@ We should spend more time guiding this conceptual readjustments when teaching sc
 
 > Les professeurs de sciences, plus encore que les autres si c'est possible, ne comprennent pas qu'on ne comprenne pas.
 
-"Science teachers, even more than others if that is possible, don't understand that one doesn't understand."
+*"Science teachers, even more than others if that is possible, don't understand that one doesn't understand."*
 
 ---
 
-> Un educateur n'a pas le sens de l'echec precisement parce qu'il se croit un maitre.
+> Un éducateur n'a pas le sens de l'échec précisément parce qu'il se croit un maître.
 
-"A teacher doesn't have a sense of failure precisely because he believes himself to be a master."
+*"A teacher doesn't have a sense of failure precisely because he believes himself to be a master."*
 
 ---
 
@@ -174,15 +279,41 @@ Sure they'll remember when the tube exploded but not why or in which context.
 
 > Mieux vaudrait une ignorance complète qu'une connaissance privée de son principe fondamental.
 
-"Complete ignorance would be better than knowledge deprived of its fundamental principle."
+*"Complete ignorance would be better than knowledge deprived of its fundamental principle."*
 
-
-## Interesting stories
-
-- How people were fascinated by [Leyden jars](https://www.youtube.com/watch?v=xjW-isgOijs).
 
 ## Sick burns
 
+About Carra's explanation of bipedal walking that involve centrifugal force from earth rotation and electricity in the atmosphere: 
+
 > On imagine assez facilement qu'un enfant de huit ans, à la seule condition d'avoir à sa disposition un vocabulaire pédant, pourrait développer de telles billevesées.
 
-"We can imagine quite easily that an eight years old child, if only he had a pedantic vocabulary at his disposal, would develop similar nonsense."
+*"We can imagine quite easily that an eight years old child, if only he had a pedantic vocabulary at his disposal, would develop similar nonsense."*
+
+![](https://media.giphy.com/media/xUPGcoUeohKhIesT5K/giphy.gif)
+
+---
+
+Philosophers vs scientists:
+
+> E. Mach ne manquait pas de malice quand il répondait à l'affirmation de W. James «Tout savant a sa philosophie» par la constatation réciproque «Tout philosophe a sa science à lui».
+
+*"E. Mach playfully responded to W. James's statement that «Every scientist has his own philosophy» by the reciprocal «Every philosopher has his own science»."*
+
+
+---
+
+About Réaumur's explanation of air as a *sponge*: 
+
+> Nous sentons le besoin de nous excuser auprès du lecteur d'avoir cité cette page interminable, cette page si mal écrite, d'un auteur célèbre.
+
+*"We feel we must apologize to the reader that we quoted this never-ending page, this page so badly written, from a famous author."*
+
+---
+
+P. de Lozeran won the Academy price with his explanation of thunder as a chemical reaction of gun powder-like ingredients in the air.
+Bachelard quotes the Academy:
+
+> L'Académie qui n'avait pu discerner le prix l'année précédente se félicite d'avoir attendu un si beau mémoire.
+
+*"The Academy which hadn't been able to give a prize the year before congratulate itself for having waited for such a beautiful memoir."*
