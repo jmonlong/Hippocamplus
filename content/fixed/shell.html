@@ -16,8 +16,7 @@ output:
 <li><a href="#rsync">rsync</a></li>
 </ul></li>
 <li><a href="#one-liners">One-liners</a><ul>
-<li><a href="#add-headers-with-cat">Add headers with cat</a></li>
-<li><a href="#remove-empty-directories">Remove empty directories</a></li>
+<li><a href="#bash-pipes">Bash &amp; Pipes</a></li>
 <li><a href="#awk">AWK</a></li>
 <li><a href="#perl-one-liners">Perl one-liners</a></li>
 </ul></li>
@@ -43,7 +42,7 @@ output:
 <div id="misc" class="section level2">
 <h2>Misc</h2>
 <ul>
-<li>Redirect stderr to stdout: <code>2&gt;&amp;1</code> (when <em>screen</em> doesn’t let me scroll).</li>
+<li>Redirect stderr to stdout: <code>2&gt;&amp;1</code>.</li>
 </ul>
 <div id="colors-in-less" class="section level3">
 <h3>Colors in <code>less</code></h3>
@@ -58,24 +57,29 @@ grep --color=always | less -R</code></pre>
 </div>
 <div id="rsync" class="section level3">
 <h3>rsync</h3>
-<p><code>rsync</code> is not completely intuitive to me. Here are some of the commands I could make work.</p>
+<p><code>rsync</code> is not completely intuitive to me.
+Here are some of the commands I could make work.</p>
 <hr />
 <p>To recurrently sync all the files that match the patterns in <code>rsyncIncludes.txt</code>:</p>
 <pre class="sh"><code>rsync -r --include=&#39;*/&#39; --include-from=rsyncIncludes.txt --exclude=&#39;*&#39; --prune-empty-dirs SRC DEST</code></pre>
 <hr />
-<p>To recurrently sync all the files that match the patterns in <code>rsyncIncludes.txt</code> EXCEPT some with a specific pattern. Practical example: all the R scripts but not the ones created by BatchJobs in <code>*-files</code> directories:</p>
+<p>To recurrently sync all the files that match the patterns in <code>rsyncIncludes.txt</code> EXCEPT some with a specific pattern.
+Practical example: all the R scripts but not the ones created by BatchJobs in <code>*-files</code> directories:</p>
 <pre class="sh"><code>rsync -r --exclude=&quot;*-files&quot; --include=&#39;*/&#39; --include=&#39;*.R&#39; --exclude=&#39;*&#39; --prune-empty-dirs SRC DEST</code></pre>
 </div>
 </div>
 <div id="one-liners" class="section level2">
 <h2>One-liners</h2>
-<div id="add-headers-with-cat" class="section level3">
-<h3>Add headers with cat</h3>
-<p><code>cat file.txt | cat headers.txt -</code> concatenated end of the pipe after <code>headers.txt</code>.</p>
-</div>
-<div id="remove-empty-directories" class="section level3">
-<h3>Remove empty directories</h3>
-<p><code>find . -type d | xargs rmdir</code></p>
+<div id="bash-pipes" class="section level3">
+<h3>Bash &amp; Pipes</h3>
+<p>Add headers with cat</p>
+<pre><code>cat file.txt | cat headers.txt -</code></pre>
+<hr />
+<p>Remove empty directories</p>
+<pre><code>find . -type d | xargs rmdir</code></pre>
+<hr />
+<p>Git add all untracked files</p>
+<pre><code>git st -s | grep &#39;??&#39; | cut -f2 -d &#39; &#39; | xargs git add</code></pre>
 </div>
 <div id="awk" class="section level3">
 <h3>AWK</h3>
@@ -155,12 +159,14 @@ fi</code></pre>
 </div>
 <div id="to-pdfa" class="section level3">
 <h3>to PDF/A</h3>
-<p>In the end I had to use Acrobat Reader Pro… Still, converting the PDF using the following commands beforehand helped (otherwise Acrobat Reader Pro couldn’t convert it):</p>
+<p>In the end I had to use Acrobat Reader Pro…
+Still, converting the PDF using the following commands beforehand helped (otherwise Acrobat Reader Pro couldn’t convert it):</p>
 <pre class="sh"><code>gs -dPDFA=1 -dBATCH -dNOPAUSE -dEmbedAllFonts=true -dSubsetFonts=false -dHaveTrueTypes=true -dPDFSETTINGS=/prepress -sProcessColorModel=DeviceRGB -sDEVICE=pdfwrite -sPDFACompatibilityPolicy=1 -sOutputFile=mainPDFA.pdf main.pdf</code></pre>
 <p>On the other hand, passing by a <code>.ps</code> stage as recommended <a href="https://superuser.com/questions/188953/how-to-convert-a-pdf-to-a-pdf-a">here</a>, produced a smaller PDF that was directly PDF/A compliant (no need for Acrobat Reader Pro) but lost all cross-reference links :(</p>
 <pre class="sh"><code>pdftops main.pdf main.ps
 gs -dPDFA -dBATCH -dNOPAUSE -dNOOUTERSAVE -dUseCIEColor -sProcessColorModel=DeviceCMYK -sDEVICE=pdfwrite -sPDFACompatibilityPolicy=1 -sOutputFile=mainPDFA.pdf main.ps</code></pre>
-<p>To check for PDF/A compliance I used <a href="https://www.pdf-online.com/osa/validate.aspx">this online validator</a> or Acrobat Reader Pro. Another way to check for problems is to look at the <em>emb</em> column of <code>pdffonts main.pdf</code> (should be all embedded) and the <em>type</em> column of <code>pdfimages -list main.pdf</code> (should be all <em>image</em>).</p>
+<p>To check for PDF/A compliance I used <a href="https://www.pdf-online.com/osa/validate.aspx">this online validator</a> or Acrobat Reader Pro.
+Another way to check for problems is to look at the <em>emb</em> column of <code>pdffonts main.pdf</code> (should be all embedded) and the <em>type</em> column of <code>pdfimages -list main.pdf</code> (should be all <em>image</em>).</p>
 <p><em>Note: this is based only on my one-time experience with the PDF of my thesis.</em></p>
 </div>
 </div>
@@ -168,9 +174,10 @@ gs -dPDFA -dBATCH -dNOPAUSE -dNOOUTERSAVE -dUseCIEColor -sProcessColorModel=Devi
 <h2>Git</h2>
 <ul>
 <li>Commit all modification and added files: <code>git commit -am &quot;informative message&quot;</code></li>
-<li>To show all the history of a file: <code>git log -p -- file</code>.</li>
-<li>To retrieve a specific version of a file: <code>git show COMMIT:file</code>.</li>
+<li>To show all the history of a file: <code>git log -p -- file</code></li>
+<li>To retrieve a specific version of a file: <code>git show COMMIT:file</code></li>
 <li>Update sub-modules: <code>git submodule update --init --recursive</code></li>
+<li>Add all untracked files: <code>git st -s | grep '??' | cut -f2 -d ' ' | xargs git add</code></li>
 </ul>
 <div id="aliases" class="section level4">
 <h4>Aliases</h4>
@@ -235,7 +242,8 @@ cd $WD</code></pre>
 </div>
 <div id="increase-memory" class="section level4">
 <h4>Increase memory</h4>
-<p>In Mac OS, I had some problems with the docker stopping because of memory issues. I fixed by changing:</p>
+<p>In Mac OS, I had some problems with the docker stopping because of memory issues.
+I fixed by changing:</p>
 <pre class="sh"><code>docker-machine stop
 VBoxManage modifyvm default --cpus 3
 VBoxManage modifyvm default --memory 8192
@@ -250,7 +258,8 @@ docker-machine start</code></pre>
 </div>
 <div id="modules" class="section level2">
 <h2>Modules</h2>
-<p>For example installing Emacs as a module on a HPC. After installing Emacs locally in a <code>~/softwares/emacs/emacs-24.4</code> I create a file <code>~/myModules/jmonlong/emacs/24.4</code> with:</p>
+<p>For example installing Emacs as a module on a HPC.
+After installing Emacs locally in a <code>~/softwares/emacs/emacs-24.4</code> I create a file <code>~/myModules/jmonlong/emacs/24.4</code> with:</p>
 <pre class="shell"><code>#%Module1.0
 proc ModulesHelp { } {
   puts stderr &quot;\tMUMmer &quot;

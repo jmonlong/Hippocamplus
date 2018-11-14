@@ -8,8 +8,6 @@
 *.toc
 auto
 .Rhistory
-Gemfile.lock
 docs/*/*Rmkd
 cache
-_source
-_site
+blogdown

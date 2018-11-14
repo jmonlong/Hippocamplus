@@ -9,7 +9,7 @@ output:
 
 ## Misc
 
-- Redirect stderr to stdout: `2>&1` (when *screen* doesn't let me scroll).
+- Redirect stderr to stdout: `2>&1`.
 
 ### Colors in `less`
 
@@ -49,13 +49,30 @@ rsync -r --exclude="*-files" --include='*/' --include='*.R' --exclude='*' --prun
 
 ## One-liners
 
-### Add headers with cat
+### Bash & Pipes
 
-`cat file.txt | cat headers.txt -` concatenated end of the pipe after `headers.txt`.
+Add headers with cat
 
-### Remove empty directories
+```
+cat file.txt | cat headers.txt -
+```
 
-`find . -type d | xargs rmdir`
+---
+
+Remove empty directories
+
+```
+find . -type d | xargs rmdir
+```
+
+---
+
+Git add all untracked files
+
+```
+git st -s | grep '??' | cut -f2 -d ' ' | xargs git add
+```
+
 
 ### AWK
 
@@ -175,9 +192,10 @@ Another way to check for problems is to look at the *emb* column of `pdffonts ma
 ## Git
 
 + Commit all modification and added files: `git commit -am "informative message"`
-+ To show all the history of a file: `git log -p -- file`.
-+ To retrieve a specific version of a file: `git show COMMIT:file`.
++ To show all the history of a file: `git log -p -- file`
++ To retrieve a specific version of a file: `git show COMMIT:file`
 + Update sub-modules: `git submodule update --init --recursive`
++ Add all untracked files: `git st -s | grep '??' | cut -f2 -d ' ' | xargs git add`
 
 #### Aliases
 
