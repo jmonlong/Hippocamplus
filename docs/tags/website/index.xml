@@ -12,11 +12,11 @@
     
     
     <item>
-      <title>Speeding up blogdown/Hugo for large bibliography</title>
-      <link>/Hippocamplus/2018/11/17/speedup-blogwdown-hugo-large-bibliography/</link>
+      <title>Speeding up blogdown/Pandoc for large bibliography</title>
+      <link>/Hippocamplus/2018/11/17/speedup-blogwdown-pandoc-large-bibliography/</link>
       <pubDate>Sat, 17 Nov 2018 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/2018/11/17/speedup-blogwdown-hugo-large-bibliography/</guid>
+      <guid>/Hippocamplus/2018/11/17/speedup-blogwdown-pandoc-large-bibliography/</guid>
       <description>I have another website where I write down my reviews of the papers I read. To handle citations in pages and posts, I was originally using jekyll-scholar. It scales well enough that I could have one main BibTeX file for all the pages of the website. I’m now switching to blogdown/Hugo because it’s apparently faster, with less dependencies, but most importantly because it’s very easy to integrate R code with RMarkdown.</description>
     </item>
     
