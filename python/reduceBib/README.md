@@ -1,4 +1,4 @@
-Some more info at [http://jmonlong.github.io/Hippocamplus/2018/11/17/speedup-blogwdown-hugo-large-bibliography/](http://jmonlong.github.io/Hippocamplus/2018/11/17/speedup-blogwdown-hugo-large-bibliography/).
+Some more info at [http://jmonlong.github.io/Hippocamplus/2018/11/17/speedup-blogwdown-pandoc-large-bibliography/](http://jmonlong.github.io/Hippocamplus/2018/11/17/speedup-blogwdown-pandoc-large-bibliography/).
 
 ```sh
 usage: reduceBib.py [-h] [-b BIB] [-o OUT] [-a NAUTHS] [-f FIELDS]
