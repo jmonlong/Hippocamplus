@@ -10,7 +10,7 @@
 
   <title>
     
-      Summary epigenetic mark tracks &middot; Hippocamplus
+      Speeding up blogdown/Hugo for large bibliography &middot; Hippocamplus
     
   </title>
 
@@ -197,53 +197,56 @@
 
 
 <div class="post">
-  <h1 class="post-title">Summary epigenetic mark tracks</h1>
-  <span class="post-date">Sep 6 2016
+  <h1 class="post-title">Speeding up blogdown/Hugo for large bibliography</h1>
+  <span class="post-date">Nov 17 2018
   
   
   
   
   
-  <a href='../../../../tags/genome/' class='label'>genome</a>
+  <a href='../../../../tags/r/' class='label'>R</a>
   
-  <a href='../../../../tags/data/' class='label'>data</a>
-  
-  <a href='../../../../tags/epigenetic/' class='label'>epigenetic</a>
+  <a href='../../../../tags/website/' class='label'>website</a>
   
   
   
   </span>
-  <p>To assess the potential impact of variants (SNV, SVs) we might want to use some of the public epigentic datasets. The amount and heterogeneity of this data is a bit overwhelming. I would like to get a summary of which regions of the genome are the most functionally important.</p>
-<p>The plan is to:</p>
-<ul>
-<li>get annotated <strong>peaks</strong></li>
-<li>for the 6 <strong>typical histone marks</strong></li>
-<li>in <strong>5-6 tissues</strong>, merging sub-tissues (e.g. brain subregions)</li>
-<li>keep regions <strong>supported by enough replicates</strong></li>
-</ul>
-<p>Eventually, I could also annotate the regions that are tissue-specific or shared across tissues.</p>
-<p>The R-markdown source code is in the website’s <a href="https://github.com/jmonlong/Hippocamplus/blob/gh-pages/_source/2016-09-06-epigeneticTracks.Rmd">GitHub</a>.</p>
-<div id="annotationhub" class="section level2">
-<h2>AnnotationHub</h2>
-<p>I’ll use the <a href="http://bioconductor.org/packages/release/bioc/html/AnnotationHub.html">AnnotationHub</a> package, which links Encode and EpigenomeRoadmap data (and more) directly in R.</p>
-<p>I search for <em>narrowPeak</em> in <em>hg19</em> from H3K27ac, H3K27me3, H3K36me3, H3K4me1, H3K4me3 or H3K9me3, in brain, blood, liver, muscle, lung, kidney, skin or heart. I also look for DNase peaks. Let’s see if I can find what I want.</p>
-<p><img src="../../../../post/2016-09-06-epigeneticTracks_files/figure-html/ahgraph-1.png" width="672" /></p>
-<p>Most tissues have more than 3 tracks for each histone mark. I’ll just exclude liver and knidney that don’t. DNase is a bit more rare but there is at least one track per tissue. In total, it represents 360 different tracks, that I want to merge into one track per mark/tissue.</p>
-</div>
-<div id="download-and-merge-tracks" class="section level2">
-<h2>Download and merge tracks</h2>
-<p>For each mark/tissue, I download the available tracks, overlap the peaks into sub-peaks (<em>disjoin</em>) and keep the pieces supported by more than half the tracks. Finally, these recurrent sub-peaks are stitched (<em>reduce</em>) if closer than 500 bp.</p>
-<p>Afterwards, the regions for each mark is annotated with the number of tissues with overlapping regions.</p>
-<p>The results were uploaded there: <a href="https://dl.dropboxusercontent.com/s/8c412u1ug2lwrc2/epiTracks.RData?dl=0"><a href="https://dl.dropboxusercontent.com/s/8c412u1ug2lwrc2/epiTracks.RData?dl=0" class="uri">https://dl.dropboxusercontent.com/s/8c412u1ug2lwrc2/epiTracks.RData?dl=0</a></a>.</p>
-</div>
-<div id="overview" class="section level2">
-<h2>Overview</h2>
-<p><img src="../../../../post/2016-09-06-epigeneticTracks_files/figure-html/overview-1.png" width="672" /><img src="../../../../post/2016-09-06-epigeneticTracks_files/figure-html/overview-2.png" width="672" /><img src="../../../../post/2016-09-06-epigeneticTracks_files/figure-html/overview-3.png" width="672" /></p>
-</div>
-<div id="limitations" class="section level2">
-<h2>Limitations</h2>
-<p>I searched all tracks with keywords <em><span class="math">\(tissue*, *\)</span>mark</em> (and <em>narrowPeak</em>, <em>hg19</em>). I’m <strong>not completely sure that the different tracks come from different replicates.</strong> I think I avoided the “bioinformatics” replicates by taking only the <em>narrowPeaks</em>. And when there are different sub-tissues (e.g. for brain), I decided to keep only regions supported by half the tracks, but then I <strong>might miss the specific a sub-tissue regions</strong>.</p>
-<p>I also made <strong>some arbitrary choices</strong>. For example, in for a particular mark/tissue, I stitch together regions that are at 500 bp or less. The main motivation is to reduce the amount of data. Also, I’m interested in large variants (SVs), so this resolution is fine.</p>
+  <p>I have another website where I write down my reviews of the papers I read.
+To handle citations in pages and posts, I was originally using <a href="https://github.com/inukshuk/jekyll-scholar">jekyll-scholar</a>.
+It scales well enough that I could have <strong>one main BibTeX file for all the pages</strong> of the website.
+I’m now switching to <a href="https://bookdown.org/yihui/blogdown/">blogdown</a>/<a href="https://gohugo.io/">Hugo</a> because it’s apparently faster, with less dependencies, but most importantly because it’s very easy to integrate R code with RMarkdown.
+To use citations in blogdown, we can specify the BibTeX file in the YAML header and then use either <code>@blabla</code> or <code>[@blabla]</code> in the text (for multiple citations: <code>[@blabla;@foo]</code>).
+In the YAML header:</p>
+<pre class="yaml"><code>bibliography: [../../static/library.bib]
+link-citations: true</code></pre>
+<p>It seemed to work well at first but after adding more pages <strong>the rendering got stuck</strong>.
+Googling around, it seemed to be a <a href="https://stackoverflow.com/questions/16223019/pandoc-performs-very-slowly-when-referencing-large-biblatex-file">known issue for pandoc-citation and large bibliography</a>, the solution being to use a bib file as small as possible by keeping only the records cited.
+Surprisingly this didn’t fix my problem and now even with a tiny BibTeX file I couldn’t render some pages.
+It turned out that <strong>the problem was the very long author list</strong> in some citations, which is common in the genomics field.
+So the solution for me was to keep only the records cited AND set a maximum number of authors.</p>
+<p>I wrote a small <strong>Python script</strong> that scans Markdown files for citations and extract them from a BibTeX file, shortening the author list if necessary.
+I put the <code>reduceBib.py</code> Python script <a href="https://github.com/jmonlong/Hippocamplus/tree/config/python/reduceBib">on GitHub here</a>.</p>
+<div id="reducebib.py-usage" class="section level2">
+<h2><code>reduceBib.py</code> usage</h2>
+<p>At the root of the website, I use the following command:</p>
+<pre class="sh"><code>python reduceBib.py -b static/library.bib -o static/library-small.bib content/fixed/*.Rmd content/post/*.Rmd</code></pre>
+<p>The help page:</p>
+<pre><code>&gt; python reduceBib.py -h
+usage: reduceBib.py [-h] [-b BIB] [-o OUT] [-a NAUTHS] [-f FIELDS]
+                    mds [mds ...]
+
+Reduce a .bib file.
+
+positional arguments:
+  mds         the markdown files to scan
+
+optional arguments:
+  -h, --help  show this help message and exit
+  -b BIB      the original bib file
+  -o OUT      the new bib file
+  -a NAUTHS   the maximum number of authors. Default: 5.
+  -f FIELDS   the BibTeX fields to keep (comma separated). Default:
+              &quot;author,title,doi,journal,year,url&quot;</code></pre>
 </div>
 
 </div>

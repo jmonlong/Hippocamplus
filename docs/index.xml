@@ -6,7 +6,7 @@
     <language>en-us</language>
     <author>Mark Otto</author>
     <rights>(C) 2018</rights>
-    <updated>2018-11-12 00:00:00 &#43;0000 UTC</updated>
+    <updated>2018-11-17 00:00:00 &#43;0000 UTC</updated>
 
     
       
@@ -25,6 +25,54 @@
     
       
     
+      
+    
+      
+        <item>
+          <title>Speeding up blogdown/Hugo for large bibliography</title>
+          <link>/Hippocamplus/2018/11/17/speedup-blogwdown-hugo-large-bibliography/</link>
+          <pubDate>Sat, 17 Nov 2018 00:00:00 UTC</pubDate>
+          <author>Mark Otto</author>
+          <guid>/Hippocamplus/2018/11/17/speedup-blogwdown-hugo-large-bibliography/</guid>
+          <description>&lt;p&gt;I have another website where I write down my reviews of the papers I read.
+To handle citations in pages and posts, I was originally using &lt;a href=&#34;https://github.com/inukshuk/jekyll-scholar&#34;&gt;jekyll-scholar&lt;/a&gt;.
+It scales well enough that I could have &lt;strong&gt;one main BibTeX file for all the pages&lt;/strong&gt; of the website.
+I’m now switching to &lt;a href=&#34;https://bookdown.org/yihui/blogdown/&#34;&gt;blogdown&lt;/a&gt;/&lt;a href=&#34;https://gohugo.io/&#34;&gt;Hugo&lt;/a&gt; because it’s apparently faster, with less dependencies, but most importantly because it’s very easy to integrate R code with RMarkdown.
+To use citations in blogdown, we can specify the BibTeX file in the YAML header and then use either &lt;code&gt;@blabla&lt;/code&gt; or &lt;code&gt;[@blabla]&lt;/code&gt; in the text (for multiple citations: &lt;code&gt;[@blabla;@foo]&lt;/code&gt;).
+In the YAML header:&lt;/p&gt;
+&lt;pre class=&#34;yaml&#34;&gt;&lt;code&gt;bibliography: [../../static/library.bib]
+link-citations: true&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;It seemed to work well at first but after adding more pages &lt;strong&gt;the rendering got stuck&lt;/strong&gt;.
+Googling around, it seemed to be a &lt;a href=&#34;https://stackoverflow.com/questions/16223019/pandoc-performs-very-slowly-when-referencing-large-biblatex-file&#34;&gt;known issue for pandoc-citation and large bibliography&lt;/a&gt;, the solution being to use a bib file as small as possible by keeping only the records cited.
+Surprisingly this didn’t fix my problem and now even with a tiny BibTeX file I couldn’t render some pages.
+It turned out that &lt;strong&gt;the problem was the very long author list&lt;/strong&gt; in some citations, which is common in the genomics field.
+So the solution for me was to keep only the records cited AND set a maximum number of authors.&lt;/p&gt;
+&lt;p&gt;I wrote a small &lt;strong&gt;Python script&lt;/strong&gt; that scans Markdown files for citations and extract them from a BibTeX file, shortening the author list if necessary.
+I put the &lt;code&gt;reduceBib.py&lt;/code&gt; Python script &lt;a href=&#34;https://github.com/jmonlong/Hippocamplus/tree/config/python/reduceBib&#34;&gt;on GitHub here&lt;/a&gt;.&lt;/p&gt;
+&lt;div id=&#34;reducebib.py-usage&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;&lt;code&gt;reduceBib.py&lt;/code&gt; usage&lt;/h2&gt;
+&lt;p&gt;At the root of the website, I use the following command:&lt;/p&gt;
+&lt;pre class=&#34;sh&#34;&gt;&lt;code&gt;python reduceBib.py -b static/library.bib -o static/library-small.bib content/fixed/*.Rmd content/post/*.Rmd&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The help page:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt; python reduceBib.py -h
+usage: reduceBib.py [-h] [-b BIB] [-o OUT] [-a NAUTHS] [-f FIELDS]
+                    mds [mds ...]
+
+Reduce a .bib file.
+
+positional arguments:
+  mds         the markdown files to scan
+
+optional arguments:
+  -h, --help  show this help message and exit
+  -b BIB      the original bib file
+  -o OUT      the new bib file
+  -a NAUTHS   the maximum number of authors. Default: 5.
+  -f FIELDS   the BibTeX fields to keep (comma separated). Default:
+              &amp;quot;author,title,doi,journal,year,url&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+        </item>
       
     
       

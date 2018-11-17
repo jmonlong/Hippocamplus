@@ -34,7 +34,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/Hippocamplus/markdown/</guid>
-      <description>Tips Converting Markdown into nice HTML pages Converting Markdown into slides Jekyll websites Themes Table of Contents Math formulas  blogdown websites Themes Table of Contents Draft posts Math formulas  R Markdown   Tips  / to add some vertical space/break. Use two ` and a space to escape ` in inline code. E.g `` `pwd` `` gives `pwd`. --- to add horizontal line/separation.   Converting Markdown into nice HTML pages I use RMarkdown.</description>
+      <description>Tips Converting Markdown into nice HTML pages Converting Markdown into slides Jekyll websites Themes Table of Contents Math formulas  blogdown websites Themes Table of Contents Draft posts Math formulas Bibliography  R Markdown   Tips  / to add some vertical space/break. Use two ` and a space to escape ` in inline code. E.g `` `pwd` `` gives `pwd`. --- to add horizontal line/separation.   Converting Markdown into nice HTML pages I use RMarkdown.</description>
     </item>
     
     <item>

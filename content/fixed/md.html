@@ -23,6 +23,7 @@ output:
 <li><a href="#table-of-contents-1">Table of Contents</a></li>
 <li><a href="#draft-posts">Draft posts</a></li>
 <li><a href="#math-formulas-1">Math formulas</a></li>
+<li><a href="#bibliography">Bibliography</a></li>
 </ul></li>
 <li><a href="#r-markdown">R Markdown</a></li>
 </ul>
@@ -76,7 +77,8 @@ output:
 </div>
 <div id="blogdown-websites" class="section level2">
 <h2>blogdown websites</h2>
-<p><a href="https://github.com/rstudio/blogdown">blogdown</a> is a R package extending <a href="http://rmarkdown.rstudio.com/">R Markdown</a> to build <a href="https://gohugo.io/">Hugo</a> static websites. Hugo is easier to install than Jekyll and apparently fast. Most importantly blogdown makes it easier to write posts with R code like in a RMarkdown document.</p>
+<p><a href="https://github.com/rstudio/blogdown">blogdown</a> is a R package extending <a href="http://rmarkdown.rstudio.com/">R Markdown</a> to build <a href="https://gohugo.io/">Hugo</a> static websites.
+Hugo is easier to install than Jekyll and apparently faster. Most importantly blogdown makes it easier to write posts with R code like in a RMarkdown document.</p>
 <p>I still use GitHub Pages to deploy the website. Because GH Pages doesn’t support Hugo, I build the website in a <code>docs</code> folder (<code>publishDir = &quot;docs&quot;</code> in <code>config.toml</code>) which I set up in the website settings to be the source of the static website.</p>
 <div id="themes-1" class="section level3">
 <h3>Themes</h3>
@@ -92,7 +94,8 @@ output:
 <div id="draft-posts" class="section level3">
 <h3>Draft posts</h3>
 <p>Most of the time I would like to build the website with minimal recompilation and I don’t want the draft posts to show (except for previews).</p>
-<p><code>build_site()</code> builds the site without showing posts with YAML <code>draft: true</code>. But it also recompiles everything and that can be a pain.</p>
+<p><code>build_site()</code> builds the site without showing posts with YAML <code>draft: true</code>.
+But it also recompiles everything and that can be a pain.</p>
 <p><code>serve_site()</code> recompiles only the <em>Rmd</em> documents newer than the corresponding <em>HTML</em> but it builds all posts, even if they have the <em>draft</em> parameter.</p>
 <p>For minimal recompilation and hidden draft posts I do <code>hugo_build()</code> after a <code>serve_site()</code>.</p>
 </div>
@@ -103,6 +106,14 @@ output:
 &lt;script async src=&quot;//cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML&quot;&gt;
 &lt;/script&gt;</code></pre>
 <p>Then inline formulas are surronded by $ (for equations use two $), and they follow <a href="https://en.wikibooks.org/wiki/LaTeX/Mathematics">LaTeX syntax</a>.</p>
+</div>
+<div id="bibliography" class="section level3">
+<h3>Bibliography</h3>
+<p>In the YAML header:</p>
+<pre><code>bibliography: [../../static/library.bib]
+link-citations: true</code></pre>
+<p>I also use <a href="https://github.com/jmonlong/Hippocamplus/tree/config/python/reduceBib">a script to reduce the BibTeX file</a> used (see <a href="/2018/11/17/speedup-blogwdown-hugo-large-bibliography/">this post</a>).
+Otherwise, large BibTeX files or large author lists make the rendering extremely slow.</p>
 </div>
 </div>
 <div id="r-markdown" class="section level2">

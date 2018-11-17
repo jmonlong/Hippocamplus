@@ -1,0 +1,46 @@
+---
+title: Speeding up blogdown/Hugo for large bibliography 
+date: 2018-11-17
+tags: ["R", "website"]
+slug: speedup-blogwdown-hugo-large-bibliography
+---
+
+
+
+<p>I have another website where I write down my reviews of the papers I read.
+To handle citations in pages and posts, I was originally using <a href="https://github.com/inukshuk/jekyll-scholar">jekyll-scholar</a>.
+It scales well enough that I could have <strong>one main BibTeX file for all the pages</strong> of the website.
+I’m now switching to <a href="https://bookdown.org/yihui/blogdown/">blogdown</a>/<a href="https://gohugo.io/">Hugo</a> because it’s apparently faster, with less dependencies, but most importantly because it’s very easy to integrate R code with RMarkdown.
+To use citations in blogdown, we can specify the BibTeX file in the YAML header and then use either <code>@blabla</code> or <code>[@blabla]</code> in the text (for multiple citations: <code>[@blabla;@foo]</code>).
+In the YAML header:</p>
+<pre class="yaml"><code>bibliography: [../../static/library.bib]
+link-citations: true</code></pre>
+<p>It seemed to work well at first but after adding more pages <strong>the rendering got stuck</strong>.
+Googling around, it seemed to be a <a href="https://stackoverflow.com/questions/16223019/pandoc-performs-very-slowly-when-referencing-large-biblatex-file">known issue for pandoc-citation and large bibliography</a>, the solution being to use a bib file as small as possible by keeping only the records cited.
+Surprisingly this didn’t fix my problem and now even with a tiny BibTeX file I couldn’t render some pages.
+It turned out that <strong>the problem was the very long author list</strong> in some citations, which is common in the genomics field.
+So the solution for me was to keep only the records cited AND set a maximum number of authors.</p>
+<p>I wrote a small <strong>Python script</strong> that scans Markdown files for citations and extract them from a BibTeX file, shortening the author list if necessary.
+I put the <code>reduceBib.py</code> Python script <a href="https://github.com/jmonlong/Hippocamplus/tree/config/python/reduceBib">on GitHub here</a>.</p>
+<div id="reducebib.py-usage" class="section level2">
+<h2><code>reduceBib.py</code> usage</h2>
+<p>At the root of the website, I use the following command:</p>
+<pre class="sh"><code>python reduceBib.py -b static/library.bib -o static/library-small.bib content/fixed/*.Rmd content/post/*.Rmd</code></pre>
+<p>The help page:</p>
+<pre><code>&gt; python reduceBib.py -h
+usage: reduceBib.py [-h] [-b BIB] [-o OUT] [-a NAUTHS] [-f FIELDS]
+                    mds [mds ...]
+
+Reduce a .bib file.
+
+positional arguments:
+  mds         the markdown files to scan
+
+optional arguments:
+  -h, --help  show this help message and exit
+  -b BIB      the original bib file
+  -o OUT      the new bib file
+  -a NAUTHS   the maximum number of authors. Default: 5.
+  -f FIELDS   the BibTeX fields to keep (comma separated). Default:
+              &quot;author,title,doi,journal,year,url&quot;</code></pre>
+</div>

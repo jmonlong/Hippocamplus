@@ -75,7 +75,7 @@ For example, `\\(\int_{-\infty}^\infty e^{-x^2}\mathrm{d}x = \sqrt{\pi}\\)` prod
 ## blogdown websites
 
 [blogdown](https://github.com/rstudio/blogdown) is a R package extending [R Markdown](http://rmarkdown.rstudio.com/) to build [Hugo](https://gohugo.io/) static websites.
-Hugo is easier to install than Jekyll and apparently fast. Most importantly blogdown makes it easier to write posts with R code like in a RMarkdown document.
+Hugo is easier to install than Jekyll and apparently faster. Most importantly blogdown makes it easier to write posts with R code like in a RMarkdown document.
 
 I still use GitHub Pages to deploy the website. Because GH Pages doesn't support Hugo, I build the website in a `docs` folder (`publishDir = "docs"` in `config.toml`) which I set up in the website settings to be the source of the static website. 
 
@@ -115,6 +115,18 @@ Using [MathJax](http://docs.mathjax.org/en/latest/mathjax.html) JavaScript displ
 ~~~
 
 Then inline formulas are surronded by \$ (for equations use two \$), and they follow [LaTeX syntax](https://en.wikibooks.org/wiki/LaTeX/Mathematics).
+
+### Bibliography
+
+In the YAML header:
+
+~~~
+bibliography: [../../static/library.bib]
+link-citations: true
+~~~
+
+I also use [a script to reduce the BibTeX file](https://github.com/jmonlong/Hippocamplus/tree/config/python/reduceBib) used (see [this post](/2018/11/17/speedup-blogwdown-hugo-large-bibliography/)).
+Otherwise, large BibTeX files or large author lists make the rendering extremely slow.
 
 ## R Markdown
 

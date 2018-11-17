@@ -1,0 +1,57 @@
+---
+title: Speeding up blogdown/Hugo for large bibliography 
+date: 2018-11-17
+tags: ["R", "website"]
+slug: speedup-blogwdown-hugo-large-bibliography
+---
+
+I have another website where I write down my reviews of the papers I read.
+To handle citations in pages and posts, I was originally using [jekyll-scholar](https://github.com/inukshuk/jekyll-scholar). 
+It scales well enough that I could have **one main BibTeX file for all the pages** of the website.
+I'm now switching to [blogdown](https://bookdown.org/yihui/blogdown/)/[Hugo](https://gohugo.io/) because it's apparently faster, with less dependencies, but most importantly because it's very easy to integrate R code with RMarkdown.
+To use citations in blogdown, we can specify the BibTeX file in the YAML header and then use either `@blabla` or `[@blabla]` in the text (for multiple citations: `[@blabla;@foo]`). 
+In the YAML header:
+
+```yaml
+bibliography: [../../static/library.bib]
+link-citations: true
+```
+
+It seemed to work well at first but after adding more pages **the rendering got stuck**. 
+Googling around, it seemed to be a [known issue for pandoc-citation and large bibliography](https://stackoverflow.com/questions/16223019/pandoc-performs-very-slowly-when-referencing-large-biblatex-file), the solution being to use a bib file as small as possible by keeping only the records cited.
+Surprisingly this didn't fix my problem and now even with a tiny BibTeX file I couldn't render some pages.
+It turned out that **the problem was the very long author list** in some citations, which is common in the genomics field.
+So the solution for me was to keep only the records cited AND set a maximum number of authors.
+
+I wrote a small **Python script** that scans Markdown files for citations and extract them from a BibTeX file, shortening the author list if necessary.
+I put the `reduceBib.py` Python script [on GitHub here](https://github.com/jmonlong/Hippocamplus/tree/config/python/reduceBib).
+
+## `reduceBib.py` usage
+
+At the root of the website, I use the following command:
+
+```sh
+python reduceBib.py -b static/library.bib -o static/library-small.bib content/fixed/*.Rmd content/post/*.Rmd
+```
+
+The help page:
+
+```
+> python reduceBib.py -h
+usage: reduceBib.py [-h] [-b BIB] [-o OUT] [-a NAUTHS] [-f FIELDS]
+                    mds [mds ...]
+
+Reduce a .bib file.
+
+positional arguments:
+  mds         the markdown files to scan
+
+optional arguments:
+  -h, --help  show this help message and exit
+  -b BIB      the original bib file
+  -o OUT      the new bib file
+  -a NAUTHS   the maximum number of authors. Default: 5.
+  -f FIELDS   the BibTeX fields to keep (comma separated). Default:
+              "author,title,doi,journal,year,url"
+```
+
