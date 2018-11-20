@@ -7,21 +7,17 @@ output:
     toc: true
 ---
 
-## Optimization
-
-+ Use `rbindlist` from *data.table* package for a memory-optimized and faster `do.call(rbind, list(..))`.
-
 ## Details to remember
 
-### Run a OS command
-
-Use `system2` instead of `system`. It's more portable apparently.
+- Use `rbindlist` from *data.table* package for a memory-optimized and faster `do.call(rbind, list(..))`.
+- Use `system2` instead of `system` to run a command. It's more portable apparently.
+- Get RPubs working with `options(rpubs.upload.method = "internal")`.
+- Operations on dates using `strptime(x, "%a %b %d %T PST %Y'")` and `difftime` and then `as.Double(d, units="hours")`.
 
 ### Order in condition assessment
 
 Using `&` and `|` operators, *R* tries all the conditions and then performs the operations. 
-However sometimes in sequential assessment is preferable. 
-Especially with `&`. 
+However sometimes we would like a smarter sequential assessment for *AND*.
 For example, we get an error if we run:
 
 ~~~r
@@ -29,7 +25,8 @@ x = NULL
 if(!is.null(x) & x>10) message("so big !")
 ~~~
 
-Because it tries to do `x>10` when *x* is *NULL*. What we want is `&&`:
+Because it tries to do `x>10` when *x* is *NULL*. 
+Here, what we want is `&&`:
 
 ~~~r
 x = NULL
@@ -39,10 +36,7 @@ if(!is.null(x) && x>10) message("so big !")
 ~~~
 
 Now it won't try to do `x<10` if `!is.null(x)` is not true (because what's the point, anything "*False AND ...*" is for sure *False*).
-
-### Get RPubs working
-
-`options(rpubs.upload.method = "internal")`
+Caution, `&&` doesn't work on vectors (it will only test the first element).
 
 ## Graphs
 

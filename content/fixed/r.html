@@ -10,11 +10,8 @@ output:
 
 <div id="TOC">
 <ul>
-<li><a href="#optimization">Optimization</a></li>
 <li><a href="#details-to-remember">Details to remember</a><ul>
-<li><a href="#run-a-os-command">Run a OS command</a></li>
 <li><a href="#order-in-condition-assessment">Order in condition assessment</a></li>
-<li><a href="#get-rpubs-working">Get RPubs working</a></li>
 </ul></li>
 <li><a href="#graphs">Graphs</a><ul>
 <li><a href="#ggplot2-tricks">ggplot2 tricks</a></li>
@@ -31,33 +28,29 @@ output:
 </ul>
 </div>
 
-<div id="optimization" class="section level2">
-<h2>Optimization</h2>
-<ul>
-<li>Use <code>rbindlist</code> from <em>data.table</em> package for a memory-optimized and faster <code>do.call(rbind, list(..))</code>.</li>
-</ul>
-</div>
 <div id="details-to-remember" class="section level2">
 <h2>Details to remember</h2>
-<div id="run-a-os-command" class="section level3">
-<h3>Run a OS command</h3>
-<p>Use <code>system2</code> instead of <code>system</code>. It’s more portable apparently.</p>
-</div>
+<ul>
+<li>Use <code>rbindlist</code> from <em>data.table</em> package for a memory-optimized and faster <code>do.call(rbind, list(..))</code>.</li>
+<li>Use <code>system2</code> instead of <code>system</code> to run a command. It’s more portable apparently.</li>
+<li>Get RPubs working with <code>options(rpubs.upload.method = &quot;internal&quot;)</code>.</li>
+<li>Operations on dates using <code>strptime(x, &quot;%a %b %d %T PST %Y'&quot;)</code> and <code>difftime</code> and then <code>as.Double(d, units=&quot;hours&quot;)</code>.</li>
+</ul>
 <div id="order-in-condition-assessment" class="section level3">
 <h3>Order in condition assessment</h3>
-<p>Using <code>&amp;</code> and <code>|</code> operators, <em>R</em> tries all the conditions and then performs the operations. However sometimes in sequential assessment is preferable. Especially with <code>&amp;</code>. For example, we get an error if we run:</p>
+<p>Using <code>&amp;</code> and <code>|</code> operators, <em>R</em> tries all the conditions and then performs the operations.
+However sometimes we would like a smarter sequential assessment for <em>AND</em>.
+For example, we get an error if we run:</p>
 <pre class="r"><code>x = NULL
 if(!is.null(x) &amp; x&gt;10) message(&quot;so big !&quot;)</code></pre>
-<p>Because it tries to do <code>x&gt;10</code> when <em>x</em> is <em>NULL</em>. What we want is <code>&amp;&amp;</code>:</p>
+<p>Because it tries to do <code>x&gt;10</code> when <em>x</em> is <em>NULL</em>.
+Here, what we want is <code>&amp;&amp;</code>:</p>
 <pre class="r"><code>x = NULL
 if(!is.null(x) &amp;&amp; x&gt;10) message(&quot;so big !&quot;)
 x = 17
 if(!is.null(x) &amp;&amp; x&gt;10) message(&quot;so big !&quot;)</code></pre>
-<p>Now it won’t try to do <code>x&lt;10</code> if <code>!is.null(x)</code> is not true (because what’s the point, anything “<em>False AND …</em>” is for sure <em>False</em>).</p>
-</div>
-<div id="get-rpubs-working" class="section level3">
-<h3>Get RPubs working</h3>
-<p><code>options(rpubs.upload.method = &quot;internal&quot;)</code></p>
+<p>Now it won’t try to do <code>x&lt;10</code> if <code>!is.null(x)</code> is not true (because what’s the point, anything “<em>False AND …</em>” is for sure <em>False</em>).
+Caution, <code>&amp;&amp;</code> doesn’t work on vectors (it will only test the first element).</p>
 </div>
 </div>
 <div id="graphs" class="section level2">
