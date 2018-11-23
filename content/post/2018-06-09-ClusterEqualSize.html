@@ -31,11 +31,11 @@ output:
 
 <p><em>Update Nov 23 2018: New iterative approach using hierarchical clustering and better graphs.</em></p>
 <p>I would like to cluster points into groups of similar size.
-For example I would like to group 1000 points into clusters of around 10 points each.
+For example I would like to group 1000 points into clusters of around 20 points each.
 The two aspects that are important here are:</p>
 <ol style="list-style-type: decimal">
-<li>The cluster size distribution, or the deviation from the desired cluster size.</li>
-<li>The quality of the clusters, i.e. how similar are points within a cluster.</li>
+<li>The cluster size distribution (or the deviation from the desired cluster size).</li>
+<li>The quality of the clusters (i.e. how similar are points within a cluster).</li>
 </ol>
 <p>In addition to the typical hierarchical clustering approach, I will test the following iterative approaches:</p>
 <ol style="list-style-type: decimal">
@@ -94,18 +94,18 @@ The hierarchical clustering integrates information across all the (available) po
 <h2>Test data</h2>
 <p>I’ll test the different approaches on dummy data with Gaussian distributions and some outliers.
 The 1000 points are grouped in 4 groups with one larger than the others.
-I also added 100 outliers.</p>
+I added 100 outliers.</p>
 <p><img src="/post/2018-06-09-ClusterEqualSize_files/figure-html/unnamed-chunk-7-1.png" width="960" /></p>
 </div>
 <div id="results" class="section level2">
 <h2>Results</h2>
-<p>Let’s aim at clusters of around <span class="math inline">\(s=21\)</span> points.
+<p>Let’s aim for clusters of around <span class="math inline">\(s=21\)</span> points.
 Why 21, and not 20? Because that way there will be “left-over” points (more realistic).</p>
 <div id="cluster-size" class="section level3">
 <h3>Cluster size</h3>
 <p><img src="/post/2018-06-09-ClusterEqualSize_files/figure-html/unnamed-chunk-9-1.png" width="960" /></p>
 <ul>
-<li>The dichotomy and hclust sometimes produce (on average) close to the desired size but many cluster are very much smaller/bigger.</li>
+<li>The dichotomy and hclust sometimes produce an average cluster size close to the desired size but still many cluster are much smaller/bigger.</li>
 <li>As expected, we get the correct size when using the methods that specifically control for cluster size.</li>
 </ul>
 </div>
@@ -117,7 +117,7 @@ Why 21, and not 20? Because that way there will be “left-over” points (more 
 Among the methods with cluster size control, <em>hclust-bottom</em> and <em>nearest neighbors</em> looks quite good considering that they have the additional constraint of the fixed cluster size.
 However we notice a few outlier points with high values.
 These are usually the last cluster of the iterative process, kind of a left-over cluster with many distant outlier points.
-That’s why the nearest neighbors approach with the <em>maxD</em> rule, which starts with outlier points on purpose, is performing better with a narrower distribution and much weaker outliers.</p>
+That’s why the nearest neighbors approach with the <em>maxD</em> rule, which starts with outlier points on purpose, is performing better (narrower distribution and much weaker outliers).</p>
 <hr />
 <p>A summary bar chart with the median values only:</p>
 <p><img src="/post/2018-06-09-ClusterEqualSize_files/figure-html/unnamed-chunk-11-1.png" width="960" /></p>
@@ -146,7 +146,7 @@ So, as usual, it would be a good idea to try several methods when analyzing a ne
 <h2>Extra: optimization</h2>
 <p>The nearest neighbor approach uses a <code>while</code> loop, which is not efficient in R.
 Maybe implementing the loop with Rcpp could speed up the computation (in practice I would like to run this on up to 10K points).</p>
-<p>After implementing the loop using Rcpp, I ran it on datasets of different size and compare the computation times.</p>
+<p>After implementing the loop using Rcpp, I ran it on datasets of different size and got these computation times.</p>
 <p><img src="/post/2018-06-09-ClusterEqualSize_files/figure-html/unnamed-chunk-14-1.png" width="960" /><img src="/post/2018-06-09-ClusterEqualSize_files/figure-html/unnamed-chunk-14-2.png" width="960" /></p>
 <p>It’s around three times faster with Rcpp. Not bad!</p>
 <p>Quick sanity check: are the results actually the same ?</p>

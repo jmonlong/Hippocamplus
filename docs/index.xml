@@ -517,11 +517,11 @@ To have a chance to be included in the pool of reviewers, we should submit a let
 
 &lt;p&gt;&lt;em&gt;Update Nov 23 2018: New iterative approach using hierarchical clustering and better graphs.&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;I would like to cluster points into groups of similar size.
-For example I would like to group 1000 points into clusters of around 10 points each.
+For example I would like to group 1000 points into clusters of around 20 points each.
 The two aspects that are important here are:&lt;/p&gt;
 &lt;ol style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;The cluster size distribution, or the deviation from the desired cluster size.&lt;/li&gt;
-&lt;li&gt;The quality of the clusters, i.e. how similar are points within a cluster.&lt;/li&gt;
+&lt;li&gt;The cluster size distribution (or the deviation from the desired cluster size).&lt;/li&gt;
+&lt;li&gt;The quality of the clusters (i.e. how similar are points within a cluster).&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;In addition to the typical hierarchical clustering approach, I will test the following iterative approaches:&lt;/p&gt;
 &lt;ol style=&#34;list-style-type: decimal&#34;&gt;
@@ -580,18 +580,18 @@ The hierarchical clustering integrates information across all the (available) po
 &lt;h2&gt;Test data&lt;/h2&gt;
 &lt;p&gt;I’ll test the different approaches on dummy data with Gaussian distributions and some outliers.
 The 1000 points are grouped in 4 groups with one larger than the others.
-I also added 100 outliers.&lt;/p&gt;
+I added 100 outliers.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./post/2018-06-09-ClusterEqualSize_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;results&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Results&lt;/h2&gt;
-&lt;p&gt;Let’s aim at clusters of around &lt;span class=&#34;math inline&#34;&gt;\(s=21\)&lt;/span&gt; points.
+&lt;p&gt;Let’s aim for clusters of around &lt;span class=&#34;math inline&#34;&gt;\(s=21\)&lt;/span&gt; points.
 Why 21, and not 20? Because that way there will be “left-over” points (more realistic).&lt;/p&gt;
 &lt;div id=&#34;cluster-size&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Cluster size&lt;/h3&gt;
 &lt;p&gt;&lt;img src=&#34;./post/2018-06-09-ClusterEqualSize_files/figure-html/unnamed-chunk-9-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;The dichotomy and hclust sometimes produce (on average) close to the desired size but many cluster are very much smaller/bigger.&lt;/li&gt;
+&lt;li&gt;The dichotomy and hclust sometimes produce an average cluster size close to the desired size but still many cluster are much smaller/bigger.&lt;/li&gt;
 &lt;li&gt;As expected, we get the correct size when using the methods that specifically control for cluster size.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
@@ -603,7 +603,7 @@ Why 21, and not 20? Because that way there will be “left-over” points (more 
 Among the methods with cluster size control, &lt;em&gt;hclust-bottom&lt;/em&gt; and &lt;em&gt;nearest neighbors&lt;/em&gt; looks quite good considering that they have the additional constraint of the fixed cluster size.
 However we notice a few outlier points with high values.
 These are usually the last cluster of the iterative process, kind of a left-over cluster with many distant outlier points.
-That’s why the nearest neighbors approach with the &lt;em&gt;maxD&lt;/em&gt; rule, which starts with outlier points on purpose, is performing better with a narrower distribution and much weaker outliers.&lt;/p&gt;
+That’s why the nearest neighbors approach with the &lt;em&gt;maxD&lt;/em&gt; rule, which starts with outlier points on purpose, is performing better (narrower distribution and much weaker outliers).&lt;/p&gt;
 &lt;hr /&gt;
 &lt;p&gt;A summary bar chart with the median values only:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./post/2018-06-09-ClusterEqualSize_files/figure-html/unnamed-chunk-11-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
@@ -632,7 +632,7 @@ So, as usual, it would be a good idea to try several methods when analyzing a ne
 &lt;h2&gt;Extra: optimization&lt;/h2&gt;
 &lt;p&gt;The nearest neighbor approach uses a &lt;code&gt;while&lt;/code&gt; loop, which is not efficient in R.
 Maybe implementing the loop with Rcpp could speed up the computation (in practice I would like to run this on up to 10K points).&lt;/p&gt;
-&lt;p&gt;After implementing the loop using Rcpp, I ran it on datasets of different size and compare the computation times.&lt;/p&gt;
+&lt;p&gt;After implementing the loop using Rcpp, I ran it on datasets of different size and got these computation times.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./post/2018-06-09-ClusterEqualSize_files/figure-html/unnamed-chunk-14-1.png&#34; width=&#34;960&#34; /&gt;&lt;img src=&#34;./post/2018-06-09-ClusterEqualSize_files/figure-html/unnamed-chunk-14-2.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;It’s around three times faster with Rcpp. Not bad!&lt;/p&gt;
 &lt;p&gt;Quick sanity check: are the results actually the same ?&lt;/p&gt;

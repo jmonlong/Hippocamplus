@@ -67,7 +67,7 @@ Issues with the Nature Biotech article The numbers are based on an email survey 
       
       <guid>/Hippocamplus/2018/06/09/cluster-same-size/</guid>
       <description>Methods Iterative dichotomy Iterative nearest neighbor Same-size k-Means Variation Iterative “bottom-leaves” hierarchical clustering  Test data Results Cluster size Within-cluster distance Silhouette score  Conclusions Extra: optimization Code   Update Nov 23 2018: New iterative approach using hierarchical clustering and better graphs.
-I would like to cluster points into groups of similar size. For example I would like to group 1000 points into clusters of around 10 points each.</description>
+I would like to cluster points into groups of similar size. For example I would like to group 1000 points into clusters of around 20 points each.</description>
     </item>
     
     <item>

@@ -30,11 +30,11 @@ winsor <- function(x, u){
 *Update Nov 23 2018: New iterative approach using hierarchical clustering and better graphs.*
 
 I would like to cluster points into groups of similar size. 
-For example I would like to group 1000 points into clusters of around 10 points each.
+For example I would like to group 1000 points into clusters of around 20 points each.
 The two aspects that are important here are:
 
-1. The cluster size distribution, or the deviation from the desired cluster size.
-1. The quality of the clusters, i.e. how similar are points within a cluster.
+1. The cluster size distribution (or the deviation from the desired cluster size).
+1. The quality of the clusters (i.e. how similar are points within a cluster).
 
 In addition to the typical hierarchical clustering approach, I will test the following iterative approaches:
 
@@ -204,7 +204,7 @@ hcbottom <- function(mat, clsize = 10, method='ward.D'){
 
 I'll test the different approaches on dummy data with Gaussian distributions and some outliers.
 The 1000 points are grouped in 4 groups with one larger than the others.
-I also added 100 outliers.
+I added 100 outliers.
 
 ```{r}
 N = 1000
@@ -223,7 +223,7 @@ mat %>% as.data.frame %>% ggplot(aes(V1, V2)) + geom_point(alpha=.5) + theme_bw(
 
 ## Results
 
-Let's aim at clusters of around $s=21$ points.
+Let's aim for clusters of around $s=21$ points.
 Why 21, and not 20? Because that way there will be "left-over" points (more realistic).
 
 ```{r}
@@ -279,7 +279,7 @@ ggplot(cls.df, aes(x=method, y=winsor(size, 3*clsize))) + geom_boxplot() + theme
   scale_y_continuous(breaks=seq(0,200,10))
 ```
 
-- The dichotomy and hclust sometimes produce (on average) close to the desired size but many cluster are very much smaller/bigger.
+- The dichotomy and hclust sometimes produce an average cluster size close to the desired size but still many cluster are much smaller/bigger.
 - As expected, we get the correct size when using the methods that specifically control for cluster size.
 
 ### Within-cluster distance
@@ -302,7 +302,7 @@ Several approaches perform well.
 Among the methods with cluster size control, *hclust-bottom* and *nearest neighbors* looks quite good considering that they have the additional constraint of the fixed cluster size.
 However we notice a few outlier points with high values.
 These are usually the last cluster of the iterative process, kind of a left-over cluster with many distant outlier points.
-That's why the nearest neighbors approach with the *maxD* rule, which starts with outlier points on purpose, is performing better with a narrower distribution and much weaker outliers.
+That's why the nearest neighbors approach with the *maxD* rule, which starts with outlier points on purpose, is performing better (narrower distribution and much weaker outliers).
 
 ---
 
@@ -430,7 +430,7 @@ nnit.opt <- function(mat, clsize = 10){
 }
 ```
 
-After implementing the loop using Rcpp, I ran it on datasets of different size and compare the computation times.
+After implementing the loop using Rcpp, I ran it on datasets of different size and got these computation times.
 
 ```{r cache=TRUE}
 st.df = lapply(c(1000,1500,2000,2500,3000,3500,4000), function(N){
@@ -445,7 +445,7 @@ ggplot(st.df, aes(x=n, y=elapsed, color=method)) + geom_point() + geom_line() +
   theme_bw() + ylab('elapsed time (second)') + xlab('points')
 
 st.df %>% select(-system) %>% spread(method, elapsed) %>% ggplot(aes(x=n, y=R/Rcpp)) +
-  geom_point() + theme_bw() + xlab('points')
+  geom_bar(stat='identity') + theme_bw() + xlab('points')
 ```
 
 It's around three times faster with Rcpp. Not bad!
