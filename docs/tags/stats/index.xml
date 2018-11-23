@@ -6,10 +6,20 @@
     <description>Recent content in Stats on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 13 Feb 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 09 Jun 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/Hippocamplus/tags/stats/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Clustering into same size clusters</title>
+      <link>/Hippocamplus/2018/06/09/cluster-same-size/</link>
+      <pubDate>Sat, 09 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/Hippocamplus/2018/06/09/cluster-same-size/</guid>
+      <description>Methods Iterative dichotomy Iterative nearest neighbor Same-size k-Means Variation Iterative “bottom-leaves” hierarchical clustering  Test data Results Cluster size Within-cluster distance Silhouette score  Conclusions Extra: optimization Code   Update Nov 23 2018: New iterative approach using hierarchical clustering and better graphs.
+I would like to cluster points into groups of similar size. For example I would like to group 1000 points into clusters of around 10 points each.</description>
+    </item>
     
     <item>
       <title>tSNE and clustering</title>

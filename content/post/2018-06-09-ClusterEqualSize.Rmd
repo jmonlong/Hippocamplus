@@ -12,6 +12,23 @@ output:
 knitr::opts_chunk$set(message=FALSE, echo=FALSE, warning=FALSE, fig.width=10)
 ```
 
+```{r}
+library(ape)
+library(ggplot2)
+library(dplyr)
+library(magrittr)
+library(tidyr)
+library(cluster)
+
+## Winsorize a vector
+winsor <- function(x, u){
+  if(any(x>u)) x[x>u] = u
+  x
+}
+```
+
+*Update Nov 23 2018: New iterative approach using hierarchical clustering and better graphs.*
+
 I would like to cluster points into groups of similar size. 
 For example I would like to group 1000 points into clusters of around 10 points each.
 The two aspects that are important here are:
@@ -24,12 +41,13 @@ In addition to the typical hierarchical clustering approach, I will test the fol
 1. Iterative dichotomy: large clusters are split in two until around the desired size (using hierarchical clustering).
 1. Iterative nearest neighbor: a point and its closest neighboring points are assigned to a cluster and removed before processing another point.
 1. [Same-size k-Means Variation](https://elki-project.github.io/tutorial/same-size_k_means) that some quick googling returned.
+1. Iterative "bottom-leaves" hierarchical clustering: keeping the first cluster of the desired size at the "bottom" of the dendrogram.
 
-As a baseline, points will be randomly clustered into same-size clusters.
+## Methods
 
 In the following $s$ is the target cluster size.
 
-## Iterative dichotomy
+### Iterative dichotomy
 
 Starting with one cluster containing all the points, a cluster is split in two if larger that $1.5*s$.
 When all clusters are smaller than $1.5*s$, the process stops.
@@ -38,7 +56,22 @@ The points are split in two using hierarchical clustering.
 I will try different linkage criteria. 
 My guess is that the Ward criterion will be good at this because it tends to produce balanced dendrograms.
 
-## Iterative nearest neighbor
+```{r}
+hclustit <- function(mat, clsize = 10, method='ward.D', split.th=1.5){
+  lab = rep('l', nrow(mat))
+  lab.size = table(lab)
+  while(any(lab.size>clsize*split.th)){
+    lab.ii = which(lab == names(lab.size)[which.max(lab.size)])
+    mmat = mat[lab.ii,]
+    hc.o = hclust(dist(mmat), method=method)
+    lab[lab.ii] = paste0(lab[lab.ii], '-', cutree(hc.o, 2))
+    lab.size = table(lab)
+  }
+  lab
+}
+```
+
+### Iterative nearest neighbor
 
 While there are more than $s$ unassigned points:
 
@@ -54,51 +87,8 @@ I'll start by choosing a point randomly (out of the unassigned points).
 Eventually I could try picking the points with close neighbors, or the opposite, far from other points.
 I'll use the mean distance between a point and the others to define the order at which points are processed.
 
-## Same-size k-Means Variation
-
-As explained in a few pages online (e.g. [here](https://elki-project.github.io/tutorial/same-size_k_means)), one approach consists of using K-means to derive centers and then assigning the same amount of points to each center/cluster.
-
-In the proposed approach the points are ordered by their distance to the closest center minus the distance to the farthest cluster. 
-Each point is assigned to the best cluster in this order. 
-If the best cluster is full, the second best is chosen, etc.
-
-I'll also try to order the points by the distance to the closest center, by the distance to the farthest cluster, or using a random order.
-
 ```{r}
-library(ape)
-library(ggplot2)
-library(dplyr)
-library(magrittr)
-library(tidyr)
-library(cluster)
-
-winsor <- function(x, u){
-  if(any(x>u)) x[x>u] = u
-  x
-}
-hclustit <- function(mat, clsize = 10, method='ward.D', split.th=1.5){
-  lab = rep('l', nrow(mat))
-  lab.size = table(lab)
-  while(any(lab.size>clsize*split.th)){
-    lab.ii = which(lab == names(lab.size)[which.max(lab.size)])
-    mmat = mat[lab.ii,]
-    hc.o = hclust(dist(mmat), method=method)
-    lab[lab.ii] = paste0(lab[lab.ii], '-', cutree(hc.o, 2))
-    lab.size = table(lab)
-  }
-  lab
-}
-clstats <- function(mat, cls){
-  dmat = as.matrix(dist(mat))
-  sk <- silhouette(as.numeric(factor(cls)), dmatrix=dmat)
-  ll = lapply(unique(cls), function(cl){
-    cl.ii = which(cls==cl)
-    d = as.dist(dmat[cl.ii, cl.ii])
-    tibble(lab=cl, max.dist=max(d), mean.dist=mean(d), size=length(cl.ii), mean.sil=mean(sk[,3]))
-  })
-  do.call(rbind, ll)
-}
-nnit <- function(mat, clsize = 10, method=c('rand','maxd', 'mind')){
+nnit <- function(mat, clsize = 10, method=c('random','maxd', 'mind')){
   clsize.rle = rle(as.numeric(cut(1:nrow(mat), ceiling(nrow(mat)/clsize))))
   clsize = clsize.rle$lengths
   lab = rep(NA, nrow(mat))
@@ -107,7 +97,7 @@ nnit <- function(mat, clsize = 10, method=c('rand','maxd', 'mind')){
   while(sum(is.na(lab)) > 0){
     lab.ii = which(is.na(lab))
     dmat.m = dmat[lab.ii,lab.ii]
-    if(method[1]=='rand'){
+    if(method[1]=='random'){
       ii = sample.int(nrow(dmat.m),1)
     } else if(method[1]=='maxd'){
       ii = which.max(rowSums(dmat.m))
@@ -126,7 +116,20 @@ nnit <- function(mat, clsize = 10, method=c('rand','maxd', 'mind')){
   }
   lab
 }
-kmvar <- function(mat, clsize=10, method=c('rand','maxd', 'mind', 'elki')){
+```
+
+### Same-size k-Means Variation
+
+As explained in a few pages online (e.g. [here](https://elki-project.github.io/tutorial/same-size_k_means)), one approach consists of using K-means to derive centers and then assigning the same amount of points to each center/cluster.
+
+In the proposed approach the points are ordered by their distance to the closest center minus the distance to the farthest cluster. 
+Each point is assigned to the best cluster in this order. 
+If the best cluster is full, the second best is chosen, etc.
+
+I'll also try to order the points by the distance to the closest center, by the distance to the farthest cluster, or using a random order.
+
+```{r}
+kmvar <- function(mat, clsize=10, method=c('random','maxd', 'mind', 'elki')){
   k = ceiling(nrow(mat)/clsize)
   km.o = kmeans(mat, k)
   labs = rep(NA, nrow(mat))
@@ -136,7 +139,7 @@ kmvar <- function(mat, clsize=10, method=c('rand','maxd', 'mind', 'elki')){
   })
   centd = matrix(unlist(centd), ncol=k)
   clsizes = rep(0, k)
-  if(method[1]=='rand'){
+  if(method[1]=='random'){
     ptord = sample.int(nrow(mat))
   } else if(method[1]=='elki'){
     ptord = order(apply(centd, 1, min) - apply(centd, 1, max))
@@ -157,6 +160,20 @@ kmvar <- function(mat, clsize=10, method=c('rand','maxd', 'mind', 'elki')){
   }
   return(labs)
 }
+```
+
+### Iterative "bottom-leaves" hierarchical clustering
+
+While there are more than $s$ unassigned points:
+
+1. A hierarchical clustering is built.
+1. The tree is cut at increasing level until one cluster is $\gt s$.
+1. Assign these points to a cluster and repeat.
+
+Instead of working at the level of the point, the idea is to find the best *cluster* at each step.
+The hierarchical clustering integrates information across all the (available) points which might be more robust than ad-hoc rules (e.g. nearest neighbors approach).
+
+```{r}
 hcbottom <- function(mat, clsize = 10, method='ward.D'){
   dmat = as.matrix(dist(mat))
   clsize.rle = rle(as.numeric(cut(1:nrow(mat), ceiling(nrow(mat)/clsize))))
@@ -180,127 +197,158 @@ hcbottom <- function(mat, clsize = 10, method='ward.D'){
   lab[which(is.na(lab))] = cpt
   lab
 }
-
 ```
 
 
 ## Test data
 
 I'll test the different approaches on dummy data with Gaussian distributions and some outliers.
-Both test datasets contains, 1000 points in two dimensions and includes 100 outliers.
-The second test dataset contains two groups, one larger than the other.
+The 1000 points are grouped in 4 groups with one larger than the others.
+I also added 100 outliers.
 
 ```{r}
-## lab = hclustit(mat, clsize, 'ward.D')
-
-## hc.o = hclust(dist(mat), method='ward.D')
-## plot(as.phylo(hc.o), direction='down', tip.color=as.numeric(factor(lab)))
-
-## plot(as.phylo(hc.o), direction='down', tip.color=cutree(hc.o, length(unique(lab))))
-
 N = 1000
 mat = matrix(rnorm(2*N), N)
+## Outliers
 OL = sample.int(N, 100)
 mat[OL,] = runif(length(OL), 2, 5)*mat[OL,]
-
-N = 1000
-mat2 = matrix(rnorm(2*N), N)
-OL = sample.int(N, 100)
-mat2[OL,] = runif(length(OL), 2, 5)*mat2[OL,]
-GP = sample.int(N, 200)
-mat2[GP,] = 3+mat2[GP,]
-
-par(mfrow=c(1,2))
-plot(mat, main='Test data 1')
-plot(mat2, main='Test data 2')
-par(mfrow=c(1,1))
+## 4 groups
+GPx = rep(4*c(0,0,0,1), c(2/5, 1/5, 1/5, 1/5)*N)
+GPy = rep(4*c(0,1,2,1), c(2/5, 1/5, 1/5, 1/5)*N)
+mat[,1] = GPx + mat[,1]
+mat[,2] = GPy + mat[,2]
+mat %>% as.data.frame %>% ggplot(aes(V1, V2)) + geom_point(alpha=.5) + theme_bw()
 ```
 
 
 ## Results
 
 Let's aim at clusters of around $s=21$ points.
-Not 20 because that way there will be left-over points (more realistic).
-
-### Test data 1
+Why 21, and not 20? Because that way there will be "left-over" points (more realistic).
 
 ```{r}
 clsize = 21
+
+## Cluster statistics
+clstats <- function(mat, cls){
+  dmat = as.matrix(dist(mat))
+  sk <- silhouette(as.numeric(factor(cls)), dmatrix=dmat)
+  mean.sk = mean(sk[,3])
+  ll = lapply(unique(cls), function(cl){
+    cl.ii = which(cls==cl)
+    d = as.dist(dmat[cl.ii, cl.ii])
+    tibble(lab=cl, max.dist=max(d), mean.dist=mean(d), size=length(cl.ii), mean.cl.sil=mean(sk[cl.ii, 3]), mean.sil=mean.sk)
+  })
+  do.call(rbind, ll)
+}
+
+## Hierarchical clustering based methods
 hc.l = lapply(c('average', 'complete', 'ward.D', 'single'), function(meth){
-  lab = hclustit(mat, clsize, meth, split.th=1.5)
-  hc.o = hclust(dist(mat), method=meth)
-  rbind(clstats(mat, lab) %>% mutate(method=meth, strategy='dichotomy'),
-        clstats(mat, cutree(hc.o, N/clsize)) %>% mutate(method=meth, strategy='hclust-cutree'))
+  ## Hierarchical complete
+  lab.ct = hclust(dist(mat), method=meth) %>% cutree(N/clsize)
+  ## Iterative dichotomy
+  lab.it = hclustit(mat, clsize, meth, split.th=1.5)
+  ## ## Iterative "bottom-leaves" clustering
+  lab.hcb = hcbottom(mat, clsize, meth)
+  rbind(clstats(mat, lab.it) %>% mutate(method=meth, strategy='dichotomy'),
+        clstats(mat, lab.hcb) %>% mutate(method=meth, strategy='hclust-bottom'),
+        clstats(mat, lab.ct) %>% mutate(method=meth, strategy='hclust-cutree'))
+})
+## K-means variation
+kmv.l = lapply(c('random', 'maxd', 'mind', 'elki'), function(meth){
+  lab = kmvar(mat, clsize, method=meth)
+  clstats(mat, lab) %>% mutate(method=meth, strategy='Kmeans-var')
+})
+## Nearest neighbors
+nn.l = lapply(c('random', 'maxd', 'mind'), function(meth){
+  lab = nnit(mat, clsize, method=meth)
+  clstats(mat, lab) %>% mutate(method=meth, strategy='nearest neighbors')
 })
 
-hcb.o = hcbottom(mat, clsize)
-kmv.o = kmvar(mat, clsize)
-kmv2.o = kmvar(mat, clsize, method='maxd')
-kmv3.o = kmvar(mat, clsize, method='mind')
-kmv4.o = kmvar(mat, clsize, method='elki')
-nn.o = nnit(mat, clsize)
-nn2.o = nnit(mat, clsize, method='maxd')
-nn3.o = nnit(mat, clsize, method='mind')
-
-cls.df = do.call(rbind, hc.l)
-cls.df = rbind(cls.df, clstats(mat, hcb.o) %>% mutate(method='hcbottom', strategy='nearest neighbor'))
-cls.df = rbind(cls.df, clstats(mat, sample(rep(1:ceiling(nrow(mat)/clsize), each=clsize)[1:nrow(mat)])) %>% mutate(method='random', strategy='baseline'))
-cls.df = rbind(cls.df, clstats(mat, kmv.o) %>% mutate(method='random', strategy='Kmeans-var'))
-cls.df = rbind(cls.df, clstats(mat, kmv2.o) %>% mutate(method='maxD', strategy='Kmeans-var'))
-cls.df = rbind(cls.df, clstats(mat, kmv3.o) %>% mutate(method='minD', strategy='Kmeans-var'))
-cls.df = rbind(cls.df, clstats(mat, kmv4.o) %>% mutate(method='default', strategy='Kmeans-var'))
-cls.df = rbind(cls.df, clstats(mat, nn.o) %>% mutate(method='random', strategy='nearest neighbor'))
-cls.df = rbind(cls.df, clstats(mat, nn2.o) %>% mutate(method='maxD', strategy='nearest neighbor'))
-cls.df = rbind(cls.df, clstats(mat, nn3.o) %>% mutate(method='minD', strategy='nearest neighbor'))
-
-ggplot(cls.df, aes(x=method, y=winsor(size, 5*clsize))) + geom_boxplot() + theme_bw() + geom_hline(yintercept=clsize, linetype=2) + facet_grid(.~strategy, space='free', scales='free') + ylab(paste0('cluster size (winsorized at ', 5*clsize, ')')) + scale_y_continuous(breaks=seq(0,200,10))
-
-ggplot(cls.df, aes(x=method, y=mean.dist)) + geom_boxplot() + theme_bw() + facet_grid(.~strategy, space='free', scales='free') + ylab('average pairwise distance')
-
-ggplot(cls.df, aes(x=method, y=max.dist)) + geom_boxplot() + theme_bw() + facet_grid(.~strategy, space='free', scales='free') + ylab('maximum pairwise distance')
-
-cls.df %>% select(strategy, method, mean.sil) %>% unique %>% ggplot(aes(x=method, y=mean.sil)) + geom_bar(stat='identity') + theme_bw() + facet_grid(.~strategy, space='free', scales='free') + ylab('mean silhouette score')
-
-cls.df %>% select(-lab, -size) %>% group_by(method, strategy) %>% summarize_all(median) %>% gather(variable, value, -method, -strategy) %>% ggplot(aes(x=paste(strategy, method), y=value, fill=strategy)) + geom_bar(stat='identity') + facet_wrap(~variable, scales='free') + theme_bw() + theme(axis.text.x=element_text(hjust=1, vjust=.5, angle=90)) + xlab('method') + ylab('median per-cluster value')
+cls.df = do.call(rbind, c(hc.l, kmv.l, nn.l))
 ```
 
-
-### Test data 2
+### Cluster size
 
 ```{r}
-clsize = 20
-hc.l = lapply(c('average', 'complete', 'ward.D', 'single'), function(meth){
-  lab = hclustit(mat2, clsize, meth, split.th=1.5)
-  hc.o = hclust(dist(mat2), method=meth)
-  rbind(clstats(mat2, lab) %>% mutate(method=meth, strategy='iterative'),
-        clstats(mat2, cutree(hc.o, N/clsize)) %>% mutate(method=meth, strategy='hclust-cutree'))
-})
-
-kmv.o = kmvar(mat2, clsize)
-kmv2.o = kmvar(mat2, clsize, method='maxd')
-kmv3.o = kmvar(mat2, clsize, method='mind')
-nn.o = nnit(mat2, clsize)
-nn2.o = nnit(mat2, clsize, method='maxd')
-nn3.o = nnit(mat2, clsize, method='mind')
-
-cls.df = do.call(rbind, hc.l)
-cls.df = rbind(cls.df, clstats(mat2, sample(rep(1:ceiling(nrow(mat2)/clsize), each=clsize)[1:nrow(mat2)])) %>% mutate(method='random', strategy='baseline'))
-cls.df = rbind(cls.df, clstats(mat2, kmv.o) %>% mutate(method='random', strategy='Kmeans-var'))
-cls.df = rbind(cls.df, clstats(mat2, kmv2.o) %>% mutate(method='maxD', strategy='Kmeans-var'))
-cls.df = rbind(cls.df, clstats(mat2, kmv3.o) %>% mutate(method='minD', strategy='Kmeans-var'))
-cls.df = rbind(cls.df, clstats(mat, kmv4.o) %>% mutate(method='default', strategy='Kmeans-var'))
-cls.df = rbind(cls.df, clstats(mat2, nn.o) %>% mutate(method='random', strategy='nearest neighbor'))
-cls.df = rbind(cls.df, clstats(mat2, nn2.o) %>% mutate(method='maxD', strategy='nearest neighbor'))
-cls.df = rbind(cls.df, clstats(mat2, nn3.o) %>% mutate(method='minD', strategy='nearest neighbor'))
-
-ggplot(cls.df, aes(x=method, y=winsor(size, 5*clsize))) + geom_boxplot() + theme_bw() + geom_hline(yintercept=clsize, linetype=2) + facet_grid(.~strategy, space='free', scales='free') + ylab(paste0('cluster size (winsorized at ', 5*clsize, ')')) + scale_y_continuous(breaks=seq(0,200,10))
-
-ggplot(cls.df, aes(x=method, y=mean.dist)) + geom_boxplot() + theme_bw() + facet_grid(.~strategy, space='free', scales='free') + ylab('average pairwise distance')
-
-ggplot(cls.df, aes(x=method, y=max.dist)) + geom_boxplot() + theme_bw() + facet_grid(.~strategy, space='free', scales='free') + ylab('maximum pairwise distance')
-
-cls.df %>% select(-lab, -size) %>% group_by(method, strategy) %>% summarize_all(median) %>% gather(variable, value, -method, -strategy) %>% ggplot(aes(x=paste(strategy, method), y=value, fill=strategy)) + geom_bar(stat='identity') + facet_wrap(~variable, scales='free') + theme_bw() + theme(axis.text.x=element_text(hjust=1, vjust=.5, angle=90)) + xlab('method') + ylab('median per-cluster value')
+ggplot(cls.df, aes(x=method, y=winsor(size, 3*clsize))) + geom_boxplot() + theme_bw() +
+  geom_hline(yintercept=clsize, linetype=2) +
+  facet_grid(.~strategy, space='free', scales='free') +
+  ylab(paste0('cluster size (winsorized at ', 3*clsize, ')')) +
+  theme(axis.text.x=element_text(hjust=1, vjust=1, angle=70)) +
+  scale_y_continuous(breaks=seq(0,200,10))
 ```
+
+- The dichotomy and hclust sometimes produce (on average) close to the desired size but many cluster are very much smaller/bigger.
+- As expected, we get the correct size when using the methods that specifically control for cluster size.
+
+### Within-cluster distance
+
+We compute the average pairwise distance per cluster and the maximum pairwise distance per cluster.
+
+```{r}
+## Average distance between points in a cluster
+ggplot(cls.df, aes(x=method, y=mean.dist)) + geom_boxplot() + theme_bw() +
+  theme(axis.text.x=element_text(hjust=1, vjust=1, angle=70)) +
+  facet_grid(.~strategy, space='free', scales='free') + ylab('average pairwise distance')
+
+## Maximum distance between two points in a cluster
+ggplot(cls.df, aes(x=method, y=max.dist)) + geom_boxplot() + theme_bw() +
+  theme(axis.text.x=element_text(hjust=1, vjust=1, angle=70)) +
+  facet_grid(.~strategy, space='free', scales='free') + ylab('maximum pairwise distance')
+```
+
+Several approaches perform well. 
+Among the methods with cluster size control, *hclust-bottom* and *nearest neighbors* looks quite good considering that they have the additional constraint of the fixed cluster size.
+However we notice a few outlier points with high values.
+These are usually the last cluster of the iterative process, kind of a left-over cluster with many distant outlier points.
+That's why the nearest neighbors approach with the *maxD* rule, which starts with outlier points on purpose, is performing better with a narrower distribution and much weaker outliers.
+
+---
+
+A summary bar chart with the median values only:
+
+```{r}
+## Median after filtering for NA and infinite values
+medianFilt <- function(x){
+  median(x[which(!is.infinite(x) & !is.na(x))])
+}
+
+## Summary 
+cls.df %>% select(-lab, -size, -mean.sil, -mean.cl.sil) %>% group_by(method, strategy) %>%
+  summarize_all(medianFilt) %>% gather(variable, value, -method, -strategy) %>%
+  mutate(variable=factor(variable, levels=c('mean.dist', 'max.dist'),
+                         labels=c('average pairwise distance',
+                                  'maximum pairwise distance'))) %>% 
+  ggplot(aes(x=paste(strategy, method), y=value, fill=strategy)) +
+  geom_bar(stat='identity') + facet_wrap(~variable, scales='free') + theme_bw() +
+  theme(axis.text.x=element_text(hjust=1, vjust=1, angle=70)) +
+  xlab('') + ylab('median per-cluster value')
+```
+
+### Silhouette score
+
+Another way of estimating cluster quality is the [silhouette score](https://en.wikipedia.org/wiki/Silhouette_(clustering)).
+The higher the silhouette score for a point the better (the more it belongs to its cluster rather than another).
+We could look at the mean silhouette score per cluster or overall.
+
+```{r}
+## Mean silhouette per cluster
+ggplot(cls.df, aes(x=method, y=mean.cl.sil)) +
+  geom_hline(yintercept=0, linetype=2) +
+  geom_boxplot() + theme_bw() +
+  facet_grid(.~strategy, space='free', scales='free') +
+  theme(axis.text.x=element_text(hjust=1, vjust=1, angle=70)) +
+  ylab('mean silhouette score per cluster')
+  
+## Mean silhouette score
+cls.df %>% select(strategy, method, mean.sil) %>% unique %>%
+  ggplot(aes(x=method, y=mean.sil)) + geom_bar(stat='identity') + theme_bw() +
+  theme(axis.text.x=element_text(hjust=1, vjust=1, angle=70)) +
+  facet_grid(.~strategy, space='free', scales='free') + ylab('mean silhouette score')
+```
+
+Again higher and narrower score distribution for the *nearest neighbors* with *maxD* rule.
 
 
 ## Conclusions
@@ -313,10 +361,14 @@ The cluster size is completely controlled and the mean/maximum pairwise distance
 
 The K-means approach didn't perform as well but we can keep it in mind if the number of points is very large, as it is much more memory efficient (no need for a pairwise distance matrix).
 
+Although the "bottom-leaves" hierarchical clustering doesn't look as good as the nearest neighbors, it might be more robust sometimes.
+In a real data analysis for example, I had noticed that it created better cluster (in my opinion).
+So, as usual, it would be a good idea to try several methods when analyzing a new dataset and see which behaves the best.
+
 
 ## Extra: optimization
 
-The nearest neighbor approach requires a `while` loop, which is not efficient in R. 
+The nearest neighbor approach uses a `while` loop, which is not efficient in R. 
 Maybe implementing the loop with Rcpp could speed up the computation (in practice I would like to run this on up to 10K points).
 
 ```{r}
@@ -378,6 +430,8 @@ nnit.opt <- function(mat, clsize = 10){
 }
 ```
 
+After implementing the loop using Rcpp, I ran it on datasets of different size and compare the computation times.
+
 ```{r cache=TRUE}
 st.df = lapply(c(1000,1500,2000,2500,3000,3500,4000), function(N){
   mat = matrix(rnorm(2*N), N)
@@ -387,15 +441,16 @@ st.df = lapply(c(1000,1500,2000,2500,3000,3500,4000), function(N){
 })
 st.df = do.call(rbind, st.df)
 
-ggplot(st.df, aes(x=n, y=elapsed, color=method)) + geom_point() + geom_line() + theme_bw() + ylab('elapsed time (second)')
+ggplot(st.df, aes(x=n, y=elapsed, color=method)) + geom_point() + geom_line() +
+  theme_bw() + ylab('elapsed time (second)') + xlab('points')
 
-library(tidyr)
-st.df %>% select(-system) %>% spread(method, elapsed) %>% ggplot(aes(x=n, y=R/Rcpp)) + geom_point() + theme_bw()
+st.df %>% select(-system) %>% spread(method, elapsed) %>% ggplot(aes(x=n, y=R/Rcpp)) +
+  geom_point() + theme_bw() + xlab('points')
 ```
 
-Three times faster with Rcpp!
+It's around three times faster with Rcpp. Not bad!
 
-Safety check, are the results actually the same ?
+Quick sanity check: are the results actually the same ?
 
 ```{r}
 N = 1000
@@ -405,8 +460,9 @@ st2 = system.time({nn2.o = nnit.opt(mat, clsize=20)})
 r.stats = clstats(mat, nn.o) %>% mutate(method='original')
 rcpp.stats = clstats(mat, nn2.o) %>% mutate(method='optimized')
 
-opt.df = rbind(tibble(R=sort(r.stats$mean.dist), Rcpp=sort(rcpp.stats$mean.dist)) %>% mutate(metric='mean.dist'),
-               tibble(R=sort(r.stats$max.dist), Rcpp=sort(rcpp.stats$max.dist)) %>% mutate(metric='max.dist'))
+opt.df = rbind(
+  tibble(R=sort(r.stats$mean.dist), Rcpp=sort(rcpp.stats$mean.dist)) %>% mutate(metric='mean.dist'),
+  tibble(R=sort(r.stats$max.dist), Rcpp=sort(rcpp.stats$max.dist)) %>% mutate(metric='max.dist'))
 
 ggplot(opt.df, aes(x=R, y=Rcpp)) + geom_point(alpha=.5) + theme_bw() + facet_wrap(~metric, scales='free')
 ```
@@ -416,54 +472,3 @@ Yes. Ouf...
 ## Code
 
 The source code of this page can be found [here](https://github.com/jmonlong/Hippocamplus/tree/master/content/post/2018-06-09-ClusterEqualSize.Rmd).
-
-
-```{r eval=FALSE}
-
-N = 70
-mat = matrix(rnorm(50*N), N)
-gp1 = sample.int(N, N/2)
-dev=6
-mat[gp1, 1] = rnorm(length(gp1), dev)
-##mat[gp1, 3] = rnorm(length(gp1), dev/2)
-gp12 = sample(gp1, length(gp1)/2)
-mat[gp12, 2] = rnorm(length(gp12), -dev)
-##mat[gp12, 6] = rnorm(length(gp12), -dev/2)
-
-df = mat %>% as.data.frame %>% mutate(sample=1:nrow(mat)) %>% gather(dim, value, -sample)
-hc.o = hclust(dist(mat))
-df %>% mutate(sample=factor(sample, levels=hc.o$order)) %>% ggplot(aes(x=dim, y=sample, fill=value)) + geom_tile() + theme_bw() + scale_fill_gradient2()
-
-lab.df = tibble(sample=1:N, cl=nnit(mat, clsize=10))
-df %>% merge(lab.df) %>% mutate(sample=factor(sample, levels=hc.o$order)) %>% ggplot(aes(x=dim, y=sample, fill=value)) + geom_tile() + theme_bw() + scale_fill_gradient2() + facet_grid(cl~., scales='free')
-
-lab.df = tibble(sample=1:N, cl=hcbottom(mat, clsize=10))
-df %>% merge(lab.df) %>% mutate(sample=factor(sample, levels=hc.o$order)) %>% ggplot(aes(x=dim, y=sample, fill=value)) + geom_tile() + theme_bw() + scale_fill_gradient2() + facet_grid(cl~., scales='free')
-
-perm.df = lapply(1:500, function(perm){
-  N = 70
-  mat = matrix(rnorm(100*N), N)
-  gp1 = sample.int(N, N/2)
-  dev=6
-  mat[gp1, 1] = rnorm(length(gp1), dev)
-  ##mat[gp1, 3] = rnorm(length(gp1), dev/2)
-  gp12 = sample.int(N, N/2)
-  ##gp12 = sample(gp1, length(gp1)/2)
-  mat[gp12, 2] = rnorm(length(gp12), -dev)
-  ##mat[gp12, 6] = rnorm(length(gp12), -dev/2)
-  lab.nnit = tibble(sample=1:N, cl=nnit(mat, clsize=10))
-  stat.nnit = clstats(mat, lab.nnit$cl)
-  lab.hcb = tibble(sample=1:N, cl=hcbottom(mat, clsize=10))
-  stat.hcb = clstats(mat, lab.hcb$cl)
-  rbind(tibble(gp1.cl=length(unique(subset(lab.hcb, sample %in% gp1)$cl)), gp12.cl=length(unique(subset(lab.hcb, sample %in% gp12)$cl)), method='hcbottom', mean.sil=stat.hcb$mean.sil[1]),
-        tibble(gp1.cl=length(unique(subset(lab.nnit, sample %in% gp1)$cl)), gp12.cl=length(unique(subset(lab.nnit, sample %in% gp12)$cl)), method='nnit', mean.sil=stat.nnit$mean.sil[1]))
-})
-
-perm.df = do.call(rbind, perm.df)
-
-ggplot(perm.df, aes(x=gp1.cl, fill=method)) + geom_bar(position='dodge') + theme_bw()
-ggplot(perm.df, aes(x=gp12.cl, fill=method)) + geom_bar(position='dodge') + theme_bw()
-
-ggplot(perm.df, aes(x=method, y=mean.sil)) + geom_boxplot() + theme_bw()
-
-```
