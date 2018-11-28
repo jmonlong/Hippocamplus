@@ -154,7 +154,7 @@ The spacing is quite important, and the conditions can be built with:
 
 ## Convert PDF 
 
-### to EPS
+#### to EPS
 
 I ended up using Inkscape in command-line mode. The result is not so bad (better than the `pdf2eps` etc).
 
@@ -168,7 +168,7 @@ inkscape document.pdf --export-eps=document.eps
 pdftops -eps document.pdf
 ~~~
 
-### to PDF/A
+#### to PDF/A
 
 In the end I had to use Acrobat Reader Pro...
 Still, converting the PDF using the following commands beforehand helped (otherwise Acrobat Reader Pro couldn't convert it):
@@ -196,6 +196,7 @@ Another way to check for problems is to look at the *emb* column of `pdffonts ma
 + To retrieve a specific version of a file: `git show COMMIT:file`
 + Update sub-modules: `git submodule update --init --recursive`
 + Add all untracked files: `git st -s | grep '??' | cut -f2 -d ' ' | xargs git add`
++ Add remote e.g. after a fork: `git remote add mine git@github.com:jmonlong/REPO.git`
 
 #### Aliases
 

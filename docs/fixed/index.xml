@@ -71,7 +71,7 @@ Naming and formatting  Use lowercase _-separated for modules and functions name.
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/Hippocamplus/shell/</guid>
-      <description>Misc Colors in less Avoid killing ssh jobs rsync  One-liners Bash &amp;amp; Pipes AWK Perl one-liners  Shell scripting Variables If Then Else  Convert PDF to EPS to PDF/A  Git Docker cheatsheet Makefile Modules OSX Mount server Setup WD Elements external hard drive    Misc  Redirect stderr to stdout: 2&amp;gt;&amp;amp;1.  Colors in less Use the -r or -R option. Sometimes the previous command needs a parameter make sure the output includes color codes.</description>
+      <description>Misc Colors in less Avoid killing ssh jobs rsync  One-liners Bash &amp;amp; Pipes AWK Perl one-liners  Shell scripting Variables If Then Else  Convert PDF Git Docker cheatsheet Makefile Modules OSX Mount server Setup WD Elements external hard drive    Misc  Redirect stderr to stdout: 2&amp;gt;&amp;amp;1.  Colors in less Use the -r or -R option. Sometimes the previous command needs a parameter make sure the output includes color codes.</description>
     </item>
     
     <item>

@@ -24,10 +24,7 @@ output:
 <li><a href="#variables">Variables</a></li>
 <li><a href="#if-then-else">If Then Else</a></li>
 </ul></li>
-<li><a href="#convert-pdf">Convert PDF</a><ul>
-<li><a href="#to-eps">to EPS</a></li>
-<li><a href="#to-pdfa">to PDF/A</a></li>
-</ul></li>
+<li><a href="#convert-pdf">Convert PDF</a></li>
 <li><a href="#git">Git</a></li>
 <li><a href="#docker-cheatsheet">Docker cheatsheet</a></li>
 <li><a href="#makefile">Makefile</a></li>
@@ -150,15 +147,15 @@ fi</code></pre>
 </div>
 <div id="convert-pdf" class="section level2">
 <h2>Convert PDF</h2>
-<div id="to-eps" class="section level3">
-<h3>to EPS</h3>
+<div id="to-eps" class="section level4">
+<h4>to EPS</h4>
 <p>I ended up using Inkscape in command-line mode. The result is not so bad (better than the <code>pdf2eps</code> etc).</p>
 <pre class="sh"><code>inkscape document.pdf --export-eps=document.eps</code></pre>
 <p><a href="http://blm.io/blog/convert-pdf-eps-osx/">Apparently</a>, <code>pdftops</code> is even better.</p>
 <pre class="sh"><code>pdftops -eps document.pdf</code></pre>
 </div>
-<div id="to-pdfa" class="section level3">
-<h3>to PDF/A</h3>
+<div id="to-pdfa" class="section level4">
+<h4>to PDF/A</h4>
 <p>In the end I had to use Acrobat Reader Pro…
 Still, converting the PDF using the following commands beforehand helped (otherwise Acrobat Reader Pro couldn’t convert it):</p>
 <pre class="sh"><code>gs -dPDFA=1 -dBATCH -dNOPAUSE -dEmbedAllFonts=true -dSubsetFonts=false -dHaveTrueTypes=true -dPDFSETTINGS=/prepress -sProcessColorModel=DeviceRGB -sDEVICE=pdfwrite -sPDFACompatibilityPolicy=1 -sOutputFile=mainPDFA.pdf main.pdf</code></pre>
@@ -178,6 +175,7 @@ Another way to check for problems is to look at the <em>emb</em> column of <code
 <li>To retrieve a specific version of a file: <code>git show COMMIT:file</code></li>
 <li>Update sub-modules: <code>git submodule update --init --recursive</code></li>
 <li>Add all untracked files: <code>git st -s | grep '??' | cut -f2 -d ' ' | xargs git add</code></li>
+<li>Add remote e.g. after a fork: <code>git remote add mine git@github.com:jmonlong/REPO.git</code></li>
 </ul>
 <div id="aliases" class="section level4">
 <h4>Aliases</h4>
