@@ -213,7 +213,7 @@
 <li><a href="#auto-complete">Auto-complete</a></li>
 <li><a href="#smart-underscores">Smart underscores</a></li>
 <li><a href="#poly-mode-for-r-markdown">Poly-mode for R + Markdown</a></li>
-<li><a href="#keyboard-shortcut-to-render-rmarkdown">Keyboard shortcut to render RMarkdown</a></li>
+<li><a href="#custom-keyboard-shortcuts">Custom keyboard shortcuts</a></li>
 </ul></li>
 <li><a href="#for-writing">For writing</a><ul>
 <li><a href="#spell-checking">Spell checking</a></li>
@@ -302,7 +302,7 @@
 </div>
 <div id="melpa-package-repository" class="section level2">
 <h2>MELPA package repository</h2>
-<p>Usually packages are just <code>.el</code> files to download and add in the folder defined in <code>.emacs</code> (e.g. <code>(add-to-list 'load-path &quot;~/.emacs.d/lisp/&quot;)</code>). However, there is easier way: <a href="http://www.emacswiki.org/emacs/MELPA">MELPA</a> package manager !</p>
+<p>Usually packages are just <code>.el</code> files to download and add in the folder defined in <code>.emacs</code> (e.g. <code>(add-to-list 'load-path &quot;~/.emacs.d/lisp/&quot;)</code>). However, there is easier way: <a href="http://www.emacswiki.org/emacs/MELPA">MELPA</a> package manager !</p>
 <p>To install it, add to <code>.emacs</code>:</p>
 <pre class="lisp"><code>(require &#39;package)
 (add-to-list &#39;package-archives &#39;(&quot;melpa&quot; . &quot;https://melpa.org/packages/&quot;) t)
@@ -311,7 +311,10 @@
 </div>
 <div id="solarized-theme" class="section level2">
 <h2>Solarized theme</h2>
-<p>I use <a href="http://ethanschoonover.com/solarized">Solarized</a> theme palette. I installed the <em>color-theme-sanityinc-solarized</em> pacakge directly from <a href="#melpa-package-repository">MELPA</a>. Then I added the dark version as default with <code>(load-theme 'sanityinc-solarized-dark t)</code>. To change it interactively I run <code>M-x load-theme</code> and then for example <code>sanityinc-solarized-light</code>.</p>
+<p>I use <a href="http://ethanschoonover.com/solarized">Solarized</a> theme palette.
+I installed the <em>color-theme-sanityinc-solarized</em> pacakge directly from <a href="#melpa-package-repository">MELPA</a>.
+Then I added the dark version as default with <code>(load-theme 'sanityinc-solarized-dark t)</code>.
+To change it interactively I run <code>M-x load-theme</code> and then for example <code>sanityinc-solarized-light</code>.</p>
 <p>I also have an alias in my <code>.bashrc</code> to open emacs directly in <em>light</em> mode:</p>
 <pre class="sh"><code>alias emacsl=&quot;emacs --eval \&quot;(load-theme &#39;sanityinc-solarized-light t)\&quot;&quot;</code></pre>
 </div>
@@ -320,7 +323,7 @@
 <div id="emacs-speaks-statistics" class="section level3">
 <h3>Emacs Speaks Statistics</h3>
 <p>ESS can be installed through <strong>MELPA</strong>. Otherwise, see below.</p>
-<p>To install ESS, without needing the admin rights, the easiest way is to download and compile it in a dedicated folder (e.g. <code>.emacs.d/lisp/ess</code>):</p>
+<p>To install ESS, without needing the admin rights, the easiest way is to download and compile it in a dedicated folder (e.g. <code>.emacs.d/lisp/ess</code>):</p>
 <pre class="sh"><code>git clone https://github.com/emacs-ess/ESS.git .emacs.d/lisp/ess
 cd .emacs.d/lisp/ess
 make</code></pre>
@@ -361,8 +364,10 @@ make</code></pre>
 (require &#39;poly-markdown)
 (add-to-list &#39;auto-mode-alist &#39;(&quot;\\.Rmd\\&#39;&quot; . poly-markdown+r-mode))</code></pre>
 </div>
-<div id="keyboard-shortcut-to-render-rmarkdown" class="section level3">
-<h3>Keyboard shortcut to render RMarkdown</h3>
+<div id="custom-keyboard-shortcuts" class="section level3">
+<h3>Custom keyboard shortcuts</h3>
+<div id="to-render-rmarkdown" class="section level4">
+<h4>To render RMarkdown</h4>
 <p>I <a href="https://stat.ethz.ch/pipermail/ess-help/2004-September/002092.html">tweaked</a> a function to run <code>rmarkdown::render</code> on the current buffer and I created a shortcut for it.</p>
 <p>In <code>.emacs</code>:</p>
 <pre class="lisp"><code>(defun renderRmd ()
@@ -374,6 +379,22 @@ make</code></pre>
 (add-hook &#39;ess-mode-hook
           (lambda ()
             (local-set-key (kbd &quot;C-c C-d C-r&quot;) &#39;renderRmd)))</code></pre>
+</div>
+<div id="to-send-a-dev.off" class="section level4">
+<h4>To send a <code>dev.off()</code></h4>
+<p>When working remotely, I send <code>dev.off()</code> to the R buffer using <code>C-c C-d C-d</code> to “update” the PDF opened from the mounted server.</p>
+<p>In <code>.emacs</code>:</p>
+<pre class="lisp"><code>(defun devoff ()
+  (interactive)
+  (save-excursion
+    (message &quot;Closing device&quot;)
+    (setq ess-command &quot;dev.off()&quot;)
+    (ess-execute ess-command &#39;buffer nil nil)))
+(add-hook &#39;ess-mode-hook
+          (lambda ()
+            (local-set-key (kbd &quot;C-c C-d C-d&quot;) &#39;devoff)))</code></pre>
+<p>Note: I use <code>options(device=function() pdf(width=9, height=7))</code> to specify the dimensions of the default <em>Rplots.pdf</em> created.</p>
+</div>
 </div>
 </div>
 <div id="for-writing" class="section level2">
@@ -390,19 +411,26 @@ make</code></pre>
 </div>
 <div id="thesaurus-and-synonyms" class="section level3">
 <h3>Thesaurus and synonyms</h3>
-<p>I use the <code>synosaurus</code> package available in MELPA. It’s not as user friendly as some online resources but a good offline alternative. It uses the <a href="https://en.wikipedia.org/wiki/WordNet">WordNet</a> database through the <code>wn</code> command line. The shortcut to list synonyms is <code>C-c C-s l</code>.</p>
+<p>I use the <code>synosaurus</code> package available in MELPA.
+It’s not as user friendly as some online resources but a good offline alternative.
+It uses the <a href="https://en.wikipedia.org/wiki/WordNet">WordNet</a> database through the <code>wn</code> command line.
+The shortcut to list synonyms is <code>C-c C-s l</code>.</p>
 <p>In my <code>.emacs</code> I added the <code>synosaurus-mode</code> minor mode:</p>
 <pre class="lisp"><code>(add-hook &#39;LaTeX-mode-hook &#39;synosaurus-mode)</code></pre>
 </div>
 <div id="grammar-checking" class="section level3">
 <h3>Grammar checking</h3>
-<p>The <code>langtool</code> package is available in MELPA. It uses the <a href="https://languagetool.org/">LanguageTool</a> JAR to highlight potential grammar problems. In my <code>.emacs</code>:</p>
+<p>The <code>langtool</code> package is available in MELPA.
+It uses the <a href="https://languagetool.org/">LanguageTool</a> JAR to highlight potential grammar problems.
+In my <code>.emacs</code>:</p>
 <pre class="lisp"><code>(require &#39;langtool)
 (setq langtool-language-tool-jar &quot;/usr/local/Cellar/languagetool/3.8/libexec/languagetool-commandline.jar&quot;)
 (setq langtool-default-language &quot;en-US&quot;)
 (setq langtool-mother-tongue &quot;fr&quot;)
 (setq langtool-disabled-rules &#39;(&quot;MORFOLOGIK_RULE_EN_US&quot;))</code></pre>
-<p><em>MORFOLOGIK_RULE_EN_US</em> corresponds to spelling mistakes, which I don’t want to see because I do the spell-checking separately better with ispell. The list of rules is <a href="https://community.languagetool.org/rule/list?lang=en-US">here</a>. For example, I could disabled <em>WHITESPACE_RULE</em> for LaTeX.</p>
+<p><em>MORFOLOGIK_RULE_EN_US</em> corresponds to spelling mistakes, which I don’t want to see because I do the spell-checking separately better with ispell.
+The list of rules is <a href="https://community.languagetool.org/rule/list?lang=en-US">here</a>.
+For example, I could disabled <em>WHITESPACE_RULE</em> for LaTeX.</p>
 <p>Then:</p>
 <ul>
 <li><code>M-x langtool-check</code> to highlight problems.</li>
@@ -413,7 +441,9 @@ make</code></pre>
 <div id="for-latex" class="section level2">
 <h2>For LaTeX</h2>
 <p>I put some Emacs tricks (e.g. for table manipulation) on the <a href="https://jmonlong.github.io/Hippocamplus/latex">LaTeX page</a>.</p>
-<p>I general I prefer to use AUCTeX (available through MELPA). It handles multi-file documents and keeps the annoying compilation buffer closed. My configuration is:</p>
+<p>I general I prefer to use AUCTeX (available through MELPA).
+It handles multi-file documents and keeps the annoying compilation buffer closed.
+My configuration is:</p>
 <pre class="lisp"><code>(setq TeX-PDF-mode t)
 (setq-default TeX-master nil)
 (setq LaTeX-verbatim-environments-local &#39;(&quot;lstlisting&quot;))</code></pre>
@@ -430,7 +460,8 @@ make</code></pre>
 </div>
 <div id="chunk-folding" class="section level3">
 <h3>Chunk folding</h3>
-<p>Sometimes I like to fold chunk of the document to improve clarity, e.g. frames in beamer document or figure/table in a manuscript. I added to my <code>.emacs</code>:</p>
+<p>Sometimes I like to fold chunk of the document to improve clarity, e.g. frames in beamer document or figure/table in a manuscript.
+I added to my <code>.emacs</code>:</p>
 <pre class="lisp"><code>(add-hook &#39;LaTeX-mode-hook (lambda ()
                  (add-to-list &#39;LaTeX-fold-env-spec-list &#39;(&quot;[frame]&quot; (&quot;frame&quot;)))
                  (setq TeX-fold-macro-spec-list (list ()))
@@ -442,7 +473,8 @@ make</code></pre>
 <li><code>C-c C-o i</code> unfold an item.</li>
 <li><code>C-c C-o C-f</code> to switch the fold-mode on/off</li>
 </ul>
-<p>Because I added <em>frame</em> in the list, I can select a bunch of frames, press <code>C-c C-o C-r</code> and they all get folded (but not the rest). Otherwise, I manually fold the frames/figures/tables that are distracting.</p>
+<p>Because I added <em>frame</em> in the list, I can select a bunch of frames, press <code>C-c C-o C-r</code> and they all get folded (but not the rest).
+Otherwise, I manually fold the frames/figures/tables that are distracting.</p>
 </div>
 </div>
 <div id="for-markdown" class="section level2">
@@ -487,7 +519,8 @@ make</code></pre>
 <li><code>C-c C-n</code> go to next flymake error (previous with <em>p</em>).</li>
 <li><code>C-c C-e</code> edit all occurrences of symbol on point for refactoring (narrow if needed).</li>
 </ul>
-<p>Of note, I use the Jupyter console instead of the default interpreter. So <code>pip install jupyter</code> and in my <code>.emacs</code>:</p>
+<p>Of note, I use the Jupyter console instead of the default interpreter.
+So <code>pip install jupyter</code> and in my <code>.emacs</code>:</p>
 <pre class="lisp"><code>(setq python-shell-interpreter &quot;jupyter&quot;
       python-shell-interpreter-args &quot;console --simple-prompt&quot;
       python-shell-prompt-detect-failure-warning nil)
@@ -497,7 +530,9 @@ make</code></pre>
 <div id="send-commands-to-a-specific-buffer" class="section level3">
 <h3>Send commands to a specific buffer</h3>
 <p>Sometimes I want to send the commands to a specific buffer. For example, when testing new packages within a Docker container, I start a <em>shell</em> buffer, run docker and python.</p>
-<p>I installed <em>isend</em> from MELPA. Then I simply go to the <em>code</em> buffer and run <code>M-x isend-associate RET *shell* RET</code>. At this point <code>C-Enter</code> will send the command to the <em>shell</em> buffer.</p>
+<p>I installed <em>isend</em> from MELPA.
+Then I simply go to the <em>code</em> buffer and run <code>M-x isend-associate RET *shell* RET</code>.
+At this point <code>C-Enter</code> will send the command to the <em>shell</em> buffer.</p>
 </div>
 </div>
 <div id="for-ccpp" class="section level2">
@@ -508,7 +543,8 @@ make</code></pre>
 </ul>
 <div id="tags" class="section level3">
 <h3>Tags</h3>
-<p>I installed <a href="http://www.gnu.org/software/global/">GNU Global</a> and the <em>ggtags</em> package from MELPA. Then added to <code>.emacs</code>:</p>
+<p>I installed <a href="http://www.gnu.org/software/global/">GNU Global</a> and the <em>ggtags</em> package from MELPA.
+Then added to <code>.emacs</code>:</p>
 <pre class="lisp"><code>(require &#39;ggtags)
 (add-hook &#39;c-mode-common-hook
           (lambda ()
@@ -561,7 +597,9 @@ make</code></pre>
 <p>To visualize blanks (tabs, spaces, new lines) I use the minor mode <code>whitespace-mode</code>.</p>
 <div id="csvtsv" class="section level3">
 <h3>CSV/TSV</h3>
-<p>I use the <code>csv-mode</code> and the command <code>c-c c-a</code> to align columns. By default it understand <code>,</code>, <code>;</code> and <code>\t</code> as separator. If not I think the variable to customize is <code>csv-separators</code>.</p>
+<p>I use the <code>csv-mode</code> and the command <code>c-c c-a</code> to align columns.
+By default it understand <code>,</code>, <code>;</code> and <code>\t</code> as separator.
+If not I think the variable to customize is <code>csv-separators</code>.</p>
 </div>
 <div id="dired-mode" class="section level3">
 <h3>Dired mode</h3>
@@ -586,7 +624,8 @@ make</code></pre>
 <li><code>C-x v i</code> to add.</li>
 <li><code>C-x v =</code> to see differences.</li>
 </ul>
-<p>A more popular Git interface is <a href="https://www.emacswiki.org/emacs/Magit">Magit</a>. After installing <em>magit</em> using MELPA, invoke the main buffer with <code>M-x magit-status</code> (or <code>C-x g</code>) and then:</p>
+<p>A more popular Git interface is <a href="https://www.emacswiki.org/emacs/Magit">Magit</a>.
+After installing <em>magit</em> using MELPA, invoke the main buffer with <code>M-x magit-status</code> (or <code>C-x g</code>) and then:</p>
 <ul>
 <li><code>?</code> to list keystroke/commands.</li>
 <li><code>F u</code> to pull.</li>
