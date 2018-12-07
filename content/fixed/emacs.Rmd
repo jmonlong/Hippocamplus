@@ -158,7 +158,9 @@ I added this to my `.emacs`:
 (add-to-list 'auto-mode-alist '("\\.Rmd\\'" . poly-markdown+r-mode))
 ~~~
 
-### Keyboard shortcut to render RMarkdown
+### Custom keyboard shortcuts
+
+#### To render RMarkdown
 
 I [tweaked](https://stat.ethz.ch/pipermail/ess-help/2004-September/002092.html) a function to run `rmarkdown::render` on the current buffer and I created a shortcut for it.
 
@@ -175,6 +177,26 @@ In `.emacs`:
           (lambda ()
             (local-set-key (kbd "C-c C-d C-r") 'renderRmd)))
 ~~~
+
+#### To send a `dev.off()`
+
+When working remotely, I send `dev.off()` to the R buffer using `C-c C-d C-d` to "update" the PDF opened from the mounted server.
+
+In `.emacs`:
+
+~~~lisp
+(defun devoff ()
+  (interactive)
+  (save-excursion
+    (message "Closing device")
+    (setq ess-command "dev.off()")
+    (ess-execute ess-command 'buffer nil nil)))
+(add-hook 'ess-mode-hook
+          (lambda ()
+            (local-set-key (kbd "C-c C-d C-d") 'devoff)))
+~~~
+
+Note: I use `options(device=function() pdf(width=9, height=7))` to specify the dimensions of the default *Rplots.pdf* created.
 
 ## For writing
 
