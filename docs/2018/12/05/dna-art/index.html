@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Artistic representation of DNA tests &middot; Hippocamplus
+    
+  </title>
+
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113785126-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    
+    gtag('config', "UA-113785126-1");
+  </script>
+  
+  
+  <link rel="stylesheet" href="../../../../css/poole.css">
+  <link rel="stylesheet" href="../../../../css/syntax.css">
+  <link rel="stylesheet" href="../../../../css/lanyon.css">
+  <link rel="stylesheet" href="../../../../css/github.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
+  <link rel="stylesheet" href="../../../../fa/css/font-awesome.min.css">
+  
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../../../assets/hippoPlus-icon.png">
+  <link rel="shortcut icon" href="../../../../assets/hippoPlus-icon.png">
+
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="../../../../atom.xml">
+</head>
+
+  
+  <body>
+
+    
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>A place to gather useful information I keep on forgetting.</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item " href="../../../../">Home</a>
+    <a class="sidebar-nav-item " href="../../../../post">Posts</a>
+
+    
+    
+      
+        <a class="sidebar-nav-item " href="../../../../emacs/">Emacs</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../latex/">LaTeX</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../markdown/">Markdown</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../math/stats/">Math/Stats</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../python/">Python</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../r/">R</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../shell/">Shell</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../internet/">Internet</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../about/">About</a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+    
+  </nav>
+
+  <div class="sidebar-item">
+  </div>
+  
+  <div class="sidebar-item">
+    <div><a href="../../../../index.xml"><i class="fa fa-rss-square" aria-hidden="true"></i> RSS</a></div>
+    <div><a href="https://twitter.com/JMonlong"><i class="fa fa-twitter" aria-hidden="true"></i> @JMonlong</a></div>
+    <p>&copy; 2018 Jean Monlong. All rights reserved.</p>
+  </div>
+</div>
+
+
+    
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="../../../../" title="Home">Hippocamplus</a>
+            <small>My Second Memory</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+
+
+<div class="post">
+  <h1 class="post-title">Artistic representation of DNA tests</h1>
+  <span class="post-date">Dec 5 2018
+  
+  
+  
+  
+  
+  <a href='../../../../tags/genome/' class='label'>genome</a>
+  
+  <a href='../../../../tags/plot/' class='label'>plot</a>
+  
+  
+  
+  </span>
+  <div id="TOC">
+<ul>
+<li><a href="#version-1-tree">Version 1: Tree</a></li>
+<li><a href="#version-2-weave">Version 2: Weave</a></li>
+<li><a href="#version-3-noise">Version 3: Noise</a></li>
+<li><a href="#version-4-stars">Version 4: Stars</a></li>
+<li><a href="#notes">Notes</a></li>
+<li><a href="#gallery">Gallery</a></li>
+<li><a href="#code">Code</a></li>
+</ul>
+</div>
+
+<p>Christmas is coming.
+DNA tests are cool gifts but I’ve already offered it to some members of my family before.
+Now I was wondering if I could use this data in a more creative way and produce some kind of artistic representation of the DNA data to give them for Christmas.
+Some kind of DNA art or painting that would be unique for each person.</p>
+<p>Surprisingly, I didn’t find much on the internet for something like this.
+I expected some people to have already tried considering the success of 23andme and co.
+<a href="https://www.dotone.io/">One company</a> sells scarves made from some selected variants with associated traits (eye color, etc).
+Others were just printing <a href="https://www.dna11.com/dna-images-gallery">photos of gels</a>.</p>
+<p>So I started tinkering a script around a year ago and now it feel like a good time to stop and put it out there.
+First, I’m running out of inspiration.
+And then I used the script a couple of month ago for a friend’s birthday present and I think it turned out OK, so here it is, my attempt at DNA art…</p>
+<hr />
+<p>After some feedback from friends, I ended up implementing a <strong>four different versions</strong>: tree, weave, noise, and stars.
+Every time, the DNA is used to create a background or some kind of mesh that, by itself, is not that amazing but could be combined with some photo edition to create cool images.</p>
+<div id="version-1-tree" class="section level2">
+<h2>Version 1: Tree</h2>
+<p>The first idea was to represent how unique is the person.
+Each fork represents a mutation with three “options”: homozygous for the common allele, heterozygous, or homozygous for the rare allele.
+The real tree would be huge and this version represents just the branch/path followed by that person.
+The image would be unique because the “chances” to go though the same path (same choices at each fork) are extremely low.
+At least that’s what I wanted to depict.</p>
+<p>CARTOON</p>
+<p>EXAMPLE</p>
+</div>
+<div id="version-2-weave" class="section level2">
+<h2>Version 2: Weave</h2>
+<p>Very similar to version 1 but with a thicker path/fork so that it covers more surface.
+This is better suited to use as a mask for a photo, while the first version worked mostly when combining with simple “texture” images.</p>
+<p>CARTOON</p>
+<p>EXAMPLE</p>
+</div>
+<div id="version-3-noise" class="section level2">
+<h2>Version 3: Noise</h2>
+<p>Here the goal was to create some kind of pixel noise based on the DNA and see if larger patterns would arise.
+Each variant is represented as a pixel whose size depends on the genotype: no pixel if homozygous for the common allele; small pixel if heterozygous; large pixel if homozygous for the rare allele.</p>
+<p>CARTOON</p>
+<p>EXAMPLE</p>
+</div>
+<div id="version-4-stars" class="section level2">
+<h2>Version 4: Stars</h2>
+<p>Finally, each variant are represented as points whose size depends on the genotype.
+Similar to the previous version: no point if homozygous for the common allele; small point if heterozygous; large point if homozygous for the rare allele.
+We can then make these points look like stars and combine with some other space images.</p>
+<p>CARTOON</p>
+<p>EXAMPLE</p>
+</div>
+<div id="notes" class="section level2">
+<h2>Notes</h2>
+<p>In the end there are so many variants that it’s impossible to see if we use all of them and print on a reasonable surface (having an entire wall covered with this would cool though).
+My solution was to pack variants and represent these packs with a special symbol.</p>
+<p>CARTOON</p>
+<p>We could imagine these packs as nucleosomes, the DNA packing system.
+It could be something more poetic like galaxies in the stars representation, or the tree branch looping in a third dimension for version 1.</p>
+<hr />
+<p>To make the meaning more significant, I used the frequency of the variant in the 1000GP to find out which allele is common vs rare. I like the idea of the brighter stars representing rare things about the person.</p>
+</div>
+<div id="gallery" class="section level2">
+<h2>Gallery</h2>
+<p>A couple of example of each version (from random data):</p>
+<a data-flickr-embed="true"  href="https://www.flickr.com/photos/137419613@N08/albums/72157701062376504" title="California"><img src="https://farm2.staticflickr.com/1878/43966073664_0aa1be9896_z.jpg" width="640" height="480" alt="California"></a>
+<script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
+</div>
+<div id="code" class="section level2">
+<h2>Code</h2>
+<p>The scripts and some basic GIMP instructions are <a href="">available on GitHub</a>.</p>
+</div>
+
+</div>
+
+      </div>
+    </div>
+
+    
+    
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src="../../../../assets/highlight.min.js"></script>
+    <script src="../../../../assets/r.min.js"></script>
+    
+    <script>
+      hljs.configure({languages: ['r']});
+      hljs.initHighlightingOnLoad();
+    </script>
+
+    <script src="//yihui.name/js/math-code.js"></script>
+    <script async src="//cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    
+  </body>
+</html>
+
