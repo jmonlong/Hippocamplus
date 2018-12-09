@@ -2,7 +2,7 @@ To generate images from genomic variants, e.g. results from 23andMe/Ancestry DNA
 See commands in the `trace.sh` file and more information on [this post](http://jmonlong.github.io/Hippocamplus/2018/12/08/dna-art/).
 
 ```sh
-python dnart.py -i dnatree.tsv -o chalk.svg -a "5184x3456" -u 200 -p 10000
+python dnart.py -i dnatree.tsv -o dbart.svg -a "2000x1000" -u 200 -p 10000
 ```
 
 Usage:
