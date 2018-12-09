@@ -1,4 +1,4 @@
-To generate images from the genomic variants, e.g. results from 23andMe/Ancestry DNA tests.
+To generate images from genomic variants, e.g. results from 23andMe/Ancestry DNA tests.
 See commands in the `trace.sh` file and more information on [this post](http://jmonlong.github.io/Hippocamplus/2018/12/08/dna-art/).
 
 ```sh
