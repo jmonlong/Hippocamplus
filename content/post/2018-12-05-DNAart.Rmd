@@ -1,5 +1,5 @@
 ---
-title: Artistic representation of DNA tests
+title: Artistic representation of DNA tests' results
 date: 2018-12-08
 tags: ["genome", "plot"]
 slug: dna-art
@@ -14,7 +14,7 @@ Now I was wondering if I could use this data in a more creative way and produce 
 Some kind of DNA art or painting that would be unique.
 
 Surprisingly, I didn't find much on the internet for something like this.
-I expected some people to have already tried considering the success of 23andme and co.
+I expected some people to have already tried considering the success of 23andMe, Ancestry etc.
 [One company](https://www.dotone.io/) sells scarves with motives generated from selected variants with associated traits (eye color, etc).
 Others were just printing [photos of gels](https://www.dna11.com/dna-images-gallery).
 

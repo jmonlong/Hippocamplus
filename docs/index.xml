@@ -29,7 +29,7 @@
     
       
         <item>
-          <title>Artistic representation of DNA tests</title>
+          <title>Artistic representation of DNA tests&#39; results</title>
           <link>/Hippocamplus/2018/12/08/dna-art/</link>
           <pubDate>Sat, 08 Dec 2018 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
@@ -47,7 +47,7 @@
 &lt;/div&gt;
 
 &lt;p&gt;Christmas is coming. DNA tests are cool gifts but I’ve already offered it to some members of my family before. Now I was wondering if I could use this data in a more creative way and produce some kind of artistic representation of the DNA data to give them for Christmas. Some kind of DNA art or painting that would be unique.&lt;/p&gt;
-&lt;p&gt;Surprisingly, I didn’t find much on the internet for something like this. I expected some people to have already tried considering the success of 23andme and co. &lt;a href=&#34;https://www.dotone.io/&#34;&gt;One company&lt;/a&gt; sells scarves with motives generated from selected variants with associated traits (eye color, etc). Others were just printing &lt;a href=&#34;https://www.dna11.com/dna-images-gallery&#34;&gt;photos of gels&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Surprisingly, I didn’t find much on the internet for something like this. I expected some people to have already tried considering the success of 23andMe, Ancestry etc. &lt;a href=&#34;https://www.dotone.io/&#34;&gt;One company&lt;/a&gt; sells scarves with motives generated from selected variants with associated traits (eye color, etc). Others were just printing &lt;a href=&#34;https://www.dna11.com/dna-images-gallery&#34;&gt;photos of gels&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;So I started tinkering a script around a year ago and now it feel like a good time to stop and put it out there. First, I’ve long passed the peak of excitement/inspiration. And second, I used the script a couple of month ago for a friend’s birthday present and I think it turned out OK. So here it is, my attempt at DNA art…&lt;/p&gt;
 &lt;hr /&gt;
 &lt;p&gt;After getting some feedback from friends, I ended up implementing &lt;strong&gt;four different versions&lt;/strong&gt;: tree, weave, noise, and stars. Each time, the DNA is used to create a background or some kind of mesh that, by itself, is not that amazing but could be combined with some photo edition to create cool images.&lt;/p&gt;
