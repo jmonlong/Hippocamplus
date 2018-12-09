@@ -1,7 +1,6 @@
 ---
 title: Artistic representation of DNA tests
-date: 2018-12-05
-draft: true
+date: 2018-12-08
 tags: ["genome", "plot"]
 slug: dna-art
 output:
@@ -16,75 +15,67 @@ output:
 <li><a href="#version-2-weave">Version 2: Weave</a></li>
 <li><a href="#version-3-noise">Version 3: Noise</a></li>
 <li><a href="#version-4-stars">Version 4: Stars</a></li>
-<li><a href="#notes">Notes</a></li>
 <li><a href="#gallery">Gallery</a></li>
 <li><a href="#code">Code</a></li>
+<li><a href="#notes">Notes</a></li>
 </ul>
 </div>
 
-<p>Christmas is coming.
-DNA tests are cool gifts but I’ve already offered it to some members of my family before.
-Now I was wondering if I could use this data in a more creative way and produce some kind of artistic representation of the DNA data to give them for Christmas.
-Some kind of DNA art or painting that would be unique for each person.</p>
-<p>Surprisingly, I didn’t find much on the internet for something like this.
-I expected some people to have already tried considering the success of 23andme and co.
-<a href="https://www.dotone.io/">One company</a> sells scarves made from some selected variants with associated traits (eye color, etc).
-Others were just printing <a href="https://www.dna11.com/dna-images-gallery">photos of gels</a>.</p>
-<p>So I started tinkering a script around a year ago and now it feel like a good time to stop and put it out there.
-First, I’m running out of inspiration.
-And then I used the script a couple of month ago for a friend’s birthday present and I think it turned out OK, so here it is, my attempt at DNA art…</p>
+<p>Christmas is coming. DNA tests are cool gifts but I’ve already offered it to some members of my family before. Now I was wondering if I could use this data in a more creative way and produce some kind of artistic representation of the DNA data to give them for Christmas. Some kind of DNA art or painting that would be unique.</p>
+<p>Surprisingly, I didn’t find much on the internet for something like this. I expected some people to have already tried considering the success of 23andme and co. <a href="https://www.dotone.io/">One company</a> sells scarves with motives generated from selected variants with associated traits (eye color, etc). Others were just printing <a href="https://www.dna11.com/dna-images-gallery">photos of gels</a>.</p>
+<p>So I started tinkering a script around a year ago and now it feel like a good time to stop and put it out there. First, I’ve long passed the peak of excitement/inspiration. And second, I used the script a couple of month ago for a friend’s birthday present and I think it turned out OK. So here it is, my attempt at DNA art…</p>
 <hr />
-<p>After some feedback from friends, I ended up implementing a <strong>four different versions</strong>: tree, weave, noise, and stars.
-Every time, the DNA is used to create a background or some kind of mesh that, by itself, is not that amazing but could be combined with some photo edition to create cool images.</p>
+<p>After getting some feedback from friends, I ended up implementing <strong>four different versions</strong>: tree, weave, noise, and stars. Each time, the DNA is used to create a background or some kind of mesh that, by itself, is not that amazing but could be combined with some photo edition to create cool images.</p>
 <div id="version-1-tree" class="section level2">
 <h2>Version 1: Tree</h2>
-<p>The first idea was to represent how unique is the person.
-Each fork represents a mutation with three “options”: homozygous for the common allele, heterozygous, or homozygous for the rare allele.
-The real tree would be huge and this version represents just the branch/path followed by that person.
-The image would be unique because the “chances” to go though the same path (same choices at each fork) are extremely low.
-At least that’s what I wanted to depict.</p>
-<p>CARTOON</p>
-<p>EXAMPLE</p>
+<p>The first idea was to represent how unique is the person. Each fork represents a mutation with three “options”: homozygous for the common allele, heterozygous, or homozygous for the rare allele. The complete tree would be huge and this version represents just the branch/path followed by that person. The image is unique because the “chances” to go though the same path (same choices at each fork) are extremely low. At least that’s what I wanted to communicate.</p>
+<div class="figure">
+<img src="/imgs/dnart/cartoon1.jpg" />
+
+</div>
 </div>
 <div id="version-2-weave" class="section level2">
 <h2>Version 2: Weave</h2>
-<p>Very similar to version 1 but with a thicker path/fork so that it covers more surface.
-This is better suited to use as a mask for a photo, while the first version worked mostly when combining with simple “texture” images.</p>
-<p>CARTOON</p>
-<p>EXAMPLE</p>
+<p>Very similar to version 1 but with a thicker path/fork so that it covers more surface. This is better suited to use as a mask for a photo, while the first version worked mostly when combining with simple “texture” images.</p>
+<div class="figure">
+<img src="/imgs/dnart/cartoon2.jpg" />
+
+</div>
 </div>
 <div id="version-3-noise" class="section level2">
 <h2>Version 3: Noise</h2>
-<p>Here the goal was to create some kind of pixel noise based on the DNA and see if larger patterns would arise.
-Each variant is represented as a pixel whose size depends on the genotype: no pixel if homozygous for the common allele; small pixel if heterozygous; large pixel if homozygous for the rare allele.</p>
-<p>CARTOON</p>
-<p>EXAMPLE</p>
+<p>Here the goal was to create some kind of pixel noise based on the DNA data and see if larger patterns would arise. Each variant is represented as a pixel whose size depends on the genotype: no pixel if homozygous for the common allele; small pixel if heterozygous; large pixel if homozygous for the rare allele.</p>
+<div class="figure">
+<img src="/imgs/dnart/cartoon3.jpg" />
+
+</div>
 </div>
 <div id="version-4-stars" class="section level2">
 <h2>Version 4: Stars</h2>
-<p>Finally, each variant are represented as points whose size depends on the genotype.
-Similar to the previous version: no point if homozygous for the common allele; small point if heterozygous; large point if homozygous for the rare allele.
-We can then make these points look like stars and combine with some other space images.</p>
-<p>CARTOON</p>
-<p>EXAMPLE</p>
+<p>Finally, variants are represented as points whose size depends on the genotype. Similar to the previous version: no point if homozygous for the common allele; small point if heterozygous; large point if homozygous for the rare allele. We can then make these points look like stars and combine with some other space images.</p>
+<div class="figure">
+<img src="/imgs/dnart/cartoon4.jpg" />
+
 </div>
-<div id="notes" class="section level2">
-<h2>Notes</h2>
-<p>In the end there are so many variants that it’s impossible to see if we use all of them and print on a reasonable surface (having an entire wall covered with this would cool though).
-My solution was to pack variants and represent these packs with a special symbol.</p>
-<p>CARTOON</p>
-<p>We could imagine these packs as nucleosomes, the DNA packing system.
-It could be something more poetic like galaxies in the stars representation, or the tree branch looping in a third dimension for version 1.</p>
-<hr />
-<p>To make the meaning more significant, I used the frequency of the variant in the 1000GP to find out which allele is common vs rare. I like the idea of the brighter stars representing rare things about the person.</p>
 </div>
 <div id="gallery" class="section level2">
 <h2>Gallery</h2>
-<p>A couple of example of each version (from random data):</p>
-<a data-flickr-embed="true"  href="https://www.flickr.com/photos/137419613@N08/albums/72157701062376504" title="California"><img src="https://farm2.staticflickr.com/1878/43966073664_0aa1be9896_z.jpg" width="640" height="480" alt="California"></a>
+<p>A couple of example of each version (or see <a href="https://flic.kr/s/aHskKjn4w6">album on Flickr</a>) :</p>
+<a data-flickr-embed="true" data-footer="true"  href="https://www.flickr.com/photos/137419613@N08/albums/72157674331904837" title="DNArt"><img src="https://farm5.staticflickr.com/4863/46186328172_32c8630662.jpg" width="900" height="600" alt="DNArt"></a>
 <script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
 </div>
 <div id="code" class="section level2">
 <h2>Code</h2>
-<p>The scripts and some basic GIMP instructions are <a href="">available on GitHub</a>.</p>
+<p>The scripts and some basic GIMP instructions are <a href="https://github.com/jmonlong/Hippocamplus/tree/config/python/dnart">available on GitHub</a>.</p>
+</div>
+<div id="notes" class="section level2">
+<h2>Notes</h2>
+<p>I didn’t think about that at first but there are so many variants that we don’t see much if we use all of them and print on a reasonable surface (having an entire wall covered with this would cool though). My solution was to pack variants and represent these packs with a special symbol. For example, draw 200 variants, then pack the next 10K, draw 200 variants, …</p>
+<div class="figure">
+<img src="/imgs/dnart/cartoon1-pack.jpg" />
+
+</div>
+<p>We could imagine these packs as nucleosomes, the DNA packing system. It could also be something more poetic like galaxies in the stars representation, or imagining the tree branch looping in a third dimension for version 1.</p>
+<hr />
+<p>I used the frequency of the variant in the 1000GP to find out which allele is common vs rare. I like the idea of the brighter stars representing rare things about the person.</p>
 </div>

@@ -6,10 +6,19 @@
     <description>Recent content in Genome on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 05 Sep 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 08 Dec 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/Hippocamplus/tags/genome/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Artistic representation of DNA tests</title>
+      <link>/Hippocamplus/2018/12/08/dna-art/</link>
+      <pubDate>Sat, 08 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/Hippocamplus/2018/12/08/dna-art/</guid>
+      <description>Version 1: Tree Version 2: Weave Version 3: Noise Version 4: Stars Gallery Code Notes   Christmas is coming. DNA tests are cool gifts but I’ve already offered it to some members of my family before. Now I was wondering if I could use this data in a more creative way and produce some kind of artistic representation of the DNA data to give them for Christmas. Some kind of DNA art or painting that would be unique.</description>
+    </item>
     
     <item>
       <title>Enrichment between genomic regions</title>
