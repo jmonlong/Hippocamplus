@@ -1,6 +1,6 @@
 #### To prepare real data
 ## Download dbSNP
-wget ftp://ftp.ncbi.nlm.nih.gov/snp/organisms/human_9606_b150_GRCh37p13/VCF/common_all_20170710.vcf.gz
+wget ftp://ftp.ncbi.nlm.nih.gov/snp/pre_build152/organisms/human_9606_b150_GRCh37p13/VCF/common_all_20170710.vcf.gz
 ## Format and annotate SNP frequencies
 python formatVcf.py -v dnaresults.vcf.gz -f common_all_20170710.vcf.gz
 
