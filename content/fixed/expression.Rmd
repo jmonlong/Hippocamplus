@@ -1,0 +1,235 @@
+---
+sidebar: true
+title: Expression
+weight: 1
+output:
+  blogdown::html_page:
+    toc: true
+---
+
+
+# Writing
+
+Some recommendations from [Sportscience](https://www.sportsci.org/jour/9901/wghstyle.html):
+
+- *i.e.* and *e.g.* only within parenthesis (is that a thing?)
+- aim for economy.
+- *However* or synonyms at most once per paragraph.
+- *while/since* for time related stuff, not instead of *whereas/although/because*.
+- Don't start sentence with *because/as/since*.
+- Adverb after verb.
+
+What I noticed that I'm doing wrong sometimes:
+
+- *aim to verb* instead of *aim at verb-ing*.
+- Using simple *be* instead of "fancy" verbs (e.g. represent).
+- Shorter sentences. E.g. *... This explains...* instead of *..., which explains...*.
+- Place *such as* at end of the sentence when possible.
+- The verb *represent* might be a faux-ami.
+
+## General
+
+Some snippets that could be useful.
+
+### Starting the sentence
+
+Typically, ... 
+$~~\bullet~~$
+In principle, ...
+$~~\bullet~~$ 
+Occasionally, ...
+$~~\bullet~~$ 
+For example, ...
+$~~\bullet~~$ 
+In X, Y ...
+$~~\bullet~~$ 
+As a result, ...
+$~~\bullet~~$ 
+Indeed, ...
+$~~\bullet~~$ 
+In this regard, ...
+$~~\bullet~~$ 
+Surprisingly, it appears that ...
+$~~\bullet~~$ 
+Although X, ...
+$~~\bullet~~$ 
+Despite X, ...
+$~~\bullet~~$ 
+Conversely,... 
+$~~\bullet~~$ 
+In contrast,...
+$~~\bullet~~$ 
+Generally speaking, X with Y are more likely to engage in Z
+
+### Explanation
+
+This calculation is based on the fact that ...
+$~~\bullet~~$ 
+... : that is, ...
+$~~\bullet~~$ 
+X (namely, XX)
+
+### Not sure
+
+..., possibly via X
+$~~\bullet~~$ 
+X may result in Y
+$~~\bullet~~$ 
+These properties probably explain why ...
+$~~\bullet~~$ 
+... occasionally cause X through Y
+
+### Opening
+
+... offer valuable models for studying ...
+$~~\bullet~~$ 
+The study of X offers an alternative source of information on Y that ...
+$~~\bullet~~$ 
+Finally, an interesting question is whether ...
+$~~\bullet~~$ 
+Given that X, it would be interesting to examine ...
+$~~\bullet~~$ 
+These studies beg for more systematic analyses to assess X
+
+### Nice expression/style
+
+X may have a greater propensity to ...
+$~~\bullet~~$ 
+... but, intriguingly, only under X and Y conditions.
+$~~\bullet~~$ 
+... may also be helpful to ...
+$~~\bullet~~$ 
+X is based, in part, on ...
+$~~\bullet~~$ 
+..., which, in turn, ...
+$~~\bullet~~$ 
+Together, these data suggest a model in which ...
+$~~\bullet~~$ 
+These data are consistent with a X model...
+$~~\bullet~~$ 
+... through myriad of mechanisms, including X.
+$~~\bullet~~$ 
+... it is often coined the guardian of the genome because of ...
+$~~\bullet~~$ 
+..., which arose ..., ...
+
+### Introduce the second part of a sentence
+
+..., showing that...
+$~~\bullet~~$ 
+..., suggesting ...
+$~~\bullet~~$ 
+..., which suggests it ...
+$~~\bullet~~$ 
+..., whereas ...
+
+## Introduction/reviews
+
+It is only in the past few years that the pervasiveness of X has been appreciated.
+$~~\bullet~~$ 
+According to the X/current model, ...
+$~~\bullet~~$ 
+... have uncovered a staggering quantity of ...
+$~~\bullet~~$ 
+This is a tell-tale signature of many ...
+$~~\bullet~~$ 
+"There are three lines of evidence that CNVs contribute to risk for SCZ"
+$~~\bullet~~$ 
+We conclude the paper with some ﬁnal discussions
+$~~\bullet~~$ 
+Thereafter
+
+### Intro the intro
+
+We also examine the multitude of ways through which
+$~~\bullet~~$ 
+Recent studies have uncovered myriad of ...
+$~~\bullet~~$ 
+Several facets of X have been extensively investigated. 
+$~~\bullet~~$ 
+A number of studies have produced robust ...
+$~~\bullet~~$ 
+Various methods can be applied to ...
+
+### Pionner work
+
+... has laid the foundation for the emerging field of ...
+$~~\bullet~~$ 
+... helped to shed light on X.
+$~~\bullet~~$ 
+Several recent studies point to the existence of a previously unrecognized ...
+$~~\bullet~~$ 
+A first hint at the system came from a series of elegant studies on ...
+
+### Changing subject
+
+Another exciting facet of X is that ...
+$~~\bullet~~$ 
+Another common route to X is through ...
+$~~\bullet~~$ 
+Another mechanism by which X can have an impact on Y is through ...
+$~~\bullet~~$ 
+The second functional theme emerging from analyses of X is the ...
+$~~\bullet~~$ 
+No less astounding are the results reported by X studies showing that ...
+$~~\bullet~~$ 
+Recently, several landmark studies have provided support to the four-decade-old hypothesis that ...
+
+### More
+
+In addition, it has been shown ...
+$~~\bullet~~$ 
+In one study, X et al. found that ...
+$~~\bullet~~$ 
+A classic example is X, which ...
+$~~\bullet~~$ 
+These studies led to a detailed characterization of ...
+$~~\bullet~~$ 
+This was recently demonstrated by a report showing that ...
+
+### Closing
+
+There is evidence that all of these processes have contributed to ...
+
+## Discussion
+
+In spite of X and Y, our understanding of Z remains fragmentary.
+$~~\bullet~~$ 
+A huge gap in our understanding of X lies (between) ...
+$~~\bullet~~$ 
+Whether X (that is, whether XX) remains an open question
+$~~\bullet~~$ 
+Regarding X and Y, the emerging consensus posits that ...
+$~~\bullet~~$ 
+Several factors have been proposed to explain this incongruity.
+$~~\bullet~~$ 
+How then can we explain the discrepancy between X and Y?
+$~~\bullet~~$ 
+We argue that ...
+$~~\bullet~~$ 
+The bedrock for future studies
+
+
+# Oral Expression
+
+- *Now* as a transition word, e.g. when changing slides.
+
+## Advices
+
+- Don't be a parrot, aka don't read the slides and say things differently.
+- Have fun.
+- Make jokes.
+- Articulate.
+- Avoid "people have shown".
+- Lots of good ideas [there](https://svpow.com/2013/07/12/tutorial-16-giving-good-talks-in-four-parts/):
+	- Don't read the title but say why we care.
+	- Put yourself in a "I love this subject" enthusiast mood.
+	- Don't learn your talk, learn your subject. Then you just have to talk about your slides.
+	- No conclusions if talk is short.
+	- Don't read acknowledgments.
+	- Tell a story, not a list of analysis.
+	- Anticipate objections and meet them in advance.
+	- Use the pointer only when necessary. No constant waving and circling.
+	- No "I hope I convinced you...". I agree !
+	- Avoid putting important information at the bottom.
+
