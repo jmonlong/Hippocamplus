@@ -95,6 +95,11 @@ mres.group(1)</code></pre>
 </div>
 <div id="inputoutput" class="section level2">
 <h2>Input/Output</h2>
+<p>To read the standard input:</p>
+<pre class="python"><code>import fileinput
+
+for line in fileinput.input():
+    # SOMETHING WITH line</code></pre>
 <p>To read a file line by line:</p>
 <pre class="python"><code>for line in open(input_file)
     line.rstrip(&#39;\n&#39;)</code></pre>
