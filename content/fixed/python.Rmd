@@ -80,6 +80,15 @@ def functionname( parameters ):
 
 ## Input/Output
 
+To read the standard input:
+
+~~~python
+import fileinput
+
+for line in fileinput.input():
+    # SOMETHING WITH line
+~~~
+
 To read a file line by line:
 
 ~~~python
