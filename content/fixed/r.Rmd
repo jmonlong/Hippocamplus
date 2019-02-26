@@ -44,10 +44,38 @@ Caution, `&&` doesn't work on vectors (it will only test the first element).
 - `png("g.png", 1300, 1000, res=200)`
 - `options(device=function() pdf(width=9, height=7))` to set the default device (e.g. remote graphs).
 
+### Palette with many colors
+
+When I need many colors and distinguish consecutive classes (in bar graphs or ordered clusters), I use an interleaved rainbow-like palette:
+
+```{r, include=FALSE}
+library(ggplot2)
+bar.df = data.frame(x=sample.int(2, 100, TRUE), c=sample(letters[1:20],100, TRUE))
+```
+
+```{r}
+interk <- function(x, k=4){ # Interleaves elements in x
+  idx = unlist(lapply(1:k, function(kk) seq(kk,length(x), k)))
+  x[idx]
+}
+pal = interk(rainbow(20, s=.8), 5)
+```
+
+For example:
+
+```{r, fig.height=2, fig.width=10}
+ggplot(bar.df, aes(x=x, fill=c)) + geom_bar() + coord_flip() +
+  guides(fill=guide_legend(ncol=4))
+ggplot(bar.df, aes(x=x, fill=c)) + geom_bar() + coord_flip() +
+  guides(fill=guide_legend(ncol=4)) + 
+  scale_fill_manual(values=pal)
+```
+
 ### ggplot2 tricks
 
 - To plot a density distribution without the x-axis line, use `stat_density(geom="line")` (and eventually `position="dodge"` if plotting several groups).
 - To override the legend's aes: `guides(colour=guide_legend(override.aes=list(alpha=1)))`
+- Multi-column legends: `guides(fill=guide_legend(ncol=4))`
 
 ### Align/stack two ggplots
 

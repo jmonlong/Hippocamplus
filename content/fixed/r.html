@@ -14,6 +14,7 @@ output:
 <li><a href="#order-in-condition-assessment">Order in condition assessment</a></li>
 </ul></li>
 <li><a href="#graphs">Graphs</a><ul>
+<li><a href="#palette-with-many-colors">Palette with many colors</a></li>
 <li><a href="#ggplot2-tricks">ggplot2 tricks</a></li>
 <li><a href="#alignstack-two-ggplots">Align/stack two ggplots</a></li>
 <li><a href="#change-font-in-ggplot2">Change font in ggplot2</a></li>
@@ -60,11 +61,29 @@ Caution, <code>&amp;&amp;</code> doesn’t work on vectors (it will only test th
 <li><code>png(&quot;g.png&quot;, 1300, 1000, res=200)</code></li>
 <li><code>options(device=function() pdf(width=9, height=7))</code> to set the default device (e.g. remote graphs).</li>
 </ul>
+<div id="palette-with-many-colors" class="section level3">
+<h3>Palette with many colors</h3>
+<p>When I need many colors and distinguish consecutive classes (in bar graphs or ordered clusters), I use an interleaved rainbow-like palette:</p>
+<pre class="r"><code>interk &lt;- function(x, k=4){ # Interleaves elements in x
+  idx = unlist(lapply(1:k, function(kk) seq(kk,length(x), k)))
+  x[idx]
+}
+pal = interk(rainbow(20, s=.8), 5)</code></pre>
+<p>For example:</p>
+<pre class="r"><code>ggplot(bar.df, aes(x=x, fill=c)) + geom_bar() + coord_flip() +
+  guides(fill=guide_legend(ncol=4))</code></pre>
+<p><img src="/fixed/r_files/figure-html/unnamed-chunk-3-1.png" width="960" /></p>
+<pre class="r"><code>ggplot(bar.df, aes(x=x, fill=c)) + geom_bar() + coord_flip() +
+  guides(fill=guide_legend(ncol=4)) + 
+  scale_fill_manual(values=pal)</code></pre>
+<p><img src="/fixed/r_files/figure-html/unnamed-chunk-3-2.png" width="960" /></p>
+</div>
 <div id="ggplot2-tricks" class="section level3">
 <h3>ggplot2 tricks</h3>
 <ul>
 <li>To plot a density distribution without the x-axis line, use <code>stat_density(geom=&quot;line&quot;)</code> (and eventually <code>position=&quot;dodge&quot;</code> if plotting several groups).</li>
 <li>To override the legend’s aes: <code>guides(colour=guide_legend(override.aes=list(alpha=1)))</code></li>
+<li>Multi-column legends: <code>guides(fill=guide_legend(ncol=4))</code></li>
 </ul>
 </div>
 <div id="alignstack-two-ggplots" class="section level3">
