@@ -11,6 +11,9 @@
 % taken from pickton on Adobe Kuler:
 % https://kuler.adobe.com/Some-Kind-Of-Execushares-color-theme-3837185/
 \definecolor{ExecusharesRed}{RGB}{220, 20, 60} % Crimson
+% \definecolor{ExecusharesUCSC}{RGB}{40, 100, 160} % 
+\definecolor{ExecusharesUCSC}{RGB}{10, 70, 140} % 
+% \definecolor{ExecusharesUCSC}{RGB}{10, 55, 105} % 
 \definecolor{ExecusharesBlack}{RGB}{43,40,40}
 \definecolor{ExecusharesBlue}{RGB}{20,152,204}
 % \definecolor{ExecusharesWhite}{RGB}{255,255,243}
@@ -33,13 +36,14 @@
 
 % set colours
 \setbeamercolor{itemize item}{fg=ExecusharesBlue}
-\setbeamercolor{description item}{fg=ExecusharesRed}
-\setbeamercolor{enumerate item}{fg=ExecusharesBlue}
+\setbeamercolor{description item}{fg=ExecusharesUCSC}
+\setbeamercolor{structure}{fg=ExecusharesUCSC}
+\setbeamercolor{enumerate item}{fg=ExecusharesUCSC}
 \setbeamercolor{alerted text}{fg=ExecusharesBlue}
-\setbeamercolor{section in toc}{fg=ExecusharesBlack}
+\setbeamercolor{section in toc}{fg=ExecusharesUCSC}
 \setbeamercolor{block title}{fg=ExecusharesWhite}
-\setbeamercolor{block title}{bg=ExecusharesRed}
-\setbeamercolor{block border}{bg=ExecusharesRed}
+\setbeamercolor{block title}{bg=ExecusharesUCSC}
+\setbeamercolor{block border}{bg=ExecusharesUCSC}
 
 
 % set fonts
@@ -57,12 +61,12 @@
 % }
 \setbeamertemplate{itemize item}{
 	\tikz{
-          \draw[fill=ExecusharesRed, draw=none] (0,0.2)--(0.1,0.3)--(0.3,0.2)--(0.1,0.1)--(0,0.2)
+          \draw[fill=ExecusharesUCSC, draw=none] (0,0.2)--(0.1,0.3)--(0.3,0.2)--(0.1,0.1)--(0,0.2)
 	}
 }
 \setbeamertemplate{itemize subitem}{
 	\tikz{
-          \draw[fill=ExecusharesRed, draw=none] (0,0.2)--(0.07,0.27)--(0.27,0.2)--(0.07,0.13)--(0,0.2)
+          \draw[fill=ExecusharesUCSC, draw=none] (0,0.2)--(0.07,0.27)--(0.27,0.2)--(0.07,0.13)--(0,0.2)
 	}
 }
 
@@ -117,7 +121,7 @@
 \slidewidth=\the\paperwidth
 \slideheight=\the\paperheight
 
-\setbeamercolor{paletteFrameTitle}{fg=ExecusharesWhite,bg=ExecusharesRed}
+\setbeamercolor{paletteFrameTitle}{fg=ExecusharesWhite,bg=ExecusharesUCSC}
 \setbeamercolor{titlelike}{parent=paletteFrameTitle}
 \setbeamertemplate{frametitle}
 {
@@ -153,7 +157,7 @@
 		\ifnum\thepage=1\relax
 			% the title page
 			% draw the fills
-			\fill[color=ExecusharesRed] (0, 4cm) rectangle(\slidewidth,\slideheight);
+			\fill[color=ExecusharesUCSC] (0, 4cm) rectangle(\slidewidth,\slideheight);
 
 			% draw the actual text
 			\node[anchor=south,text width=\slidewidth-1cm,inner xsep=0.5cm] at (0.5\slidewidth,4.5cm) {\color{ExecusharesWhite}\LARGE\textbf{\inserttitle}};
@@ -161,6 +165,9 @@
 			\node[anchor=north,text width=\slidewidth-1cm,inner xsep=0cm] at (0.5\slidewidth,3cm)  {\color{ExecusharesBlack}\normalsize\insertauthor};
                         \node[anchor=north, text width=\slidewidth-1cm,inner xsep=0cm] at(0.5\slidewidth,2.5cm) {\color{ExecusharesBlack}\normalsize\insertdate};
 			\node[anchor=north,text width=\slidewidth-1cm,inner xsep=0cm] at (0.5\slidewidth,1.6cm)  {\color{ExecusharesBlack}\scriptsize\sc\insertinstitute};
+
+
+                        \node[anchor=north,text width=\slidewidth-1cm,inner xsep=0cm] at (\slidewidth-0.4cm,4cm)  {\includegraphics[width=.5\textwidth]{ucsc.png}};
 
 			% add the date in the corner
 			% \node[anchor=south east] at(\slidewidth,0cm) {\color{ExecusharesGrey}\scriptsize\insertdate};
@@ -180,7 +187,7 @@
 				% \draw[fill=ExecusharesGrey,draw=none] (0cm,0cm) rectangle(\slidewidth,0.25cm);
 				% \draw[fill=ExecusharesRed,draw=none] (0cm,0cm) rectangle(\progressbar@tmpdim,0.25cm);
 				\draw[fill=ExecusharesGrey,draw=none] (0cm,0cm) rectangle(\slidewidth,0.3cm);
-				\draw[fill=ExecusharesRed,draw=none] (0cm,0cm) rectangle(\progressbar@tmpdim,0.3cm);
+				\draw[fill=ExecusharesUCSC,draw=none] (0cm,0cm) rectangle(\progressbar@tmpdim,0.3cm);
 
 				% bottom information
 				% \node[anchor=south west] at(0cm,0.25cm) {\color{ExecusharesGrey}\tiny\insertsection};
@@ -226,7 +233,7 @@
 		\useasboundingbox (0,0) rectangle(\slidewidth,\slideheight);
 		%\fill[color=ExecusharesWhite] (0,0) rectangle(\the\paperwidth,\the\paperheight);
 		\fill[color=ExecusharesWhite] (-1cm, 2cm) rectangle (\slidewidth, \slideheight+0.1cm);
-		\fill[color=ExecusharesRed] (-1cm, 0.5\slideheight-1cm) rectangle(\slidewidth, 0.5\slideheight+1cm);
+		\fill[color=ExecusharesUCSC] (-1cm, 0.5\slideheight-1cm) rectangle(\slidewidth, 0.5\slideheight+1cm);
 		\node[text width=\the\paperwidth-1cm,align=center] at (0.4\slidewidth, 0.5\slideheight) {\color{ExecusharesWhite}\LARGE\textbf{\insertsection}};
 	\end{tikzpicture}
 }
