@@ -72,11 +72,11 @@ pal = interk(rainbow(20, s=.8), 5)</code></pre>
 <p>For example:</p>
 <pre class="r"><code>ggplot(bar.df, aes(x=x, fill=c)) + geom_bar() + coord_flip() +
   guides(fill=guide_legend(ncol=4))</code></pre>
-<p><img src="/fixed/r_files/figure-html/unnamed-chunk-3-1.png" width="960" /></p>
+<p><img src="/fixed/r_files/figure-html/inter-palette-1.png" width="960" /></p>
 <pre class="r"><code>ggplot(bar.df, aes(x=x, fill=c)) + geom_bar() + coord_flip() +
   guides(fill=guide_legend(ncol=4)) + 
   scale_fill_manual(values=pal)</code></pre>
-<p><img src="/fixed/r_files/figure-html/unnamed-chunk-3-2.png" width="960" /></p>
+<p><img src="/fixed/r_files/figure-html/inter-palette-2.png" width="960" /></p>
 </div>
 <div id="ggplot2-tricks" class="section level3">
 <h3>ggplot2 tricks</h3>

@@ -63,7 +63,7 @@ pal = interk(rainbow(20, s=.8), 5)
 
 For example:
 
-```{r, fig.height=2, fig.width=10}
+```{r inter-palette, fig.height=2, fig.width=10}
 ggplot(bar.df, aes(x=x, fill=c)) + geom_bar() + coord_flip() +
   guides(fill=guide_legend(ncol=4))
 ggplot(bar.df, aes(x=x, fill=c)) + geom_bar() + coord_flip() +

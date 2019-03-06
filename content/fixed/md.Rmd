@@ -12,6 +12,7 @@ output:
 + `/` to add some vertical space/break.
 + Use two `` ` `` and a space to escape `` ` `` in inline code. E.g ``` `` `pwd` `` ``` gives `` `pwd` ``.
 + `---` to add horizontal line/separation.
++ Comments using: `[//]: # (This is a comment)` or `<!-- This is a comment -->`
 
 ## Converting Markdown into nice HTML pages
 
