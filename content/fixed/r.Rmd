@@ -17,7 +17,7 @@ output:
 ### Order in condition assessment
 
 Using `&` and `|` operators, *R* tries all the conditions and then performs the operations. 
-However sometimes we would like a smarter sequential assessment for *AND*.
+However, sometimes we would like a smarter sequential assessment for *AND*.
 For example, we get an error if we run:
 
 ~~~r
@@ -25,7 +25,7 @@ x = NULL
 if(!is.null(x) & x>10) message("so big !")
 ~~~
 
-Because it tries to do `x>10` when *x* is *NULL*. 
+That's because it tries to do `x>10` when *x* is *NULL*. 
 Here, what we want is `&&`:
 
 ~~~r
@@ -46,16 +46,17 @@ Caution, `&&` doesn't work on vectors (it will only test the first element).
 
 ### Palette with many colors
 
-When I need many colors and distinguish consecutive classes (in bar graphs or ordered clusters), I use an interleaved rainbow-like palette:
+When I need many colors and want to distinguish consecutive classes (e.g. bar graphs or overlapping clusters), I use an interleaved rainbow-like palette:
 
 ```{r, include=FALSE}
 library(ggplot2)
+set.seed(123456)
 bar.df = data.frame(x=sample.int(2, 100, TRUE), c=sample(letters[1:20],100, TRUE))
 ```
 
 ```{r}
 interk <- function(x, k=4){ # Interleaves elements in x
-  idx = unlist(lapply(1:k, function(kk) seq(kk,length(x), k)))
+  idx = unlist(lapply(1:k, function(kk) seq(kk, length(x), k)))
   x[idx]
 }
 pal = interk(rainbow(20, s=.8), 5)
@@ -79,7 +80,8 @@ ggplot(bar.df, aes(x=x, fill=c)) + geom_bar() + coord_flip() +
 
 ### Align/stack two ggplots
 
-One easy way is to use the `tracks` function in the [ggbio](https://bioconductor.org/packages/release/bioc/html/ggbio.html) package. However I don't really like this package because it sometimes conflicts with ggplot2 (boo!) and you end up having to specify `ggplot2::` to the functions to avoid obscure errors.
+One easy way is to use the `tracks` function in the [ggbio](https://bioconductor.org/packages/release/bioc/html/ggbio.html) package. 
+However, I don't really like this package because it sometimes conflicts with ggplot2 (boo!) and you end up having to specify `ggplot2::` to the functions to avoid obscure errors.
 
 I found [another way on the internet](http://www.exegetic.biz/blog/2015/05/r-recipe-aligning-axes-in-ggplot2/):
 

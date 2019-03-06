@@ -9,14 +9,15 @@ output:
 
 ## Tips
 
-+ `/` to add some vertical space/break.
++ `/` to add some vertical space/break (e.g. in slides).
 + Use two `` ` `` and a space to escape `` ` `` in inline code. E.g ``` `` `pwd` `` ``` gives `` `pwd` ``.
 + `---` to add horizontal line/separation.
 + Comments using: `[//]: # (This is a comment)` or `<!-- This is a comment -->`
 
 ## Converting Markdown into nice HTML pages
 
-I use RMarkdown. It creates a self-contained HTML document that's looks nice enough and is easy to share.
+I use RMarkdown. 
+It creates a self-contained HTML document that looks nice enough and is easy to share.
 
 ~~~sh
 Rscript -e 'rmarkdown::render("document.md")'
@@ -28,11 +29,14 @@ I use RMarkdown or [MarkdownSlides](https://github.com/asanzdiego/markdownslides
 
 ## Jekyll websites
 
-[Jekyll](http://jekyllrb.com/) websites are simple Markdown documents that can be converted into a website. [GitHub](https://pages.github.com/) uses it to provide a website for a repo.
+[Jekyll](http://jekyllrb.com/) websites are simple Markdown documents that can be converted into a website. 
+[GitHub](https://pages.github.com/) uses it to provide a website for a repo.
+
+Note: I now use *blogdown* for markdown-based websites, see below.
 
 ### Themes
 
-There are several themes [available](http://jekyllthemes.org/). My favorite are the two [Poole](http://getpoole.com/) themes, Hyde and Lanyon.
+There are several themes [available](http://jekyllthemes.org/). My favorites are the two [Poole](http://getpoole.com/) themes, Hyde and Lanyon.
 
 ### Table of Contents
 
@@ -78,11 +82,13 @@ For example, `\\(\int_{-\infty}^\infty e^{-x^2}\mathrm{d}x = \sqrt{\pi}\\)` prod
 [blogdown](https://github.com/rstudio/blogdown) is a R package extending [R Markdown](http://rmarkdown.rstudio.com/) to build [Hugo](https://gohugo.io/) static websites.
 Hugo is easier to install than Jekyll and apparently faster. Most importantly blogdown makes it easier to write posts with R code like in a RMarkdown document.
 
-I still use GitHub Pages to deploy the website. Because GH Pages doesn't support Hugo, I build the website in a `docs` folder (`publishDir = "docs"` in `config.toml`) which I set up in the website settings to be the source of the static website. 
+I still use GitHub Pages to deploy the website. 
+GH Pages doesn't support Hugo, so I build the website in a `docs` folder (`publishDir = "docs"` in `config.toml`) which I set up on the website settings to be the source of the static website. 
 
 ### Themes
 
-There are several themes [available](https://themes.gohugo.io/). I keep using the [Poole](http://getpoole.com/) themes, Hyde and Lanyon, that have been [made available for Hugo](https://github.com/tummychow/lanyon-hugo).
+There are several themes [available](https://themes.gohugo.io/). 
+I keep using the [Poole](http://getpoole.com/) themes, Hyde and Lanyon, that have been [made available for Hugo](https://github.com/tummychow/lanyon-hugo).
 
 ### Table of Contents
 

@@ -32,7 +32,7 @@ output:
 <div id="tips" class="section level2">
 <h2>Tips</h2>
 <ul>
-<li><code>/</code> to add some vertical space/break.</li>
+<li><code>/</code> to add some vertical space/break (e.g. in slides).</li>
 <li>Use two <code>`</code> and a space to escape <code>`</code> in inline code. E.g <code>`` `pwd` ``</code> gives <code>`pwd`</code>.</li>
 <li><code>---</code> to add horizontal line/separation.</li>
 <li>Comments using: <code>[//]: # (This is a comment)</code> or <code>&lt;!-- This is a comment --&gt;</code></li>
@@ -40,7 +40,8 @@ output:
 </div>
 <div id="converting-markdown-into-nice-html-pages" class="section level2">
 <h2>Converting Markdown into nice HTML pages</h2>
-<p>I use RMarkdown. It creates a self-contained HTML document that’s looks nice enough and is easy to share.</p>
+<p>I use RMarkdown.
+It creates a self-contained HTML document that looks nice enough and is easy to share.</p>
 <pre class="sh"><code>Rscript -e &#39;rmarkdown::render(&quot;document.md&quot;)&#39;</code></pre>
 </div>
 <div id="converting-markdown-into-slides" class="section level2">
@@ -49,10 +50,12 @@ output:
 </div>
 <div id="jekyll-websites" class="section level2">
 <h2>Jekyll websites</h2>
-<p><a href="http://jekyllrb.com/">Jekyll</a> websites are simple Markdown documents that can be converted into a website. <a href="https://pages.github.com/">GitHub</a> uses it to provide a website for a repo.</p>
+<p><a href="http://jekyllrb.com/">Jekyll</a> websites are simple Markdown documents that can be converted into a website.
+<a href="https://pages.github.com/">GitHub</a> uses it to provide a website for a repo.</p>
+<p>Note: I now use <em>blogdown</em> for markdown-based websites, see below.</p>
 <div id="themes" class="section level3">
 <h3>Themes</h3>
-<p>There are several themes <a href="http://jekyllthemes.org/">available</a>. My favorite are the two <a href="http://getpoole.com/">Poole</a> themes, Hyde and Lanyon.</p>
+<p>There are several themes <a href="http://jekyllthemes.org/">available</a>. My favorites are the two <a href="http://getpoole.com/">Poole</a> themes, Hyde and Lanyon.</p>
 </div>
 <div id="table-of-contents" class="section level3">
 <h3>Table of Contents</h3>
@@ -80,10 +83,12 @@ output:
 <h2>blogdown websites</h2>
 <p><a href="https://github.com/rstudio/blogdown">blogdown</a> is a R package extending <a href="http://rmarkdown.rstudio.com/">R Markdown</a> to build <a href="https://gohugo.io/">Hugo</a> static websites.
 Hugo is easier to install than Jekyll and apparently faster. Most importantly blogdown makes it easier to write posts with R code like in a RMarkdown document.</p>
-<p>I still use GitHub Pages to deploy the website. Because GH Pages doesn’t support Hugo, I build the website in a <code>docs</code> folder (<code>publishDir = &quot;docs&quot;</code> in <code>config.toml</code>) which I set up in the website settings to be the source of the static website.</p>
+<p>I still use GitHub Pages to deploy the website.
+GH Pages doesn’t support Hugo, so I build the website in a <code>docs</code> folder (<code>publishDir = &quot;docs&quot;</code> in <code>config.toml</code>) which I set up on the website settings to be the source of the static website.</p>
 <div id="themes-1" class="section level3">
 <h3>Themes</h3>
-<p>There are several themes <a href="https://themes.gohugo.io/">available</a>. I keep using the <a href="http://getpoole.com/">Poole</a> themes, Hyde and Lanyon, that have been <a href="https://github.com/tummychow/lanyon-hugo">made available for Hugo</a>.</p>
+<p>There are several themes <a href="https://themes.gohugo.io/">available</a>.
+I keep using the <a href="http://getpoole.com/">Poole</a> themes, Hyde and Lanyon, that have been <a href="https://github.com/tummychow/lanyon-hugo">made available for Hugo</a>.</p>
 </div>
 <div id="table-of-contents-1" class="section level3">
 <h3>Table of Contents</h3>

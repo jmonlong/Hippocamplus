@@ -238,11 +238,11 @@
 <div id="order-in-condition-assessment" class="section level3">
 <h3>Order in condition assessment</h3>
 <p>Using <code>&amp;</code> and <code>|</code> operators, <em>R</em> tries all the conditions and then performs the operations.
-However sometimes we would like a smarter sequential assessment for <em>AND</em>.
+However, sometimes we would like a smarter sequential assessment for <em>AND</em>.
 For example, we get an error if we run:</p>
 <pre class="r"><code>x = NULL
 if(!is.null(x) &amp; x&gt;10) message(&quot;so big !&quot;)</code></pre>
-<p>Because it tries to do <code>x&gt;10</code> when <em>x</em> is <em>NULL</em>.
+<p>That’s because it tries to do <code>x&gt;10</code> when <em>x</em> is <em>NULL</em>.
 Here, what we want is <code>&amp;&amp;</code>:</p>
 <pre class="r"><code>x = NULL
 if(!is.null(x) &amp;&amp; x&gt;10) message(&quot;so big !&quot;)
@@ -261,9 +261,9 @@ Caution, <code>&amp;&amp;</code> doesn’t work on vectors (it will only test th
 </ul>
 <div id="palette-with-many-colors" class="section level3">
 <h3>Palette with many colors</h3>
-<p>When I need many colors and distinguish consecutive classes (in bar graphs or ordered clusters), I use an interleaved rainbow-like palette:</p>
+<p>When I need many colors and want to distinguish consecutive classes (e.g. bar graphs or overlapping clusters), I use an interleaved rainbow-like palette:</p>
 <pre class="r"><code>interk &lt;- function(x, k=4){ # Interleaves elements in x
-  idx = unlist(lapply(1:k, function(kk) seq(kk,length(x), k)))
+  idx = unlist(lapply(1:k, function(kk) seq(kk, length(x), k)))
   x[idx]
 }
 pal = interk(rainbow(20, s=.8), 5)</code></pre>
@@ -286,7 +286,8 @@ pal = interk(rainbow(20, s=.8), 5)</code></pre>
 </div>
 <div id="alignstack-two-ggplots" class="section level3">
 <h3>Align/stack two ggplots</h3>
-<p>One easy way is to use the <code>tracks</code> function in the <a href="https://bioconductor.org/packages/release/bioc/html/ggbio.html">ggbio</a> package. However I don’t really like this package because it sometimes conflicts with ggplot2 (boo!) and you end up having to specify <code>ggplot2::</code> to the functions to avoid obscure errors.</p>
+<p>One easy way is to use the <code>tracks</code> function in the <a href="https://bioconductor.org/packages/release/bioc/html/ggbio.html">ggbio</a> package.
+However, I don’t really like this package because it sometimes conflicts with ggplot2 (boo!) and you end up having to specify <code>ggplot2::</code> to the functions to avoid obscure errors.</p>
 <p>I found <a href="http://www.exegetic.biz/blog/2015/05/r-recipe-aligning-axes-in-ggplot2/">another way on the internet</a>:</p>
 <pre class="r"><code>library(ggplot2)
 library(gridExtra)
