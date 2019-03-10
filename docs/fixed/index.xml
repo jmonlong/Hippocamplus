@@ -44,7 +44,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/Hippocamplus/markdown/</guid>
-      <description>Tips Converting Markdown into nice HTML pages Converting Markdown into slides Jekyll websites Themes Table of Contents Math formulas  blogdown websites Themes Table of Contents Draft posts Math formulas Bibliography  R Markdown   Tips  / to add some vertical space/break. Use two ` and a space to escape ` in inline code. E.g `` `pwd` `` gives `pwd`. --- to add horizontal line/separation.   Converting Markdown into nice HTML pages I use RMarkdown.</description>
+      <description>Tips Converting Markdown into nice HTML pages Converting Markdown into slides Jekyll websites Themes Table of Contents Math formulas  blogdown websites Themes Table of Contents Draft posts Math formulas Bibliography  R Markdown   Tips  / to add some vertical space/break (e.g. in slides). Use two ` and a space to escape ` in inline code. E.g `` `pwd` `` gives `pwd`. --- to add horizontal line/separation.</description>
     </item>
     
     <item>
@@ -72,7 +72,7 @@ Naming and formatting  Use lowercase _-separated for modules and functions name.
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/Hippocamplus/r/</guid>
-      <description>Details to remember Order in condition assessment  Graphs ggplot2 tricks Align/stack two ggplots Change font in ggplot2 Waffle graphs  Rmarkdown Beamer presentation Jekyll website  data.table package Linux setup   Details to remember  Use rbindlist from data.table package for a memory-optimized and faster do.call(rbind, list(..)). Use system2 instead of system to run a command. It’s more portable apparently. Get RPubs working with options(rpubs.upload.method = &amp;quot;internal&amp;quot;). Operations on dates using strptime(x, &amp;quot;%a %b %d %T PST %Y&#39;&amp;quot;) and difftime and then as.</description>
+      <description>Details to remember Order in condition assessment  Graphs Palette with many colors ggplot2 tricks Align/stack two ggplots Change font in ggplot2 Waffle graphs  Rmarkdown Beamer presentation Jekyll website  data.table package Linux setup   Details to remember  Use rbindlist from data.table package for a memory-optimized and faster do.call(rbind, list(..)). Use system2 instead of system to run a command. It’s more portable apparently. Get RPubs working with options(rpubs.</description>
     </item>
     
     <item>
