@@ -1,0 +1,2256 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Exploring basic annotations of the Human genome &middot; Hippocamplus
+    
+  </title>
+
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113785126-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    
+    gtag('config', "UA-113785126-1");
+  </script>
+  
+  
+  <link rel="stylesheet" href="../../../../css/poole.css">
+  <link rel="stylesheet" href="../../../../css/syntax.css">
+  <link rel="stylesheet" href="../../../../css/lanyon.css">
+  <link rel="stylesheet" href="../../../../css/github.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
+  <link rel="stylesheet" href="../../../../fa/css/font-awesome.min.css">
+  
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../../../assets/hippoPlus-icon.png">
+  <link rel="shortcut icon" href="../../../../assets/hippoPlus-icon.png">
+
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="../../../../atom.xml">
+</head>
+
+  
+  <body>
+
+    
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>A place to gather useful information I keep on forgetting.</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item " href="../../../../">Home</a>
+    <a class="sidebar-nav-item " href="../../../../post">Posts</a>
+
+    
+    
+      
+        <a class="sidebar-nav-item " href="../../../../emacs/">Emacs</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../expression/">Expression</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../latex/">LaTeX</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../markdown/">Markdown</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../math/stats/">Math/Stats</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../python/">Python</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../r/">R</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../shell/">Shell</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../internet/">Internet</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../about/">About</a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+    
+  </nav>
+
+  <div class="sidebar-item">
+  </div>
+  
+  <div class="sidebar-item">
+    <div><a href="../../../../index.xml"><i class="fa fa-rss-square" aria-hidden="true"></i> RSS</a></div>
+    <div><a href="https://twitter.com/JMonlong"><i class="fa fa-twitter" aria-hidden="true"></i> @JMonlong</a></div>
+    <p>&copy; 2018 Jean Monlong. All rights reserved.</p>
+  </div>
+</div>
+
+
+    
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="../../../../" title="Home">Hippocamplus</a>
+            <small>My Second Memory</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+
+
+<div class="post">
+  <h1 class="post-title">Exploring basic annotations of the Human genome</h1>
+  <span class="post-date">Jun 4 2016
+  
+  
+  
+  
+  
+  <a href='../../../../tags/genome/' class='label'>genome</a>
+  
+  
+  
+  </span>
+  <div id="quick-look-at-the-annotations" class="section level1">
+<h1>Quick look at the annotations</h1>
+<div id="genes" class="section level2">
+<h2>Genes</h2>
+<p>In Gencode V19 and focusing on autosomes/X/Y, there are 57783 “genes” of different types:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">type</th>
+<th align="right">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">protein_coding</td>
+<td align="right">20,332</td>
+</tr>
+<tr class="even">
+<td align="left">pseudogene</td>
+<td align="right">13,931</td>
+</tr>
+<tr class="odd">
+<td align="left">lincRNA</td>
+<td align="right">7,114</td>
+</tr>
+<tr class="even">
+<td align="left">antisense</td>
+<td align="right">5,276</td>
+</tr>
+<tr class="odd">
+<td align="left">miRNA</td>
+<td align="right">3,055</td>
+</tr>
+<tr class="even">
+<td align="left">misc_RNA</td>
+<td align="right">2,034</td>
+</tr>
+<tr class="odd">
+<td align="left">snRNA</td>
+<td align="right">1,916</td>
+</tr>
+<tr class="even">
+<td align="left">snoRNA</td>
+<td align="right">1,457</td>
+</tr>
+<tr class="odd">
+<td align="left">sense_intronic</td>
+<td align="right">742</td>
+</tr>
+<tr class="even">
+<td align="left">rRNA</td>
+<td align="right">527</td>
+</tr>
+<tr class="odd">
+<td align="left">processed_transcript</td>
+<td align="right">515</td>
+</tr>
+<tr class="even">
+<td align="left">sense_overlapping</td>
+<td align="right">202</td>
+</tr>
+<tr class="odd">
+<td align="left">IG_V_pseudogene</td>
+<td align="right">187</td>
+</tr>
+<tr class="even">
+<td align="left">IG_V_gene</td>
+<td align="right">138</td>
+</tr>
+<tr class="odd">
+<td align="left">TR_V_gene</td>
+<td align="right">97</td>
+</tr>
+<tr class="even">
+<td align="left">TR_J_gene</td>
+<td align="right">74</td>
+</tr>
+<tr class="odd">
+<td align="left">polymorphic_pseudogene</td>
+<td align="right">45</td>
+</tr>
+<tr class="even">
+<td align="left">IG_D_gene</td>
+<td align="right">37</td>
+</tr>
+<tr class="odd">
+<td align="left">TR_V_pseudogene</td>
+<td align="right">27</td>
+</tr>
+<tr class="even">
+<td align="left">3prime_overlapping_ncrna</td>
+<td align="right">21</td>
+</tr>
+<tr class="odd">
+<td align="left">IG_J_gene</td>
+<td align="right">18</td>
+</tr>
+<tr class="even">
+<td align="left">IG_C_gene</td>
+<td align="right">14</td>
+</tr>
+<tr class="odd">
+<td align="left">IG_C_pseudogene</td>
+<td align="right">9</td>
+</tr>
+<tr class="even">
+<td align="left">TR_C_gene</td>
+<td align="right">5</td>
+</tr>
+<tr class="odd">
+<td align="left">TR_J_pseudogene</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td align="left">IG_J_pseudogene</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">TR_D_gene</td>
+<td align="right">3</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="exons" class="section level2">
+<h2>Exons</h2>
+<p>In Gencode V19 and focusing on autosomes/X/Y, there are 1196256 “exons” from different types of genes:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">type</th>
+<th align="right">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">protein_coding</td>
+<td align="right">1,070,764</td>
+</tr>
+<tr class="even">
+<td align="left">pseudogene</td>
+<td align="right">39,909</td>
+</tr>
+<tr class="odd">
+<td align="left">lincRNA</td>
+<td align="right">33,455</td>
+</tr>
+<tr class="even">
+<td align="left">antisense</td>
+<td align="right">26,981</td>
+</tr>
+<tr class="odd">
+<td align="left">processed_transcript</td>
+<td align="right">10,846</td>
+</tr>
+<tr class="even">
+<td align="left">miRNA</td>
+<td align="right">3,055</td>
+</tr>
+<tr class="odd">
+<td align="left">misc_RNA</td>
+<td align="right">2,034</td>
+</tr>
+<tr class="even">
+<td align="left">snRNA</td>
+<td align="right">1,916</td>
+</tr>
+<tr class="odd">
+<td align="left">polymorphic_pseudogene</td>
+<td align="right">1,750</td>
+</tr>
+<tr class="even">
+<td align="left">sense_intronic</td>
+<td align="right">1,619</td>
+</tr>
+<tr class="odd">
+<td align="left">snoRNA</td>
+<td align="right">1,457</td>
+</tr>
+<tr class="even">
+<td align="left">sense_overlapping</td>
+<td align="right">834</td>
+</tr>
+<tr class="odd">
+<td align="left">rRNA</td>
+<td align="right">527</td>
+</tr>
+<tr class="even">
+<td align="left">IG_V_pseudogene</td>
+<td align="right">298</td>
+</tr>
+<tr class="odd">
+<td align="left">IG_V_gene</td>
+<td align="right">284</td>
+</tr>
+<tr class="even">
+<td align="left">TR_V_gene</td>
+<td align="right">193</td>
+</tr>
+<tr class="odd">
+<td align="left">TR_J_gene</td>
+<td align="right">74</td>
+</tr>
+<tr class="even">
+<td align="left">IG_C_gene</td>
+<td align="right">60</td>
+</tr>
+<tr class="odd">
+<td align="left">3prime_overlapping_ncrna</td>
+<td align="right">54</td>
+</tr>
+<tr class="even">
+<td align="left">TR_V_pseudogene</td>
+<td align="right">45</td>
+</tr>
+<tr class="odd">
+<td align="left">IG_D_gene</td>
+<td align="right">37</td>
+</tr>
+<tr class="even">
+<td align="left">TR_C_gene</td>
+<td align="right">19</td>
+</tr>
+<tr class="odd">
+<td align="left">IG_J_gene</td>
+<td align="right">18</td>
+</tr>
+<tr class="even">
+<td align="left">IG_C_pseudogene</td>
+<td align="right">17</td>
+</tr>
+<tr class="odd">
+<td align="left">TR_J_pseudogene</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td align="left">IG_J_pseudogene</td>
+<td align="right">3</td>
+</tr>
+<tr class="odd">
+<td align="left">TR_D_gene</td>
+<td align="right">3</td>
+</tr>
+</tbody>
+</table>
+<p>I focus on exons from protein-coding genes because it’s what we think about most of the time.</p>
+</div>
+<div id="mappability" class="section level2">
+<h2>Mappability</h2>
+<p>The mappability track was produced from the UCSC track. The raw file contains, for each base in the genome, an estimation of how likely a read is correctly mapped to this position. Using a sliding-window approach, I computed the average mappability in regions of size 1 Kbp.</p>
+<p><img src="../../../../post/2016-06-04-genomeAnnotation_files/figure-html/unnamed-chunk-10-1.png" width="960" /><img src="../../../../post/2016-06-04-genomeAnnotation_files/figure-html/unnamed-chunk-10-2.png" width="960" /></p>
+<p>For later use I also define regions of low-mappability as regions with an average mappability below 0.75, which represents 14% of the genome.</p>
+</div>
+<div id="centromere-telomeres-and-gaps" class="section level2">
+<h2>Centromere, telomeres and gaps</h2>
+<p>I group different elements in this class:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">type</th>
+<th align="right">n</th>
+<th align="right">mean.size.kb</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">telomere</td>
+<td align="right">232</td>
+<td align="right">10.0</td>
+</tr>
+<tr class="even">
+<td align="left">clone</td>
+<td align="right">207</td>
+<td align="right">56.2</td>
+</tr>
+<tr class="odd">
+<td align="left">contig</td>
+<td align="right">163</td>
+<td align="right">98.9</td>
+</tr>
+<tr class="even">
+<td align="left">centromere</td>
+<td align="right">24</td>
+<td align="right">3,000.0</td>
+</tr>
+<tr class="odd">
+<td align="left">heterochromatin</td>
+<td align="right">12</td>
+<td align="right">6,039.8</td>
+</tr>
+<tr class="even">
+<td align="left">short_arm</td>
+<td align="right">5</td>
+<td align="right">13,432.2</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="simple-repeats" class="section level2">
+<h2>Simple repeats</h2>
+<table>
+<thead>
+<tr class="header">
+<th align="left">sequence</th>
+<th align="right">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">T</td>
+<td align="right">35,301</td>
+</tr>
+<tr class="even">
+<td align="left">A</td>
+<td align="right">34,898</td>
+</tr>
+<tr class="odd">
+<td align="left">AC</td>
+<td align="right">23,317</td>
+</tr>
+<tr class="even">
+<td align="left">TG</td>
+<td align="right">19,739</td>
+</tr>
+<tr class="odd">
+<td align="left">GT</td>
+<td align="right">13,727</td>
+</tr>
+<tr class="even">
+<td align="left">AT</td>
+<td align="right">12,311</td>
+</tr>
+<tr class="odd">
+<td align="left">TA</td>
+<td align="right">11,429</td>
+</tr>
+<tr class="even">
+<td align="left">CA</td>
+<td align="right">9,722</td>
+</tr>
+<tr class="odd">
+<td align="left">AAAT</td>
+<td align="right">6,875</td>
+</tr>
+<tr class="even">
+<td align="left">TTTA</td>
+<td align="right">5,345</td>
+</tr>
+</tbody>
+</table>
+<p>In total there are 962714 annotated simple repeats.</p>
+</div>
+<div id="repeatmasker-annotation" class="section level2">
+<h2>RepeatMasker annotation</h2>
+<p>There are different classes of repeats in RepeatMasker annotation:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">repClass</th>
+<th align="right">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">SINE</td>
+<td align="right">1,793,723</td>
+</tr>
+<tr class="even">
+<td align="left">LINE</td>
+<td align="right">1,498,690</td>
+</tr>
+<tr class="odd">
+<td align="left">LTR</td>
+<td align="right">717,656</td>
+</tr>
+<tr class="even">
+<td align="left">DNA</td>
+<td align="right">461,751</td>
+</tr>
+<tr class="odd">
+<td align="left">Simple_repeat</td>
+<td align="right">417,913</td>
+</tr>
+<tr class="even">
+<td align="left">Low_complexity</td>
+<td align="right">371,543</td>
+</tr>
+<tr class="odd">
+<td align="left">Satellite</td>
+<td align="right">9,566</td>
+</tr>
+<tr class="even">
+<td align="left">Unknown</td>
+<td align="right">7,036</td>
+</tr>
+<tr class="odd">
+<td align="left">snRNA</td>
+<td align="right">4,386</td>
+</tr>
+<tr class="even">
+<td align="left">Other</td>
+<td align="right">3,733</td>
+</tr>
+<tr class="odd">
+<td align="left">RC</td>
+<td align="right">2,236</td>
+</tr>
+<tr class="even">
+<td align="left">tRNA</td>
+<td align="right">2,002</td>
+</tr>
+<tr class="odd">
+<td align="left">DNA?</td>
+<td align="right">1,881</td>
+</tr>
+<tr class="even">
+<td align="left">rRNA</td>
+<td align="right">1,769</td>
+</tr>
+<tr class="odd">
+<td align="left">srpRNA</td>
+<td align="right">1,481</td>
+</tr>
+<tr class="even">
+<td align="left">scRNA</td>
+<td align="right">1,340</td>
+</tr>
+<tr class="odd">
+<td align="left">RNA</td>
+<td align="right">729</td>
+</tr>
+<tr class="even">
+<td align="left">SINE?</td>
+<td align="right">425</td>
+</tr>
+<tr class="odd">
+<td align="left">LTR?</td>
+<td align="right">122</td>
+</tr>
+<tr class="even">
+<td align="left">Unknown?</td>
+<td align="right">97</td>
+</tr>
+<tr class="odd">
+<td align="left">LINE?</td>
+<td align="right">51</td>
+</tr>
+</tbody>
+</table>
+<p>I extract DNA satellites. They are grouped in different families:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">repName</th>
+<th align="left">repFamily</th>
+<th align="right">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">BSR/Beta</td>
+<td align="left">Satellite</td>
+<td align="right">1,984</td>
+</tr>
+<tr class="even">
+<td align="left">(GAATG)n</td>
+<td align="left">Satellite</td>
+<td align="right">1,362</td>
+</tr>
+<tr class="odd">
+<td align="left">ALR/Alpha</td>
+<td align="left">centr</td>
+<td align="right">1,301</td>
+</tr>
+<tr class="even">
+<td align="left">(CATTC)n</td>
+<td align="left">Satellite</td>
+<td align="right">1,096</td>
+</tr>
+<tr class="odd">
+<td align="left">SST1</td>
+<td align="left">centr</td>
+<td align="right">612</td>
+</tr>
+<tr class="even">
+<td align="left">SATR1</td>
+<td align="left">Satellite</td>
+<td align="right">544</td>
+</tr>
+<tr class="odd">
+<td align="left">HSATII</td>
+<td align="left">Satellite</td>
+<td align="right">399</td>
+</tr>
+<tr class="even">
+<td align="left">MSR1</td>
+<td align="left">Satellite</td>
+<td align="right">316</td>
+</tr>
+<tr class="odd">
+<td align="left">SATR2</td>
+<td align="left">Satellite</td>
+<td align="right">262</td>
+</tr>
+<tr class="even">
+<td align="left">HSAT5</td>
+<td align="left">Satellite</td>
+<td align="right">260</td>
+</tr>
+<tr class="odd">
+<td align="left">D20S16</td>
+<td align="left">Satellite</td>
+<td align="right">254</td>
+</tr>
+<tr class="even">
+<td align="left">REP522</td>
+<td align="left">telo</td>
+<td align="right">244</td>
+</tr>
+<tr class="odd">
+<td align="left">GSATII</td>
+<td align="left">centr</td>
+<td align="right">190</td>
+</tr>
+<tr class="even">
+<td align="left">TAR1</td>
+<td align="left">telo</td>
+<td align="right">161</td>
+</tr>
+<tr class="odd">
+<td align="left">LSAU</td>
+<td align="left">Satellite</td>
+<td align="right">129</td>
+</tr>
+<tr class="even">
+<td align="left">HSAT4</td>
+<td align="left">centr</td>
+<td align="right">99</td>
+</tr>
+<tr class="odd">
+<td align="left">CER</td>
+<td align="left">Satellite</td>
+<td align="right">72</td>
+</tr>
+<tr class="even">
+<td align="left">GSAT</td>
+<td align="left">centr</td>
+<td align="right">67</td>
+</tr>
+<tr class="odd">
+<td align="left">ACRO1</td>
+<td align="left">acro</td>
+<td align="right">61</td>
+</tr>
+<tr class="even">
+<td align="left">GSATX</td>
+<td align="left">centr</td>
+<td align="right">56</td>
+</tr>
+<tr class="odd">
+<td align="left">HSATI</td>
+<td align="left">Satellite</td>
+<td align="right">45</td>
+</tr>
+<tr class="even">
+<td align="left">SUBTEL_sa</td>
+<td align="left">Satellite</td>
+<td align="right">34</td>
+</tr>
+<tr class="odd">
+<td align="left">HSAT6</td>
+<td align="left">Satellite</td>
+<td align="right">17</td>
+</tr>
+<tr class="even">
+<td align="left">SAR</td>
+<td align="left">Satellite</td>
+<td align="right">1</td>
+</tr>
+</tbody>
+</table>
+<p>I also extract transposable elements.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">repFamily</th>
+<th align="left">repClass</th>
+<th align="right">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Alu</td>
+<td align="left">SINE</td>
+<td align="right">1,194,734</td>
+</tr>
+<tr class="even">
+<td align="left">L1</td>
+<td align="left">LINE</td>
+<td align="right">951,780</td>
+</tr>
+<tr class="odd">
+<td align="left">MIR</td>
+<td align="left">SINE</td>
+<td align="right">595,094</td>
+</tr>
+<tr class="even">
+<td align="left">L2</td>
+<td align="left">LINE</td>
+<td align="right">466,438</td>
+</tr>
+<tr class="odd">
+<td align="left">ERVL-MaLR</td>
+<td align="left">LTR</td>
+<td align="right">347,105</td>
+</tr>
+<tr class="even">
+<td align="left">hAT-Charlie</td>
+<td align="left">DNA</td>
+<td align="right">254,646</td>
+</tr>
+<tr class="odd">
+<td align="left">ERV1</td>
+<td align="left">LTR</td>
+<td align="right">175,937</td>
+</tr>
+<tr class="even">
+<td align="left">ERVL</td>
+<td align="left">LTR</td>
+<td align="right">160,346</td>
+</tr>
+<tr class="odd">
+<td align="left">TcMar-Tigger</td>
+<td align="left">DNA</td>
+<td align="right">104,026</td>
+</tr>
+<tr class="even">
+<td align="left">CR1</td>
+<td align="left">LINE</td>
+<td align="right">61,303</td>
+</tr>
+<tr class="odd">
+<td align="left">hAT-Tip100</td>
+<td align="left">DNA</td>
+<td align="right">30,669</td>
+</tr>
+<tr class="even">
+<td align="left">hAT-Blackjack</td>
+<td align="left">DNA</td>
+<td align="right">19,755</td>
+</tr>
+<tr class="odd">
+<td align="left">RTE</td>
+<td align="left">LINE</td>
+<td align="right">17,874</td>
+</tr>
+<tr class="even">
+<td align="left">TcMar-Mariner</td>
+<td align="left">DNA</td>
+<td align="right">16,348</td>
+</tr>
+<tr class="odd">
+<td align="left">hAT</td>
+<td align="left">DNA</td>
+<td align="right">12,573</td>
+</tr>
+<tr class="even">
+<td align="left">Gypsy</td>
+<td align="left">LTR</td>
+<td align="right">10,892</td>
+</tr>
+<tr class="odd">
+<td align="left">ERVK</td>
+<td align="left">LTR</td>
+<td align="right">10,868</td>
+</tr>
+<tr class="even">
+<td align="left">TcMar-Tc2</td>
+<td align="left">DNA</td>
+<td align="right">8,156</td>
+</tr>
+<tr class="odd">
+<td align="left">Gypsy?</td>
+<td align="left">LTR</td>
+<td align="right">7,869</td>
+</tr>
+<tr class="even">
+<td align="left">Other</td>
+<td align="left">Other</td>
+<td align="right">3,733</td>
+</tr>
+<tr class="odd">
+<td align="left">TcMar?</td>
+<td align="left">DNA</td>
+<td align="right">3,424</td>
+</tr>
+<tr class="even">
+<td align="left">hAT?</td>
+<td align="left">DNA</td>
+<td align="right">3,050</td>
+</tr>
+<tr class="odd">
+<td align="left">DNA</td>
+<td align="left">DNA</td>
+<td align="right">2,744</td>
+</tr>
+<tr class="even">
+<td align="left">LTR</td>
+<td align="left">LTR</td>
+<td align="right">2,206</td>
+</tr>
+<tr class="odd">
+<td align="left">PiggyBac</td>
+<td align="left">DNA</td>
+<td align="right">2,120</td>
+</tr>
+<tr class="even">
+<td align="left">MuDR</td>
+<td align="left">DNA</td>
+<td align="right">1,992</td>
+</tr>
+<tr class="odd">
+<td align="left">TcMar</td>
+<td align="left">DNA</td>
+<td align="right">1,950</td>
+</tr>
+<tr class="even">
+<td align="left">ERVL?</td>
+<td align="left">LTR</td>
+<td align="right">1,854</td>
+</tr>
+<tr class="odd">
+<td align="left">tRNA</td>
+<td align="left">SINE</td>
+<td align="right">1,668</td>
+</tr>
+<tr class="even">
+<td align="left">Deu</td>
+<td align="left">SINE</td>
+<td align="right">1,265</td>
+</tr>
+<tr class="odd">
+<td align="left">SINE</td>
+<td align="left">SINE</td>
+<td align="right">962</td>
+</tr>
+<tr class="even">
+<td align="left">RTE-BovB</td>
+<td align="left">LINE</td>
+<td align="right">655</td>
+</tr>
+<tr class="odd">
+<td align="left">ERV</td>
+<td align="left">LTR</td>
+<td align="right">579</td>
+</tr>
+<tr class="even">
+<td align="left">Dong-R4</td>
+<td align="left">LINE</td>
+<td align="right">556</td>
+</tr>
+<tr class="odd">
+<td align="left">PiggyBac?</td>
+<td align="left">DNA</td>
+<td align="right">241</td>
+</tr>
+<tr class="even">
+<td align="left">L1?</td>
+<td align="left">LINE</td>
+<td align="right">84</td>
+</tr>
+<tr class="odd">
+<td align="left">Merlin</td>
+<td align="left">DNA</td>
+<td align="right">57</td>
+</tr>
+</tbody>
+</table>
+<p>Moreover they are organized in 909 sub-families.</p>
+</div>
+</div>
+<div id="genes-1" class="section level1">
+<h1>Genes</h1>
+<div id="size" class="section level2">
+<h2>Size</h2>
+<p><img src="../../../../post/2016-06-04-genomeAnnotation_files/figure-html/unnamed-chunk-18-1.png" width="960" /></p>
+<p>The largest annotated genes are</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">chr</th>
+<th align="left">name</th>
+<th align="left">type.f</th>
+<th align="right">size.kb</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">7</td>
+<td align="left">CNTNAP2</td>
+<td align="left">protein_coding</td>
+<td align="right">2,304.637</td>
+</tr>
+<tr class="even">
+<td align="left">9</td>
+<td align="left">PTPRD</td>
+<td align="left">protein_coding</td>
+<td align="right">2,298.477</td>
+</tr>
+<tr class="odd">
+<td align="left">X</td>
+<td align="left">DMD</td>
+<td align="left">protein_coding</td>
+<td align="right">2,241.764</td>
+</tr>
+<tr class="even">
+<td align="left">3</td>
+<td align="left">LSAMP</td>
+<td align="left">protein_coding</td>
+<td align="right">2,194.860</td>
+</tr>
+<tr class="odd">
+<td align="left">11</td>
+<td align="left">DLG2</td>
+<td align="left">protein_coding</td>
+<td align="right">2,172.911</td>
+</tr>
+<tr class="even">
+<td align="left">8</td>
+<td align="left">CSMD1</td>
+<td align="left">protein_coding</td>
+<td align="right">2,059.619</td>
+</tr>
+<tr class="odd">
+<td align="left">20</td>
+<td align="left">MACROD2</td>
+<td align="left">protein_coding</td>
+<td align="right">2,057.827</td>
+</tr>
+<tr class="even">
+<td align="left">6</td>
+<td align="left">EYS</td>
+<td align="left">protein_coding</td>
+<td align="right">1,987.242</td>
+</tr>
+<tr class="odd">
+<td align="left">2</td>
+<td align="left">LRP1B</td>
+<td align="left">protein_coding</td>
+<td align="right">1,900.278</td>
+</tr>
+<tr class="even">
+<td align="left">10</td>
+<td align="left">PCDH15</td>
+<td align="left">protein_coding</td>
+<td align="right">1,825.171</td>
+</tr>
+</tbody>
+</table>
+<p>The smallest protein-coding annotated genes are</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">chr</th>
+<th align="left">name</th>
+<th align="left">type.f</th>
+<th align="right">size.kb</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">2</td>
+<td align="left">AC011308.1</td>
+<td align="left">protein_coding</td>
+<td align="right">0.058</td>
+</tr>
+<tr class="even">
+<td align="left">12</td>
+<td align="left">AC055736.1</td>
+<td align="left">protein_coding</td>
+<td align="right">0.065</td>
+</tr>
+<tr class="odd">
+<td align="left">16</td>
+<td align="left">PIH1</td>
+<td align="left">protein_coding</td>
+<td align="right">0.092</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">AC012360.2</td>
+<td align="left">protein_coding</td>
+<td align="right">0.095</td>
+</tr>
+<tr class="odd">
+<td align="left">5</td>
+<td align="left">AC008914.1</td>
+<td align="left">protein_coding</td>
+<td align="right">0.101</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">MGC4771</td>
+<td align="left">protein_coding</td>
+<td align="right">0.104</td>
+</tr>
+<tr class="odd">
+<td align="left">2</td>
+<td align="left">CATX-2</td>
+<td align="left">protein_coding</td>
+<td align="right">0.110</td>
+</tr>
+<tr class="even">
+<td align="left">X</td>
+<td align="left">GAGE12B</td>
+<td align="left">protein_coding</td>
+<td align="right">0.116</td>
+</tr>
+<tr class="odd">
+<td align="left">7</td>
+<td align="left">AC083862.1</td>
+<td align="left">protein_coding</td>
+<td align="right">0.119</td>
+</tr>
+<tr class="even">
+<td align="left">1</td>
+<td align="left">AL606500.1</td>
+<td align="left">protein_coding</td>
+<td align="right">0.123</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="density" class="section level2">
+<h2>Density</h2>
+<p>Using non-overlapping windows of 1 Mb the gene density looks like this:</p>
+<p><img src="../../../../post/2016-06-04-genomeAnnotation_files/figure-html/unnamed-chunk-21-1.png" width="960" /><img src="../../../../post/2016-06-04-genomeAnnotation_files/figure-html/unnamed-chunk-21-2.png" width="960" /><img src="../../../../post/2016-06-04-genomeAnnotation_files/figure-html/unnamed-chunk-21-3.png" width="960" /></p>
+</div>
+<div id="mappability-1" class="section level2">
+<h2>Mappability</h2>
+<p>Here I compute how many genes overlap regions of low-mappability (defined previously).Also how many genes are within those regions, defined as genes with at least 50% of their body overlapping low-mappability regions.</p>
+<p><img src="../../../../post/2016-06-04-genomeAnnotation_files/figure-html/unnamed-chunk-22-1.png" width="960" /><img src="../../../../post/2016-06-04-genomeAnnotation_files/figure-html/unnamed-chunk-22-2.png" width="960" /><img src="../../../../post/2016-06-04-genomeAnnotation_files/figure-html/unnamed-chunk-22-3.png" width="960" /><img src="../../../../post/2016-06-04-genomeAnnotation_files/figure-html/unnamed-chunk-22-4.png" width="960" /></p>
+</div>
+<div id="centromere-telomeres-and-gaps-1" class="section level2">
+<h2>Centromere, telomeres and gaps</h2>
+<p>As a control, random regions of similar sizes are used.</p>
+<p><img src="../../../../post/2016-06-04-genomeAnnotation_files/figure-html/unnamed-chunk-25-1.png" width="960" /></p>
+</div>
+<div id="summary-table" class="section level2">
+<h2>Summary table</h2>
+<table>
+<thead>
+<tr class="header">
+<th align="left">type.f</th>
+<th align="right">nb</th>
+<th align="right">min.kb</th>
+<th align="right">mean.kb</th>
+<th align="right">med.kb</th>
+<th align="right">max.kb</th>
+<th align="right">inLowMap</th>
+<th align="right">olLowMap</th>
+<th align="right">genePerMb</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">protein_coding</td>
+<td align="right">20,332</td>
+<td align="right">0.06</td>
+<td align="right">65.35</td>
+<td align="right">25.70</td>
+<td align="right">2,304.64</td>
+<td align="right">0.05</td>
+<td align="right">0.31</td>
+<td align="right">6.96</td>
+</tr>
+<tr class="even">
+<td align="left">pseudogene</td>
+<td align="right">13,931</td>
+<td align="right">0.02</td>
+<td align="right">3.58</td>
+<td align="right">0.73</td>
+<td align="right">586.57</td>
+<td align="right">0.17</td>
+<td align="right">0.21</td>
+<td align="right">4.49</td>
+</tr>
+<tr class="odd">
+<td align="left">other</td>
+<td align="right">7,417</td>
+<td align="right">0.01</td>
+<td align="right">20.29</td>
+<td align="right">3.71</td>
+<td align="right">1,536.21</td>
+<td align="right">0.05</td>
+<td align="right">0.17</td>
+<td align="right">2.43</td>
+</tr>
+<tr class="even">
+<td align="left">lincRNA</td>
+<td align="right">7,114</td>
+<td align="right">0.09</td>
+<td align="right">27.98</td>
+<td align="right">5.69</td>
+<td align="right">1,375.32</td>
+<td align="right">0.08</td>
+<td align="right">0.25</td>
+<td align="right">2.35</td>
+</tr>
+<tr class="odd">
+<td align="left">RNA</td>
+<td align="right">5,934</td>
+<td align="right">0.03</td>
+<td align="right">0.14</td>
+<td align="right">0.11</td>
+<td align="right">0.52</td>
+<td align="right">0.06</td>
+<td align="right">0.06</td>
+<td align="right">1.91</td>
+</tr>
+<tr class="even">
+<td align="left">miRNA</td>
+<td align="right">3,055</td>
+<td align="right">0.04</td>
+<td align="right">0.09</td>
+<td align="right">0.08</td>
+<td align="right">0.19</td>
+<td align="right">0.08</td>
+<td align="right">0.08</td>
+<td align="right">0.98</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="exons-1" class="section level1">
+<h1>Exons</h1>
+<div id="size-1" class="section level2">
+<h2>Size</h2>
+<p><img src="../../../../post/2016-06-04-genomeAnnotation_files/figure-html/unnamed-chunk-27-1.png" width="960" /><img src="../../../../post/2016-06-04-genomeAnnotation_files/figure-html/unnamed-chunk-27-2.png" width="960" /></p>
+<p>The largest annotated exons are</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">chr</th>
+<th align="left">name</th>
+<th align="right">size.kb</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">8</td>
+<td align="left">TRAPPC9</td>
+<td align="right">29.059</td>
+</tr>
+<tr class="even">
+<td align="left">5</td>
+<td align="left">MCC</td>
+<td align="right">27.198</td>
+</tr>
+<tr class="odd">
+<td align="left">12</td>
+<td align="left">GRIN2B</td>
+<td align="right">24.408</td>
+</tr>
+<tr class="even">
+<td align="left">19</td>
+<td align="left">MUC16</td>
+<td align="right">21.692</td>
+</tr>
+<tr class="odd">
+<td align="left">2</td>
+<td align="left">ABI2</td>
+<td align="right">20.546</td>
+</tr>
+<tr class="even">
+<td align="left">6</td>
+<td align="left">CNKSR3</td>
+<td align="right">19.148</td>
+</tr>
+<tr class="odd">
+<td align="left">8</td>
+<td align="left">XKR4</td>
+<td align="right">18.773</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">SLC8A1</td>
+<td align="right">18.359</td>
+</tr>
+<tr class="odd">
+<td align="left">11</td>
+<td align="left">AHNAK</td>
+<td align="right">18.169</td>
+</tr>
+<tr class="even">
+<td align="left">21</td>
+<td align="left">KCNJ6</td>
+<td align="right">18.108</td>
+</tr>
+</tbody>
+</table>
+<p>The smallest protein-coding annotated exons are</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">chr</th>
+<th align="left">name</th>
+<th align="right">size.kb</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">2</td>
+<td align="left">ALK</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">3</td>
+<td align="left">ACAD11</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">4</td>
+<td align="left">PPA2</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">5</td>
+<td align="left">PAM</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">5</td>
+<td align="left">GALNT10</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">5</td>
+<td align="left">CYFIP2</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">6</td>
+<td align="left">HDDC2</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">7</td>
+<td align="left">SRRM3</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">11</td>
+<td align="left">AP002884.3</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">12</td>
+<td align="left">YAF2</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p><em>ToDo: Size per type (first exon, second exon, …)</em></p>
+</div>
+<div id="density-1" class="section level2">
+<h2>Density</h2>
+<p>Using non-overlapping windows of 1 Mb the gene density looks like this:</p>
+<p><img src="../../../../post/2016-06-04-genomeAnnotation_files/figure-html/unnamed-chunk-30-1.png" width="960" /></p>
+<p>There are, on average, 357.8926476 exons per Mb.</p>
+</div>
+<div id="mappability-2" class="section level2">
+<h2>Mappability</h2>
+<p><img src="../../../../post/2016-06-04-genomeAnnotation_files/figure-html/unnamed-chunk-31-1.png" width="960" /></p>
+<p>35201 exons overlap low-mappability regions.</p>
+</div>
+<div id="centromere-telomeres-and-gaps-2" class="section level2">
+<h2>Centromere, telomeres and gaps</h2>
+<p>As a control, random regions of similar sizes are used.</p>
+<p><img src="../../../../post/2016-06-04-genomeAnnotation_files/figure-html/unnamed-chunk-34-1.png" width="960" /></p>
+</div>
+</div>
+<div id="gwas" class="section level1">
+<h1>GWAS</h1>
+</div>
+<div id="mappability-3" class="section level1">
+<h1>Mappability</h1>
+<div id="density-2" class="section level2">
+<h2>Density</h2>
+<p>Using non-overlapping windows of 1 Mb the density of low-mappability regions looks like this:</p>
+<p><img src="../../../../post/2016-06-04-genomeAnnotation_files/figure-html/unnamed-chunk-35-1.png" width="960" /><img src="../../../../post/2016-06-04-genomeAnnotation_files/figure-html/unnamed-chunk-35-2.png" width="960" /></p>
+<p><em>Yellow regions are 1 Mb regions fully annotated as low-mappability.</em></p>
+</div>
+</div>
+<div id="segmental-duplications" class="section level1">
+<h1>Segmental duplications</h1>
+</div>
+<div id="dna-satellites" class="section level1">
+<h1>DNA Satellites</h1>
+</div>
+<div id="centromeres-telomeres-and-gaps" class="section level1">
+<h1>Centromeres, telomeres and gaps</h1>
+</div>
+<div id="simple-repeats-1" class="section level1">
+<h1>Simple repeats</h1>
+<p><img src="../../../../post/2016-06-04-genomeAnnotation_files/figure-html/unnamed-chunk-36-1.png" width="960" /><img src="../../../../post/2016-06-04-genomeAnnotation_files/figure-html/unnamed-chunk-36-2.png" width="960" /><img src="../../../../post/2016-06-04-genomeAnnotation_files/figure-html/unnamed-chunk-36-3.png" width="960" /><img src="../../../../post/2016-06-04-genomeAnnotation_files/figure-html/unnamed-chunk-36-4.png" width="960" /></p>
+<ul>
+<li>Interestingly, there is much less STR of period 3 than expected. Why ?</li>
+<li>There is also this burst at copy-number 25. Methodological artifact ?</li>
+</ul>
+<p>Grouping the repeats according to their motif, we can ask how frequent is each motif.</p>
+<p><img src="../../../../post/2016-06-04-genomeAnnotation_files/figure-html/unnamed-chunk-37-1.png" width="960" /><img src="../../../../post/2016-06-04-genomeAnnotation_files/figure-html/unnamed-chunk-37-2.png" width="960" /></p>
+<div id="summary-tables" class="section level2">
+<h2>Summary tables</h2>
+<p>Most numerous STRs:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">sequence</th>
+<th align="right">period</th>
+<th align="right">n</th>
+<th align="right">n.100</th>
+<th align="right">n.400</th>
+<th align="right">n.1k</th>
+<th align="right">size.mean</th>
+<th align="right">total.kb</th>
+<th align="left">period.class</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">T</td>
+<td align="right">1</td>
+<td align="right">35,301</td>
+<td align="right">5</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">31.12</td>
+<td align="right">1,098.73</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">A</td>
+<td align="right">1</td>
+<td align="right">34,898</td>
+<td align="right">9</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">31.14</td>
+<td align="right">1,086.68</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">AC</td>
+<td align="right">2</td>
+<td align="right">23,317</td>
+<td align="right">258</td>
+<td align="right">70</td>
+<td align="right">11</td>
+<td align="right">43.12</td>
+<td align="right">1,005.36</td>
+<td align="left">2</td>
+</tr>
+<tr class="even">
+<td align="left">TG</td>
+<td align="right">2</td>
+<td align="right">19,739</td>
+<td align="right">300</td>
+<td align="right">75</td>
+<td align="right">10</td>
+<td align="right">44.27</td>
+<td align="right">873.94</td>
+<td align="left">2</td>
+</tr>
+<tr class="odd">
+<td align="left">GT</td>
+<td align="right">2</td>
+<td align="right">13,727</td>
+<td align="right">240</td>
+<td align="right">84</td>
+<td align="right">12</td>
+<td align="right">45.87</td>
+<td align="right">629.69</td>
+<td align="left">2</td>
+</tr>
+<tr class="even">
+<td align="left">AT</td>
+<td align="right">2</td>
+<td align="right">12,311</td>
+<td align="right">2,747</td>
+<td align="right">354</td>
+<td align="right">64</td>
+<td align="right">92.65</td>
+<td align="right">1,140.66</td>
+<td align="left">2</td>
+</tr>
+<tr class="odd">
+<td align="left">TA</td>
+<td align="right">2</td>
+<td align="right">11,429</td>
+<td align="right">2,801</td>
+<td align="right">377</td>
+<td align="right">85</td>
+<td align="right">100.86</td>
+<td align="right">1,152.69</td>
+<td align="left">2</td>
+</tr>
+<tr class="even">
+<td align="left">CA</td>
+<td align="right">2</td>
+<td align="right">9,722</td>
+<td align="right">258</td>
+<td align="right">78</td>
+<td align="right">17</td>
+<td align="right">48.64</td>
+<td align="right">472.84</td>
+<td align="left">2</td>
+</tr>
+<tr class="odd">
+<td align="left">AAAT</td>
+<td align="right">4</td>
+<td align="right">6,875</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">38.98</td>
+<td align="right">268.02</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td align="left">TTTA</td>
+<td align="right">4</td>
+<td align="right">5,345</td>
+<td align="right">8</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">39.57</td>
+<td align="right">211.48</td>
+<td align="left">4</td>
+</tr>
+</tbody>
+</table>
+<p>Most numerous in term of instances larger than 100 bp:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">sequence</th>
+<th align="right">period</th>
+<th align="right">n</th>
+<th align="right">n.100</th>
+<th align="right">n.400</th>
+<th align="right">n.1k</th>
+<th align="right">size.mean</th>
+<th align="right">total.kb</th>
+<th align="left">period.class</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">TA</td>
+<td align="right">2</td>
+<td align="right">11,429</td>
+<td align="right">2,801</td>
+<td align="right">377</td>
+<td align="right">85</td>
+<td align="right">100.86</td>
+<td align="right">1,152.69</td>
+<td align="left">2</td>
+</tr>
+<tr class="even">
+<td align="left">AT</td>
+<td align="right">2</td>
+<td align="right">12,311</td>
+<td align="right">2,747</td>
+<td align="right">354</td>
+<td align="right">64</td>
+<td align="right">92.65</td>
+<td align="right">1,140.66</td>
+<td align="left">2</td>
+</tr>
+<tr class="odd">
+<td align="left">AAAG</td>
+<td align="right">4</td>
+<td align="right">3,163</td>
+<td align="right">1,272</td>
+<td align="right">16</td>
+<td align="right">0</td>
+<td align="right">101.49</td>
+<td align="right">321.00</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td align="left">TTTC</td>
+<td align="right">4</td>
+<td align="right">2,843</td>
+<td align="right">1,217</td>
+<td align="right">34</td>
+<td align="right">0</td>
+<td align="right">107.36</td>
+<td align="right">305.22</td>
+<td align="left">4</td>
+</tr>
+<tr class="odd">
+<td align="left">TCTT</td>
+<td align="right">4</td>
+<td align="right">1,580</td>
+<td align="right">749</td>
+<td align="right">11</td>
+<td align="right">0</td>
+<td align="right">114.62</td>
+<td align="right">181.09</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td align="left">AGAA</td>
+<td align="right">4</td>
+<td align="right">1,305</td>
+<td align="right">693</td>
+<td align="right">15</td>
+<td align="right">0</td>
+<td align="right">125.65</td>
+<td align="right">163.97</td>
+<td align="left">4</td>
+</tr>
+<tr class="odd">
+<td align="left">GAAA</td>
+<td align="right">4</td>
+<td align="right">1,166</td>
+<td align="right">627</td>
+<td align="right">12</td>
+<td align="right">0</td>
+<td align="right">127.67</td>
+<td align="right">148.86</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td align="left">CTTT</td>
+<td align="right">4</td>
+<td align="right">1,241</td>
+<td align="right">620</td>
+<td align="right">2</td>
+<td align="right">0</td>
+<td align="right">118.08</td>
+<td align="right">146.53</td>
+<td align="left">4</td>
+</tr>
+<tr class="odd">
+<td align="left">TTCC</td>
+<td align="right">4</td>
+<td align="right">1,888</td>
+<td align="right">552</td>
+<td align="right">21</td>
+<td align="right">1</td>
+<td align="right">95.04</td>
+<td align="right">179.44</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td align="left">AAGG</td>
+<td align="right">4</td>
+<td align="right">1,734</td>
+<td align="right">541</td>
+<td align="right">35</td>
+<td align="right">2</td>
+<td align="right">100.42</td>
+<td align="right">174.13</td>
+<td align="left">4</td>
+</tr>
+</tbody>
+</table>
+<p>Most numerous in term of instances larger than 400 bp:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">sequence</th>
+<th align="right">period</th>
+<th align="right">n</th>
+<th align="right">n.100</th>
+<th align="right">n.400</th>
+<th align="right">n.1k</th>
+<th align="right">size.mean</th>
+<th align="right">total.kb</th>
+<th align="left">period.class</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">TA</td>
+<td align="right">2</td>
+<td align="right">11,429</td>
+<td align="right">2,801</td>
+<td align="right">377</td>
+<td align="right">85</td>
+<td align="right">100.86</td>
+<td align="right">1,152.69</td>
+<td align="left">2</td>
+</tr>
+<tr class="even">
+<td align="left">AT</td>
+<td align="right">2</td>
+<td align="right">12,311</td>
+<td align="right">2,747</td>
+<td align="right">354</td>
+<td align="right">64</td>
+<td align="right">92.65</td>
+<td align="right">1,140.66</td>
+<td align="left">2</td>
+</tr>
+<tr class="odd">
+<td align="left">GCCTCTGCCCGGCCGCCACCCCGTCTGGGAAGTGAGGAGC</td>
+<td align="right">40</td>
+<td align="right">182</td>
+<td align="right">182</td>
+<td align="right">153</td>
+<td align="right">0</td>
+<td align="right">468.81</td>
+<td align="right">85.32</td>
+<td align="left">&gt;6</td>
+</tr>
+<tr class="even">
+<td align="left">TCCCAGACGGGGTGGCGGCCGGGCAGAGACGCTCCTCACT</td>
+<td align="right">40</td>
+<td align="right">111</td>
+<td align="right">111</td>
+<td align="right">98</td>
+<td align="right">0</td>
+<td align="right">459.25</td>
+<td align="right">50.98</td>
+<td align="left">&gt;6</td>
+</tr>
+<tr class="odd">
+<td align="left">ATATATA</td>
+<td align="right">7</td>
+<td align="right">348</td>
+<td align="right">258</td>
+<td align="right">91</td>
+<td align="right">15</td>
+<td align="right">305.88</td>
+<td align="right">106.45</td>
+<td align="left">&gt;6</td>
+</tr>
+<tr class="even">
+<td align="left">GT</td>
+<td align="right">2</td>
+<td align="right">13,727</td>
+<td align="right">240</td>
+<td align="right">84</td>
+<td align="right">12</td>
+<td align="right">45.87</td>
+<td align="right">629.69</td>
+<td align="left">2</td>
+</tr>
+<tr class="odd">
+<td align="left">CA</td>
+<td align="right">2</td>
+<td align="right">9,722</td>
+<td align="right">258</td>
+<td align="right">78</td>
+<td align="right">17</td>
+<td align="right">48.64</td>
+<td align="right">472.84</td>
+<td align="left">2</td>
+</tr>
+<tr class="even">
+<td align="left">TG</td>
+<td align="right">2</td>
+<td align="right">19,739</td>
+<td align="right">300</td>
+<td align="right">75</td>
+<td align="right">10</td>
+<td align="right">44.27</td>
+<td align="right">873.94</td>
+<td align="left">2</td>
+</tr>
+<tr class="odd">
+<td align="left">TATATAT</td>
+<td align="right">7</td>
+<td align="right">286</td>
+<td align="right">209</td>
+<td align="right">72</td>
+<td align="right">17</td>
+<td align="right">335.49</td>
+<td align="right">95.95</td>
+<td align="left">&gt;6</td>
+</tr>
+<tr class="even">
+<td align="left">AC</td>
+<td align="right">2</td>
+<td align="right">23,317</td>
+<td align="right">258</td>
+<td align="right">70</td>
+<td align="right">11</td>
+<td align="right">43.12</td>
+<td align="right">1,005.36</td>
+<td align="left">2</td>
+</tr>
+</tbody>
+</table>
+<p>Set of large and numerous STRs (names annotated in the previous graphs):</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">sequence</th>
+<th align="right">period</th>
+<th align="right">n</th>
+<th align="right">n.100</th>
+<th align="right">n.400</th>
+<th align="right">n.1k</th>
+<th align="right">size.mean</th>
+<th align="right">total.kb</th>
+<th align="left">period.class</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">AT</td>
+<td align="right">2</td>
+<td align="right">12,311</td>
+<td align="right">2,747</td>
+<td align="right">354</td>
+<td align="right">64</td>
+<td align="right">92.65</td>
+<td align="right">1,140.66</td>
+<td align="left">2</td>
+</tr>
+<tr class="even">
+<td align="left">TA</td>
+<td align="right">2</td>
+<td align="right">11,429</td>
+<td align="right">2,801</td>
+<td align="right">377</td>
+<td align="right">85</td>
+<td align="right">100.86</td>
+<td align="right">1,152.69</td>
+<td align="left">2</td>
+</tr>
+<tr class="odd">
+<td align="left">AAAG</td>
+<td align="right">4</td>
+<td align="right">3,163</td>
+<td align="right">1,272</td>
+<td align="right">16</td>
+<td align="right">0</td>
+<td align="right">101.49</td>
+<td align="right">321.00</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td align="left">TTTC</td>
+<td align="right">4</td>
+<td align="right">2,843</td>
+<td align="right">1,217</td>
+<td align="right">34</td>
+<td align="right">0</td>
+<td align="right">107.36</td>
+<td align="right">305.22</td>
+<td align="left">4</td>
+</tr>
+<tr class="odd">
+<td align="left">TTCC</td>
+<td align="right">4</td>
+<td align="right">1,888</td>
+<td align="right">552</td>
+<td align="right">21</td>
+<td align="right">1</td>
+<td align="right">95.04</td>
+<td align="right">179.44</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td align="left">AAGG</td>
+<td align="right">4</td>
+<td align="right">1,734</td>
+<td align="right">541</td>
+<td align="right">35</td>
+<td align="right">2</td>
+<td align="right">100.42</td>
+<td align="right">174.13</td>
+<td align="left">4</td>
+</tr>
+<tr class="odd">
+<td align="left">TCTT</td>
+<td align="right">4</td>
+<td align="right">1,580</td>
+<td align="right">749</td>
+<td align="right">11</td>
+<td align="right">0</td>
+<td align="right">114.62</td>
+<td align="right">181.09</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td align="left">TATC</td>
+<td align="right">4</td>
+<td align="right">1,426</td>
+<td align="right">195</td>
+<td align="right">23</td>
+<td align="right">6</td>
+<td align="right">83.24</td>
+<td align="right">118.70</td>
+<td align="left">4</td>
+</tr>
+<tr class="odd">
+<td align="left">CCTT</td>
+<td align="right">4</td>
+<td align="right">1,404</td>
+<td align="right">354</td>
+<td align="right">20</td>
+<td align="right">0</td>
+<td align="right">92.31</td>
+<td align="right">129.60</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td align="left">AGAA</td>
+<td align="right">4</td>
+<td align="right">1,305</td>
+<td align="right">693</td>
+<td align="right">15</td>
+<td align="right">0</td>
+<td align="right">125.65</td>
+<td align="right">163.97</td>
+<td align="left">4</td>
+</tr>
+<tr class="odd">
+<td align="left">GAAG</td>
+<td align="right">4</td>
+<td align="right">1,284</td>
+<td align="right">410</td>
+<td align="right">12</td>
+<td align="right">0</td>
+<td align="right">96.08</td>
+<td align="right">123.36</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td align="left">CTTT</td>
+<td align="right">4</td>
+<td align="right">1,241</td>
+<td align="right">620</td>
+<td align="right">2</td>
+<td align="right">0</td>
+<td align="right">118.08</td>
+<td align="right">146.53</td>
+<td align="left">4</td>
+</tr>
+<tr class="odd">
+<td align="left">GAAA</td>
+<td align="right">4</td>
+<td align="right">1,166</td>
+<td align="right">627</td>
+<td align="right">12</td>
+<td align="right">0</td>
+<td align="right">127.67</td>
+<td align="right">148.86</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td align="left">ATAG</td>
+<td align="right">4</td>
+<td align="right">1,133</td>
+<td align="right">186</td>
+<td align="right">24</td>
+<td align="right">8</td>
+<td align="right">87.22</td>
+<td align="right">98.82</td>
+<td align="left">4</td>
+</tr>
+<tr class="odd">
+<td align="left">AGGA</td>
+<td align="right">4</td>
+<td align="right">1,130</td>
+<td align="right">303</td>
+<td align="right">26</td>
+<td align="right">2</td>
+<td align="right">97.65</td>
+<td align="right">110.35</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td align="left">AGAT</td>
+<td align="right">4</td>
+<td align="right">1,009</td>
+<td align="right">187</td>
+<td align="right">21</td>
+<td align="right">0</td>
+<td align="right">86.98</td>
+<td align="right">87.76</td>
+<td align="left">4</td>
+</tr>
+<tr class="odd">
+<td align="left">TCTA</td>
+<td align="right">4</td>
+<td align="right">945</td>
+<td align="right">163</td>
+<td align="right">18</td>
+<td align="right">1</td>
+<td align="right">85.68</td>
+<td align="right">80.97</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td align="left">GGAA</td>
+<td align="right">4</td>
+<td align="right">907</td>
+<td align="right">270</td>
+<td align="right">16</td>
+<td align="right">0</td>
+<td align="right">98.79</td>
+<td align="right">89.60</td>
+<td align="left">4</td>
+</tr>
+<tr class="odd">
+<td align="left">TCCT</td>
+<td align="right">4</td>
+<td align="right">901</td>
+<td align="right">278</td>
+<td align="right">10</td>
+<td align="right">0</td>
+<td align="right">96.36</td>
+<td align="right">86.82</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td align="left">ATCT</td>
+<td align="right">4</td>
+<td align="right">836</td>
+<td align="right">145</td>
+<td align="right">19</td>
+<td align="right">4</td>
+<td align="right">91.24</td>
+<td align="right">76.28</td>
+<td align="left">4</td>
+</tr>
+<tr class="odd">
+<td align="left">CTTC</td>
+<td align="right">4</td>
+<td align="right">817</td>
+<td align="right">246</td>
+<td align="right">11</td>
+<td align="right">0</td>
+<td align="right">96.46</td>
+<td align="right">78.81</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td align="left">AAGA</td>
+<td align="right">4</td>
+<td align="right">761</td>
+<td align="right">390</td>
+<td align="right">10</td>
+<td align="right">0</td>
+<td align="right">127.96</td>
+<td align="right">97.38</td>
+<td align="left">4</td>
+</tr>
+<tr class="odd">
+<td align="left">TTCT</td>
+<td align="right">4</td>
+<td align="right">748</td>
+<td align="right">340</td>
+<td align="right">10</td>
+<td align="right">0</td>
+<td align="right">115.62</td>
+<td align="right">86.48</td>
+<td align="left">4</td>
+</tr>
+<tr class="even">
+<td align="left">TAGA</td>
+<td align="right">4</td>
+<td align="right">706</td>
+<td align="right">118</td>
+<td align="right">28</td>
+<td align="right">2</td>
+<td align="right">95.19</td>
+<td align="right">67.21</td>
+<td align="left">4</td>
+</tr>
+<tr class="odd">
+<td align="left">GATA</td>
+<td align="right">4</td>
+<td align="right">682</td>
+<td align="right">137</td>
+<td align="right">26</td>
+<td align="right">4</td>
+<td align="right">105.61</td>
+<td align="right">72.03</td>
+<td align="left">4</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="dna-satellites-1" class="section level1">
+<h1>DNA satellites</h1>
+<p><img src="../../../../post/2016-06-04-genomeAnnotation_files/figure-html/unnamed-chunk-42-1.png" width="960" /></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">repName</th>
+<th align="right">mean.size</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">SUBTEL_sa</td>
+<td align="right">87.74</td>
+</tr>
+<tr class="even">
+<td align="left">HSAT5</td>
+<td align="right">126.92</td>
+</tr>
+<tr class="odd">
+<td align="left">D20S16</td>
+<td align="right">149.57</td>
+</tr>
+<tr class="even">
+<td align="left">HSAT6</td>
+<td align="right">233.24</td>
+</tr>
+<tr class="odd">
+<td align="left">LSAU</td>
+<td align="right">267.70</td>
+</tr>
+<tr class="even">
+<td align="left">MSR1</td>
+<td align="right">279.90</td>
+</tr>
+<tr class="odd">
+<td align="left">(GAATG)n</td>
+<td align="right">319.12</td>
+</tr>
+<tr class="even">
+<td align="left">(CATTC)n</td>
+<td align="right">332.20</td>
+</tr>
+<tr class="odd">
+<td align="left">HSATI</td>
+<td align="right">442.89</td>
+</tr>
+<tr class="even">
+<td align="left">TAR1</td>
+<td align="right">554.02</td>
+</tr>
+<tr class="odd">
+<td align="left">SST1</td>
+<td align="right">602.01</td>
+</tr>
+<tr class="even">
+<td align="left">HSATII</td>
+<td align="right">712.02</td>
+</tr>
+<tr class="odd">
+<td align="left">REP522</td>
+<td align="right">712.68</td>
+</tr>
+<tr class="even">
+<td align="left">BSR/Beta</td>
+<td align="right">720.22</td>
+</tr>
+<tr class="odd">
+<td align="left">ACRO1</td>
+<td align="right">744.80</td>
+</tr>
+<tr class="even">
+<td align="left">GSATII</td>
+<td align="right">1,044.12</td>
+</tr>
+<tr class="odd">
+<td align="left">SATR2</td>
+<td align="right">1,253.72</td>
+</tr>
+<tr class="even">
+<td align="left">SATR1</td>
+<td align="right">1,696.22</td>
+</tr>
+<tr class="odd">
+<td align="left">GSATX</td>
+<td align="right">1,834.30</td>
+</tr>
+<tr class="even">
+<td align="left">HSAT4</td>
+<td align="right">2,390.72</td>
+</tr>
+<tr class="odd">
+<td align="left">GSAT</td>
+<td align="right">3,575.97</td>
+</tr>
+<tr class="even">
+<td align="left">SAR</td>
+<td align="right">4,775.00</td>
+</tr>
+<tr class="odd">
+<td align="left">ALR/Alpha</td>
+<td align="right">5,723.55</td>
+</tr>
+<tr class="even">
+<td align="left">CER</td>
+<td align="right">7,535.17</td>
+</tr>
+</tbody>
+</table>
+<p><img src="../../../../post/2016-06-04-genomeAnnotation_files/figure-html/unnamed-chunk-42-2.png" width="960" /></p>
+</div>
+<div id="transposable-elements" class="section level1">
+<h1>Transposable elements</h1>
+<p><img src="../../../../post/2016-06-04-genomeAnnotation_files/figure-html/unnamed-chunk-43-1.png" width="960" /></p>
+</div>
+
+</div>
+
+      </div>
+    </div>
+
+    
+    
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src="../../../../assets/highlight.min.js"></script>
+    <script src="../../../../assets/r.min.js"></script>
+    
+    <script>
+      hljs.configure({languages: ['r']});
+      hljs.initHighlightingOnLoad();
+    </script>
+
+    <script src="//yihui.name/js/math-code.js"></script>
+    <script async src="//cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    
+  </body>
+</html>
+

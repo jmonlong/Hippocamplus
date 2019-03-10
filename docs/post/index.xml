@@ -194,6 +194,16 @@ The plan is to:
     </item>
     
     <item>
+      <title>Exploring basic annotations of the Human genome</title>
+      <link>/Hippocamplus/2016/06/04/exploring-basic-annotations-of-the-human-genome/</link>
+      <pubDate>Sat, 04 Jun 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/Hippocamplus/2016/06/04/exploring-basic-annotations-of-the-human-genome/</guid>
+      <description>Quick look at the annotations Genes In Gencode V19 and focusing on autosomes/X/Y, there are 57783 “genes” of different types:
+  type n    protein_coding 20,332  pseudogene 13,931  lincRNA 7,114  antisense 5,276  miRNA 3,055  misc_RNA 2,034  snRNA 1,916  snoRNA 1,457  sense_intronic 742  rRNA 527  processed_transcript 515  sense_overlapping 202  IG_V_pseudogene 187  IG_V_gene 138  TR_V_gene 97  TR_J_gene 74  polymorphic_pseudogene 45  IG_D_gene 37  TR_V_pseudogene 27  3prime_overlapping_ncrna 21  IG_J_gene 18  IG_C_gene 14  IG_C_pseudogene 9  TR_C_gene 5  TR_J_pseudogene 4  IG_J_pseudogene 3  TR_D_gene 3     Exons In Gencode V19 and focusing on autosomes/X/Y, there are 1196256 “exons” from different types of genes:</description>
+    </item>
+    
+    <item>
       <title>Gencode exploration</title>
       <link>/Hippocamplus/2016/06/04/gencode-exploration/</link>
       <pubDate>Sat, 04 Jun 2016 00:00:00 +0000</pubDate>
