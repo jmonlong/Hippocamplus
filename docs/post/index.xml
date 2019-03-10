@@ -173,6 +173,17 @@ But when we manipulate many regions of variable size covering the entire genome 
     </item>
     
     <item>
+      <title>Conservation to annotate large(r) regions</title>
+      <link>/Hippocamplus/2017/02/25/conservation-to-annotate-larger-regions/</link>
+      <pubDate>Sat, 25 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/Hippocamplus/2017/02/25/conservation-to-annotate-larger-regions/</guid>
+      <description>Conservation can be used to annotate single nucleotide changes or short variants. This information helps assessing the functional impact of short variation.
+What if we have larger variants, for example deletions larger than 50 bp, or larger than 1 kbp. Can we use conservation metrics? In this case the question is often not “Is the region conserved?” but rather “Is there any conserved elements in the region?”.
+One approach would be to overlap the variants/deletions with known (ultra-)conserved regions.</description>
+    </item>
+    
+    <item>
       <title>Segmental duplication exploration</title>
       <link>/Hippocamplus/2016/10/20/segmental-duplication-exploration/</link>
       <pubDate>Thu, 20 Oct 2016 00:00:00 +0000</pubDate>

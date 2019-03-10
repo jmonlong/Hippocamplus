@@ -2917,6 +2917,54 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
     
       
         <item>
+          <title>Conservation to annotate large(r) regions</title>
+          <link>/Hippocamplus/2017/02/25/conservation-to-annotate-larger-regions/</link>
+          <pubDate>Sat, 25 Feb 2017 00:00:00 UTC</pubDate>
+          <author>Mark Otto</author>
+          <guid>/Hippocamplus/2017/02/25/conservation-to-annotate-larger-regions/</guid>
+          <description>&lt;p&gt;Conservation can be used to annotate single nucleotide changes or short variants. This information helps assessing the functional impact of short variation.&lt;/p&gt;
+&lt;p&gt;What if we have larger variants, for example deletions larger than 50 bp, or larger than 1 kbp. Can we use conservation metrics? In this case the question is often not &lt;em&gt;“Is the region conserved?”&lt;/em&gt; but rather &lt;em&gt;“Is there any conserved elements in the region?”&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;One approach would be to overlap the variants/deletions with known (ultra-)conserved regions. Otherwise we could work with bp-level conservation estimates. That’s what I quickly explore below.&lt;/p&gt;
+&lt;div id=&#34;genomic-annotation-and-conservation&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Genomic annotation and conservation&lt;/h2&gt;
+&lt;p&gt;I’ll have a look at regions &lt;strong&gt;overlapping&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Insulator region: CTCF binding sites (GM12878 narrow peaks by the Broad)&lt;/li&gt;
+&lt;li&gt;Open chromatin regions: DNase sites (GM12878 narrow peaks by the Broad for Encode)&lt;/li&gt;
+&lt;li&gt;Protein-coding exons.&lt;/li&gt;
+&lt;li&gt;Other “exons” (e.g. lncRNA, miRNA, pseudogenes, … but not protein-coding)&lt;/li&gt;
+&lt;li&gt;Other, i.e. none of the above&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;PhastCons gives a conservation score for each base pair. As a measure across a region I try to use:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;the average&lt;/li&gt;
+&lt;li&gt;the 80th percentile&lt;/li&gt;
+&lt;li&gt;the maximum average in short windows (e.g. 10 bp, 30 bp or 100 bp)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The quantile and sliding-window approaches should mitigate the effect of surrounding background noise.&lt;/p&gt;
+&lt;div id=&#34;kbp-regions&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;1 Kbp regions&lt;/h3&gt;
+&lt;p&gt;First fragmenting the genome into 1 kbp regions, I select bins from the different annotation profiles.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./post/2017-02-25-RegionConservation_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;1440&#34; /&gt;&lt;img src=&#34;./post/2017-02-25-RegionConservation_files/figure-html/unnamed-chunk-4-2.png&#34; width=&#34;1440&#34; /&gt;&lt;img src=&#34;./post/2017-02-25-RegionConservation_files/figure-html/unnamed-chunk-4-3.png&#34; width=&#34;1440&#34; /&gt;&lt;img src=&#34;./post/2017-02-25-RegionConservation_files/figure-html/unnamed-chunk-4-4.png&#34; width=&#34;1440&#34; /&gt;&lt;img src=&#34;./post/2017-02-25-RegionConservation_files/figure-html/unnamed-chunk-4-5.png&#34; width=&#34;1440&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;The sliding-window approach gives the best results where we can really see different distributions for the different types of regions. Using the average across the region, the conservation distributions are similar, likely because the studied region is larger than the conserved element so there is a majority of background conservation scores.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;kbp-regions-1&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;50 Kbp regions&lt;/h3&gt;
+&lt;p&gt;Same for larger regions.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./post/2017-02-25-RegionConservation_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;1440&#34; /&gt;&lt;img src=&#34;./post/2017-02-25-RegionConservation_files/figure-html/unnamed-chunk-5-2.png&#34; width=&#34;1440&#34; /&gt;&lt;img src=&#34;./post/2017-02-25-RegionConservation_files/figure-html/unnamed-chunk-5-3.png&#34; width=&#34;1440&#34; /&gt;&lt;img src=&#34;./post/2017-02-25-RegionConservation_files/figure-html/unnamed-chunk-5-4.png&#34; width=&#34;1440&#34; /&gt;&lt;img src=&#34;./post/2017-02-25-RegionConservation_files/figure-html/unnamed-chunk-5-5.png&#34; width=&#34;1440&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;conclusions&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Conclusions&lt;/h2&gt;
+&lt;p&gt;Using the average conservation might be good for short regions (e.g. 10s-100s bp) but is not useful for large regions. We can do a bit better by using the 80th percentile of the scores, focusing on the long tail of scores in the region. A better approach yet seems to be using the maximum score across sliding windows. For 1 kbp regions, we could differentiate functional classes using windows of size 100 bp.&lt;/p&gt;
+&lt;p&gt;This kind of metric work only work for regions that are not too large. As the 50 kbp experiment shows, when the input regions get too big, it’s difficult to see much differences because all regions have some conserved sequence somewhere.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+        </item>
+      
+    
+      
+        <item>
           <title>Segmental duplication exploration</title>
           <link>/Hippocamplus/2016/10/20/segmental-duplication-exploration/</link>
           <pubDate>Thu, 20 Oct 2016 00:00:00 UTC</pubDate>

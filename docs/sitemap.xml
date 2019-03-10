@@ -123,6 +123,11 @@
   </url>
   
   <url>
+    <loc>/Hippocamplus/2017/02/25/conservation-to-annotate-larger-regions/</loc>
+    <lastmod>2017-02-25T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/Hippocamplus/2016/10/20/segmental-duplication-exploration/</loc>
     <lastmod>2016-10-20T00:00:00+00:00</lastmod>
   </url>
@@ -195,6 +200,12 @@
   <url>
     <loc>/Hippocamplus/tags/latex/</loc>
     <lastmod>2018-04-18T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/Hippocamplus/tags/non-coding/</loc>
+    <lastmod>2017-02-25T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

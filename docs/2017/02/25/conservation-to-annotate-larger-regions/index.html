@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Conservation to annotate large(r) regions &middot; Hippocamplus
+    
+  </title>
+
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113785126-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    
+    gtag('config', "UA-113785126-1");
+  </script>
+  
+  
+  <link rel="stylesheet" href="../../../../css/poole.css">
+  <link rel="stylesheet" href="../../../../css/syntax.css">
+  <link rel="stylesheet" href="../../../../css/lanyon.css">
+  <link rel="stylesheet" href="../../../../css/github.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
+  <link rel="stylesheet" href="../../../../fa/css/font-awesome.min.css">
+  
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../../../assets/hippoPlus-icon.png">
+  <link rel="shortcut icon" href="../../../../assets/hippoPlus-icon.png">
+
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="../../../../atom.xml">
+</head>
+
+  
+  <body>
+
+    
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>A place to gather useful information I keep on forgetting.</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item " href="../../../../">Home</a>
+    <a class="sidebar-nav-item " href="../../../../post">Posts</a>
+
+    
+    
+      
+        <a class="sidebar-nav-item " href="../../../../emacs/">Emacs</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../expression/">Expression</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../latex/">LaTeX</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../markdown/">Markdown</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../math/stats/">Math/Stats</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../python/">Python</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../r/">R</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../shell/">Shell</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../internet/">Internet</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../about/">About</a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+    
+  </nav>
+
+  <div class="sidebar-item">
+  </div>
+  
+  <div class="sidebar-item">
+    <div><a href="../../../../index.xml"><i class="fa fa-rss-square" aria-hidden="true"></i> RSS</a></div>
+    <div><a href="https://twitter.com/JMonlong"><i class="fa fa-twitter" aria-hidden="true"></i> @JMonlong</a></div>
+    <p>&copy; 2018 Jean Monlong. All rights reserved.</p>
+  </div>
+</div>
+
+
+    
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="../../../../" title="Home">Hippocamplus</a>
+            <small>My Second Memory</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+
+
+<div class="post">
+  <h1 class="post-title">Conservation to annotate large(r) regions</h1>
+  <span class="post-date">Feb 25 2017
+  
+  
+  
+  
+  
+  <a href='../../../../tags/genome/' class='label'>genome</a>
+  
+  <a href='../../../../tags/non-coding/' class='label'>non-coding</a>
+  
+  
+  
+  </span>
+  <p>Conservation can be used to annotate single nucleotide changes or short variants. This information helps assessing the functional impact of short variation.</p>
+<p>What if we have larger variants, for example deletions larger than 50 bp, or larger than 1 kbp. Can we use conservation metrics? In this case the question is often not <em>“Is the region conserved?”</em> but rather <em>“Is there any conserved elements in the region?”</em>.</p>
+<p>One approach would be to overlap the variants/deletions with known (ultra-)conserved regions. Otherwise we could work with bp-level conservation estimates. That’s what I quickly explore below.</p>
+<div id="genomic-annotation-and-conservation" class="section level2">
+<h2>Genomic annotation and conservation</h2>
+<p>I’ll have a look at regions <strong>overlapping</strong>:</p>
+<ul>
+<li>Insulator region: CTCF binding sites (GM12878 narrow peaks by the Broad)</li>
+<li>Open chromatin regions: DNase sites (GM12878 narrow peaks by the Broad for Encode)</li>
+<li>Protein-coding exons.</li>
+<li>Other “exons” (e.g. lncRNA, miRNA, pseudogenes, … but not protein-coding)</li>
+<li>Other, i.e. none of the above</li>
+</ul>
+<p>PhastCons gives a conservation score for each base pair. As a measure across a region I try to use:</p>
+<ul>
+<li>the average</li>
+<li>the 80th percentile</li>
+<li>the maximum average in short windows (e.g. 10 bp, 30 bp or 100 bp)</li>
+</ul>
+<p>The quantile and sliding-window approaches should mitigate the effect of surrounding background noise.</p>
+<div id="kbp-regions" class="section level3">
+<h3>1 Kbp regions</h3>
+<p>First fragmenting the genome into 1 kbp regions, I select bins from the different annotation profiles.</p>
+<p><img src="../../../../post/2017-02-25-RegionConservation_files/figure-html/unnamed-chunk-4-1.png" width="1440" /><img src="../../../../post/2017-02-25-RegionConservation_files/figure-html/unnamed-chunk-4-2.png" width="1440" /><img src="../../../../post/2017-02-25-RegionConservation_files/figure-html/unnamed-chunk-4-3.png" width="1440" /><img src="../../../../post/2017-02-25-RegionConservation_files/figure-html/unnamed-chunk-4-4.png" width="1440" /><img src="../../../../post/2017-02-25-RegionConservation_files/figure-html/unnamed-chunk-4-5.png" width="1440" /></p>
+<p>The sliding-window approach gives the best results where we can really see different distributions for the different types of regions. Using the average across the region, the conservation distributions are similar, likely because the studied region is larger than the conserved element so there is a majority of background conservation scores.</p>
+</div>
+<div id="kbp-regions-1" class="section level3">
+<h3>50 Kbp regions</h3>
+<p>Same for larger regions.</p>
+<p><img src="../../../../post/2017-02-25-RegionConservation_files/figure-html/unnamed-chunk-5-1.png" width="1440" /><img src="../../../../post/2017-02-25-RegionConservation_files/figure-html/unnamed-chunk-5-2.png" width="1440" /><img src="../../../../post/2017-02-25-RegionConservation_files/figure-html/unnamed-chunk-5-3.png" width="1440" /><img src="../../../../post/2017-02-25-RegionConservation_files/figure-html/unnamed-chunk-5-4.png" width="1440" /><img src="../../../../post/2017-02-25-RegionConservation_files/figure-html/unnamed-chunk-5-5.png" width="1440" /></p>
+</div>
+</div>
+<div id="conclusions" class="section level2">
+<h2>Conclusions</h2>
+<p>Using the average conservation might be good for short regions (e.g. 10s-100s bp) but is not useful for large regions. We can do a bit better by using the 80th percentile of the scores, focusing on the long tail of scores in the region. A better approach yet seems to be using the maximum score across sliding windows. For 1 kbp regions, we could differentiate functional classes using windows of size 100 bp.</p>
+<p>This kind of metric work only work for regions that are not too large. As the 50 kbp experiment shows, when the input regions get too big, it’s difficult to see much differences because all regions have some conserved sequence somewhere.</p>
+</div>
+
+</div>
+
+      </div>
+    </div>
+
+    
+    
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src="../../../../assets/highlight.min.js"></script>
+    <script src="../../../../assets/r.min.js"></script>
+    
+    <script>
+      hljs.configure({languages: ['r']});
+      hljs.initHighlightingOnLoad();
+    </script>
+
+    <script src="//yihui.name/js/math-code.js"></script>
+    <script async src="//cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    
+  </body>
+</html>
+

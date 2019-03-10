@@ -1,0 +1,166 @@
+---
+title: Conservation to annotate large(r) regions
+date: 2017-02-25
+tags: ["genome", "non-coding"]
+---
+
+```{r include=FALSE}
+knitr::opts_chunk$set(fig.width=15, echo=FALSE, message=FALSE, warning=FALSE)
+```
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(magrittr)
+library(GenomicRanges)
+library(knitr)
+library(tidyr)
+library(ggforce)
+library(PopSV)
+library(phastCons100way.UCSC.hg19)
+
+theme_bw2 <- function(...) theme_bw(base_size=16, ...)
+subF <- function(df, N, label){
+    df = df[sample.int(length(df),N)]
+    df$region = label
+    df
+}
+quantf <- function(x) quantile(x, probs=.8, na.rm=TRUE)
+swmax <- function(x, k=30){
+    mat = sapply(1:k, function(ii) x[ii:(length(x)-k+ii)])
+    max(apply(mat, 1, mean, na.rm=TRUE))
+}
+swmax30 <- function(x) swmax(x, 30)
+swmax10 <- function(x) swmax(x, 10)
+swmax100 <- function(x) swmax(x, 100)
+```
+
+Conservation can be used to annotate single nucleotide changes or short variants.
+This information helps assessing the functional impact of short variation.
+
+What if we have larger variants, for example deletions larger than 50 bp, or larger than 1 kbp.
+Can we use conservation metrics? 
+In this case the question is often not *"Is the region conserved?"* but rather *"Is there any conserved elements in the region?"*.
+
+One approach would be to overlap the variants/deletions with known (ultra-)conserved regions.
+Otherwise we could work with bp-level conservation estimates.
+That's what I quickly explore below.
+
+## Genomic annotation and conservation
+
+I'll have a look at regions **overlapping**:
+
+- Insulator region: CTCF binding sites (GM12878 narrow peaks by the Broad)
+- Open chromatin regions: DNase sites (GM12878 narrow peaks by the Broad for Encode)
+- Protein-coding exons.
+- Other "exons" (e.g. lncRNA, miRNA, pseudogenes, ... but not protein-coding)
+- Other, i.e. none of the above
+
+```{r}
+library(AnnotationHub)
+ah = AnnotationHub()
+ctcf = query(ah, c("hg19","CTCF","narrow", "gm12878", "broad"))
+ctcf = ctcf[[1]]
+
+dnase = query(ah, c("hg19","dnase", "gm12878", "narrow","broad", "encode"))
+dnase = dnase[[1]]
+
+gencode = query(ah, c("hg19","gencode", "transcript","v10","gene"))
+gencode = gencode[[1]]
+
+exons.pc = subset(gencode, type=='exon' & gene_type=='protein_coding')
+exons.all = subset(gencode, type=='exon')
+rm(gencode)
+tmp = gc()
+```
+
+PhastCons gives a conservation score for each base pair.
+As a measure across a region I try to use:
+
+- the average
+- the 80th percentile
+- the maximum average in short windows (e.g. 10 bp, 30 bp or 100 bp)
+
+The quantile and sliding-window approaches should mitigate the effect of surrounding background noise.
+
+### 1 Kbp regions
+
+First fragmenting the genome into 1 kbp regions, I select bins from the different annotation profiles.
+
+
+```{r}
+bins.gr = fragment.genome.hg19(1e3, chr.prefix = TRUE) %>% makeGRangesFromDataFrame
+bins.gr$ctcf = overlapsAny(bins.gr, ctcf)
+bins.gr$ex.pc = overlapsAny(bins.gr, exons.pc)
+bins.gr$ex.all = overlapsAny(bins.gr, exons.all)
+bins.gr$dnase = overlapsAny(bins.gr, dnase)
+
+N = 500
+reg.gr = c(subF(subset(bins.gr, ctcf), N, "CTCF"),
+    subF(subset(bins.gr, ex.pc), N, "protein-coding exon"),
+    subF(subset(bins.gr, ex.all & !ex.pc), N, "other exon"),
+    subF(subset(bins.gr, dnase), N, "DNase"),
+    subF(subset(bins.gr, !dnase & !ctcf & !ex.all), N, "other"))
+
+rm(bins.gr)
+tmp = gc()
+
+reg.gr$pc.mean = scores(phastCons100way.UCSC.hg19, reg.gr, summaryFun="mean")$scores
+reg.gr$pc.q80 = scores(phastCons100way.UCSC.hg19, reg.gr, summaryFun="quantf")$scores
+reg.gr$pc.sw10 = scores(phastCons100way.UCSC.hg19, reg.gr, summaryFun="swmax10")$scores
+reg.gr$pc.sw30 = scores(phastCons100way.UCSC.hg19, reg.gr, summaryFun="swmax30")$scores
+reg.gr$pc.sw100 = scores(phastCons100way.UCSC.hg19, reg.gr, summaryFun="swmax100")$scores
+
+reg.gr %>% as.data.frame %>% ggplot(aes(x=reorder(region,pc.mean, median, na.rm=TRUE), y=pc.mean)) + geom_sina(alpha=.2) + geom_boxplot(fill="grey50", alpha=0.5, outlier.size=0) + theme_bw2() + xlab("region") + ylab("average PhastCons")
+reg.gr %>% as.data.frame %>% ggplot(aes(x=reorder(region,pc.q80, median, na.rm=TRUE), y=pc.q80)) + geom_sina(alpha=.2) + geom_boxplot(fill="grey50", alpha=0.5, outlier.size=0) + theme_bw2() + xlab("region")+ ylab("80% quantile PhastCons")
+reg.gr %>% as.data.frame %>% ggplot(aes(x=reorder(region, pc.sw10, median, na.rm=TRUE), y=pc.sw10)) + geom_sina(alpha=.2) + geom_boxplot(fill="grey50", alpha=0.5, outlier.size=0) + theme_bw2() + xlab("region")+ ylab("maximum of 10bp-window\naverages PhastCons")
+reg.gr %>% as.data.frame %>% ggplot(aes(x=reorder(region, pc.sw30, median, na.rm=TRUE), y=pc.sw30)) + geom_sina(alpha=.2) + geom_boxplot(fill="grey50", alpha=0.5, outlier.size=0) + theme_bw2() + xlab("region")+ ylab("maximum of 30bp-window\naverages PhastCons")
+reg.gr %>% as.data.frame %>% ggplot(aes(x=reorder(region, pc.sw100, median, na.rm=TRUE), y=pc.sw100)) + geom_sina(alpha=.2) + geom_boxplot(fill="grey50", alpha=0.5, outlier.size=0) + theme_bw2() + xlab("region")+ ylab("maximum of 100bp-window\naverages PhastCons")
+```
+
+The sliding-window approach gives the best results where we can really see different distributions for the different types of regions.
+Using the average across the region, the conservation distributions are similar, likely because the studied region is larger than the conserved element so there is a majority of background conservation scores.
+
+### 50 Kbp regions
+
+Same for larger regions.
+
+```{r}
+bins.gr = fragment.genome.hg19(5e4, chr.prefix = TRUE) %>% makeGRangesFromDataFrame
+bins.gr$ctcf = overlapsAny(bins.gr, ctcf)
+bins.gr$ex.pc = overlapsAny(bins.gr, exons.pc)
+bins.gr$ex.all = overlapsAny(bins.gr, exons.all)
+bins.gr$dnase = overlapsAny(bins.gr, dnase)
+
+N = 100
+reg.gr = c(subF(subset(bins.gr, ctcf), N, "CTCF"),
+    subF(subset(bins.gr, ex.pc), N, "protein-coding exon"),
+    subF(subset(bins.gr, ex.all & !ex.pc), N, "other exon"),
+    subF(subset(bins.gr, dnase), N, "DNase"),
+    subF(subset(bins.gr, !dnase & !ctcf & !ex.all), N, "other"))
+
+rm(bins.gr)
+tmp = gc()
+
+reg.gr$pc.mean = scores(phastCons100way.UCSC.hg19, reg.gr, summaryFun="mean")$scores
+reg.gr$pc.q80 = scores(phastCons100way.UCSC.hg19, reg.gr, summaryFun="quantf")$scores
+reg.gr$pc.sw10 = scores(phastCons100way.UCSC.hg19, reg.gr, summaryFun="swmax10")$scores
+reg.gr$pc.sw30 = scores(phastCons100way.UCSC.hg19, reg.gr, summaryFun="swmax30")$scores
+reg.gr$pc.sw100 = scores(phastCons100way.UCSC.hg19, reg.gr, summaryFun="swmax100")$scores
+
+reg.gr %>% as.data.frame %>% ggplot(aes(x=reorder(region,pc.mean, median, na.rm=TRUE), y=pc.mean)) + geom_sina(alpha=.2) + geom_boxplot(fill="grey50", alpha=0.5, outlier.size=0) + theme_bw2() + xlab("region") + ylab("average PhastCons")
+reg.gr %>% as.data.frame %>% ggplot(aes(x=reorder(region,pc.q80, median, na.rm=TRUE), y=pc.q80)) + geom_sina(alpha=.2) + geom_boxplot(fill="grey50", alpha=0.5, outlier.size=0) + theme_bw2() + xlab("region")+ ylab("80% quantile PhastCons")
+reg.gr %>% as.data.frame %>% ggplot(aes(x=reorder(region, pc.sw10, median, na.rm=TRUE), y=pc.sw10)) + geom_sina(alpha=.2) + geom_boxplot(fill="grey50", alpha=0.5, outlier.size=0) + theme_bw2() + xlab("region")+ ylab("maximum of 10bp-window\naverages PhastCons")
+reg.gr %>% as.data.frame %>% ggplot(aes(x=reorder(region, pc.sw30, median, na.rm=TRUE), y=pc.sw30)) + geom_sina(alpha=.2) + geom_boxplot(fill="grey50", alpha=0.5, outlier.size=0) + theme_bw2() + xlab("region")+ ylab("maximum of 30bp-window\naverages PhastCons")
+reg.gr %>% as.data.frame %>% ggplot(aes(x=reorder(region, pc.sw100, median, na.rm=TRUE), y=pc.sw100)) + geom_sina(alpha=.2) + geom_boxplot(fill="grey50", alpha=0.5, outlier.size=0) + theme_bw2() + xlab("region")+ ylab("maximum of 100bp-window\naverages PhastCons")
+```
+
+## Conclusions
+
+Using the average conservation might be good for short regions (e.g. 10s-100s bp) but is not useful for large regions.
+We can do a bit better by using the 80th percentile of the scores, focusing on the long tail of scores in the region.
+A better approach yet seems to be using the maximum score across sliding windows.
+For 1 kbp regions, we could differentiate functional classes using windows of size 100 bp.
+
+This kind of metric work only work for regions that are not too large.
+As the 50 kbp experiment shows, when the input regions get too big, it's difficult to see much differences because all regions have some conserved sequence somewhere.
