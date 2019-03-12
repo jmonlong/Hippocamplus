@@ -1,0 +1,221 @@
+---
+title: Public SV catalogs from long-read sequencing studies
+date: 2019-03-15
+tags: ["genome", "sv"]
+slug: public-sv-catalogs-longread
+draft: true
+output:
+  blogdown::html_page:
+    toc: true
+---
+
+
+<div id="TOC">
+<ul>
+<li><a href="#downloading-the-sv-catalogs">Downloading the SV catalogs</a><ul>
+<li><a href="#audano-et-al.cell-2019">Audano et al. Cell 2019</a></li>
+<li><a href="#genome-in-a-bottle">Genome in a Bottle</a></li>
+<li><a href="#human-genome-structural-variation-consortium">Human Genome Structural Variation Consortium</a></li>
+</ul></li>
+<li><a href="#size-distribution">Size distribution</a></li>
+<li><a href="#duplicated-variants-within-each-catalog">Duplicated variants within each catalog</a></li>
+<li><a href="#breakpoint-inconsistency-between-catalogs">Breakpoint inconsistency between catalogs</a></li>
+<li><a href="#todo">Todo</a></li>
+</ul>
+</div>
+
+<p>More and more studies are using long-read sequencing, often with other technologies, to produce high-quality catalogs of structural variation (SV).
+Many novel SVs are being discovered and most of them are sequence-resolved.
+For example:</p>
+<ul>
+<li><a href="https://doi.org/10.1016/j.cell.2018.12.019">Audano et al. Cell 2019</a>.</li>
+<li>The <a href="https://www.nist.gov/programs-projects/genome-bottle">Genome in a Bottle</a> consortium.</li>
+<li>The <a href="http://www.internationalgenome.org/data_collections/hgsv_sv_discovery/README_hgsvc_datareuse_statement/">Human Genome Structural Variation Consortium</a>.</li>
+</ul>
+<p>Are they consistent with each other or are there signs of errors in their definition?</p>
+<div id="downloading-the-sv-catalogs" class="section level2">
+<h2>Downloading the SV catalogs</h2>
+<div id="audano-et-al.cell-2019" class="section level3">
+<h3>Audano et al. Cell 2019</h3>
+<p>I downloaded <a href="https://ars.els-cdn.com/content/image/1-s2.0-S0092867418316337-mmc1.xlsx">Table S1</a>.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">SVTYPE</th>
+<th align="right">n</th>
+<th align="right">mean.bp</th>
+<th align="right">min.bp</th>
+<th align="right">max.bp</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">DEL</td>
+<td align="right">41,388</td>
+<td align="right">448</td>
+<td align="right">50</td>
+<td align="right">32,354</td>
+</tr>
+<tr class="even">
+<td align="left">INS</td>
+<td align="right">57,994</td>
+<td align="right">368</td>
+<td align="right">50</td>
+<td align="right">51,668</td>
+</tr>
+<tr class="odd">
+<td align="left">INV</td>
+<td align="right">222</td>
+<td align="right">5,401</td>
+<td align="right">51</td>
+<td align="right">51,909</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="genome-in-a-bottle" class="section level3">
+<h3>Genome in a Bottle</h3>
+<p>I downloaded the <a href="ftp://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/data/AshkenazimTrio/analysis/NIST_SVs_Integration_v0.6/">NIST SVs Integration v0.6</a>.</p>
+<p><strong>Caution: This catalog still uses GRCh37.</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">SVTYPE</th>
+<th align="right">n</th>
+<th align="right">mean.bp</th>
+<th align="right">min.bp</th>
+<th align="right">max.bp</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">DEL</td>
+<td align="right">37,412</td>
+<td align="right">686</td>
+<td align="right">1</td>
+<td align="right">997,115</td>
+</tr>
+<tr class="even">
+<td align="left">INS</td>
+<td align="right">36,600</td>
+<td align="right">267</td>
+<td align="right">1</td>
+<td align="right">125,187</td>
+</tr>
+</tbody>
+</table>
+<p>This catalogs includes short indels that I decided to filter, keeping only variants of size 50 bp or more to be consistent with the other catalogs.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">SVTYPE</th>
+<th align="right">n</th>
+<th align="right">mean.bp</th>
+<th align="right">min.bp</th>
+<th align="right">max.bp</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">DEL</td>
+<td align="right">14,588</td>
+<td align="right">1,715</td>
+<td align="right">50</td>
+<td align="right">997,115</td>
+</tr>
+<tr class="even">
+<td align="left">INS</td>
+<td align="right">15,432</td>
+<td align="right">595</td>
+<td align="right">50</td>
+<td align="right">125,187</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="human-genome-structural-variation-consortium" class="section level3">
+<h3>Human Genome Structural Variation Consortium</h3>
+<p>I downloaded the <a href="http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/hgsv_sv_discovery/working/20180627_PhasedSVMSPAC/">merged PhasedSV and MsPAC callset</a> as described in <a href="https://www.biorxiv.org/content/early/2018/06/13/193144">Chaisson et al. bioRxiv 2018</a>.
+They provide a callset for each of the three individuals studied: HG00514 (Han chinese), HG00733 (Puerto Ricans), and NA19240 (YRI Nigerian).</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">SVTYPE</th>
+<th align="left">catalog</th>
+<th align="right">n</th>
+<th align="right">mean.bp</th>
+<th align="right">min.bp</th>
+<th align="right">max.bp</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">DEL</td>
+<td align="left">HGSVC-HAN</td>
+<td align="right">4,790</td>
+<td align="right">393</td>
+<td align="right">50</td>
+<td align="right">114,201</td>
+</tr>
+<tr class="even">
+<td align="left">DEL</td>
+<td align="left">HGSVC-PR</td>
+<td align="right">5,202</td>
+<td align="right">300</td>
+<td align="right">50</td>
+<td align="right">46,993</td>
+</tr>
+<tr class="odd">
+<td align="left">DEL</td>
+<td align="left">HGSVC-YRI</td>
+<td align="right">5,705</td>
+<td align="right">297</td>
+<td align="right">50</td>
+<td align="right">75,761</td>
+</tr>
+<tr class="even">
+<td align="left">INS</td>
+<td align="left">HGSVC-HAN</td>
+<td align="right">12,298</td>
+<td align="right">474</td>
+<td align="right">50</td>
+<td align="right">54,296</td>
+</tr>
+<tr class="odd">
+<td align="left">INS</td>
+<td align="left">HGSVC-PR</td>
+<td align="right">13,324</td>
+<td align="right">477</td>
+<td align="right">50</td>
+<td align="right">48,046</td>
+</tr>
+<tr class="even">
+<td align="left">INS</td>
+<td align="left">HGSVC-YRI</td>
+<td align="right">13,115</td>
+<td align="right">460</td>
+<td align="right">50</td>
+<td align="right">79,482</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="size-distribution" class="section level2">
+<h2>Size distribution</h2>
+<p><img src="/post/2019-03-11-LongReadSVcatalogs_files/figure-html/size-1.png" width="960" /><img src="/post/2019-03-11-LongReadSVcatalogs_files/figure-html/size-2.png" width="960" /><img src="/post/2019-03-11-LongReadSVcatalogs_files/figure-html/size-3.png" width="960" /></p>
+<p>It’s good to keep in mind that the catalog from Audano et al. is based on 15 individuals which might explain some of the differences in size distribution.
+Rare variants will be enriched in this catalog, and rare variants tend to be smaller.</p>
+</div>
+<div id="duplicated-variants-within-each-catalog" class="section level2">
+<h2>Duplicated variants within each catalog</h2>
+</div>
+<div id="breakpoint-inconsistency-between-catalogs" class="section level2">
+<h2>Breakpoint inconsistency between catalogs</h2>
+</div>
+<div id="todo" class="section level2">
+<h2>Todo</h2>
+<ul>
+<li>Add references/links and description for each dataset.</li>
+</ul>
+</div>

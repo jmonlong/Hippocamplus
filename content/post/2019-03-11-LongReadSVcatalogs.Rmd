@@ -1,0 +1,162 @@
+---
+title: Public SV catalogs from long-read sequencing studies
+date: 2019-03-15
+tags: ["genome", "sv"]
+slug: public-sv-catalogs-longread
+draft: true
+output:
+  blogdown::html_page:
+    toc: true
+---
+
+```{r include=FALSE}
+knitr::opts_chunk$set(fig.width=10, echo=FALSE, message=FALSE, warning=FALSE)
+```
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(magrittr)
+library(VariantAnnotation)
+library(GenomicRanges)
+library(knitr)
+library(tidyr)
+
+theme_bw2 <- function(...) theme_bw(base_size=16, ...)
+```
+
+More and more studies are using long-read sequencing, often with other technologies, to produce high-quality catalogs of structural variation (SV).
+Many novel SVs are being discovered and most of them are sequence-resolved.
+For example:
+
+- [Audano et al. Cell 2019](https://doi.org/10.1016/j.cell.2018.12.019).
+- The [Genome in a Bottle](https://www.nist.gov/programs-projects/genome-bottle) consortium.
+- The [Human Genome Structural Variation Consortium](http://www.internationalgenome.org/data_collections/hgsv_sv_discovery/README_hgsvc_datareuse_statement/).
+
+Are they consistent with each other or are there signs of errors?
+
+
+## Downloading the SV catalogs
+
+### Audano et al. Cell 2019
+
+I downloaded [Table S1](https://ars.els-cdn.com/content/image/1-s2.0-S0092867418316337-mmc1.xlsx).
+
+```{r audano}
+audano = read.csv('./1-s2.0-S0092867418316337-mmc1.csv', as.is=TRUE)
+audano = audano %>% mutate(chr=gsub('chr','', X.CHROM), start=POS) %>% 
+  dplyr::select(chr, start, END, SVLEN, SVTYPE) %>%
+  makeGRangesFromDataFrame(keep.extra.columns=TRUE)
+audano$catalog = 'Audano2019'
+
+audano %>% as.data.frame %>% group_by(SVTYPE) %>%
+  summarize(n=n(), mean.bp=mean(SVLEN), min.bp=min(SVLEN), max.bp=max(SVLEN)) %>%
+  kable(digits=0, format.args=list(big.mark=','))
+```
+
+### Genome in a Bottle
+
+I downloaded the [NIST SVs Integration v0.6](ftp://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/data/AshkenazimTrio/analysis/NIST_SVs_Integration_v0.6/).
+
+**Caution: This catalog still uses GRCh37.**
+
+```{r giab}
+outfile = 'HG002_SVs_Tier1_v0.6.vcf.gz'
+if(!file.exists(outfile)){
+  download.file('ftp://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/data/AshkenazimTrio/analysis/NIST_SVs_Integration_v0.6/HG002_SVs_Tier1_v0.6.vcf.gz', outfile)
+}
+vcf = readVcf(outfile)
+
+giab = rowRanges(vcf)
+mcols(giab) = NULL
+names(giab) = NULL
+giab$SVLEN = abs(unlist(info(vcf)$SVLEN))
+giab$SVTYPE = info(vcf)$SVTYPE
+giab$catalog = 'GiaB'
+
+giab %>% as.data.frame %>% group_by(SVTYPE) %>%
+  summarize(n=n(), mean.bp=mean(SVLEN), min.bp=min(SVLEN), max.bp=max(SVLEN)) %>%
+  kable(digits=0, format.args=list(big.mark=','))
+```
+
+This catalogs includes short indels that I decided to filter, keeping only variants of size 50 bp or more to be consistent with the other catalogs.
+
+```{r giab.filt}
+giab = subset(giab, SVLEN>=50)
+
+giab %>% as.data.frame %>% group_by(SVTYPE) %>%
+  summarize(n=n(), mean.bp=mean(SVLEN), min.bp=min(SVLEN), max.bp=max(SVLEN)) %>%
+  kable(digits=0, format.args=list(big.mark=','))
+```
+
+### Human Genome Structural Variation Consortium
+
+I downloaded the [merged PhasedSV and MsPAC callset](http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/hgsv_sv_discovery/working/20180627_PhasedSVMSPAC/) as described in [Chaisson et al. bioRxiv 2018](https://www.biorxiv.org/content/early/2018/06/13/193144).
+They provide a callset for each of the three individuals studied: HG00514 (Han chinese), HG00733 (Puerto Ricans), and NA19240 (YRI Nigerian).
+
+```{r hgsvc}
+read_hgsvc <- function(outfile){
+  if(!file.exists(outfile)){
+    download.file(paste0('http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/hgsv_sv_discovery/working/20180627_PhasedSVMSPAC/', outfile), outfile)
+  }
+  vcf = readVcf(outfile)
+  hgsvc = rowRanges(vcf)
+  mcols(hgsvc) = NULL
+  names(hgsvc) = NULL
+  if(any(unlist(lapply(info(vcf)$SVLEN, length))>1)){
+    stop('multi alleles !')
+  }
+  hgsvc$SVLEN = abs(unlist(info(vcf)$SVLEN))
+  hgsvc$SVTYPE = info(vcf)$SVTYPE
+  seqlevels(hgsvc) = gsub('chr','', seqlevels(hgsvc))
+  return(hgsvc)
+}
+
+hgsvc.han = read_hgsvc('PhasedSVMsPAC.HG00514.vcf')
+hgsvc.han$catalog = 'HGSVC-HAN'
+hgsvc.pr = read_hgsvc('PhasedSVMsPAC.HG00733.vcf')
+hgsvc.pr$catalog = 'HGSVC-PR'
+hgsvc.yri = read_hgsvc('PhasedSVMsPAC.NA19240.vcf')
+hgsvc.yri$catalog = 'HGSVC-YRI'
+
+c(hgsvc.han, hgsvc.pr, hgsvc.yri)  %>% as.data.frame %>%
+  group_by(SVTYPE, catalog) %>%
+  summarize(n=n(), mean.bp=mean(SVLEN), min.bp=min(SVLEN), max.bp=max(SVLEN)) %>%
+  kable(digits=0, format.args=list(big.mark=','))
+```
+
+## Size distribution
+
+```{r size}
+cat.df = c(audano, hgsvc.han, hgsvc.pr, hgsvc.yri) %>% as.data.frame
+cat.df = giab %>% as.data.frame %>% rbind(cat.df)
+
+cat.df %>% filter(SVTYPE=='DEL') %>% 
+  ggplot(aes(x=SVLEN)) +
+  geom_histogram(bins=100) + theme_bw() +
+  facet_grid(catalog~., scales='free') +
+  scale_x_log10() + ylab('deletions')
+
+cat.df %>% filter(SVTYPE=='INS') %>% 
+  ggplot(aes(x=SVLEN)) +
+  geom_histogram(bins=100) + theme_bw() +
+  facet_grid(catalog~., scales='free') +
+  scale_x_log10() + ylab("insertions") 
+
+cat.df %>% filter(SVTYPE=='INV') %>% 
+  ggplot(aes(x=SVLEN)) +
+  geom_histogram() + theme_bw() +
+  facet_grid(catalog~., scales='free') +
+  scale_x_log10() + ylab("inversions")
+```
+
+It's good to keep in mind that the catalog from Audano et al. is based on 15 individuals which might explain some of the differences in size distribution.
+Rare variants will be enriched in this catalog, and rare variants tend to be smaller.
+
+## Duplicated variants within each catalog
+
+## Breakpoint inconsistency between catalogs
+
+## Todo
+
+- Add references/links and description for each dataset.
