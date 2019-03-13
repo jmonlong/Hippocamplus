@@ -195,6 +195,7 @@ Another way to check for problems is to look at the *emb* column of `pdffonts ma
 + To show all the history of a file: `git log -p -- file`
 + To retrieve a specific version of a file: `git show COMMIT:file`
 + Revert repo to a specific commit: `git checkout COMMIT`
++ Undo a commit: `git reset HEAD~` and then for the real commit `git commit -c ORIG_HEAD`.
 + Update sub-modules: `git submodule update --init --recursive`
 + Add all untracked files: `git st -s | grep '??' | cut -f2 -d ' ' | xargs git add`
 + Add remote e.g. after a fork: `git remote add mine git@github.com:jmonlong/REPO.git`
