@@ -212,7 +212,7 @@ I'm more of a tidyverse person but for very large data the [data.table](https://
 Necessary to compile some R packages:
 
 ~~~sh
-sudo apt-get install libxml2-dev libssl-dev libmariadbclient-dev
+sudo apt-get install libxml2-dev libssl-dev libmariadbclient-dev libcurl4-openssl-dev
 ~~~
 
-*Related to XML, OpenSSL, MySQL, respectively.*
+*Related to XML, OpenSSL, MySQL, Curl respectively.*
