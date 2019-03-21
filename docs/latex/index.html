@@ -260,6 +260,7 @@
 <li><a href="#changing-the-font">Changing the font</a></li>
 <li><a href="#section-slides">Section slides</a></li>
 <li><a href="#themes">Themes</a></li>
+<li><a href="#background-image">Background image</a></li>
 <li><a href="#backup-slides">Backup slides</a></li>
 <li><a href="#link-to-frame">Link to frame</a></li>
 </ul></li>
@@ -671,6 +672,15 @@ FUNCTION {format.doi}
 \setbeamertemplate{navigation symbols}{}
 \setbeamertemplate{footline}[page number]</code></pre>
 <p>For an important presentation, I could use a more fancy theme, such as the <a href="https://github.com/matze/mtheme">Metropolis</a> theme or the <a href="http://hamaluik.com/posts/better-beamer-themes/">Execushares</a> one. Eventually I would like to mix and customize these two (see current state <a href="https://github.com/jmonlong/Hippocamplus/blob/master/LaTeX/theme/beamerthemeMyExecushares.sty">there</a>).</p>
+</div>
+<div id="background-image" class="section level3">
+<h3>Background image</h3>
+<p>For the acknowledgment slide or for more informal presentations, I sometimes want to use a specific image as background for a slide.</p>
+<pre class="latex"><code>{
+\usebackgroundtemplate{\includegraphics[width=\paperwidth]{pic.jpg}}%
+\begin{frame}
+\end{frame}
+}</code></pre>
 </div>
 <div id="backup-slides" class="section level3">
 <h3>Backup slides</h3>
