@@ -220,7 +220,8 @@
 <li><a href="#ubuntu">Ubuntu</a></li>
 <li><a href="#sync-a-specific-google-drive-folder-on-ubuntu">Sync a specific Google Drive folder on Ubuntu</a></li>
 <li><a href="#sync-pdfs-between-mendeley-and-google-drive">Sync PDFs between Mendeley and Google Drive</a></li>
-<li><a href="#host-html-documents-in-dropbox">Host HTML documents in Dropbox</a></li>
+<li><a href="#zotero">Zotero</a></li>
+<li><a href="#dowload-files-from-dropbox">Dowload files from Dropbox</a></li>
 </ul>
 </div>
 
@@ -275,13 +276,24 @@ grive -a -s ArticlesPDF</code></pre>
 </div>
 <div id="sync-pdfs-between-mendeley-and-google-drive" class="section level2">
 <h2>Sync PDFs between Mendeley and Google Drive</h2>
-<p>See <a href="../2018/09/22/sync-mendeley/">this post</a>.</p>
+<p>See <a href="../2018/09/22/sync-mendeley/">this post</a>. <em>Edit: I switched to a “Zotero + Google Drive” solution, see below.</em></p>
 </div>
-<div id="host-html-documents-in-dropbox" class="section level2">
-<h2>Host HTML documents in Dropbox</h2>
-<p>HTML reports are a convenient to send results to collaborators. They are easy to produce with R Markdown for example. When a HTML file is shared in <a href="www.dropbox.com">Dropbox</a> the browser doesn’t directly display its content but proposes the user to download the page. It’s OK but it’s another step for the collaborator to access the report.</p>
-<p>To directly see the HTML page, the hack is to transform the link by replacing <code>https://www.dropbox.com</code> with <code>https://dl.dropboxusercontent.com</code>.</p>
-<p><em>Edit: I don’t think it works anymore</em></p>
+<div id="zotero" class="section level2">
+<h2>Zotero</h2>
+<p>Mostly following <a href="https://ikashnitsky.github.io/2019/zotero/">this blog post</a>.</p>
+<p>In the general settings of Zotero I also specify the Google Drive folder as <em>base directory</em> and swich off the <em>Sync full-text content</em>.</p>
+<p>Then using the <a href="http://zotfile.com/">Zotfile</a> plugins to make sure the PDF files are consistent between computers. The configuration I use is:</p>
+<ul>
+<li>Pointing at the Google Drive folder, with subfolders by authors <code>/%a</code>.</li>
+<li>Chaning to lower case and replacing blanks in file names.</li>
+</ul>
+<p>For the <a href="https://retorque.re/zotero-better-bibtex/">Better BibTeX plugin</a>, the most important setting is the citation key style: <code>[auth:lower][year][journal:lower:abbr]</code>.</p>
+<p>I use <a href="https://play.google.com/store/apps/details?id=dk.tacit.android.foldersync.lite&amp;hl=en_US">FolderSync</a> to sync the PDFs that I annotate on my Android tablet.</p>
+</div>
+<div id="dowload-files-from-dropbox" class="section level2">
+<h2>Dowload files from Dropbox</h2>
+<p>By replacing <code>https://www.dropbox.com</code> with <code>https://dl.dropboxusercontent.com</code> in the link, a file can be dowloaded using command lines tools (e.g. wget or <em>download.file</em> in R). It’s useful to host files that are used in scripts, like some of the post I made using R-Markdown.</p>
+<p>Originally it was useful to “serve” HTML pages but it doesn’t work anymore.</p>
 </div>
 
 </div>
