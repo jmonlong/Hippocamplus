@@ -43,6 +43,11 @@
   </url>
   
   <url>
+    <loc>/Hippocamplus/2019/03/31/gnomad-sv-first-look/</loc>
+    <lastmod>2019-03-31T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/Hippocamplus/2018/12/08/dna-art/</loc>
     <lastmod>2018-12-08T00:00:00+00:00</lastmod>
   </url>
@@ -159,7 +164,7 @@
   
   <url>
     <loc>/Hippocamplus/</loc>
-    <lastmod>2018-12-08T00:00:00+00:00</lastmod>
+    <lastmod>2019-03-31T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -193,7 +198,7 @@
   
   <url>
     <loc>/Hippocamplus/tags/genome/</loc>
-    <lastmod>2018-12-08T00:00:00+00:00</lastmod>
+    <lastmod>2019-03-31T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -217,7 +222,7 @@
   
   <url>
     <loc>/Hippocamplus/post/</loc>
-    <lastmod>2018-12-08T00:00:00+00:00</lastmod>
+    <lastmod>2019-03-31T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -241,6 +246,12 @@
   <url>
     <loc>/Hippocamplus/tags/stats/</loc>
     <lastmod>2018-06-09T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/Hippocamplus/tags/sv/</loc>
+    <lastmod>2019-03-31T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

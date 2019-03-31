@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Sv on </title>
+    <link>/Hippocamplus/tags/sv/</link>
+    <description>Recent content in Sv on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 31 Mar 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/Hippocamplus/tags/sv/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>First look at the gnomAD SV catalog</title>
+      <link>/Hippocamplus/2019/03/31/gnomad-sv-first-look/</link>
+      <pubDate>Sun, 31 Mar 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/Hippocamplus/2019/03/31/gnomad-sv-first-look/</guid>
+      <description>TL;DR Allele frequency Size distribution SV coordinates confusion Potential duplicates SV calling method Two size clusters of potentially duplicated complex variants Effect on allele frequency estimates  GiaB comparison to investigate sequence resolution   The recent gnomAD-SV catalog is potentially a great resource that we could use to annotate SV calls or augment genome graphs with. For now there is a preprint on bioRxiv and a comprehensive blog post that explains how the SVs were called and how to use the catalog.</description>
+    </item>
+    
+  </channel>
+</rss>

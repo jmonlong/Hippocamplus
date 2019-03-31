@@ -1,0 +1,450 @@
+---
+title: First look at the gnomAD SV catalog
+date: 2019-03-31
+tags: ["genome", "sv"]
+slug: gnomad-sv-first-look
+output:
+  blogdown::html_page:
+    toc: true
+---
+
+```{r include=FALSE}
+knitr::opts_chunk$set(fig.width=10, echo=FALSE, message=FALSE, warning=FALSE)
+```
+
+```{r libs}
+library(ggplot2)
+library(ggforce)
+library(ggridges)
+library(dplyr)
+library(magrittr)
+library(VariantAnnotation)
+library(GenomicRanges)
+library(knitr)
+theme_bw2 <- function(...) theme_bw(base_size=16, ...)
+interk <- function(x, k=4){ # Interleaves elements in x
+  idx = unlist(lapply(1:k, function(kk) seq(kk, length(x), k)))
+  x[idx]
+}
+paln <- function(n){
+  interk(rainbow(n, s=.8), 5)
+}
+```
+
+```{r import, cache=TRUE}
+gnomad.file = 'gnomad_v2_sv.sites.vcf.gz'
+if(!file.exists(gnomad.file)){
+  download.file('https://storage.googleapis.com/gnomad-public/papers/2019-sv/gnomad_v2_sv.sites.vcf.gz', gnomad.file)
+}
+vcf = readVcf(gnomad.file)
+sv.gr = rowRanges(vcf)
+sv.gr$SVTYPE = info(vcf)$SVTYPE
+sv.gr$SVLEN = info(vcf)$SVLEN
+sv.gr$END = info(vcf)$END
+sv.gr$CHR2 = info(vcf)$CHR2
+sv.gr$CPX_TYPE = info(vcf)$CPX_TYPE
+sv.gr$methods = unlist(lapply(info(vcf)$ALGORITHMS, function(x) paste(sort(x), collapse='_')))
+```
+
+The recent gnomAD-SV catalog is potentially a great resource that we could use to annotate SV calls or augment genome graphs with.
+For now there is a [preprint on bioRxiv](https://www.biorxiv.org/content/10.1101/578674v1) and a [comprehensive blog post](https://macarthurlab.org/2019/03/20/structural-variants-in-gnomad/) that explains how the SVs were called and how to use the catalog. 
+
+I had a quick look at these variants and here are my observations/notes.
+I'm using the following VCF file from the gnomAD download page: [gnomad_v2_sv.sites.vcf.gz](https://storage.googleapis.com/gnomad-public/papers/2019-sv/gnomad_v2_sv.sites.vcf.gz).
+
+## TL;DR
+
+- The vast majority of SVs look good and there is a lot of information in the VCF.
+- Some insertions and complex variants have contradicting POS/END fields (not sure what to do with those).
+- Thousands of SVs are so similar that they could be the same SVs that weren't merged.
+- In a few cases, duplicates might lead to under-estimating the allele frequency.
+- Take-home message: don't annotate SVs using only the best matching SV in gnomAD.
+- Most likely, the majority of variants are not really sequence-resolved (like in most SV catalogs).
+
+## Allele frequency
+
+- AF field: sometimes one value (when biallelic), sometimes multiple values.
+- Only MCNVs contain multiple AF values (one for each copy number).
+- All MCNVs have a *CN=2* allele.
+
+I want one value of allele frequency per variant so I sum up the AF values across alleles excluding the *CN=2* allele for MCNVs.
+
+```{r af, fig.height=6}
+af = info(vcf)$AF
+afl = unlist(lapply(af, length))
+alts = sv.gr$ALT
+## table(sv.gr$SVTYPE[which(afl>1)]) # only MCNV have multiple AFs
+## table(unlist(lapply(alts[which(afl>1)], function(alt) which(alt=='<CN=2>')))) ## always a CN2 allele at position 3
+sv.gr$AF = rep(NA, length(af))
+sv.gr$AF[which(afl==1)] = unlist(af[which(afl==1)])
+sv.gr$AF[which(afl>1)] = unlist(lapply(af[which(afl>1)], function(ff) sum(ff[-3])))
+
+sv.gr %>% as.data.frame %>%
+  ggplot(aes(x=AF)) + geom_histogram(binwidth=.05) +
+  facet_wrap(~SVTYPE, scales='free') + theme_bw2() +
+  scale_x_sqrt(breaks=c(0, .01, .1, .5, 1), limits=c(-.1,1.1)) +
+  xlab('allele frequency (sqrt scale)') + ylab('variant')
+```
+
+## Size distribution
+
+```{r size}
+sv.gr %>% as.data.frame %>%
+  ggplot(aes(x=SVLEN, fill=SVTYPE)) + geom_histogram() + theme_bw2() +
+  scale_x_log10() + scale_fill_brewer(palette='Set1') + 
+  xlab('SV length (bp)') + ylab('variant') +
+  theme(legend.position=c(.99,.99), legend.justification=c(1,1))
+
+sv.gr %>% as.data.frame %>%
+  ggplot(aes(x=SVLEN, fill=SVTYPE)) + geom_histogram() + theme_bw2() +
+  xlim(0,500) + scale_fill_brewer(palette='Set1') + 
+  xlab('SV length (bp)') + ylab('variant') +
+  theme(legend.position=c(.99,.99), legend.justification=c(1,1)) +
+  ggtitle('Alu peak')
+
+sv.gr %>% as.data.frame %>%
+  ggplot(aes(x=SVLEN, fill=SVTYPE)) + geom_histogram() + theme_bw2() +
+  xlim(900,2000) + scale_fill_brewer(palette='Set1') + 
+  xlab('SV length (bp)') + ylab('variant') +
+  theme(legend.position=c(.99,.99), legend.justification=c(1,1)) +
+  ggtitle('SVA peak')
+
+sv.gr %>% as.data.frame %>%
+  ggplot(aes(x=SVLEN, fill=SVTYPE)) + geom_histogram() + theme_bw2() +
+  xlim(4000, 7000) + scale_fill_brewer(palette='Set1') + 
+  xlab('SV length (bp)') + ylab('variant') +
+  theme(legend.position=c(.99,.99), legend.justification=c(1,1)) +
+  ggtitle('L1 peak')
+```
+
+The **peak at 5 kbp is a bit puzzling**.
+Maybe it's a technical artifact, e.g. due to a method that detects *DEL*/*DUP* only down to 5 kbp.
+Looking at the variants with absolute *SVLEN* of exactly 5 kbp:
+
+```{r meths-5kbp}
+sv.gr %>% as.data.frame %>% filter(abs(SVLEN)==5000) %>% group_by(methods) %>%
+  summarize(n=n()) %>% arrange(desc(n)) %>% kable(format.args=list(big.mark=','))
+```
+
+It's most likely an artifact of the *depth* algorithm.
+Does it affect the allele frequency distribution?
+
+```{r meths-5kbp-af}
+sv.gr %>% as.data.frame %>%
+  mutate(size.class=cut(abs(SVLEN), breaks=c(0,4e3,5e3, 6e3, Inf),
+                        labels=c('<4kbp','4-5kbp','5-6kbp','>6kbp'))) %>%
+  ggplot(aes(x=AF, y=size.class, fill=factor(..quantile..))) +
+  stat_density_ridges(geom="density_ridges_gradient", calc_ecdf=TRUE, quantiles=5) + 
+  scale_x_log10() + theme_bw2() + xlab('allele frequency') +
+  scale_fill_brewer(name='20th percentile') + ylab('size class')
+```
+
+The tail of the distribution is longer in the 5-6 kbp class. 
+
+## SV coordinates confusion
+
+It seems like the ***END* value is not always larger than the position *POS*** in the VCF.
+Most of it comes from *CTX* (reciprocal chromosomal translocation) variants or translocations which makes sense.
+
+```{r end}
+sv.gr %>% as.data.frame %>% group_by(SVTYPE) %>%
+  summarize(end.before.pos=sum(END<start), prop=mean(END<start)) %>%
+  arrange(desc(end.before.pos)) %>% kable(digits=4)
+```
+
+Some are insertions and I'm not sure how to interpret them.
+
+```{r ins-end}
+subset(sv.gr, SVTYPE=='INS' & start>END) %>% as.data.frame %>%
+  ggplot(aes(x=start-END)) + geom_histogram() +
+  ylab('insertions with END before POS') + xlab('POS - END') + 
+  scale_x_log10() + theme_bw2()
+```
+
+For most of these insetions the *END* is not that far from the *POS* (<100bp) but **for some the *END* and *POS* are hundreds of kbp apart**. 
+Hum.
+Let's have a look at some of those:
+
+```{r ins-end-far}
+set.seed(333)
+idx = which(sv.gr$SVTYPE=='INS' & start(sv.gr)>sv.gr$END + 1e5)
+sv.gr[sample(idx, 3),]
+```
+
+I don't see anything else suspicious.
+
+For complex variants, the *POS* and *END* are always less than 100 bp apart and all for one type of complex SV: **"dispersed duplications"**.
+If I understand correctly, this type of complex SV is pretty much an insertion of a sequence already in the genome (but not a transposable element I guess?).
+
+```{r cpx-end}
+subset(sv.gr, SVTYPE=='CPX' & start>END) %>% as.data.frame %>%
+  ggplot(aes(x=start-END, fill=CPX_TYPE)) + geom_histogram() +
+  ylab('complex variants with END before POS') + xlab('POS - END') + 
+  theme_bw2()
+```
+
+I'm not sure how to interpret them either.
+
+For now, I'll use the **POS field for both insertions and dispersed duplications** when manipulating the variants as genomic intervals. 
+So I'll assume that they are both simple insertions (which I think is fair enough).
+
+```{r end-fix}
+sv.gr$END = ifelse(sv.gr$SVTYPE=='INS', start(sv.gr), sv.gr$END)
+sv.gr$END = ifelse(sv.gr$SVTYPE=='CPX' & !is.na(sv.gr$CPX_TYPE) & sv.gr$CPX_TYPE=='dDUP', start(sv.gr), sv.gr$END)
+end(sv.gr) = ifelse(sv.gr$SVTYPE %in% c('BND','CTX'), end(sv.gr), sv.gr$END)
+```
+
+## Potential duplicates
+
+Are there any pairs of variants with a **reciprocal overlap higher than 90%**.
+For insertions, I match them if they are located at less than 30 bp from each other and their size is 90% similar.
+
+Note: Here I don't consider *BND* or *CTX* variants, and I count each pair of variants only once.
+
+```{r dups}
+ssv.gr = subset(sv.gr, !(SVTYPE %in% c('BND','CTX')))
+
+ol = findOverlaps(ssv.gr, ssv.gr, maxgap=30) %>% as.data.frame %>%
+  filter(queryHits<subjectHits) %>%
+  mutate(qw=width(ssv.gr)[queryHits], sw=width(ssv.gr)[subjectHits],
+         ql=abs(ssv.gr$SVLEN[queryHits]), sl=abs(ssv.gr$SVLEN[subjectHits]),
+         ql=ifelse(qw>ql, qw, ql), sl=ifelse(sw>sl, sw, sl), 
+         olw=width(pintersect(ssv.gr[queryHits], ssv.gr[subjectHits])),
+         olw=ifelse(qw==1 & sw==1 & ql<sl, ql, olw),
+         olw=ifelse(qw==1 & sw==1 & ql>sl, sl, olw)) %>%
+  filter(olw>50, olw/ql > .9, olw/sl > .9)
+
+ol = ol %>% mutate(types=apply(cbind(ssv.gr$SVTYPE[queryHits], ssv.gr$SVTYPE[subjectHits]), 1, function(x) paste(sort(x), collapse='_')),
+                   methods=apply(cbind(ssv.gr$methods[queryHits], ssv.gr$methods[subjectHits]), 1, function(x) paste(sort(x), collapse='__')))  %>%
+  group_by(types) %>% mutate(n=n()) %>% ungroup %>%
+  arrange(desc(n)) %>% mutate(types=factor(types, levels=unique(types)))
+
+ol %>% group_by(types) %>% summarize(n=n()) %>% kable(format.args=list(big.mark=','))
+```
+
+There are **thousands of deletions, insertions and duplications with high reciprocal overlap.**
+Also many complex variants but I can imagine that it's difficult to merge those.
+
+Let's look at the size distribution of these potential duplicates.
+
+```{r dups-size}
+pal.types = paln(length(unique(ol$types)))
+names(pal.types) = levels(ol$types)
+ggplot(ol, aes(x=ql, fill=types)) + geom_histogram(bins=50) + theme_bw2() +
+  scale_x_log10() + scale_fill_manual(values=pal.types) +
+  xlab('SV length (bp)') + ylab('SV pairs with reciprocal overlap >90%') +
+  theme(legend.position=c(.99,.99), legend.justification=c(1,1)) +
+  guides(fill=guide_legend(ncol=2))
+```
+
+Wow, very "peaky".
+Let's zoom in with no log-scale:
+
+```{r dups-peaks}
+ggplot(ol, aes(x=ql, fill=types)) + geom_histogram() + theme_bw2() +
+  xlim(0, 500) + scale_fill_manual(values=pal.types) +
+  xlab('SV length (bp)') + ylab('SV pairs with reciprocal overlap >90%') +
+  theme(legend.position=c(.99,.99), legend.justification=c(1,1))
+
+ggplot(ol, aes(x=ql, fill=types)) + geom_histogram() + theme_bw2() +
+  xlim(4000,7000) + scale_fill_manual(values=pal.types) +
+  xlab('SV length (bp)') + ylab('SV pairs with reciprocal overlap >90%') +
+  theme(legend.position=c(.99,.99), legend.justification=c(1,1))
+
+ggplot(ol, aes(x=ql, fill=types)) + geom_histogram() + theme_bw2() +
+  xlim(100000,200000) + scale_fill_manual(values=pal.types) +
+  xlab('SV length (bp)') + ylab('SV pairs with reciprocal overlap >90%') +
+  theme(legend.position=c(.99,.99), legend.justification=c(1,1))
+```
+
+- The "Alu" peak around 300 bp is made of around 200 insertion pairs.
+- The "L1" peak around 6 kbp is made of around 30 insertion pairs and almost as many duplication pairs.
+- Again the technical peak at 5 kbp, here mostly pairs of deletions.
+- The complex variants that are potentially duplicated form two size clusters.
+
+
+### SV calling method
+
+Duplicates can occur when merging two sets of variants, for example the call sets of different methods.
+**Are the potential duplicates from different methods?**
+
+Top 10 of the most common pairs:
+
+```{r dups-meths}
+ol %>% group_by(types, methods) %>% summarize(n=n()) %>% arrange(desc(n)) %>%
+  head(10) %>% kable(format.args=list(big.mark=','))
+```
+
+**For thousands of potential duplicates the variants were called by the same algorithm.**
+The question is then: were these methods run once in a "single-sample" mode or on all the samples together?
+I think at least Delly and MELT can do the genotyping step across all samples together.
+Even in those, there can be duplicates in the discovery phase that are not merged properly before genotyping.
+
+I'm still not sure if these deletions/duplications/MEIs are actually different SVs.
+Especially the mobile element insertions, I would lean toward them being duplicates.
+Otherwise, it means the TE jumped and then got an indel later.
+It's possible but maybe not that often.
+Also, the comparison with GiaB below shows that we are not there yet in term of bp resolution.
+**It might be safer to assume these variants are duplicates.**
+
+### Two size clusters of potentially duplicated complex variants
+
+Above, we saw two groups of potentially duplicated complex variants that clustered by size.
+Defining size clusters 1 and 2 for the complex variants of sizes around 120 kbp and 160 kbp, respectively.
+
+```{r dups-cpx}
+idx1 = unique(subset(ol, types=='CPX_CPX' & ql>1e5 & ql<15e4)$queryHits,
+              subset(ol, types=='CPX_CPX' & ql>1e5 & ql<15e4)$subjectHits)
+dcpx1 = ssv.gr[idx1]
+
+idx2 = unique(subset(ol, types=='CPX_CPX' & ql>15e4 & ql<2e5)$queryHits,
+              subset(ol, types=='CPX_CPX' & ql>15e4 & ql<2e5)$subjectHits)
+dcpx2 = ssv.gr[idx2]
+
+ol = ol %>% mutate(chr=as.character(seqnames(ssv.gr))[queryHits],
+                   chr=factor(chr, levels=c(1:22, 'X','Y')),
+                   start=start(ssv.gr)[queryHits])
+
+ol %>% filter(types=='CPX_CPX', ql>1e5, ql<2e5) %>% arrange(chr, start) %>%
+  mutate(size.cl=ifelse(ql<15e4, 1, 2), var=factor(queryHits, levels=unique(queryHits))) %>% 
+  ggplot() +
+  geom_rect(aes(xmin=start, xmax=start+ql, ymin=as.numeric(var)-.5, ymax=as.numeric(var)+.5,
+                fill=factor(size.cl))) + 
+  ## geom_point(aes(x=start, y=as.numeric(var), colour=factor(size.cl))) +
+  theme_bw2() +
+  scale_fill_brewer(name='size cluster', palette='Set1') + 
+  scale_colour_brewer(name='size cluster', palette='Set1') + 
+  facet_grid(.~chr, scales='free', space='free') +
+  theme(axis.text.x=element_text(angle=60, hjust=1, vjust=1)) + 
+  xlab('position') + ylab('pair of matched complex variant')
+```
+
+Some do cluster together in the genome and, looking up a few of them, they seem to be in segmental duplications.
+
+```{r dups-cpx-sd}
+ol %>% filter(types=='CPX_CPX', ql>1e5, ql<2e5) %>% arrange(chr, start) %>%
+  mutate(size.cl=ifelse(ql<15e4, 1, 2), coord=as.character(ssv.gr)[queryHits],
+         coord=paste0('[', coord, '](https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg19&position=chr', coord, ')')) %>%
+  group_by(chr) %>% sample_n(1) %>% dplyr::select(types, methods, coord) %>% kable
+```
+
+### Effect on allele frequency estimates
+
+**What is the potential effect of these duplicated variants on the frequency annotation?**
+
+Below, I compare the allele frequencies of each variant and its potential duplicate.
+
+```{r dups-af}
+ol = ol %>% mutate(AF1=ssv.gr$AF[queryHits], AF2=ssv.gr$AF[subjectHits],
+                   AF.min=ifelse(AF1<AF2, AF1, AF2),
+                   AF.max=ifelse(AF1<AF2, AF2, AF1))
+
+ggplot(ol, aes(x=AF.max-AF.min)) + geom_histogram() + theme_bw2() + 
+  xlab('absolute difference in allele frequencies') +
+  ylab('pairs of variants with reciprocal overlap >90%')
+```
+
+**Most pairs of potential duplicates have similar frequencies.**
+Does that mean that the frequencies of these variants are supposed to be the double of what we have?
+
+Let's zoom in to the long tail with the highest difference in allele frequency.
+To make the graph clearer, I compare the lowest frequency to the highest.
+
+```{r dups-af-scatter, fig.height=8}
+ggplot(ol, aes(x=AF.min, y=AF.max)) + geom_point(alpha=.5) + theme_bw2() +
+  facet_zoom(xlim=c(0,.01)) + xlab('lowest allele frequency') +
+  ylab('highest allele frequency') +
+  ggtitle('Pairs of variants with reciprocal overlap >90%')
+
+## ol %>% filter(types=='INS_INS', methods=='manta__manta') %>% 
+##   ggplot(aes(x=AF.min, y=AF.max)) + geom_point(alpha=.5) + theme_bw2() +
+##   facet_zoom(xlim=c(0,.01)) + xlab('smallest allele frequency') +
+##   ylab('largest allele frequency') +
+##   ggtitle('Pairs of insertions called by Manta with reciprocal overlap >90%')
+```
+
+- Some SVs with low frequencies might be a duplicate of a SV with higher frequency.
+- E.g. `r sum(ol$AF.min<.001 & ol$AF.max>.01)` of these variants have AF<0.1% while the other variant has AF>1%.
+
+Although it's only a minority of cases, **we should be careful when matching our SVs to this catalog.** 
+Otherwise we might think that a variant is rarer than it is.
+Instead of annotating a SV with the allele frequency of the most similar SV in gnomAD-SV, a more robust strategy would be to use the maximum frequency across all SVs that are similar enough.
+That's what we had done when annotating CNVs in our [epilepsy study](https://doi.org/10.1371/journal.pgen.1007285), although we were being maybe too conservative by considering any overlapping SV.
+For short deletions it's fine, but in general a *reciprocal overlap > XX%* matchin would be less conservative. 
+
+## GiaB comparison to investigate sequence resolution
+
+The Genome in a Bottle consortium combined many types of techonologies (ultra deep short-read, linked-reads, long reads, optical mapping) to generate a **high-quality SV catalog**.
+Maybe not all variants are correct but it's one of the best quality catalog we have.
+I want to quickly compare these SVs with the ones in the gnomAD catalog. 
+If many variants look exactly the same in both datasets, it would be good evidence that they are both sequence-resolved.
+
+I downloaded the [NIST SVs Integration v0.6](ftp://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/data/AshkenazimTrio/analysis/NIST_SVs_Integration_v0.6/).
+This catalog also uses GRCh37.
+It includes short indels that I decided to filter out, keeping only variants of size 50 bp or more.
+
+```{r giab}
+giab.file = 'HG002_SVs_Tier1_v0.6.vcf.gz'
+if(!file.exists(giab.file)){
+  download.file('ftp://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/data/AshkenazimTrio/analysis/NIST_SVs_Integration_v0.6/HG002_SVs_Tier1_v0.6.vcf.gz', giab.file)
+}
+giab.vcf = readVcf(giab.file)
+
+giab = rowRanges(giab.vcf)
+mcols(giab) = NULL
+names(giab) = NULL
+giab$SVLEN = abs(unlist(info(giab.vcf)$SVLEN))
+giab$SVTYPE = info(giab.vcf)$SVTYPE
+giab$catalog = 'GiaB'
+giab = subset(giab, SVLEN>=50)
+
+giab %>% as.data.frame %>% group_by(SVTYPE) %>%
+  summarize(n=n(), mean.bp=mean(SVLEN), min.bp=min(SVLEN), max.bp=max(SVLEN)) %>%
+  kable(digits=0, format.args=list(big.mark=','))
+```
+
+I'm curious to compare the exact breakpoint locations of SVs shared by both catalogs.
+Do they have exactly the same breakpoints/sequence?
+To make things easier let's just look at deletions.
+
+```{r giab-del}
+del.gr = subset(sv.gr, SVTYPE=='DEL')
+del.gr$catalog = 'gnomAD'
+giab.del = subset(giab, SVTYPE=='DEL')
+giab.del = shift(giab.del, 1)
+
+ol.del = findOverlaps(del.gr, giab.del) %>% as.data.frame %>%
+  mutate(qw=width(del.gr)[queryHits], sw=width(giab.del)[subjectHits],
+         olw=width(pintersect(del.gr[queryHits], giab.del[subjectHits])),
+         rol=ifelse(qw>sw, olw/qw , olw/sw)) %>%
+  filter(rol > .9)
+
+ggplot(ol.del, aes(x=rol, fill=rol==1)) + geom_histogram() +
+  theme_bw2() + xlab('reciprocal overlap') + ylab('pair of deletions') +
+  scale_fill_brewer(name='exact match (recip. overlap=1)', labels=c('no','yes'), palette='Set1') +
+  theme(legend.position=c(.01,.99), legend.justification=c(0,1)) +
+  ggtitle('gnomAD-SV deletions vs GiaB (HG002) deletions')
+```
+
+Many deletions in the gnomAD catalog are **extremely similar** to the GiaB dataset **but not exactly the same**.
+Some examples (randomly selected):
+
+```{r giab-del-ex}
+set.seed(333)
+
+ex.df = lapply(sample(which(ol.del$rol>.98 & ol.del$rol<1), 6), function(ii){
+  rbind(giab.del[ol.del$subjectHits[ii]] %>% as.data.frame %>% dplyr::select(seqnames, start, end, SVTYPE, SVLEN, catalog),
+        del.gr[ol.del$queryHits[ii]] %>% as.data.frame %>% dplyr::select(seqnames, start, end, SVTYPE, SVLEN, catalog))
+})
+ex.df = do.call(rbind, ex.df)
+
+kable(ex.df, row.names=FALSE)
+```
+
+This quick comparison suggests that the variants are not really sequence-resolved. 
+**In gnomAD, the GiaB dataset, or both, the breakpoints might have a few errors.**
+That will be important when genotyping these SVs or injecting them in genome graphs.
+
+Of note, I'm not sure if the variants were left-aligned.
+It's not a big deal because we see that the deletions are discordant in term of size anyway.
+Still, both VCF should be normalized first to better estimate how many deletions are exactly matched.
