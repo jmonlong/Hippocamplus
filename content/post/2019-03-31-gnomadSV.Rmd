@@ -148,7 +148,7 @@ The tail of the distribution is longer in the 5-6 kbp class.
 ## SV coordinates confusion
 
 It seems like the ***END* value is not always larger than the position *POS*** in the VCF.
-Most of it comes from *CTX* (reciprocal chromosomal translocation) variants or translocations which makes sense.
+Most of it comes from *CTX* (reciprocal chromosomal translocation) variants or translocations which makes sense: the END might relate to the second breakpoint, potentially anywhere in the genome.
 
 ```{r end}
 sv.gr %>% as.data.frame %>% group_by(SVTYPE) %>%
@@ -166,7 +166,7 @@ subset(sv.gr, SVTYPE=='INS' & start>END) %>% as.data.frame %>%
   scale_x_log10() + theme_bw2()
 ```
 
-For most of these insetions the *END* is not that far from the *POS* (<100bp) but **for some the *END* and *POS* are hundreds of kbp apart**. 
+For most of these insertions the *END* is not that far from the *POS* (<100bp) but **for some the *END* and *POS* are hundreds of kbp apart**. 
 Hum.
 Let's have a look at some of those:
 
@@ -201,7 +201,7 @@ end(sv.gr) = ifelse(sv.gr$SVTYPE %in% c('BND','CTX'), end(sv.gr), sv.gr$END)
 
 ## Potential duplicates
 
-Are there any pairs of variants with a **reciprocal overlap higher than 90%**.
+Are there any pairs of variants with a **reciprocal overlap higher than 90%**?
 For insertions, I match them if they are located at less than 30 bp from each other and their size is 90% similar.
 
 Note: Here I don't consider *BND* or *CTX* variants, and I count each pair of variants only once.
@@ -232,6 +232,8 @@ ol %>% group_by(types) %>% summarize(n=n(), prop.both.PASS=mean(both.PASS)) %>%
 There are **thousands of deletions, insertions and duplications with high reciprocal overlap.**
 Also many complex variants but I can imagine that it's difficult to merge those.
 For the vast majority of pairs, both variants have a *PASS* filter.
+However, for most of the complex variants duplicates, one of the variant doesn't have a PASS filter.
+**Using *FILTER==PASS* would remove almost all the complex SV duplicates.**
 
 Let's look at the size distribution of these potential duplicates.
 
@@ -297,7 +299,8 @@ Also, the comparison with GiaB below shows that we are not there yet in term of 
 
 ### Two size clusters of potentially duplicated complex variants
 
-Above, we saw two groups of potentially duplicated complex variants that clustered by size.
+The vast majority of the complex SV duplicates would disappear if we were filtering variants with *FILTER=PASS*.
+I'm still curious about the fact that two groups of potentially duplicated complex variants clustered by size.
 Defining size clusters 1 and 2 for the complex variants of sizes around 120 kbp and 160 kbp, respectively.
 
 ```{r dups-cpx}
@@ -378,7 +381,7 @@ Although it's only a minority of cases, **we should be careful when matching our
 Otherwise we might think that a variant is rarer than it is.
 Instead of annotating a SV with the allele frequency of the most similar SV in gnomAD-SV, a more robust strategy would be to use the maximum frequency across all SVs that are similar enough.
 That's what we had done when annotating CNVs in our [epilepsy study](https://doi.org/10.1371/journal.pgen.1007285), although we were being maybe too conservative by considering any overlapping SV.
-For short deletions it's fine, but in general a *reciprocal overlap > XX%* matchin would be less conservative. 
+For short deletions it's fine, but in general something like *reciprocal overlap > XX%* would be less conservative. 
 
 ## GiaB comparison to investigate sequence resolution
 

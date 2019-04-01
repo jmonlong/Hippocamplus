@@ -315,7 +315,7 @@ Does it affect the allele frequency distribution?</p>
 <div id="sv-coordinates-confusion" class="section level2">
 <h2>SV coordinates confusion</h2>
 <p>It seems like the <strong><em>END</em> value is not always larger than the position <em>POS</em></strong> in the VCF.
-Most of it comes from <em>CTX</em> (reciprocal chromosomal translocation) variants or translocations which makes sense.</p>
+Most of it comes from <em>CTX</em> (reciprocal chromosomal translocation) variants or translocations which makes sense: the END might relate to the second breakpoint, potentially anywhere in the genome.</p>
 <table>
 <thead>
 <tr class="header">
@@ -379,7 +379,7 @@ Most of it comes from <em>CTX</em> (reciprocal chromosomal translocation) varian
 <p>Some are insertions and I’m not sure how to interpret them.
 The vast majority of these variants have a <em>PASS</em> filter.</p>
 <p><img src="../../../../post/2019-03-31-gnomadSV_files/figure-html/ins-end-1.png" width="960" /></p>
-<p>For most of these insetions the <em>END</em> is not that far from the <em>POS</em> (&lt;100bp) but <strong>for some the <em>END</em> and <em>POS</em> are hundreds of kbp apart</strong>.
+<p>For most of these insertions the <em>END</em> is not that far from the <em>POS</em> (&lt;100bp) but <strong>for some the <em>END</em> and <em>POS</em> are hundreds of kbp apart</strong>.
 Hum.
 Let’s have a look at some of those:</p>
 <pre><code>## GRanges object with 3 ranges and 12 metadata columns:
@@ -420,7 +420,7 @@ So I’ll assume that they are both simple insertions (which I think is fair eno
 </div>
 <div id="potential-duplicates" class="section level2">
 <h2>Potential duplicates</h2>
-<p>Are there any pairs of variants with a <strong>reciprocal overlap higher than 90%</strong>.
+<p>Are there any pairs of variants with a <strong>reciprocal overlap higher than 90%</strong>?
 For insertions, I match them if they are located at less than 30 bp from each other and their size is 90% similar.</p>
 <p>Note: Here I don’t consider <em>BND</em> or <em>CTX</em> variants, and I count each pair of variants only once.</p>
 <table>
@@ -506,7 +506,9 @@ For insertions, I match them if they are located at less than 30 bp from each ot
 </table>
 <p>There are <strong>thousands of deletions, insertions and duplications with high reciprocal overlap.</strong>
 Also many complex variants but I can imagine that it’s difficult to merge those.
-For the vast majority of pairs, both variants have a <em>PASS</em> filter.</p>
+For the vast majority of pairs, both variants have a <em>PASS</em> filter.
+However, for most of the complex variants duplicates, one of the variant doesn’t have a PASS filter.
+<strong>Using <em>FILTER==PASS</em> would remove almost all the complex SV duplicates.</strong></p>
 <p>Let’s look at the size distribution of these potential duplicates.</p>
 <p><img src="../../../../post/2019-03-31-gnomadSV_files/figure-html/dups-size-1.png" width="960" /></p>
 <p>Wow, very “peaky”.
@@ -608,7 +610,8 @@ Also, the comparison with GiaB below shows that we are not there yet in term of 
 </div>
 <div id="two-size-clusters-of-potentially-duplicated-complex-variants" class="section level3">
 <h3>Two size clusters of potentially duplicated complex variants</h3>
-<p>Above, we saw two groups of potentially duplicated complex variants that clustered by size.
+<p>The vast majority of the complex SV duplicates would disappear if we were filtering variants with <em>FILTER=PASS</em>.
+I’m still curious about the fact that two groups of potentially duplicated complex variants clustered by size.
 Defining size clusters 1 and 2 for the complex variants of sizes around 120 kbp and 160 kbp, respectively.</p>
 <p><img src="../../../../post/2019-03-31-gnomadSV_files/figure-html/dups-cpx-1.png" width="960" /></p>
 <p>Some do cluster together in the genome and, looking up a few of them, they seem to be in segmental duplications.</p>
@@ -673,7 +676,7 @@ To make the graph clearer, I compare the lowest frequency to the highest.</p>
 Otherwise we might think that a variant is rarer than it is.
 Instead of annotating a SV with the allele frequency of the most similar SV in gnomAD-SV, a more robust strategy would be to use the maximum frequency across all SVs that are similar enough.
 That’s what we had done when annotating CNVs in our <a href="https://doi.org/10.1371/journal.pgen.1007285">epilepsy study</a>, although we were being maybe too conservative by considering any overlapping SV.
-For short deletions it’s fine, but in general a <em>reciprocal overlap &gt; XX%</em> matchin would be less conservative.</p>
+For short deletions it’s fine, but in general something like <em>reciprocal overlap &gt; XX%</em> would be less conservative.</p>
 </div>
 </div>
 <div id="giab-comparison-to-investigate-sequence-resolution" class="section level2">
