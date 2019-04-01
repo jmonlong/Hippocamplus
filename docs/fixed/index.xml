@@ -63,7 +63,7 @@
       
       <guid>/Hippocamplus/python/</guid>
       <description>Naming and formatting Objects Array Hash Class String Function  Input/Output Module, files, imports Packaging code Install a module locally  Passing arguments to a script Graphs Shell integration Timing Bioinfo Sequences Fasta SAM files VCF  Tricks   Some notes on my recent attempt to learn Python.
-Naming and formatting  Use lowercase _-separated for modules and functions name. E.g. my_function. Use CapsWord for classes. E.g. MyClass.</description>
+Naming and formatting  Use lowercase _-separated for modules and functions name. E.g. my_function. Use CapsWord for classes. E.g. MyClass. Use _ prefix for private variable.</description>
     </item>
     
     <item>
@@ -91,7 +91,7 @@ Naming and formatting  Use lowercase _-separated for modules and functions name.
       
       <guid>/Hippocamplus/internet/</guid>
       <description>DuckDuckGo Ubuntu Sync a specific Google Drive folder on Ubuntu Sync PDFs between Mendeley and Google Drive Zotero Dowload files from Dropbox   DuckDuckGo DuckDuckGo is a “search engine that doesn’t track you”. It provides nice “bangs” to search directly specific websites. By making DDG the default search engine these bangs can be used directly in the address bar.
- !pub PubMed. !scholar Google Scholar. !bioc Bioconductor. !</description>
+ !pub PubMed. !scholar Google Scholar. !bioc Bioconductor. !so Stack Overflow.</description>
     </item>
     
     <item>

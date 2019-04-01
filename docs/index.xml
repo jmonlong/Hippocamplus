@@ -36,9 +36,7 @@
           <pubDate>Sun, 31 Mar 2019 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2019/03/31/gnomad-sv-first-look/</guid>
-          <description>
-
-&lt;div id=&#34;TOC&#34;&gt;
+          <description>&lt;div id=&#34;TOC&#34;&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;#tldr&#34;&gt;TL;DR&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#allele-frequency&#34;&gt;Allele frequency&lt;/a&gt;&lt;/li&gt;
@@ -53,8 +51,12 @@
 &lt;/ul&gt;
 &lt;/div&gt;
 
-&lt;p&gt;The recent gnomAD-SV catalog is potentially a great resource that we could use to annotate SV calls or augment genome graphs with. For now there is a &lt;a href=&#34;https://www.biorxiv.org/content/10.1101/578674v1&#34;&gt;preprint on bioRxiv&lt;/a&gt; and a &lt;a href=&#34;https://macarthurlab.org/2019/03/20/structural-variants-in-gnomad/&#34;&gt;comprehensive blog post&lt;/a&gt; that explains how the SVs were called and how to use the catalog.&lt;/p&gt;
-&lt;p&gt;I had a quick look at these variants and here are my observations/notes. I’m using the following VCF file from the gnomAD download page: &lt;a href=&#34;https://storage.googleapis.com/gnomad-public/papers/2019-sv/gnomad_v2_sv.sites.vcf.gz&#34;&gt;gnomad_v2_sv.sites.vcf.gz&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Edit April 1 2019: I added columns with the proportion of variants with PASS filter in the tables about the END/POS confusion and duplicated variants.&lt;/em&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;The recent gnomAD-SV catalog is potentially a great resource that we could use to annotate SV calls or augment genome graphs with.
+For now there is a &lt;a href=&#34;https://www.biorxiv.org/content/10.1101/578674v1&#34;&gt;preprint on bioRxiv&lt;/a&gt; and a &lt;a href=&#34;https://macarthurlab.org/2019/03/20/structural-variants-in-gnomad/&#34;&gt;comprehensive blog post&lt;/a&gt; that explains how the SVs were called and how to use the catalog.&lt;/p&gt;
+&lt;p&gt;I had a quick look at these variants and here are my observations/notes.
+I’m using the following VCF file from the gnomAD download page: &lt;a href=&#34;https://storage.googleapis.com/gnomad-public/papers/2019-sv/gnomad_v2_sv.sites.vcf.gz&#34;&gt;gnomad_v2_sv.sites.vcf.gz&lt;/a&gt;.&lt;/p&gt;
 &lt;div id=&#34;tldr&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;TL;DR&lt;/h2&gt;
 &lt;ul&gt;
@@ -79,7 +81,9 @@
 &lt;div id=&#34;size-distribution&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Size distribution&lt;/h2&gt;
 &lt;p&gt;&lt;img src=&#34;./post/2019-03-31-gnomadSV_files/figure-html/size-1.png&#34; width=&#34;960&#34; /&gt;&lt;img src=&#34;./post/2019-03-31-gnomadSV_files/figure-html/size-2.png&#34; width=&#34;960&#34; /&gt;&lt;img src=&#34;./post/2019-03-31-gnomadSV_files/figure-html/size-3.png&#34; width=&#34;960&#34; /&gt;&lt;img src=&#34;./post/2019-03-31-gnomadSV_files/figure-html/size-4.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;The &lt;strong&gt;peak at 5 kbp is a bit puzzling&lt;/strong&gt;. Maybe it’s a technical artifact, e.g. due to a method that detects &lt;em&gt;DEL&lt;/em&gt;/&lt;em&gt;DUP&lt;/em&gt; only down to 5 kbp. Looking at the variants with absolute &lt;em&gt;SVLEN&lt;/em&gt; of exactly 5 kbp:&lt;/p&gt;
+&lt;p&gt;The &lt;strong&gt;peak at 5 kbp is a bit puzzling&lt;/strong&gt;.
+Maybe it’s a technical artifact, e.g. due to a method that detects &lt;em&gt;DEL&lt;/em&gt;/&lt;em&gt;DUP&lt;/em&gt; only down to 5 kbp.
+Looking at the variants with absolute &lt;em&gt;SVLEN&lt;/em&gt; of exactly 5 kbp:&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr class=&#34;header&#34;&gt;
@@ -110,19 +114,22 @@
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;p&gt;It’s most likely an artifact of the &lt;em&gt;depth&lt;/em&gt; algorithm. Does it affect the allele frequency distribution?&lt;/p&gt;
+&lt;p&gt;It’s most likely an artifact of the &lt;em&gt;depth&lt;/em&gt; algorithm.
+Does it affect the allele frequency distribution?&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./post/2019-03-31-gnomadSV_files/figure-html/meths-5kbp-af-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;The tail of the distribution is longer in the 5-6 kbp class.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;sv-coordinates-confusion&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;SV coordinates confusion&lt;/h2&gt;
-&lt;p&gt;It seems like the &lt;strong&gt;&lt;em&gt;END&lt;/em&gt; value is not always larger than the position &lt;em&gt;POS&lt;/em&gt;&lt;/strong&gt; in the VCF. Most of it comes from &lt;em&gt;CTX&lt;/em&gt; (reciprocal chromosomal translocation) variants or translocations which makes sense.&lt;/p&gt;
+&lt;p&gt;It seems like the &lt;strong&gt;&lt;em&gt;END&lt;/em&gt; value is not always larger than the position &lt;em&gt;POS&lt;/em&gt;&lt;/strong&gt; in the VCF.
+Most of it comes from &lt;em&gt;CTX&lt;/em&gt; (reciprocal chromosomal translocation) variants or translocations which makes sense.&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr class=&#34;header&#34;&gt;
 &lt;th align=&#34;left&#34;&gt;SVTYPE&lt;/th&gt;
 &lt;th align=&#34;right&#34;&gt;end.before.pos&lt;/th&gt;
 &lt;th align=&#34;right&#34;&gt;prop&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;prop.PASS&lt;/th&gt;
 &lt;/tr&gt;
 &lt;/thead&gt;
 &lt;tbody&gt;
@@ -130,150 +137,187 @@
 &lt;td align=&#34;left&#34;&gt;INS&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;358&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;0.0031&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.9973&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;CPX&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;289&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;0.0551&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.9737&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;BND&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;44&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;0.0006&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0000&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;CTX&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;6&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;0.6667&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.0000&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;DEL&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;0.0000&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.8833&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;DUP&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;0.0000&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.9772&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;INV&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;0.0000&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.9986&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;MCNV&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;0.0000&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0000&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;p&gt;Some are insertions and I’m not sure how to interpret them.&lt;/p&gt;
+&lt;p&gt;Some are insertions and I’m not sure how to interpret them.
+The vast majority of these variants have a &lt;em&gt;PASS&lt;/em&gt; filter.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./post/2019-03-31-gnomadSV_files/figure-html/ins-end-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;For most of these insetions the &lt;em&gt;END&lt;/em&gt; is not that far from the &lt;em&gt;POS&lt;/em&gt; (&amp;lt;100bp) but &lt;strong&gt;for some the &lt;em&gt;END&lt;/em&gt; and &lt;em&gt;POS&lt;/em&gt; are hundreds of kbp apart&lt;/strong&gt;. Hum. Let’s have a look at some of those:&lt;/p&gt;
+&lt;p&gt;For most of these insetions the &lt;em&gt;END&lt;/em&gt; is not that far from the &lt;em&gt;POS&lt;/em&gt; (&amp;lt;100bp) but &lt;strong&gt;for some the &lt;em&gt;END&lt;/em&gt; and &lt;em&gt;POS&lt;/em&gt; are hundreds of kbp apart&lt;/strong&gt;.
+Hum.
+Let’s have a look at some of those:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;## GRanges object with 3 ranges and 12 metadata columns:
-##                         seqnames    ranges strand | paramRangeID
-##                            &amp;lt;Rle&amp;gt; &amp;lt;IRanges&amp;gt;  &amp;lt;Rle&amp;gt; |     &amp;lt;factor&amp;gt;
-##   gnomAD_v2_INS_4_34681        4 116015282      * |         &amp;lt;NA&amp;gt;
-##   gnomAD_v2_INS_2_13594        2  85885163      * |         &amp;lt;NA&amp;gt;
-##   gnomAD_v2_INS_9_69619        9  28199346      * |         &amp;lt;NA&amp;gt;
-##                                    REF             ALT      QUAL
-##                         &amp;lt;DNAStringSet&amp;gt; &amp;lt;CharacterList&amp;gt; &amp;lt;numeric&amp;gt;
-##   gnomAD_v2_INS_4_34681              N    &amp;lt;INS:ME:ALU&amp;gt;       646
-##   gnomAD_v2_INS_2_13594              N    &amp;lt;INS:ME:ALU&amp;gt;       652
-##   gnomAD_v2_INS_9_69619              N           &amp;lt;INS&amp;gt;       407
-##                              FILTER      SVTYPE     SVLEN       END
-##                         &amp;lt;character&amp;gt; &amp;lt;character&amp;gt; &amp;lt;integer&amp;gt; &amp;lt;integer&amp;gt;
-##   gnomAD_v2_INS_4_34681        PASS         INS       281  44565090
-##   gnomAD_v2_INS_2_13594        PASS         INS       279   8372664
-##   gnomAD_v2_INS_9_69619        PASS         INS       136  17898584
-##                                CHR2    CPX_TYPE          methods        AF
-##                         &amp;lt;character&amp;gt; &amp;lt;character&amp;gt;      &amp;lt;character&amp;gt; &amp;lt;numeric&amp;gt;
-##   gnomAD_v2_INS_4_34681           4        &amp;lt;NA&amp;gt; delly_manta_melt   0.00149
-##   gnomAD_v2_INS_2_13594           2        &amp;lt;NA&amp;gt; delly_manta_melt  0.005355
-##   gnomAD_v2_INS_9_69619           9        &amp;lt;NA&amp;gt;      delly_manta  0.057464
+##                         seqnames                 ranges strand |
+##                            &amp;lt;Rle&amp;gt;              &amp;lt;IRanges&amp;gt;  &amp;lt;Rle&amp;gt; |
+##   gnomAD_v2_INS_4_34681        4 [116015282, 116015282]      * |
+##   gnomAD_v2_INS_2_13594        2 [ 85885163,  85885163]      * |
+##   gnomAD_v2_INS_9_69619        9 [ 28199346,  28199346]      * |
+##                         paramRangeID            REF             ALT
+##                             &amp;lt;factor&amp;gt; &amp;lt;DNAStringSet&amp;gt; &amp;lt;CharacterList&amp;gt;
+##   gnomAD_v2_INS_4_34681         &amp;lt;NA&amp;gt;              N    &amp;lt;INS:ME:ALU&amp;gt;
+##   gnomAD_v2_INS_2_13594         &amp;lt;NA&amp;gt;              N    &amp;lt;INS:ME:ALU&amp;gt;
+##   gnomAD_v2_INS_9_69619         &amp;lt;NA&amp;gt;              N           &amp;lt;INS&amp;gt;
+##                              QUAL      FILTER      SVTYPE     SVLEN
+##                         &amp;lt;numeric&amp;gt; &amp;lt;character&amp;gt; &amp;lt;character&amp;gt; &amp;lt;integer&amp;gt;
+##   gnomAD_v2_INS_4_34681       646        PASS         INS       281
+##   gnomAD_v2_INS_2_13594       652        PASS         INS       279
+##   gnomAD_v2_INS_9_69619       407        PASS         INS       136
+##                               END        CHR2    CPX_TYPE          methods
+##                         &amp;lt;integer&amp;gt; &amp;lt;character&amp;gt; &amp;lt;character&amp;gt;      &amp;lt;character&amp;gt;
+##   gnomAD_v2_INS_4_34681  44565090           4        &amp;lt;NA&amp;gt; delly_manta_melt
+##   gnomAD_v2_INS_2_13594   8372664           2        &amp;lt;NA&amp;gt; delly_manta_melt
+##   gnomAD_v2_INS_9_69619  17898584           9        &amp;lt;NA&amp;gt;      delly_manta
+##                                AF
+##                         &amp;lt;numeric&amp;gt;
+##   gnomAD_v2_INS_4_34681  0.001490
+##   gnomAD_v2_INS_2_13594  0.005355
+##   gnomAD_v2_INS_9_69619  0.057464
 ##   -------
 ##   seqinfo: 24 sequences from an unspecified genome&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;I don’t see anything else suspicious.&lt;/p&gt;
-&lt;p&gt;For complex variants, the &lt;em&gt;POS&lt;/em&gt; and &lt;em&gt;END&lt;/em&gt; are always less than 100 bp apart and all for one type of complex SV: &lt;strong&gt;“dispersed duplications”&lt;/strong&gt;. If I understand correctly, this type of complex SV is pretty much an insertion of a sequence already in the genome (but not a transposable element I guess?).&lt;/p&gt;
+&lt;p&gt;For complex variants, the &lt;em&gt;POS&lt;/em&gt; and &lt;em&gt;END&lt;/em&gt; are always less than 100 bp apart and all for one type of complex SV: &lt;strong&gt;“dispersed duplications”&lt;/strong&gt;.
+If I understand correctly, this type of complex SV is pretty much an insertion of a sequence already in the genome (but not a transposable element I guess?).&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./post/2019-03-31-gnomadSV_files/figure-html/cpx-end-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;I’m not sure how to interpret them either.&lt;/p&gt;
-&lt;p&gt;For now, I’ll use the &lt;strong&gt;POS field for both insertions and dispersed duplications&lt;/strong&gt; when manipulating the variants as genomic intervals. So I’ll assume that they are both simple insertions (which I think is fair enough).&lt;/p&gt;
+&lt;p&gt;For now, I’ll use the &lt;strong&gt;POS field for both insertions and dispersed duplications&lt;/strong&gt; when manipulating the variants as genomic intervals.
+So I’ll assume that they are both simple insertions (which I think is fair enough).&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;potential-duplicates&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Potential duplicates&lt;/h2&gt;
-&lt;p&gt;Are there any pairs of variants with a &lt;strong&gt;reciprocal overlap higher than 90%&lt;/strong&gt;. For insertions, I match them if they are located at less than 30 bp from each other and their size is 90% similar.&lt;/p&gt;
+&lt;p&gt;Are there any pairs of variants with a &lt;strong&gt;reciprocal overlap higher than 90%&lt;/strong&gt;.
+For insertions, I match them if they are located at less than 30 bp from each other and their size is 90% similar.&lt;/p&gt;
 &lt;p&gt;Note: Here I don’t consider &lt;em&gt;BND&lt;/em&gt; or &lt;em&gt;CTX&lt;/em&gt; variants, and I count each pair of variants only once.&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr class=&#34;header&#34;&gt;
 &lt;th align=&#34;left&#34;&gt;types&lt;/th&gt;
 &lt;th align=&#34;right&#34;&gt;n&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;prop.both.PASS&lt;/th&gt;
 &lt;/tr&gt;
 &lt;/thead&gt;
 &lt;tbody&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;DEL_DEL&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;3,335&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.8237&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;INS_INS&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;2,221&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.9955&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;DUP_DUP&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;2,057&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.9728&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;CPX_CPX&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;1,077&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0529&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;DEL_DUP&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;797&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.8821&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;CPX_DEL&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;253&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.9921&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;DEL_MCNV&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;117&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0000&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;CPX_DUP&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;66&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.9091&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;DUP_MCNV&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;50&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0000&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;DEL_INV&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;10&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.0000&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;CPX_INS&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;6&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.0000&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;DUP_INV&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.0000&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;CPX_INV&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.0000&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;INV_INV&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1.0000&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;p&gt;There are &lt;strong&gt;thousands of deletions, insertions and duplications with high reciprocal overlap.&lt;/strong&gt; Also many complex variants but I can imagine that it’s difficult to merge those.&lt;/p&gt;
+&lt;p&gt;There are &lt;strong&gt;thousands of deletions, insertions and duplications with high reciprocal overlap.&lt;/strong&gt;
+Also many complex variants but I can imagine that it’s difficult to merge those.
+For the vast majority of pairs, both variants have a &lt;em&gt;PASS&lt;/em&gt; filter.&lt;/p&gt;
 &lt;p&gt;Let’s look at the size distribution of these potential duplicates.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./post/2019-03-31-gnomadSV_files/figure-html/dups-size-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;Wow, very “peaky”. Let’s zoom in with no log-scale:&lt;/p&gt;
+&lt;p&gt;Wow, very “peaky”.
+Let’s zoom in with no log-scale:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./post/2019-03-31-gnomadSV_files/figure-html/dups-peaks-1.png&#34; width=&#34;960&#34; /&gt;&lt;img src=&#34;./post/2019-03-31-gnomadSV_files/figure-html/dups-peaks-2.png&#34; width=&#34;960&#34; /&gt;&lt;img src=&#34;./post/2019-03-31-gnomadSV_files/figure-html/dups-peaks-3.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;The “Alu” peak around 300 bp is made of around 200 insertion pairs.&lt;/li&gt;
@@ -283,7 +327,8 @@
 &lt;/ul&gt;
 &lt;div id=&#34;sv-calling-method&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;SV calling method&lt;/h3&gt;
-&lt;p&gt;Duplicates can occur when merging two sets of variants, for example the call sets of different methods. &lt;strong&gt;Are the potential duplicates from different methods?&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Duplicates can occur when merging two sets of variants, for example the call sets of different methods.
+&lt;strong&gt;Are the potential duplicates from different methods?&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Top 10 of the most common pairs:&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;
@@ -291,6 +336,7 @@
 &lt;th align=&#34;left&#34;&gt;types&lt;/th&gt;
 &lt;th align=&#34;left&#34;&gt;methods&lt;/th&gt;
 &lt;th align=&#34;right&#34;&gt;n&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;prop.both.PASS&lt;/th&gt;
 &lt;/tr&gt;
 &lt;/thead&gt;
 &lt;tbody&gt;
@@ -298,60 +344,79 @@
 &lt;td align=&#34;left&#34;&gt;INS_INS&lt;/td&gt;
 &lt;td align=&#34;left&#34;&gt;manta__manta&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;1,639&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.9969&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;DEL_DEL&lt;/td&gt;
 &lt;td align=&#34;left&#34;&gt;delly__delly&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;1,110&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.6009&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;DEL_DEL&lt;/td&gt;
 &lt;td align=&#34;left&#34;&gt;manta__manta&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;652&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.9417&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;DUP_DUP&lt;/td&gt;
 &lt;td align=&#34;left&#34;&gt;delly__delly&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;576&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.9688&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;CPX_CPX&lt;/td&gt;
 &lt;td align=&#34;left&#34;&gt;delly__delly&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;528&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.0436&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;INS_INS&lt;/td&gt;
 &lt;td align=&#34;left&#34;&gt;melt__melt&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;489&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.9918&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;DUP_DUP&lt;/td&gt;
 &lt;td align=&#34;left&#34;&gt;manta__manta&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;443&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.9842&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;DEL_DUP&lt;/td&gt;
 &lt;td align=&#34;left&#34;&gt;depth__depth&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;395&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.8785&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;odd&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;DUP_DUP&lt;/td&gt;
 &lt;td align=&#34;left&#34;&gt;delly__manta&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;376&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.9787&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr class=&#34;even&#34;&gt;
 &lt;td align=&#34;left&#34;&gt;DEL_DEL&lt;/td&gt;
 &lt;td align=&#34;left&#34;&gt;delly__manta&lt;/td&gt;
 &lt;td align=&#34;right&#34;&gt;319&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0.9310&lt;/td&gt;
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;p&gt;&lt;strong&gt;For thousands of potential duplicates the variants were called by the same algorithm.&lt;/strong&gt; The question is then: were these methods run once in a “single-sample” mode or on all the samples together? I think at least Delly and MELT can do the genotyping step across all samples together. Even in those, there can be duplicates in the discovery phase that are not merged properly before genotyping.&lt;/p&gt;
-&lt;p&gt;I’m still not sure if these deletions/duplications/MEIs are actually different SVs. Especially the mobile element insertions, I would lean toward them being duplicates. Otherwise, it means the TE jumped and then got an indel later. It’s possible but maybe not that often. Also, the comparison with GiaB below shows that we are not there yet in term of bp resolution. &lt;strong&gt;It might be safer to assume these variants are duplicates.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;For thousands of potential duplicates the variants were called by the same algorithm.&lt;/strong&gt;
+The question is then: were these methods run once in a “single-sample” mode or on all the samples together?
+I think at least Delly and MELT can do the genotyping step across all samples together.
+Even in those, there can be duplicates in the discovery phase that are not merged properly before genotyping.&lt;/p&gt;
+&lt;p&gt;I’m still not sure if these deletions/duplications/MEIs are actually different SVs.
+Especially the mobile element insertions, I would lean toward them being duplicates.
+Otherwise, it means the TE jumped and then got an indel later.
+It’s possible but maybe not that often.
+Also, the comparison with GiaB below shows that we are not there yet in term of bp resolution.
+&lt;strong&gt;It might be safer to assume these variants are duplicates.&lt;/strong&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;two-size-clusters-of-potentially-duplicated-complex-variants&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Two size clusters of potentially duplicated complex variants&lt;/h3&gt;
-&lt;p&gt;Above, we saw two groups of potentially duplicated complex variants that clustered by size. Defining size clusters 1 and 2 for the complex variants of sizes around 120 kbp and 160 kbp, respectively.&lt;/p&gt;
+&lt;p&gt;Above, we saw two groups of potentially duplicated complex variants that clustered by size.
+Defining size clusters 1 and 2 for the complex variants of sizes around 120 kbp and 160 kbp, respectively.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./post/2019-03-31-gnomadSV_files/figure-html/dups-cpx-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Some do cluster together in the genome and, looking up a few of them, they seem to be in segmental duplications.&lt;/p&gt;
 &lt;table&gt;
@@ -402,20 +467,31 @@
 &lt;p&gt;&lt;strong&gt;What is the potential effect of these duplicated variants on the frequency annotation?&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;Below, I compare the allele frequencies of each variant and its potential duplicate.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./post/2019-03-31-gnomadSV_files/figure-html/dups-af-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Most pairs of potential duplicates have similar frequencies.&lt;/strong&gt; Does that mean that the frequencies of these variants are supposed to be the double of what we have?&lt;/p&gt;
-&lt;p&gt;Let’s zoom in to the long tail with the highest difference in allele frequency. To make the graph clearer, I compare the lowest frequency to the highest.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Most pairs of potential duplicates have similar frequencies.&lt;/strong&gt;
+Does that mean that the frequencies of these variants are supposed to be the double of what we have?&lt;/p&gt;
+&lt;p&gt;Let’s zoom in to the long tail with the highest difference in allele frequency.
+To make the graph clearer, I compare the lowest frequency to the highest.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./post/2019-03-31-gnomadSV_files/figure-html/dups-af-scatter-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Some SVs with low frequencies might be a duplicate of a SV with higher frequency.&lt;/li&gt;
 &lt;li&gt;E.g. 827 of these variants have AF&amp;lt;0.1% while the other variant has AF&amp;gt;1%.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Although it’s only a minority of cases, &lt;strong&gt;we should be careful when matching our SVs to this catalog.&lt;/strong&gt; Otherwise we might think that a variant is rarer than it is. Instead of annotating a SV with the allele frequency of the most similar SV in gnomAD-SV, a more robust strategy would be to use the maximum frequency across all SVs that are similar enough. That’s what we had done when annotating CNVs in our &lt;a href=&#34;https://doi.org/10.1371/journal.pgen.1007285&#34;&gt;epilepsy study&lt;/a&gt;, although we were being maybe too conservative by considering any overlapping SV. For short deletions it’s fine, but in general a &lt;em&gt;reciprocal overlap &amp;gt; XX%&lt;/em&gt; matchin would be less conservative.&lt;/p&gt;
+&lt;p&gt;Although it’s only a minority of cases, &lt;strong&gt;we should be careful when matching our SVs to this catalog.&lt;/strong&gt;
+Otherwise we might think that a variant is rarer than it is.
+Instead of annotating a SV with the allele frequency of the most similar SV in gnomAD-SV, a more robust strategy would be to use the maximum frequency across all SVs that are similar enough.
+That’s what we had done when annotating CNVs in our &lt;a href=&#34;https://doi.org/10.1371/journal.pgen.1007285&#34;&gt;epilepsy study&lt;/a&gt;, although we were being maybe too conservative by considering any overlapping SV.
+For short deletions it’s fine, but in general a &lt;em&gt;reciprocal overlap &amp;gt; XX%&lt;/em&gt; matchin would be less conservative.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;giab-comparison-to-investigate-sequence-resolution&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;GiaB comparison to investigate sequence resolution&lt;/h2&gt;
-&lt;p&gt;The Genome in a Bottle consortium combined many types of techonologies (ultra deep short-read, linked-reads, long reads, optical mapping) to generate a &lt;strong&gt;high-quality SV catalog&lt;/strong&gt;. Maybe not all variants are correct but it’s one of the best quality catalog we have. I want to quickly compare these SVs with the ones in the gnomAD catalog. If many variants look exactly the same in both datasets, it would be good evidence that they are both sequence-resolved.&lt;/p&gt;
-&lt;p&gt;I downloaded the &lt;a href=&#34;ftp://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/data/AshkenazimTrio/analysis/NIST_SVs_Integration_v0.6/&#34;&gt;NIST SVs Integration v0.6&lt;/a&gt;. This catalog also uses GRCh37. It includes short indels that I decided to filter out, keeping only variants of size 50 bp or more.&lt;/p&gt;
+&lt;p&gt;The Genome in a Bottle consortium combined many types of techonologies (ultra deep short-read, linked-reads, long reads, optical mapping) to generate a &lt;strong&gt;high-quality SV catalog&lt;/strong&gt;.
+Maybe not all variants are correct but it’s one of the best quality catalog we have.
+I want to quickly compare these SVs with the ones in the gnomAD catalog.
+If many variants look exactly the same in both datasets, it would be good evidence that they are both sequence-resolved.&lt;/p&gt;
+&lt;p&gt;I downloaded the &lt;a href=&#34;ftp://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/data/AshkenazimTrio/analysis/NIST_SVs_Integration_v0.6/&#34;&gt;NIST SVs Integration v0.6&lt;/a&gt;.
+This catalog also uses GRCh37.
+It includes short indels that I decided to filter out, keeping only variants of size 50 bp or more.&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr class=&#34;header&#34;&gt;
@@ -443,9 +519,12 @@
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;p&gt;I’m curious to compare the exact breakpoint locations of SVs shared by both catalogs. Do they have exactly the same breakpoints/sequence? To make things easier let’s just look at deletions.&lt;/p&gt;
+&lt;p&gt;I’m curious to compare the exact breakpoint locations of SVs shared by both catalogs.
+Do they have exactly the same breakpoints/sequence?
+To make things easier let’s just look at deletions.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;./post/2019-03-31-gnomadSV_files/figure-html/giab-del-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;Many deletions in the gnomAD catalog are &lt;strong&gt;extremely similar&lt;/strong&gt; to the GiaB dataset &lt;strong&gt;but not exactly the same&lt;/strong&gt;. Some examples (randomly selected):&lt;/p&gt;
+&lt;p&gt;Many deletions in the gnomAD catalog are &lt;strong&gt;extremely similar&lt;/strong&gt; to the GiaB dataset &lt;strong&gt;but not exactly the same&lt;/strong&gt;.
+Some examples (randomly selected):&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr class=&#34;header&#34;&gt;
@@ -556,8 +635,12 @@
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;p&gt;This quick comparison suggests that the variants are not really sequence-resolved. &lt;strong&gt;In gnomAD, the GiaB dataset, or both, the breakpoints might have a few errors.&lt;/strong&gt; That will be important when genotyping these SVs or injecting them in genome graphs.&lt;/p&gt;
-&lt;p&gt;Of note, I’m not sure if the variants were left-aligned. It’s not a big deal because we see that the deletions are discordant in term of size anyway. Still, both VCF should be normalized first to better estimate how many deletions are exactly matched.&lt;/p&gt;
+&lt;p&gt;This quick comparison suggests that the variants are not really sequence-resolved.
+&lt;strong&gt;In gnomAD, the GiaB dataset, or both, the breakpoints might have a few errors.&lt;/strong&gt;
+That will be important when genotyping these SVs or injecting them in genome graphs.&lt;/p&gt;
+&lt;p&gt;Of note, I’m not sure if the variants were left-aligned.
+It’s not a big deal because we see that the deletions are discordant in term of size anyway.
+Still, both VCF should be normalized first to better estimate how many deletions are exactly matched.&lt;/p&gt;
 &lt;/div&gt;
 </description>
         </item>
@@ -570,9 +653,7 @@
           <pubDate>Sat, 08 Dec 2018 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2018/12/08/dna-art/</guid>
-          <description>
-
-&lt;div id=&#34;TOC&#34;&gt;
+          <description>&lt;div id=&#34;TOC&#34;&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;#version-1-tree&#34;&gt;Version 1: Tree&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#version-2-weave&#34;&gt;Version 2: Weave&lt;/a&gt;&lt;/li&gt;
@@ -653,10 +734,7 @@
           <pubDate>Sat, 17 Nov 2018 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2018/11/17/speedup-blogwdown-pandoc-large-bibliography/</guid>
-          <description>
-
-
-&lt;p&gt;I have another website where I write down my reviews of the papers I read.
+          <description>&lt;p&gt;I have another website where I write down my reviews of the papers I read.
 To handle citations in pages and posts, I was originally using &lt;a href=&#34;https://github.com/inukshuk/jekyll-scholar&#34;&gt;jekyll-scholar&lt;/a&gt;.
 It scales well enough that I could have &lt;strong&gt;one main BibTeX file for all the pages&lt;/strong&gt; of the website.
 I’m now switching to &lt;a href=&#34;https://bookdown.org/yihui/blogdown/&#34;&gt;blogdown&lt;/a&gt;/&lt;a href=&#34;https://gohugo.io/&#34;&gt;Hugo&lt;/a&gt; because it’s apparently faster, with less dependencies, but most importantly because it’s very easy to integrate R code with RMarkdown.
@@ -704,9 +782,7 @@ optional arguments:
           <pubDate>Mon, 12 Nov 2018 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2018/11/12/bachelard-formation-esprit-scientifique-part1/</guid>
-          <description>
-
-&lt;div id=&#34;TOC&#34;&gt;
+          <description>&lt;div id=&#34;TOC&#34;&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;#quotes-about-science&#34;&gt;Quotes about science&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#the-concept-of-epistemological-obstacle&#34;&gt;The concept of epistemological obstacle&lt;/a&gt;&lt;/li&gt;
@@ -940,10 +1016,7 @@ optional arguments:
           <pubDate>Wed, 07 Nov 2018 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2018/11/07/ecr-peerreview/</guid>
-          <description>
-
-
-&lt;p&gt;Some notes from &lt;a href=&#34;https://uspa.ucsc.edu/2018/10/31/peer-review-workshop-117-12-pm-in-biomed-200/&#34;&gt;today’s workshop organized by USPA&lt;/a&gt; with bio-protocol and eLife ambassadors.&lt;/p&gt;
+          <description>&lt;p&gt;Some notes from &lt;a href=&#34;https://uspa.ucsc.edu/2018/10/31/peer-review-workshop-117-12-pm-in-biomed-200/&#34;&gt;today’s workshop organized by USPA&lt;/a&gt; with bio-protocol and eLife ambassadors.&lt;/p&gt;
 &lt;div id=&#34;bio-protocol&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Bio-protocol&lt;/h2&gt;
 &lt;p&gt;Data is uploaded to databases, code to repos like GitHub but protocols are still just in the &lt;em&gt;Methods&lt;/em&gt; section of papers.
@@ -1022,10 +1095,7 @@ To have a chance to be included in the pool of reviewers, we should submit a let
           <pubDate>Sat, 22 Sep 2018 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2018/09/22/sync-mendeley/</guid>
-          <description>
-
-
-&lt;p&gt;&lt;em&gt;20 March 2019 Edit: I switched to Zotero (yeay open-source, bye Elsevier), using Google Drive to store the PDF files. See the &lt;a href=&#34;./internet#zotero&#34;&gt;Internet section&lt;/a&gt; and &lt;a href=&#34;https://ikashnitsky.github.io/2019/zotero/&#34;&gt;the blog post that inspired the change&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+          <description>&lt;p&gt;&lt;em&gt;20 March 2019 Edit: I switched to Zotero (yeay open-source, bye Elsevier), using Google Drive to store the PDF files. See the &lt;a href=&#34;./internet#zotero&#34;&gt;Internet section&lt;/a&gt; and &lt;a href=&#34;https://ikashnitsky.github.io/2019/zotero/&#34;&gt;the blog post that inspired the change&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;Recently, I’ve been setting up new computers from scratch as I moved from Montreal to Santa Cruz. Like for spring cleaning, it might be a good idea to clarify the system I’ve been using to manage bibliography and PDF annotation.&lt;/p&gt;
 &lt;p&gt;Briefly I use Mendeley Desktop and also put all PDF files in a Google Drive. Both are synced with my Android tablet. On the tablet, I use the Mendeley app to get information, search etc, but I read/annotate the PDFs from the Google Drive. On a computer I use a custom Python script to update the PDFs if necessary.&lt;/p&gt;
 &lt;div id=&#34;the-updatemendeley.py-script&#34; class=&#34;section level2&#34;&gt;
@@ -1074,10 +1144,7 @@ To have a chance to be included in the pool of reviewers, we should submit a let
           <pubDate>Sun, 08 Jul 2018 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2018/07/08/mental-health-crisis-science/</guid>
-          <description>
-
-
-&lt;p&gt;A few month ago, a short paper was published in Nature Biotechnology&lt;a href=&#34;#fn1&#34; class=&#34;footnoteRef&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; about the mental health crisis in science. It attracted a bit of attention on the news and social media, which is good because it’s an important matter. The article was very good at putting the subject on the table and proposing some solutions, but it picked my curiosity about nonresponse bias.&lt;/p&gt;
+          <description>&lt;p&gt;A few month ago, a short paper was published in Nature Biotechnology&lt;a href=&#34;#fn1&#34; class=&#34;footnoteRef&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; about the mental health crisis in science. It attracted a bit of attention on the news and social media, which is good because it’s an important matter. The article was very good at putting the subject on the table and proposing some solutions, but it picked my curiosity about nonresponse bias.&lt;/p&gt;
 &lt;div id=&#34;issues-with-the-nature-biotech-article&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Issues with the Nature Biotech article&lt;/h2&gt;
 &lt;p&gt;The numbers are based on an email survey so &lt;strong&gt;one issue is the nonresponse bias&lt;/strong&gt;: the individuals that responded might not be representative of the population. The authors quickly mention it:&lt;/p&gt;
@@ -1129,9 +1196,7 @@ To have a chance to be included in the pool of reviewers, we should submit a let
           <pubDate>Sat, 09 Jun 2018 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2018/06/09/cluster-same-size/</guid>
-          <description>
-
-&lt;div id=&#34;TOC&#34;&gt;
+          <description>&lt;div id=&#34;TOC&#34;&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;#methods&#34;&gt;Methods&lt;/a&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;#iterative-dichotomy&#34;&gt;Iterative dichotomy&lt;/a&gt;&lt;/li&gt;
@@ -1290,9 +1355,7 @@ Maybe implementing the loop with Rcpp could speed up the computation (in practic
           <pubDate>Mon, 07 May 2018 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2018/05/07/epub-reviews/</guid>
-          <description>
-
-&lt;div id=&#34;TOC&#34;&gt;
+          <description>&lt;div id=&#34;TOC&#34;&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;#first-check-on-pubmed-central&#34;&gt;First, check on PubMed Central&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#convert-the-html-page-to-epub&#34;&gt;Convert the HTML page to EPUB&lt;/a&gt;&lt;/li&gt;
@@ -1394,10 +1457,7 @@ Rscript epubify-naturereviews.R -i https://www.nature.com/articles/nrg.2015.16&l
           <pubDate>Wed, 18 Apr 2018 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2018/04/18/check-latex-pub/</guid>
-          <description>
-
-
-&lt;p&gt;To continue on the series of &lt;em&gt;“Things I did instead of writing my thesis to help me write my thesis”&lt;/em&gt;, another Python script that reads a LaTeX manuscript and helps check that everything is fine. More specifically, the &lt;code&gt;checkLatex.py&lt;/code&gt; script (&lt;a href=&#34;https://github.com/jmonlong/Hippocamplus/tree/config/python/checkLatex&#34;&gt;on GitHub&lt;/a&gt;) will:&lt;/p&gt;
+          <description>&lt;p&gt;To continue on the series of &lt;em&gt;“Things I did instead of writing my thesis to help me write my thesis”&lt;/em&gt;, another Python script that reads a LaTeX manuscript and helps check that everything is fine. More specifically, the &lt;code&gt;checkLatex.py&lt;/code&gt; script (&lt;a href=&#34;https://github.com/jmonlong/Hippocamplus/tree/config/python/checkLatex&#34;&gt;on GitHub&lt;/a&gt;) will:&lt;/p&gt;
 &lt;ol style=&#34;list-style-type: decimal&#34;&gt;
 &lt;li&gt;List missing references.&lt;/li&gt;
 &lt;li&gt;List multi-references to reorder.&lt;/li&gt;
@@ -1451,10 +1511,7 @@ optional arguments:
           <pubDate>Mon, 16 Apr 2018 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2018/04/16/text-similarity/</guid>
-          <description>
-
-
-&lt;p&gt;To start the series of &lt;em&gt;“Things I did instead of writing my thesis to help me write my thesis”&lt;/em&gt;, a small Python script that compares two text documents and output similar parts. I did that to avoid auto-plagiarism of my manuscripts’ introduction in the main thesis introduction.&lt;/p&gt;
+          <description>&lt;p&gt;To start the series of &lt;em&gt;“Things I did instead of writing my thesis to help me write my thesis”&lt;/em&gt;, a small Python script that compares two text documents and output similar parts. I did that to avoid auto-plagiarism of my manuscripts’ introduction in the main thesis introduction.&lt;/p&gt;
 &lt;p&gt;It’s a very naive approach but sped up the checking process (&lt;a href=&#34;https://xkcd.com/1319/&#34;&gt;maybe worth the time&lt;/a&gt;). It first looks for short exact matches between the two documents, then extends these exact matches and uses the &lt;a href=&#34;https://docs.python.org/2/library/difflib.html&#34;&gt;difflib&lt;/a&gt; module to keep text with a minimum similarity score (default 80%).&lt;/p&gt;
 &lt;p&gt;I put the &lt;code&gt;simText.py&lt;/code&gt; Python script &lt;a href=&#34;https://github.com/jmonlong/Hippocamplus/tree/config/python/simText&#34;&gt;on GitHub here&lt;/a&gt;.&lt;/p&gt;
 &lt;div id=&#34;usage&#34; class=&#34;section level2&#34;&gt;
@@ -1504,10 +1561,7 @@ T2: eletions and duplications, which affect DNA copy number, are collectively kn
           <pubDate>Fri, 23 Feb 2018 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2018/02/23/journals-comparison/</guid>
-          <description>
-
-
-&lt;p&gt;&lt;em&gt;Edit Feb 24: Added variance graph and some examples of suspiciously fast publications.&lt;/em&gt;&lt;/p&gt;
+          <description>&lt;p&gt;&lt;em&gt;Edit Feb 24: Added variance graph and some examples of suspiciously fast publications.&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Edit Feb 25: Added &lt;a href=&#34;https://github.com/jmonlong/Hippocamplus/tree/config/R/journalPubTime&#34;&gt;script and data&lt;/a&gt; to GitHub.&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;Some info about journals in my field.&lt;/p&gt;
 &lt;div id=&#34;summary-table&#34; class=&#34;section level2&#34;&gt;
@@ -2046,10 +2100,7 @@ T2: eletions and duplications, which affect DNA copy number, are collectively kn
           <pubDate>Tue, 13 Feb 2018 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2018/02/13/tsne-and-clustering/</guid>
-          <description>
-
-
-&lt;p&gt;tSNE can give really nice results when we want to visualize many groups of multi-dimensional points. Once the 2D graph is done we might want to identify which points cluster in the tSNE blobs.&lt;/p&gt;
+          <description>&lt;p&gt;tSNE can give really nice results when we want to visualize many groups of multi-dimensional points. Once the 2D graph is done we might want to identify which points cluster in the tSNE blobs.&lt;/p&gt;
 &lt;p&gt;Using simulated and real data, I’ll try different methods:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Hierarchical clustering&lt;/li&gt;
@@ -2342,10 +2393,7 @@ ggplot(info.real, aes(x = tsne1, y = tsne2, colour = louvain)) +
           <pubDate>Wed, 04 Oct 2017 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2017/10/04/bibliography-style-for-ajhg/</guid>
-          <description>
-
-
-&lt;p&gt;I couldn’t find an up-to-date/working &lt;strong&gt;LaTeX bibliography style for the American Journal of Human Genetics (AJHG)&lt;/strong&gt;. The output from &lt;code&gt;unsrtnat&lt;/code&gt; (my goto style) was also quite different from what the journal wanted.&lt;/p&gt;
+          <description>&lt;p&gt;I couldn’t find an up-to-date/working &lt;strong&gt;LaTeX bibliography style for the American Journal of Human Genetics (AJHG)&lt;/strong&gt;. The output from &lt;code&gt;unsrtnat&lt;/code&gt; (my goto style) was also quite different from what the journal wanted.&lt;/p&gt;
 &lt;p&gt;I found a bibliography style for &lt;em&gt;Cell&lt;/em&gt; which is almost what AJHG wants, but I also wanted the references to be &lt;strong&gt;ordered by their appearance in the text&lt;/strong&gt; (like for &lt;code&gt;unsrtnat&lt;/code&gt;) and not alphabetically. So I downloaded both &lt;code&gt;cell.bst&lt;/code&gt; (&lt;a href=&#34;https://www.ctan.org/tex-archive/macros/latex/contrib/cell&#34;&gt;here&lt;/a&gt;) and &lt;code&gt;unsrtnat.bst&lt;/code&gt; (&lt;a href=&#34;https://www.ctan.org/tex-archive/macros/latex/contrib/natbib/&#34;&gt;here&lt;/a&gt;) files and merged them. I don’t understand all the details but after some trial-and-errors it seems to work.&lt;/p&gt;
 &lt;p&gt;After merging, I removed the &lt;em&gt;emphasis&lt;/em&gt; on the Journal/Book name which was the only difference I could see between the Cell and AJHG styles.&lt;/p&gt;
 &lt;p&gt;I also added some code to &lt;strong&gt;automatically compress long author lists&lt;/strong&gt; into “&lt;em&gt;et al.&lt;/em&gt;”. In the code, the line with &lt;code&gt;max.num.names.before.forced.et.al&lt;/code&gt; specifies the maximum number of authors before switching to “&lt;em&gt;et al.&lt;/em&gt;”. The line with &lt;code&gt;num.names.shown.with.forced.et.al&lt;/code&gt; specifies how many authors to show when using &lt;em&gt;et al.&lt;/em&gt;. They are both set at 10, following AJHG guidelines.&lt;/p&gt;
@@ -2361,10 +2409,7 @@ ggplot(info.real, aes(x = tsne1, y = tsne2, colour = louvain)) +
           <pubDate>Tue, 19 Sep 2017 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2017/09/19/mummerplots-with-ggplot2/</guid>
-          <description>
-
-
-&lt;p&gt;&lt;em&gt;Update Oct 28 2018: added reference id (rid) to be able to visualize multiple reference regions. Also uploaded the example data somewhere.&lt;/em&gt;&lt;/p&gt;
+          <description>&lt;p&gt;&lt;em&gt;Update Oct 28 2018: added reference id (rid) to be able to visualize multiple reference regions. Also uploaded the example data somewhere.&lt;/em&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(dplyr)
 library(magrittr)
 library(GenomicRanges)
@@ -2722,10 +2767,7 @@ mumgp.filt.m %&amp;gt;% select(similarity, start, end, filter) %&amp;gt;% gather
           <pubDate>Sat, 16 Sep 2017 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2017/09/16/regression-sandbox/</guid>
-          <description>
-
-
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
+          <description>&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
 library(broom)
 library(magrittr)
 library(dplyr)
@@ -3049,10 +3091,7 @@ ggplot(df, aes(x = x, y = y)) + geom_point(alpha = 0.2) +
           <pubDate>Tue, 05 Sep 2017 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2017/09/05/enrichment-between-genomic-regions/</guid>
-          <description>
-
-
-&lt;p&gt;Testing if two sets of genomic regions overlap significantly is not straightforward. In the simple situation of regions of 1 bp (e.g. SNVs) we could use a hypergeometric test. When the regions are small enough and there are not too many, the hypergeometric test might also be a fair approximation.&lt;/p&gt;
+          <description>&lt;p&gt;Testing if two sets of genomic regions overlap significantly is not straightforward. In the simple situation of regions of 1 bp (e.g. SNVs) we could use a hypergeometric test. When the regions are small enough and there are not too many, the hypergeometric test might also be a fair approximation.&lt;/p&gt;
 &lt;p&gt;But when we manipulate many regions of variable size covering the entire genome it’s not as straightforward. The gene annotation is an example. The repeat annotation is even worse as it covers almost 50% of the genome and contains different families with very different size/location profiles.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
 library(dplyr)
@@ -3501,10 +3540,7 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
           <pubDate>Sat, 25 Feb 2017 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2017/02/25/conservation-to-annotate-larger-regions/</guid>
-          <description>
-
-
-&lt;p&gt;Conservation can be used to annotate single nucleotide changes or short variants. This information helps assessing the functional impact of short variation.&lt;/p&gt;
+          <description>&lt;p&gt;Conservation can be used to annotate single nucleotide changes or short variants. This information helps assessing the functional impact of short variation.&lt;/p&gt;
 &lt;p&gt;What if we have larger variants, for example deletions larger than 50 bp, or larger than 1 kbp. Can we use conservation metrics? In this case the question is often not &lt;em&gt;“Is the region conserved?”&lt;/em&gt; but rather &lt;em&gt;“Is there any conserved elements in the region?”&lt;/em&gt;.&lt;/p&gt;
 &lt;p&gt;One approach would be to overlap the variants/deletions with known (ultra-)conserved regions. Otherwise we could work with bp-level conservation estimates. That’s what I quickly explore below.&lt;/p&gt;
 &lt;div id=&#34;genomic-annotation-and-conservation&#34; class=&#34;section level2&#34;&gt;
@@ -3552,10 +3588,7 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
           <pubDate>Thu, 20 Oct 2016 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2016/10/20/segmental-duplication-exploration/</guid>
-          <description>
-
-
-&lt;div id=&#34;segmental-duplications-sd&#34; class=&#34;section level2&#34;&gt;
+          <description>&lt;div id=&#34;segmental-duplications-sd&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Segmental Duplications (SD)&lt;/h2&gt;
 &lt;p&gt;I downloaded the segmental duplication annotation for hg19 from &lt;a href=&#34;http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/genomicSuperDups.txt.gz&#34;&gt;UCSC&lt;/a&gt;. There are 51599 annotated SD. They are defined as regions larger than 1 Kbp with at least 90% similarity with another region in the genome.&lt;/p&gt;
 &lt;/div&gt;
@@ -4304,10 +4337,7 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
           <pubDate>Tue, 06 Sep 2016 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2016/09/06/summary-epigenetic-mark-tracks/</guid>
-          <description>
-
-
-&lt;p&gt;To assess the potential impact of variants (SNV, SVs) we might want to use some of the public epigentic datasets. The amount and heterogeneity of this data is a bit overwhelming. I would like to get a summary of which regions of the genome are the most functionally important.&lt;/p&gt;
+          <description>&lt;p&gt;To assess the potential impact of variants (SNV, SVs) we might want to use some of the public epigentic datasets. The amount and heterogeneity of this data is a bit overwhelming. I would like to get a summary of which regions of the genome are the most functionally important.&lt;/p&gt;
 &lt;p&gt;The plan is to:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;get annotated &lt;strong&gt;peaks&lt;/strong&gt;&lt;/li&gt;
@@ -4350,10 +4380,7 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
           <pubDate>Sat, 04 Jun 2016 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2016/06/04/exploring-basic-annotations-of-the-human-genome/</guid>
-          <description>
-
-
-&lt;div id=&#34;quick-look-at-the-annotations&#34; class=&#34;section level1&#34;&gt;
+          <description>&lt;div id=&#34;quick-look-at-the-annotations&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Quick look at the annotations&lt;/h1&gt;
 &lt;div id=&#34;genes&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Genes&lt;/h2&gt;
@@ -6373,10 +6400,7 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
           <pubDate>Sat, 04 Jun 2016 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2016/06/04/gencode-exploration/</guid>
-          <description>
-
-
-&lt;div id=&#34;gencode-v19&#34; class=&#34;section level2&#34;&gt;
+          <description>&lt;div id=&#34;gencode-v19&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Gencode v19&lt;/h2&gt;
 &lt;p&gt;I downloaded Gencode v19 at &lt;a href=&#34;ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz&#34;&gt;&lt;a href=&#34;ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz&#34; class=&#34;uri&#34;&gt;ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz&lt;/a&gt;&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
@@ -6673,10 +6697,7 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
           <pubDate>Fri, 03 Jun 2016 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2016/06/03/preparing-some-genomic-annotations/</guid>
-          <description>
-
-
-&lt;div id=&#34;mappability-track&#34; class=&#34;section level2&#34;&gt;
+          <description>&lt;div id=&#34;mappability-track&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Mappability track&lt;/h2&gt;
 &lt;p&gt;I produced a mappability track from the UCSC track. The &lt;a href=&#34;http://hgdownload.soe.ucsc.edu/gbdb/hg19/bbi/wgEncodeCrgMapabilityAlign100mer.bw&#34;&gt;raw file&lt;/a&gt; contains, for each base in the genome, an estimation of the probability that a read is correctly mapped at this position.&lt;/p&gt;
 &lt;p&gt;Using a sliding-window approach, I compute the average mappability in regions of size 1 Kbp. This is a more manageable amount of data and still informative, especially when interested in large regions (e.g. SVs).&lt;/p&gt;
@@ -6727,10 +6748,7 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
           <pubDate>Fri, 26 Feb 2016 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2016/02/26/word-cloud-in-r/</guid>
-          <description>
-
-
-&lt;p&gt;The &lt;a href=&#34;https://cran.r-project.org/web/packages/wordcloud/index.html&#34;&gt;&lt;code&gt;wordcloud&lt;/code&gt; package&lt;/a&gt; is available on CRAN.&lt;/p&gt;
+          <description>&lt;p&gt;The &lt;a href=&#34;https://cran.r-project.org/web/packages/wordcloud/index.html&#34;&gt;&lt;code&gt;wordcloud&lt;/code&gt; package&lt;/a&gt; is available on CRAN.&lt;/p&gt;
 &lt;div id=&#34;fake-words&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Fake words&lt;/h2&gt;
 &lt;p&gt;I create fake words to see a bit how the command is working.&lt;/p&gt;

@@ -17,7 +17,8 @@
       <pubDate>Sun, 31 Mar 2019 00:00:00 +0000</pubDate>
       
       <guid>/Hippocamplus/2019/03/31/gnomad-sv-first-look/</guid>
-      <description>TL;DR Allele frequency Size distribution SV coordinates confusion Potential duplicates SV calling method Two size clusters of potentially duplicated complex variants Effect on allele frequency estimates  GiaB comparison to investigate sequence resolution   The recent gnomAD-SV catalog is potentially a great resource that we could use to annotate SV calls or augment genome graphs with. For now there is a preprint on bioRxiv and a comprehensive blog post that explains how the SVs were called and how to use the catalog.</description>
+      <description>TL;DR Allele frequency Size distribution SV coordinates confusion Potential duplicates SV calling method Two size clusters of potentially duplicated complex variants Effect on allele frequency estimates  GiaB comparison to investigate sequence resolution   Edit April 1 2019: I added columns with the proportion of variants with PASS filter in the tables about the END/POS confusion and duplicated variants.
+The recent gnomAD-SV catalog is potentially a great resource that we could use to annotate SV calls or augment genome graphs with.</description>
     </item>
     
   </channel>

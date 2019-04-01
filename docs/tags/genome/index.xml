@@ -17,7 +17,8 @@
       <pubDate>Sun, 31 Mar 2019 00:00:00 +0000</pubDate>
       
       <guid>/Hippocamplus/2019/03/31/gnomad-sv-first-look/</guid>
-      <description>TL;DR Allele frequency Size distribution SV coordinates confusion Potential duplicates SV calling method Two size clusters of potentially duplicated complex variants Effect on allele frequency estimates  GiaB comparison to investigate sequence resolution   The recent gnomAD-SV catalog is potentially a great resource that we could use to annotate SV calls or augment genome graphs with. For now there is a preprint on bioRxiv and a comprehensive blog post that explains how the SVs were called and how to use the catalog.</description>
+      <description>TL;DR Allele frequency Size distribution SV coordinates confusion Potential duplicates SV calling method Two size clusters of potentially duplicated complex variants Effect on allele frequency estimates  GiaB comparison to investigate sequence resolution   Edit April 1 2019: I added columns with the proportion of variants with PASS filter in the tables about the END/POS confusion and duplicated variants.
+The recent gnomAD-SV catalog is potentially a great resource that we could use to annotate SV calls or augment genome graphs with.</description>
     </item>
     
     <item>
@@ -100,7 +101,8 @@ I merge the rare types into a other class and some RNAs.
       
       <guid>/Hippocamplus/2016/06/03/preparing-some-genomic-annotations/</guid>
       <description>Mappability track I produced a mappability track from the UCSC track. The raw file contains, for each base in the genome, an estimation of the probability that a read is correctly mapped at this position.
-Using a sliding-window approach, I compute the average mappability in regions of size 1 Kbp. This is a more manageable amount of data and still informative, especially when interested in large regions (e.g. SVs).</description>
+Using a sliding-window approach, I compute the average mappability in regions of size 1 Kbp. This is a more manageable amount of data and still informative, especially when interested in large regions (e.g. SVs).
+I used a custom Perl script to efficiently parse the bedGraph-transformed original file.</description>
     </item>
     
   </channel>

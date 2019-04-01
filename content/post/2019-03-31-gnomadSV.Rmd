@@ -46,6 +46,10 @@ sv.gr$CPX_TYPE = info(vcf)$CPX_TYPE
 sv.gr$methods = unlist(lapply(info(vcf)$ALGORITHMS, function(x) paste(sort(x), collapse='_')))
 ```
 
+*Edit April 1 2019: I added columns with the proportion of variants with PASS filter in the tables about the END/POS confusion and duplicated variants.*
+
+---
+
 The recent gnomAD-SV catalog is potentially a great resource that we could use to annotate SV calls or augment genome graphs with.
 For now there is a [preprint on bioRxiv](https://www.biorxiv.org/content/10.1101/578674v1) and a [comprehensive blog post](https://macarthurlab.org/2019/03/20/structural-variants-in-gnomad/) that explains how the SVs were called and how to use the catalog. 
 
@@ -148,11 +152,12 @@ Most of it comes from *CTX* (reciprocal chromosomal translocation) variants or t
 
 ```{r end}
 sv.gr %>% as.data.frame %>% group_by(SVTYPE) %>%
-  summarize(end.before.pos=sum(END<start), prop=mean(END<start)) %>%
+  summarize(end.before.pos=sum(END<start), prop=mean(END<start), prop.PASS=mean(FILTER=='PASS')) %>%
   arrange(desc(end.before.pos)) %>% kable(digits=4)
 ```
 
-Some are insertions and I'm not sure how to interpret them.
+Some are insertions and I'm not sure how to interpret them. 
+The vast majority of these variants have a *PASS* filter.
 
 ```{r ins-end}
 subset(sv.gr, SVTYPE=='INS' & start>END) %>% as.data.frame %>%
@@ -215,15 +220,18 @@ ol = findOverlaps(ssv.gr, ssv.gr, maxgap=30) %>% as.data.frame %>%
   filter(olw>50, olw/ql > .9, olw/sl > .9)
 
 ol = ol %>% mutate(types=apply(cbind(ssv.gr$SVTYPE[queryHits], ssv.gr$SVTYPE[subjectHits]), 1, function(x) paste(sort(x), collapse='_')),
-                   methods=apply(cbind(ssv.gr$methods[queryHits], ssv.gr$methods[subjectHits]), 1, function(x) paste(sort(x), collapse='__')))  %>%
+                   methods=apply(cbind(ssv.gr$methods[queryHits], ssv.gr$methods[subjectHits]), 1, function(x) paste(sort(x), collapse='__')),
+                   both.PASS=ssv.gr$FILTER[queryHits]=='PASS' & ssv.gr$FILTER[subjectHits]=='PASS')  %>%
   group_by(types) %>% mutate(n=n()) %>% ungroup %>%
   arrange(desc(n)) %>% mutate(types=factor(types, levels=unique(types)))
 
-ol %>% group_by(types) %>% summarize(n=n()) %>% kable(format.args=list(big.mark=','))
+ol %>% group_by(types) %>% summarize(n=n(), prop.both.PASS=mean(both.PASS)) %>%
+  kable(format.args=list(big.mark=','), digits=4)
 ```
 
 There are **thousands of deletions, insertions and duplications with high reciprocal overlap.**
 Also many complex variants but I can imagine that it's difficult to merge those.
+For the vast majority of pairs, both variants have a *PASS* filter.
 
 Let's look at the size distribution of these potential duplicates.
 
@@ -271,8 +279,8 @@ Duplicates can occur when merging two sets of variants, for example the call set
 Top 10 of the most common pairs:
 
 ```{r dups-meths}
-ol %>% group_by(types, methods) %>% summarize(n=n()) %>% arrange(desc(n)) %>%
-  head(10) %>% kable(format.args=list(big.mark=','))
+ol %>% group_by(types, methods) %>% summarize(n=n(), prop.both.PASS=mean(both.PASS)) %>% 
+  arrange(desc(n)) %>% head(10) %>% kable(format.args=list(big.mark=','), digits=4)
 ```
 
 **For thousands of potential duplicates the variants were called by the same algorithm.**

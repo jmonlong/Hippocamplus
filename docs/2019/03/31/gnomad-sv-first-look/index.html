@@ -195,7 +195,7 @@
   <div class="sidebar-item">
     <div><a href="../../../../index.xml"><i class="fa fa-rss-square" aria-hidden="true"></i> RSS</a></div>
     <div><a href="https://twitter.com/JMonlong"><i class="fa fa-twitter" aria-hidden="true"></i> @JMonlong</a></div>
-    <p>&copy; 2018 Jean Monlong. All rights reserved.</p>
+    <p>&copy; 2019 Jean Monlong. All rights reserved.</p>
   </div>
 </div>
 
@@ -229,9 +229,7 @@
   
   
   </span>
-  
-
-<div id="TOC">
+  <div id="TOC">
 <ul>
 <li><a href="#tldr">TL;DR</a></li>
 <li><a href="#allele-frequency">Allele frequency</a></li>
@@ -246,8 +244,12 @@
 </ul>
 </div>
 
-<p>The recent gnomAD-SV catalog is potentially a great resource that we could use to annotate SV calls or augment genome graphs with. For now there is a <a href="https://www.biorxiv.org/content/10.1101/578674v1">preprint on bioRxiv</a> and a <a href="https://macarthurlab.org/2019/03/20/structural-variants-in-gnomad/">comprehensive blog post</a> that explains how the SVs were called and how to use the catalog.</p>
-<p>I had a quick look at these variants and here are my observations/notes. I’m using the following VCF file from the gnomAD download page: <a href="https://storage.googleapis.com/gnomad-public/papers/2019-sv/gnomad_v2_sv.sites.vcf.gz">gnomad_v2_sv.sites.vcf.gz</a>.</p>
+<p><em>Edit April 1 2019: I added columns with the proportion of variants with PASS filter in the tables about the END/POS confusion and duplicated variants.</em></p>
+<hr />
+<p>The recent gnomAD-SV catalog is potentially a great resource that we could use to annotate SV calls or augment genome graphs with.
+For now there is a <a href="https://www.biorxiv.org/content/10.1101/578674v1">preprint on bioRxiv</a> and a <a href="https://macarthurlab.org/2019/03/20/structural-variants-in-gnomad/">comprehensive blog post</a> that explains how the SVs were called and how to use the catalog.</p>
+<p>I had a quick look at these variants and here are my observations/notes.
+I’m using the following VCF file from the gnomAD download page: <a href="https://storage.googleapis.com/gnomad-public/papers/2019-sv/gnomad_v2_sv.sites.vcf.gz">gnomad_v2_sv.sites.vcf.gz</a>.</p>
 <div id="tldr" class="section level2">
 <h2>TL;DR</h2>
 <ul>
@@ -272,7 +274,9 @@
 <div id="size-distribution" class="section level2">
 <h2>Size distribution</h2>
 <p><img src="../../../../post/2019-03-31-gnomadSV_files/figure-html/size-1.png" width="960" /><img src="../../../../post/2019-03-31-gnomadSV_files/figure-html/size-2.png" width="960" /><img src="../../../../post/2019-03-31-gnomadSV_files/figure-html/size-3.png" width="960" /><img src="../../../../post/2019-03-31-gnomadSV_files/figure-html/size-4.png" width="960" /></p>
-<p>The <strong>peak at 5 kbp is a bit puzzling</strong>. Maybe it’s a technical artifact, e.g. due to a method that detects <em>DEL</em>/<em>DUP</em> only down to 5 kbp. Looking at the variants with absolute <em>SVLEN</em> of exactly 5 kbp:</p>
+<p>The <strong>peak at 5 kbp is a bit puzzling</strong>.
+Maybe it’s a technical artifact, e.g. due to a method that detects <em>DEL</em>/<em>DUP</em> only down to 5 kbp.
+Looking at the variants with absolute <em>SVLEN</em> of exactly 5 kbp:</p>
 <table>
 <thead>
 <tr class="header">
@@ -303,19 +307,22 @@
 </tr>
 </tbody>
 </table>
-<p>It’s most likely an artifact of the <em>depth</em> algorithm. Does it affect the allele frequency distribution?</p>
+<p>It’s most likely an artifact of the <em>depth</em> algorithm.
+Does it affect the allele frequency distribution?</p>
 <p><img src="../../../../post/2019-03-31-gnomadSV_files/figure-html/meths-5kbp-af-1.png" width="960" /></p>
 <p>The tail of the distribution is longer in the 5-6 kbp class.</p>
 </div>
 <div id="sv-coordinates-confusion" class="section level2">
 <h2>SV coordinates confusion</h2>
-<p>It seems like the <strong><em>END</em> value is not always larger than the position <em>POS</em></strong> in the VCF. Most of it comes from <em>CTX</em> (reciprocal chromosomal translocation) variants or translocations which makes sense.</p>
+<p>It seems like the <strong><em>END</em> value is not always larger than the position <em>POS</em></strong> in the VCF.
+Most of it comes from <em>CTX</em> (reciprocal chromosomal translocation) variants or translocations which makes sense.</p>
 <table>
 <thead>
 <tr class="header">
 <th align="left">SVTYPE</th>
 <th align="right">end.before.pos</th>
 <th align="right">prop</th>
+<th align="right">prop.PASS</th>
 </tr>
 </thead>
 <tbody>
@@ -323,150 +330,187 @@
 <td align="left">INS</td>
 <td align="right">358</td>
 <td align="right">0.0031</td>
+<td align="right">0.9973</td>
 </tr>
 <tr class="even">
 <td align="left">CPX</td>
 <td align="right">289</td>
 <td align="right">0.0551</td>
+<td align="right">0.9737</td>
 </tr>
 <tr class="odd">
 <td align="left">BND</td>
 <td align="right">44</td>
 <td align="right">0.0006</td>
+<td align="right">0.0000</td>
 </tr>
 <tr class="even">
 <td align="left">CTX</td>
 <td align="right">6</td>
 <td align="right">0.6667</td>
+<td align="right">1.0000</td>
 </tr>
 <tr class="odd">
 <td align="left">DEL</td>
 <td align="right">0</td>
 <td align="right">0.0000</td>
+<td align="right">0.8833</td>
 </tr>
 <tr class="even">
 <td align="left">DUP</td>
 <td align="right">0</td>
 <td align="right">0.0000</td>
+<td align="right">0.9772</td>
 </tr>
 <tr class="odd">
 <td align="left">INV</td>
 <td align="right">0</td>
 <td align="right">0.0000</td>
+<td align="right">0.9986</td>
 </tr>
 <tr class="even">
 <td align="left">MCNV</td>
 <td align="right">0</td>
 <td align="right">0.0000</td>
+<td align="right">0.0000</td>
 </tr>
 </tbody>
 </table>
-<p>Some are insertions and I’m not sure how to interpret them.</p>
+<p>Some are insertions and I’m not sure how to interpret them.
+The vast majority of these variants have a <em>PASS</em> filter.</p>
 <p><img src="../../../../post/2019-03-31-gnomadSV_files/figure-html/ins-end-1.png" width="960" /></p>
-<p>For most of these insetions the <em>END</em> is not that far from the <em>POS</em> (&lt;100bp) but <strong>for some the <em>END</em> and <em>POS</em> are hundreds of kbp apart</strong>. Hum. Let’s have a look at some of those:</p>
+<p>For most of these insetions the <em>END</em> is not that far from the <em>POS</em> (&lt;100bp) but <strong>for some the <em>END</em> and <em>POS</em> are hundreds of kbp apart</strong>.
+Hum.
+Let’s have a look at some of those:</p>
 <pre><code>## GRanges object with 3 ranges and 12 metadata columns:
-##                         seqnames    ranges strand | paramRangeID
-##                            &lt;Rle&gt; &lt;IRanges&gt;  &lt;Rle&gt; |     &lt;factor&gt;
-##   gnomAD_v2_INS_4_34681        4 116015282      * |         &lt;NA&gt;
-##   gnomAD_v2_INS_2_13594        2  85885163      * |         &lt;NA&gt;
-##   gnomAD_v2_INS_9_69619        9  28199346      * |         &lt;NA&gt;
-##                                    REF             ALT      QUAL
-##                         &lt;DNAStringSet&gt; &lt;CharacterList&gt; &lt;numeric&gt;
-##   gnomAD_v2_INS_4_34681              N    &lt;INS:ME:ALU&gt;       646
-##   gnomAD_v2_INS_2_13594              N    &lt;INS:ME:ALU&gt;       652
-##   gnomAD_v2_INS_9_69619              N           &lt;INS&gt;       407
-##                              FILTER      SVTYPE     SVLEN       END
-##                         &lt;character&gt; &lt;character&gt; &lt;integer&gt; &lt;integer&gt;
-##   gnomAD_v2_INS_4_34681        PASS         INS       281  44565090
-##   gnomAD_v2_INS_2_13594        PASS         INS       279   8372664
-##   gnomAD_v2_INS_9_69619        PASS         INS       136  17898584
-##                                CHR2    CPX_TYPE          methods        AF
-##                         &lt;character&gt; &lt;character&gt;      &lt;character&gt; &lt;numeric&gt;
-##   gnomAD_v2_INS_4_34681           4        &lt;NA&gt; delly_manta_melt   0.00149
-##   gnomAD_v2_INS_2_13594           2        &lt;NA&gt; delly_manta_melt  0.005355
-##   gnomAD_v2_INS_9_69619           9        &lt;NA&gt;      delly_manta  0.057464
+##                         seqnames                 ranges strand |
+##                            &lt;Rle&gt;              &lt;IRanges&gt;  &lt;Rle&gt; |
+##   gnomAD_v2_INS_4_34681        4 [116015282, 116015282]      * |
+##   gnomAD_v2_INS_2_13594        2 [ 85885163,  85885163]      * |
+##   gnomAD_v2_INS_9_69619        9 [ 28199346,  28199346]      * |
+##                         paramRangeID            REF             ALT
+##                             &lt;factor&gt; &lt;DNAStringSet&gt; &lt;CharacterList&gt;
+##   gnomAD_v2_INS_4_34681         &lt;NA&gt;              N    &lt;INS:ME:ALU&gt;
+##   gnomAD_v2_INS_2_13594         &lt;NA&gt;              N    &lt;INS:ME:ALU&gt;
+##   gnomAD_v2_INS_9_69619         &lt;NA&gt;              N           &lt;INS&gt;
+##                              QUAL      FILTER      SVTYPE     SVLEN
+##                         &lt;numeric&gt; &lt;character&gt; &lt;character&gt; &lt;integer&gt;
+##   gnomAD_v2_INS_4_34681       646        PASS         INS       281
+##   gnomAD_v2_INS_2_13594       652        PASS         INS       279
+##   gnomAD_v2_INS_9_69619       407        PASS         INS       136
+##                               END        CHR2    CPX_TYPE          methods
+##                         &lt;integer&gt; &lt;character&gt; &lt;character&gt;      &lt;character&gt;
+##   gnomAD_v2_INS_4_34681  44565090           4        &lt;NA&gt; delly_manta_melt
+##   gnomAD_v2_INS_2_13594   8372664           2        &lt;NA&gt; delly_manta_melt
+##   gnomAD_v2_INS_9_69619  17898584           9        &lt;NA&gt;      delly_manta
+##                                AF
+##                         &lt;numeric&gt;
+##   gnomAD_v2_INS_4_34681  0.001490
+##   gnomAD_v2_INS_2_13594  0.005355
+##   gnomAD_v2_INS_9_69619  0.057464
 ##   -------
 ##   seqinfo: 24 sequences from an unspecified genome</code></pre>
 <p>I don’t see anything else suspicious.</p>
-<p>For complex variants, the <em>POS</em> and <em>END</em> are always less than 100 bp apart and all for one type of complex SV: <strong>“dispersed duplications”</strong>. If I understand correctly, this type of complex SV is pretty much an insertion of a sequence already in the genome (but not a transposable element I guess?).</p>
+<p>For complex variants, the <em>POS</em> and <em>END</em> are always less than 100 bp apart and all for one type of complex SV: <strong>“dispersed duplications”</strong>.
+If I understand correctly, this type of complex SV is pretty much an insertion of a sequence already in the genome (but not a transposable element I guess?).</p>
 <p><img src="../../../../post/2019-03-31-gnomadSV_files/figure-html/cpx-end-1.png" width="960" /></p>
 <p>I’m not sure how to interpret them either.</p>
-<p>For now, I’ll use the <strong>POS field for both insertions and dispersed duplications</strong> when manipulating the variants as genomic intervals. So I’ll assume that they are both simple insertions (which I think is fair enough).</p>
+<p>For now, I’ll use the <strong>POS field for both insertions and dispersed duplications</strong> when manipulating the variants as genomic intervals.
+So I’ll assume that they are both simple insertions (which I think is fair enough).</p>
 </div>
 <div id="potential-duplicates" class="section level2">
 <h2>Potential duplicates</h2>
-<p>Are there any pairs of variants with a <strong>reciprocal overlap higher than 90%</strong>. For insertions, I match them if they are located at less than 30 bp from each other and their size is 90% similar.</p>
+<p>Are there any pairs of variants with a <strong>reciprocal overlap higher than 90%</strong>.
+For insertions, I match them if they are located at less than 30 bp from each other and their size is 90% similar.</p>
 <p>Note: Here I don’t consider <em>BND</em> or <em>CTX</em> variants, and I count each pair of variants only once.</p>
 <table>
 <thead>
 <tr class="header">
 <th align="left">types</th>
 <th align="right">n</th>
+<th align="right">prop.both.PASS</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left">DEL_DEL</td>
 <td align="right">3,335</td>
+<td align="right">0.8237</td>
 </tr>
 <tr class="even">
 <td align="left">INS_INS</td>
 <td align="right">2,221</td>
+<td align="right">0.9955</td>
 </tr>
 <tr class="odd">
 <td align="left">DUP_DUP</td>
 <td align="right">2,057</td>
+<td align="right">0.9728</td>
 </tr>
 <tr class="even">
 <td align="left">CPX_CPX</td>
 <td align="right">1,077</td>
+<td align="right">0.0529</td>
 </tr>
 <tr class="odd">
 <td align="left">DEL_DUP</td>
 <td align="right">797</td>
+<td align="right">0.8821</td>
 </tr>
 <tr class="even">
 <td align="left">CPX_DEL</td>
 <td align="right">253</td>
+<td align="right">0.9921</td>
 </tr>
 <tr class="odd">
 <td align="left">DEL_MCNV</td>
 <td align="right">117</td>
+<td align="right">0.0000</td>
 </tr>
 <tr class="even">
 <td align="left">CPX_DUP</td>
 <td align="right">66</td>
+<td align="right">0.9091</td>
 </tr>
 <tr class="odd">
 <td align="left">DUP_MCNV</td>
 <td align="right">50</td>
+<td align="right">0.0000</td>
 </tr>
 <tr class="even">
 <td align="left">DEL_INV</td>
 <td align="right">10</td>
+<td align="right">1.0000</td>
 </tr>
 <tr class="odd">
 <td align="left">CPX_INS</td>
 <td align="right">6</td>
+<td align="right">1.0000</td>
 </tr>
 <tr class="even">
 <td align="left">DUP_INV</td>
 <td align="right">2</td>
+<td align="right">1.0000</td>
 </tr>
 <tr class="odd">
 <td align="left">CPX_INV</td>
 <td align="right">1</td>
+<td align="right">1.0000</td>
 </tr>
 <tr class="even">
 <td align="left">INV_INV</td>
 <td align="right">1</td>
+<td align="right">1.0000</td>
 </tr>
 </tbody>
 </table>
-<p>There are <strong>thousands of deletions, insertions and duplications with high reciprocal overlap.</strong> Also many complex variants but I can imagine that it’s difficult to merge those.</p>
+<p>There are <strong>thousands of deletions, insertions and duplications with high reciprocal overlap.</strong>
+Also many complex variants but I can imagine that it’s difficult to merge those.
+For the vast majority of pairs, both variants have a <em>PASS</em> filter.</p>
 <p>Let’s look at the size distribution of these potential duplicates.</p>
 <p><img src="../../../../post/2019-03-31-gnomadSV_files/figure-html/dups-size-1.png" width="960" /></p>
-<p>Wow, very “peaky”. Let’s zoom in with no log-scale:</p>
+<p>Wow, very “peaky”.
+Let’s zoom in with no log-scale:</p>
 <p><img src="../../../../post/2019-03-31-gnomadSV_files/figure-html/dups-peaks-1.png" width="960" /><img src="../../../../post/2019-03-31-gnomadSV_files/figure-html/dups-peaks-2.png" width="960" /><img src="../../../../post/2019-03-31-gnomadSV_files/figure-html/dups-peaks-3.png" width="960" /></p>
 <ul>
 <li>The “Alu” peak around 300 bp is made of around 200 insertion pairs.</li>
@@ -476,7 +520,8 @@
 </ul>
 <div id="sv-calling-method" class="section level3">
 <h3>SV calling method</h3>
-<p>Duplicates can occur when merging two sets of variants, for example the call sets of different methods. <strong>Are the potential duplicates from different methods?</strong></p>
+<p>Duplicates can occur when merging two sets of variants, for example the call sets of different methods.
+<strong>Are the potential duplicates from different methods?</strong></p>
 <p>Top 10 of the most common pairs:</p>
 <table>
 <thead>
@@ -484,6 +529,7 @@
 <th align="left">types</th>
 <th align="left">methods</th>
 <th align="right">n</th>
+<th align="right">prop.both.PASS</th>
 </tr>
 </thead>
 <tbody>
@@ -491,60 +537,79 @@
 <td align="left">INS_INS</td>
 <td align="left">manta__manta</td>
 <td align="right">1,639</td>
+<td align="right">0.9969</td>
 </tr>
 <tr class="even">
 <td align="left">DEL_DEL</td>
 <td align="left">delly__delly</td>
 <td align="right">1,110</td>
+<td align="right">0.6009</td>
 </tr>
 <tr class="odd">
 <td align="left">DEL_DEL</td>
 <td align="left">manta__manta</td>
 <td align="right">652</td>
+<td align="right">0.9417</td>
 </tr>
 <tr class="even">
 <td align="left">DUP_DUP</td>
 <td align="left">delly__delly</td>
 <td align="right">576</td>
+<td align="right">0.9688</td>
 </tr>
 <tr class="odd">
 <td align="left">CPX_CPX</td>
 <td align="left">delly__delly</td>
 <td align="right">528</td>
+<td align="right">0.0436</td>
 </tr>
 <tr class="even">
 <td align="left">INS_INS</td>
 <td align="left">melt__melt</td>
 <td align="right">489</td>
+<td align="right">0.9918</td>
 </tr>
 <tr class="odd">
 <td align="left">DUP_DUP</td>
 <td align="left">manta__manta</td>
 <td align="right">443</td>
+<td align="right">0.9842</td>
 </tr>
 <tr class="even">
 <td align="left">DEL_DUP</td>
 <td align="left">depth__depth</td>
 <td align="right">395</td>
+<td align="right">0.8785</td>
 </tr>
 <tr class="odd">
 <td align="left">DUP_DUP</td>
 <td align="left">delly__manta</td>
 <td align="right">376</td>
+<td align="right">0.9787</td>
 </tr>
 <tr class="even">
 <td align="left">DEL_DEL</td>
 <td align="left">delly__manta</td>
 <td align="right">319</td>
+<td align="right">0.9310</td>
 </tr>
 </tbody>
 </table>
-<p><strong>For thousands of potential duplicates the variants were called by the same algorithm.</strong> The question is then: were these methods run once in a “single-sample” mode or on all the samples together? I think at least Delly and MELT can do the genotyping step across all samples together. Even in those, there can be duplicates in the discovery phase that are not merged properly before genotyping.</p>
-<p>I’m still not sure if these deletions/duplications/MEIs are actually different SVs. Especially the mobile element insertions, I would lean toward them being duplicates. Otherwise, it means the TE jumped and then got an indel later. It’s possible but maybe not that often. Also, the comparison with GiaB below shows that we are not there yet in term of bp resolution. <strong>It might be safer to assume these variants are duplicates.</strong></p>
+<p><strong>For thousands of potential duplicates the variants were called by the same algorithm.</strong>
+The question is then: were these methods run once in a “single-sample” mode or on all the samples together?
+I think at least Delly and MELT can do the genotyping step across all samples together.
+Even in those, there can be duplicates in the discovery phase that are not merged properly before genotyping.</p>
+<p>I’m still not sure if these deletions/duplications/MEIs are actually different SVs.
+Especially the mobile element insertions, I would lean toward them being duplicates.
+Otherwise, it means the TE jumped and then got an indel later.
+It’s possible but maybe not that often.
+Also, the comparison with GiaB below shows that we are not there yet in term of bp resolution.
+<strong>It might be safer to assume these variants are duplicates.</strong></p>
 </div>
 <div id="two-size-clusters-of-potentially-duplicated-complex-variants" class="section level3">
 <h3>Two size clusters of potentially duplicated complex variants</h3>
-<p>Above, we saw two groups of potentially duplicated complex variants that clustered by size. Defining size clusters 1 and 2 for the complex variants of sizes around 120 kbp and 160 kbp, respectively.</p>
+<p>Above, we saw two groups of potentially duplicated complex variants that clustered by size.
+Defining size clusters 1 and 2 for the complex variants of sizes around 120 kbp and 160 kbp, respectively.</p>
 <p><img src="../../../../post/2019-03-31-gnomadSV_files/figure-html/dups-cpx-1.png" width="960" /></p>
 <p>Some do cluster together in the genome and, looking up a few of them, they seem to be in segmental duplications.</p>
 <table>
@@ -595,20 +660,31 @@
 <p><strong>What is the potential effect of these duplicated variants on the frequency annotation?</strong></p>
 <p>Below, I compare the allele frequencies of each variant and its potential duplicate.</p>
 <p><img src="../../../../post/2019-03-31-gnomadSV_files/figure-html/dups-af-1.png" width="960" /></p>
-<p><strong>Most pairs of potential duplicates have similar frequencies.</strong> Does that mean that the frequencies of these variants are supposed to be the double of what we have?</p>
-<p>Let’s zoom in to the long tail with the highest difference in allele frequency. To make the graph clearer, I compare the lowest frequency to the highest.</p>
+<p><strong>Most pairs of potential duplicates have similar frequencies.</strong>
+Does that mean that the frequencies of these variants are supposed to be the double of what we have?</p>
+<p>Let’s zoom in to the long tail with the highest difference in allele frequency.
+To make the graph clearer, I compare the lowest frequency to the highest.</p>
 <p><img src="../../../../post/2019-03-31-gnomadSV_files/figure-html/dups-af-scatter-1.png" width="960" /></p>
 <ul>
 <li>Some SVs with low frequencies might be a duplicate of a SV with higher frequency.</li>
 <li>E.g. 827 of these variants have AF&lt;0.1% while the other variant has AF&gt;1%.</li>
 </ul>
-<p>Although it’s only a minority of cases, <strong>we should be careful when matching our SVs to this catalog.</strong> Otherwise we might think that a variant is rarer than it is. Instead of annotating a SV with the allele frequency of the most similar SV in gnomAD-SV, a more robust strategy would be to use the maximum frequency across all SVs that are similar enough. That’s what we had done when annotating CNVs in our <a href="https://doi.org/10.1371/journal.pgen.1007285">epilepsy study</a>, although we were being maybe too conservative by considering any overlapping SV. For short deletions it’s fine, but in general a <em>reciprocal overlap &gt; XX%</em> matchin would be less conservative.</p>
+<p>Although it’s only a minority of cases, <strong>we should be careful when matching our SVs to this catalog.</strong>
+Otherwise we might think that a variant is rarer than it is.
+Instead of annotating a SV with the allele frequency of the most similar SV in gnomAD-SV, a more robust strategy would be to use the maximum frequency across all SVs that are similar enough.
+That’s what we had done when annotating CNVs in our <a href="https://doi.org/10.1371/journal.pgen.1007285">epilepsy study</a>, although we were being maybe too conservative by considering any overlapping SV.
+For short deletions it’s fine, but in general a <em>reciprocal overlap &gt; XX%</em> matchin would be less conservative.</p>
 </div>
 </div>
 <div id="giab-comparison-to-investigate-sequence-resolution" class="section level2">
 <h2>GiaB comparison to investigate sequence resolution</h2>
-<p>The Genome in a Bottle consortium combined many types of techonologies (ultra deep short-read, linked-reads, long reads, optical mapping) to generate a <strong>high-quality SV catalog</strong>. Maybe not all variants are correct but it’s one of the best quality catalog we have. I want to quickly compare these SVs with the ones in the gnomAD catalog. If many variants look exactly the same in both datasets, it would be good evidence that they are both sequence-resolved.</p>
-<p>I downloaded the <a href="ftp://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/data/AshkenazimTrio/analysis/NIST_SVs_Integration_v0.6/">NIST SVs Integration v0.6</a>. This catalog also uses GRCh37. It includes short indels that I decided to filter out, keeping only variants of size 50 bp or more.</p>
+<p>The Genome in a Bottle consortium combined many types of techonologies (ultra deep short-read, linked-reads, long reads, optical mapping) to generate a <strong>high-quality SV catalog</strong>.
+Maybe not all variants are correct but it’s one of the best quality catalog we have.
+I want to quickly compare these SVs with the ones in the gnomAD catalog.
+If many variants look exactly the same in both datasets, it would be good evidence that they are both sequence-resolved.</p>
+<p>I downloaded the <a href="ftp://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/data/AshkenazimTrio/analysis/NIST_SVs_Integration_v0.6/">NIST SVs Integration v0.6</a>.
+This catalog also uses GRCh37.
+It includes short indels that I decided to filter out, keeping only variants of size 50 bp or more.</p>
 <table>
 <thead>
 <tr class="header">
@@ -636,9 +712,12 @@
 </tr>
 </tbody>
 </table>
-<p>I’m curious to compare the exact breakpoint locations of SVs shared by both catalogs. Do they have exactly the same breakpoints/sequence? To make things easier let’s just look at deletions.</p>
+<p>I’m curious to compare the exact breakpoint locations of SVs shared by both catalogs.
+Do they have exactly the same breakpoints/sequence?
+To make things easier let’s just look at deletions.</p>
 <p><img src="../../../../post/2019-03-31-gnomadSV_files/figure-html/giab-del-1.png" width="960" /></p>
-<p>Many deletions in the gnomAD catalog are <strong>extremely similar</strong> to the GiaB dataset <strong>but not exactly the same</strong>. Some examples (randomly selected):</p>
+<p>Many deletions in the gnomAD catalog are <strong>extremely similar</strong> to the GiaB dataset <strong>but not exactly the same</strong>.
+Some examples (randomly selected):</p>
 <table>
 <thead>
 <tr class="header">
@@ -749,8 +828,12 @@
 </tr>
 </tbody>
 </table>
-<p>This quick comparison suggests that the variants are not really sequence-resolved. <strong>In gnomAD, the GiaB dataset, or both, the breakpoints might have a few errors.</strong> That will be important when genotyping these SVs or injecting them in genome graphs.</p>
-<p>Of note, I’m not sure if the variants were left-aligned. It’s not a big deal because we see that the deletions are discordant in term of size anyway. Still, both VCF should be normalized first to better estimate how many deletions are exactly matched.</p>
+<p>This quick comparison suggests that the variants are not really sequence-resolved.
+<strong>In gnomAD, the GiaB dataset, or both, the breakpoints might have a few errors.</strong>
+That will be important when genotyping these SVs or injecting them in genome graphs.</p>
+<p>Of note, I’m not sure if the variants were left-aligned.
+It’s not a big deal because we see that the deletions are discordant in term of size anyway.
+Still, both VCF should be normalized first to better estimate how many deletions are exactly matched.</p>
 </div>
 
 </div>
