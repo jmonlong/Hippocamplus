@@ -5,9 +5,12 @@
 *.out
 *.snm
 *.gz
+*.vcf
+*.csv
 *.toc
 auto
 .Rhistory
+*.RData
 docs/*/*Rmkd
 cache
 blogdown

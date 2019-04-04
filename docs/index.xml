@@ -6,7 +6,7 @@
     <language>en-us</language>
     <author>Mark Otto</author>
     <rights>(C) 2019</rights>
-    <updated>2019-03-31 00:00:00 &#43;0000 UTC</updated>
+    <updated>2019-04-03 00:00:00 &#43;0000 UTC</updated>
 
     
       
@@ -27,6 +27,391 @@
     
       
     
+      
+    
+      
+        <item>
+          <title>Cancer genes and CNA hotspots</title>
+          <link>/Hippocamplus/2019/04/03/cancer-genes-cna-r/</link>
+          <pubDate>Wed, 03 Apr 2019 00:00:00 UTC</pubDate>
+          <author>Mark Otto</author>
+          <guid>/Hippocamplus/2019/04/03/cancer-genes-cna-r/</guid>
+          <description>&lt;div id=&#34;TOC&#34;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#candidate-cancer-gene-database-ccgd&#34;&gt;Candidate Cancer Gene Database (CCGD)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#cancer-gene-census&#34;&gt;Cancer Gene Census&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#merge-the-gene-lists&#34;&gt;Merge the gene lists&lt;/a&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#effect-vs-role&#34;&gt;“Effect” vs “Role” ?&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#known-cna-hotspots&#34;&gt;Known CNA hotspots&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#saving-the-r-objects&#34;&gt;Saving the R objects&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;p&gt;This is an updated version of an old private post where I had prepared some R objects with cancer genes and CNA hotspots.
+I used this to quickly annotate copy number results in cancer projects.
+The file was almost 3 years old so here is an updated version (as of today, Apr 3 2019).&lt;/p&gt;
+&lt;div id=&#34;candidate-cancer-gene-database-ccgd&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Candidate Cancer Gene Database (CCGD)&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The &lt;a href=&#34;http://ccgd-starrlab.oit.umn.edu/about.php&#34;&gt;Candidate Cancer Gene Database (CCGD)&lt;/a&gt; was developed to disseminate the results of transposon-based forward genetic screens in mice that identify candidate cancer genes.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;I downloaded the version available on Apr 3 2019.
+There is information about each study that reports a gene as a cancer driver.
+I’m mostly interested about the list of cancer driver.
+As a secondary information, I will save the cancer type(s) and the predicted effect for each gene.&lt;/p&gt;
+&lt;p&gt;For each study, the predicted effect is either &lt;em&gt;Not Determined&lt;/em&gt;, &lt;em&gt;Gain&lt;/em&gt; or &lt;em&gt;Loss&lt;/em&gt;.
+I define an &lt;em&gt;effect&lt;/em&gt; field with the major “determined” effect.
+The &lt;em&gt;effects&lt;/em&gt; column contains all the predicted effect with the number of supporting studies.
+It looks like this:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;gene&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;effect&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;effects&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;ABCD3&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Gain&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Not Determined(3),Gain(1)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;ADAM19&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Gain&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Gain(1)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;AAK1&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Loss&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Not Determined(6),Loss(1)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;ABHD2&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Loss&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Not Determined(7),Loss(1)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;A1CF&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Not Determined&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Not Determined(3)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;A4GALT&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Not Determined&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Not Determined(1)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;In total, there are 9488 cancer driver genes in this list.
+For most of them we don’t know the effect.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;effect&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;gene&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Not Determined&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;8141&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Loss&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1151&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Gain&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;196&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;cancer-gene-census&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Cancer Gene Census&lt;/h2&gt;
+&lt;p&gt;The gene list can be downloaded from the &lt;a href=&#34;https://cancer.sanger.ac.uk/cosmic/download&#34;&gt;COSMIC website&lt;/a&gt;.
+The user must register and login to download.
+I’m using version 88 on GRCh38.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The cancer Gene Census is an ongoing effort to catalogue those genes for which mutations have been causally implicated in cancer. The original census and analysis was published in &lt;a href=&#34;http://www.nature.com/nrc/journal/v4/n3/abs/nrc1299.html&#34;&gt;Nature Reviews Cancer&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Here the genes are either &lt;em&gt;oncogene&lt;/em&gt;, &lt;em&gt;TSG&lt;/em&gt; or &lt;em&gt;fusion&lt;/em&gt; (or a combination of those).
+I’ll also save the tumor types where somatic mutations were observed.
+It looks like this:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;gene&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;role&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;cgcTumor&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;A1CF&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;oncogene&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;melanoma&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;ABI1&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;TSG, fusion&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;AML&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;ABL1&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;oncogene, fusion&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;CML, ALL, T-ALL&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;ABL2&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;oncogene, fusion&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;AML&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;ACKR3&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;oncogene, fusion&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;lipoma&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;ACSL3&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;fusion&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;prostate&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;In total, there are 723 cancer driver genes in this list.
+The role are distributed as follows:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;role&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;gene&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;fusion&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;363&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;oncogene&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;315&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;TSG&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;315&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;merge-the-gene-lists&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Merge the gene lists&lt;/h2&gt;
+&lt;p&gt;I merged the two gene lists into a &lt;em&gt;driver.genes&lt;/em&gt; data.frame:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;gene&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;effect&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;effects&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;ccgdTumor&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;role&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;cgcTumor&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;ccgd&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;cgc&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;ACKR3&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;NA&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;NA&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;NA&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;oncogene, fusion&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;lipoma&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;FALSE&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;TRUE&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;ACSL3&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;NA&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;NA&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;NA&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;fusion&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;prostate&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;FALSE&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;TRUE&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;A4GALT&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Not Determined&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Not Determined(1)&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Blood Cancer&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;NA&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;NA&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;TRUE&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;FALSE&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;AAAS&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Not Determined&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Not Determined(1)&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Colorectal Cancer&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;NA&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;NA&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;TRUE&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;FALSE&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;A1CF&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Not Determined&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Not Determined(3)&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Liver Cancer&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;oncogene&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;melanoma&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;TRUE&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;TRUE&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;ACSL6&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Not Determined&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Not Determined(2)&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Blood Cancer&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;fusion&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;AML, AEL&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;TRUE&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;TRUE&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;div id=&#34;effect-vs-role&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;“Effect” vs “Role” ?&lt;/h3&gt;
+&lt;p&gt;I would expect a &lt;em&gt;loss&lt;/em&gt; for a &lt;em&gt;tumor suppressor&lt;/em&gt;, and a &lt;em&gt;gain&lt;/em&gt; of function for &lt;em&gt;oncogenes&lt;/em&gt;.
+Are the two databases consistent ?&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;effect&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;role&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;gene&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Loss&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;TSG&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;42&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Loss&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;TSG, fusion&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;21&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Loss&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;fusion&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;19&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Loss&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;oncogene, fusion&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;17&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Gain&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;oncogene, fusion&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;12&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Loss&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;oncogene&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;12&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Gain&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;oncogene&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;8&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Loss&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;oncogene, TSG&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;6&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Gain&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;oncogene, TSG, fusion&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;5&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Gain&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;TSG&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;5&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Gain&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;fusion&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Loss&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;oncogene, TSG, fusion&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Gain&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;TSG, fusion&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Gain&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;oncogene, TSG&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Kind of:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Most of the &lt;em&gt;Loss&lt;/em&gt; effects are &lt;em&gt;TSG&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;Most of the &lt;em&gt;Gain&lt;/em&gt; effects are &lt;em&gt;oncogene&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;However several &lt;em&gt;Loss&lt;/em&gt; are also &lt;em&gt;oncogene&lt;/em&gt;, etc.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;known-cna-hotspots&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Known CNA hotspots&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.nature.com/ng/journal/v45/n10/full/ng.2760.html&#34;&gt;Zack et al&lt;/a&gt; identified hotspots of somatic CNA from ~5,000 tumors across 11 cancer types.
+They called CNA from the SNP-array in TCGA.
+I downloaded Supp Table 2, the pan-cancer regions of significant somatic CNA, and cleaned up the &lt;em&gt;xls&lt;/em&gt; file into a &lt;em&gt;csv&lt;/em&gt; file.&lt;/p&gt;
+&lt;p&gt;In total there are 140 CNA hotspots.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;type&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;region&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;gain&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;70&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;loss&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;70&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;Caution: this is hg19!&lt;/strong&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;saving-the-r-objects&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Saving the R objects&lt;/h2&gt;
+&lt;p&gt;I saved the &lt;em&gt;driver.genes&lt;/em&gt; data.frame and the &lt;em&gt;cna.zack.hg19.gr&lt;/em&gt; GRanges object into a &lt;code&gt;.RData&lt;/code&gt; file .
+It’s available &lt;a href=&#34;https://dl.dropboxusercontent.com/s/kayue1w92no4nz4/cancerDriverGenes.RData?dl=0&#34;&gt;there&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+        </item>
       
     
       

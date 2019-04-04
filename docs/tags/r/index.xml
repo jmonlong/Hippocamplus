@@ -6,10 +6,19 @@
     <description>Recent content in R on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 17 Nov 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 03 Apr 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/Hippocamplus/tags/r/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Cancer genes and CNA hotspots</title>
+      <link>/Hippocamplus/2019/04/03/cancer-genes-cna-r/</link>
+      <pubDate>Wed, 03 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/Hippocamplus/2019/04/03/cancer-genes-cna-r/</guid>
+      <description>Candidate Cancer Gene Database (CCGD) Cancer Gene Census Merge the gene lists “Effect” vs “Role” ?  Known CNA hotspots Saving the R objects   This is an updated version of an old private post where I had prepared some R objects with cancer genes and CNA hotspots. I used this to quickly annotate copy number results in cancer projects. The file was almost 3 years old so here is an updated version (as of today, Apr 3 2019).</description>
+    </item>
     
     <item>
       <title>Speeding up blogdown/Pandoc for large bibliography</title>

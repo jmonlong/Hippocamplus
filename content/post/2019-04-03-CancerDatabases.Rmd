@@ -1,0 +1,157 @@
+---
+title: Cancer genes and CNA hotspots
+date: 2019-04-03
+tags: ["genome", "data", "R"]
+slug: cancer-genes-cna-r
+output:
+  blogdown::html_page:
+    toc: true
+---
+
+```{r include=FALSE}
+knitr::opts_chunk$set(fig.width=15, echo=FALSE, message=FALSE, warning=FALSE)
+```
+
+```{r}
+library(data.table)
+library(ggplot2)
+library(dplyr)
+library(magrittr)
+library(GenomicRanges)
+library(knitr)
+library(tidyr)
+effectC <- function(x, major.only=TRUE){
+  xt = sort(table(x), decreasing=TRUE)
+  if(major.only){
+    if(all(x=="Not Determined")) return("Not Determined")
+    return(head(setdiff(names(xt), "Not Determined"), 1))
+  }
+  return(paste(paste0(names(xt),"(",xt,")"), collapse=","))
+}
+```
+
+This is an updated version of an old private post where I had prepared some R objects with cancer genes and CNA hotspots.
+I used this to quickly annotate copy number results in cancer projects. 
+The file was almost 3 years old so here is an updated version (as of today, Apr 3 2019).
+
+## Candidate Cancer Gene Database (CCGD)
+
+> The [Candidate Cancer Gene Database (CCGD)](http://ccgd-starrlab.oit.umn.edu/about.php) was developed to disseminate the results of transposon-based forward genetic screens in mice that identify candidate cancer genes. 
+
+I downloaded the version available on Apr 3 2019.
+There is information about each study that reports a gene as a cancer driver. 
+I'm mostly interested about the list of cancer driver.
+As a secondary information, I will save the cancer type(s) and the predicted effect for each gene.
+
+For each study, the predicted effect is either *Not Determined*, *Gain* or *Loss*.
+I define an *effect* field with the major "determined" effect. 
+The *effects* column contains all the predicted effect with the number of supporting studies.
+It looks like this:
+
+```{r ccgd}
+if(!file.exists("CCGD_export.csv")) {
+  download.file("http://ccgd-starrlab.oit.umn.edu/dump.php","CCGD_export.csv", quiet=TRUE)
+}
+ccgd = read.csv("CCGD_export.csv", as.is=TRUE)
+
+ccgd %<>% filter(Human.Symbol!="") %>% mutate(gene=Human.Symbol) %>%
+  group_by(gene) %>%
+  summarize(effect=effectC(Predicted.Effect),
+            effects=effectC(Predicted.Effect, major.only=FALSE),
+            ccgdTumor=paste(sort(unique(Cancer.Type)), collapse=","))
+
+ccgd %>% group_by(effect) %>% do(head(.,2)) %>%
+  select(gene, effect, effects) %>% kable
+```
+
+In total, there are `r nrow(ccgd)` cancer driver genes in this list. 
+For most of them we don't know the effect.
+
+```{r ccgdeff}
+ccgd %>% group_by(effect) %>% summarize(gene=n()) %>% arrange(desc(gene)) %>% kable
+```
+
+## Cancer Gene Census
+
+The gene list can be downloaded from the [COSMIC website](https://cancer.sanger.ac.uk/cosmic/download).
+The user must register and login to download.
+I'm using version 88 on GRCh38.
+
+> The cancer Gene Census is an ongoing effort to catalogue those genes for which mutations have been causally implicated in cancer. The original census and analysis was published in [Nature Reviews Cancer](http://www.nature.com/nrc/journal/v4/n3/abs/nrc1299.html).
+
+Here the genes are either *oncogene*, *TSG* or *fusion* (or a combination of those). 
+I'll also save the tumor types where somatic mutations were observed.
+It looks like this:
+
+```{r cgc}
+cgc = read.csv("cancer_gene_census.csv", as.is=TRUE)
+cgc %<>% mutate(gene=Gene.Symbol, role=Role.in.Cancer, cgcTumor=Tumour.Types.Somatic.) %>% select(gene, role, cgcTumor)
+cgc %>% head %>% kable
+```
+
+In total, there are `r nrow(cgc)` cancer driver genes in this list. 
+The role are distributed as follows:
+
+```{r cgceff}
+cgc$role %>% strsplit(', ') %>% unlist %>%
+  tibble(role=.) %>% group_by(role) %>%
+  summarize(gene=n()) %>% arrange(desc(gene)) %>% kable
+```
+
+
+## Merge the gene lists
+
+I merged the two gene lists into a *driver.genes* data.frame:
+
+```{r merge}
+driver.genes = merge(ccgd, cgc, all=TRUE)
+driver.genes %<>% mutate(ccgd=!is.na(effect), cgc=!is.na(role))
+driver.genes %>% filter(!grepl(",", ccgdTumor)) %>% group_by(ccgd, cgc) %>% do(head(.,2)) %>% kable
+```
+
+
+###  "Effect" vs "Role" ?
+
+I would expect a *loss* for a *tumor suppressor*, and a *gain* of function for *oncogenes*.
+Are the two databases consistent ?
+
+```{r effrole}
+driver.genes %>% filter(effect!="Not Determined", role!="") %>% group_by(effect, role) %>% summarize(gene=n()) %>% arrange(desc(gene)) %>% kable
+```
+
+Kind of: 
+
++ Most of the *Loss* effects are *TSG*.
++ Most of the *Gain* effects are *oncogene*.
++ However several *Loss* are also *oncogene*, etc.
+
+
+## Known CNA hotspots
+
+[Zack et al](http://www.nature.com/ng/journal/v45/n10/full/ng.2760.html) identified hotspots of somatic CNA from ~5,000 tumors across 11 cancer types. 
+They called CNA from the SNP-array in TCGA.
+I downloaded Supp Table 2, the pan-cancer regions of significant somatic CNA, and cleaned up the *xls* file into a *csv* file.
+
+```{r cna}
+cna.zack = read.csv("zackPancancerHS.csv", header=TRUE, as.is=TRUE)
+cna.zack.hg19.gr = cna.zack$Peak.region %>% gsub("chr","",.) %>% GRanges
+cna.zack.hg19.gr$name = cna.zack$Peak.Name
+cna.zack.hg19.gr$type = cna.zack$type
+```
+
+In total there are `r length(cna.zack.hg19.gr)` CNA hotspots.
+
+```{r cnadetails}
+mcols(cna.zack.hg19.gr) %>% as.data.frame %>% group_by(type) %>% summarize(region=n()) %>% kable
+```
+
+**Caution: this is hg19!**
+
+## Saving the R objects
+
+```{r save}
+save(driver.genes, cna.zack.hg19.gr, file="cancerDriverGenes.RData")
+```
+
+I saved the *driver.genes* data.frame and the *cna.zack.hg19.gr* GRanges object into a `.RData` file . 
+It's available [there](https://dl.dropboxusercontent.com/s/kayue1w92no4nz4/cancerDriverGenes.RData?dl=0).

@@ -1,0 +1,385 @@
+---
+title: Cancer genes and CNA hotspots
+date: 2019-04-03
+tags: ["genome", "data", "R"]
+slug: cancer-genes-cna-r
+output:
+  blogdown::html_page:
+    toc: true
+---
+
+
+<div id="TOC">
+<ul>
+<li><a href="#candidate-cancer-gene-database-ccgd">Candidate Cancer Gene Database (CCGD)</a></li>
+<li><a href="#cancer-gene-census">Cancer Gene Census</a></li>
+<li><a href="#merge-the-gene-lists">Merge the gene lists</a><ul>
+<li><a href="#effect-vs-role">“Effect” vs “Role” ?</a></li>
+</ul></li>
+<li><a href="#known-cna-hotspots">Known CNA hotspots</a></li>
+<li><a href="#saving-the-r-objects">Saving the R objects</a></li>
+</ul>
+</div>
+
+<p>This is an updated version of an old private post where I had prepared some R objects with cancer genes and CNA hotspots.
+I used this to quickly annotate copy number results in cancer projects.
+The file was almost 3 years old so here is an updated version (as of today, Apr 3 2019).</p>
+<div id="candidate-cancer-gene-database-ccgd" class="section level2">
+<h2>Candidate Cancer Gene Database (CCGD)</h2>
+<blockquote>
+<p>The <a href="http://ccgd-starrlab.oit.umn.edu/about.php">Candidate Cancer Gene Database (CCGD)</a> was developed to disseminate the results of transposon-based forward genetic screens in mice that identify candidate cancer genes.</p>
+</blockquote>
+<p>I downloaded the version available on Apr 3 2019.
+There is information about each study that reports a gene as a cancer driver.
+I’m mostly interested about the list of cancer driver.
+As a secondary information, I will save the cancer type(s) and the predicted effect for each gene.</p>
+<p>For each study, the predicted effect is either <em>Not Determined</em>, <em>Gain</em> or <em>Loss</em>.
+I define an <em>effect</em> field with the major “determined” effect.
+The <em>effects</em> column contains all the predicted effect with the number of supporting studies.
+It looks like this:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">gene</th>
+<th align="left">effect</th>
+<th align="left">effects</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">ABCD3</td>
+<td align="left">Gain</td>
+<td align="left">Not Determined(3),Gain(1)</td>
+</tr>
+<tr class="even">
+<td align="left">ADAM19</td>
+<td align="left">Gain</td>
+<td align="left">Gain(1)</td>
+</tr>
+<tr class="odd">
+<td align="left">AAK1</td>
+<td align="left">Loss</td>
+<td align="left">Not Determined(6),Loss(1)</td>
+</tr>
+<tr class="even">
+<td align="left">ABHD2</td>
+<td align="left">Loss</td>
+<td align="left">Not Determined(7),Loss(1)</td>
+</tr>
+<tr class="odd">
+<td align="left">A1CF</td>
+<td align="left">Not Determined</td>
+<td align="left">Not Determined(3)</td>
+</tr>
+<tr class="even">
+<td align="left">A4GALT</td>
+<td align="left">Not Determined</td>
+<td align="left">Not Determined(1)</td>
+</tr>
+</tbody>
+</table>
+<p>In total, there are 9488 cancer driver genes in this list.
+For most of them we don’t know the effect.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">effect</th>
+<th align="right">gene</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Not Determined</td>
+<td align="right">8141</td>
+</tr>
+<tr class="even">
+<td align="left">Loss</td>
+<td align="right">1151</td>
+</tr>
+<tr class="odd">
+<td align="left">Gain</td>
+<td align="right">196</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="cancer-gene-census" class="section level2">
+<h2>Cancer Gene Census</h2>
+<p>The gene list can be downloaded from the <a href="https://cancer.sanger.ac.uk/cosmic/download">COSMIC website</a>.
+The user must register and login to download.
+I’m using version 88 on GRCh38.</p>
+<blockquote>
+<p>The cancer Gene Census is an ongoing effort to catalogue those genes for which mutations have been causally implicated in cancer. The original census and analysis was published in <a href="http://www.nature.com/nrc/journal/v4/n3/abs/nrc1299.html">Nature Reviews Cancer</a>.</p>
+</blockquote>
+<p>Here the genes are either <em>oncogene</em>, <em>TSG</em> or <em>fusion</em> (or a combination of those).
+I’ll also save the tumor types where somatic mutations were observed.
+It looks like this:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">gene</th>
+<th align="left">role</th>
+<th align="left">cgcTumor</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">A1CF</td>
+<td align="left">oncogene</td>
+<td align="left">melanoma</td>
+</tr>
+<tr class="even">
+<td align="left">ABI1</td>
+<td align="left">TSG, fusion</td>
+<td align="left">AML</td>
+</tr>
+<tr class="odd">
+<td align="left">ABL1</td>
+<td align="left">oncogene, fusion</td>
+<td align="left">CML, ALL, T-ALL</td>
+</tr>
+<tr class="even">
+<td align="left">ABL2</td>
+<td align="left">oncogene, fusion</td>
+<td align="left">AML</td>
+</tr>
+<tr class="odd">
+<td align="left">ACKR3</td>
+<td align="left">oncogene, fusion</td>
+<td align="left">lipoma</td>
+</tr>
+<tr class="even">
+<td align="left">ACSL3</td>
+<td align="left">fusion</td>
+<td align="left">prostate</td>
+</tr>
+</tbody>
+</table>
+<p>In total, there are 723 cancer driver genes in this list.
+The role are distributed as follows:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">role</th>
+<th align="right">gene</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">fusion</td>
+<td align="right">363</td>
+</tr>
+<tr class="even">
+<td align="left">oncogene</td>
+<td align="right">315</td>
+</tr>
+<tr class="odd">
+<td align="left">TSG</td>
+<td align="right">315</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="merge-the-gene-lists" class="section level2">
+<h2>Merge the gene lists</h2>
+<p>I merged the two gene lists into a <em>driver.genes</em> data.frame:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">gene</th>
+<th align="left">effect</th>
+<th align="left">effects</th>
+<th align="left">ccgdTumor</th>
+<th align="left">role</th>
+<th align="left">cgcTumor</th>
+<th align="left">ccgd</th>
+<th align="left">cgc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">ACKR3</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">oncogene, fusion</td>
+<td align="left">lipoma</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+</tr>
+<tr class="even">
+<td align="left">ACSL3</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">fusion</td>
+<td align="left">prostate</td>
+<td align="left">FALSE</td>
+<td align="left">TRUE</td>
+</tr>
+<tr class="odd">
+<td align="left">A4GALT</td>
+<td align="left">Not Determined</td>
+<td align="left">Not Determined(1)</td>
+<td align="left">Blood Cancer</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">AAAS</td>
+<td align="left">Not Determined</td>
+<td align="left">Not Determined(1)</td>
+<td align="left">Colorectal Cancer</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">TRUE</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">A1CF</td>
+<td align="left">Not Determined</td>
+<td align="left">Not Determined(3)</td>
+<td align="left">Liver Cancer</td>
+<td align="left">oncogene</td>
+<td align="left">melanoma</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+</tr>
+<tr class="even">
+<td align="left">ACSL6</td>
+<td align="left">Not Determined</td>
+<td align="left">Not Determined(2)</td>
+<td align="left">Blood Cancer</td>
+<td align="left">fusion</td>
+<td align="left">AML, AEL</td>
+<td align="left">TRUE</td>
+<td align="left">TRUE</td>
+</tr>
+</tbody>
+</table>
+<div id="effect-vs-role" class="section level3">
+<h3>“Effect” vs “Role” ?</h3>
+<p>I would expect a <em>loss</em> for a <em>tumor suppressor</em>, and a <em>gain</em> of function for <em>oncogenes</em>.
+Are the two databases consistent ?</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">effect</th>
+<th align="left">role</th>
+<th align="right">gene</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Loss</td>
+<td align="left">TSG</td>
+<td align="right">42</td>
+</tr>
+<tr class="even">
+<td align="left">Loss</td>
+<td align="left">TSG, fusion</td>
+<td align="right">21</td>
+</tr>
+<tr class="odd">
+<td align="left">Loss</td>
+<td align="left">fusion</td>
+<td align="right">19</td>
+</tr>
+<tr class="even">
+<td align="left">Loss</td>
+<td align="left">oncogene, fusion</td>
+<td align="right">17</td>
+</tr>
+<tr class="odd">
+<td align="left">Gain</td>
+<td align="left">oncogene, fusion</td>
+<td align="right">12</td>
+</tr>
+<tr class="even">
+<td align="left">Loss</td>
+<td align="left">oncogene</td>
+<td align="right">12</td>
+</tr>
+<tr class="odd">
+<td align="left">Gain</td>
+<td align="left">oncogene</td>
+<td align="right">8</td>
+</tr>
+<tr class="even">
+<td align="left">Loss</td>
+<td align="left">oncogene, TSG</td>
+<td align="right">6</td>
+</tr>
+<tr class="odd">
+<td align="left">Gain</td>
+<td align="left">oncogene, TSG, fusion</td>
+<td align="right">5</td>
+</tr>
+<tr class="even">
+<td align="left">Gain</td>
+<td align="left">TSG</td>
+<td align="right">5</td>
+</tr>
+<tr class="odd">
+<td align="left">Gain</td>
+<td align="left">fusion</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td align="left">Loss</td>
+<td align="left">oncogene, TSG, fusion</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Gain</td>
+<td align="left">TSG, fusion</td>
+<td align="right">3</td>
+</tr>
+<tr class="even">
+<td align="left">Gain</td>
+<td align="left">oncogene, TSG</td>
+<td align="right">2</td>
+</tr>
+</tbody>
+</table>
+<p>Kind of:</p>
+<ul>
+<li>Most of the <em>Loss</em> effects are <em>TSG</em>.</li>
+<li>Most of the <em>Gain</em> effects are <em>oncogene</em>.</li>
+<li>However several <em>Loss</em> are also <em>oncogene</em>, etc.</li>
+</ul>
+</div>
+</div>
+<div id="known-cna-hotspots" class="section level2">
+<h2>Known CNA hotspots</h2>
+<p><a href="http://www.nature.com/ng/journal/v45/n10/full/ng.2760.html">Zack et al</a> identified hotspots of somatic CNA from ~5,000 tumors across 11 cancer types.
+They called CNA from the SNP-array in TCGA.
+I downloaded Supp Table 2, the pan-cancer regions of significant somatic CNA, and cleaned up the <em>xls</em> file into a <em>csv</em> file.</p>
+<p>In total there are 140 CNA hotspots.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">type</th>
+<th align="right">region</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">gain</td>
+<td align="right">70</td>
+</tr>
+<tr class="even">
+<td align="left">loss</td>
+<td align="right">70</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Caution: this is hg19!</strong></p>
+</div>
+<div id="saving-the-r-objects" class="section level2">
+<h2>Saving the R objects</h2>
+<p>I saved the <em>driver.genes</em> data.frame and the <em>cna.zack.hg19.gr</em> GRanges object into a <code>.RData</code> file .
+It’s available <a href="https://dl.dropboxusercontent.com/s/kayue1w92no4nz4/cancerDriverGenes.RData?dl=0">there</a>.</p>
+</div>
