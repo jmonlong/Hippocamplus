@@ -1,5 +1,5 @@
 The scripts I use to convert reviews from [*Nature Reviews*](https://www.nature.com/reviews/index.html) or [*Annual Reviews*](https://www.annualreviews.org/) to EPUB. 
-[More info here](http://jmonlong.github.io/Hippocamplus/XXX/).
+More info [on the website](http://jmonlong.github.io/Hippocamplus/2018/05/07/epub-reviews/).
 
 ```sh
 Rscript epubify-annualreviews.R -i https://www.annualreviews.org/doi/full/10.1146/annurev-genet-120215-034854
