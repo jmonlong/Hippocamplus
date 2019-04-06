@@ -104,7 +104,8 @@ I would like to cluster points into groups of similar size. For example I would 
       <pubDate>Mon, 07 May 2018 00:00:00 +0000</pubDate>
       
       <guid>/Hippocamplus/2018/05/07/epub-reviews/</guid>
-      <description>First, check on PubMed Central Convert the HTML page to EPUB Clean up the HTML before conversion Compiling several reviews into one EPUB document VPN, paywall and Pandoc Limitations Methods  Other EPUB resources   Third post on the series of “Things I did instead of writing my thesis to help me write my thesis”: how to find/convert reviews in the EPUB format to read in an ebook reader.</description>
+      <description>First, check on PubMed Central Convert the HTML page to EPUB Clean up the HTML before conversion Compiling several reviews into one EPUB document VPN, paywall and Pandoc Limitations Methods  Other EPUB resources Loose Ends by Sidney Brenner   Edit Apr 6 2019: Added the compilation of Loose Ends columns by Sidney Brenner.
+Third post on the series of “Things I did instead of writing my thesis to help me write my thesis”: how to find/convert reviews in the EPUB format to read in an ebook reader.</description>
     </item>
     
     <item>
@@ -252,8 +253,7 @@ I merge the rare types into a other class and some RNAs.
       
       <guid>/Hippocamplus/2016/06/03/preparing-some-genomic-annotations/</guid>
       <description>Mappability track I produced a mappability track from the UCSC track. The raw file contains, for each base in the genome, an estimation of the probability that a read is correctly mapped at this position.
-Using a sliding-window approach, I compute the average mappability in regions of size 1 Kbp. This is a more manageable amount of data and still informative, especially when interested in large regions (e.g. SVs).
-I used a custom Perl script to efficiently parse the bedGraph-transformed original file.</description>
+Using a sliding-window approach, I compute the average mappability in regions of size 1 Kbp. This is a more manageable amount of data and still informative, especially when interested in large regions (e.g. SVs).</description>
     </item>
     
     <item>

@@ -36,7 +36,9 @@
           <pubDate>Wed, 03 Apr 2019 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2019/04/03/cancer-genes-cna-r/</guid>
-          <description>&lt;div id=&#34;TOC&#34;&gt;
+          <description>
+
+&lt;div id=&#34;TOC&#34;&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;#candidate-cancer-gene-database-ccgd&#34;&gt;Candidate Cancer Gene Database (CCGD)&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#cancer-gene-census&#34;&gt;Cancer Gene Census&lt;/a&gt;&lt;/li&gt;
@@ -421,7 +423,9 @@ It’s available &lt;a href=&#34;https://dl.dropboxusercontent.com/s/kayue1w92no
           <pubDate>Sun, 31 Mar 2019 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2019/03/31/gnomad-sv-first-look/</guid>
-          <description>&lt;div id=&#34;TOC&#34;&gt;
+          <description>
+
+&lt;div id=&#34;TOC&#34;&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;#tldr&#34;&gt;TL;DR&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#allele-frequency&#34;&gt;Allele frequency&lt;/a&gt;&lt;/li&gt;
@@ -1041,7 +1045,9 @@ Still, both VCF should be normalized first to better estimate how many deletions
           <pubDate>Sat, 08 Dec 2018 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2018/12/08/dna-art/</guid>
-          <description>&lt;div id=&#34;TOC&#34;&gt;
+          <description>
+
+&lt;div id=&#34;TOC&#34;&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;#version-1-tree&#34;&gt;Version 1: Tree&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#version-2-weave&#34;&gt;Version 2: Weave&lt;/a&gt;&lt;/li&gt;
@@ -1122,7 +1128,10 @@ Still, both VCF should be normalized first to better estimate how many deletions
           <pubDate>Sat, 17 Nov 2018 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2018/11/17/speedup-blogwdown-pandoc-large-bibliography/</guid>
-          <description>&lt;p&gt;I have another website where I write down my reviews of the papers I read.
+          <description>
+
+
+&lt;p&gt;I have another website where I write down my reviews of the papers I read.
 To handle citations in pages and posts, I was originally using &lt;a href=&#34;https://github.com/inukshuk/jekyll-scholar&#34;&gt;jekyll-scholar&lt;/a&gt;.
 It scales well enough that I could have &lt;strong&gt;one main BibTeX file for all the pages&lt;/strong&gt; of the website.
 I’m now switching to &lt;a href=&#34;https://bookdown.org/yihui/blogdown/&#34;&gt;blogdown&lt;/a&gt;/&lt;a href=&#34;https://gohugo.io/&#34;&gt;Hugo&lt;/a&gt; because it’s apparently faster, with less dependencies, but most importantly because it’s very easy to integrate R code with RMarkdown.
@@ -1170,7 +1179,9 @@ optional arguments:
           <pubDate>Mon, 12 Nov 2018 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2018/11/12/bachelard-formation-esprit-scientifique-part1/</guid>
-          <description>&lt;div id=&#34;TOC&#34;&gt;
+          <description>
+
+&lt;div id=&#34;TOC&#34;&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;#quotes-about-science&#34;&gt;Quotes about science&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#the-concept-of-epistemological-obstacle&#34;&gt;The concept of epistemological obstacle&lt;/a&gt;&lt;/li&gt;
@@ -1404,7 +1415,10 @@ optional arguments:
           <pubDate>Wed, 07 Nov 2018 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2018/11/07/ecr-peerreview/</guid>
-          <description>&lt;p&gt;Some notes from &lt;a href=&#34;https://uspa.ucsc.edu/2018/10/31/peer-review-workshop-117-12-pm-in-biomed-200/&#34;&gt;today’s workshop organized by USPA&lt;/a&gt; with bio-protocol and eLife ambassadors.&lt;/p&gt;
+          <description>
+
+
+&lt;p&gt;Some notes from &lt;a href=&#34;https://uspa.ucsc.edu/2018/10/31/peer-review-workshop-117-12-pm-in-biomed-200/&#34;&gt;today’s workshop organized by USPA&lt;/a&gt; with bio-protocol and eLife ambassadors.&lt;/p&gt;
 &lt;div id=&#34;bio-protocol&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Bio-protocol&lt;/h2&gt;
 &lt;p&gt;Data is uploaded to databases, code to repos like GitHub but protocols are still just in the &lt;em&gt;Methods&lt;/em&gt; section of papers.
@@ -1483,7 +1497,10 @@ To have a chance to be included in the pool of reviewers, we should submit a let
           <pubDate>Sat, 22 Sep 2018 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2018/09/22/sync-mendeley/</guid>
-          <description>&lt;p&gt;&lt;em&gt;20 March 2019 Edit: I switched to Zotero (yeay open-source, bye Elsevier), using Google Drive to store the PDF files. See the &lt;a href=&#34;./internet#zotero&#34;&gt;Internet section&lt;/a&gt; and &lt;a href=&#34;https://ikashnitsky.github.io/2019/zotero/&#34;&gt;the blog post that inspired the change&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
+          <description>
+
+
+&lt;p&gt;&lt;em&gt;20 March 2019 Edit: I switched to Zotero (yeay open-source, bye Elsevier), using Google Drive to store the PDF files. See the &lt;a href=&#34;./internet#zotero&#34;&gt;Internet section&lt;/a&gt; and &lt;a href=&#34;https://ikashnitsky.github.io/2019/zotero/&#34;&gt;the blog post that inspired the change&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;Recently, I’ve been setting up new computers from scratch as I moved from Montreal to Santa Cruz. Like for spring cleaning, it might be a good idea to clarify the system I’ve been using to manage bibliography and PDF annotation.&lt;/p&gt;
 &lt;p&gt;Briefly I use Mendeley Desktop and also put all PDF files in a Google Drive. Both are synced with my Android tablet. On the tablet, I use the Mendeley app to get information, search etc, but I read/annotate the PDFs from the Google Drive. On a computer I use a custom Python script to update the PDFs if necessary.&lt;/p&gt;
 &lt;div id=&#34;the-updatemendeley.py-script&#34; class=&#34;section level2&#34;&gt;
@@ -1532,7 +1549,10 @@ To have a chance to be included in the pool of reviewers, we should submit a let
           <pubDate>Sun, 08 Jul 2018 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2018/07/08/mental-health-crisis-science/</guid>
-          <description>&lt;p&gt;A few month ago, a short paper was published in Nature Biotechnology&lt;a href=&#34;#fn1&#34; class=&#34;footnoteRef&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; about the mental health crisis in science. It attracted a bit of attention on the news and social media, which is good because it’s an important matter. The article was very good at putting the subject on the table and proposing some solutions, but it picked my curiosity about nonresponse bias.&lt;/p&gt;
+          <description>
+
+
+&lt;p&gt;A few month ago, a short paper was published in Nature Biotechnology&lt;a href=&#34;#fn1&#34; class=&#34;footnoteRef&#34; id=&#34;fnref1&#34;&gt;&lt;sup&gt;1&lt;/sup&gt;&lt;/a&gt; about the mental health crisis in science. It attracted a bit of attention on the news and social media, which is good because it’s an important matter. The article was very good at putting the subject on the table and proposing some solutions, but it picked my curiosity about nonresponse bias.&lt;/p&gt;
 &lt;div id=&#34;issues-with-the-nature-biotech-article&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Issues with the Nature Biotech article&lt;/h2&gt;
 &lt;p&gt;The numbers are based on an email survey so &lt;strong&gt;one issue is the nonresponse bias&lt;/strong&gt;: the individuals that responded might not be representative of the population. The authors quickly mention it:&lt;/p&gt;
@@ -1584,7 +1604,9 @@ To have a chance to be included in the pool of reviewers, we should submit a let
           <pubDate>Sat, 09 Jun 2018 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2018/06/09/cluster-same-size/</guid>
-          <description>&lt;div id=&#34;TOC&#34;&gt;
+          <description>
+
+&lt;div id=&#34;TOC&#34;&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;#methods&#34;&gt;Methods&lt;/a&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;#iterative-dichotomy&#34;&gt;Iterative dichotomy&lt;/a&gt;&lt;/li&gt;
@@ -1743,7 +1765,9 @@ Maybe implementing the loop with Rcpp could speed up the computation (in practic
           <pubDate>Mon, 07 May 2018 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2018/05/07/epub-reviews/</guid>
-          <description>&lt;div id=&#34;TOC&#34;&gt;
+          <description>
+
+&lt;div id=&#34;TOC&#34;&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;#first-check-on-pubmed-central&#34;&gt;First, check on PubMed Central&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#convert-the-html-page-to-epub&#34;&gt;Convert the HTML page to EPUB&lt;/a&gt;&lt;/li&gt;
@@ -1754,9 +1778,11 @@ Maybe implementing the loop with Rcpp could speed up the computation (in practic
 &lt;li&gt;&lt;a href=&#34;#methods&#34;&gt;Methods&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#other-epub-resources&#34;&gt;Other EPUB resources&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#loose-ends-by-sidney-brenner&#34;&gt;Loose Ends by Sidney Brenner&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
 
+&lt;p&gt;&lt;em&gt;Edit Apr 6 2019: Added the compilation of Loose Ends columns by Sidney Brenner.&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;Third post on the series of &lt;em&gt;“Things I did instead of writing my thesis to help me write my thesis”&lt;/em&gt;: how to find/convert reviews in the EPUB format to read in an ebook reader.&lt;/p&gt;
 &lt;p&gt;To motivate myself to write the thesis introduction and get some “style” inspiration, I read a few reviews. Reviews are longer and often more wordy than original research articles so I’d sometimes prefer to use my e-reader. It’s more compact and the e-ink is more comfortable to read, especially outside. But I find PDFs a bit awkward to use on an e-reader so it would be better to have the reviews in a e-reader format like EPUB.&lt;/p&gt;
 &lt;p&gt;In my experience, this is the best strategy to get a review in EPUB format:&lt;/p&gt;
@@ -1834,6 +1860,15 @@ Rscript epubify-naturereviews.R -i https://www.nature.com/articles/nrg.2015.16&l
 &lt;li&gt;The &lt;a href=&#34;http://collections.plos.org/translational-bioinformatics&#34;&gt;Translational Bioinformatics collection&lt;/a&gt; in PLoS Computational Biology has &lt;a href=&#34;http://www.ploscollections.org/downloads/TranslationalBioinformatics.epub&#34;&gt;an ePub option&lt;/a&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
+&lt;div id=&#34;loose-ends-by-sidney-brenner&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Loose Ends by Sidney Brenner&lt;/h2&gt;
+&lt;p&gt;&lt;em&gt;Added Apr 6 2019.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Sydney_Brenner&#34;&gt;Sidney Brenner&lt;/a&gt; passed away yesterday. I knew his name and that he is a legend in the field but never had the chance to really read about him. I saw this tweet from Yaniv Erlich:&lt;/p&gt;
+&lt;blockquote class=&#34;twitter-tweet&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;His loose ends book was instrumental for me to get through grad school. You can read it online here:&lt;a href=&#34;https://t.co/d4Ni1vosYN&#34;&gt;https://t.co/d4Ni1vosYN&lt;/a&gt;&lt;/p&gt;&amp;mdash; Yaniv (((Erlich))) (@erlichya) &lt;a href=&#34;https://twitter.com/erlichya/status/1114107353090146304?ref_src=twsrc%5Etfw&#34;&gt;April 5, 2019&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async src=&#34;https://platform.twitter.com/widgets.js&#34; charset=&#34;utf-8&#34;&gt;&lt;/script&gt;
+
+&lt;p&gt;So I decided to compile &lt;a href=&#34;https://www.cell.com/current-biology/libraries/loose-ends&#34;&gt;these monthly columns from 1994-2000&lt;/a&gt; that Sidney Brenner wrote into EPUB/MOBI files to read on my ebook reader. I put the &lt;a href=&#34;https://github.com/jmonlong/Hippocamplus/blob/config/R/epubifyReviews/README.md#loose-ends-by-sidney-brenner&#34;&gt;files on GitHub&lt;/a&gt; if anyone else is interested.&lt;/p&gt;
+&lt;/div&gt;
 </description>
         </item>
       
@@ -1845,7 +1880,10 @@ Rscript epubify-naturereviews.R -i https://www.nature.com/articles/nrg.2015.16&l
           <pubDate>Wed, 18 Apr 2018 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2018/04/18/check-latex-pub/</guid>
-          <description>&lt;p&gt;To continue on the series of &lt;em&gt;“Things I did instead of writing my thesis to help me write my thesis”&lt;/em&gt;, another Python script that reads a LaTeX manuscript and helps check that everything is fine. More specifically, the &lt;code&gt;checkLatex.py&lt;/code&gt; script (&lt;a href=&#34;https://github.com/jmonlong/Hippocamplus/tree/config/python/checkLatex&#34;&gt;on GitHub&lt;/a&gt;) will:&lt;/p&gt;
+          <description>
+
+
+&lt;p&gt;To continue on the series of &lt;em&gt;“Things I did instead of writing my thesis to help me write my thesis”&lt;/em&gt;, another Python script that reads a LaTeX manuscript and helps check that everything is fine. More specifically, the &lt;code&gt;checkLatex.py&lt;/code&gt; script (&lt;a href=&#34;https://github.com/jmonlong/Hippocamplus/tree/config/python/checkLatex&#34;&gt;on GitHub&lt;/a&gt;) will:&lt;/p&gt;
 &lt;ol style=&#34;list-style-type: decimal&#34;&gt;
 &lt;li&gt;List missing references.&lt;/li&gt;
 &lt;li&gt;List multi-references to reorder.&lt;/li&gt;
@@ -1899,7 +1937,10 @@ optional arguments:
           <pubDate>Mon, 16 Apr 2018 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2018/04/16/text-similarity/</guid>
-          <description>&lt;p&gt;To start the series of &lt;em&gt;“Things I did instead of writing my thesis to help me write my thesis”&lt;/em&gt;, a small Python script that compares two text documents and output similar parts. I did that to avoid auto-plagiarism of my manuscripts’ introduction in the main thesis introduction.&lt;/p&gt;
+          <description>
+
+
+&lt;p&gt;To start the series of &lt;em&gt;“Things I did instead of writing my thesis to help me write my thesis”&lt;/em&gt;, a small Python script that compares two text documents and output similar parts. I did that to avoid auto-plagiarism of my manuscripts’ introduction in the main thesis introduction.&lt;/p&gt;
 &lt;p&gt;It’s a very naive approach but sped up the checking process (&lt;a href=&#34;https://xkcd.com/1319/&#34;&gt;maybe worth the time&lt;/a&gt;). It first looks for short exact matches between the two documents, then extends these exact matches and uses the &lt;a href=&#34;https://docs.python.org/2/library/difflib.html&#34;&gt;difflib&lt;/a&gt; module to keep text with a minimum similarity score (default 80%).&lt;/p&gt;
 &lt;p&gt;I put the &lt;code&gt;simText.py&lt;/code&gt; Python script &lt;a href=&#34;https://github.com/jmonlong/Hippocamplus/tree/config/python/simText&#34;&gt;on GitHub here&lt;/a&gt;.&lt;/p&gt;
 &lt;div id=&#34;usage&#34; class=&#34;section level2&#34;&gt;
@@ -1949,7 +1990,10 @@ T2: eletions and duplications, which affect DNA copy number, are collectively kn
           <pubDate>Fri, 23 Feb 2018 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2018/02/23/journals-comparison/</guid>
-          <description>&lt;p&gt;&lt;em&gt;Edit Feb 24: Added variance graph and some examples of suspiciously fast publications.&lt;/em&gt;&lt;/p&gt;
+          <description>
+
+
+&lt;p&gt;&lt;em&gt;Edit Feb 24: Added variance graph and some examples of suspiciously fast publications.&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;Edit Feb 25: Added &lt;a href=&#34;https://github.com/jmonlong/Hippocamplus/tree/config/R/journalPubTime&#34;&gt;script and data&lt;/a&gt; to GitHub.&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;Some info about journals in my field.&lt;/p&gt;
 &lt;div id=&#34;summary-table&#34; class=&#34;section level2&#34;&gt;
@@ -2488,7 +2532,10 @@ T2: eletions and duplications, which affect DNA copy number, are collectively kn
           <pubDate>Tue, 13 Feb 2018 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2018/02/13/tsne-and-clustering/</guid>
-          <description>&lt;p&gt;tSNE can give really nice results when we want to visualize many groups of multi-dimensional points. Once the 2D graph is done we might want to identify which points cluster in the tSNE blobs.&lt;/p&gt;
+          <description>
+
+
+&lt;p&gt;tSNE can give really nice results when we want to visualize many groups of multi-dimensional points. Once the 2D graph is done we might want to identify which points cluster in the tSNE blobs.&lt;/p&gt;
 &lt;p&gt;Using simulated and real data, I’ll try different methods:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Hierarchical clustering&lt;/li&gt;
@@ -2781,7 +2828,10 @@ ggplot(info.real, aes(x = tsne1, y = tsne2, colour = louvain)) +
           <pubDate>Wed, 04 Oct 2017 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2017/10/04/bibliography-style-for-ajhg/</guid>
-          <description>&lt;p&gt;I couldn’t find an up-to-date/working &lt;strong&gt;LaTeX bibliography style for the American Journal of Human Genetics (AJHG)&lt;/strong&gt;. The output from &lt;code&gt;unsrtnat&lt;/code&gt; (my goto style) was also quite different from what the journal wanted.&lt;/p&gt;
+          <description>
+
+
+&lt;p&gt;I couldn’t find an up-to-date/working &lt;strong&gt;LaTeX bibliography style for the American Journal of Human Genetics (AJHG)&lt;/strong&gt;. The output from &lt;code&gt;unsrtnat&lt;/code&gt; (my goto style) was also quite different from what the journal wanted.&lt;/p&gt;
 &lt;p&gt;I found a bibliography style for &lt;em&gt;Cell&lt;/em&gt; which is almost what AJHG wants, but I also wanted the references to be &lt;strong&gt;ordered by their appearance in the text&lt;/strong&gt; (like for &lt;code&gt;unsrtnat&lt;/code&gt;) and not alphabetically. So I downloaded both &lt;code&gt;cell.bst&lt;/code&gt; (&lt;a href=&#34;https://www.ctan.org/tex-archive/macros/latex/contrib/cell&#34;&gt;here&lt;/a&gt;) and &lt;code&gt;unsrtnat.bst&lt;/code&gt; (&lt;a href=&#34;https://www.ctan.org/tex-archive/macros/latex/contrib/natbib/&#34;&gt;here&lt;/a&gt;) files and merged them. I don’t understand all the details but after some trial-and-errors it seems to work.&lt;/p&gt;
 &lt;p&gt;After merging, I removed the &lt;em&gt;emphasis&lt;/em&gt; on the Journal/Book name which was the only difference I could see between the Cell and AJHG styles.&lt;/p&gt;
 &lt;p&gt;I also added some code to &lt;strong&gt;automatically compress long author lists&lt;/strong&gt; into “&lt;em&gt;et al.&lt;/em&gt;”. In the code, the line with &lt;code&gt;max.num.names.before.forced.et.al&lt;/code&gt; specifies the maximum number of authors before switching to “&lt;em&gt;et al.&lt;/em&gt;”. The line with &lt;code&gt;num.names.shown.with.forced.et.al&lt;/code&gt; specifies how many authors to show when using &lt;em&gt;et al.&lt;/em&gt;. They are both set at 10, following AJHG guidelines.&lt;/p&gt;
@@ -2797,7 +2847,10 @@ ggplot(info.real, aes(x = tsne1, y = tsne2, colour = louvain)) +
           <pubDate>Tue, 19 Sep 2017 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2017/09/19/mummerplots-with-ggplot2/</guid>
-          <description>&lt;p&gt;&lt;em&gt;Update Oct 28 2018: added reference id (rid) to be able to visualize multiple reference regions. Also uploaded the example data somewhere.&lt;/em&gt;&lt;/p&gt;
+          <description>
+
+
+&lt;p&gt;&lt;em&gt;Update Oct 28 2018: added reference id (rid) to be able to visualize multiple reference regions. Also uploaded the example data somewhere.&lt;/em&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(dplyr)
 library(magrittr)
 library(GenomicRanges)
@@ -3155,7 +3208,10 @@ mumgp.filt.m %&amp;gt;% select(similarity, start, end, filter) %&amp;gt;% gather
           <pubDate>Sat, 16 Sep 2017 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2017/09/16/regression-sandbox/</guid>
-          <description>&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
+          <description>
+
+
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
 library(broom)
 library(magrittr)
 library(dplyr)
@@ -3479,7 +3535,10 @@ ggplot(df, aes(x = x, y = y)) + geom_point(alpha = 0.2) +
           <pubDate>Tue, 05 Sep 2017 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2017/09/05/enrichment-between-genomic-regions/</guid>
-          <description>&lt;p&gt;Testing if two sets of genomic regions overlap significantly is not straightforward. In the simple situation of regions of 1 bp (e.g. SNVs) we could use a hypergeometric test. When the regions are small enough and there are not too many, the hypergeometric test might also be a fair approximation.&lt;/p&gt;
+          <description>
+
+
+&lt;p&gt;Testing if two sets of genomic regions overlap significantly is not straightforward. In the simple situation of regions of 1 bp (e.g. SNVs) we could use a hypergeometric test. When the regions are small enough and there are not too many, the hypergeometric test might also be a fair approximation.&lt;/p&gt;
 &lt;p&gt;But when we manipulate many regions of variable size covering the entire genome it’s not as straightforward. The gene annotation is an example. The repeat annotation is even worse as it covers almost 50% of the genome and contains different families with very different size/location profiles.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
 library(dplyr)
@@ -3928,7 +3987,10 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
           <pubDate>Sat, 25 Feb 2017 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2017/02/25/conservation-to-annotate-larger-regions/</guid>
-          <description>&lt;p&gt;Conservation can be used to annotate single nucleotide changes or short variants. This information helps assessing the functional impact of short variation.&lt;/p&gt;
+          <description>
+
+
+&lt;p&gt;Conservation can be used to annotate single nucleotide changes or short variants. This information helps assessing the functional impact of short variation.&lt;/p&gt;
 &lt;p&gt;What if we have larger variants, for example deletions larger than 50 bp, or larger than 1 kbp. Can we use conservation metrics? In this case the question is often not &lt;em&gt;“Is the region conserved?”&lt;/em&gt; but rather &lt;em&gt;“Is there any conserved elements in the region?”&lt;/em&gt;.&lt;/p&gt;
 &lt;p&gt;One approach would be to overlap the variants/deletions with known (ultra-)conserved regions. Otherwise we could work with bp-level conservation estimates. That’s what I quickly explore below.&lt;/p&gt;
 &lt;div id=&#34;genomic-annotation-and-conservation&#34; class=&#34;section level2&#34;&gt;
@@ -3976,7 +4038,10 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
           <pubDate>Thu, 20 Oct 2016 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2016/10/20/segmental-duplication-exploration/</guid>
-          <description>&lt;div id=&#34;segmental-duplications-sd&#34; class=&#34;section level2&#34;&gt;
+          <description>
+
+
+&lt;div id=&#34;segmental-duplications-sd&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Segmental Duplications (SD)&lt;/h2&gt;
 &lt;p&gt;I downloaded the segmental duplication annotation for hg19 from &lt;a href=&#34;http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/genomicSuperDups.txt.gz&#34;&gt;UCSC&lt;/a&gt;. There are 51599 annotated SD. They are defined as regions larger than 1 Kbp with at least 90% similarity with another region in the genome.&lt;/p&gt;
 &lt;/div&gt;
@@ -4725,7 +4790,10 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
           <pubDate>Tue, 06 Sep 2016 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2016/09/06/summary-epigenetic-mark-tracks/</guid>
-          <description>&lt;p&gt;To assess the potential impact of variants (SNV, SVs) we might want to use some of the public epigentic datasets. The amount and heterogeneity of this data is a bit overwhelming. I would like to get a summary of which regions of the genome are the most functionally important.&lt;/p&gt;
+          <description>
+
+
+&lt;p&gt;To assess the potential impact of variants (SNV, SVs) we might want to use some of the public epigentic datasets. The amount and heterogeneity of this data is a bit overwhelming. I would like to get a summary of which regions of the genome are the most functionally important.&lt;/p&gt;
 &lt;p&gt;The plan is to:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;get annotated &lt;strong&gt;peaks&lt;/strong&gt;&lt;/li&gt;
@@ -4768,7 +4836,10 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
           <pubDate>Sat, 04 Jun 2016 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2016/06/04/exploring-basic-annotations-of-the-human-genome/</guid>
-          <description>&lt;div id=&#34;quick-look-at-the-annotations&#34; class=&#34;section level1&#34;&gt;
+          <description>
+
+
+&lt;div id=&#34;quick-look-at-the-annotations&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;Quick look at the annotations&lt;/h1&gt;
 &lt;div id=&#34;genes&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Genes&lt;/h2&gt;
@@ -6788,7 +6859,10 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
           <pubDate>Sat, 04 Jun 2016 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2016/06/04/gencode-exploration/</guid>
-          <description>&lt;div id=&#34;gencode-v19&#34; class=&#34;section level2&#34;&gt;
+          <description>
+
+
+&lt;div id=&#34;gencode-v19&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Gencode v19&lt;/h2&gt;
 &lt;p&gt;I downloaded Gencode v19 at &lt;a href=&#34;ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz&#34;&gt;&lt;a href=&#34;ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz&#34; class=&#34;uri&#34;&gt;ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz&lt;/a&gt;&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
@@ -7085,7 +7159,10 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
           <pubDate>Fri, 03 Jun 2016 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2016/06/03/preparing-some-genomic-annotations/</guid>
-          <description>&lt;div id=&#34;mappability-track&#34; class=&#34;section level2&#34;&gt;
+          <description>
+
+
+&lt;div id=&#34;mappability-track&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Mappability track&lt;/h2&gt;
 &lt;p&gt;I produced a mappability track from the UCSC track. The &lt;a href=&#34;http://hgdownload.soe.ucsc.edu/gbdb/hg19/bbi/wgEncodeCrgMapabilityAlign100mer.bw&#34;&gt;raw file&lt;/a&gt; contains, for each base in the genome, an estimation of the probability that a read is correctly mapped at this position.&lt;/p&gt;
 &lt;p&gt;Using a sliding-window approach, I compute the average mappability in regions of size 1 Kbp. This is a more manageable amount of data and still informative, especially when interested in large regions (e.g. SVs).&lt;/p&gt;
@@ -7136,7 +7213,10 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
           <pubDate>Fri, 26 Feb 2016 00:00:00 UTC</pubDate>
           <author>Mark Otto</author>
           <guid>/Hippocamplus/2016/02/26/word-cloud-in-r/</guid>
-          <description>&lt;p&gt;The &lt;a href=&#34;https://cran.r-project.org/web/packages/wordcloud/index.html&#34;&gt;&lt;code&gt;wordcloud&lt;/code&gt; package&lt;/a&gt; is available on CRAN.&lt;/p&gt;
+          <description>
+
+
+&lt;p&gt;The &lt;a href=&#34;https://cran.r-project.org/web/packages/wordcloud/index.html&#34;&gt;&lt;code&gt;wordcloud&lt;/code&gt; package&lt;/a&gt; is available on CRAN.&lt;/p&gt;
 &lt;div id=&#34;fake-words&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Fake words&lt;/h2&gt;
 &lt;p&gt;I create fake words to see a bit how the command is working.&lt;/p&gt;

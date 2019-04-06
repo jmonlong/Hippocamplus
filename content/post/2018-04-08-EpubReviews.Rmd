@@ -8,6 +8,8 @@ output:
     toc: true
 ---
 
+*Edit Apr 6 2019: Added the compilation of Loose Ends columns by Sidney Brenner.*
+
 Third post on the series of *"Things I did instead of writing my thesis to help me write my thesis"*: how to find/convert reviews in the EPUB format to read in an ebook reader.
 
 To motivate myself to write the thesis introduction and get some "style" inspiration, I read a few reviews.
@@ -127,3 +129,17 @@ At the end, the final HTML code is written in a file which is converted to EPUB 
 - **Books** from the [Methods in Molecular Biology](https://link.springer.com/bookseries/7651) series can be downloaded in the EPUB format.
 - The [Translational Bioinformatics collection](http://collections.plos.org/translational-bioinformatics) in PLoS Computational Biology has [an ePub option](http://www.ploscollections.org/downloads/TranslationalBioinformatics.epub).
 
+## Loose Ends by Sidney Brenner
+
+*Added Apr 6 2019.*
+
+[Sidney Brenner](https://en.wikipedia.org/wiki/Sydney_Brenner) passed away yesterday. 
+I knew his name and that he is a legend in the field but never had the chance to really read about him. 
+I saw this tweet from Yaniv Erlich:
+
+```{r echo=FALSE}
+blogdown::shortcode('tweet', '1114107353090146304')
+```
+
+So I decided to compile [these monthly columns from 1994-2000](https://www.cell.com/current-biology/libraries/loose-ends) that Sidney Brenner wrote into EPUB/MOBI files to read on my ebook reader.
+I put the [files on GitHub](https://github.com/jmonlong/Hippocamplus/blob/config/R/epubifyReviews/README.md#loose-ends-by-sidney-brenner) if anyone else is interested.
