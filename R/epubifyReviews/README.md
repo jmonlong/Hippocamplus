@@ -48,7 +48,7 @@ Rscript epubify-annualreviews.R -i AnnualReviews-MicrobiomeSequencing-urls.txt -
 ### Loose Ends by Sidney Brenner
 
 I compiled the ["Losse Ends" columns](https://www.cell.com/current-biology/libraries/loose-ends) by Sidney Brenner.
-R commands in `epubify-LooseEnds-SidneyBrenner.R`, output in EPUB or mobi formats:
+R commands in `epubify-LooseEnds-SidneyBrenner.R`, output in EPUB or MOBI formats:
 
-- [Loose_Ends_by_Sidney_Brenner.epub](https://github.com/jmonlong/Hippocamplus/raw/config/R/epubifyReviews/Loose_Ends_by_Sidney_Brenner.epub)
-- [Loose_Ends_by_Sidney_Brenner.mobi](https://github.com/jmonlong/Hippocamplus/raw/config/R/epubifyReviews/Loose_Ends_by_Sidney_Brenner.mobi)
+- EPUD: [Loose_Ends_by_Sidney_Brenner.epub](https://github.com/jmonlong/Hippocamplus/raw/config/R/epubifyReviews/Loose_Ends_by_Sidney_Brenner.epub)
+- MOBI: [Loose_Ends_by_Sidney_Brenner.mobi](https://github.com/jmonlong/Hippocamplus/raw/config/R/epubifyReviews/Loose_Ends_by_Sidney_Brenner.mobi)
