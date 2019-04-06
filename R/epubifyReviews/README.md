@@ -44,3 +44,11 @@ Rscript epubify-naturereviews.R -i NatureReviews-ComputationalTools-urls.txt -li
 ## Microbiome & Sequencing (Annual Reviews)
 Rscript epubify-annualreviews.R -i AnnualReviews-MicrobiomeSequencing-urls.txt -list -title "Microbiome and Sequencing"
 ```
+
+### Loose Ends by Sidney Brenner
+
+I compiled the ["Losse Ends" columns](https://www.cell.com/current-biology/libraries/loose-ends) by Sidney Brenner.
+R commands in `epubify-LooseEnds-SidneyBrenner.R`, output in EPUB or mobi formats:
+
+- [Loose_Ends_by_Sidney_Brenner.epub](Loose_Ends_by_Sidney_Brenner.epub)
+- [Loose_Ends_by_Sidney_Brenner.mobi](Loose_Ends_by_Sidney_Brenner.mobi)
