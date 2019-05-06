@@ -54,6 +54,7 @@ output:
 <li><a href="#simplenote">Simplenote</a></li>
 </ul></li>
 <li><a href="#file-encryption">File encryption</a></li>
+<li><a href="#on-hpcs">On HPCs</a></li>
 <li><a href="#for-osx">For OSX</a><ul>
 <li><a href="#maximize-window-at-opening">Maximize window at opening</a></li>
 <li><a href="#keybindings">Keybindings</a></li>
@@ -110,7 +111,7 @@ output:
 </div>
 <div id="melpa-package-repository" class="section level2">
 <h2>MELPA package repository</h2>
-<p>Usually packages are just <code>.el</code> files to download and add in the folder defined in <code>.emacs</code> (e.g. <code>(add-to-list 'load-path &quot;~/.emacs.d/lisp/&quot;)</code>). However, there is easier way: <a href="http://www.emacswiki.org/emacs/MELPA">MELPA</a> package manager !</p>
+<p>Usually packages are just <code>.el</code> files to download and add in the folder defined in <code>.emacs</code> (e.g. <code>(add-to-list 'load-path "~/.emacs.d/lisp/")</code>). However, there is easier way: <a href="http://www.emacswiki.org/emacs/MELPA">MELPA</a> package manager !</p>
 <p>To install it, add to <code>.emacs</code>:</p>
 <pre class="lisp"><code>(require &#39;package)
 (add-to-list &#39;package-archives &#39;(&quot;melpa&quot; . &quot;https://melpa.org/packages/&quot;) t)
@@ -500,6 +501,12 @@ ruby setup.rb</code></pre>
 <div id="file-encryption" class="section level2">
 <h2>File encryption</h2>
 <p>Encryption is integrated directly. Just add the extension <code>.gpg</code> to a file.</p>
+</div>
+<div id="on-hpcs" class="section level2">
+<h2>On HPCs</h2>
+<ul>
+<li>See how to setup GNU screen to avoid visual glitches in the <a href="../shell/#gnu-screen">Shell section</a>.</li>
+</ul>
 </div>
 <div id="for-osx" class="section level2">
 <h2>For OSX</h2>

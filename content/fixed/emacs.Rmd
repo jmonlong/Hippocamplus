@@ -559,6 +559,9 @@ Other general commands include:
 
 Encryption is integrated directly. Just add the extension `.gpg` to a file.
 
+## On HPCs
+
+- See how to setup GNU screen to avoid visual glitches in the [Shell section](../shell/#gnu-screen).
 
 ## For OSX
 

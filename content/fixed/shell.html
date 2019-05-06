@@ -10,6 +10,8 @@ output:
 
 <div id="TOC">
 <ul>
+<li><a href="#git">Git</a></li>
+<li><a href="#gnu-screen">GNU screen</a></li>
 <li><a href="#misc">Misc</a><ul>
 <li><a href="#colors-in-less">Colors in <code>less</code></a></li>
 <li><a href="#avoid-killing-ssh-jobs">Avoid killing ssh jobs</a></li>
@@ -25,7 +27,6 @@ output:
 <li><a href="#if-then-else">If Then Else</a></li>
 </ul></li>
 <li><a href="#convert-pdf">Convert PDF</a></li>
-<li><a href="#git">Git</a></li>
 <li><a href="#docker-cheatsheet">Docker cheatsheet</a></li>
 <li><a href="#makefile">Makefile</a></li>
 <li><a href="#modules">Modules</a></li>
@@ -33,9 +34,74 @@ output:
 <li><a href="#mount-server">Mount server</a></li>
 <li><a href="#setup-wd-elements-external-hard-drive">Setup WD Elements external hard drive</a></li>
 </ul></li>
+<li><a href="#ffmpeg">ffmpeg</a></li>
 </ul>
 </div>
 
+<div id="git" class="section level2">
+<h2>Git</h2>
+<ul>
+<li>Commit all modification and added files: <code>git commit -am "informative message"</code></li>
+<li>To show all the history of a file: <code>git log -p -- file</code></li>
+<li>To retrieve a specific version of a file: <code>git show COMMIT:file</code></li>
+<li>Revert repo to a specific commit: <code>git checkout COMMIT</code></li>
+<li>Undo a commit: <code>git reset HEAD~</code> and then for the real commit <code>git commit -c ORIG_HEAD</code>.</li>
+<li>Update sub-modules: <code>git submodule update --init --recursive</code></li>
+<li>Add all untracked files: <code>git st -s | grep '??' | cut -f2 -d ' ' | xargs git add</code></li>
+<li>Add remote e.g. after a fork: <code>git remote add mine git@github.com:jmonlong/REPO.git</code></li>
+</ul>
+<div id="aliases" class="section level4">
+<h4>Aliases</h4>
+<pre class="sh"><code>git config --global alias.co checkout
+git config --global alias.ci commit
+git config --global alias.st status
+git config --global alias.br branch
+git config --global user.email &#39;&lt;EMAIL&gt;&#39;
+git config --global user.name &#39;Jean Monlong&#39;</code></pre>
+</div>
+<div id="branches" class="section level4">
+<h4>Branches</h4>
+<ul>
+<li>List branches: <code>git branch</code></li>
+<li>List all branches: <code>git branch -a</code></li>
+<li>Update remote branch list: <code>git remote prune origin</code></li>
+<li>Create branch: <code>git checkout -b hotfix</code></li>
+<li>Link it to a remote branch: <code>git branch -u origin/hotflix</code></li>
+<li>Creat a new local branch from remote: <code>git co -t origin/hotfix</code></li>
+<li>Merge the current branch with another branch: <code>git merge hotfix</code></li>
+<li>Delete a branch: <code>git branch -d hotfix</code></li>
+<li>Delete remote branch: <code>git push origin :hotfix</code></li>
+</ul>
+</div>
+<div id="check-status-of-all-repos" class="section level4">
+<h4>Check status of all repos</h4>
+<p>I have an alias calling the following commands:</p>
+<pre class="sh"><code>WD=`pwd`
+for ff in `find . -maxdepth 5 -name .git`
+do
+    GDIR=`dirname $ff`
+    echo $GDIR
+    cd $WD/$GDIR
+    git st -s
+    git st | grep ahead
+done
+cd $WD</code></pre>
+</div>
+</div>
+<div id="gnu-screen" class="section level2">
+<h2>GNU screen</h2>
+<p>I had the following problems in some HPCs:</p>
+<ul>
+<li>screen not clearing out after commands like <em>less</em> or <em>emacs</em>.</li>
+<li><em>Ctl-l</em> not clearing out the screen.</li>
+<li>Emacs rendering badly with annoying visual glitches. I had to constantly <em>Ctl-L</em> to clean them.</li>
+</ul>
+<p>The solution was to add in <code>~/.screenrc</code>:</p>
+<pre class="sh"><code># clear out screen after less etc
+altscreen on
+# fixes ctr-l and emacs visual glitches
+term screen-256color</code></pre>
+</div>
 <div id="misc" class="section level2">
 <h2>Misc</h2>
 <ul>
@@ -99,8 +165,8 @@ Practical example: all the R scripts but not the ones created by BatchJobs in <c
 <li>Replace text if line contains <em>foo</em>: <code>perl -pe 's/you/me/g if /foo/</code></li>
 <li>Replace text line-by-line with regexp: <code>perl -pe 's/ID(\d+)/$1/g'</code></li>
 <li>Operations on a CSV file: <code>perl -F, -ane 'print $F[3]+$F[8]</code></li>
-<li>Operations on a CSV file and print at the end: <code>perl -F, -ane $t+=$F[3]+$F[8]; END{print $t}</code></li>
-<li><p>Print matches from regular expression: <code>perl -ne 'print &quot;$1\n&quot; if /foo=([^;]*)/'</code></p></li>
+<li>Operations on a CSV file and print at the end: <code>perl -F, -ane $t+=$F[3]+$F[8]; END{print $t}</code> %</li>
+<li><p>Print matches from regular expression: <code>perl -ne 'print "$1\n" if /foo=([^;]*)/'</code></p></li>
 </ul>
 </div>
 </div>
@@ -165,56 +231,6 @@ gs -dPDFA -dBATCH -dNOPAUSE -dNOOUTERSAVE -dUseCIEColor -sProcessColorModel=Devi
 <p>To check for PDF/A compliance I used <a href="https://www.pdf-online.com/osa/validate.aspx">this online validator</a> or Acrobat Reader Pro.
 Another way to check for problems is to look at the <em>emb</em> column of <code>pdffonts main.pdf</code> (should be all embedded) and the <em>type</em> column of <code>pdfimages -list main.pdf</code> (should be all <em>image</em>).</p>
 <p><em>Note: this is based only on my one-time experience with the PDF of my thesis.</em></p>
-</div>
-</div>
-<div id="git" class="section level2">
-<h2>Git</h2>
-<ul>
-<li>Commit all modification and added files: <code>git commit -am &quot;informative message&quot;</code></li>
-<li>To show all the history of a file: <code>git log -p -- file</code></li>
-<li>To retrieve a specific version of a file: <code>git show COMMIT:file</code></li>
-<li>Revert repo to a specific commit: <code>git checkout COMMIT</code></li>
-<li>Undo a commit: <code>git reset HEAD~</code> and then for the real commit <code>git commit -c ORIG_HEAD</code>.</li>
-<li>Update sub-modules: <code>git submodule update --init --recursive</code></li>
-<li>Add all untracked files: <code>git st -s | grep '??' | cut -f2 -d ' ' | xargs git add</code></li>
-<li>Add remote e.g. after a fork: <code>git remote add mine git@github.com:jmonlong/REPO.git</code></li>
-</ul>
-<div id="aliases" class="section level4">
-<h4>Aliases</h4>
-<pre class="sh"><code>git config --global alias.co checkout
-git config --global alias.ci commit
-git config --global alias.st status
-git config --global alias.br branch
-git config --global user.email &#39;&lt;EMAIL&gt;&#39;
-git config --global user.name &#39;Jean Monlong&#39;</code></pre>
-</div>
-<div id="branches" class="section level4">
-<h4>Branches</h4>
-<ul>
-<li>List branches: <code>git branch</code></li>
-<li>List all branches: <code>git branch -a</code></li>
-<li>Update remote branch list: <code>git remote prune origin</code></li>
-<li>Create branch: <code>git checkout -b hotfix</code></li>
-<li>Link it to a remote branch: <code>git branch -u origin/hotflix</code></li>
-<li>Creat a new local branch from remote: <code>git co -t origin/hotfix</code></li>
-<li>Merge the current branch with another branch: <code>git merge hotfix</code></li>
-<li>Delete a branch: <code>git branch -d hotfix</code></li>
-<li>Delete remote branch: <code>git push origin :hotfix</code></li>
-</ul>
-</div>
-<div id="check-status-of-all-repos" class="section level4">
-<h4>Check status of all repos</h4>
-<p>I have an alias calling the following commands:</p>
-<pre class="sh"><code>WD=`pwd`
-for ff in `find . -maxdepth 5 -name .git`
-do
-    GDIR=`dirname $ff`
-    echo $GDIR
-    cd $WD/$GDIR
-    git st -s
-    git st | grep ahead
-done
-cd $WD</code></pre>
 </div>
 </div>
 <div id="docker-cheatsheet" class="section level2">
@@ -289,4 +305,8 @@ module load jmonlong/emacs</code></pre>
 <p><em>Note: If there are spaces in the label, replace them by <code>\040</code>.</em></p>
 <p>The disk can then be accessed through the <em>Volumes</em> folder (<code>/Volumes</code>).</p>
 </div>
+</div>
+<div id="ffmpeg" class="section level2">
+<h2>ffmpeg</h2>
+<p>To convert to MP3: <code>ffmpeg -i my.m4a -acodec mp3 -ac 2 -ab 192k my.mp3</code></p>
 </div>

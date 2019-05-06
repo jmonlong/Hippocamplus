@@ -16,7 +16,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/Hippocamplus/emacs/</guid>
-      <description>Basic configuration General commands Console-size split screen  MELPA package repository Solarized theme For R Emacs Speaks Statistics Auto-complete Smart underscores Poly-mode for R + Markdown Custom keyboard shortcuts  For writing Spell checking Thesaurus and synonyms Grammar checking  For LaTeX Word count Chunk folding  For Markdown Table formatting Markdown live preview  For Python Elpy python mode Send commands to a specific buffer  For C/CPP Tags  For Shell For file manipulation CSV/TSV Dired mode  For Version Control For online notes Evernote Simplenote  File encryption For OSX Maximize window at opening Keybindings Ispell Explicit path definition    I use Emacs for almost everything: coding, writing, taking notes, preparing presentations.</description>
+      <description>Basic configuration General commands Console-size split screen  MELPA package repository Solarized theme For R Emacs Speaks Statistics Auto-complete Smart underscores Poly-mode for R + Markdown Custom keyboard shortcuts  For writing Spell checking Thesaurus and synonyms Grammar checking  For LaTeX Word count Chunk folding  For Markdown Table formatting Markdown live preview  For Python Elpy python mode Send commands to a specific buffer  For C/CPP Tags  For Shell For file manipulation CSV/TSV Dired mode  For Version Control For online notes Evernote Simplenote  File encryption On HPCs For OSX Maximize window at opening Keybindings Ispell Explicit path definition    I use Emacs for almost everything: coding, writing, taking notes, preparing presentations.</description>
     </item>
     
     <item>
@@ -81,7 +81,7 @@ Naming and formatting  Use lowercase _-separated for modules and functions name.
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/Hippocamplus/shell/</guid>
-      <description>Misc Colors in less Avoid killing ssh jobs rsync  One-liners Bash &amp;amp; Pipes AWK Perl one-liners  Shell scripting Variables If Then Else  Convert PDF Git Docker cheatsheet Makefile Modules OSX Mount server Setup WD Elements external hard drive    Misc  Redirect stderr to stdout: 2&amp;gt;&amp;amp;1.  Colors in less Use the -r or -R option. Sometimes the previous command needs a parameter make sure the output includes color codes.</description>
+      <description>Git GNU screen Misc Colors in less Avoid killing ssh jobs rsync  One-liners Bash &amp;amp; Pipes AWK Perl one-liners  Shell scripting Variables If Then Else  Convert PDF Docker cheatsheet Makefile Modules OSX Mount server Setup WD Elements external hard drive  ffmpeg   Git  Commit all modification and added files: git commit -am &#34;informative message&#34; To show all the history of a file: git log -p -- file To retrieve a specific version of a file: git show COMMIT:file Revert repo to a specific commit: git checkout COMMIT Undo a commit: git reset HEAD~ and then for the real commit git commit -c ORIG_HEAD.</description>
     </item>
     
     <item>

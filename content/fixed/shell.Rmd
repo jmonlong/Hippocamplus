@@ -7,6 +7,76 @@ output:
     toc: true
 ---
 
+## Git
+
++ Commit all modification and added files: `git commit -am "informative message"`
++ To show all the history of a file: `git log -p -- file`
++ To retrieve a specific version of a file: `git show COMMIT:file`
++ Revert repo to a specific commit: `git checkout COMMIT`
++ Undo a commit: `git reset HEAD~` and then for the real commit `git commit -c ORIG_HEAD`.
++ Update sub-modules: `git submodule update --init --recursive`
++ Add all untracked files: `git st -s | grep '??' | cut -f2 -d ' ' | xargs git add`
++ Add remote e.g. after a fork: `git remote add mine git@github.com:jmonlong/REPO.git`
+
+#### Aliases
+
+~~~sh
+git config --global alias.co checkout
+git config --global alias.ci commit
+git config --global alias.st status
+git config --global alias.br branch
+git config --global user.email '<EMAIL>'
+git config --global user.name 'Jean Monlong'
+~~~
+
+
+#### Branches
+
++ List branches: `git branch`
++ List all branches: `git branch -a`
++ Update remote branch list: `git remote prune origin`
++ Create branch: `git checkout -b hotfix`
++ Link it to a remote branch: `git branch -u origin/hotflix`
++ Creat a new local branch from remote: `git co -t origin/hotfix`
++ Merge the current branch with another branch: `git merge hotfix`
++ Delete a branch: `git branch -d hotfix`
++ Delete remote branch: `git push origin :hotfix`
+
+
+#### Check status of all repos
+
+I have an alias calling the following commands:
+
+~~~sh
+WD=`pwd`
+for ff in `find . -maxdepth 5 -name .git`
+do
+    GDIR=`dirname $ff`
+    echo $GDIR
+    cd $WD/$GDIR
+    git st -s
+    git st | grep ahead
+done
+cd $WD
+~~~
+
+## GNU screen
+
+I had the following problems in some HPCs:
+
+- screen not clearing out after commands like *less* or *emacs*.
+- *Ctl-l* not clearing out the screen.
+- Emacs rendering badly with annoying visual glitches. I had to constantly *Ctl-L* to clean them.
+
+The solution was to add in `~/.screenrc`:
+
+```sh
+# clear out screen after less etc
+altscreen on
+# fixes ctr-l and emacs visual glitches
+term screen-256color
+```
+
 ## Misc
 
 - Redirect stderr to stdout: `2>&1`.
@@ -90,11 +160,12 @@ Inspired from these: [Catonmat](http://www.catonmat.net/blog/introduction-to-per
 - `$_` contains the line.
 - `$.` contains the line number.
 
+
 - Replace text line-by-line in a file: `perl -pe 's/you/me/g'`
 - Replace text if line contains *foo*: `perl -pe 's/you/me/g if /foo/`
 - Replace text line-by-line with regexp: `perl -pe 's/ID(\d+)/$1/g'`
 - Operations on a CSV file: `perl -F, -ane 'print $F[3]+$F[8]`
-- Operations on a CSV file and print at the end: `perl -F, -ane $t+=$F[3]+$F[8]; END{print $t}`
+- Operations on a CSV file and print at the end: `perl -F, -ane $t+=$F[3]+$F[8]; END{print $t}` %
 - Print matches from regular expression: `perl -ne 'print "$1\n" if /foo=([^;]*)/'`
 
 ## Shell scripting
@@ -189,58 +260,6 @@ Another way to check for problems is to look at the *emb* column of `pdffonts ma
 
 *Note: this is based only on my one-time experience with the PDF of my thesis.*
 
-## Git
-
-+ Commit all modification and added files: `git commit -am "informative message"`
-+ To show all the history of a file: `git log -p -- file`
-+ To retrieve a specific version of a file: `git show COMMIT:file`
-+ Revert repo to a specific commit: `git checkout COMMIT`
-+ Undo a commit: `git reset HEAD~` and then for the real commit `git commit -c ORIG_HEAD`.
-+ Update sub-modules: `git submodule update --init --recursive`
-+ Add all untracked files: `git st -s | grep '??' | cut -f2 -d ' ' | xargs git add`
-+ Add remote e.g. after a fork: `git remote add mine git@github.com:jmonlong/REPO.git`
-
-#### Aliases
-
-~~~sh
-git config --global alias.co checkout
-git config --global alias.ci commit
-git config --global alias.st status
-git config --global alias.br branch
-git config --global user.email '<EMAIL>'
-git config --global user.name 'Jean Monlong'
-~~~
-
-
-#### Branches
-
-+ List branches: `git branch`
-+ List all branches: `git branch -a`
-+ Update remote branch list: `git remote prune origin`
-+ Create branch: `git checkout -b hotfix`
-+ Link it to a remote branch: `git branch -u origin/hotflix`
-+ Creat a new local branch from remote: `git co -t origin/hotfix`
-+ Merge the current branch with another branch: `git merge hotfix`
-+ Delete a branch: `git branch -d hotfix`
-+ Delete remote branch: `git push origin :hotfix`
-
-
-#### Check status of all repos
-
-I have an alias calling the following commands:
-
-~~~sh
-WD=`pwd`
-for ff in `find . -maxdepth 5 -name .git`
-do
-    GDIR=`dirname $ff`
-    echo $GDIR
-    cd $WD/$GDIR
-    git st -s
-    git st | grep ahead
-done
-cd $WD
-~~~
 
 
 ## Docker cheatsheet
@@ -337,3 +356,7 @@ LABEL=Elements none ntfs rw,auto,nobrowse
 *Note: If there are spaces in the label, replace them by `\040`.*
 
 The disk can then be accessed through the *Volumes* folder (`/Volumes`).
+
+## ffmpeg
+
+To convert to MP3: `ffmpeg -i my.m4a -acodec mp3 -ac 2 -ab 192k my.mp3`
