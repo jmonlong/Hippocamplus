@@ -562,6 +562,7 @@ Encryption is integrated directly. Just add the extension `.gpg` to a file.
 ## On HPCs
 
 - See how to setup GNU screen to avoid visual glitches in the [Shell section](../shell/#gnu-screen).
+- `M-x ess-remote` to use a *shell* buffer as R buffer to send commands to. For example to send commands from a local R script to an R session on a server (connected through ssh in the *shell* buffer), or on an interactive job (launched in the *shell* buffer).
 
 ## For OSX
 
