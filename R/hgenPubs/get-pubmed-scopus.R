@@ -119,5 +119,5 @@ pm.df = pm.df %>% filter(grepl('Journal Article', type))
 ## Write tsv file
 write.table(pm.df, file="hgen-pubmed.tsv", quote=FALSE, sep='\t', row.names=FALSE)
 
-## Scopus
+## Search Scopus for the citation count (https://www.scopus.com/search/form.uri?zone=TopNavBar&origin=searchadvanced&display=advanced)
 pm.df %>% filter(hgen) %>% .$pmid %>% unique %>% paste0("PMID(",.,")") %>% paste(collapse=" OR ") %>% cat(file="pmids-hgen-forscopus.txt")
