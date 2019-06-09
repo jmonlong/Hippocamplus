@@ -68,7 +68,7 @@ shinyServer(function(input, output) {
   output$timeline <- renderRbokeh({
     cit.n = pm.small %>% group_by(Year) %>% arrange(desc(Citations)) %>%
       mutate(Year.rank=factor(1:n())) %>% do(head(.,input$nbtop))
-    figure(legend_location=NULL, width=1000, height=300,tools="reset") %>%
+    figure(legend_location=NULL, width=2000, tools="reset") %>%
       ly_points(Date, Citations, data = cit.n, color=Year.rank,
                 hover=list(Title, Citations, Journal, Year)) %>%
       tool_pan %>% tool_wheel_zoom %>% y_axis(log = TRUE) %>%

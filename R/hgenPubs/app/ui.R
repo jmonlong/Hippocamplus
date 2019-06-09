@@ -2,12 +2,9 @@ library(shiny)
 library(visNetwork)
 library(rbokeh)
 
-width = 800
-
-shinyUI(fluidPage(
-
-  headerPanel("HGEN in publications"),
-
+shinyUI(fluidPage(                  
+  headerPanel("McGill HGEN in publications"),
+  
   mainPanel(
     tabsetPanel(
       tabPanel('Timeline',
@@ -16,7 +13,7 @@ shinyUI(fluidPage(
                helpText("NOTE: Article published before 1996 are not well tracked by Scopus."),
                numericInput("nbtop", "Top paper per year:", 2, min=1, max=10, step=1),
                hr(),
-               rbokehOutput("timeline",height=300),
+               rbokehOutput("timeline",height=400),
                hr(),
                dataTableOutput("timelinetable")),
 
@@ -80,7 +77,13 @@ shinyUI(fluidPage(
                hr(),
                checkboxInput("normtrend", "Correct for total pubs/year"),
                rbokehOutput("trend",height=300)
+               ),
+      tabPanel('About',
+               h3("About"),
+               helpText('This app explores the publication record of the Human Genetics Dept. of McGill University. '),
+               helpText("The data was extracted mainly from PubMed. The citations counts come from Scopus. There are a couple of problems and limitations that are due to the incorrect/inconsistent information on PubMed. The numbers might also be biased because the databases have evolved with time and we are likely missing information the further we go back in time."),
+               helpText("Find more information about the why and how at LINK.")
                )
-    )
-  )
+    ),
+    width=12)
 ))
