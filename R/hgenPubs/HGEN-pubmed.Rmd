@@ -19,7 +19,6 @@ library(knitr)
 library(magrittr)
 library(DT)
 library(visNetwork)
-library(plotly)
 urlpm <- function(df){
     df %>% mutate(title=paste0("[",title,"](http://www.ncbi.nlm.nih.gov/pubmed/",pmid,")")) %>% select(-pmid)
 }
@@ -29,7 +28,7 @@ urlpm <- function(df){
 pm.df = read.table('./hgen-pubmed.tsv', as.is=TRUE, header=TRUE, sep='\t', quote='')
 pm.df %<>% filter(year<2019, !grepl('Published Erratum', type)) %>%
   mutate(author=paste(auth.firstname, auth.lastname),
-         big=journal %in% c("Nature", "Science"),
+         big=journal %in% c("Nature", "Science", "Cell"),
          date=as.Date(date))
 
 ## Prepare the 'per-author' data.frame
@@ -39,7 +38,7 @@ auth.sum = pm.df %>% filter(hgen) %>% select(author, pmid, big, year) %>%
             until=max(year),
             pubs=n(),
             pubsPerYear=ifelse(until>since, round(pubs/(until-since),2), NA),
-            pubsNatSc=sum(big))
+            pubsNatScCell=sum(big))
 
 co.df = lapply(auth.sum$author, function(auth){
   pmids = pm.df %>% filter(author==auth) %>% .$pmid %>%
@@ -72,14 +71,14 @@ pm.df %>% arrange(date) %>% filter(year==1988) %>% select(title, journal, date, 
 
 ```{r}
 cit.n = pm.df %>% filter(!grepl('Review', type)) %>%
-  select(title, year, cited, pmid, date) %>% unique %>% 
+  select(title, year, cited, pmid, date, journal) %>% unique %>% 
   group_by(year) %>% arrange(desc(cited)) %>%
   mutate(citn=cited/max(cited, na.rm=TRUE), year.rank=factor(1:n())) %>%
   do(head(.,3))
 
 figure(legend_location=NULL, width=800,height=500,tools="reset") %>%
   ly_points(date, cited, data = cit.n, color=year.rank,
-            hover=list(title, year, cited)) %>%
+            hover=list(title, year, journal, cited)) %>%
   tool_pan %>% tool_wheel_zoom %>% y_axis(log = TRUE)
 ```
 
@@ -154,12 +153,15 @@ auth.sum %>% arrange(desc(pubs)) %>% datatable
 ## Who published the most ?
 
 ```{r}
-pm.df %>% filter(hgen) %>% group_by(author) %>%
-  summarize(pubs=n(), firstDate=min(date), NatSc=sum(big)) %>%
-  filter(pubs>2) %>% arrange(NatSc) %>%
-  plot_ly(x=firstDate, y=pub, text=author, mode="markers",
-          color=factor(NatSc, levels=2:0), size=NatSc+1, colors="Set1",
-          width=800)
+pub.df = pm.df %>% filter(hgen) %>% group_by(author) %>%
+  summarize(pubs=n(), firstDate=min(date), NatScCell=sum(big)) %>%
+  filter(pubs>2) %>% arrange(NatScCell)
+
+figure(legend_location=NULL, width=800,height=500,tools="reset") %>%
+  ly_points(firstDate, pubs, data = pub.df,
+            hover=list(author, pubs, NatScCell)) %>%
+  tool_pan %>% tool_wheel_zoom %>% y_axis(log = TRUE)
+
 ```
 
 ## Paper with most HGEN
@@ -172,6 +174,14 @@ pm.df %>% filter(hgen, aff.single, aff.nchar<400) %>%
   summarize(nb.hgen=n(), prop.hgen=nb.hgen/nb.auth[1],
             authors=paste(author, collapse=",")) %>%
   ungroup %>% select(-nb.auth) %>% arrange(desc(nb.hgen), desc(prop.hgen)) %>%
+    head %>% urlpm %>% kable(digits=2)
+
+pm.df %>% filter(hgen, aff.single, aff.nchar<400) %>%
+  group_by(title, pmid, nb.auth) %>%
+  summarize(nb.hgen=n(), prop.hgen=nb.hgen/nb.auth[1],
+            hgen.score=nb.hgen - (nb.auth[1]-nb.hgen),
+            authors=paste(author, collapse=",")) %>%
+  ungroup %>% select(-nb.auth) %>% arrange(desc(hgen.score), desc(prop.hgen)) %>%
     head %>% urlpm %>% kable(digits=2)
 ```	
 
@@ -197,14 +207,18 @@ visNetwork(nodes, edges) %>% visOptions(highlightNearest = FALSE)
 ```{r}
 library(igraph)
 
-fam.df = pm.df %>% filter(!is.na(auth.pos), nb.auth>2) %>% 
-  group_by(pmid) %>% filter(auth.pos==1 | auth.pos==n()) %>%
+fam.df = pm.df %>% filter(!is.na(auth.pos), nb.auth>1) %>% 
+  group_by(pmid) %>% filter(auth.pos==1 | auth.pos==max(auth.pos)) %>%
   filter(n()>1, all(hgen)) %>% arrange(auth.pos) %>%
-  summarize(student=author[1], author=author[2]) %>%
-  group_by(student, author) %>% summarize(n=n()) %>% filter(n>0)
+  summarize(student=author[1], mentor=author[2]) %>%
+  group_by(student, mentor) %>% summarize(n=n()) %>% filter(n>0)
 
-fam.g = rbind(fam.df$author, fam.df$student) %>% as.character %>% graph
-gens = lapply(unique(fam.df$author), function(ment){
+## Keep only one mentor (the one with most pubs) per student
+fam.df = fam.df %>% arrange(desc(n)) %>% group_by(student) %>%
+  do(head(.,1))
+
+fam.g = rbind(fam.df$mentor, fam.df$student) %>% as.character %>% graph
+gens = lapply(unique(fam.df$mentor), function(ment){
            paths = all_shortest_paths(fam.g, ment)
            paths.l = unlist(lapply(paths$res, length))
            if(any(paths.l>2)){
@@ -215,10 +229,24 @@ gens = lapply(unique(fam.df$author), function(ment){
        })
 gens = gens[which(!unlist(lapply(gens, is.null)))]
 gens.df = data.frame(lineage=unlist(lapply(gens, function(x)paste(as_ids(x), collapse="->"))),
-    gens=unlist(lapply(gens, length)),
+                     gens=unlist(lapply(gens, length)),
     stringsAsFactors=FALSE)
 
 gens.df %>% arrange(desc(gens)) %>% datatable
+
+big.fams = gens.df %>% arrange(desc(gens)) %>% head(10) %>% .$lineage %>% strsplit('->') %>%
+  unlist
+fam.nw = fam.df %>% filter(mentor %in% big.fams)
+nodes = data.frame(id=c(fam.nw$mentor, fam.nw$student)) %>% unique %>%
+  mutate(title=id, label=id)
+edges = fam.nw %>%
+  mutate(from=mentor, to=student, value=n, title=n, arrows='to') %>%
+  select(from, to, value, title, arrows) %>% as.data.frame
+visNetwork(nodes, edges) %>% visOptions(highlightNearest = FALSE)
+
+fam.comps = components(fam.g)
+
+ss = 'Shoubridge'
 ```
 
 
@@ -265,19 +293,8 @@ pm.df %>% select(pmid, aff.nchar) %>% unique %>% filter(aff.nchar>500) %>%
 ```
 
 
-```{r}
-pm.small = pm.df %>% dplyr::rename(Citations=cited, Date=date,
-                                   Year=year, Title=title) %>%
-  select(Title, Citations, Date, Year) %>% unique
-
-auth.sum %<>% dplyr::rename(Author=author, Students=students,
-                            Coauthors=coauthor, HGEN.Coauthors=coauthor.hgen,
-                            Since=since, Until=until, Pubs=pubs,
-                            PubsPerYear=pubsPerYear) %>% select(-pubsNatSc)
-
-co.df %<>% select(author, coauthor, nb.pubs) %>%
-  dplyr::rename(Author=author, Coauthor=coauthor, Pubs=nb.pubs)
-
-save(auth.sum, co.df, pm.small, file="HGenpubs-dataForApp.RData")
-```
-
+It looks like PubMed records "changed" around 2003. 
+For example the author names changed from *Initials LastName* to *FirstName LastName*. 
+That causes the stats for some authors to be split in two. 
+It also means that the "department growth" is biased.
+Maybe PubMed changed in 2003, for example increasing the list of journals/databases that it includes, which then looks like a boost of publications/authors in the department.
