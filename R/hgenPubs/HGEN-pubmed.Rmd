@@ -19,6 +19,7 @@ library(knitr)
 library(magrittr)
 library(DT)
 library(visNetwork)
+library(igraph)
 urlpm <- function(df){
     df %>% mutate(title=paste0("[",title,"](http://www.ncbi.nlm.nih.gov/pubmed/",pmid,")")) %>% select(-pmid)
 }
@@ -26,12 +27,13 @@ urlpm <- function(df){
 
 ```{r, cache=TRUE}
 pm.df = read.table('./hgen-pubmed.tsv', as.is=TRUE, header=TRUE, sep='\t', quote='')
-pm.df %<>% filter(year<2019, !grepl('Published Erratum', type)) %>%
+pm.df %<>% filter(year<2019, !grepl('Published Erratum', type),
+                  !is.na(auth.firstname), !is.na(auth.lastname)) %>%
   mutate(author=paste(auth.firstname, auth.lastname),
          big=journal %in% c("Nature", "Science", "Cell"),
          date=as.Date(date))
 
-## Prepare the 'per-author' data.frame
+## 'Per-author' data.frame
 auth.sum = pm.df %>% filter(hgen) %>% select(author, pmid, big, year) %>%
   unique %>% group_by(author) %>%
   summarize(since=min(year),
@@ -40,25 +42,41 @@ auth.sum = pm.df %>% filter(hgen) %>% select(author, pmid, big, year) %>%
             pubsPerYear=ifelse(until>since, round(pubs/(until-since),2), NA),
             pubsNatScCell=sum(big))
 
+## Co-authors
 co.df = lapply(auth.sum$author, function(auth){
   pmids = pm.df %>% filter(author==auth) %>% .$pmid %>%
     as.character %>% unique
   pm.df %>% filter(pmid %in% pmids) %>% group_by(author) %>%
-    summarize(nb.pubs=n()) %>% ungroup %>% mutate(coauthor=author, author=auth)
+    summarize(nb.tot=n(), nb.hgen=sum(hgen)) %>% ungroup %>%
+      mutate(coauthor=author, author=auth)
 })
 co.df = do.call(rbind, co.df)
-co.df %<>% mutate(hgen=coauthor %in% auth.sum$author)
-auth.sum = co.df %>% filter(author!=coauthor) %>%
-  group_by(author) %>% summarize(coauthor=n(), coauthor.hgen=sum(hgen)) %>%
+co.df %<>% filter(author!=coauthor)
+
+## Update per-author stats
+auth.sum = co.df %>% group_by(author) %>%
+  summarize(coauthor=n(), coauthor.hgen=sum(nb.hgen>0)) %>%
   merge(auth.sum)
 
+## Families
 fam.df = pm.df %>% filter(!is.na(auth.pos)) %>% 
-  group_by(pmid) %>% filter(auth.pos==1 | auth.pos==n()) %>%
+  group_by(pmid) %>% filter(auth.pos==1 | auth.pos==max(auth.pos)) %>%
   filter(n()>1, all(hgen)) %>% arrange(auth.pos) %>%
-  summarize(student=author[1], author=author[2]) %>%
-  group_by(student, author) %>% summarize(n=n()) %>% filter(n>0)
-auth.sum = fam.df %>% group_by(author) %>% summarize(students=n()) %>%
+  summarize(student=author[1], mentor=author[2]) %>%
+  group_by(student, mentor) %>% summarize(n=n()) %>% filter(n>0)
+
+## Update per-author stats
+auth.sum = fam.df %>% mutate(author=mentor) %>%
+  group_by(author) %>% summarize(students=n()) %>%
   merge(auth.sum, all.y=TRUE)
+
+### Family tree
+## Keep only one mentor (the one with most pubs) per student
+fam.df = fam.df %>% arrange(desc(n)) %>% group_by(student) %>%
+  do(head(.,1))
+## Find components in the graph
+fam.g = rbind(fam.df$mentor, fam.df$student) %>% as.character %>% graph
+fam.comps = components(fam.g)
 ```
 
 ## First papers in history?
@@ -188,14 +206,15 @@ pm.df %>% filter(hgen, aff.single, aff.nchar<400) %>%
 ## HGEN network
 
 ```{r}
-co.df %<>% filter(hgen, author>coauthor) %>% arrange(desc(nb.pubs))
-co.df %>% select(author, coauthor, nb.pubs) %>% datatable
+co.df %<>% filter(author>coauthor) %>%
+  select(author, coauthor, nb.hgen) %>%
+  arrange(desc(nb.hgen))
 
-bro.df = co.df %>% head(50)
+bro.df = co.df %>% head(200)
 nodes = data.frame(id=c(bro.df$author, bro.df$coauthor)) %>% unique %>%
   mutate(title=id, label=id)
 edges = bro.df %>%
-  mutate(from=author, to=coauthor, value=nb.pubs, title=nb.pubs) %>%
+  mutate(from=author, to=coauthor, value=nb.hgen, title=nb.hgen) %>%
   select(from, to, value, title) %>% as.data.frame
 visNetwork(nodes, edges) %>% visOptions(highlightNearest = FALSE)
 ```
@@ -205,19 +224,6 @@ visNetwork(nodes, edges) %>% visOptions(highlightNearest = FALSE)
 *Doesn't really work...*
 
 ```{r}
-library(igraph)
-
-fam.df = pm.df %>% filter(!is.na(auth.pos), nb.auth>1) %>% 
-  group_by(pmid) %>% filter(auth.pos==1 | auth.pos==max(auth.pos)) %>%
-  filter(n()>1, all(hgen)) %>% arrange(auth.pos) %>%
-  summarize(student=author[1], mentor=author[2]) %>%
-  group_by(student, mentor) %>% summarize(n=n()) %>% filter(n>0)
-
-## Keep only one mentor (the one with most pubs) per student
-fam.df = fam.df %>% arrange(desc(n)) %>% group_by(student) %>%
-  do(head(.,1))
-
-fam.g = rbind(fam.df$mentor, fam.df$student) %>% as.character %>% graph
 gens = lapply(unique(fam.df$mentor), function(ment){
            paths = all_shortest_paths(fam.g, ment)
            paths.l = unlist(lapply(paths$res, length))
@@ -232,9 +238,7 @@ gens.df = data.frame(lineage=unlist(lapply(gens, function(x)paste(as_ids(x), col
                      gens=unlist(lapply(gens, length)),
     stringsAsFactors=FALSE)
 
-gens.df %>% arrange(desc(gens)) %>% datatable
-
-big.fams = gens.df %>% arrange(desc(gens)) %>% head(10) %>% .$lineage %>% strsplit('->') %>%
+big.fams = gens.df %>% arrange(desc(gens)) %>% head(30) %>% .$lineage %>% strsplit('->') %>%
   unlist
 fam.nw = fam.df %>% filter(mentor %in% big.fams)
 nodes = data.frame(id=c(fam.nw$mentor, fam.nw$student)) %>% unique %>%
@@ -243,10 +247,6 @@ edges = fam.nw %>%
   mutate(from=mentor, to=student, value=n, title=n, arrows='to') %>%
   select(from, to, value, title, arrows) %>% as.data.frame
 visNetwork(nodes, edges) %>% visOptions(highlightNearest = FALSE)
-
-fam.comps = components(fam.g)
-
-ss = 'Shoubridge'
 ```
 
 

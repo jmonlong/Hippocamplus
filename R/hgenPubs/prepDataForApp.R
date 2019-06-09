@@ -22,17 +22,18 @@ auth.sum = pm.df %>% filter(hgen) %>% select(author, pmid, big, year) %>%
 
 ## Co-authors
 co.df = lapply(auth.sum$author, function(auth){
-  pmids = pm.df %>% filter(author==auth, aff.nchar<400, hgen) %>% .$pmid %>%
+  pmids = pm.df %>% filter(author==auth) %>% .$pmid %>%
     as.character %>% unique
-  pm.df %>% filter(pmid %in% pmids, hgen) %>% group_by(author) %>%
-    summarize(nb.pubs=n()) %>% ungroup %>% mutate(coauthor=author, author=auth)
+  pm.df %>% filter(pmid %in% pmids) %>% group_by(author) %>%
+    summarize(nb.tot=n(), nb.hgen=sum(hgen)) %>% ungroup %>%
+      mutate(coauthor=author, author=auth)
 })
 co.df = do.call(rbind, co.df)
-co.df %<>% filter(author!=coauthor) %>% mutate(hgen=coauthor %in% auth.sum$author)
+co.df %<>% filter(author!=coauthor)
 
 ## Update per-author stats
 auth.sum = co.df %>% group_by(author) %>%
-  summarize(coauthor=n(), coauthor.hgen=sum(hgen)) %>%
+  summarize(coauthor=n(), coauthor.hgen=sum(nb.hgen>0)) %>%
   merge(auth.sum)
 
 ## Families
@@ -56,9 +57,6 @@ fam.g = rbind(fam.df$mentor, fam.df$student) %>% as.character %>% graph
 fam.comps = components(fam.g)
 
 
-
-
-
 ## Keep only information needed for the app
 pm.small = pm.df %>% dplyr::rename(Citations=cited, Date=date, Journal=journal,
                                    Year=year, Title=title) %>%
@@ -69,9 +67,10 @@ auth.sum %<>% dplyr::rename(Author=author, Mentees=students,
                             Since=since, Until=until, Pubs=pubs,
                             PubsPerYear=pubsPerYear) %>% select(-pubsNatScCell)
 
-co.df %<>% select(author, coauthor, nb.pubs) %>%
-  filter(author>coauthor) %>%  arrange(desc(nb.pubs)) %>% 
-  dplyr::rename(Author=author, Coauthor=coauthor, Pubs=nb.pubs)
+co.df %<>% filter(author>coauthor) %>%
+  select(author, coauthor, nb.hgen) %>%
+  arrange(desc(nb.hgen)) %>% 
+  dplyr::rename(Author=author, Coauthor=coauthor, Pubs=nb.hgen)
 
 fam.df %<>% select(mentor, student, n)
 

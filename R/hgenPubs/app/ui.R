@@ -53,8 +53,8 @@ shinyUI(fluidPage(
                fluidRow(
                  column(4,
                         numericInput("year.s", "From", 1988, min=1988, max=2016),
-                        numericInput("year.e", "Until", 2016, min=1988, max=2016),
-                        actionButton("update", "Change"),
+                        numericInput("year.e", "Until", 2018, min=1988, max=2018),
+                        actionButton("update", "Update"),
                         hr(),
                         sliderInput("freqwd",
                                     "Minimum Frequency:",

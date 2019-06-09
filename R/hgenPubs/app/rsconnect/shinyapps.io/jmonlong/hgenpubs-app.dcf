@@ -1,0 +1,9 @@
+name: hgenpubs-app
+title:
+account: jmonlong
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 138408
+bundleId: 2141173
+url: https://jmonlong.shinyapps.io/hgenpubs-app/
+when: 1560113316.54683
