@@ -1,0 +1,16 @@
+---
+sidebar: true
+weight: 1
+title: CPP
+draft: true
+output:
+  blogdown::html_page:
+    toc: true
+---
+
+## Resources
+
+- [C++ Core Guidelines](https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md)
+- [C++ Primer (5th Edition). Stanley B. Lippman, Josée Lajoie, Barbara E. Moo](https://www.amazon.com/Primer-5th-Stanley-B-Lippman/dp/0321714113)
+- [Accelerated C++. Andrew Koenig](https://www.bookdepository.com/Accelerated-C-Andrew-Koenig/9780201703535)
+
