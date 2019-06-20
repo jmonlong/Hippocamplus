@@ -41,7 +41,7 @@ output:
 <div id="git" class="section level2">
 <h2>Git</h2>
 <ul>
-<li>Commit all modification and added files: <code>git commit -am "informative message"</code></li>
+<li>Commit all modification and added files: <code>git commit -am &quot;informative message&quot;</code></li>
 <li>To show all the history of a file: <code>git log -p -- file</code></li>
 <li>To retrieve a specific version of a file: <code>git show COMMIT:file</code></li>
 <li>Revert repo to a specific commit: <code>git checkout COMMIT</code></li>
@@ -106,6 +106,7 @@ term screen-256color</code></pre>
 <h2>Misc</h2>
 <ul>
 <li>Redirect stderr to stdout: <code>2&gt;&amp;1</code>.</li>
+<li>Show special characters (end of line, tabs) with <code>cat -A</code>.</li>
 </ul>
 <div id="colors-in-less" class="section level3">
 <h3>Colors in <code>less</code></h3>
@@ -120,14 +121,12 @@ grep --color=always | less -R</code></pre>
 </div>
 <div id="rsync" class="section level3">
 <h3>rsync</h3>
-<p><code>rsync</code> is not completely intuitive to me.
-Here are some of the commands I could make work.</p>
+<p><code>rsync</code> is not completely intuitive to me. Here are some of the commands I could make work.</p>
 <hr />
 <p>To recurrently sync all the files that match the patterns in <code>rsyncIncludes.txt</code>:</p>
 <pre class="sh"><code>rsync -r --include=&#39;*/&#39; --include-from=rsyncIncludes.txt --exclude=&#39;*&#39; --prune-empty-dirs SRC DEST</code></pre>
 <hr />
-<p>To recurrently sync all the files that match the patterns in <code>rsyncIncludes.txt</code> EXCEPT some with a specific pattern.
-Practical example: all the R scripts but not the ones created by BatchJobs in <code>*-files</code> directories:</p>
+<p>To recurrently sync all the files that match the patterns in <code>rsyncIncludes.txt</code> EXCEPT some with a specific pattern. Practical example: all the R scripts but not the ones created by BatchJobs in <code>*-files</code> directories:</p>
 <pre class="sh"><code>rsync -r --exclude=&quot;*-files&quot; --include=&#39;*/&#39; --include=&#39;*.R&#39; --exclude=&#39;*&#39; --prune-empty-dirs SRC DEST</code></pre>
 </div>
 </div>
@@ -166,7 +165,7 @@ Practical example: all the R scripts but not the ones created by BatchJobs in <c
 <li>Replace text line-by-line with regexp: <code>perl -pe 's/ID(\d+)/$1/g'</code></li>
 <li>Operations on a CSV file: <code>perl -F, -ane 'print $F[3]+$F[8]</code></li>
 <li>Operations on a CSV file and print at the end: <code>perl -F, -ane $t+=$F[3]+$F[8]; END{print $t}</code> %</li>
-<li><p>Print matches from regular expression: <code>perl -ne 'print "$1\n" if /foo=([^;]*)/'</code></p></li>
+<li><p>Print matches from regular expression: <code>perl -ne 'print &quot;$1\n&quot; if /foo=([^;]*)/'</code></p></li>
 </ul>
 </div>
 </div>
@@ -222,14 +221,12 @@ fi</code></pre>
 </div>
 <div id="to-pdfa" class="section level4">
 <h4>to PDF/A</h4>
-<p>In the end I had to use Acrobat Reader Pro…
-Still, converting the PDF using the following commands beforehand helped (otherwise Acrobat Reader Pro couldn’t convert it):</p>
+<p>In the end I had to use Acrobat Reader Pro… Still, converting the PDF using the following commands beforehand helped (otherwise Acrobat Reader Pro couldn’t convert it):</p>
 <pre class="sh"><code>gs -dPDFA=1 -dBATCH -dNOPAUSE -dEmbedAllFonts=true -dSubsetFonts=false -dHaveTrueTypes=true -dPDFSETTINGS=/prepress -sProcessColorModel=DeviceRGB -sDEVICE=pdfwrite -sPDFACompatibilityPolicy=1 -sOutputFile=mainPDFA.pdf main.pdf</code></pre>
 <p>On the other hand, passing by a <code>.ps</code> stage as recommended <a href="https://superuser.com/questions/188953/how-to-convert-a-pdf-to-a-pdf-a">here</a>, produced a smaller PDF that was directly PDF/A compliant (no need for Acrobat Reader Pro) but lost all cross-reference links :(</p>
 <pre class="sh"><code>pdftops main.pdf main.ps
 gs -dPDFA -dBATCH -dNOPAUSE -dNOOUTERSAVE -dUseCIEColor -sProcessColorModel=DeviceCMYK -sDEVICE=pdfwrite -sPDFACompatibilityPolicy=1 -sOutputFile=mainPDFA.pdf main.ps</code></pre>
-<p>To check for PDF/A compliance I used <a href="https://www.pdf-online.com/osa/validate.aspx">this online validator</a> or Acrobat Reader Pro.
-Another way to check for problems is to look at the <em>emb</em> column of <code>pdffonts main.pdf</code> (should be all embedded) and the <em>type</em> column of <code>pdfimages -list main.pdf</code> (should be all <em>image</em>).</p>
+<p>To check for PDF/A compliance I used <a href="https://www.pdf-online.com/osa/validate.aspx">this online validator</a> or Acrobat Reader Pro. Another way to check for problems is to look at the <em>emb</em> column of <code>pdffonts main.pdf</code> (should be all embedded) and the <em>type</em> column of <code>pdfimages -list main.pdf</code> (should be all <em>image</em>).</p>
 <p><em>Note: this is based only on my one-time experience with the PDF of my thesis.</em></p>
 </div>
 </div>
@@ -258,8 +255,7 @@ Another way to check for problems is to look at the <em>emb</em> column of <code
 </div>
 <div id="increase-memory" class="section level4">
 <h4>Increase memory</h4>
-<p>In Mac OS, I had some problems with the docker stopping because of memory issues.
-I fixed by changing:</p>
+<p>In Mac OS, I had some problems with the docker stopping because of memory issues. I fixed by changing:</p>
 <pre class="sh"><code>docker-machine stop
 VBoxManage modifyvm default --cpus 3
 VBoxManage modifyvm default --memory 8192
@@ -274,8 +270,7 @@ docker-machine start</code></pre>
 </div>
 <div id="modules" class="section level2">
 <h2>Modules</h2>
-<p>For example installing Emacs as a module on a HPC.
-After installing Emacs locally in a <code>~/softwares/emacs/emacs-24.4</code> I create a file <code>~/myModules/jmonlong/emacs/24.4</code> with:</p>
+<p>For example installing Emacs as a module on a HPC. After installing Emacs locally in a <code>~/softwares/emacs/emacs-24.4</code> I create a file <code>~/myModules/jmonlong/emacs/24.4</code> with:</p>
 <pre class="shell"><code>#%Module1.0
 proc ModulesHelp { } {
   puts stderr &quot;\tMUMmer &quot;

@@ -80,6 +80,7 @@ term screen-256color
 ## Misc
 
 - Redirect stderr to stdout: `2>&1`.
+- Show special characters (end of line, tabs) with `cat -A`.
 
 ### Colors in `less`
 
