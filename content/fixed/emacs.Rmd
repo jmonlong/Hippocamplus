@@ -86,6 +86,7 @@ I also have an alias in my `.bashrc` to open emacs directly in *light* mode:
 alias emacsl="emacs --eval \"(load-theme 'sanityinc-solarized-light t)\""
 ~~~
 
+Note: a theme can be unloaded using `M-x disable-theme`.
 
 ## For R
 
