@@ -1,0 +1,119 @@
+---
+title: Alternative to pie charts in R
+date: 2019-06-27
+draft: true
+tags: ["R", "plot"]
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(message=FALSE, warning=FALSE, tidy=TRUE, tidy.opts=list(width.cutoff=50))
+```
+
+## Some setting up
+
+Using a typical tidyverse with data.frame manipulation (*dplyr*) and graphs (*ggplot2*):
+
+```{r init}
+library(ggplot2)
+library(dplyr)
+
+## Random names
+randNames <- function(nb.names=10, name.length=6){
+  replicate(nb.names, paste(sample(letters, name.length, TRUE), collapse=''))
+}
+## Creates a random data.frame with "class" column x
+pieDF <- function(labels){
+  tibble(x=rep(labels,
+               c(runif(length(labels)/2, 100,200),
+                 runif(length(labels)/2, 1,20))))
+}
+## Interleaves color for palette
+interk <- function(x, k=4){ # Interleaves elements in x
+  idx = unlist(lapply(1:k, function(kk) seq(kk, length(x), k)))
+  x[idx]
+}
+pal = interk(rainbow(10, s=.8), 3)
+```
+
+The functions above create random names and data.frames with labels that I will use to test the graphs.
+
+I will simulate 10 labels: 5 with around the same number of elements (between 100 and 200); 5 with a small number of elements (between 1 and 20). 
+This should be good to see how the graphs look like with multiple groups, some with very low numbers.
+
+
+## Problem with pie charts
+
+```{r pies}
+labs = randNames(10,6)
+df1 = pieDF(labs)
+ggplot(df1, aes(x='', fill=x)) + geom_bar() +
+  scale_fill_manual(values=pal) +
+  coord_polar("y", start=0) + theme_bw() +
+  theme(axis.title.y=element_blank(), legend.title=element_blank())
+
+df2 = pieDF(labs)
+ggplot(df2, aes(x='', fill=x)) + geom_bar() +
+  scale_fill_manual(values=pal) + 
+  coord_polar("y", start=0) + theme_bw() +
+  theme(axis.title.y=element_blank(), legend.title=element_blank())
+```
+
+## Waffle graphs
+
+[ggwaffle](https://github.com/liamgilbey/ggwaffle)
+
+```{r waffle}
+library(ggwaffle)
+
+waffleSubset <- function(df, ss=100){
+  ss.prop = ss/nrow(df)
+  df %>% group_by(x) %>%
+    mutate(ss=round(n()*ss.prop), ss=ifelse(ss==0, 1, ss)) %>%
+    sample_n(ss)
+}
+
+df1 %>% waffleSubset(200) %>% waffle_iron(aes_d(group=x), rows=10) %>%
+  ggplot(aes(x, y, fill=group)) + geom_waffle() +
+  coord_equal() + scale_fill_manual(values=pal) + theme_waffle() +
+  theme(axis.title.x=element_blank(), axis.title.y=element_blank(),
+        legend.title=element_blank())
+
+df2 %>% waffleSubset(200) %>% waffle_iron(aes_d(group=x), rows=10) %>%
+  ggplot(aes(x, y, fill=group)) + geom_waffle() +
+  coord_equal() + scale_fill_manual(values=pal) + theme_waffle() +
+  theme(axis.title.x=element_blank(), axis.title.y=element_blank(),
+        legend.title=element_blank())
+
+```
+
+## Bar graphs
+
+```{r bars}
+ggplot(df1, aes(x=x, fill=x)) + geom_bar(color='black') +
+  theme_bw() + scale_fill_manual(values=pal) +
+  theme(axis.title.x=element_blank(), legend.title=element_blank())
+ggplot(df2, aes(x=x, fill=x)) + geom_bar(color='black') +
+  theme_bw() + scale_fill_manual(values=pal) + 
+  theme(axis.title.x=element_blank(), legend.title=element_blank())
+```
+
+More compact version:
+
+```{r barsc, fig.height=4, fig.width=4}
+compactBars <- function(df, digits=1, nudge=.001){
+  df %>% group_by(x) %>% summarize(n=n()) %>% ungroup %>%
+    mutate(prop=n/sum(n), percent=paste0(100*round(prop, 2+digits),'%'),
+           hjust=ifelse(prop<max(prop)/2, 0, 1),
+           nudge=ifelse(prop<max(prop)/2, nudge, -1*nudge)) %>% 
+    ggplot(aes(x=reorder(x, prop))) +
+    geom_bar(aes(y=prop, fill=x), stat='identity', color='black') +
+    geom_text(aes(y=prop+nudge, label=percent, hjust=hjust), size=7) + 
+    theme_void() +
+    scale_fill_manual(values=pal) +
+    theme(axis.text.y=element_text(size=24)) + 
+    coord_flip() + guides(fill=FALSE)
+}
+
+compactBars(df1)
+compactBars(df2)
+```

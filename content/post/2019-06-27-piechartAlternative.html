@@ -1,0 +1,106 @@
+---
+title: Alternative to pie charts in R
+date: 2019-06-27
+draft: true
+tags: ["R", "plot"]
+---
+
+
+
+<div id="some-setting-up" class="section level2">
+<h2>Some setting up</h2>
+<p>Using a typical tidyverse with data.frame manipulation (<em>dplyr</em>) and graphs (<em>ggplot2</em>):</p>
+<pre class="r"><code>library(ggplot2)
+library(dplyr)
+
+## Random names
+randNames &lt;- function(nb.names = 10, name.length = 6) {
+    replicate(nb.names, paste(sample(letters, name.length, 
+        TRUE), collapse = &quot;&quot;))
+}
+## Creates a random data.frame with &#39;class&#39; column x
+pieDF &lt;- function(labels) {
+    tibble(x = rep(labels, c(runif(length(labels)/2, 
+        100, 200), runif(length(labels)/2, 1, 20))))
+}
+## Interleaves color for palette Interleaves
+## elements in x
+interk &lt;- function(x, k = 4) {
+    idx = unlist(lapply(1:k, function(kk) seq(kk, length(x), 
+        k)))
+    x[idx]
+}
+pal = interk(rainbow(10, s = 0.8), 3)</code></pre>
+<p>The functions above create random names and data.frames with labels that I will use to test the graphs.</p>
+<p>I will simulate 10 labels: 5 with around the same number of elements (between 100 and 200); 5 with a small number of elements (between 1 and 20).
+This should be good to see how the graphs look like with multiple groups, some with very low numbers.</p>
+</div>
+<div id="problem-with-pie-charts" class="section level2">
+<h2>Problem with pie charts</h2>
+<pre class="r"><code>labs = randNames(10, 6)
+df1 = pieDF(labs)
+ggplot(df1, aes(x = &quot;&quot;, fill = x)) + geom_bar() + scale_fill_manual(values = pal) + 
+    coord_polar(&quot;y&quot;, start = 0) + theme_bw() + theme(axis.title.y = element_blank(), 
+    legend.title = element_blank())</code></pre>
+<p><img src="/post/2019-06-27-piechartAlternative_files/figure-html/pies-1.png" width="672" /></p>
+<pre class="r"><code>df2 = pieDF(labs)
+ggplot(df2, aes(x = &quot;&quot;, fill = x)) + geom_bar() + scale_fill_manual(values = pal) + 
+    coord_polar(&quot;y&quot;, start = 0) + theme_bw() + theme(axis.title.y = element_blank(), 
+    legend.title = element_blank())</code></pre>
+<p><img src="/post/2019-06-27-piechartAlternative_files/figure-html/pies-2.png" width="672" /></p>
+</div>
+<div id="waffle-graphs" class="section level2">
+<h2>Waffle graphs</h2>
+<p><a href="https://github.com/liamgilbey/ggwaffle">ggwaffle</a></p>
+<pre class="r"><code>library(ggwaffle)
+
+waffleSubset &lt;- function(df, ss = 100) {
+    ss.prop = ss/nrow(df)
+    df %&gt;% group_by(x) %&gt;% mutate(ss = round(n() * 
+        ss.prop), ss = ifelse(ss == 0, 1, ss)) %&gt;% 
+        sample_n(ss)
+}
+
+df1 %&gt;% waffleSubset(200) %&gt;% waffle_iron(aes_d(group = x), 
+    rows = 10) %&gt;% ggplot(aes(x, y, fill = group)) + 
+    geom_waffle() + coord_equal() + scale_fill_manual(values = pal) + 
+    theme_waffle() + theme(axis.title.x = element_blank(), 
+    axis.title.y = element_blank(), legend.title = element_blank())</code></pre>
+<p><img src="/post/2019-06-27-piechartAlternative_files/figure-html/waffle-1.png" width="672" /></p>
+<pre class="r"><code>df2 %&gt;% waffleSubset(200) %&gt;% waffle_iron(aes_d(group = x), 
+    rows = 10) %&gt;% ggplot(aes(x, y, fill = group)) + 
+    geom_waffle() + coord_equal() + scale_fill_manual(values = pal) + 
+    theme_waffle() + theme(axis.title.x = element_blank(), 
+    axis.title.y = element_blank(), legend.title = element_blank())</code></pre>
+<p><img src="/post/2019-06-27-piechartAlternative_files/figure-html/waffle-2.png" width="672" /></p>
+</div>
+<div id="bar-graphs" class="section level2">
+<h2>Bar graphs</h2>
+<pre class="r"><code>ggplot(df1, aes(x = x, fill = x)) + geom_bar(color = &quot;black&quot;) + 
+    theme_bw() + scale_fill_manual(values = pal) + 
+    theme(axis.title.x = element_blank(), legend.title = element_blank())</code></pre>
+<p><img src="/post/2019-06-27-piechartAlternative_files/figure-html/bars-1.png" width="672" /></p>
+<pre class="r"><code>ggplot(df2, aes(x = x, fill = x)) + geom_bar(color = &quot;black&quot;) + 
+    theme_bw() + scale_fill_manual(values = pal) + 
+    theme(axis.title.x = element_blank(), legend.title = element_blank())</code></pre>
+<p><img src="/post/2019-06-27-piechartAlternative_files/figure-html/bars-2.png" width="672" /></p>
+<p>More compact version:</p>
+<pre class="r"><code>compactBars &lt;- function(df, digits = 1, nudge = 0.001) {
+    df %&gt;% group_by(x) %&gt;% summarize(n = n()) %&gt;% ungroup %&gt;% 
+        mutate(prop = n/sum(n), percent = paste0(100 * 
+            round(prop, 2 + digits), &quot;%&quot;), hjust = ifelse(prop &lt; 
+            max(prop)/2, 0, 1), nudge = ifelse(prop &lt; 
+            max(prop)/2, nudge, -1 * nudge)) %&gt;% ggplot(aes(x = reorder(x, 
+        prop))) + geom_bar(aes(y = prop, fill = x), 
+        stat = &quot;identity&quot;, color = &quot;black&quot;) + geom_text(aes(y = prop + 
+        nudge, label = percent, hjust = hjust), size = 7) + 
+        theme_void() + scale_fill_manual(values = pal) + 
+        theme(axis.text.y = element_text(size = 24)) + 
+        coord_flip() + guides(fill = FALSE)
+}
+
+compactBars(df1)</code></pre>
+<p><img src="/post/2019-06-27-piechartAlternative_files/figure-html/barsc-1.png" width="384" /></p>
+<pre class="r"><code>compactBars(df2)</code></pre>
+<p><img src="/post/2019-06-27-piechartAlternative_files/figure-html/barsc-2.png" width="384" /></p>
+</div>

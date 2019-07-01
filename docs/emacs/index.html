@@ -323,7 +323,7 @@
 </div>
 <div id="melpa-package-repository" class="section level2">
 <h2>MELPA package repository</h2>
-<p>Usually packages are just <code>.el</code> files to download and add in the folder defined in <code>.emacs</code> (e.g. <code>(add-to-list 'load-path "~/.emacs.d/lisp/")</code>). However, there is easier way: <a href="http://www.emacswiki.org/emacs/MELPA">MELPA</a> package manager !</p>
+<p>Usually packages are just <code>.el</code> files to download and add in the folder defined in <code>.emacs</code> (e.g. <code>(add-to-list 'load-path &quot;~/.emacs.d/lisp/&quot;)</code>). However, there is easier way: <a href="http://www.emacswiki.org/emacs/MELPA">MELPA</a> package manager !</p>
 <p>To install it, add to <code>.emacs</code>:</p>
 <pre class="lisp"><code>(require &#39;package)
 (add-to-list &#39;package-archives &#39;(&quot;melpa&quot; . &quot;https://melpa.org/packages/&quot;) t)
@@ -338,6 +338,7 @@ Then I added the dark version as default with <code>(load-theme 'sanityinc-solar
 To change it interactively I run <code>M-x load-theme</code> and then for example <code>sanityinc-solarized-light</code>.</p>
 <p>I also have an alias in my <code>.bashrc</code> to open emacs directly in <em>light</em> mode:</p>
 <pre class="sh"><code>alias emacsl=&quot;emacs --eval \&quot;(load-theme &#39;sanityinc-solarized-light t)\&quot;&quot;</code></pre>
+<p>Note: a theme can be unloaded using <code>M-x disable-theme</code>.</p>
 </div>
 <div id="for-r" class="section level2">
 <h2>For R</h2>
