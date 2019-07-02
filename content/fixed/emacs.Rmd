@@ -37,6 +37,7 @@ Some of the basic tweaks in my `.emacs` file:
 + List key bindings currently available starting with `C-c`: `C-c C-h`.
 + Narrow down to a region with `C-x n n` and widen back to the entire buffer with `C-x n w` (e.g. when refactoring).
 + Accents with `C-x 8` (`C-x 8 C-h` for list).
++ Shift a selected chunk with spaces: `C-x TAB` or `C-4 C-x TAB` to add a specific number of spaces (here 4).
 
 Regexp replace :
 
@@ -435,6 +436,36 @@ Then I use the [*Emacs Speaks SHELL*](http://www.emacswiki.org/emacs/essh) packa
 
 The shortcuts are self-explanatory.
 
+## For WDL workflows
+
+- [*wdl-mode*](https://github.com/zhanxw/wdl-mode) written by [Xiaowei Zhan](http://zhanxw.com/) (install through MELPA).
+- Change the indentation size with `(setq wdl-indent-level 4)` in the `.emacs` file.
+
+I also use [polymode](https://polymode.github.io/) to swith to "shell" mode within *command* chunks.
+Once *polymode* is installed (e.g. though MELPA), I added to my `.emacs`:
+
+~~~lisp
+(require 'polymode)
+(define-hostmode poly-wdl-hostmode
+  :mode 'wdl-mode)
+(define-innermode poly-wdl-command-innermode
+  :mode 'sh-mode
+  :head-matcher "^[ \t]*command *{ *\n"
+  :tail-matcher "^[ \t]*} *\n"
+  :head-mode 'host
+  :tail-mode 'host)
+(define-innermode poly-wdl-command2-innermode
+  :mode 'sh-mode
+  :head-matcher "^[ \t]*command *<<< *\n"
+  :tail-matcher "^[ \t]*>>> *\n"
+  :head-mode 'host
+  :tail-mode 'host)
+(define-polymode poly-wdl-mode
+  :hostmode 'poly-wdl-hostmode
+  :innermodes '(poly-wdl-command-innermode
+		poly-wdl-command2-innermode))
+(add-to-list 'auto-mode-alist '("\\.wdl\\'" . poly-wdl-mode))
+~~~
 
 ## For file manipulation
 

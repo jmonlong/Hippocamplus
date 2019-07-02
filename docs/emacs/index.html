@@ -256,6 +256,7 @@
 <li><a href="#tags">Tags</a></li>
 </ul></li>
 <li><a href="#for-shell">For Shell</a></li>
+<li><a href="#for-wdl-workflows">For WDL workflows</a></li>
 <li><a href="#for-file-manipulation">For file manipulation</a><ul>
 <li><a href="#csvtsv">CSV/TSV</a></li>
 <li><a href="#dired-mode">Dired mode</a></li>
@@ -302,6 +303,7 @@
 <li>List key bindings currently available starting with <code>C-c</code>: <code>C-c C-h</code>.</li>
 <li>Narrow down to a region with <code>C-x n n</code> and widen back to the entire buffer with <code>C-x n w</code> (e.g. when refactoring).</li>
 <li>Accents with <code>C-x 8</code> (<code>C-x 8 C-h</code> for list).</li>
+<li>Shift a selected chunk with spaces: <code>C-x TAB</code> or <code>C-4 C-x TAB</code> to add a specific number of spaces (here 4).</li>
 </ul>
 <p>Regexp replace :</p>
 <ul>
@@ -604,6 +606,35 @@ Then added to <code>.emacs</code>:</p>
   (define-key sh-mode-map &quot;\C-c\C-d&quot; &#39;shell-cd-current-directory))
 (add-hook &#39;sh-mode-hook &#39;essh-sh-hook)</code></pre>
 <p>The shortcuts are self-explanatory.</p>
+</div>
+<div id="for-wdl-workflows" class="section level2">
+<h2>For WDL workflows</h2>
+<ul>
+<li><a href="https://github.com/zhanxw/wdl-mode"><em>wdl-mode</em></a> written by <a href="http://zhanxw.com/">Xiaowei Zhan</a> (install through MELPA).</li>
+<li>Change the indentation size with <code>(setq wdl-indent-level 4)</code> in the <code>.emacs</code> file.</li>
+</ul>
+<p>I also use <a href="https://polymode.github.io/">polymode</a> to swith to “shell” mode within <em>command</em> chunks.
+Once <em>polymode</em> is installed (e.g. though MELPA), I added to my <code>.emacs</code>:</p>
+<pre class="lisp"><code>(require &#39;polymode)
+(define-hostmode poly-wdl-hostmode
+  :mode &#39;wdl-mode)
+(define-innermode poly-wdl-command-innermode
+  :mode &#39;sh-mode
+  :head-matcher &quot;^[ \t]*command *{ *\n&quot;
+  :tail-matcher &quot;^[ \t]*} *\n&quot;
+  :head-mode &#39;host
+  :tail-mode &#39;host)
+(define-innermode poly-wdl-command2-innermode
+  :mode &#39;sh-mode
+  :head-matcher &quot;^[ \t]*command *&lt;&lt;&lt; *\n&quot;
+  :tail-matcher &quot;^[ \t]*&gt;&gt;&gt; *\n&quot;
+  :head-mode &#39;host
+  :tail-mode &#39;host)
+(define-polymode poly-wdl-mode
+  :hostmode &#39;poly-wdl-hostmode
+  :innermodes &#39;(poly-wdl-command-innermode
+        poly-wdl-command2-innermode))
+(add-to-list &#39;auto-mode-alist &#39;(&quot;\\.wdl\\&#39;&quot; . poly-wdl-mode))</code></pre>
 </div>
 <div id="for-file-manipulation" class="section level2">
 <h2>For file manipulation</h2>
