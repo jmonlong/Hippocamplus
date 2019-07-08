@@ -105,10 +105,11 @@ lines = [line.rstrip('\n') for line in open(input_file)]
 To write a file:
 
 ~~~python
-f = open(output_file, 'w')
+f = open(output_file, 'w') # 'a' for append mode
 f.write('something' + str(an_integer) + '\n')
 f.close()
 ~~~
+
 
 To quickly read a manually indexed (e.g. `grep -b`) file quickly, use `seek` to jump to a byte-offset and `tell` to save the current byte-offset.
 
