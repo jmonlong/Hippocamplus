@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Wdl on </title>
+    <link>/Hippocamplus/tags/wdl/</link>
+    <description>Recent content in Wdl on </description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 15 Jul 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/Hippocamplus/tags/wdl/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Workflow Description Language (WDL) in Emacs</title>
+      <link>/Hippocamplus/2019/07/15/workflow-description-language-wdl-in-emacs/</link>
+      <pubDate>Mon, 15 Jul 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/Hippocamplus/2019/07/15/workflow-description-language-wdl-in-emacs/</guid>
+      <description>I recently started working with WDL files. The Broad Institute recommends using Sublime and the syntax highlighter that they provide. They also provide a syntax highlighter for Vim.
+I started by looking for a solution in Emacs, my go-to editor. Luckily there was already a WDL mode available that I just slightly improved. I also made a polymode to complement it. Both are available through MELPA as wdl-mode and poly-mode.</description>
+    </item>
+    
+  </channel>
+</rss>

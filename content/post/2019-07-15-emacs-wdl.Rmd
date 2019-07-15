@@ -1,0 +1,41 @@
+---
+title: Workflow Description Language (WDL) in Emacs
+date: 2019-07-15
+tags: ["emacs", "wdl"]
+---
+
+I recently started working with [WDL](https://software.broadinstitute.org/wdl/documentation/) files.
+The Broad Institute recommends using Sublime and the [syntax highlighter](https://github.com/broadinstitute/wdl-sublime-syntax-highlighter) that they provide.
+They also provide a [syntax highlighter for Vim](https://github.com/broadinstitute/vim-wdl).
+
+I started by looking for a **solution in Emacs**, my go-to editor.
+Luckily there was already a WDL mode available that I just slightly improved.
+I also made a polymode to complement it.
+Both are available through [MELPA](https://github.com/melpa/melpa) as `wdl-mode` and `poly-mode`.
+
+Other useful commands include `(setq-default indent-tabs-mode nil)` and the `whitespace-mode` to ensure consistent indents (see the [Emacs's WDL section](/emacs#for-wdl-workflows)).
+
+## `wdl-mode`
+
+The [wdl-mode package](https://github.com/zhanxw/wdl-mode) provides **syntax highlighting and indentation**.
+It was developed by [Xiaowei Zhan](https://github.com/zhanxw).
+
+I noticed that the indentation was not triggered in the presence of space(s) after the character that should trigger it (`{`, `<<<`, `}`, `>>>`).
+Maybe this space is not supposed to be there in the first place.
+Still some the files I was working with (or some of [TOPMed's workflows](https://github.com/DataBiosphere/topmed-workflows/blob/master/variant-caller/variant-caller-wdl/topmed_freeze3_calling.wdl)) had those sometimes.
+I think it's worth catching those so I modified the package.
+It's now a [PR in the main repo](https://github.com/zhanxw/wdl-mode/pull/3).
+If it's not merged it could always be modified locally (e.g. in the `.emacs.d/elpa/wdl-mode*/wdl-mode.el`).
+
+## `poly-mode`
+
+Starting from existing polymodes, I wrote one for WDL. 
+The goal was to **automatically switch to "*shell mode*" in the command chunks**, mostly to get the appropriate indentation.
+The [poly-wdl package](https://github.com/jmonlong/poly-wdl) is now in MELPA and I'm glad I could contribute to MELPA even if just with a simple and field-specific package.
+
+## Screenshot
+
+Here is an example of part of a TOPMed workflow for read alignment [available here](https://github.com/DataBiosphere/topmed-workflows/blob/master/aligner/u_of_michigan_aligner/u_of_michigan_aligner.wdl).
+I removed empty lines and some comments to make it more compact.
+
+![](/imgs/emacs-wdl-ex.png)

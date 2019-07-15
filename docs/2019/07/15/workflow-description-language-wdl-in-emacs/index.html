@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Workflow Description Language (WDL) in Emacs &middot; Hippocamplus
+    
+  </title>
+
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113785126-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    
+    gtag('config', "UA-113785126-1");
+  </script>
+  
+  
+  <link rel="stylesheet" href="../../../../css/poole.css">
+  <link rel="stylesheet" href="../../../../css/syntax.css">
+  <link rel="stylesheet" href="../../../../css/lanyon.css">
+  <link rel="stylesheet" href="../../../../css/github.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
+  <link rel="stylesheet" href="../../../../fa/css/font-awesome.min.css">
+  
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../../../assets/hippoPlus-icon.png">
+  <link rel="shortcut icon" href="../../../../assets/hippoPlus-icon.png">
+
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="../../../../atom.xml">
+</head>
+
+  
+  <body>
+
+    
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>A place to gather useful information I keep on forgetting.</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item " href="../../../../">Home</a>
+    <a class="sidebar-nav-item " href="../../../../post">Posts</a>
+
+    
+    
+      
+        <a class="sidebar-nav-item " href="../../../../emacs/">Emacs</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../expression/">Expression</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../latex/">LaTeX</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../markdown/">Markdown</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../math/stats/">Math/Stats</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../python/">Python</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../r/">R</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../shell/">Shell</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../internet/">Internet</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../about/">About</a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+    
+  </nav>
+
+  <div class="sidebar-item">
+  </div>
+  
+  <div class="sidebar-item">
+    <div><a href="../../../../index.xml"><i class="fa fa-rss-square" aria-hidden="true"></i> RSS</a></div>
+    <div><a href="https://twitter.com/JMonlong"><i class="fa fa-twitter" aria-hidden="true"></i> @JMonlong</a></div>
+    <p>&copy; 2019 Jean Monlong. All rights reserved.</p>
+  </div>
+</div>
+
+
+    
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="../../../../" title="Home">Hippocamplus</a>
+            <small>My Second Memory</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+
+
+<div class="post">
+  <h1 class="post-title">Workflow Description Language (WDL) in Emacs</h1>
+  <span class="post-date">Jul 15 2019
+  
+  
+  
+  
+  
+  <a href='../../../../tags/emacs/' class='label'>emacs</a>
+  
+  <a href='../../../../tags/wdl/' class='label'>wdl</a>
+  
+  
+  
+  </span>
+  
+
+
+<p>I recently started working with <a href="https://software.broadinstitute.org/wdl/documentation/">WDL</a> files.
+The Broad Institute recommends using Sublime and the <a href="https://github.com/broadinstitute/wdl-sublime-syntax-highlighter">syntax highlighter</a> that they provide.
+They also provide a <a href="https://github.com/broadinstitute/vim-wdl">syntax highlighter for Vim</a>.</p>
+<p>I started by looking for a <strong>solution in Emacs</strong>, my go-to editor.
+Luckily there was already a WDL mode available that I just slightly improved.
+I also made a polymode to complement it.
+Both are available through <a href="https://github.com/melpa/melpa">MELPA</a> as <code>wdl-mode</code> and <code>poly-mode</code>.</p>
+<p>Other useful commands include <code>(setq-default indent-tabs-mode nil)</code> and the <code>whitespace-mode</code> to ensure consistent indents (see the <a href="../../../../emacs#for-wdl-workflows">Emacs’s WDL section</a>).</p>
+<div id="wdl-mode" class="section level2">
+<h2><code>wdl-mode</code></h2>
+<p>The <a href="https://github.com/zhanxw/wdl-mode">wdl-mode package</a> provides <strong>syntax highlighting and indentation</strong>.
+It was developed by <a href="https://github.com/zhanxw">Xiaowei Zhan</a>.</p>
+<p>I noticed that the indentation was not triggered in the presence of space(s) after the character that should trigger it (<code>{</code>, <code>&lt;&lt;&lt;</code>, <code>}</code>, <code>&gt;&gt;&gt;</code>).
+Maybe this space is not supposed to be there in the first place.
+Still some the files I was working with (or some of <a href="https://github.com/DataBiosphere/topmed-workflows/blob/master/variant-caller/variant-caller-wdl/topmed_freeze3_calling.wdl">TOPMed’s workflows</a>) had those sometimes.
+I think it’s worth catching those so I modified the package.
+It’s now a <a href="https://github.com/zhanxw/wdl-mode/pull/3">PR in the main repo</a>.
+If it’s not merged it could always be modified locally (e.g. in the <code>.emacs.d/elpa/wdl-mode*/wdl-mode.el</code>).</p>
+</div>
+<div id="poly-mode" class="section level2">
+<h2><code>poly-mode</code></h2>
+<p>Starting from existing polymodes, I wrote one for WDL.
+The goal was to <strong>automatically switch to “<em>shell mode</em>” in the command chunks</strong>, mostly to get the appropriate indentation.
+The <a href="https://github.com/jmonlong/poly-wdl">poly-wdl package</a> is now in MELPA and I’m glad I could contribute to MELPA even if just with a simple and field-specific package.</p>
+</div>
+<div id="screenshot" class="section level2">
+<h2>Screenshot</h2>
+<p>Here is an example of part of a TOPMed workflow for read alignment <a href="https://github.com/DataBiosphere/topmed-workflows/blob/master/aligner/u_of_michigan_aligner/u_of_michigan_aligner.wdl">available here</a>.
+I removed empty lines and some comments to make it more compact.</p>
+<p><img src="../../../../imgs/emacs-wdl-ex.png" /></p>
+</div>
+
+</div>
+
+      </div>
+    </div>
+
+    
+    
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src="../../../../assets/highlight.min.js"></script>
+    <script src="../../../../assets/r.min.js"></script>
+    
+    <script>
+      hljs.configure({languages: ['r']});
+      hljs.initHighlightingOnLoad();
+    </script>
+
+    <script src="//yihui.name/js/math-code.js"></script>
+    <script async src="//cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    
+  </body>
+</html>
+

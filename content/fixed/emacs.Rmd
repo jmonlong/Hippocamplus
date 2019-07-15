@@ -438,35 +438,17 @@ The shortcuts are self-explanatory.
 
 ## For WDL workflows
 
-- [*wdl-mode*](https://github.com/zhanxw/wdl-mode) written by [Xiaowei Zhan](http://zhanxw.com/) (install through MELPA).
-- Change the indentation size with `(setq wdl-indent-level 4)` in the `.emacs` file.
-- Also `(setq-default indent-tabs-mode nil)` to make sure tabs are made of spaces (WDL doesn't like mixing spaces and tabs).
+Install through MELPA:
 
-I also use [polymode](https://polymode.github.io/) to swith to "shell" mode within *command* chunks.
-Once *polymode* is installed (e.g. though MELPA), I added to my `.emacs`:
+- [*wdl-mode*](https://github.com/zhanxw/wdl-mode) for syntax highlighting and indentation.
+- [*poly-wdl*](https://github.com/jmonlong/poly-wdl) to swith to "shell" mode within *command* chunks.
 
-~~~lisp
-(require 'polymode)
-(define-hostmode poly-wdl-hostmode
-  :mode 'wdl-mode)
-(define-innermode poly-wdl-command-innermode
-  :mode 'sh-mode
-  :head-matcher "^[ \t]*command *{ *\n"
-  :tail-matcher "^[ \t]*} *\n"
-  :head-mode 'host
-  :tail-mode 'host)
-(define-innermode poly-wdl-command2-innermode
-  :mode 'sh-mode
-  :head-matcher "^[ \t]*command *<<< *\n"
-  :tail-matcher "^[ \t]*>>> *\n"
-  :head-mode 'host
-  :tail-mode 'host)
-(define-polymode poly-wdl-mode
-  :hostmode 'poly-wdl-hostmode
-  :innermodes '(poly-wdl-command-innermode
-		poly-wdl-command2-innermode))
-(add-to-list 'auto-mode-alist '("\\.wdl\\'" . poly-wdl-mode))
-~~~
+In my `.emacs` file:
+
+- `(setq wdl-indent-level 4)` to change the indentation size.
+- `(setq-default indent-tabs-mode nil)` to make sure tabs are made of spaces (WDL doesn't like mixing spaces and tabs).
+
+Eventually the minor mode `whitespace-mode` is useful to explicitly show spaces and double-check that none of the indentations are made of tabs.
 
 ## For file manipulation
 
