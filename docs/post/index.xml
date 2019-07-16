@@ -17,7 +17,7 @@
       <pubDate>Mon, 15 Jul 2019 00:00:00 +0000</pubDate>
       
       <guid>/Hippocamplus/2019/07/15/workflow-description-language-wdl-in-emacs/</guid>
-      <description>wdl-mode poly-mode Language Server Protocol Screenshots   I recently started working with WDL files. The Broad Institute recommends using Sublime and the syntax highlighter that they provide. They also provide a syntax highlighter for Vim. As Denis Loginov mentioned, they are working on an LSP implementation for WDL that could be use by Emacs to get syntax validation.
+      <description>wdl-mode poly-wdl Language Server Protocol Screenshots   I recently started working with WDL files. The Broad Institute recommends using Sublime and the syntax highlighter that they provide. They also provide a syntax highlighter for Vim. As Denis Loginov mentioned, they are working on an LSP implementation for WDL that could be used by tools to get syntax validation.
 I looked first for a solution in Emacs, my go-to editor.</description>
     </item>
     

@@ -41,27 +41,42 @@
 &lt;div id=&#34;TOC&#34;&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;#wdl-mode&#34;&gt;wdl-mode&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;#poly-mode&#34;&gt;poly-mode&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#poly-wdl&#34;&gt;poly-wdl&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#language-server-protocol&#34;&gt;Language Server Protocol&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#screenshots&#34;&gt;Screenshots&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
 
-&lt;p&gt;I recently started working with &lt;a href=&#34;https://software.broadinstitute.org/wdl/documentation/&#34;&gt;WDL&lt;/a&gt; files. The Broad Institute recommends using Sublime and the &lt;a href=&#34;https://github.com/broadinstitute/wdl-sublime-syntax-highlighter&#34;&gt;syntax highlighter&lt;/a&gt; that they provide. They also provide a &lt;a href=&#34;https://github.com/broadinstitute/vim-wdl&#34;&gt;syntax highlighter for Vim&lt;/a&gt;. &lt;a href=&#34;https://github.com/openwdl/wdl/pull/321#issuecomment-511617350&#34;&gt;As Denis Loginov mentioned&lt;/a&gt;, they are working on an LSP implementation for WDL that could be use by Emacs to get syntax validation.&lt;/p&gt;
-&lt;p&gt;I looked first for a &lt;strong&gt;solution in Emacs&lt;/strong&gt;, my go-to editor. Luckily there was already a WDL mode available that I just slightly improved. I also made a polymode to complement it and configured &lt;em&gt;lsp-mode&lt;/em&gt; to use the WDL implementation. All packages are available through &lt;a href=&#34;https://github.com/melpa/melpa&#34;&gt;MELPA&lt;/a&gt; as &lt;code&gt;wdl-mode&lt;/code&gt;, &lt;code&gt;poly-mode&lt;/code&gt;, &lt;code&gt;lsp-mode&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;I recently started working with &lt;a href=&#34;https://software.broadinstitute.org/wdl/documentation/&#34;&gt;WDL&lt;/a&gt; files.
+The Broad Institute recommends using Sublime and the &lt;a href=&#34;https://github.com/broadinstitute/wdl-sublime-syntax-highlighter&#34;&gt;syntax highlighter&lt;/a&gt; that they provide.
+They also provide a &lt;a href=&#34;https://github.com/broadinstitute/vim-wdl&#34;&gt;syntax highlighter for Vim&lt;/a&gt;.
+&lt;a href=&#34;https://github.com/openwdl/wdl/pull/321#issuecomment-511617350&#34;&gt;As Denis Loginov mentioned&lt;/a&gt;, they are working on an LSP implementation for WDL that could be used by tools to get syntax validation.&lt;/p&gt;
+&lt;p&gt;I looked first for a &lt;strong&gt;solution in Emacs&lt;/strong&gt;, my go-to editor.
+Luckily there was already a WDL mode available that I just slightly improved.
+I also made a polymode to complement it and configured &lt;em&gt;lsp-mode&lt;/em&gt; to use the WDL implementation.
+All packages are available through &lt;a href=&#34;https://github.com/melpa/melpa&#34;&gt;MELPA&lt;/a&gt; as &lt;code&gt;wdl-mode&lt;/code&gt;, &lt;code&gt;poly-wdl&lt;/code&gt;, &lt;code&gt;lsp-mode&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Other useful commands include &lt;code&gt;(setq-default indent-tabs-mode nil)&lt;/code&gt; and the &lt;code&gt;whitespace-mode&lt;/code&gt; to ensure consistent indents (see the &lt;a href=&#34;./emacs#for-wdl-workflows&#34;&gt;WDL section of my Emacs page&lt;/a&gt;).&lt;/p&gt;
 &lt;div id=&#34;wdl-mode&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;wdl-mode&lt;/h2&gt;
-&lt;p&gt;The &lt;a href=&#34;https://github.com/zhanxw/wdl-mode&#34;&gt;wdl-mode package&lt;/a&gt; provides &lt;strong&gt;syntax highlighting and indentation&lt;/strong&gt;. It was developed by &lt;a href=&#34;https://github.com/zhanxw&#34;&gt;Xiaowei Zhan&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;I noticed that the indentation was not triggered in the presence of space(s) after the character that should trigger it (&lt;code&gt;{&lt;/code&gt;, &lt;code&gt;&amp;lt;&amp;lt;&amp;lt;&lt;/code&gt;, &lt;code&gt;}&lt;/code&gt;, &lt;code&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/code&gt;). Maybe this space is not supposed to be there in the first place. Still, some the files I was working with (or some of &lt;a href=&#34;https://github.com/DataBiosphere/topmed-workflows/blob/master/variant-caller/variant-caller-wdl/topmed_freeze3_calling.wdl&#34;&gt;TOPMed’s workflows&lt;/a&gt;) had those sometimes. I think it’s worth catching those, so I modified the package. It’s now a &lt;a href=&#34;https://github.com/zhanxw/wdl-mode/pull/3&#34;&gt;PR in the main repo&lt;/a&gt;. If it’s not merged and part of the next version on MELPA, it could always be modified locally (e.g. in the &lt;code&gt;.emacs.d/elpa/wdl-mode*/wdl-mode.el&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;The &lt;a href=&#34;https://github.com/zhanxw/wdl-mode&#34;&gt;wdl-mode package&lt;/a&gt; provides &lt;strong&gt;syntax highlighting and indentation&lt;/strong&gt;.
+It was developed by &lt;a href=&#34;https://github.com/zhanxw&#34;&gt;Xiaowei Zhan&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I noticed that the indentation was not triggered in the presence of space(s) after the character that should trigger it (&lt;code&gt;{&lt;/code&gt;, &lt;code&gt;&amp;lt;&amp;lt;&amp;lt;&lt;/code&gt;, &lt;code&gt;}&lt;/code&gt;, &lt;code&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/code&gt;).
+Maybe this space is not supposed to be there in the first place.
+Still, some the files I was working with (or some of &lt;a href=&#34;https://github.com/DataBiosphere/topmed-workflows/blob/master/variant-caller/variant-caller-wdl/topmed_freeze3_calling.wdl&#34;&gt;TOPMed’s workflows&lt;/a&gt;) had those sometimes.
+I think it’s worth catching those, so I modified the package.
+It’s now a &lt;a href=&#34;https://github.com/zhanxw/wdl-mode/pull/3&#34;&gt;PR in the main repo&lt;/a&gt;.
+If it’s not merged and part of the next version on MELPA, it could always be modified locally (e.g. in the &lt;code&gt;.emacs.d/elpa/wdl-mode*/wdl-mode.el&lt;/code&gt;).&lt;/p&gt;
 &lt;/div&gt;
-&lt;div id=&#34;poly-mode&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;poly-mode&lt;/h2&gt;
-&lt;p&gt;Starting from existing polymodes, I wrote one for WDL. The goal was to &lt;strong&gt;automatically switch to “&lt;em&gt;shell mode&lt;/em&gt;” in the command chunks&lt;/strong&gt;, mostly to get the appropriate indentation. The &lt;a href=&#34;https://github.com/jmonlong/poly-wdl&#34;&gt;poly-wdl package&lt;/a&gt; is now in MELPA and I’m glad I got to contribute to MELPA even if just with a simple and field-specific package.&lt;/p&gt;
+&lt;div id=&#34;poly-wdl&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;poly-wdl&lt;/h2&gt;
+&lt;p&gt;Starting from existing polymodes, I wrote one for WDL.
+The goal was to &lt;strong&gt;automatically switch to “&lt;em&gt;shell mode&lt;/em&gt;” in the command chunks&lt;/strong&gt;, mostly to get the appropriate indentation.
+The &lt;a href=&#34;https://github.com/jmonlong/poly-wdl&#34;&gt;poly-wdl package&lt;/a&gt; is now in MELPA and I’m glad I got to contribute to MELPA even if just with a simple and field-specific package.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;language-server-protocol&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Language Server Protocol&lt;/h2&gt;
-&lt;p&gt;There is an &lt;a href=&#34;https://github.com/broadinstitute/wdl-ide&#34;&gt;LSP implementation for WDL&lt;/a&gt; that can be used by Emacs to provide &lt;strong&gt;syntax validation and (some) auto-completion&lt;/strong&gt;. It’s still under active development but it seems to work well already.&lt;/p&gt;
+&lt;p&gt;There is an &lt;a href=&#34;https://github.com/broadinstitute/wdl-ide&#34;&gt;LSP implementation for WDL&lt;/a&gt; that can be used by Emacs to provide &lt;strong&gt;syntax validation and (some) auto-completion&lt;/strong&gt;.
+It’s still under active development but it seems to work well already.&lt;/p&gt;
 &lt;p&gt;To use it in Emacs, the python package providing the server needs to be installed first and Emacs’ &lt;em&gt;lsp-mode&lt;/em&gt; needs to be configured:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Install the &lt;a href=&#34;https://pypi.org/project/wdl-lsp/&#34;&gt;LSP server for WDL&lt;/a&gt;: &lt;code&gt;pip install wdl-lsp&lt;/code&gt; (or &lt;code&gt;pip3&lt;/code&gt;).&lt;/li&gt;
@@ -93,28 +108,21 @@
 ;; To get some auto-completion
 (require &amp;#39;company-lsp)
 (push &amp;#39;company-lsp company-backends)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Note: The first time a file is opened, the package will ask what is the root of the project. I use the folder that contains the WDL file because I don’t think project structures are integrated at this point. This can be changed at any time using &lt;code&gt;M-x lsp-workspace-folders-remove&lt;/code&gt; and &lt;code&gt;M-x lsp-workspace-folders-add&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Note: The first time a file is opened, the package will ask what is the root of the project.
+I use the folder that contains the WDL file because I don’t think project structures are integrated at this point.
+This can be changed at any time using &lt;code&gt;M-x lsp-workspace-folders-remove&lt;/code&gt; and &lt;code&gt;M-x lsp-workspace-folders-add&lt;/code&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;screenshots&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Screenshots&lt;/h2&gt;
-&lt;p&gt;Here is an example of part of a TOPMed workflow for read alignment &lt;a href=&#34;https://github.com/DataBiosphere/topmed-workflows/blob/master/aligner/u_of_michigan_aligner/u_of_michigan_aligner.wdl&#34;&gt;available here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;As an example, here is part of a TOPMed workflow for read alignment &lt;a href=&#34;https://github.com/DataBiosphere/topmed-workflows/blob/master/aligner/u_of_michigan_aligner/u_of_michigan_aligner.wdl&#34;&gt;available here&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;&lt;em&gt;I removed empty lines and some comments to make it more compact.&lt;/em&gt;&lt;/p&gt;
-&lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;./imgs/emacs-wdl-ex.png&#34; /&gt;
-
-&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;./imgs/emacs-wdl-ex.png&#34; /&gt;&lt;/p&gt;
 &lt;hr /&gt;
 &lt;p&gt;&lt;em&gt;Syntax validation (error message at the bottom)&lt;/em&gt;&lt;/p&gt;
-&lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;./imgs/emacs-wdl-ex-validation.png&#34; /&gt;
-
-&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;./imgs/emacs-wdl-ex-validation.png&#34; /&gt;&lt;/p&gt;
 &lt;hr /&gt;
 &lt;p&gt;&lt;em&gt;Auto-completion&lt;/em&gt;&lt;/p&gt;
-&lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;./imgs/emacs-wdl-ex-autocomp.png&#34; /&gt;
-
-&lt;/div&gt;
+&lt;p&gt;&lt;img src=&#34;./imgs/emacs-wdl-ex-autocomp.png&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 </description>
         </item>

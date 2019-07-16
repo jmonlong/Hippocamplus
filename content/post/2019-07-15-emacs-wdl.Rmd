@@ -12,12 +12,12 @@ output:
 I recently started working with [WDL](https://software.broadinstitute.org/wdl/documentation/) files.
 The Broad Institute recommends using Sublime and the [syntax highlighter](https://github.com/broadinstitute/wdl-sublime-syntax-highlighter) that they provide.
 They also provide a [syntax highlighter for Vim](https://github.com/broadinstitute/vim-wdl).
-[As Denis Loginov mentioned](https://github.com/openwdl/wdl/pull/321#issuecomment-511617350), they are working on an LSP implementation for WDL that could be use by Emacs to get syntax validation.
+[As Denis Loginov mentioned](https://github.com/openwdl/wdl/pull/321#issuecomment-511617350), they are working on an LSP implementation for WDL that could be used by tools to get syntax validation.
 
 I looked first for a **solution in Emacs**, my go-to editor.
 Luckily there was already a WDL mode available that I just slightly improved.
 I also made a polymode to complement it and configured *lsp-mode* to use the WDL implementation.
-All packages are available through [MELPA](https://github.com/melpa/melpa) as `wdl-mode`, `poly-mode`, `lsp-mode`.
+All packages are available through [MELPA](https://github.com/melpa/melpa) as `wdl-mode`, `poly-wdl`, `lsp-mode`.
 
 Other useful commands include `(setq-default indent-tabs-mode nil)` and the `whitespace-mode` to ensure consistent indents (see the [WDL section of my Emacs page](/emacs#for-wdl-workflows)).
 
@@ -33,7 +33,7 @@ I think it's worth catching those, so I modified the package.
 It's now a [PR in the main repo](https://github.com/zhanxw/wdl-mode/pull/3).
 If it's not merged and part of the next version on MELPA, it could always be modified locally (e.g. in the `.emacs.d/elpa/wdl-mode*/wdl-mode.el`).
 
-## poly-mode
+## poly-wdl
 
 Starting from existing polymodes, I wrote one for WDL. 
 The goal was to **automatically switch to "*shell mode*" in the command chunks**, mostly to get the appropriate indentation.
@@ -85,7 +85,7 @@ This can be changed at any time using `M-x lsp-workspace-folders-remove` and `M-
 
 ## Screenshots
 
-Here is an example of part of a TOPMed workflow for read alignment [available here](https://github.com/DataBiosphere/topmed-workflows/blob/master/aligner/u_of_michigan_aligner/u_of_michigan_aligner.wdl).
+As an example, here is part of a TOPMed workflow for read alignment [available here](https://github.com/DataBiosphere/topmed-workflows/blob/master/aligner/u_of_michigan_aligner/u_of_michigan_aligner.wdl).
 
 
 *I removed empty lines and some comments to make it more compact.*
