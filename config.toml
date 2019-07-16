@@ -10,6 +10,7 @@ paginate = 10
 
 [params]
 title = "Hippocamplus"
+author = "Jean Monlong"
 tagline = 'My Second Memory'
 description = 'A place to gather useful information I keep on forgetting.'
 year = "2019 Jean Monlong"
