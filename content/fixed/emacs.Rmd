@@ -450,6 +450,43 @@ In my `.emacs` file:
 
 Eventually the minor mode `whitespace-mode` is useful to explicitly show spaces and double-check that none of the indentations are made of tabs.
 
+There is also an [LSP implementation for WDL](https://github.com/broadinstitute/wdl-ide) that can be used by Emacs to provide syntax validation and (some) auto-completion.
+
+- Install through MELPA: `lsp-mode`, `lsp-ui` and `company-lsp`.
+- Install the [LSP server for WDL](https://pypi.org/project/wdl-lsp/): `pip install wdl-lsp` (or `pip3`).
+- Add to `.emacs` file:
+
+~~~lisp
+(require 'lsp-mode)
+(add-to-list 'lsp-language-id-configuration '(wdl-mode . "wdl"))
+(defgroup lsp-wdl nil
+  "LSP support for WDL."
+  :group 'lsp-mode
+  :link '(url-link "https://github.com/broadinstitute/wdl-ide"))
+(defcustom lsp-wdl-server-command "wdl-lsp"
+  "Command to start wdl-lsp."
+  :group 'lsp-wdl
+  :risky t
+  :type 'file)
+(lsp-register-client
+ (make-lsp-client :new-connection (lsp-stdio-connection
+                                   (lambda () lsp-wdl-server-command))
+                  :major-modes '(wdl-mode)
+                  :priority -1
+                  :server-id 'wdl))
+(add-hook 'wdl-mode-hook #'lsp)
+;; Syntax validation interface
+(require 'lsp-ui)
+(add-hook 'lsp-mode-hook 'lsp-ui-mode)
+(setq lsp-ui-sideline-enable nil)
+;; To get some auto-completion
+(require 'company-lsp)
+(push 'company-lsp company-backends)
+~~~
+
+The first time a file is opened, lsp will ask what is the root of the project.
+This can be changed later using `M-x lsp-workspace-folders-remove` and `M-x lsp-workspace-folders-add`.
+
 ## For file manipulation
 
 To compare and merge two files, use Ediff mode by calling `M-x ediff` (or `M-x ediff-buffers` when *diff* should be done between existing buffers). Once launched press:
