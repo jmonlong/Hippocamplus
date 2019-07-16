@@ -11,7 +11,7 @@ output:
 
 This is my default (more or less) :
 
-~~~ latex
+~~~tex
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
@@ -40,7 +40,7 @@ To find which package provides a particular *xxx.sty* run `tlmgr_search("/xxx.st
 
 ### Change the symbol in lists
 
-~~~latex
+~~~tex
 \renewcommand{\labelitemi}{\textgreater}
 ~~~
 
@@ -58,7 +58,7 @@ The two most popular math calligraphy are used with :
 
 At some time when writing in French or Spannish I used:
 
-~~~latex
+~~~tex
 \usepackage[utf8]{inputenc}
 \usepackage[frenchb]{babel}
 \usepackage[T1]{fontenc}
@@ -66,7 +66,7 @@ At some time when writing in French or Spannish I used:
 
 and
 
-~~~latex
+~~~tex
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[spanish]{babel}
@@ -78,7 +78,7 @@ An accent was specified as `\'i`.
 
 I prefer the links to be colored rather than boxed, but with darker color than the default:
 
-~~~latex
+~~~tex
 \usepackage{hyperref}
 \usepackage{xcolor}
 \hypersetup{
@@ -94,26 +94,26 @@ I prefer the links to be colored rather than boxed, but with darker color than t
 
 Changing the title of the section created by `\tableofcontents`:
 
-~~~latex
+~~~tex
 \renewcommand{\contentsname}{Table of Contents}
 ~~~
 
 To manually add an un-numbered section to the TOC (here at the *chapter* level):
 
-~~~latex
+~~~tex
 \addcontentsline{toc}{chapter}{Disclaimer}
 ~~~
 
 To set the depth of the TOC:
 
-~~~latex
+~~~tex
 \usepackage{tocbibind}
 \setcounter{tocdepth}{2}
 ~~~
 
 To set the space between the number and the title in list of figures/tables (e.g. if custom long numbers):
 
-~~~latex
+~~~tex
 \usepackage{tocloft}
 \setlength{\cftfignumwidth}{3em}
 ~~~
@@ -122,7 +122,7 @@ To set the space between the number and the title in list of figures/tables (e.g
 
 To specify the PDF's metadata (title, author, etc):
 
-~~~latex
+~~~tex
 \usepackage[pdfauthor={AUTHOR},pdftitle={TITLE},pdfsubject={SUBJECT},pdfkeywords={KEYWORDS},pdfproducer={LaTeX},pdfcreator={pdflatex}]{hyperref}
 ~~~
 
@@ -141,7 +141,7 @@ I usually use `[ht]` for small/medium figures, and `[htp]` for large ones.
 
 After adding `\usepackage{subcaption}`, use like this:
 
-~~~latex
+~~~tex
 \begin{subfigure}[b]{.48\textwidth}
 	\includegraphics{example.pdf}
 	\caption{}
@@ -151,7 +151,7 @@ end{subfigure}
 
 For more custom organization of the sub-figures, feel free to use `minipage` environment. To force a caption number/letter, use `\addtocounter{subfigure}{XX}`. For example, to have the second subfigure as a long vertical panel on the right and figure {\it a} and {\it c}, smaller on the left:
 
-~~~latex
+~~~tex
 \begin{figure}[htp]
 	\begin{minipage}[c]{.4\textwidth}
 		\begin{subfigure}[b]{\linewidth}
@@ -182,7 +182,7 @@ For more custom organization of the sub-figures, feel free to use `minipage` env
 
 The counter and style for supplementary figures (and tables) can be changed. I place this block at the beginning of the supplementary figure section:
 
-~~~latex
+~~~tex
 \setcounter{figure}{0}
 \renewcommand{\thefigure}{S\arabic{figure}}
 ~~~
@@ -197,7 +197,7 @@ To list tables: `\listoffigures`
 
 ### Control tabular width
 
-~~~latex
+~~~tex
 \resizebox{.8\textwidth}{!}{
 	TABULAR
 }
@@ -207,7 +207,7 @@ To list tables: `\listoffigures`
 
 Similar to figures I use:
 
-~~~latex
+~~~tex
 \setcounter{table}{0}
 \renewcommand{\thetable}{S\arabic{table}}%
 ~~~
@@ -248,7 +248,7 @@ In Emacs to avoid misinterpreting special character (e.g. `$` or `_`) I added to
 
 Then in the LaTeX document I setup the *lstlisting* environment with something like:
 
-~~~latex
+~~~tex
 \lstset{
   basicstyle=\scriptsize\ttfamily, % the size of the fonts that are used for the code
   breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
@@ -265,7 +265,7 @@ Then in the LaTeX document I setup the *lstlisting* environment with something l
 
 An abstract environment exists:
 
-~~~latex
+~~~tex
 \begin{abstract}
 Genetics has been shown to be important...
 \end{abstract}
@@ -275,7 +275,7 @@ Genetics has been shown to be important...
 
 Using `\usepackage{authblk}`, the authors' affiliations can be defined like this:
 
-~~~latex
+~~~tex
 \author[1,2]{Jean Monlong}
 ...
 \affil[1]{Department of Human Genetics, McGill University, Montréal, H3A 1B1, Canada}
@@ -288,7 +288,7 @@ Using `\usepackage{authblk}`, the authors' affiliations can be defined like this
 + `\linespread{1.6}` for double-spacing.
 + To add line numbers, *lineno* package:
 
-~~~latex
+~~~tex
 \usepackage[modulo]{lineno}
 \linenumbers
 ~~~
@@ -296,7 +296,7 @@ Using `\usepackage{authblk}`, the authors' affiliations can be defined like this
 
 ### Notes/comments
 
-~~~latex
+~~~tex
 \usepackage{todonotes}
 \newcounter{mycomment}
 \newcommand{\comment}[2][]{%
@@ -326,21 +326,21 @@ Using the `xr` package, we can specify other documents where to find references 
 
 In the `main.tex` document:
 
-~~~latex
+~~~tex
 \usepackage{xr}
 \externaldocument{suppmap}
 ~~~
 
 And in the `suppmat.tex` document:
 
-~~~latex
+~~~tex
 \usepackage{xr}
 \externaldocument{main}
 ~~~
 
 On Overleaf, they use [a variant](http://tex.stackexchange.com/a/69832/226) where the `suppmat.tex` is not compiled but its references can still be used in the `main.tex` using:
 
-~~~latex
+~~~tex
 \usepackage{xcite}
 \usepackage{xr}
 \makeatletter
@@ -392,7 +392,7 @@ done
 
 I use `\usepackage[comma,super]{natbib}` and the commands:
 
-~~~latex
+~~~tex
 \bibliographystyle{unsrtnat}
 \bibliography{library.bib}
 ~~~
@@ -403,7 +403,7 @@ To change a long list of authors into *"First Author et al"* in the references, 
 
 I downloaded the original version of the file [there](http://ctan.org/tex-archive/macros/latex/contrib/natbib) and change the `FUNCTION {format.names}` part by
 
-~~~
+~~~bst
 INTEGERS { max.num.names.before.forced.et.al num.names.shown.with.forced.et.al }
 
 FUNCTION {format.names}
@@ -455,7 +455,7 @@ I put this new `.bst` file in the folder of my `.tex` file and called it in the 
 
 I used `\citep{}` with this configuration:
 
-~~~latex
+~~~tex
 \usepackage{natbib}
 \bibpunct{ (}{)}{;}{a}{}{;}
 ~~~
@@ -464,7 +464,7 @@ I used `\citep{}` with this configuration:
 
 To get *Simpson H.* instead of *Homer Simpson* I changes the `.bst` file line in the `format.names` function to :
 
-~~~latex
+~~~tex
 { s nameptr "{vv~}{ll~}{f.}{, jj}" format.name$ 't :=
 ~~~
 
@@ -472,7 +472,7 @@ To get *Simpson H.* instead of *Homer Simpson* I changes the `.bst` file line in
 
 There are nicer option with `biblatex` but since I'm still using `bibtex` I went into the `.bst` file and changed the formatting functions:
 
-~~~latex
+~~~tex
 FUNCTION {format.url}
 { "" }
 %%{ url empty$
@@ -496,7 +496,7 @@ FUNCTION {format.doi}
 
 By default, Beamer uses a sans-serif font. It looks a bit harsh. I find the *Palatino* font easier on the eye. To switch to serif font and choose the *Palatino*, I add at the beginning of the document:
 
-~~~latex
+~~~tex
 \renewcommand*{\familydefault}{\rmdefault}
 \renewcommand*\rmdefault{ppl}
 ~~~
@@ -505,7 +505,7 @@ By default, Beamer uses a sans-serif font. It looks a bit harsh. I find the *Pal
 
 To introduce sections, Beamer can automatically insert slides. These automated slides can be defined with:
 
-~~~latex
+~~~tex
 \AtBeginSection{
   \begin{frame}
     \begin{center}
@@ -526,7 +526,7 @@ To introduce sections, Beamer can automatically insert slides. These automated s
 
 I tend to use the minimalist *default* theme, remove the navigation bar but add slide number:
 
-~~~latex
+~~~tex
 \usetheme{default}
 \setbeamertemplate{navigation symbols}{}
 \setbeamertemplate{footline}[page number]
@@ -538,7 +538,7 @@ For an important presentation, I could use a more fancy theme, such as the [Metr
 
 For the acknowledgment slide or for more informal presentations, I sometimes want to use a specific image as background for a slide.
 
-~~~latex
+~~~tex
 {
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{pic.jpg}}%
 \begin{frame}
@@ -550,7 +550,7 @@ For the acknowledgment slide or for more informal presentations, I sometimes wan
 
 To add extra slides at the end of the presentation without increasing the total number of slides displayed:
 
-~~~latex
+~~~tex
 \appendix
 \newcounter{finalframe}
 \setcounter{finalframe}{\value{framenumber}}

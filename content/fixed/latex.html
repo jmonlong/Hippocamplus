@@ -64,7 +64,7 @@ output:
 <div id="standard-packages" class="section level2">
 <h2>Standard packages</h2>
 <p>This is my default (more or less) :</p>
-<pre class="latex"><code>\usepackage[english]{babel}
+<pre class="tex"><code>\usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage{tabularx}
@@ -87,7 +87,7 @@ output:
 </div>
 <div id="change-the-symbol-in-lists" class="section level3">
 <h3>Change the symbol in lists</h3>
-<pre class="latex"><code>\renewcommand{\labelitemi}{\textgreater}</code></pre>
+<pre class="tex"><code>\renewcommand{\labelitemi}{\textgreater}</code></pre>
 <p>Here are some appropriate symbols: <code>\ast</code>, <code>\star</code>, <code>\diamond</code>, <code>\blacktriangleleft</code>, <code>\blacktriangleright</code>, <code>\rightarrow</code>, <code>\Rightarrow</code>.</p>
 </div>
 <div id="math-calligraphy" class="section level3">
@@ -102,11 +102,11 @@ output:
 <div id="languages-and-encoding" class="section level3">
 <h3>Languages and encoding</h3>
 <p>At some time when writing in French or Spannish I used:</p>
-<pre class="latex"><code>\usepackage[utf8]{inputenc}
+<pre class="tex"><code>\usepackage[utf8]{inputenc}
 \usepackage[frenchb]{babel}
 \usepackage[T1]{fontenc}</code></pre>
 <p>and</p>
-<pre class="latex"><code>\usepackage[utf8]{inputenc}
+<pre class="tex"><code>\usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[spanish]{babel}</code></pre>
 <p>An accent was specified as <code>\'i</code>.</p>
@@ -114,7 +114,7 @@ output:
 <div id="links" class="section level3">
 <h3>Links</h3>
 <p>I prefer the links to be colored rather than boxed, but with darker color than the default:</p>
-<pre class="latex"><code>\usepackage{hyperref}
+<pre class="tex"><code>\usepackage{hyperref}
 \usepackage{xcolor}
 \hypersetup{
     colorlinks,
@@ -126,20 +126,20 @@ output:
 <div id="table-of-contents" class="section level3">
 <h3>Table of contents</h3>
 <p>Changing the title of the section created by <code>\tableofcontents</code>:</p>
-<pre class="latex"><code>\renewcommand{\contentsname}{Table of Contents}</code></pre>
+<pre class="tex"><code>\renewcommand{\contentsname}{Table of Contents}</code></pre>
 <p>To manually add an un-numbered section to the TOC (here at the <em>chapter</em> level):</p>
-<pre class="latex"><code>\addcontentsline{toc}{chapter}{Disclaimer}</code></pre>
+<pre class="tex"><code>\addcontentsline{toc}{chapter}{Disclaimer}</code></pre>
 <p>To set the depth of the TOC:</p>
-<pre class="latex"><code>\usepackage{tocbibind}
+<pre class="tex"><code>\usepackage{tocbibind}
 \setcounter{tocdepth}{2}</code></pre>
 <p>To set the space between the number and the title in list of figures/tables (e.g. if custom long numbers):</p>
-<pre class="latex"><code>\usepackage{tocloft}
+<pre class="tex"><code>\usepackage{tocloft}
 \setlength{\cftfignumwidth}{3em}</code></pre>
 </div>
 <div id="metadata" class="section level3">
 <h3>Metadata</h3>
 <p>To specify the PDF’s metadata (title, author, etc):</p>
-<pre class="latex"><code>\usepackage[pdfauthor={AUTHOR},pdftitle={TITLE},pdfsubject={SUBJECT},pdfkeywords={KEYWORDS},pdfproducer={LaTeX},pdfcreator={pdflatex}]{hyperref}</code></pre>
+<pre class="tex"><code>\usepackage[pdfauthor={AUTHOR},pdftitle={TITLE},pdfsubject={SUBJECT},pdfkeywords={KEYWORDS},pdfproducer={LaTeX},pdfcreator={pdflatex}]{hyperref}</code></pre>
 </div>
 </div>
 <div id="figures" class="section level2">
@@ -156,13 +156,13 @@ output:
 <div id="sub-figures" class="section level3">
 <h3>Sub-figures</h3>
 <p>After adding <code>\usepackage{subcaption}</code>, use like this:</p>
-<pre class="latex"><code>\begin{subfigure}[b]{.48\textwidth}
+<pre class="tex"><code>\begin{subfigure}[b]{.48\textwidth}
     \includegraphics{example.pdf}
     \caption{}
     \label{fig:example}
 end{subfigure}</code></pre>
 <p>For more custom organization of the sub-figures, feel free to use <code>minipage</code> environment. To force a caption number/letter, use <code>\addtocounter{subfigure}{XX}</code>. For example, to have the second subfigure as a long vertical panel on the right and figure {} and {}, smaller on the left:</p>
-<pre class="latex"><code>\begin{figure}[htp]
+<pre class="tex"><code>\begin{figure}[htp]
     \begin{minipage}[c]{.4\textwidth}
         \begin{subfigure}[b]{\linewidth}
             \includegraphics{example.pdf}
@@ -190,7 +190,7 @@ end{subfigure}</code></pre>
 <div id="supplementary-figures" class="section level3">
 <h3>Supplementary figures</h3>
 <p>The counter and style for supplementary figures (and tables) can be changed. I place this block at the beginning of the supplementary figure section:</p>
-<pre class="latex"><code>\setcounter{figure}{0}
+<pre class="tex"><code>\setcounter{figure}{0}
 \renewcommand{\thefigure}{S\arabic{figure}}</code></pre>
 <p>Moreover, some journals require the supplementary figures to be named <em>Supplementary Fig. 1</em>. As it is, with the configuration above, it would look like <em>Fig. S1</em> when using <code>Fig. \ref{fig:toto}</code>. The only solution I can think of is to manually write or not the <em>Supplementary</em> and remove the <em>S</em> in the number. But it’s painful. Eventually I could write a small script that does this automatically.</p>
 <p>Side-note: I don’t like this style. Ok it looks a bit more fancy but using <em>S12</em> is shorter and clearer, and avoids any confusion even when citing multiple figures.</p>
@@ -201,14 +201,14 @@ end{subfigure}</code></pre>
 <h2>Tables</h2>
 <div id="control-tabular-width" class="section level3">
 <h3>Control tabular width</h3>
-<pre class="latex"><code>\resizebox{.8\textwidth}{!}{
+<pre class="tex"><code>\resizebox{.8\textwidth}{!}{
     TABULAR
 }</code></pre>
 </div>
 <div id="supplementary-tables" class="section level3">
 <h3>Supplementary tables</h3>
 <p>Similar to figures I use:</p>
-<pre class="latex"><code>\setcounter{table}{0}
+<pre class="tex"><code>\setcounter{table}{0}
 \renewcommand{\thetable}{S\arabic{table}}%</code></pre>
 <p>To list tables: <code>\listoftables</code></p>
 </div>
@@ -244,7 +244,7 @@ end{subfigure}</code></pre>
 <p>In Emacs to avoid misinterpreting special character (e.g. <code>$</code> or <code>_</code>) I added to <code>.emacs</code> :</p>
 <pre class="lisp"><code>(setq LaTeX-verbatim-environments-local &#39;(&quot;lstlisting&quot;))</code></pre>
 <p>Then in the LaTeX document I setup the <em>lstlisting</em> environment with something like:</p>
-<pre class="latex"><code>\lstset{
+<pre class="tex"><code>\lstset{
   basicstyle=\scriptsize\ttfamily, % the size of the fonts that are used for the code
   breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
   breaklines=true,                 % sets automatic line breaking
@@ -258,14 +258,14 @@ end{subfigure}</code></pre>
 <div id="abstract" class="section level3">
 <h3>Abstract</h3>
 <p>An abstract environment exists:</p>
-<pre class="latex"><code>\begin{abstract}
+<pre class="tex"><code>\begin{abstract}
 Genetics has been shown to be important...
 \end{abstract}</code></pre>
 </div>
 <div id="author-affiliation" class="section level3">
 <h3>Author affiliation</h3>
 <p>Using <code>\usepackage{authblk}</code>, the authors’ affiliations can be defined like this:</p>
-<pre class="latex"><code>\author[1,2]{Jean Monlong}
+<pre class="tex"><code>\author[1,2]{Jean Monlong}
 ...
 \affil[1]{Department of Human Genetics, McGill University, Montréal, H3A 1B1, Canada}
 \affil[2]{McGill University and Génome Québec Innovation Center, Montréal, H3A 1A4, Canada}
@@ -277,12 +277,12 @@ Genetics has been shown to be important...
 <li><code>\linespread{1.6}</code> for double-spacing.</li>
 <li>To add line numbers, <em>lineno</em> package:</li>
 </ul>
-<pre class="latex"><code>\usepackage[modulo]{lineno}
+<pre class="tex"><code>\usepackage[modulo]{lineno}
 \linenumbers</code></pre>
 </div>
 <div id="notescomments" class="section level3">
 <h3>Notes/comments</h3>
-<pre class="latex"><code>\usepackage{todonotes}
+<pre class="tex"><code>\usepackage{todonotes}
 \newcounter{mycomment}
 \newcommand{\comment}[2][]{%
   \refstepcounter{mycomment}%
@@ -305,13 +305,13 @@ Genetics has been shown to be important...
 <p>It’s easier to have the two documents separated with their own bibliography. Then no need to manually split the pdf (and likely lose links).</p>
 <p>Using the <code>xr</code> package, we can specify other documents where to find references (figures, tables, sections).</p>
 <p>In the <code>main.tex</code> document:</p>
-<pre class="latex"><code>\usepackage{xr}
+<pre class="tex"><code>\usepackage{xr}
 \externaldocument{suppmap}</code></pre>
 <p>And in the <code>suppmat.tex</code> document:</p>
-<pre class="latex"><code>\usepackage{xr}
+<pre class="tex"><code>\usepackage{xr}
 \externaldocument{main}</code></pre>
 <p>On Overleaf, they use <a href="http://tex.stackexchange.com/a/69832/226">a variant</a> where the <code>suppmat.tex</code> is not compiled but its references can still be used in the <code>main.tex</code> using:</p>
-<pre class="latex"><code>\usepackage{xcite}
+<pre class="tex"><code>\usepackage{xcite}
 \usepackage{xr}
 \makeatletter
 \newcommand*{\addFileDependency}[1]{% argument=file name and extension
@@ -352,13 +352,13 @@ done</code></pre>
 <div id="bibliography" class="section level2">
 <h2>Bibliography</h2>
 <p>I use <code>\usepackage[comma,super]{natbib}</code> and the commands:</p>
-<pre class="latex"><code>\bibliographystyle{unsrtnat}
+<pre class="tex"><code>\bibliographystyle{unsrtnat}
 \bibliography{library.bib}</code></pre>
 <div id="reduce-long-list-of-authors" class="section level3">
 <h3>Reduce long list of authors</h3>
 <p>To change a long list of authors into <em>“First Author et al”</em> in the references, use a custom <code>.bst</code> file.</p>
 <p>I downloaded the original version of the file <a href="http://ctan.org/tex-archive/macros/latex/contrib/natbib">there</a> and change the <code>FUNCTION {format.names}</code> part by</p>
-<pre><code>INTEGERS { max.num.names.before.forced.et.al num.names.shown.with.forced.et.al }
+<pre class="bst"><code>INTEGERS { max.num.names.before.forced.et.al num.names.shown.with.forced.et.al }
 
 FUNCTION {format.names}
 { &#39;s :=
@@ -405,18 +405,18 @@ FUNCTION {format.names}
 <div id="name-year-style" class="section level3">
 <h3>“Name Year” style</h3>
 <p>I used <code>\citep{}</code> with this configuration:</p>
-<pre class="latex"><code>\usepackage{natbib}
+<pre class="tex"><code>\usepackage{natbib}
 \bibpunct{ (}{)}{;}{a}{}{;}</code></pre>
 </div>
 <div id="order-of-initials" class="section level3">
 <h3>Order of initials</h3>
 <p>To get <em>Simpson H.</em> instead of <em>Homer Simpson</em> I changes the <code>.bst</code> file line in the <code>format.names</code> function to :</p>
-<pre class="latex"><code>{ s nameptr &quot;{vv~}{ll~}{f.}{, jj}&quot; format.name$ &#39;t :=</code></pre>
+<pre class="tex"><code>{ s nameptr &quot;{vv~}{ll~}{f.}{, jj}&quot; format.name$ &#39;t :=</code></pre>
 </div>
 <div id="no-url-or-doi" class="section level3">
 <h3>No URL or DOI</h3>
 <p>There are nicer option with <code>biblatex</code> but since I’m still using <code>bibtex</code> I went into the <code>.bst</code> file and changed the formatting functions:</p>
-<pre class="latex"><code>FUNCTION {format.url}
+<pre class="tex"><code>FUNCTION {format.url}
 { &quot;&quot; }
 %%{ url empty$
 %%    { &quot;&quot; }
@@ -438,13 +438,13 @@ FUNCTION {format.doi}
 <div id="changing-the-font" class="section level3">
 <h3>Changing the font</h3>
 <p>By default, Beamer uses a sans-serif font. It looks a bit harsh. I find the <em>Palatino</em> font easier on the eye. To switch to serif font and choose the <em>Palatino</em>, I add at the beginning of the document:</p>
-<pre class="latex"><code>\renewcommand*{\familydefault}{\rmdefault}
+<pre class="tex"><code>\renewcommand*{\familydefault}{\rmdefault}
 \renewcommand*\rmdefault{ppl}</code></pre>
 </div>
 <div id="section-slides" class="section level3">
 <h3>Section slides</h3>
 <p>To introduce sections, Beamer can automatically insert slides. These automated slides can be defined with:</p>
-<pre class="latex"><code>\AtBeginSection{
+<pre class="tex"><code>\AtBeginSection{
   \begin{frame}
     \begin{center}
       \structure{\Large\bf \insertsection}
@@ -462,7 +462,7 @@ FUNCTION {format.doi}
 <div id="themes" class="section level3">
 <h3>Themes</h3>
 <p>I tend to use the minimalist <em>default</em> theme, remove the navigation bar but add slide number:</p>
-<pre class="latex"><code>\usetheme{default}
+<pre class="tex"><code>\usetheme{default}
 \setbeamertemplate{navigation symbols}{}
 \setbeamertemplate{footline}[page number]</code></pre>
 <p>For an important presentation, I could use a more fancy theme, such as the <a href="https://github.com/matze/mtheme">Metropolis</a> theme or the <a href="http://hamaluik.com/posts/better-beamer-themes/">Execushares</a> one. Eventually I would like to mix and customize these two (see current state <a href="https://github.com/jmonlong/Hippocamplus/blob/master/LaTeX/theme/beamerthemeMyExecushares.sty">there</a>).</p>
@@ -470,7 +470,7 @@ FUNCTION {format.doi}
 <div id="background-image" class="section level3">
 <h3>Background image</h3>
 <p>For the acknowledgment slide or for more informal presentations, I sometimes want to use a specific image as background for a slide.</p>
-<pre class="latex"><code>{
+<pre class="tex"><code>{
 \usebackgroundtemplate{\includegraphics[width=\paperwidth]{pic.jpg}}%
 \begin{frame}
 \end{frame}
@@ -479,7 +479,7 @@ FUNCTION {format.doi}
 <div id="backup-slides" class="section level3">
 <h3>Backup slides</h3>
 <p>To add extra slides at the end of the presentation without increasing the total number of slides displayed:</p>
-<pre class="latex"><code>\appendix
+<pre class="tex"><code>\appendix
 \newcounter{finalframe}
 \setcounter{finalframe}{\value{framenumber}}
 
