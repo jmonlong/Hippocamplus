@@ -60,7 +60,8 @@ for elt in arr:
 <p><em>numpy</em> arrays are more efficient when the data needs to be manipulated/combined. For example it allows for some vectorized operations:</p>
 <pre class="python"><code>pred_counts = numpy.zeros((4, len(rfc.classes_)))
 pred_counts[0, ] += sum(predprobs &gt; .5)</code></pre>
-<p>To convert a string into an array: <code>numpy.fromstring(line, dtype=int, sep='\t')</code>. The opposite would be <code>'\t'.join(map(str, arr))</code></p>
+<p>To convert a string into an array: <code>numpy.fromstring(line, dtype=int, sep='\t')</code>.
+The opposite would be <code>'\t'.join(map(str, arr))</code></p>
 </div>
 <div id="hash" class="section level3">
 <h3>Hash</h3>
@@ -109,7 +110,11 @@ for line in fileinput.input():
 <pre class="python"><code>f = open(output_file, &#39;w&#39;) # &#39;a&#39; for append mode
 f.write(&#39;something&#39; + str(an_integer) + &#39;\n&#39;)
 f.close()</code></pre>
-<p>To quickly read a manually indexed (e.g. <code>grep -b</code>) file quickly, use <code>seek</code> to jump to a byte-offset and <code>tell</code> to save the current byte-offset.</p>
+<p>For gzipped files, use <em>gzip</em> module:</p>
+<pre class="python"><code>import gzip
+f = gzip.open(&#39;file.txt.gz&#39;, &#39;rb&#39;)
+f = gzip.open(&#39;file.txt.gz&#39;, &#39;wb&#39;)</code></pre>
+<p>To quickly read a manually indexed (e.g. <code>grep -b</code>) file quickly, use <code>seek</code> to jump to a byte-offset and <code>tell</code> to save the current byte-offset.</p>
 <pre class="python"><code>f = open(reads_fn)
 f.seek(bos)
 line = f.next()
@@ -134,7 +139,10 @@ module1.fun()</code></pre>
 │   ├── submod1.py
 │   ├── submod2.py
 ├── setup.py</code></pre>
-<p><code>__init__.py</code> files can be (and usually are) empty. The <code>setup.py</code> contains metadata about the package and list dependencies and files to includes. Once setup, the package can be installed locally with <code>pip install .</code>. Other functions exist to produce a tarball or upload the code to <a href="https://pypi.org">pypi</a>.</p>
+<p><code>__init__.py</code> files can be (and usually are) empty.
+The <code>setup.py</code> contains metadata about the package and list dependencies and files to includes.
+Once setup, the package can be installed locally with <code>pip install .</code>.
+Other functions exist to produce a tarball or upload the code to <a href="https://pypi.org">pypi</a>.</p>
 <p>More details at “<a href="https://python-packaging.readthedocs.io/en/latest/index.html">How to package your python code</a>”.</p>
 </div>
 <div id="install-a-module-locally" class="section level3">

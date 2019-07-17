@@ -110,6 +110,13 @@ f.write('something' + str(an_integer) + '\n')
 f.close()
 ~~~
 
+For gzipped files, use *gzip* module:
+
+~~~python
+import gzip
+f = gzip.open('file.txt.gz', 'rb')
+f = gzip.open('file.txt.gz', 'wb')
+~~~
 
 To quickly read a manually indexed (e.g. `grep -b`) file quickly, use `seek` to jump to a byte-offset and `tell` to save the current byte-offset.
 
