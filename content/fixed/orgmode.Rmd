@@ -1,0 +1,69 @@
+---
+sidebar: true
+title: Org mode
+draft: true
+weight: 1
+output:
+  blogdown::html_page:
+    toc: true
+---
+
+I'll give [Org mode](https://orgmode.org/) a try.
+This page will contain my configuration and the small subset of commands that I want to learn.
+
+## Org file
+
+- Start with `MY PROJECTS    -*- mode: org; -*-`
+
+## Configuration
+
+In `.emacs` file:
+
+~~~lisp
+(require 'org)
+(define-key org-mode-map (kbd "C-<tab>") 'pcomplete)
+(setq org-todo-keywords
+      '((sequence "TODO" "ONGOING" "WAITING" "|" "DONE")))
+(global-set-key (kbd "C-c a") 'org-agenda)
+(setq org-startup-truncated nil)
+(setq org-startup-indented 1)
+~~~
+
+## Keybindings
+
+### Edit mode
+
+- Completion: changed to `C-tab`.
+- Move to next/previous heading: `C-c C-n`/`C-c C-p`.
+- Move to next/previous same-level heading: `C-c C-f`/`C-c C-b`.
+- Move up to higher heading: `C-c C-u`.
+- Insert a new heading at the end of the current subtree: `C-RET`.
+- Promote/demote heading: `M-LEFT`/`M-RIGHT`.
+- Promote/demote subtree: `M-S-LEFT`/`M-S-RIGHT`.
+- Move subtree up/down: `M-UP`/`M-DOWN`.
+- Cycle through TODO states: `S-RIGHT`/`S-LEFT`.
+- Toggle the sparse tree view: `C-c /`.
+
+### Timestamps
+
+- Insert date: `C-c .`
+- Navigate with `S-ARROW`.
+- Toggle the calendar at a specific date: `C-c >`.
+- In calendar, jump to specific date: `o`.
+
+## Agenda views
+
+- Add/remove document to agenda files: `C-c [`/`C-c ]`.
+- Open agenda views: binded to `C-c a`.
+- Highlight in file: `SPC`.
+- Jump to file: `TAB`.
+- Jump to file and close agenda: `RET`.
+
+
+## TODO entry
+
+~~~
+*** TODO Do this before the deadline
+    SCHEDULED: <2004-02-22 Sun>
+    DEADLINE: <2004-02-29 Sun>
+~~~
