@@ -67,3 +67,15 @@ In `.emacs` file:
     SCHEDULED: <2004-02-22 Sun>
     DEADLINE: <2004-02-29 Sun>
 ~~~
+
+## Habits entry
+
+~~~
+** TODO Go for a run
+SCHEDULED: <2019-07-16 Tue .+2d/7d>
+- State "DONE"       from "WAITING"    [2019-07-14 Sun 14:13] 
+:PROPERTIES: 
+:STYLE:    habit
+:LAST_REPEAT: [2019-07-14 Sun 14:13]
+:END:
+~~~
