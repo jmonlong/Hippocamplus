@@ -11,6 +11,8 @@ output:
 I'll give [Org mode](https://orgmode.org/) a try.
 This page will contain my configuration and the small subset of commands that I want to learn.
 
+[Org Manual](https://orgmode.org/manual/)
+
 ## Org file
 
 - Start with `MY PROJECTS    -*- mode: org; -*-`
@@ -21,15 +23,29 @@ In `.emacs` file:
 
 ~~~lisp
 (require 'org)
+;; Change M-TAB completion to C-TAB
 (define-key org-mode-map (kbd "C-<tab>") 'pcomplete)
 (setq org-todo-keywords
       '((sequence "TODO" "ONGOING" "WAITING" "|" "DONE")))
 (global-set-key (kbd "C-c a") 'org-agenda)
-(setq org-startup-truncated nil)
-(setq org-startup-indented 1)
+(setq org-startup-truncated nil) ;; wrap lines
+(setq org-startup-indented 1) ;; heading indentation
+(setq org-return-follows-link 1) ;; RET to follow links
+;; path to org files
+(custom-set-variables
+ '(org-directory "path/to/org/dir")
+ '(org-agenda-files (list org-directory)))
+;; capture
+(setq org-default-notes-file (concat org-directory "/notes.org"))
+(global-set-key (kbd "C-c c") 'org-capture)
 ~~~
 
 ## Keybindings
+
+### From anywhere
+
+- Capture a note: bound to `C-c c`
+- Open agenda views: bound to `C-c a`.
 
 ### Edit mode
 
@@ -43,22 +59,29 @@ In `.emacs` file:
 - Move subtree up/down: `M-UP`/`M-DOWN`.
 - Cycle through TODO states: `S-RIGHT`/`S-LEFT`.
 - Toggle the sparse tree view: `C-c /`.
+- Open link: `C-c C-o`.
+- New/edit link: `C-c C-l`.
 
 ### Timestamps
 
-- Insert date: `C-c .`
+- Insert/edit date: `C-c .`
+- Insert/edit schedule: `C-c C-s`.
+- Insert/edit deadline: `C-c C-d`.
 - Navigate with `S-ARROW`.
 - Toggle the calendar at a specific date: `C-c >`.
 - In calendar, jump to specific date: `o`.
 
-## Agenda views
+### Agenda views
 
 - Add/remove document to agenda files: `C-c [`/`C-c ]`.
-- Open agenda views: binded to `C-c a`.
 - Highlight in file: `SPC`.
 - Jump to file: `TAB`.
 - Jump to file and close agenda: `RET`.
+- Change TODO states with `t`.
 
+### Capture
+
+- Finish capture and go back to current buffer: `C-c C-c`.
 
 ## TODO entry
 
@@ -78,4 +101,35 @@ SCHEDULED: <2019-07-16 Tue .+2d/7d>
 :STYLE:    habit
 :LAST_REPEAT: [2019-07-14 Sun 14:13]
 :END:
+~~~
+
+## Links
+
+`[[LINK][DESCRIPTION]]`
+
+With *LINK*:
+
+- `http://jmonlong.github.io/Hippocamplus/`
+- `file:path/to/file`
+- `file:sometextfile::NNN` file with line number.
+- `file:projects.org::*task title` Org file with heading search.
+- `doi:XX.XXXX/XXX`
+
+## Custom agenda views
+
+### Today's agenda and un-scheduled tasks
+
+~~~lisp
+(setq org-agenda-custom-commands
+      '(("c" "Today's agenda"
+         ((agenda "" ((org-agenda-ndays 1)))
+          (alltodo ""
+                   ((org-agenda-skip-function
+                     (lambda nil
+                       (org-agenda-skip-entry-if (quote scheduled)
+                                                 (quote deadline))))
+                    (org-agenda-overriding-header "Un-scheduled tasks:")
+                    )))
+         ((org-agenda-compact-blocks t))
+         )))
 ~~~
