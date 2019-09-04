@@ -387,6 +387,7 @@ At this point `C-Enter` will send the command to the *shell* buffer.
 I'm following [this tutorial](https://tuhdo.github.io/c-ide.html).
 
 - The speedbar is nice to get an overview of the files. `M-x speedbar`.
+- A better speedbar is provided by *sr-speedbar* and toogled with `M-x sr-speedbar-toggle`.
 
 ### Tags
 
@@ -411,10 +412,12 @@ Then added to `.emacs`:
 Useful shortcuts:
 
 - `M-.` to jump to a definition or reference file. 
-    - `M-<`/`M->` to switch among files with results.
-    - `M-,` to go back to the original position.
+    - `M-p`/`M-n` to switch among files with results.
+    - `M-,` to go back to the previous positions.
 
 *More soon...*
+
+List occurrences of current word in the buffer.
 
 ## For Shell
 

@@ -1,14 +1,13 @@
 ---
 sidebar: true
 title: Org mode
-draft: true
 weight: 1
 output:
   blogdown::html_page:
     toc: true
 ---
 
-I'll give [Org mode](https://orgmode.org/) a try.
+I'm giving [Org mode](https://orgmode.org/) a try.
 This page will contain my configuration and the small subset of commands that I want to learn.
 
 [Org Manual](https://orgmode.org/manual/)
@@ -40,6 +39,11 @@ In `.emacs` file:
 (global-set-key (kbd "C-c c") 'org-capture)
 ~~~
 
+## Syntax
+
+- `*bold*`, `/italic/`, `_underlined_`, `+strike-through+`.
+- `=verbatim=`, `~code~`. 
+
 ## Keybindings
 
 ### From anywhere
@@ -69,6 +73,7 @@ In `.emacs` file:
 - Insert/edit deadline: `C-c C-d`.
 - Navigate with `S-ARROW`.
 - Toggle the calendar at a specific date: `C-c >`.
+- Insert selected date in the calendar at cursor position: `C-c <`.
 - In calendar, jump to specific date: `o`.
 
 ### Agenda views
@@ -78,6 +83,8 @@ In `.emacs` file:
 - Jump to file: `TAB`.
 - Jump to file and close agenda: `RET`.
 - Change TODO states with `t`.
+- Jump to a specific date: `j`.
+- Previous/next day/week/month: `b`/`f`
 
 ### Capture
 
@@ -115,9 +122,17 @@ With *LINK*:
 - `file:projects.org::*task title` Org file with heading search.
 - `doi:XX.XXXX/XXX`
 
+## Tags
+
+- Set/edit tag: `C-c C-q`
+
 ## Custom agenda views
 
-### Today's agenda and un-scheduled tasks
+I either want to know the tasks and events for the day, or just the events for the upcoming week/year.
+
+- (c) Today's agenda and un-scheduled tasks.
+- (w) Events for the upcoming week.
+- (y) Events for the upcoming year (recurrent events and birthdays excluded).
 
 ~~~lisp
 (setq org-agenda-custom-commands
@@ -131,5 +146,31 @@ With *LINK*:
                     (org-agenda-overriding-header "Un-scheduled tasks:")
                     )))
          ((org-agenda-compact-blocks t))
-         )))
+         )
+        ("w" "Week's events"
+         ((agenda "" ((org-agenda-ndays 7)
+                      (org-agenda-skip-function
+                       '(or (org-agenda-skip-entry-if 'todo '("TODO" "ONGOING" "DONE"))
+                            )
+                       )
+                      (org-agenda-show-all-dates nil)
+                      (org-agenda-overriding-header "Week's events:")
+                      )))
+          ((org-agenda-compact-blocks t))
+          )
+        ("y" "Year's events (no recurrents)"
+         ((agenda "" ((org-agenda-ndays 365)
+                      (org-agenda-skip-function
+                       '(or (org-agenda-skip-entry-if 'todo '("TODO" "ONGOING" "DONE"))
+                            (org-agenda-skip-subtree-if 'regexp ":recurrent:")
+                            (org-agenda-skip-subtree-if 'regexp ":birthday:")
+                            )
+                       )
+                      (org-agenda-show-all-dates nil)
+                      (org-agenda-overriding-header "Year's events (no recurrents):")
+                      )))
+          ((org-agenda-compact-blocks t))
+          )
+        )
+      )
 ~~~

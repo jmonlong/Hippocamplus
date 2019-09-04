@@ -57,6 +57,18 @@
     </item>
     
     <item>
+      <title>Org mode</title>
+      <link>/Hippocamplus/org-mode/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/Hippocamplus/org-mode/</guid>
+      <description>Org file Configuration Syntax Keybindings From anywhere Edit mode Timestamps Agenda views Capture  TODO entry Habits entry Links Tags Custom agenda views   I’m giving Org mode a try. This page will contain my configuration and the small subset of commands that I want to learn.
+Org Manual
+Org file  Start with MY PROJECTS -*- mode: org; -*-   Configuration In .emacs file:
+(require &amp;#39;org) ;; Change M-TAB completion to C-TAB (define-key org-mode-map (kbd &amp;quot;C-&amp;lt;tab&amp;gt;&amp;quot;) &amp;#39;pcomplete) (setq org-todo-keywords &amp;#39;((sequence &amp;quot;TODO&amp;quot; &amp;quot;ONGOING&amp;quot; &amp;quot;WAITING&amp;quot; &amp;quot;|&amp;quot; &amp;quot;DONE&amp;quot;))) (global-set-key (kbd &amp;quot;C-c a&amp;quot;) &amp;#39;org-agenda) (setq org-startup-truncated nil) ;; wrap lines (setq org-startup-indented 1) ;; heading indentation (setq org-return-follows-link 1) ;; RET to follow links ;; path to org files (custom-set-variables &amp;#39;(org-directory &amp;quot;path/to/org/dir&amp;quot;) &amp;#39;(org-agenda-files (list org-directory))) ;; capture (setq org-default-notes-file (concat org-directory &amp;quot;/notes.</description>
+    </item>
+    
+    <item>
       <title>Python</title>
       <link>/Hippocamplus/python/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>

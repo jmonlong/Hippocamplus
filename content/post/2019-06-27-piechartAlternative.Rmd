@@ -6,12 +6,22 @@ tags: ["R", "plot"]
 ---
 
 ```{r, include=FALSE}
-knitr::opts_chunk$set(message=FALSE, warning=FALSE, tidy=TRUE, tidy.opts=list(width.cutoff=50))
+knitr::opts_chunk$set(message=FALSE, warning=FALSE, tidy=TRUE,
+                      fig.width=10,
+                      tidy.opts=list(width.cutoff=50))
 ```
 
-## Some setting up
+## TL;DR
 
-Using a typical tidyverse with data.frame manipulation (*dplyr*) and graphs (*ggplot2*):
+- **Pie charts ARE bad**: it's difficult to rank and compare the pies.
+- **Waffle charts** are slightly better but it's still difficult to rank/compare groups.
+- Good Ol' **bar charts are the best** way to quickly compare groups.
+- We can make **more compact bar charts** with ggplot2 to use instead of pie charts.
+
+## Set up
+
+A typical tidyverse with data.frame manipulation (*dplyr*) and graphs (*ggplot2*).
+Also, some functions to create random group labels and data.frames with labels that I will use to test the graphs.
 
 ```{r init}
 library(ggplot2)
@@ -35,36 +45,66 @@ interk <- function(x, k=4){ # Interleaves elements in x
 pal = interk(rainbow(10, s=.8), 3)
 ```
 
-The functions above create random names and data.frames with labels that I will use to test the graphs.
-
-I will simulate 10 labels: 5 with around the same number of elements (between 100 and 200); 5 with a small number of elements (between 1 and 20). 
-This should be good to see how the graphs look like with multiple groups, some with very low numbers.
+I will **simulate 10 labels**: 5 with around the same number of elements (between 100 and 200); 5 with a small number of elements (between 1 and 20). 
+This should be good to see how the graphs look like with multiple groups, including some with very low numbers.
 
 
-## Problem with pie charts
+## Problems with pie charts
 
-```{r pies}
+Let's use **two datasets** representing counts of the same set of labels.
+What can we say from a pie chart of one or both datasets?
+
+```{r pie}
+## Datasets
 labs = randNames(10,6)
 df1 = pieDF(labs)
-ggplot(df1, aes(x='', fill=x)) + geom_bar() +
+df2 = pieDF(labs)
+df12 = rbind(df1 %>% mutate(data='dataset 1'),
+             df2 %>% mutate(data='dataset 2'))
+
+ggplot(df1, aes(x='', fill=x)) + geom_bar(position='fill') +
   scale_fill_manual(values=pal) +
   coord_polar("y", start=0) + theme_bw() +
-  theme(axis.title.y=element_blank(), legend.title=element_blank())
+  theme(axis.title.y=element_blank(),
+        axis.title.x=element_blank(),
+        legend.title=element_blank(),
+        text=element_text(size=22))
+```
 
-df2 = pieDF(labs)
-ggplot(df2, aes(x='', fill=x)) + geom_bar() +
+Not that much. 
+I see a couple of problems.
+
+**Problem 1**: It's difficult to estimate the proportion of each group. 
+Apparently humans are better at comparing straight lines than areas/pies (REF).
+
+**Problem 2**: It's difficult to rank groups or to visualize differences between groups of similar sizes.
+
+**Problem 3**: In this representation, we have to use the legend to match color with group label.
+I don't like this when there are more than a couple groups.
+To be fair, labels are often on top of the pies so it not an issue usually, just something to keep in mind below.
+
+```{r pies}
+ggplot(df12, aes(x='', fill=x)) + geom_bar(position='fill') +
   scale_fill_manual(values=pal) + 
   coord_polar("y", start=0) + theme_bw() +
-  theme(axis.title.y=element_blank(), legend.title=element_blank())
+  theme(axis.title.y=element_blank(),
+        axis.title.x=element_blank(),
+        legend.title=element_blank(),
+        text=element_text(size=22)) +
+  facet_grid(.~data) 
 ```
+
+**Problem 4**: It's a lot of back-and-forth work to understand how two datasets differ.
+
 
 ## Waffle graphs
 
-[ggwaffle](https://github.com/liamgilbey/ggwaffle)
+Using [ggwaffle](https://github.com/liamgilbey/ggwaffle), let's make waffle graphs instead.
 
 ```{r waffle}
 library(ggwaffle)
 
+## Subset data to (better) control the number of waffle squares
 waffleSubset <- function(df, ss=100){
   ss.prop = ss/nrow(df)
   df %>% group_by(x) %>%
@@ -75,45 +115,97 @@ waffleSubset <- function(df, ss=100){
 df1 %>% waffleSubset(200) %>% waffle_iron(aes_d(group=x), rows=10) %>%
   ggplot(aes(x, y, fill=group)) + geom_waffle() +
   coord_equal() + scale_fill_manual(values=pal) + theme_waffle() +
-  theme(axis.title.x=element_blank(), axis.title.y=element_blank(),
-        legend.title=element_blank())
-
-df2 %>% waffleSubset(200) %>% waffle_iron(aes_d(group=x), rows=10) %>%
-  ggplot(aes(x, y, fill=group)) + geom_waffle() +
-  coord_equal() + scale_fill_manual(values=pal) + theme_waffle() +
-  theme(axis.title.x=element_blank(), axis.title.y=element_blank(),
-        legend.title=element_blank())
-
+  theme(axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        legend.title=element_blank(),
+        legend.position='bottom',
+        text=element_text(size=22))
 ```
+
+I find it a bit easier to visually rank and compare groups.
+Still, problems 1, 2 and 3 are still present.
+
+```{r waffles}
+df12 %>% group_by(data) %>% do({waffleSubset(., 210) %>%
+                                  waffle_iron(aes_d(group=x), rows=7)}) %>% 
+  ggplot(aes(x, y, fill=group)) + geom_waffle() +
+  facet_grid(data~.) + 
+  coord_equal() + scale_fill_manual(values=pal) + 
+  theme(axis.title.x=element_blank(),
+        axis.title.y=element_blank(),
+        legend.title=element_blank(),
+        panel.grid=element_blank(),
+        panel.border=element_blank(),
+        panel.background=element_blank(),
+        axis.text=element_blank(),
+        axis.line=element_blank(),
+        plot.background=element_blank(),
+        text=element_text(size=22))
+```
+
+Again, slightly better than pie charts (I think) but it's still not straightforward to compare the datasets.
 
 ## Bar graphs
 
-```{r bars}
+A simple bar chart looks like this:
+
+```{r bar}
 ggplot(df1, aes(x=x, fill=x)) + geom_bar(color='black') +
   theme_bw() + scale_fill_manual(values=pal) +
-  theme(axis.title.x=element_blank(), legend.title=element_blank())
-ggplot(df2, aes(x=x, fill=x)) + geom_bar(color='black') +
-  theme_bw() + scale_fill_manual(values=pal) + 
-  theme(axis.title.x=element_blank(), legend.title=element_blank())
+  theme(axis.title.x=element_blank(), legend.title=element_blank()) +
+  guides(fill=FALSE)
 ```
 
-More compact version:
+There is a lot of small text and white space in this graph.
+It's fine as a graph, but we often want to use pie charts as a compact representation.
 
-```{r barsc, fig.height=4, fig.width=4}
-compactBars <- function(df, digits=1, nudge=.001){
-  df %>% group_by(x) %>% summarize(n=n()) %>% ungroup %>%
-    mutate(prop=n/sum(n), percent=paste0(100*round(prop, 2+digits),'%'),
+To make a **more compact bar chart**, we could:
+
+- flip the graph
+- reorder the bars
+- increase the font size
+- remove the legend and axis
+- add the proportion as text annotation
+
+```{r barc, fig.height=4, fig.width=5}
+lab.digits=1
+nudge=.005
+
+df1 %>% group_by(x) %>% summarize(n=n()) %>% ungroup %>%
+  mutate(prop=n/sum(n), percent=paste0(100*round(prop, 2+lab.digits),'%'),
+         hjust=ifelse(prop<max(prop)/2, 0, 1),
+         nudge=ifelse(prop<max(prop)/2, nudge, -1*nudge)) %>% 
+  ggplot(aes(x=reorder(x, prop))) +
+  geom_bar(aes(y=prop, fill=x), stat='identity', color='black') +
+  geom_text(aes(y=prop+nudge, label=percent, hjust=hjust), size=7) + 
+  theme_void() +
+  scale_fill_manual(values=pal) +
+  theme(axis.text.y=element_text(size=22)) + 
+  coord_flip() + guides(fill=FALSE)
+```
+
+I like that much more: 
+
+- the differences are easy to see visually.
+- the numbers are there without taking space.
+- the names of the groups are all in the same orientation and lined-up, making them easy to read.
+
+```{r, barsc}
+df12 %>% group_by(data, x) %>% summarize(n=n()) %>% ungroup %>%
+    mutate(prop=n/sum(n), percent=paste0(100*round(prop, 2+lab.digits),'%'),
            hjust=ifelse(prop<max(prop)/2, 0, 1),
            nudge=ifelse(prop<max(prop)/2, nudge, -1*nudge)) %>% 
-    ggplot(aes(x=reorder(x, prop))) +
-    geom_bar(aes(y=prop, fill=x), stat='identity', color='black') +
-    geom_text(aes(y=prop+nudge, label=percent, hjust=hjust), size=7) + 
-    theme_void() +
-    scale_fill_manual(values=pal) +
-    theme(axis.text.y=element_text(size=24)) + 
-    coord_flip() + guides(fill=FALSE)
-}
-
-compactBars(df1)
-compactBars(df2)
+  ggplot(aes(x=reorder(x, prop, head, 1))) +
+  geom_bar(aes(y=prop, fill=x), stat='identity', color='black') +
+  geom_text(aes(y=prop+nudge, label=percent, hjust=hjust), size=7) + 
+  theme_void() +
+  scale_fill_manual(values=pal) +
+  theme(axis.text.y=element_text(size=22), text=element_text(size=22)) + 
+  coord_flip() + guides(fill=FALSE) +
+  facet_grid(.~data)
 ```
+
+When comparing two datasets, it is straightforward to align the groups.
+In the end, I again think the differences are clearer to see.
+
+Bar charts for the win!
