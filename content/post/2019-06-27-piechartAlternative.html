@@ -7,9 +7,19 @@ tags: ["R", "plot"]
 
 
 
-<div id="some-setting-up" class="section level2">
-<h2>Some setting up</h2>
-<p>Using a typical tidyverse with data.frame manipulation (<em>dplyr</em>) and graphs (<em>ggplot2</em>):</p>
+<div id="tldr" class="section level2">
+<h2>TL;DR</h2>
+<ul>
+<li><strong>Pie charts ARE bad</strong>: it’s difficult to rank and compare the pies.</li>
+<li><strong>Waffle charts</strong> are slightly better but it’s still difficult to rank/compare groups.</li>
+<li>Good Ol’ <strong>bar charts are the best</strong> way to quickly compare groups.</li>
+<li>We can make <strong>more compact bar charts</strong> with ggplot2 to use instead of pie charts.</li>
+</ul>
+</div>
+<div id="set-up" class="section level2">
+<h2>Set up</h2>
+<p>A typical tidyverse with data.frame manipulation (<em>dplyr</em>) and graphs (<em>ggplot2</em>).
+Also, some functions to create random group labels and data.frames with labels that I will use to test the graphs.</p>
 <pre class="r"><code>library(ggplot2)
 library(dplyr)
 
@@ -31,29 +41,50 @@ interk &lt;- function(x, k = 4) {
     x[idx]
 }
 pal = interk(rainbow(10, s = 0.8), 3)</code></pre>
-<p>The functions above create random names and data.frames with labels that I will use to test the graphs.</p>
-<p>I will simulate 10 labels: 5 with around the same number of elements (between 100 and 200); 5 with a small number of elements (between 1 and 20).
-This should be good to see how the graphs look like with multiple groups, some with very low numbers.</p>
+<p>I will <strong>simulate 10 labels</strong>: 5 with around the same number of elements (between 100 and 200); 5 with a small number of elements (between 1 and 20).
+This should be good to see how the graphs look like with multiple groups, including some with very low numbers.</p>
 </div>
-<div id="problem-with-pie-charts" class="section level2">
-<h2>Problem with pie charts</h2>
-<pre class="r"><code>labs = randNames(10, 6)
+<div id="problems-with-pie-charts" class="section level2">
+<h2>Problems with pie charts</h2>
+<p>Let’s use <strong>two datasets</strong> representing counts of the same set of labels.
+What can we say from a pie chart of one or both datasets?</p>
+<pre class="r"><code>## Datasets
+labs = randNames(10, 6)
 df1 = pieDF(labs)
-ggplot(df1, aes(x = &quot;&quot;, fill = x)) + geom_bar() + scale_fill_manual(values = pal) + 
-    coord_polar(&quot;y&quot;, start = 0) + theme_bw() + theme(axis.title.y = element_blank(), 
-    legend.title = element_blank())</code></pre>
-<p><img src="/post/2019-06-27-piechartAlternative_files/figure-html/pies-1.png" width="672" /></p>
-<pre class="r"><code>df2 = pieDF(labs)
-ggplot(df2, aes(x = &quot;&quot;, fill = x)) + geom_bar() + scale_fill_manual(values = pal) + 
-    coord_polar(&quot;y&quot;, start = 0) + theme_bw() + theme(axis.title.y = element_blank(), 
-    legend.title = element_blank())</code></pre>
-<p><img src="/post/2019-06-27-piechartAlternative_files/figure-html/pies-2.png" width="672" /></p>
+df2 = pieDF(labs)
+df12 = rbind(df1 %&gt;% mutate(data = &quot;dataset 1&quot;), df2 %&gt;% 
+    mutate(data = &quot;dataset 2&quot;))
+
+ggplot(df1, aes(x = &quot;&quot;, fill = x)) + geom_bar(position = &quot;fill&quot;) + 
+    scale_fill_manual(values = pal) + coord_polar(&quot;y&quot;, 
+    start = 0) + theme_bw() + theme(axis.title.y = element_blank(), 
+    axis.title.x = element_blank(), legend.title = element_blank(), 
+    text = element_text(size = 22))</code></pre>
+<p><img src="/post/2019-06-27-piechartAlternative_files/figure-html/pie-1.png" width="960" /></p>
+<p>Not that much.
+I see a couple of problems.</p>
+<p><strong>Problem 1</strong>: It’s difficult to estimate the proportion of each group.
+Apparently humans are better at comparing straight lines than areas/pies (REF).</p>
+<p><strong>Problem 2</strong>: It’s difficult to rank groups or to visualize differences between groups of similar sizes.</p>
+<p><strong>Problem 3</strong>: In this representation, we have to use the legend to match color with group label.
+I don’t like this when there are more than a couple groups.
+To be fair, labels are often on top of the pies so it not an issue usually, just something to keep in mind below.</p>
+<pre class="r"><code>ggplot(df12, aes(x = &quot;&quot;, fill = x)) + geom_bar(position = &quot;fill&quot;) + 
+    scale_fill_manual(values = pal) + coord_polar(&quot;y&quot;, 
+    start = 0) + theme_bw() + theme(axis.title.y = element_blank(), 
+    axis.title.x = element_blank(), legend.title = element_blank(), 
+    text = element_text(size = 22)) + facet_grid(. ~ 
+    data)</code></pre>
+<p><img src="/post/2019-06-27-piechartAlternative_files/figure-html/pies-1.png" width="960" /></p>
+<p><strong>Problem 4</strong>: It’s a lot of back-and-forth work to understand how two datasets differ.</p>
 </div>
 <div id="waffle-graphs" class="section level2">
 <h2>Waffle graphs</h2>
-<p><a href="https://github.com/liamgilbey/ggwaffle">ggwaffle</a></p>
+<p>Using <a href="https://github.com/liamgilbey/ggwaffle">ggwaffle</a>, let’s make waffle graphs instead.</p>
 <pre class="r"><code>library(ggwaffle)
 
+## Subset data to (better) control the number of
+## waffle squares
 waffleSubset &lt;- function(df, ss = 100) {
     ss.prop = ss/nrow(df)
     df %&gt;% group_by(x) %&gt;% mutate(ss = round(n() * 
@@ -65,42 +96,76 @@ df1 %&gt;% waffleSubset(200) %&gt;% waffle_iron(aes_d(group = x),
     rows = 10) %&gt;% ggplot(aes(x, y, fill = group)) + 
     geom_waffle() + coord_equal() + scale_fill_manual(values = pal) + 
     theme_waffle() + theme(axis.title.x = element_blank(), 
-    axis.title.y = element_blank(), legend.title = element_blank())</code></pre>
-<p><img src="/post/2019-06-27-piechartAlternative_files/figure-html/waffle-1.png" width="672" /></p>
-<pre class="r"><code>df2 %&gt;% waffleSubset(200) %&gt;% waffle_iron(aes_d(group = x), 
-    rows = 10) %&gt;% ggplot(aes(x, y, fill = group)) + 
-    geom_waffle() + coord_equal() + scale_fill_manual(values = pal) + 
-    theme_waffle() + theme(axis.title.x = element_blank(), 
-    axis.title.y = element_blank(), legend.title = element_blank())</code></pre>
-<p><img src="/post/2019-06-27-piechartAlternative_files/figure-html/waffle-2.png" width="672" /></p>
+    axis.title.y = element_blank(), legend.title = element_blank(), 
+    legend.position = &quot;bottom&quot;, text = element_text(size = 22))</code></pre>
+<p><img src="/post/2019-06-27-piechartAlternative_files/figure-html/waffle-1.png" width="960" /></p>
+<p>I find it a bit easier to visually rank and compare groups.
+Still, problems 1, 2 and 3 are still present.</p>
+<pre class="r"><code>df12 %&gt;% group_by(data) %&gt;% do({
+    waffleSubset(., 210) %&gt;% waffle_iron(aes_d(group = x), 
+        rows = 7)
+}) %&gt;% ggplot(aes(x, y, fill = group)) + geom_waffle() + 
+    facet_grid(data ~ .) + coord_equal() + scale_fill_manual(values = pal) + 
+    theme(axis.title.x = element_blank(), axis.title.y = element_blank(), 
+        legend.title = element_blank(), panel.grid = element_blank(), 
+        panel.border = element_blank(), panel.background = element_blank(), 
+        axis.text = element_blank(), axis.line = element_blank(), 
+        plot.background = element_blank(), text = element_text(size = 22))</code></pre>
+<p><img src="/post/2019-06-27-piechartAlternative_files/figure-html/waffles-1.png" width="960" /></p>
+<p>Again, slightly better than pie charts (I think) but it’s still not straightforward to compare the datasets.</p>
 </div>
 <div id="bar-graphs" class="section level2">
 <h2>Bar graphs</h2>
+<p>A simple bar chart looks like this:</p>
 <pre class="r"><code>ggplot(df1, aes(x = x, fill = x)) + geom_bar(color = &quot;black&quot;) + 
     theme_bw() + scale_fill_manual(values = pal) + 
-    theme(axis.title.x = element_blank(), legend.title = element_blank())</code></pre>
-<p><img src="/post/2019-06-27-piechartAlternative_files/figure-html/bars-1.png" width="672" /></p>
-<pre class="r"><code>ggplot(df2, aes(x = x, fill = x)) + geom_bar(color = &quot;black&quot;) + 
-    theme_bw() + scale_fill_manual(values = pal) + 
-    theme(axis.title.x = element_blank(), legend.title = element_blank())</code></pre>
-<p><img src="/post/2019-06-27-piechartAlternative_files/figure-html/bars-2.png" width="672" /></p>
-<p>More compact version:</p>
-<pre class="r"><code>compactBars &lt;- function(df, digits = 1, nudge = 0.001) {
-    df %&gt;% group_by(x) %&gt;% summarize(n = n()) %&gt;% ungroup %&gt;% 
-        mutate(prop = n/sum(n), percent = paste0(100 * 
-            round(prop, 2 + digits), &quot;%&quot;), hjust = ifelse(prop &lt; 
-            max(prop)/2, 0, 1), nudge = ifelse(prop &lt; 
-            max(prop)/2, nudge, -1 * nudge)) %&gt;% ggplot(aes(x = reorder(x, 
-        prop))) + geom_bar(aes(y = prop, fill = x), 
-        stat = &quot;identity&quot;, color = &quot;black&quot;) + geom_text(aes(y = prop + 
-        nudge, label = percent, hjust = hjust), size = 7) + 
-        theme_void() + scale_fill_manual(values = pal) + 
-        theme(axis.text.y = element_text(size = 24)) + 
-        coord_flip() + guides(fill = FALSE)
-}
+    theme(axis.title.x = element_blank(), legend.title = element_blank()) + 
+    guides(fill = FALSE)</code></pre>
+<p><img src="/post/2019-06-27-piechartAlternative_files/figure-html/bar-1.png" width="960" /></p>
+<p>There is a lot of small text and white space in this graph.
+It’s fine as a graph, but we often want to use pie charts as a compact representation.</p>
+<p>To make a <strong>more compact bar chart</strong>, we could:</p>
+<ul>
+<li>flip the graph</li>
+<li>reorder the bars</li>
+<li>increase the font size</li>
+<li>remove the legend and axis</li>
+<li>add the proportion as text annotation</li>
+</ul>
+<pre class="r"><code>lab.digits = 1
+nudge = 0.005
 
-compactBars(df1)</code></pre>
-<p><img src="/post/2019-06-27-piechartAlternative_files/figure-html/barsc-1.png" width="384" /></p>
-<pre class="r"><code>compactBars(df2)</code></pre>
-<p><img src="/post/2019-06-27-piechartAlternative_files/figure-html/barsc-2.png" width="384" /></p>
+df1 %&gt;% group_by(x) %&gt;% summarize(n = n()) %&gt;% ungroup %&gt;% 
+    mutate(prop = n/sum(n), percent = paste0(100 * 
+        round(prop, 2 + lab.digits), &quot;%&quot;), hjust = ifelse(prop &lt; 
+        max(prop)/2, 0, 1), nudge = ifelse(prop &lt; max(prop)/2, 
+        nudge, -1 * nudge)) %&gt;% ggplot(aes(x = reorder(x, 
+    prop))) + geom_bar(aes(y = prop, fill = x), stat = &quot;identity&quot;, 
+    color = &quot;black&quot;) + geom_text(aes(y = prop + nudge, 
+    label = percent, hjust = hjust), size = 7) + theme_void() + 
+    scale_fill_manual(values = pal) + theme(axis.text.y = element_text(size = 22)) + 
+    coord_flip() + guides(fill = FALSE)</code></pre>
+<p><img src="/post/2019-06-27-piechartAlternative_files/figure-html/barc-1.png" width="480" /></p>
+<p>I like that much more:</p>
+<ul>
+<li>the differences are easy to see visually.</li>
+<li>the numbers are there without taking space.</li>
+<li>the names of the groups are all in the same orientation and lined-up, making them easy to read.</li>
+</ul>
+<pre class="r"><code>df12 %&gt;% group_by(data, x) %&gt;% summarize(n = n()) %&gt;% 
+    ungroup %&gt;% mutate(prop = n/sum(n), percent = paste0(100 * 
+    round(prop, 2 + lab.digits), &quot;%&quot;), hjust = ifelse(prop &lt; 
+    max(prop)/2, 0, 1), nudge = ifelse(prop &lt; max(prop)/2, 
+    nudge, -1 * nudge)) %&gt;% ggplot(aes(x = reorder(x, 
+    prop, head, 1))) + geom_bar(aes(y = prop, fill = x), 
+    stat = &quot;identity&quot;, color = &quot;black&quot;) + geom_text(aes(y = prop + 
+    nudge, label = percent, hjust = hjust), size = 7) + 
+    theme_void() + scale_fill_manual(values = pal) + 
+    theme(axis.text.y = element_text(size = 22), text = element_text(size = 22)) + 
+    coord_flip() + guides(fill = FALSE) + facet_grid(. ~ 
+    data)</code></pre>
+<p><img src="/post/2019-06-27-piechartAlternative_files/figure-html/barsc-1.png" width="960" /></p>
+<p>When comparing two datasets, it is straightforward to align the groups.
+In the end, I again think the differences are clearer to see.</p>
+<p>Bar charts for the win!</p>
 </div>
