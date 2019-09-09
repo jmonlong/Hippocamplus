@@ -61,6 +61,7 @@ In `.emacs` file:
 - Toggle the sparse tree view: `C-c /`.
 - Open link: `C-c C-o`.
 - New/edit link: `C-c C-l`.
+- Add property field: `C-c C-x p`.
 
 ### Timestamps
 
@@ -90,6 +91,23 @@ In `.emacs` file:
     SCHEDULED: <2004-02-22 Sun>
     DEADLINE: <2004-02-29 Sun>
 ~~~
+
+## Property drawer
+
+No empty lines between header/scheduled/deadline and property chunk.
+
+~~~
+* John Doe
+:PROPERTIES: 
+:EMAIL:    [[mailto:john.doe@gmail.com][john.doe@gmail.com]]
+:BIRTHDAY: 1982-01-14
+:END:
+~~~
+
+- To define which columns to show in the *columns view*, add at the beginning of the file: `#+COLUMNS: %25ITEM %BIRTHDAY`.
+- Toggle columns view on current item or whole file: `C-c C-x C-c`.
+	- `c` to toggle compact table.
+	- `g` to refresh.
 
 ## Habits entry
 
