@@ -121,11 +121,29 @@ No empty lines between header/scheduled/deadline and property chunk.
 ~~~
 ** TODO Go for a run
 SCHEDULED: <2019-07-16 Tue .+2d/7d>
-- State "DONE"       from "WAITING"    [2019-07-14 Sun 14:13] 
 :PROPERTIES: 
 :STYLE:    habit
 :LAST_REPEAT: [2019-07-14 Sun 14:13]
 :END:
+- State "DONE"       from "WAITING"    [2019-07-14 Sun 14:13] 
+~~~
+
+## Code block
+
+A simple code block:
+
+~~~
+#+NAME: <name>
+#+BEGIN_SRC <language>
+  <body>
+#+END_SRC
+~~~
+
+See the [list of available languages](https://orgmode.org/worg/org-contrib/babel/languages.html).
+To switch on syntax highlighting, add to `.emacs`:
+
+~~~lisp
+(setq org-src-fontify-natively t)
 ~~~
 
 ## Links
