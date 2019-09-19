@@ -38,6 +38,7 @@ Some of the basic tweaks in my `.emacs` file:
 + Narrow down to a region with `C-x n n` and widen back to the entire buffer with `C-x n w` (e.g. when refactoring).
 + Accents with `C-x 8` (`C-x 8 C-h` for list).
 + Shift a selected chunk with spaces: `C-x TAB` or `C-4 C-x TAB` to add a specific number of spaces (here 4).
+- To insert a tab: `C-q <tab>`
 
 Regexp replace :
 
@@ -502,6 +503,8 @@ To compare and merge two files, use Ediff mode by calling `M-x ediff` (or `M-x e
 + `?` to get the full list of shortcuts.
 
 To visualize blanks (tabs, spaces, new lines) I use the minor mode `whitespace-mode`.
+
+To insert a tab: `C-q <tab>`
 
 ### CSV/TSV
 
