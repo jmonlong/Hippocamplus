@@ -30,10 +30,10 @@ In `.emacs` file:
 (setq org-startup-truncated nil) ;; wrap lines
 (setq org-startup-indented 1) ;; heading indentation
 (setq org-return-follows-link 1) ;; RET to follow links
+(setq org-agenda-start-on-weekday nil) ;; start agenda on current day
 ;; path to org files
-(custom-set-variables
- '(org-directory "path/to/org/dir")
- '(org-agenda-files (list org-directory)))
+(setq org-directory "~/Documents/bulletjournal/orgmode")
+(setq org-agenda-files (list org-directory))
 ;; capture
 (setq org-default-notes-file (concat org-directory "/notes.org"))
 (global-set-key (kbd "C-c c") 'org-capture)
@@ -65,6 +65,7 @@ In `.emacs` file:
 - Toggle the sparse tree view: `C-c /`.
 - Open link: `C-c C-o`.
 - New/edit link: `C-c C-l`.
+- Add property field: `C-c C-x p`.
 
 ### Timestamps
 
@@ -97,6 +98,23 @@ In `.emacs` file:
     SCHEDULED: <2004-02-22 Sun>
     DEADLINE: <2004-02-29 Sun>
 ~~~
+
+## Property drawer
+
+No empty lines between header/scheduled/deadline and property chunk.
+
+~~~
+* John Doe
+:PROPERTIES: 
+:EMAIL:    [[mailto:john.doe@gmail.com][john.doe@gmail.com]]
+:BIRTHDAY: 1982-01-14
+:END:
+~~~
+
+- To define which columns to show in the *columns view*, add at the beginning of the file: `#+COLUMNS: %25ITEM %BIRTHDAY`.
+- Toggle columns view on current item or whole file: `C-c C-x C-c`.
+	- `c` to toggle compact table.
+	- `g` to refresh.
 
 ## Habits entry
 
@@ -137,7 +155,7 @@ I either want to know the tasks and events for the day, or just the events for t
 ~~~lisp
 (setq org-agenda-custom-commands
       '(("c" "Today's agenda"
-         ((agenda "" ((org-agenda-ndays 1)))
+         ((agenda "" ((org-agenda-span 1)))
           (alltodo ""
                    ((org-agenda-skip-function
                      (lambda nil
@@ -148,7 +166,7 @@ I either want to know the tasks and events for the day, or just the events for t
          ((org-agenda-compact-blocks t))
          )
         ("w" "Week's events"
-         ((agenda "" ((org-agenda-ndays 7)
+         ((agenda "" ((org-agenda-span 7)
                       (org-agenda-skip-function
                        '(or (org-agenda-skip-entry-if 'todo '("TODO" "ONGOING" "DONE"))
                             )
@@ -159,7 +177,7 @@ I either want to know the tasks and events for the day, or just the events for t
           ((org-agenda-compact-blocks t))
           )
         ("y" "Year's events (no recurrents)"
-         ((agenda "" ((org-agenda-ndays 365)
+         ((agenda "" ((org-agenda-span 365)
                       (org-agenda-skip-function
                        '(or (org-agenda-skip-entry-if 'todo '("TODO" "ONGOING" "DONE"))
                             (org-agenda-skip-subtree-if 'regexp ":recurrent:")

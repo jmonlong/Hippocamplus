@@ -243,6 +243,7 @@
 <li><a href="#capture">Capture</a></li>
 </ul></li>
 <li><a href="#todo-entry">TODO entry</a></li>
+<li><a href="#property-drawer">Property drawer</a></li>
 <li><a href="#habits-entry">Habits entry</a></li>
 <li><a href="#links">Links</a></li>
 <li><a href="#tags">Tags</a></li>
@@ -250,8 +251,7 @@
 </ul>
 </div>
 
-<p>I’m giving <a href="https://orgmode.org/">Org mode</a> a try.
-This page will contain my configuration and the small subset of commands that I want to learn.</p>
+<p>I’m giving <a href="https://orgmode.org/">Org mode</a> a try. This page will contain my configuration and the small subset of commands that I want to learn.</p>
 <p><a href="https://orgmode.org/manual/">Org Manual</a></p>
 <div id="org-file" class="section level2">
 <h2>Org file</h2>
@@ -271,10 +271,10 @@ This page will contain my configuration and the small subset of commands that I 
 (setq org-startup-truncated nil) ;; wrap lines
 (setq org-startup-indented 1) ;; heading indentation
 (setq org-return-follows-link 1) ;; RET to follow links
+(setq org-agenda-start-on-weekday nil) ;; start agenda on current day
 ;; path to org files
-(custom-set-variables
- &#39;(org-directory &quot;path/to/org/dir&quot;)
- &#39;(org-agenda-files (list org-directory)))
+(setq org-directory &quot;~/Documents/bulletjournal/orgmode&quot;)
+(setq org-agenda-files (list org-directory))
 ;; capture
 (setq org-default-notes-file (concat org-directory &quot;/notes.org&quot;))
 (global-set-key (kbd &quot;C-c c&quot;) &#39;org-capture)</code></pre>
@@ -310,6 +310,7 @@ This page will contain my configuration and the small subset of commands that I 
 <li>Toggle the sparse tree view: <code>C-c /</code>.</li>
 <li>Open link: <code>C-c C-o</code>.</li>
 <li>New/edit link: <code>C-c C-l</code>.</li>
+<li>Add property field: <code>C-c C-x p</code>.</li>
 </ul>
 </div>
 <div id="timestamps" class="section level3">
@@ -348,6 +349,23 @@ This page will contain my configuration and the small subset of commands that I 
 <pre><code>*** TODO Do this before the deadline
     SCHEDULED: &lt;2004-02-22 Sun&gt;
     DEADLINE: &lt;2004-02-29 Sun&gt;</code></pre>
+</div>
+<div id="property-drawer" class="section level2">
+<h2>Property drawer</h2>
+<p>No empty lines between header/scheduled/deadline and property chunk.</p>
+<pre><code>* John Doe
+:PROPERTIES: 
+:EMAIL:    [[mailto:john.doe@gmail.com][john.doe@gmail.com]]
+:BIRTHDAY: 1982-01-14
+:END:</code></pre>
+<ul>
+<li>To define which columns to show in the <em>columns view</em>, add at the beginning of the file: <code>#+COLUMNS: %25ITEM %BIRTHDAY</code>.</li>
+<li>Toggle columns view on current item or whole file: <code>C-c C-x C-c</code>.
+<ul>
+<li><code>c</code> to toggle compact table.</li>
+<li><code>g</code> to refresh.</li>
+</ul></li>
+</ul>
 </div>
 <div id="habits-entry" class="section level2">
 <h2>Habits entry</h2>
@@ -393,7 +411,7 @@ SCHEDULED: &lt;2019-07-16 Tue .+2d/7d&gt;
 </ul>
 <pre class="lisp"><code>(setq org-agenda-custom-commands
       &#39;((&quot;c&quot; &quot;Today&#39;s agenda&quot;
-         ((agenda &quot;&quot; ((org-agenda-ndays 1)))
+         ((agenda &quot;&quot; ((org-agenda-span 1)))
           (alltodo &quot;&quot;
                    ((org-agenda-skip-function
                      (lambda nil
@@ -404,7 +422,7 @@ SCHEDULED: &lt;2019-07-16 Tue .+2d/7d&gt;
          ((org-agenda-compact-blocks t))
          )
         (&quot;w&quot; &quot;Week&#39;s events&quot;
-         ((agenda &quot;&quot; ((org-agenda-ndays 7)
+         ((agenda &quot;&quot; ((org-agenda-span 7)
                       (org-agenda-skip-function
                        &#39;(or (org-agenda-skip-entry-if &#39;todo &#39;(&quot;TODO&quot; &quot;ONGOING&quot; &quot;DONE&quot;))
                             )
@@ -415,7 +433,7 @@ SCHEDULED: &lt;2019-07-16 Tue .+2d/7d&gt;
           ((org-agenda-compact-blocks t))
           )
         (&quot;y&quot; &quot;Year&#39;s events (no recurrents)&quot;
-         ((agenda &quot;&quot; ((org-agenda-ndays 365)
+         ((agenda &quot;&quot; ((org-agenda-span 365)
                       (org-agenda-skip-function
                        &#39;(or (org-agenda-skip-entry-if &#39;todo &#39;(&quot;TODO&quot; &quot;ONGOING&quot; &quot;DONE&quot;))
                             (org-agenda-skip-subtree-if &#39;regexp &quot;:recurrent:&quot;)
