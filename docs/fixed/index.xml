@@ -62,9 +62,9 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/Hippocamplus/org-mode/</guid>
-      <description>Org file Configuration Syntax Keybindings From anywhere Edit mode Timestamps Agenda views Capture  TODO entry Property drawer Habits entry Links Tags Custom agenda views   I’m giving Org mode a try. This page will contain my configuration and the small subset of commands that I want to learn.
+      <description>Org file Configuration Syntax Keybindings From anywhere Edit mode Timestamps Agenda views Capture  TODO entry Property drawer Habits entry Code block Links Tags Custom agenda views   I’m giving Org mode a try. This page will contain my configuration and the small subset of commands that I want to learn.
 Org Manual
-Org file  Start with MY PROJECTS -*- mode: org; -*-   Configuration In .emacs file:</description>
+Org file  Start with MY PROJECTS -*- mode: org; -*-   Configuration In .</description>
     </item>
     
     <item>

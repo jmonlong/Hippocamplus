@@ -529,6 +529,8 @@ It’s available &lt;a href=&#34;https://dl.dropboxusercontent.com/s/kayue1w92no
 &lt;div id=&#34;TOC&#34;&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&#34;#tldr&#34;&gt;TL;DR&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#sv-types&#34;&gt;SV types&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#detection-methods&#34;&gt;Detection methods&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#allele-frequency&#34;&gt;Allele frequency&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#size-distribution&#34;&gt;Size distribution&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#sv-coordinates-confusion&#34;&gt;SV coordinates confusion&lt;/a&gt;&lt;/li&gt;
@@ -538,10 +540,12 @@ It’s available &lt;a href=&#34;https://dl.dropboxusercontent.com/s/kayue1w92no
 &lt;li&gt;&lt;a href=&#34;#effect-on-allele-frequency-estimates&#34;&gt;Effect on allele frequency estimates&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;#giab-comparison-to-investigate-sequence-resolution&#34;&gt;GiaB comparison to investigate sequence resolution&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#chr2-and-end&#34;&gt;CHR2 and END&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
 
 &lt;p&gt;&lt;em&gt;Edit April 1 2019: I added columns with the proportion of variants with PASS filter in the tables about the END/POS confusion and duplicated variants.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Edit September 23 2019: Some tables (SV types, methods), investigation of the inconsistent CHR2/END for a few SVs.&lt;/em&gt;&lt;/p&gt;
 &lt;hr /&gt;
 &lt;p&gt;The recent gnomAD-SV catalog is potentially a great resource that we could use to annotate SV calls or augment genome graphs with.
 For now there is a &lt;a href=&#34;https://www.biorxiv.org/content/10.1101/578674v1&#34;&gt;preprint on bioRxiv&lt;/a&gt; and a &lt;a href=&#34;https://macarthurlab.org/2019/03/20/structural-variants-in-gnomad/&#34;&gt;comprehensive blog post&lt;/a&gt; that explains how the SVs were called and how to use the catalog.&lt;/p&gt;
@@ -557,6 +561,118 @@ I’m using the following VCF file from the gnomAD download page: &lt;a href=&#3
 &lt;li&gt;Take-home message: don’t annotate SVs using only the best matching SV in gnomAD.&lt;/li&gt;
 &lt;li&gt;Most likely, the majority of variants are not really sequence-resolved (like in most SV catalogs).&lt;/li&gt;
 &lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;sv-types&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;SV types&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;SVTYPE&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;n&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;DEL&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;199,498&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;INS&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;115,407&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;BND&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;72,411&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;DUP&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;51,428&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;CPX&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;5,249&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;MCNV&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1,148&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;INV&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;707&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;CTX&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;9&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;detection-methods&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Detection methods&lt;/h2&gt;
+&lt;p&gt;How many variants are supported by each method, for each SV type:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;method&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;BND&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;CPX&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;CTX&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;DEL&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;DUP&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;INS&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;INV&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;MCNV&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;delly&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;46,210&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;5,050&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;122,492&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;24,669&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2,360&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;685&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;185&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;depth&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;38,102&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;21,607&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;16&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;948&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;manta&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;31,510&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1,516&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;9&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;75,089&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;22,809&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;31,222&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;181&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;77&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;melt&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;17&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;83,420&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Note: the same variant is counted several times in this table if it is supported by multiple methods.&lt;/p&gt;
+&lt;p&gt;Interesting to see that MELT supports a few duplications (are they MEI close to an existing TE?) and that read depth changes support a few insertions (maybe some very recent MEI?).&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;allele-frequency&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Allele frequency&lt;/h2&gt;
@@ -679,7 +795,7 @@ The vast majority of these variants have a &lt;em&gt;PASS&lt;/em&gt; filter.&lt;
 &lt;p&gt;For most of these insertions the &lt;em&gt;END&lt;/em&gt; is not that far from the &lt;em&gt;POS&lt;/em&gt; (&amp;lt;100bp) but &lt;strong&gt;for some the &lt;em&gt;END&lt;/em&gt; and &lt;em&gt;POS&lt;/em&gt; are hundreds of kbp apart&lt;/strong&gt;.
 Hum.
 Let’s have a look at some of those:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;## GRanges object with 3 ranges and 12 metadata columns:
+&lt;pre&gt;&lt;code&gt;## GRanges object with 3 ranges and 13 metadata columns:
 ##                         seqnames                 ranges strand |
 ##                            &amp;lt;Rle&amp;gt;              &amp;lt;IRanges&amp;gt;  &amp;lt;Rle&amp;gt; |
 ##   gnomAD_v2_INS_4_34681        4 [116015282, 116015282]      * |
@@ -700,11 +816,11 @@ Let’s have a look at some of those:&lt;/p&gt;
 ##   gnomAD_v2_INS_4_34681  44565090           4        &amp;lt;NA&amp;gt; delly_manta_melt
 ##   gnomAD_v2_INS_2_13594   8372664           2        &amp;lt;NA&amp;gt; delly_manta_melt
 ##   gnomAD_v2_INS_9_69619  17898584           9        &amp;lt;NA&amp;gt;      delly_manta
-##                                AF
-##                         &amp;lt;numeric&amp;gt;
-##   gnomAD_v2_INS_4_34681  0.001490
-##   gnomAD_v2_INS_2_13594  0.005355
-##   gnomAD_v2_INS_9_69619  0.057464
+##                                            ID        AF
+##                                   &amp;lt;character&amp;gt; &amp;lt;numeric&amp;gt;
+##   gnomAD_v2_INS_4_34681 gnomAD_v2_INS_4_34681  0.001490
+##   gnomAD_v2_INS_2_13594 gnomAD_v2_INS_2_13594  0.005355
+##   gnomAD_v2_INS_9_69619 gnomAD_v2_INS_9_69619  0.057464
 ##   -------
 ##   seqinfo: 24 sequences from an unspecified genome&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;I don’t see anything else suspicious.&lt;/p&gt;
@@ -1132,8 +1248,88 @@ Some examples (randomly selected):&lt;/p&gt;
 &lt;strong&gt;In gnomAD, the GiaB dataset, or both, the breakpoints might have a few errors.&lt;/strong&gt;
 That will be important when genotyping these SVs or injecting them in genome graphs.&lt;/p&gt;
 &lt;p&gt;Of note, I’m not sure if the variants were left-aligned.
-It’s not a big deal because we see that the deletions are discordant in term of size anyway.
-Still, both VCF should be normalized first to better estimate how many deletions are exactly matched.&lt;/p&gt;
+In this case it wouldn’t make a big difference because we see that the deletions are discordant in term of size also.
+Still, ideally both VCF should be normalized first to better estimate how many deletions are exactly matched.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;chr2-and-end&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;CHR2 and END&lt;/h2&gt;
+&lt;p&gt;&lt;em&gt;CHR2&lt;/em&gt; is supposed to be the “Chromosome for END coordinate”.
+However I noticed that it might not be the case sometimes.
+For example, when &lt;em&gt;CHR2&lt;/em&gt; is different from &lt;em&gt;#CHROM&lt;/em&gt; but the &lt;em&gt;END&lt;/em&gt; is very close to the variant’s position.
+In those cases it might be that the &lt;em&gt;END&lt;/em&gt; was set to the position in the &lt;em&gt;#CHROM&lt;/em&gt;/&lt;em&gt;POS&lt;/em&gt; side, like for insertions for example.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./post/2019-03-31-gnomadSV_files/figure-html/chr2end-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;filter.pass&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;SVTYPE&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;pos.equal.end&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;pos.20bp.end&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;FALSE&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;BND&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;21,079&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;21,079&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;FALSE&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;CPX&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;FALSE&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;INS&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;TRUE&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;CPX&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;132&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;132&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;TRUE&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;INS&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;75&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;75&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;TRUE&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;CTX&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;It happens a lot (the y-axis is log-scale) but mostly in variants without a &lt;em&gt;FILTER=PASS&lt;/em&gt;.
+Just a few dozens variants with &lt;em&gt;FILTER=PASS&lt;/em&gt; may have a problem with their &lt;em&gt;CHR2&lt;/em&gt; or &lt;em&gt;END&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Some examples:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;##   seqnames    start      end width strand paramRangeID REF   ALT QUAL
+## 1        1  8620717  8620717     1      *         &amp;lt;NA&amp;gt;   N &amp;lt;INS&amp;gt;  999
+## 2        1  9121444  9121444     1      *         &amp;lt;NA&amp;gt;   N &amp;lt;CPX&amp;gt;  331
+## 3        1 23636591 23636591     1      *         &amp;lt;NA&amp;gt;   N &amp;lt;CPX&amp;gt;  330
+## 4        1 30893626 30893626     1      *         &amp;lt;NA&amp;gt;   N &amp;lt;INS&amp;gt;  534
+## 5        1 59880893 59880893     1      *         &amp;lt;NA&amp;gt;   N &amp;lt;INS&amp;gt;  351
+## 6        1 66188203 66188203     1      *         &amp;lt;NA&amp;gt;   N &amp;lt;INS&amp;gt;  175
+##   FILTER SVTYPE SVLEN      END CHR2 CPX_TYPE methods                   ID
+## 1   PASS    INS   277  8620717   22     &amp;lt;NA&amp;gt;   manta  gnomAD_v2_INS_1_295
+## 2   PASS    CPX   718  9121444   14     dDUP   manta   gnomAD_v2_CPX_1_20
+## 3   PASS    CPX   270 23636591    2     dDUP   manta   gnomAD_v2_CPX_1_57
+## 4   PASS    INS   172 30893626    X     &amp;lt;NA&amp;gt;   manta gnomAD_v2_INS_1_1114
+## 5   PASS    INS   340 59880893    2     &amp;lt;NA&amp;gt;   manta gnomAD_v2_INS_1_2293
+## 6   PASS    INS   344 66188203    7     &amp;lt;NA&amp;gt;   manta gnomAD_v2_INS_1_2601
+##         AF
+## 1 0.000047
+## 2 0.225787
+## 3 0.000047
+## 4 0.001762
+## 5 0.001261
+## 6 0.000047&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 </description>
         </item>

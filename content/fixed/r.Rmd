@@ -134,6 +134,8 @@ knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, fig.width=10)
 ```
 ~~~
 
+- [Awesome tables](https://haozhu233.github.io/kableExtra/awesome_table_in_pdf.pdf).
+
 ### Beamer presentation
 
 Some useful options to put in the YAML header:

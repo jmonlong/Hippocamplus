@@ -17,6 +17,7 @@ library(ggplot2)
 library(ggforce)
 library(ggridges)
 library(dplyr)
+library(tidyr)
 library(magrittr)
 library(VariantAnnotation)
 library(GenomicRanges)
@@ -28,6 +29,10 @@ interk <- function(x, k=4){ # Interleaves elements in x
 }
 paln <- function(n){
   interk(rainbow(n, s=.8), 5)
+}
+winsor <- function(x, u){
+  if(any(x>u)) x[x>u] = u
+  x
 }
 ```
 
@@ -44,9 +49,12 @@ sv.gr$END = info(vcf)$END
 sv.gr$CHR2 = info(vcf)$CHR2
 sv.gr$CPX_TYPE = info(vcf)$CPX_TYPE
 sv.gr$methods = unlist(lapply(info(vcf)$ALGORITHMS, function(x) paste(sort(x), collapse='_')))
+sv.gr$ID = names(sv.gr)
 ```
 
 *Edit April 1 2019: I added columns with the proportion of variants with PASS filter in the tables about the END/POS confusion and duplicated variants.*
+
+*Edit September 23 2019: Some tables (SV types, methods), investigation of the inconsistent CHR2/END for a few SVs.*
 
 ---
 
@@ -64,6 +72,30 @@ I'm using the following VCF file from the gnomAD download page: [gnomad_v2_sv.si
 - In a few cases, duplicates might lead to under-estimating the allele frequency.
 - Take-home message: don't annotate SVs using only the best matching SV in gnomAD.
 - Most likely, the majority of variants are not really sequence-resolved (like in most SV catalogs).
+
+## SV types
+
+```{r types}
+sv.gr %>% as.data.frame %>% group_by(SVTYPE) %>% summarize(n=n()) %>% arrange(desc(n)) %>%
+  kable(format.args=list(big.mark=','))
+```
+
+## Detection methods
+
+How many variants are supported by each method, for each SV type:
+
+```{r algo}
+meths.df = sv.gr %>% as.data.frame %>% dplyr::select(SVTYPE, methods)
+meths.l = strsplit(meths.df$method, '_')
+meths.df = meths.df[rep(1:nrow(meths.df), unlist(lapply(meths.l, length))),]
+meths.df$method = unlist(meths.l)
+meths.df %>% group_by(SVTYPE, method) %>% summarize(n=n()) %>% spread(SVTYPE, n, fill=0) %>%
+    kable(format.args=list(big.mark=','))
+```
+
+Note: the same variant is counted several times in this table if it is supported by multiple methods.
+
+Interesting to see that MELT supports a few duplications (are they MEI close to an existing TE?) and that read depth changes support a few insertions (maybe some very recent MEI?).
 
 ## Allele frequency
 
@@ -457,5 +489,44 @@ This quick comparison suggests that the variants are not really sequence-resolve
 That will be important when genotyping these SVs or injecting them in genome graphs.
 
 Of note, I'm not sure if the variants were left-aligned.
-It's not a big deal because we see that the deletions are discordant in term of size anyway.
-Still, both VCF should be normalized first to better estimate how many deletions are exactly matched.
+In this case it wouldn't make a big difference because we see that the deletions are discordant in term of size also.
+Still, ideally both VCF should be normalized first to better estimate how many deletions are exactly matched.
+
+
+## CHR2 and END
+
+*CHR2* is supposed to be the "Chromosome for END coordinate".
+However I noticed that it might not be the case sometimes.
+For example, when *CHR2* is different from *#CHROM* but the *END* is very close to the variant's position.
+In those cases it might be that the *END* was set to the position in the *#CHROM*/*POS* side, like for insertions for example.
+
+```{r chr2end}
+sv.gr %>% as.data.frame %>% filter(seqnames!=CHR2) %>%
+  mutate(pos.end.dist=abs(start-END),
+         pos.end.dist=cut(pos.end.dist,
+                          breaks=c(-1,0,10,20,30,40,Inf),
+                          labels=c(0, '1-10','10-20','20-30','30-40','>40'))) %>%
+  group_by(SVTYPE, pos.end.dist) %>% summarize(n=n()) %>% 
+  ggplot(aes(x=pos.end.dist, y=n, fill=SVTYPE)) + geom_bar(position='dodge', stat='identity') +
+  xlab('distance between POS and END when CHR!=CHR2') +
+  theme_bw() + ylab('number of variants') + 
+  scale_fill_brewer(palette='Set1') +
+  scale_y_log10()
+
+sv.gr %>% as.data.frame %>% filter(seqnames!=CHR2) %>%
+  mutate(pos.equal.end=start==END, pos.20bp.end=abs(start-END)<20, filter.pass=FILTER=='PASS') %>%
+  group_by(filter.pass, SVTYPE) %>%
+  summarize(pos.equal.end=sum(pos.equal.end), pos.20bp.end=sum(pos.20bp.end)) %>%
+  arrange(filter.pass, desc(pos.20bp.end)) %>% 
+  kable(format.args=list(big.mark=','))  
+```
+
+It happens a lot (the y-axis is log-scale) but mostly in variants without a *FILTER=PASS*.
+Just a few dozens variants with *FILTER=PASS* may have a problem with their *CHR2* or *END*.
+
+Some examples:
+
+```{r chr2end-ex}
+sv.gr %>% as.data.frame %>% filter(seqnames!=CHR2, start==END, FILTER=='PASS') %>%
+  head
+```

@@ -12,6 +12,8 @@ output:
 <div id="TOC">
 <ul>
 <li><a href="#tldr">TL;DR</a></li>
+<li><a href="#sv-types">SV types</a></li>
+<li><a href="#detection-methods">Detection methods</a></li>
 <li><a href="#allele-frequency">Allele frequency</a></li>
 <li><a href="#size-distribution">Size distribution</a></li>
 <li><a href="#sv-coordinates-confusion">SV coordinates confusion</a></li>
@@ -21,10 +23,12 @@ output:
 <li><a href="#effect-on-allele-frequency-estimates">Effect on allele frequency estimates</a></li>
 </ul></li>
 <li><a href="#giab-comparison-to-investigate-sequence-resolution">GiaB comparison to investigate sequence resolution</a></li>
+<li><a href="#chr2-and-end">CHR2 and END</a></li>
 </ul>
 </div>
 
 <p><em>Edit April 1 2019: I added columns with the proportion of variants with PASS filter in the tables about the END/POS confusion and duplicated variants.</em></p>
+<p><em>Edit September 23 2019: Some tables (SV types, methods), investigation of the inconsistent CHR2/END for a few SVs.</em></p>
 <hr />
 <p>The recent gnomAD-SV catalog is potentially a great resource that we could use to annotate SV calls or augment genome graphs with.
 For now there is a <a href="https://www.biorxiv.org/content/10.1101/578674v1">preprint on bioRxiv</a> and a <a href="https://macarthurlab.org/2019/03/20/structural-variants-in-gnomad/">comprehensive blog post</a> that explains how the SVs were called and how to use the catalog.</p>
@@ -40,6 +44,118 @@ I’m using the following VCF file from the gnomAD download page: <a href="https
 <li>Take-home message: don’t annotate SVs using only the best matching SV in gnomAD.</li>
 <li>Most likely, the majority of variants are not really sequence-resolved (like in most SV catalogs).</li>
 </ul>
+</div>
+<div id="sv-types" class="section level2">
+<h2>SV types</h2>
+<table>
+<thead>
+<tr class="header">
+<th align="left">SVTYPE</th>
+<th align="right">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">DEL</td>
+<td align="right">199,498</td>
+</tr>
+<tr class="even">
+<td align="left">INS</td>
+<td align="right">115,407</td>
+</tr>
+<tr class="odd">
+<td align="left">BND</td>
+<td align="right">72,411</td>
+</tr>
+<tr class="even">
+<td align="left">DUP</td>
+<td align="right">51,428</td>
+</tr>
+<tr class="odd">
+<td align="left">CPX</td>
+<td align="right">5,249</td>
+</tr>
+<tr class="even">
+<td align="left">MCNV</td>
+<td align="right">1,148</td>
+</tr>
+<tr class="odd">
+<td align="left">INV</td>
+<td align="right">707</td>
+</tr>
+<tr class="even">
+<td align="left">CTX</td>
+<td align="right">9</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="detection-methods" class="section level2">
+<h2>Detection methods</h2>
+<p>How many variants are supported by each method, for each SV type:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">method</th>
+<th align="right">BND</th>
+<th align="right">CPX</th>
+<th align="right">CTX</th>
+<th align="right">DEL</th>
+<th align="right">DUP</th>
+<th align="right">INS</th>
+<th align="right">INV</th>
+<th align="right">MCNV</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">delly</td>
+<td align="right">46,210</td>
+<td align="right">5,050</td>
+<td align="right">0</td>
+<td align="right">122,492</td>
+<td align="right">24,669</td>
+<td align="right">2,360</td>
+<td align="right">685</td>
+<td align="right">185</td>
+</tr>
+<tr class="even">
+<td align="left">depth</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">38,102</td>
+<td align="right">21,607</td>
+<td align="right">16</td>
+<td align="right">0</td>
+<td align="right">948</td>
+</tr>
+<tr class="odd">
+<td align="left">manta</td>
+<td align="right">31,510</td>
+<td align="right">1,516</td>
+<td align="right">9</td>
+<td align="right">75,089</td>
+<td align="right">22,809</td>
+<td align="right">31,222</td>
+<td align="right">181</td>
+<td align="right">77</td>
+</tr>
+<tr class="even">
+<td align="left">melt</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">17</td>
+<td align="right">83,420</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p>Note: the same variant is counted several times in this table if it is supported by multiple methods.</p>
+<p>Interesting to see that MELT supports a few duplications (are they MEI close to an existing TE?) and that read depth changes support a few insertions (maybe some very recent MEI?).</p>
 </div>
 <div id="allele-frequency" class="section level2">
 <h2>Allele frequency</h2>
@@ -162,7 +278,7 @@ The vast majority of these variants have a <em>PASS</em> filter.</p>
 <p>For most of these insertions the <em>END</em> is not that far from the <em>POS</em> (&lt;100bp) but <strong>for some the <em>END</em> and <em>POS</em> are hundreds of kbp apart</strong>.
 Hum.
 Let’s have a look at some of those:</p>
-<pre><code>## GRanges object with 3 ranges and 12 metadata columns:
+<pre><code>## GRanges object with 3 ranges and 13 metadata columns:
 ##                         seqnames                 ranges strand |
 ##                            &lt;Rle&gt;              &lt;IRanges&gt;  &lt;Rle&gt; |
 ##   gnomAD_v2_INS_4_34681        4 [116015282, 116015282]      * |
@@ -183,11 +299,11 @@ Let’s have a look at some of those:</p>
 ##   gnomAD_v2_INS_4_34681  44565090           4        &lt;NA&gt; delly_manta_melt
 ##   gnomAD_v2_INS_2_13594   8372664           2        &lt;NA&gt; delly_manta_melt
 ##   gnomAD_v2_INS_9_69619  17898584           9        &lt;NA&gt;      delly_manta
-##                                AF
-##                         &lt;numeric&gt;
-##   gnomAD_v2_INS_4_34681  0.001490
-##   gnomAD_v2_INS_2_13594  0.005355
-##   gnomAD_v2_INS_9_69619  0.057464
+##                                            ID        AF
+##                                   &lt;character&gt; &lt;numeric&gt;
+##   gnomAD_v2_INS_4_34681 gnomAD_v2_INS_4_34681  0.001490
+##   gnomAD_v2_INS_2_13594 gnomAD_v2_INS_2_13594  0.005355
+##   gnomAD_v2_INS_9_69619 gnomAD_v2_INS_9_69619  0.057464
 ##   -------
 ##   seqinfo: 24 sequences from an unspecified genome</code></pre>
 <p>I don’t see anything else suspicious.</p>
@@ -615,6 +731,86 @@ Some examples (randomly selected):</p>
 <strong>In gnomAD, the GiaB dataset, or both, the breakpoints might have a few errors.</strong>
 That will be important when genotyping these SVs or injecting them in genome graphs.</p>
 <p>Of note, I’m not sure if the variants were left-aligned.
-It’s not a big deal because we see that the deletions are discordant in term of size anyway.
-Still, both VCF should be normalized first to better estimate how many deletions are exactly matched.</p>
+In this case it wouldn’t make a big difference because we see that the deletions are discordant in term of size also.
+Still, ideally both VCF should be normalized first to better estimate how many deletions are exactly matched.</p>
+</div>
+<div id="chr2-and-end" class="section level2">
+<h2>CHR2 and END</h2>
+<p><em>CHR2</em> is supposed to be the “Chromosome for END coordinate”.
+However I noticed that it might not be the case sometimes.
+For example, when <em>CHR2</em> is different from <em>#CHROM</em> but the <em>END</em> is very close to the variant’s position.
+In those cases it might be that the <em>END</em> was set to the position in the <em>#CHROM</em>/<em>POS</em> side, like for insertions for example.</p>
+<p><img src="/post/2019-03-31-gnomadSV_files/figure-html/chr2end-1.png" width="960" /></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">filter.pass</th>
+<th align="left">SVTYPE</th>
+<th align="right">pos.equal.end</th>
+<th align="right">pos.20bp.end</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">FALSE</td>
+<td align="left">BND</td>
+<td align="right">21,079</td>
+<td align="right">21,079</td>
+</tr>
+<tr class="even">
+<td align="left">FALSE</td>
+<td align="left">CPX</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">FALSE</td>
+<td align="left">INS</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">TRUE</td>
+<td align="left">CPX</td>
+<td align="right">132</td>
+<td align="right">132</td>
+</tr>
+<tr class="odd">
+<td align="left">TRUE</td>
+<td align="left">INS</td>
+<td align="right">75</td>
+<td align="right">75</td>
+</tr>
+<tr class="even">
+<td align="left">TRUE</td>
+<td align="left">CTX</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p>It happens a lot (the y-axis is log-scale) but mostly in variants without a <em>FILTER=PASS</em>.
+Just a few dozens variants with <em>FILTER=PASS</em> may have a problem with their <em>CHR2</em> or <em>END</em>.</p>
+<p>Some examples:</p>
+<pre><code>##   seqnames    start      end width strand paramRangeID REF   ALT QUAL
+## 1        1  8620717  8620717     1      *         &lt;NA&gt;   N &lt;INS&gt;  999
+## 2        1  9121444  9121444     1      *         &lt;NA&gt;   N &lt;CPX&gt;  331
+## 3        1 23636591 23636591     1      *         &lt;NA&gt;   N &lt;CPX&gt;  330
+## 4        1 30893626 30893626     1      *         &lt;NA&gt;   N &lt;INS&gt;  534
+## 5        1 59880893 59880893     1      *         &lt;NA&gt;   N &lt;INS&gt;  351
+## 6        1 66188203 66188203     1      *         &lt;NA&gt;   N &lt;INS&gt;  175
+##   FILTER SVTYPE SVLEN      END CHR2 CPX_TYPE methods                   ID
+## 1   PASS    INS   277  8620717   22     &lt;NA&gt;   manta  gnomAD_v2_INS_1_295
+## 2   PASS    CPX   718  9121444   14     dDUP   manta   gnomAD_v2_CPX_1_20
+## 3   PASS    CPX   270 23636591    2     dDUP   manta   gnomAD_v2_CPX_1_57
+## 4   PASS    INS   172 30893626    X     &lt;NA&gt;   manta gnomAD_v2_INS_1_1114
+## 5   PASS    INS   340 59880893    2     &lt;NA&gt;   manta gnomAD_v2_INS_1_2293
+## 6   PASS    INS   344 66188203    7     &lt;NA&gt;   manta gnomAD_v2_INS_1_2601
+##         AF
+## 1 0.000047
+## 2 0.225787
+## 3 0.000047
+## 4 0.001762
+## 5 0.001261
+## 6 0.000047</code></pre>
 </div>

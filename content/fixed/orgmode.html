@@ -23,13 +23,15 @@ output:
 <li><a href="#todo-entry">TODO entry</a></li>
 <li><a href="#property-drawer">Property drawer</a></li>
 <li><a href="#habits-entry">Habits entry</a></li>
+<li><a href="#code-block">Code block</a></li>
 <li><a href="#links">Links</a></li>
 <li><a href="#tags">Tags</a></li>
 <li><a href="#custom-agenda-views">Custom agenda views</a></li>
 </ul>
 </div>
 
-<p>I’m giving <a href="https://orgmode.org/">Org mode</a> a try. This page will contain my configuration and the small subset of commands that I want to learn.</p>
+<p>I’m giving <a href="https://orgmode.org/">Org mode</a> a try.
+This page will contain my configuration and the small subset of commands that I want to learn.</p>
 <p><a href="https://orgmode.org/manual/">Org Manual</a></p>
 <div id="org-file" class="section level2">
 <h2>Org file</h2>
@@ -149,11 +151,22 @@ output:
 <h2>Habits entry</h2>
 <pre><code>** TODO Go for a run
 SCHEDULED: &lt;2019-07-16 Tue .+2d/7d&gt;
-- State &quot;DONE&quot;       from &quot;WAITING&quot;    [2019-07-14 Sun 14:13] 
 :PROPERTIES: 
 :STYLE:    habit
 :LAST_REPEAT: [2019-07-14 Sun 14:13]
-:END:</code></pre>
+:END:
+- State &quot;DONE&quot;       from &quot;WAITING&quot;    [2019-07-14 Sun 14:13] </code></pre>
+</div>
+<div id="code-block" class="section level2">
+<h2>Code block</h2>
+<p>A simple code block:</p>
+<pre><code>#+NAME: &lt;name&gt;
+#+BEGIN_SRC &lt;language&gt;
+  &lt;body&gt;
+#+END_SRC</code></pre>
+<p>See the <a href="https://orgmode.org/worg/org-contrib/babel/languages.html">list of available languages</a>.
+To switch on syntax highlighting, add to <code>.emacs</code>:</p>
+<pre class="lisp"><code>(setq org-src-fontify-natively t)</code></pre>
 </div>
 <div id="links" class="section level2">
 <h2>Links</h2>
