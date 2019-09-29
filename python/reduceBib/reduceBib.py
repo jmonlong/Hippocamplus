@@ -34,7 +34,7 @@ parser.add_argument('mds', nargs='+',
 
 args = parser.parse_args()
 keepinfo = args.fields.split(',')
-tagre = re.compile('([a-z]+).*=.*')
+tagre = re.compile(' *([a-z]+).*=.*')
 citere = re.compile('.*{([^,]+),')
 
 print "Original bib file: \t" + args.bib
