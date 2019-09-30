@@ -31,8 +31,10 @@ In `.emacs` file:
 (setq org-startup-indented 1) ;; heading indentation
 (setq org-return-follows-link 1) ;; RET to follow links
 (setq org-agenda-start-on-weekday nil) ;; start agenda on current day
+(setq calendar-week-start-day 1) ;; but calendar starts on Monday (not Sunday!)
+(setq org-catch-invisible-edits nil) ;; block (confusing) invisible edits ("...")
 ;; path to org files
-(setq org-directory "~/Documents/bulletjournal/orgmode")
+(setq org-directory "~/Documents/orgmode")
 (setq org-agenda-files (list org-directory))
 ;; capture
 (setq org-default-notes-file (concat org-directory "/notes.org"))
