@@ -33,6 +33,8 @@ In `.emacs` file:
 (setq org-agenda-start-on-weekday nil) ;; start agenda on current day
 (setq calendar-week-start-day 1) ;; but calendar starts on Monday (not Sunday!)
 (setq org-catch-invisible-edits nil) ;; block (confusing) invisible edits ("...")
+(setq org-enforce-todo-dependencies t) ;; Switch TODO dependencies on
+(setq org-agenda-dim-blocked-tasks 'invisible) ;; Hide tasked blocked by dependencies
 ;; path to org files
 (setq org-directory "~/Documents/orgmode")
 (setq org-agenda-files (list org-directory))
@@ -68,6 +70,7 @@ In `.emacs` file:
 - Open link: `C-c C-o`.
 - New/edit link: `C-c C-l`.
 - Add property field: `C-c C-x p`.
+- Narrow/widen to subtree: `C-x n s`/`C-x n w`.
 
 ### Timestamps
 

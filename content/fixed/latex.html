@@ -13,6 +13,8 @@ output:
 <li><a href="#standard-packages">Standard packages</a></li>
 <li><a href="#tinytex">TinyTeX</a></li>
 <li><a href="#misc">Misc</a><ul>
+<li><a href="#document-class">Document class</a></li>
+<li><a href="#page-size">Page size</a></li>
 <li><a href="#font-sizes">Font sizes</a></li>
 <li><a href="#change-the-symbol-in-lists">Change the symbol in lists</a></li>
 <li><a href="#math-calligraphy">Math calligraphy</a></li>
@@ -61,6 +63,7 @@ output:
 </ul>
 </div>
 
+<p>A lot of good information in the <a href="https://en.wikibooks.org/wiki/LaTeX">LaTeX Wikibook</a>.</p>
 <div id="standard-packages" class="section level2">
 <h2>Standard packages</h2>
 <p>This is my default (more or less) :</p>
@@ -77,10 +80,30 @@ output:
 </div>
 <div id="tinytex" class="section level2">
 <h2>TinyTeX</h2>
-<p><a href="https://yihui.name/tinytex/">TinyTeX</a> is a lightweight LaTeX distribution where we download only what we need. It’s a R package. Once installed, run <code>install_tinytex()</code> to install a first version of TinyTeX. Then install additional packages with <code>tlmgr_install(&quot;pkg&quot;)</code>. To find which package provides a particular <em>xxx.sty</em> run <code>tlmgr_search(&quot;/xxx.sty&quot;)</code>.</p>
+<p><a href="https://yihui.name/tinytex/">TinyTeX</a> is a lightweight LaTeX distribution where we download only what we need.
+It’s a R package.
+Once installed, run <code>install_tinytex()</code> to install a first version of TinyTeX.
+Then install additional packages with <code>tlmgr_install(&quot;pkg&quot;)</code>.
+To find which package provides a particular <em>xxx.sty</em> run <code>tlmgr_search(&quot;/xxx.sty&quot;)</code>.</p>
 </div>
 <div id="misc" class="section level2">
 <h2>Misc</h2>
+<div id="document-class" class="section level3">
+<h3>Document class</h3>
+<pre class="tex"><code>\documentclass[12pt, a4paper]{article}</code></pre>
+<ul>
+<li>Classic classes: <em>article</em>, <em>report</em>, <em>book</em>.</li>
+<li>Default font size is <em>10pt</em>.</li>
+<li>Other cool options: <em>twocolumn</em>, <em>landscape</em>.</li>
+</ul>
+</div>
+<div id="page-size" class="section level3">
+<h3>Page size</h3>
+<p>Page types in <code>\documentclass[letterpaper]{article}</code> include <em>letterpaper</em>, <em>a4paper</em> (and more).</p>
+<p>Custom page/margins:</p>
+<pre class="tex"><code>\usepackage[paperwidth=8.5in, paperheight=11in, top=0.5in, bottom=0.5in, left=1in, right=0.5in]{geometry}</code></pre>
+<p>Or <code>margin=</code> to apply the same margin on each side.</p>
+</div>
 <div id="font-sizes" class="section level3">
 <h3>Font sizes</h3>
 <p><code>\tiny</code>, <code>\scriptsize</code>, <code>\footnotesize</code>, <code>\small</code>, <code>\normalsize</code>, <code>\large</code>, <code>\Large</code>, <code>\LARGE</code>, <code>\huge</code>, <code>\Huge</code>.</p>
@@ -241,7 +264,7 @@ end{subfigure}</code></pre>
 <div id="code-blocks" class="section level2">
 <h2>Code blocks</h2>
 <p>The easiest is to use <a href="https://en.wikibooks.org/wiki/LaTeX/Source_Code_Listings">Listings</a> environment.</p>
-<p>In Emacs to avoid misinterpreting special character (e.g. <code>$</code> or <code>_</code>) I added to <code>.emacs</code> :</p>
+<p>In Emacs to avoid misinterpreting special character (e.g. <code>$</code> or <code>_</code>) I added to <code>.emacs</code> :</p>
 <pre class="lisp"><code>(setq LaTeX-verbatim-environments-local &#39;(&quot;lstlisting&quot;))</code></pre>
 <p>Then in the LaTeX document I setup the <em>lstlisting</em> environment with something like:</p>
 <pre class="tex"><code>\lstset{
@@ -302,7 +325,8 @@ Genetics has been shown to be important...
 </div>
 <div id="main-text-and-supplements-in-two-documents" class="section level3">
 <h3>Main text and supplements in two documents</h3>
-<p>It’s easier to have the two documents separated with their own bibliography. Then no need to manually split the pdf (and likely lose links).</p>
+<p>It’s easier to have the two documents separated with their own bibliography.
+Then no need to manually split the pdf (and likely lose links).</p>
 <p>Using the <code>xr</code> package, we can specify other documents where to find references (figures, tables, sections).</p>
 <p>In the <code>main.tex</code> document:</p>
 <pre class="tex"><code>\usepackage{xr}
@@ -330,7 +354,8 @@ Genetics has been shown to be important...
 </div>
 <div id="compare-versions-and-highlight-revisions" class="section level3">
 <h3>Compare versions and highlight revisions</h3>
-<p>The <a href="https://ctan.org/pkg/latexdiff"><code>latediff</code> Perl script</a> works well. For example to compare two versions I use:</p>
+<p>The <a href="https://ctan.org/pkg/latexdiff"><code>latediff</code> Perl script</a> works well.
+For example to compare two versions I use:</p>
 <pre class="sh"><code>git show COMMIT:main.tex &gt; main-old.tex
 git show COMMIT:suppmat.tex &gt; suppmat-old.tex
 

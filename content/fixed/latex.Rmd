@@ -7,6 +7,8 @@ output:
     toc: true
 ---
 
+A lot of good information in the [LaTeX Wikibook](https://en.wikibooks.org/wiki/LaTeX).
+
 ## Standard packages
 
 This is my default (more or less) :
@@ -33,6 +35,28 @@ Then install additional packages with `tlmgr_install("pkg")`.
 To find which package provides a particular *xxx.sty* run `tlmgr_search("/xxx.sty")`.
 
 ## Misc
+
+### Document class
+
+~~~tex
+\documentclass[12pt, a4paper]{article}
+~~~
+
+- Classic classes: *article*, *report*, *book*.
+- Default font size is *10pt*.
+- Other cool options: *twocolumn*, *landscape*.
+
+### Page size
+
+Page types in `\documentclass[letterpaper]{article}` include *letterpaper*, *a4paper* (and more).
+
+Custom page/margins:
+
+~~~tex
+\usepackage[paperwidth=8.5in, paperheight=11in, top=0.5in, bottom=0.5in, left=1in, right=0.5in]{geometry}
+~~~
+
+Or `margin=` to apply the same margin on each side.
 
 ### Font sizes
 
