@@ -17,6 +17,7 @@ This is where I put all the useful information I keep on forgetting. Instead of 
 
 + [Computational Genomics Lab at UCSC](https://cgl.genomics.ucsc.edu/).
 + [Genomics Institute at UCSC](https://ucscgenomics.soe.ucsc.edu/)
++ My [housemate](ryan-lorig-roach-ucsc)
 
 ### My previous labs
 

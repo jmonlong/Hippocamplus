@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Pub on </title>
-    <link>/Hippocamplus/tags/pub/</link>
+    <link>/tags/pub/</link>
     <description>Recent content in Pub on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 07 Nov 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/Hippocamplus/tags/pub/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/pub/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Peer-review opportunities for early career researchers</title>
-      <link>/Hippocamplus/2018/11/07/ecr-peerreview/</link>
+      <link>/2018/11/07/ecr-peerreview/</link>
       <pubDate>Wed, 07 Nov 2018 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/2018/11/07/ecr-peerreview/</guid>
+      <guid>/2018/11/07/ecr-peerreview/</guid>
       <description>Some notes from today’s workshop organized by USPA with bio-protocol and eLife ambassadors.
 Bio-protocol Data is uploaded to databases, code to repos like GitHub but protocols are still just in the Methods section of papers. And the Methods of a paper often omits many details which makes it difficult to reuse the experiment or reproduce results.
 Dennis Bua introduced bio-protocol, a platform to peer-review protocols. Here the goal is to make sure all the information is provided to reproduce an experiment.</description>
@@ -24,60 +24,60 @@ Dennis Bua introduced bio-protocol, a platform to peer-review protocols. Here th
     
     <item>
       <title>Syncing Mendeley and PDFs across devices</title>
-      <link>/Hippocamplus/2018/09/22/sync-mendeley/</link>
+      <link>/2018/09/22/sync-mendeley/</link>
       <pubDate>Sat, 22 Sep 2018 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/2018/09/22/sync-mendeley/</guid>
+      <guid>/2018/09/22/sync-mendeley/</guid>
       <description>20 March 2019 Edit: I switched to Zotero (yeay open-source, bye Elsevier), using Google Drive to store the PDF files. See the Internet section and the blog post that inspired the change.
 Recently, I’ve been setting up new computers from scratch as I moved from Montreal to Santa Cruz. Like for spring cleaning, it might be a good idea to clarify the system I’ve been using to manage bibliography and PDF annotation.</description>
     </item>
     
     <item>
       <title>Mental health crisis in science...but careful with nonresponse bias</title>
-      <link>/Hippocamplus/2018/07/08/mental-health-crisis-science/</link>
+      <link>/2018/07/08/mental-health-crisis-science/</link>
       <pubDate>Sun, 08 Jul 2018 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/2018/07/08/mental-health-crisis-science/</guid>
+      <guid>/2018/07/08/mental-health-crisis-science/</guid>
       <description>A few month ago, a short paper was published in Nature Biotechnology1 about the mental health crisis in science. It attracted a bit of attention on the news and social media, which is good because it’s an important matter. The article was very good at putting the subject on the table and proposing some solutions, but it picked my curiosity about nonresponse bias.
 Issues with the Nature Biotech article The numbers are based on an email survey so one issue is the nonresponse bias: the individuals that responded might not be representative of the population.</description>
     </item>
     
     <item>
       <title>Converting scientific reviews to EPUB</title>
-      <link>/Hippocamplus/2018/05/07/epub-reviews/</link>
+      <link>/2018/05/07/epub-reviews/</link>
       <pubDate>Mon, 07 May 2018 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/2018/05/07/epub-reviews/</guid>
+      <guid>/2018/05/07/epub-reviews/</guid>
       <description>First, check on PubMed Central Convert the HTML page to EPUB Clean up the HTML before conversion Compiling several reviews into one EPUB document VPN, paywall and Pandoc Limitations Methods  Other EPUB resources Loose Ends by Sidney Brenner   Edit Apr 6 2019: Added the compilation of Loose Ends columns by Sidney Brenner.
 Third post on the series of “Things I did instead of writing my thesis to help me write my thesis”: how to find/convert reviews in the EPUB format to read in an ebook reader.</description>
     </item>
     
     <item>
       <title>Additional checks for a LaTeX manuscript</title>
-      <link>/Hippocamplus/2018/04/18/check-latex-pub/</link>
+      <link>/2018/04/18/check-latex-pub/</link>
       <pubDate>Wed, 18 Apr 2018 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/2018/04/18/check-latex-pub/</guid>
+      <guid>/2018/04/18/check-latex-pub/</guid>
       <description>To continue on the series of “Things I did instead of writing my thesis to help me write my thesis”, another Python script that reads a LaTeX manuscript and helps check that everything is fine. More specifically, the checkLatex.py script (on GitHub) will:
 List missing references. List multi-references to reorder. List duplicated labels. List labels that don’t start by fig: or tab:. List figures/tables that are not in order. List ?</description>
     </item>
     
     <item>
       <title>Checking text similarity between two documents</title>
-      <link>/Hippocamplus/2018/04/16/text-similarity/</link>
+      <link>/2018/04/16/text-similarity/</link>
       <pubDate>Mon, 16 Apr 2018 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/2018/04/16/text-similarity/</guid>
+      <guid>/2018/04/16/text-similarity/</guid>
       <description>To start the series of “Things I did instead of writing my thesis to help me write my thesis”, a small Python script that compares two text documents and output similar parts. I did that to avoid auto-plagiarism of my manuscripts’ introduction in the main thesis introduction.
 It’s a very naive approach but sped up the checking process (maybe worth the time). It first looks for short exact matches between the two documents, then extends these exact matches and uses the difflib module to keep text with a minimum similarity score (default 80%).</description>
     </item>
     
     <item>
       <title>Journal comparison</title>
-      <link>/Hippocamplus/2018/02/23/journals-comparison/</link>
+      <link>/2018/02/23/journals-comparison/</link>
       <pubDate>Fri, 23 Feb 2018 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/2018/02/23/journals-comparison/</guid>
+      <guid>/2018/02/23/journals-comparison/</guid>
       <description>Edit Feb 24: Added variance graph and some examples of suspiciously fast publications.
 Edit Feb 25: Added script and data to GitHub.
 Some info about journals in my field.

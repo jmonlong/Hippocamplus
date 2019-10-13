@@ -2,40 +2,49 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Plot on </title>
-    <link>/Hippocamplus/tags/plot/</link>
+    <link>/tags/plot/</link>
     <description>Recent content in Plot on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 08 Dec 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 27 Jun 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/Hippocamplus/tags/plot/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/plot/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>Alternative to pie charts in R</title>
+      <link>/2019/06/27/alternative-to-pie-charts-in-r/</link>
+      <pubDate>Thu, 27 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/2019/06/27/alternative-to-pie-charts-in-r/</guid>
+      <description>TL;DR  Pie charts ARE bad: it’s difficult to rank and compare the pies. Waffle charts are slightly better but it’s still difficult to rank/compare groups. Good Ol’ bar charts are the best way to quickly compare groups. We can make more compact bar charts with ggplot2 to use instead of pie charts.   Set up A typical tidyverse with data.frame manipulation (dplyr) and graphs (ggplot2). Also, some functions to create random group labels and data.</description>
+    </item>
+    
+    <item>
       <title>Artistic representation of DNA tests&#39; results</title>
-      <link>/Hippocamplus/2018/12/08/dna-art/</link>
+      <link>/2018/12/08/dna-art/</link>
       <pubDate>Sat, 08 Dec 2018 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/2018/12/08/dna-art/</guid>
+      <guid>/2018/12/08/dna-art/</guid>
       <description>Version 1: Tree Version 2: Weave Version 3: Noise Version 4: Stars Gallery Code Notes   Christmas is coming. DNA tests are cool gifts but I’ve already offered it to some members of my family before. Now I was wondering if I could use this data in a more creative way and produce some kind of artistic representation of the DNA data to give them for Christmas. Some kind of DNA art or painting that would be unique.</description>
     </item>
     
     <item>
       <title>MUMmerplots with ggplot2</title>
-      <link>/Hippocamplus/2017/09/19/mummerplots-with-ggplot2/</link>
+      <link>/2017/09/19/mummerplots-with-ggplot2/</link>
       <pubDate>Tue, 19 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/2017/09/19/mummerplots-with-ggplot2/</guid>
+      <guid>/2017/09/19/mummerplots-with-ggplot2/</guid>
       <description>Update Oct 28 2018: added reference id (rid) to be able to visualize multiple reference regions. Also uploaded the example data somewhere.
 library(dplyr) library(magrittr) library(GenomicRanges) library(knitr) library(ggplot2) library(tidyr) MUMmer plot The MUMmer plot that I want to reproduce showed three contigs overlapping a region of chr 14. I had filtered the delta file with delta-filter -l 10000 -q -r to get only the contigs with the best alignments. I had used mummerplot with the -l layout option to reorder and orient the sequences to have a nice diagonal.</description>
     </item>
     
     <item>
       <title>Word Cloud in R</title>
-      <link>/Hippocamplus/2016/02/26/word-cloud-in-r/</link>
+      <link>/2016/02/26/word-cloud-in-r/</link>
       <pubDate>Fri, 26 Feb 2016 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/2016/02/26/word-cloud-in-r/</guid>
+      <guid>/2016/02/26/word-cloud-in-r/</guid>
       <description>The wordcloud package is available on CRAN.
 Fake words I create fake words to see a bit how the command is working.
 library(wordcloud) createWords &amp;lt;- function(w.l = 3) paste(sample(letters, w.l, TRUE), collapse = &amp;quot;&amp;quot;) words = sapply(1:200, function(e) createWords(runif(1, 3, 10))) freq = c(sample(1:30, 190, T), sample(30:150, 10, T)) freq = freq/sum(freq) wordcloud(words, freq) ## Big words in the center wordcloud(words, freq, random.order = FALSE) ## Max word number wordcloud(words, freq, max.</description>

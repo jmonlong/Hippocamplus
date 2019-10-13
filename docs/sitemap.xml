@@ -3,298 +3,331 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/Hippocamplus/emacs/</loc>
+    <loc>/cpp/</loc>
   </url>
   
   <url>
-    <loc>/Hippocamplus/expression/</loc>
+    <loc>/emacs/</loc>
   </url>
   
   <url>
-    <loc>/Hippocamplus/latex/</loc>
+    <loc>/expression/</loc>
   </url>
   
   <url>
-    <loc>/Hippocamplus/markdown/</loc>
+    <loc>/latex/</loc>
   </url>
   
   <url>
-    <loc>/Hippocamplus/math/stats/</loc>
+    <loc>/markdown/</loc>
   </url>
   
   <url>
-    <loc>/Hippocamplus/org-mode/</loc>
+    <loc>/math/stats/</loc>
   </url>
   
   <url>
-    <loc>/Hippocamplus/python/</loc>
+    <loc>/org-mode/</loc>
   </url>
   
   <url>
-    <loc>/Hippocamplus/r/</loc>
+    <loc>/python/</loc>
   </url>
   
   <url>
-    <loc>/Hippocamplus/shell/</loc>
+    <loc>/r/</loc>
   </url>
   
   <url>
-    <loc>/Hippocamplus/internet/</loc>
+    <loc>/shell/</loc>
   </url>
   
   <url>
-    <loc>/Hippocamplus/about/</loc>
+    <loc>/internet/</loc>
   </url>
   
   <url>
-    <loc>/Hippocamplus/2019/07/15/workflow-description-language-wdl-in-emacs/</loc>
+    <loc>/about/</loc>
+  </url>
+  
+  <url>
+    <loc>/2019/08/01/bbc-horizon-interviews-of-richard-feynman/</loc>
+    <lastmod>2019-08-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2019/07/15/workflow-description-language-wdl-in-emacs/</loc>
     <lastmod>2019-07-15T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/Hippocamplus/2019/04/03/cancer-genes-cna-r/</loc>
+    <loc>/2019/06/27/alternative-to-pie-charts-in-r/</loc>
+    <lastmod>2019-06-27T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2019/04/03/cancer-genes-cna-r/</loc>
     <lastmod>2019-04-03T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/Hippocamplus/2019/03/31/gnomad-sv-first-look/</loc>
+    <loc>/2019/03/31/gnomad-sv-first-look/</loc>
     <lastmod>2019-03-31T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/Hippocamplus/2018/12/08/dna-art/</loc>
+    <loc>/2019/03/21/stereographic-graphs/</loc>
+    <lastmod>2019-03-21T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2019/03/15/public-sv-catalogs-longread/</loc>
+    <lastmod>2019-03-15T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2018/12/08/dna-art/</loc>
     <lastmod>2018-12-08T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/Hippocamplus/2018/11/17/speedup-blogwdown-pandoc-large-bibliography/</loc>
+    <loc>/2018/11/17/speedup-blogwdown-pandoc-large-bibliography/</loc>
     <lastmod>2018-11-17T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/Hippocamplus/2018/11/12/bachelard-formation-esprit-scientifique-part1/</loc>
+    <loc>/2018/11/12/bachelard-formation-esprit-scientifique-part1/</loc>
     <lastmod>2018-11-12T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/Hippocamplus/2018/11/07/ecr-peerreview/</loc>
+    <loc>/2018/11/07/ecr-peerreview/</loc>
     <lastmod>2018-11-07T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/Hippocamplus/2018/09/22/sync-mendeley/</loc>
+    <loc>/2018/09/22/sync-mendeley/</loc>
     <lastmod>2018-09-22T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/Hippocamplus/2018/07/08/mental-health-crisis-science/</loc>
+    <loc>/2018/07/08/mental-health-crisis-science/</loc>
     <lastmod>2018-07-08T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/Hippocamplus/2018/06/09/cluster-same-size/</loc>
+    <loc>/2018/06/09/cluster-same-size/</loc>
     <lastmod>2018-06-09T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/Hippocamplus/2018/05/07/epub-reviews/</loc>
+    <loc>/2018/05/07/epub-reviews/</loc>
     <lastmod>2018-05-07T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/Hippocamplus/2018/04/18/check-latex-pub/</loc>
+    <loc>/2018/04/18/check-latex-pub/</loc>
     <lastmod>2018-04-18T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/Hippocamplus/2018/04/16/text-similarity/</loc>
+    <loc>/2018/04/16/text-similarity/</loc>
     <lastmod>2018-04-16T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/Hippocamplus/2018/02/23/journals-comparison/</loc>
+    <loc>/2018/02/23/journals-comparison/</loc>
     <lastmod>2018-02-23T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/Hippocamplus/2018/02/13/tsne-and-clustering/</loc>
+    <loc>/2018/02/13/tsne-and-clustering/</loc>
     <lastmod>2018-02-13T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/Hippocamplus/2017/10/04/bibliography-style-for-ajhg/</loc>
+    <loc>/2017/10/04/bibliography-style-for-ajhg/</loc>
     <lastmod>2017-10-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/Hippocamplus/2017/09/19/mummerplots-with-ggplot2/</loc>
+    <loc>/2017/09/19/mummerplots-with-ggplot2/</loc>
     <lastmod>2017-09-19T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/Hippocamplus/2017/09/16/regression-sandbox/</loc>
+    <loc>/2017/09/16/regression-sandbox/</loc>
     <lastmod>2017-09-16T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/Hippocamplus/2017/09/05/enrichment-between-genomic-regions/</loc>
+    <loc>/2017/09/05/enrichment-between-genomic-regions/</loc>
     <lastmod>2017-09-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/Hippocamplus/2017/02/25/conservation-to-annotate-larger-regions/</loc>
+    <loc>/2017/02/25/conservation-to-annotate-larger-regions/</loc>
     <lastmod>2017-02-25T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/Hippocamplus/2016/10/20/segmental-duplication-exploration/</loc>
+    <loc>/2016/10/20/segmental-duplication-exploration/</loc>
     <lastmod>2016-10-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/Hippocamplus/2016/09/06/summary-epigenetic-mark-tracks/</loc>
+    <loc>/2016/09/06/summary-epigenetic-mark-tracks/</loc>
     <lastmod>2016-09-06T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/Hippocamplus/2016/06/04/exploring-basic-annotations-of-the-human-genome/</loc>
+    <loc>/2016/06/04/exploring-basic-annotations-of-the-human-genome/</loc>
     <lastmod>2016-06-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/Hippocamplus/2016/06/04/gencode-exploration/</loc>
+    <loc>/2016/06/04/gencode-exploration/</loc>
     <lastmod>2016-06-04T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/Hippocamplus/2016/06/03/preparing-some-genomic-annotations/</loc>
+    <loc>/2016/06/04/repeat-masker-exploration/</loc>
+    <lastmod>2016-06-04T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/2016/06/03/preparing-some-genomic-annotations/</loc>
     <lastmod>2016-06-03T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/Hippocamplus/2016/02/26/word-cloud-in-r/</loc>
+    <loc>/2016/02/26/word-cloud-in-r/</loc>
     <lastmod>2016-02-26T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/Hippocamplus/</loc>
-    <lastmod>2019-07-15T00:00:00+00:00</lastmod>
+    <loc>/</loc>
+    <lastmod>2019-08-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/Hippocamplus/tags/book/</loc>
+    <loc>/tags/book/</loc>
     <lastmod>2018-11-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/Hippocamplus/categories/</loc>
+    <loc>/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/Hippocamplus/tags/data/</loc>
+    <loc>/tags/data/</loc>
     <lastmod>2019-04-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/Hippocamplus/tags/emacs/</loc>
+    <loc>/tags/emacs/</loc>
     <lastmod>2019-07-15T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/Hippocamplus/tags/epigenetic/</loc>
+    <loc>/tags/epigenetic/</loc>
     <lastmod>2016-09-06T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/Hippocamplus/fixed/</loc>
+    <loc>/fixed/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/Hippocamplus/tags/genome/</loc>
+    <loc>/tags/genome/</loc>
     <lastmod>2019-04-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/Hippocamplus/tags/latex/</loc>
+    <loc>/tags/latex/</loc>
     <lastmod>2018-04-18T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/Hippocamplus/tags/non-coding/</loc>
+    <loc>/tags/non-coding/</loc>
     <lastmod>2017-02-25T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/Hippocamplus/tags/plot/</loc>
-    <lastmod>2018-12-08T00:00:00+00:00</lastmod>
+    <loc>/tags/plot/</loc>
+    <lastmod>2019-06-27T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/Hippocamplus/post/</loc>
-    <lastmod>2019-07-15T00:00:00+00:00</lastmod>
+    <loc>/post/</loc>
+    <lastmod>2019-08-01T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/Hippocamplus/tags/pub/</loc>
+    <loc>/tags/pub/</loc>
     <lastmod>2018-11-07T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/Hippocamplus/tags/r/</loc>
-    <lastmod>2019-04-03T00:00:00+00:00</lastmod>
+    <loc>/tags/r/</loc>
+    <lastmod>2019-06-27T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/Hippocamplus/tags/science/</loc>
-    <lastmod>2018-11-12T00:00:00+00:00</lastmod>
+    <loc>/ryan-lorig-roach/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/science/</loc>
+    <lastmod>2019-08-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/Hippocamplus/tags/stats/</loc>
+    <loc>/tags/stats/</loc>
     <lastmod>2018-06-09T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/Hippocamplus/tags/sv/</loc>
+    <loc>/tags/sv/</loc>
     <lastmod>2019-03-31T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/Hippocamplus/tags/</loc>
+    <loc>/tags/</loc>
     <lastmod>2018-11-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/Hippocamplus/tags/thesis/</loc>
+    <loc>/tags/thesis/</loc>
     <lastmod>2018-05-07T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/Hippocamplus/tags/wdl/</loc>
+    <loc>/tags/wdl/</loc>
     <lastmod>2019-07-15T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/Hippocamplus/tags/website/</loc>
+    <loc>/tags/website/</loc>
     <lastmod>2018-11-17T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>

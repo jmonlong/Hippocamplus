@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Epigenetic on </title>
-    <link>/Hippocamplus/tags/epigenetic/</link>
+    <link>/tags/epigenetic/</link>
     <description>Recent content in Epigenetic on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 06 Sep 2016 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/Hippocamplus/tags/epigenetic/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/epigenetic/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Summary epigenetic mark tracks</title>
-      <link>/Hippocamplus/2016/09/06/summary-epigenetic-mark-tracks/</link>
+      <link>/2016/09/06/summary-epigenetic-mark-tracks/</link>
       <pubDate>Tue, 06 Sep 2016 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/2016/09/06/summary-epigenetic-mark-tracks/</guid>
+      <guid>/2016/09/06/summary-epigenetic-mark-tracks/</guid>
       <description>To assess the potential impact of variants (SNV, SVs) we might want to use some of the public epigentic datasets. The amount and heterogeneity of this data is a bit overwhelming. I would like to get a summary of which regions of the genome are the most functionally important.
 The plan is to:
  get annotated peaks for the 6 typical histone marks in 5-6 tissues, merging sub-tissues (e.g. brain subregions) keep regions supported by enough replicates  Eventually, I could also annotate the regions that are tissue-specific or shared across tissues.</description>

@@ -1,0 +1,15 @@
+---
+title: Ryan Lorig-Roach
+sidebar: false
+weight: 0
+---
+
+## Ryan Lorig-Roach
+
+This is Ryan Lorig-Roach, PhD student at UCSC working on nanopore sequencing and genome assembly.
+I like Mexican food and am particularly proud of planes. 
+
+- [LinkedIn](https://www.linkedin.com/in/ryan-lorig-roach-b2b925b9)
+- [GitHub](https://github.com/rlorigro)
+
+![Ryan Lorig-Roach UCSC](/imgs/ryan-lorig-roach-ucsc.JPG)

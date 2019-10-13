@@ -144,6 +144,13 @@ Git add all untracked files
 git st -s | grep '??' | cut -f2 -d ' ' | xargs git add
 ```
 
+---
+
+Open recent PDFs
+
+```
+find pdf -mtime -1 | xargs evince
+```
 
 ### AWK
 
