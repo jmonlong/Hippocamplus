@@ -2,75 +2,66 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Fixeds on </title>
-    <link>/fixed/</link>
+    <link>/Hippocamplus/fixed/</link>
     <description>Recent content in Fixeds on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     
-	<atom:link href="/fixed/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/Hippocamplus/fixed/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>CPP</title>
-      <link>/cpp/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/cpp/</guid>
-      <description>  Resources   Resources  C++ Core Guidelines C++ Primer (5th Edition). Stanley B. Lippman, Josée Lajoie, Barbara E. Moo Accelerated C++. Andrew Koenig   </description>
-    </item>
     
     <item>
       <title>Emacs</title>
-      <link>/emacs/</link>
+      <link>/Hippocamplus/emacs/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/emacs/</guid>
+      <guid>/Hippocamplus/emacs/</guid>
       <description>Basic configuration General commands Console-size split screen  MELPA package repository Solarized theme For R Emacs Speaks Statistics Auto-complete Smart underscores Poly-mode for R + Markdown Custom keyboard shortcuts  For writing Spell checking Thesaurus and synonyms Grammar checking  For LaTeX Word count Chunk folding  For Markdown Table formatting Markdown live preview  For Python Elpy python mode Send commands to a specific buffer  For C/CPP Tags  For Shell For WDL workflows For file manipulation CSV/TSV Dired mode  For Version Control For online notes Evernote Simplenote  File encryption On HPCs For OSX Maximize window at opening Keybindings Ispell Explicit path definition    I use Emacs for almost everything: coding, writing, taking notes, preparing presentations.</description>
     </item>
     
     <item>
       <title>Expression</title>
-      <link>/expression/</link>
+      <link>/Hippocamplus/expression/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/expression/</guid>
+      <guid>/Hippocamplus/expression/</guid>
       <description>Writing General Starting the sentence Explanation Not sure Opening Nice expression/style Introduce the second part of a sentence  Introduction/reviews Intro the intro Pionner work Changing subject More Closing  Discussion  Oral Expression Advices    Writing Some recommendations from Sportscience:
  i.e. and e.g. only within parenthesis (is that a thing?) aim for economy. However or synonyms at most once per paragraph. while/since for time related stuff, not instead of whereas/although/because.</description>
     </item>
     
     <item>
       <title>LaTeX</title>
-      <link>/latex/</link>
+      <link>/Hippocamplus/latex/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/latex/</guid>
+      <guid>/Hippocamplus/latex/</guid>
       <description>Standard packages TinyTeX Misc Document class Page size Font sizes Change the symbol in lists Math calligraphy Languages and encoding Links Table of contents Metadata  Figures Position Sub-figures Supplementary figures  Tables Control tabular width Supplementary tables Spanning columns/rows Align columns Rectangular selection/cut/paste Tables from R  Code blocks For manuscripts Abstract Author affiliation Text formatting Notes/comments Main text and supplements in two documents Compare versions and highlight revisions One figure = one file  Bibliography Reduce long list of authors “Name Year” style Order of initials No URL or DOI  Presentations Changing the font Section slides Themes Background image Backup slides Link to frame    A lot of good information in the LaTeX Wikibook.</description>
     </item>
     
     <item>
       <title>Markdown</title>
-      <link>/markdown/</link>
+      <link>/Hippocamplus/markdown/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/markdown/</guid>
+      <guid>/Hippocamplus/markdown/</guid>
       <description>Tips Converting Markdown into nice HTML pages Converting Markdown into slides Jekyll websites Themes Table of Contents Math formulas  blogdown websites Themes Table of Contents Draft posts Math formulas Bibliography  R Markdown   Tips  / to add some vertical space/break (e.g. in slides). Use two ` and a space to escape ` in inline code. E.g `` `pwd` `` gives `pwd`. --- to add horizontal line/separation.</description>
     </item>
     
     <item>
       <title>Math/Stats</title>
-      <link>/math/stats/</link>
+      <link>/Hippocamplus/math/stats/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/math/stats/</guid>
+      <guid>/Hippocamplus/math/stats/</guid>
       <description>Probability distributions Binomial Hypergeometric Normal Poisson Beta-binomial Beta  Statistical tests Student t-test Fisher’s exact test \(\chi^2\) test Wilcoxon test ANOVA  Regression &amp;amp; Machine Learning Linear regression LASSO LOESS Machine Learning basics CART Neural Networks SVM  Misc stats Markov Model Monte Carlo methods MCMC Hidden Markov Model Maximum Likelihood Estimation Expectation-Maximization Greedy algorithm Bayesian vs Frequentist  Graph theory De Bruijn graphs Hamiltonian path Euclidian path  Algebra SVD decomposition PCA    All of this is mostly extracted from Wikipedia.</description>
     </item>
     
     <item>
       <title>Org mode</title>
-      <link>/org-mode/</link>
+      <link>/Hippocamplus/org-mode/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/org-mode/</guid>
+      <guid>/Hippocamplus/org-mode/</guid>
       <description>Org file Configuration Syntax Keybindings From anywhere Edit mode Timestamps Agenda views Capture  TODO entry Property drawer Habits entry Code block Links Tags Custom agenda views   I’m giving Org mode a try. This page will contain my configuration and the small subset of commands that I want to learn.
 Org Manual
 Org file  Start with MY PROJECTS -*- mode: org; -*-   Configuration In .</description>
@@ -78,58 +69,58 @@ Org file  Start with MY PROJECTS -*- mode: org; -*-   Configuration In .</descri
     
     <item>
       <title>Python</title>
-      <link>/python/</link>
+      <link>/Hippocamplus/python/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/python/</guid>
+      <guid>/Hippocamplus/python/</guid>
       <description>Naming and formatting Objects Array Hash Class String Function  Input/Output Module, files, imports Packaging code Install a module locally  Passing arguments to a script Graphs Shell integration Timing Bioinfo Sequences Fasta SAM files VCF  Tricks   Some notes on my recent attempt to learn Python.
 Naming and formatting  Use lowercase _-separated for modules and functions name. E.g. my_function. Use CapsWord for classes. E.g. MyClass.</description>
     </item>
     
     <item>
       <title>R</title>
-      <link>/r/</link>
+      <link>/Hippocamplus/r/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/r/</guid>
+      <guid>/Hippocamplus/r/</guid>
       <description>Details to remember Order in condition assessment  Graphs Palette with many colors ggplot2 tricks Align/stack two ggplots Change font in ggplot2 Waffle graphs  Rmarkdown Beamer presentation Jekyll website  data.table package Linux setup   Details to remember  Use rbindlist from data.table package for a memory-optimized and faster do.call(rbind, list(..)). Use system2 instead of system to run a command. It’s more portable apparently. Get RPubs working with options(rpubs.</description>
     </item>
     
     <item>
       <title>Shell</title>
-      <link>/shell/</link>
+      <link>/Hippocamplus/shell/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/shell/</guid>
+      <guid>/Hippocamplus/shell/</guid>
       <description>Git GNU screen Misc Colors in less Avoid killing ssh jobs rsync  One-liners Bash &amp;amp; Pipes AWK Perl one-liners  Shell scripting Variables If Then Else  Convert PDF Docker cheatsheet Makefile Modules OSX Mount server Setup WD Elements external hard drive  ffmpeg   Git  Commit all modification and added files: git commit -am &amp;quot;informative message&amp;quot; To show all the history of a file: git log -p -- file To retrieve a specific version of a file: git show COMMIT:file Revert repo to a specific commit: git checkout COMMIT Undo a commit: git reset HEAD~ and then for the real commit git commit -c ORIG_HEAD.</description>
     </item>
     
     <item>
       <title>Internet</title>
-      <link>/internet/</link>
+      <link>/Hippocamplus/internet/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/internet/</guid>
+      <guid>/Hippocamplus/internet/</guid>
       <description>DuckDuckGo Ubuntu Sync a specific Google Drive folder on Ubuntu Sync PDFs between Mendeley and Google Drive Zotero Dowload files from Dropbox   DuckDuckGo DuckDuckGo is a “search engine that doesn’t track you”. It provides nice “bangs” to search directly specific websites. By making DDG the default search engine these bangs can be used directly in the address bar.
  !pub PubMed. !scholar Google Scholar. !bioc Bioconductor. !</description>
     </item>
     
     <item>
       <title>About</title>
-      <link>/about/</link>
+      <link>/Hippocamplus/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/about/</guid>
+      <guid>/Hippocamplus/about/</guid>
       <description>About this website This is where I put all the useful information I keep on forgetting. Instead of googling the same things over and over, wasting time and server energy I put them here. It’s like a second memory, better than my hippocampus, my hippocamPLUS…
  About me  Personal page with links. Twitter.  My current lab  Computational Genomics Lab at UCSC. Genomics Institute at UCSC My housemate   My previous labs  Bourque Lab.</description>
     </item>
     
     <item>
       <title>Ryan Lorig-Roach</title>
-      <link>/ryan-lorig-roach/</link>
+      <link>/Hippocamplus/ryan-lorig-roach/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/ryan-lorig-roach/</guid>
+      <guid>/Hippocamplus/ryan-lorig-roach/</guid>
       <description> Ryan Lorig-Roach This is Ryan Lorig-Roach, PhD student at UCSC working on nanopore sequencing and genome assembly. I like Mexican food and am particularly proud of planes.
  LinkedIn GitHub  Ryan Lorig-Roach UCSC
   </description>

@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Website on </title>
-    <link>/tags/website/</link>
+    <link>/Hippocamplus/tags/website/</link>
     <description>Recent content in Website on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 17 Nov 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/website/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/Hippocamplus/tags/website/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Speeding up blogdown/Pandoc for large bibliography</title>
-      <link>/2018/11/17/speedup-blogwdown-pandoc-large-bibliography/</link>
+      <link>/Hippocamplus/2018/11/17/speedup-blogwdown-pandoc-large-bibliography/</link>
       <pubDate>Sat, 17 Nov 2018 00:00:00 +0000</pubDate>
       
-      <guid>/2018/11/17/speedup-blogwdown-pandoc-large-bibliography/</guid>
+      <guid>/Hippocamplus/2018/11/17/speedup-blogwdown-pandoc-large-bibliography/</guid>
       <description>I have another website where I write down my reviews of the papers I read. To handle citations in pages and posts, I was originally using jekyll-scholar. It scales well enough that I could have one main BibTeX file for all the pages of the website. I’m now switching to blogdown/Hugo because it’s apparently faster, with less dependencies, but most importantly because it’s very easy to integrate R code with RMarkdown.</description>
     </item>
     

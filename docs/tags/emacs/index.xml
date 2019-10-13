@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Emacs on </title>
-    <link>/tags/emacs/</link>
+    <link>/Hippocamplus/tags/emacs/</link>
     <description>Recent content in Emacs on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 15 Jul 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/emacs/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/Hippocamplus/tags/emacs/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Workflow Description Language (WDL) in Emacs</title>
-      <link>/2019/07/15/workflow-description-language-wdl-in-emacs/</link>
+      <link>/Hippocamplus/2019/07/15/workflow-description-language-wdl-in-emacs/</link>
       <pubDate>Mon, 15 Jul 2019 00:00:00 +0000</pubDate>
       
-      <guid>/2019/07/15/workflow-description-language-wdl-in-emacs/</guid>
+      <guid>/Hippocamplus/2019/07/15/workflow-description-language-wdl-in-emacs/</guid>
       <description>wdl-mode poly-wdl Language Server Protocol Screenshots   I recently started working with WDL files. The Broad Institute recommends using Sublime and the syntax highlighter that they provide. They also provide a syntax highlighter for Vim. As Denis Loginov mentioned, they are working on an LSP implementation for WDL that could be used by tools to get syntax validation.
 I looked first for a solution in Emacs, my go-to editor.</description>
     </item>

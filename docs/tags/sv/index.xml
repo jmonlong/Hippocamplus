@@ -2,33 +2,23 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Sv on </title>
-    <link>/tags/sv/</link>
+    <link>/Hippocamplus/tags/sv/</link>
     <description>Recent content in Sv on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 31 Mar 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/sv/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/Hippocamplus/tags/sv/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>First look at the gnomAD SV catalog</title>
-      <link>/2019/03/31/gnomad-sv-first-look/</link>
+      <link>/Hippocamplus/2019/03/31/gnomad-sv-first-look/</link>
       <pubDate>Sun, 31 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>/2019/03/31/gnomad-sv-first-look/</guid>
+      <guid>/Hippocamplus/2019/03/31/gnomad-sv-first-look/</guid>
       <description>TL;DR SV types Detection methods Allele frequency Size distribution SV coordinates confusion Potential duplicates SV calling method Two size clusters of potentially duplicated complex variants Effect on allele frequency estimates  GiaB comparison to investigate sequence resolution CHR2 and END   Edit April 1 2019: I added columns with the proportion of variants with PASS filter in the tables about the END/POS confusion and duplicated variants.
 Edit September 23 2019: Some tables (SV types, methods), investigation of the inconsistent CHR2/END for a few SVs.</description>
-    </item>
-    
-    <item>
-      <title>Public SV catalogs from long-read sequencing studies</title>
-      <link>/2019/03/15/public-sv-catalogs-longread/</link>
-      <pubDate>Fri, 15 Mar 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/2019/03/15/public-sv-catalogs-longread/</guid>
-      <description>Downloading the SV catalogs Audano et al. Cell 2019 Genome in a Bottle Human Genome Structural Variation Consortium  Size distribution Duplicated variants within each catalog Breakpoint inconsistency between catalogs Todo   More and more studies are using long-read sequencing, often with other technologies, to produce high-quality catalogs of structural variation (SV). Many novel SVs are being discovered and most of them are sequence-resolved. For example:
- Audano et al.</description>
     </item>
     
   </channel>

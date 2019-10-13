@@ -2,69 +2,59 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Genome on </title>
-    <link>/tags/genome/</link>
+    <link>/Hippocamplus/tags/genome/</link>
     <description>Recent content in Genome on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 03 Apr 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/genome/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/Hippocamplus/tags/genome/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Cancer genes and CNA hotspots</title>
-      <link>/2019/04/03/cancer-genes-cna-r/</link>
+      <link>/Hippocamplus/2019/04/03/cancer-genes-cna-r/</link>
       <pubDate>Wed, 03 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>/2019/04/03/cancer-genes-cna-r/</guid>
+      <guid>/Hippocamplus/2019/04/03/cancer-genes-cna-r/</guid>
       <description>Candidate Cancer Gene Database (CCGD) Cancer Gene Census Merge the gene lists “Effect” vs “Role” ?  Known CNA hotspots Saving the R objects   This is an updated version of an old private post where I had prepared some R objects with cancer genes and CNA hotspots. I used this to quickly annotate copy number results in cancer projects. The file was almost 3 years old so here is an updated version (as of today, Apr 3 2019).</description>
     </item>
     
     <item>
       <title>First look at the gnomAD SV catalog</title>
-      <link>/2019/03/31/gnomad-sv-first-look/</link>
+      <link>/Hippocamplus/2019/03/31/gnomad-sv-first-look/</link>
       <pubDate>Sun, 31 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>/2019/03/31/gnomad-sv-first-look/</guid>
+      <guid>/Hippocamplus/2019/03/31/gnomad-sv-first-look/</guid>
       <description>TL;DR SV types Detection methods Allele frequency Size distribution SV coordinates confusion Potential duplicates SV calling method Two size clusters of potentially duplicated complex variants Effect on allele frequency estimates  GiaB comparison to investigate sequence resolution CHR2 and END   Edit April 1 2019: I added columns with the proportion of variants with PASS filter in the tables about the END/POS confusion and duplicated variants.
 Edit September 23 2019: Some tables (SV types, methods), investigation of the inconsistent CHR2/END for a few SVs.</description>
     </item>
     
     <item>
-      <title>Public SV catalogs from long-read sequencing studies</title>
-      <link>/2019/03/15/public-sv-catalogs-longread/</link>
-      <pubDate>Fri, 15 Mar 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/2019/03/15/public-sv-catalogs-longread/</guid>
-      <description>Downloading the SV catalogs Audano et al. Cell 2019 Genome in a Bottle Human Genome Structural Variation Consortium  Size distribution Duplicated variants within each catalog Breakpoint inconsistency between catalogs Todo   More and more studies are using long-read sequencing, often with other technologies, to produce high-quality catalogs of structural variation (SV). Many novel SVs are being discovered and most of them are sequence-resolved. For example:
- Audano et al.</description>
-    </item>
-    
-    <item>
       <title>Artistic representation of DNA tests&#39; results</title>
-      <link>/2018/12/08/dna-art/</link>
+      <link>/Hippocamplus/2018/12/08/dna-art/</link>
       <pubDate>Sat, 08 Dec 2018 00:00:00 +0000</pubDate>
       
-      <guid>/2018/12/08/dna-art/</guid>
+      <guid>/Hippocamplus/2018/12/08/dna-art/</guid>
       <description>Version 1: Tree Version 2: Weave Version 3: Noise Version 4: Stars Gallery Code Notes   Christmas is coming. DNA tests are cool gifts but I’ve already offered it to some members of my family before. Now I was wondering if I could use this data in a more creative way and produce some kind of artistic representation of the DNA data to give them for Christmas. Some kind of DNA art or painting that would be unique.</description>
     </item>
     
     <item>
       <title>Enrichment between genomic regions</title>
-      <link>/2017/09/05/enrichment-between-genomic-regions/</link>
+      <link>/Hippocamplus/2017/09/05/enrichment-between-genomic-regions/</link>
       <pubDate>Tue, 05 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>/2017/09/05/enrichment-between-genomic-regions/</guid>
+      <guid>/Hippocamplus/2017/09/05/enrichment-between-genomic-regions/</guid>
       <description>Testing if two sets of genomic regions overlap significantly is not straightforward. In the simple situation of regions of 1 bp (e.g. SNVs) we could use a hypergeometric test. When the regions are small enough and there are not too many, the hypergeometric test might also be a fair approximation.
 But when we manipulate many regions of variable size covering the entire genome it’s not as straightforward. The gene annotation is an example.</description>
     </item>
     
     <item>
       <title>Conservation to annotate large(r) regions</title>
-      <link>/2017/02/25/conservation-to-annotate-larger-regions/</link>
+      <link>/Hippocamplus/2017/02/25/conservation-to-annotate-larger-regions/</link>
       <pubDate>Sat, 25 Feb 2017 00:00:00 +0000</pubDate>
       
-      <guid>/2017/02/25/conservation-to-annotate-larger-regions/</guid>
+      <guid>/Hippocamplus/2017/02/25/conservation-to-annotate-larger-regions/</guid>
       <description>Conservation can be used to annotate single nucleotide changes or short variants. This information helps assessing the functional impact of short variation.
 What if we have larger variants, for example deletions larger than 50 bp, or larger than 1 kbp. Can we use conservation metrics? In this case the question is often not “Is the region conserved?” but rather “Is there any conserved elements in the region?”.
 One approach would be to overlap the variants/deletions with known (ultra-)conserved regions.</description>
@@ -72,20 +62,20 @@ One approach would be to overlap the variants/deletions with known (ultra-)conse
     
     <item>
       <title>Segmental duplication exploration</title>
-      <link>/2016/10/20/segmental-duplication-exploration/</link>
+      <link>/Hippocamplus/2016/10/20/segmental-duplication-exploration/</link>
       <pubDate>Thu, 20 Oct 2016 00:00:00 +0000</pubDate>
       
-      <guid>/2016/10/20/segmental-duplication-exploration/</guid>
+      <guid>/Hippocamplus/2016/10/20/segmental-duplication-exploration/</guid>
       <description>Segmental Duplications (SD) I downloaded the segmental duplication annotation for hg19 from UCSC. There are 51599 annotated SD. They are defined as regions larger than 1 Kbp with at least 90% similarity with another region in the genome.
  Segmental duplication regions Many SD are nested of located next to each other. I merge overlapping SDs (or located at &amp;lt;10 bp) to create SD regions, i.e. longer stretch of the genome overlapping SDs.</description>
     </item>
     
     <item>
       <title>Summary epigenetic mark tracks</title>
-      <link>/2016/09/06/summary-epigenetic-mark-tracks/</link>
+      <link>/Hippocamplus/2016/09/06/summary-epigenetic-mark-tracks/</link>
       <pubDate>Tue, 06 Sep 2016 00:00:00 +0000</pubDate>
       
-      <guid>/2016/09/06/summary-epigenetic-mark-tracks/</guid>
+      <guid>/Hippocamplus/2016/09/06/summary-epigenetic-mark-tracks/</guid>
       <description>To assess the potential impact of variants (SNV, SVs) we might want to use some of the public epigentic datasets. The amount and heterogeneity of this data is a bit overwhelming. I would like to get a summary of which regions of the genome are the most functionally important.
 The plan is to:
  get annotated peaks for the 6 typical histone marks in 5-6 tissues, merging sub-tissues (e.g. brain subregions) keep regions supported by enough replicates  Eventually, I could also annotate the regions that are tissue-specific or shared across tissues.</description>
@@ -93,20 +83,20 @@ The plan is to:
     
     <item>
       <title>Exploring basic annotations of the Human genome</title>
-      <link>/2016/06/04/exploring-basic-annotations-of-the-human-genome/</link>
+      <link>/Hippocamplus/2016/06/04/exploring-basic-annotations-of-the-human-genome/</link>
       <pubDate>Sat, 04 Jun 2016 00:00:00 +0000</pubDate>
       
-      <guid>/2016/06/04/exploring-basic-annotations-of-the-human-genome/</guid>
+      <guid>/Hippocamplus/2016/06/04/exploring-basic-annotations-of-the-human-genome/</guid>
       <description>Quick look at the annotations Genes In Gencode V19 and focusing on autosomes/X/Y, there are 57783 “genes” of different types:
   type n    protein_coding 20,332  pseudogene 13,931  lincRNA 7,114  antisense 5,276  miRNA 3,055  misc_RNA 2,034  snRNA 1,916  snoRNA 1,457  sense_intronic 742  rRNA 527  processed_transcript 515  sense_overlapping 202  IG_V_pseudogene 187  IG_V_gene 138  TR_V_gene 97  TR_J_gene 74  polymorphic_pseudogene 45  IG_D_gene 37  TR_V_pseudogene 27  3prime_overlapping_ncrna 21  IG_J_gene 18  IG_C_gene 14  IG_C_pseudogene 9  TR_C_gene 5  TR_J_pseudogene 4  IG_J_pseudogene 3  TR_D_gene 3     Exons In Gencode V19 and focusing on autosomes/X/Y, there are 1196256 “exons” from different types of genes:</description>
     </item>
     
     <item>
       <title>Gencode exploration</title>
-      <link>/2016/06/04/gencode-exploration/</link>
+      <link>/Hippocamplus/2016/06/04/gencode-exploration/</link>
       <pubDate>Sat, 04 Jun 2016 00:00:00 +0000</pubDate>
       
-      <guid>/2016/06/04/gencode-exploration/</guid>
+      <guid>/Hippocamplus/2016/06/04/gencode-exploration/</guid>
       <description>Gencode v19 I downloaded Gencode v19 at ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz.
  Genes Number Focusing on autosomes/X/Y, there are 57,783 “genes” of different types:
 I merge the rare types into a other class and some RNAs.
@@ -114,21 +104,11 @@ I merge the rare types into a other class and some RNAs.
     </item>
     
     <item>
-      <title>Repeat Masker exploration</title>
-      <link>/2016/06/04/repeat-masker-exploration/</link>
-      <pubDate>Sat, 04 Jun 2016 00:00:00 +0000</pubDate>
-      
-      <guid>/2016/06/04/repeat-masker-exploration/</guid>
-      <description>Repeat Masker I downloaded Repeat Masker at http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/rmsk.txt.gz.
-  chr start end repName repClass repFamily    17 37428219 37428344 AluJo SINE Alu  12 95320593 95320702 (TTC)n Simple_repeat Simple_repeat  1 150405857 150405892 (TA)n Simple_repeat Simple_repeat  10 46954002 46954311 AluSp SINE Alu  2 223575250 223575286 (TAA)n Simple_repeat Simple_repeat  4 149535979 149536275 AluSc SINE Alu  4 81625836 81625865 AT_rich Low_complexity Low_complexity  2 107075978 107076275 AluSx1 SINE Alu  2 114092998 114093116 MIRb SINE MIR  16 59345225 59345528 AluSz SINE Alu    The annotation spans a total of 1.</description>
-    </item>
-    
-    <item>
       <title>Preparing some genomic annotations</title>
-      <link>/2016/06/03/preparing-some-genomic-annotations/</link>
+      <link>/Hippocamplus/2016/06/03/preparing-some-genomic-annotations/</link>
       <pubDate>Fri, 03 Jun 2016 00:00:00 +0000</pubDate>
       
-      <guid>/2016/06/03/preparing-some-genomic-annotations/</guid>
+      <guid>/Hippocamplus/2016/06/03/preparing-some-genomic-annotations/</guid>
       <description>Mappability track I produced a mappability track from the UCSC track. The raw file contains, for each base in the genome, an estimation of the probability that a read is correctly mapped at this position.
 Using a sliding-window approach, I compute the average mappability in regions of size 1 Kbp. This is a more manageable amount of data and still informative, especially when interested in large regions (e.g. SVs).</description>
     </item>

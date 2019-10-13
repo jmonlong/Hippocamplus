@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Non Coding on </title>
-    <link>/tags/non-coding/</link>
+    <link>/Hippocamplus/tags/non-coding/</link>
     <description>Recent content in Non Coding on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 25 Feb 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/non-coding/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/Hippocamplus/tags/non-coding/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Conservation to annotate large(r) regions</title>
-      <link>/2017/02/25/conservation-to-annotate-larger-regions/</link>
+      <link>/Hippocamplus/2017/02/25/conservation-to-annotate-larger-regions/</link>
       <pubDate>Sat, 25 Feb 2017 00:00:00 +0000</pubDate>
       
-      <guid>/2017/02/25/conservation-to-annotate-larger-regions/</guid>
+      <guid>/Hippocamplus/2017/02/25/conservation-to-annotate-larger-regions/</guid>
       <description>Conservation can be used to annotate single nucleotide changes or short variants. This information helps assessing the functional impact of short variation.
 What if we have larger variants, for example deletions larger than 50 bp, or larger than 1 kbp. Can we use conservation metrics? In this case the question is often not “Is the region conserved?” but rather “Is there any conserved elements in the region?”.
 One approach would be to overlap the variants/deletions with known (ultra-)conserved regions.</description>
