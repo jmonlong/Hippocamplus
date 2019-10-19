@@ -213,6 +213,7 @@ The bedrock for future studies
 # Oral Expression
 
 - *Now* as a transition word, e.g. when changing slides.
+- *In closing, ...* to introduce the conclusion slide. 
 
 ## Advices
 
