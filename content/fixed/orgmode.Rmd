@@ -80,7 +80,6 @@ In `.emacs` file:
 - Navigate with `S-ARROW`.
 - Toggle the calendar at a specific date: `C-c >`.
 - Insert selected date in the calendar at cursor position: `C-c <`.
-- In calendar, jump to specific date: `o`.
 
 ### Agenda views
 
