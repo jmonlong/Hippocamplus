@@ -301,6 +301,7 @@ docker run -t -i -v /home/ubuntu/analysis1:/root/analysis1 jmonlong/popsv-docker
 + `-t` and `-i` are used for interactive run.
 + `-v` links folder in the host with folder in the image. It must be **absolute paths**.
 + Sometimes use `bash` as the command to force interactive, or `--entrypoint /bin/bash` if the image uses an *ENTRYPOINT*.
++ To make sure the files created by the container have the appropriate owner use: `` -u `id -u $USER` ``.
 
 #### Increase memory
 

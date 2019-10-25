@@ -16,7 +16,7 @@ output:
 <li><a href="#graphs">Graphs</a><ul>
 <li><a href="#palette-with-many-colors">Palette with many colors</a></li>
 <li><a href="#ggplot2-tricks">ggplot2 tricks</a></li>
-<li><a href="#alignstack-two-ggplots">Align/stack two ggplots</a></li>
+<li><a href="#multi-panel-ggplots">Multi-panel ggplots</a></li>
 <li><a href="#change-font-in-ggplot2">Change font in ggplot2</a></li>
 <li><a href="#waffle-graphs">Waffle graphs</a></li>
 </ul></li>
@@ -86,8 +86,17 @@ pal = interk(rainbow(20, s=.8), 5)</code></pre>
 <li>Multi-column legends: <code>guides(fill=guide_legend(ncol=4))</code></li>
 </ul>
 </div>
-<div id="alignstack-two-ggplots" class="section level3">
-<h3>Align/stack two ggplots</h3>
+<div id="multi-panel-ggplots" class="section level3">
+<h3>Multi-panel ggplots</h3>
+<p>In general we can use <code>grid.arrange</code>.
+For example:</p>
+<pre class="r"><code>p1 = ggplot(...) + ...
+p2 = ggplot(...) + ...
+p3 = ggplot(...) + ...
+grid.arrange(p1, p2, p3, heights=c(2,1), layout_matrix=rbind(c(1,1), 2:3))</code></pre>
+<div id="aligning-the-x-axis" class="section level4">
+<h4>Aligning the x-axis</h4>
+<p>Sometimes we might want to have two graphs, one on top of the other, with their x-axis aligned.</p>
 <p>One easy way is to use the <code>tracks</code> function in the <a href="https://bioconductor.org/packages/release/bioc/html/ggbio.html">ggbio</a> package.
 However, I don’t really like this package because it sometimes conflicts with ggplot2 (boo!) and you end up having to specify <code>ggplot2::</code> to the functions to avoid obscure errors.</p>
 <p>I found <a href="http://www.exegetic.biz/blog/2015/05/r-recipe-aligning-axes-in-ggplot2/">another way on the internet</a>:</p>
@@ -101,6 +110,7 @@ maxWidth = unit.pmax(p1$widths[2:3], p2$widths[2:3])
 p1$widths[2:3] &lt;- maxWidth
 p2$widths[2:3] &lt;- maxWidth
 grid.arrange(p1, p2, heights = c(3, 2))</code></pre>
+</div>
 </div>
 <div id="change-font-in-ggplot2" class="section level3">
 <h3>Change font in ggplot2</h3>

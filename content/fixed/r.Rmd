@@ -78,7 +78,21 @@ ggplot(bar.df, aes(x=x, fill=c)) + geom_bar() + coord_flip() +
 - To override the legend's aes: `guides(colour=guide_legend(override.aes=list(alpha=1)))`
 - Multi-column legends: `guides(fill=guide_legend(ncol=4))`
 
-### Align/stack two ggplots
+### Multi-panel ggplots
+
+In general we can use `grid.arrange`. 
+For example:
+
+```r
+p1 = ggplot(...) + ...
+p2 = ggplot(...) + ...
+p3 = ggplot(...) + ...
+grid.arrange(p1, p2, p3, heights=c(2,1), layout_matrix=rbind(c(1,1), 2:3))
+```
+
+#### Aligning the x-axis
+
+Sometimes we might want to have two graphs, one on top of the other, with their x-axis aligned.
 
 One easy way is to use the `tracks` function in the [ggbio](https://bioconductor.org/packages/release/bioc/html/ggbio.html) package. 
 However, I don't really like this package because it sometimes conflicts with ggplot2 (boo!) and you end up having to specify `ggplot2::` to the functions to avoid obscure errors.

@@ -262,6 +262,7 @@ Another way to check for problems is to look at the <em>emb</em> column of <code
 <li><code>-t</code> and <code>-i</code> are used for interactive run.</li>
 <li><code>-v</code> links folder in the host with folder in the image. It must be <strong>absolute paths</strong>.</li>
 <li>Sometimes use <code>bash</code> as the command to force interactive, or <code>--entrypoint /bin/bash</code> if the image uses an <em>ENTRYPOINT</em>.</li>
+<li>To make sure the files created by the container have the appropriate owner use: <code>-u `id -u $USER`</code>.</li>
 </ul>
 </div>
 <div id="increase-memory" class="section level4">
