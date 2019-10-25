@@ -177,6 +177,9 @@ for(html.url in html.urls){
 }
 
 new.html = c(new.html, '</body>\n</html>\n')
+if(is.list(new.html)){
+  new.html = unlist(new.html)
+}
 cat(new.html, file=outfile)
 
 message('Pandoc conversion: HTML -> EPUB')

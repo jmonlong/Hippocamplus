@@ -52,3 +52,11 @@ R commands in `epubify-LooseEnds-SidneyBrenner.R`, output in EPUB or MOBI format
 
 - EPUB: [Loose_Ends_by_Sidney_Brenner.epub](https://github.com/jmonlong/Hippocamplus/raw/config/R/epubifyReviews/Loose_Ends_by_Sidney_Brenner.epub)
 - MOBI: [Loose_Ends_by_Sidney_Brenner.mobi](https://github.com/jmonlong/Hippocamplus/raw/config/R/epubifyReviews/Loose_Ends_by_Sidney_Brenner.mobi)
+
+### Research leadership collection from Nature
+
+The URLs were parsed from the [collection's page](https://www.nature.com/collections/cigjfacfbg) (see `listUrls.R`)
+
+```
+Rscript epubify-naturereviews.R -i research-leadership-nature-urls.txt -list -title "Research Leadership Collection"
+```

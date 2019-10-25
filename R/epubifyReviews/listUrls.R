@@ -41,3 +41,4 @@ page = read_html('https://www.annualreviews.org/action/doSearch?content=articles
 links = page %>% html_nodes('a.btn.icon-html')  %>% html_attr('href') %>% paste0('https://www.annualreviews.org', .)
 write(links, file='AnnualReviews-MicrobiomeSequencing-urls.txt')
 ## Rscript epubify-annualreviews.R -i AnnualReviews-MicrobiomeSequencing-urls.txt -list -title "Microbiome and Sequencing"
+
