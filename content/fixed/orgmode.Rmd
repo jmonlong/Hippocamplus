@@ -132,6 +132,19 @@ SCHEDULED: <2019-07-16 Tue .+2d/7d>
 - State "DONE"       from "WAITING"    [2019-07-14 Sun 14:13] 
 ~~~
 
+For a view of the habit and how well they are followed, I added to my `.emacs`:
+
+~~~lisp
+(add-to-list 'org-modules 'org-habit)
+(require 'org-habit)
+;; (setq org-habit-show-all-today t
+;;       org-habit-show-habits-only-for-today t
+;;       org-habit-show-done-always-green t
+;;       org-habit-graph-column 40
+;;       org-habit-preceding-days 28
+;;       org-habit-following-days 7)
+~~~
+
 ## Code block
 
 A simple code block:

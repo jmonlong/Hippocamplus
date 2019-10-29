@@ -160,6 +160,15 @@ SCHEDULED: &lt;2019-07-16 Tue .+2d/7d&gt;
 :LAST_REPEAT: [2019-07-14 Sun 14:13]
 :END:
 - State &quot;DONE&quot;       from &quot;WAITING&quot;    [2019-07-14 Sun 14:13] </code></pre>
+<p>For a view of the habit and how well they are followed, I added to my <code>.emacs</code>:</p>
+<pre class="lisp"><code>(add-to-list &#39;org-modules &#39;org-habit)
+(require &#39;org-habit)
+;; (setq org-habit-show-all-today t
+;;       org-habit-show-habits-only-for-today t
+;;       org-habit-show-done-always-green t
+;;       org-habit-graph-column 40
+;;       org-habit-preceding-days 28
+;;       org-habit-following-days 7)</code></pre>
 </div>
 <div id="code-block" class="section level2">
 <h2>Code block</h2>
