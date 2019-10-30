@@ -7,7 +7,10 @@ output:
     toc: true
 ---
 
+## External links
+
 - [The Art of Command Line](https://github.com/jlevy/the-art-of-command-line)
+- [Terminals Are Sexy](https://terminalsare.sexy/)
 
 ## Git
 
@@ -61,6 +64,14 @@ do
 done
 cd $WD
 ~~~
+
+## json parsing with *jq*
+
+[Lesson at programminghistorian.org](https://programminghistorian.org/en/lessons/json-and-jq)
+
+- Select elements based on one field's value: `jq 'select(.field==value)'`
+- Keep only desired fields: `jq '{id: .id, title: .title}'`
+- Write in TSV: `jq '.array | @tsv'`
 
 ## GNU screen
 

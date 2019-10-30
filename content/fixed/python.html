@@ -34,6 +34,7 @@ output:
 <li><a href="#vcf">VCF</a></li>
 </ul></li>
 <li><a href="#tricks">Tricks</a></li>
+<li><a href="#jupyter-notebooks">Jupyter notebooks</a></li>
 </ul>
 </div>
 
@@ -332,4 +333,32 @@ except KeyError:
 <p>To get the index as well as the value in a list, use <code>enumerate</code>:</p>
 <pre class="python"><code>for id, val in enumerate(myList):
     print(id, val)</code></pre>
+</div>
+<div id="jupyter-notebooks" class="section level2">
+<h2>Jupyter notebooks</h2>
+<ul>
+<li><code>%%capture</code> at the beginning of a cell means the stdout/stderr will be captured (i.e. not shown).</li>
+<li><code>!pip install XXX</code> to install packages.</li>
+</ul>
+<p>The main keyboard shortcuts I use:</p>
+<ul>
+<li><code>Ctrl+Enter</code> run cell.</li>
+<li><code>Shift+Enter</code> run cell and select below.</li>
+<li><code>b</code> insert cell below.</li>
+<li>Switch cell mode to:
+<ul>
+<li><code>y</code> code.</li>
+<li><code>m</code> markdown.</li>
+<li><code>1</code> to heading 1</li>
+</ul></li>
+<li><code>d d</code> delete cell. Undo cell deletion with <code>z</code>.</li>
+<li><code>i i</code> interrupt kernel.</li>
+<li><code>0 0</code> restart kernel.</li>
+<li><code>h</code> Show keyboard help.</li>
+<li>In edit mode
+<ul>
+<li><code>Ctrl+]</code> (<code>[</code>) indent (deindent)</li>
+<li><code>Ctrl+Shift+-</code> split cell</li>
+</ul></li>
+</ul>
 </div>

@@ -73,8 +73,8 @@ Org file  Start with MY PROJECTS -*- mode: org; -*-   Configuration In .</descri
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/Hippocamplus/python/</guid>
-      <description>Naming and formatting Objects Array Hash Class String Function  Input/Output Module, files, imports Packaging code Install a module locally  Passing arguments to a script Graphs Shell integration Timing Bioinfo Sequences Fasta SAM files VCF  Tricks   Some notes on my recent attempt to learn Python.
-Naming and formatting  Use lowercase _-separated for modules and functions name. E.g. my_function. Use CapsWord for classes. E.g. MyClass.</description>
+      <description>Naming and formatting Objects Array Hash Class String Function  Input/Output Module, files, imports Packaging code Install a module locally  Passing arguments to a script Graphs Shell integration Timing Bioinfo Sequences Fasta SAM files VCF  Tricks Jupyter notebooks   Some notes on my recent attempt to learn Python.
+Naming and formatting  Use lowercase _-separated for modules and functions name. E.g. my_function. Use CapsWord for classes.</description>
     </item>
     
     <item>
@@ -92,7 +92,7 @@ Naming and formatting  Use lowercase _-separated for modules and functions name.
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/Hippocamplus/shell/</guid>
-      <description>Git GNU screen Misc Colors in less Avoid killing ssh jobs rsync  One-liners Bash &amp;amp; Pipes AWK Perl one-liners  Shell scripting Variables If Then Else  Convert PDF Docker cheatsheet Makefile Modules OSX Mount server Setup WD Elements external hard drive  ffmpeg    The Art of Command Line  Git  Commit all modification and added files: git commit -am &amp;quot;informative message&amp;quot; To show all the history of a file: git log -p -- file To retrieve a specific version of a file: git show COMMIT:file Revert repo to a specific commit: git checkout COMMIT Undo a commit: git reset HEAD~ and then for the real commit git commit -c ORIG_HEAD.</description>
+      <description>External links Git json parsing with jq GNU screen Misc Colors in less Avoid killing ssh jobs rsync  One-liners Bash &amp;amp; Pipes AWK Perl one-liners  Shell scripting Variables If Then Else  Convert PDF Docker cheatsheet Makefile Modules OSX Mount server Setup WD Elements external hard drive  ffmpeg   External links  The Art of Command Line Terminals Are Sexy   Git  Commit all modification and added files: git commit -am &amp;quot;informative message&amp;quot; To show all the history of a file: git log -p -- file To retrieve a specific version of a file: git show COMMIT:file Revert repo to a specific commit: git checkout COMMIT Undo a commit: git reset HEAD~ and then for the real commit git commit -c ORIG_HEAD.</description>
     </item>
     
     <item>

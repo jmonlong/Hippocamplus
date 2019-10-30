@@ -10,7 +10,9 @@ output:
 
 <div id="TOC">
 <ul>
+<li><a href="#external-links">External links</a></li>
 <li><a href="#git">Git</a></li>
+<li><a href="#json-parsing-with-jq">json parsing with <em>jq</em></a></li>
 <li><a href="#gnu-screen">GNU screen</a></li>
 <li><a href="#misc">Misc</a><ul>
 <li><a href="#colors-in-less">Colors in <code>less</code></a></li>
@@ -38,9 +40,13 @@ output:
 </ul>
 </div>
 
+<div id="external-links" class="section level2">
+<h2>External links</h2>
 <ul>
 <li><a href="https://github.com/jlevy/the-art-of-command-line">The Art of Command Line</a></li>
+<li><a href="https://terminalsare.sexy/">Terminals Are Sexy</a></li>
 </ul>
+</div>
 <div id="git" class="section level2">
 <h2>Git</h2>
 <ul>
@@ -90,6 +96,15 @@ do
 done
 cd $WD</code></pre>
 </div>
+</div>
+<div id="json-parsing-with-jq" class="section level2">
+<h2>json parsing with <em>jq</em></h2>
+<p><a href="https://programminghistorian.org/en/lessons/json-and-jq">Lesson at programminghistorian.org</a></p>
+<ul>
+<li>Select elements based on one field’s value: <code>jq 'select(.field==value)'</code></li>
+<li>Keep only desired fields: <code>jq '{id: .id, title: .title}'</code></li>
+<li>Write in TSV: <code>jq '.array | @tsv'</code></li>
+</ul>
 </div>
 <div id="gnu-screen" class="section level2">
 <h2>GNU screen</h2>

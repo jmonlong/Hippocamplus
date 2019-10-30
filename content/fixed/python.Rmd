@@ -429,3 +429,24 @@ for id, val in enumerate(myList):
 	print(id, val)
 ~~~
 
+## Jupyter notebooks
+
+- `%%capture` at the beginning of a cell means the stdout/stderr will be captured (i.e. not shown).
+- `!pip install XXX` to install packages.
+
+The main keyboard shortcuts I use:
+
+- `Ctrl+Enter` run cell.
+- `Shift+Enter` run cell and select below.
+- `b` insert cell below.
+- Switch cell mode to:
+   - `y` code.
+   - `m` markdown.
+   - `1` to heading 1
+- `d d` delete cell. Undo cell deletion with `z`.
+- `i i` interrupt kernel.
+- `0 0` restart kernel.
+- `h` Show keyboard help.
+- In edit mode
+   - `Ctrl+]` (`[`) indent (deindent)
+   - `Ctrl+Shift+-` split cell
