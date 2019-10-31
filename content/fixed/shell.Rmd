@@ -244,7 +244,14 @@ The spacing is quite important, and the conditions can be built with:
 + `-r` file readable.
 
 
-## Convert PDF 
+## Convert files
+
+### Misc
+
+- SVG to PDF: `inkscape --file=in.svg --export-area-drawing --without-gui --export-pdf=out.pdf`
+- Video to mp3: `ffmpeg -i in.m4a -acodec mp3 -ac 2 -ab 192k out.mp3`
+
+### PDF 
 
 #### to EPS
 
@@ -300,6 +307,8 @@ To run in the folder with the `Dockerfile`.
 ~~~sh
 docker build -t jmonlong/popsv-docker .
 ~~~
+
+Ignore (big) files fro the build context using a `.dockerignore` file.
 
 #### Launch a docker instance
 
@@ -379,7 +388,3 @@ LABEL=Elements none ntfs rw,auto,nobrowse
 *Note: If there are spaces in the label, replace them by `\040`.*
 
 The disk can then be accessed through the *Volumes* folder (`/Volumes`).
-
-## ffmpeg
-
-To convert to MP3: `ffmpeg -i my.m4a -acodec mp3 -ac 2 -ab 192k my.mp3`

@@ -252,7 +252,10 @@
 <li><a href="#variables">Variables</a></li>
 <li><a href="#if-then-else">If Then Else</a></li>
 </ul></li>
-<li><a href="#convert-pdf">Convert PDF</a></li>
+<li><a href="#convert-files">Convert files</a><ul>
+<li><a href="#misc-1">Misc</a></li>
+<li><a href="#pdf">PDF</a></li>
+</ul></li>
 <li><a href="#docker-cheatsheet">Docker cheatsheet</a></li>
 <li><a href="#makefile">Makefile</a></li>
 <li><a href="#modules">Modules</a></li>
@@ -260,7 +263,6 @@
 <li><a href="#mount-server">Mount server</a></li>
 <li><a href="#setup-wd-elements-external-hard-drive">Setup WD Elements external hard drive</a></li>
 </ul></li>
-<li><a href="#ffmpeg">ffmpeg</a></li>
 </ul>
 </div>
 
@@ -457,8 +459,17 @@ fi</code></pre>
 </ul>
 </div>
 </div>
-<div id="convert-pdf" class="section level2">
-<h2>Convert PDF</h2>
+<div id="convert-files" class="section level2">
+<h2>Convert files</h2>
+<div id="misc-1" class="section level3">
+<h3>Misc</h3>
+<ul>
+<li>SVG to PDF: <code>inkscape --file=in.svg --export-area-drawing --without-gui --export-pdf=out.pdf</code></li>
+<li>Video to mp3: <code>ffmpeg -i in.m4a -acodec mp3 -ac 2 -ab 192k out.mp3</code></li>
+</ul>
+</div>
+<div id="pdf" class="section level3">
+<h3>PDF</h3>
 <div id="to-eps" class="section level4">
 <h4>to EPS</h4>
 <p>I ended up using Inkscape in command-line mode. The result is not so bad (better than the <code>pdf2eps</code> etc).</p>
@@ -479,6 +490,7 @@ Another way to check for problems is to look at the <em>emb</em> column of <code
 <p><em>Note: this is based only on my one-time experience with the PDF of my thesis.</em></p>
 </div>
 </div>
+</div>
 <div id="docker-cheatsheet" class="section level2">
 <h2>Docker cheatsheet</h2>
 <p>I’m still learning Docker but here are commands/parameters that seem relevant for me:</p>
@@ -492,6 +504,7 @@ Another way to check for problems is to look at the <em>emb</em> column of <code
 </ul>
 <p>To run in the folder with the <code>Dockerfile</code>.</p>
 <pre class="sh"><code>docker build -t jmonlong/popsv-docker .</code></pre>
+<p>Ignore (big) files fro the build context using a <code>.dockerignore</code> file.</p>
 </div>
 <div id="launch-a-docker-instance" class="section level4">
 <h4>Launch a docker instance</h4>
@@ -553,10 +566,6 @@ module load jmonlong/emacs</code></pre>
 <p><em>Note: If there are spaces in the label, replace them by <code>\040</code>.</em></p>
 <p>The disk can then be accessed through the <em>Volumes</em> folder (<code>/Volumes</code>).</p>
 </div>
-</div>
-<div id="ffmpeg" class="section level2">
-<h2>ffmpeg</h2>
-<p>To convert to MP3: <code>ffmpeg -i my.m4a -acodec mp3 -ac 2 -ab 192k my.mp3</code></p>
 </div>
 
 </div>
