@@ -175,6 +175,13 @@ With *LINK*:
 - `file:projects.org::*task title` Org file with heading search.
 - `doi:XX.XXXX/XXX`
 
+To define tags/shortcuts, for example Google Map search using `[[gmap:UCSC, Santa Cruz][UCSC]]`, add to `.emacs`:
+
+~~~lisp
+(setq org-link-abbrev-alist
+      '(("gmap"      . "http://maps.google.com/maps?q=%s")))
+~~~
+
 ## Tags
 
 - Set/edit tag: `C-c C-q`

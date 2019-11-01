@@ -192,6 +192,9 @@ To switch on syntax highlighting, add to <code>.emacs</code>:</p>
 <li><code>file:projects.org::*task title</code> Org file with heading search.</li>
 <li><code>doi:XX.XXXX/XXX</code></li>
 </ul>
+<p>To define tags/shortcuts, for example Google Map search using <code>[[gmap:UCSC, Santa Cruz][UCSC]]</code>, add to <code>.emacs</code>:</p>
+<pre class="lisp"><code>(setq org-link-abbrev-alist
+      &#39;((&quot;gmap&quot;      . &quot;http://maps.google.com/maps?q=%s&quot;)))</code></pre>
 </div>
 <div id="tags" class="section level2">
 <h2>Tags</h2>
