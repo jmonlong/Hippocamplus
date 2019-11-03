@@ -478,6 +478,20 @@ To switch on syntax highlighting, add to <code>.emacs</code>:</p>
           )
         )
       )</code></pre>
+<p>I also changed the way tasks are displayed in the agenda view.
+Instead of showing the filename where the task resides, I show the first characters of the parent heading.
+That way I can use short and generic task names and still understand it in the agenda.
+No need to repeat the context in the task name anymore.
+I added in my <code>.emacs</code>:</p>
+<pre class="lisp"><code>;; Prefix tasks with parent heading
+(defun getlasthead ()
+  (let ((x (nth 0 (last (org-get-outline-path)))))
+    (if x
+    (if (&gt; (string-width x) 12)
+        (concat &quot;[&quot; (org-format-outline-path (list (substring x 0 12))) &quot;]&quot;)
+      (concat &quot;[&quot; (org-format-outline-path (list x)) &quot;]&quot;))
+      &quot;&quot;)))
+(setq org-agenda-prefix-format &quot; %i %-15(getlasthead)%?-12t% s &quot;)</code></pre>
 </div>
 
 </div>

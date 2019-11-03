@@ -234,3 +234,21 @@ I either want to know the tasks and events for the day, or just the events for t
         )
       )
 ~~~
+
+I also changed the way tasks are displayed in the agenda view.
+Instead of showing the filename where the task resides, I show the first characters of the parent heading.
+That way I can use short and generic task names and still understand it in the agenda. 
+No need to repeat the context in the task name anymore.
+I added in my `.emacs`:
+
+~~~lisp
+;; Prefix tasks with parent heading
+(defun getlasthead ()
+  (let ((x (nth 0 (last (org-get-outline-path)))))
+    (if x
+	(if (> (string-width x) 12)
+	    (concat "[" (org-format-outline-path (list (substring x 0 12))) "]")
+	  (concat "[" (org-format-outline-path (list x)) "]"))
+      "")))
+(setq org-agenda-prefix-format " %i %-15(getlasthead)%?-12t% s ")
+~~~
