@@ -1,0 +1,2 @@
+- `gi2019-core-tweets-retweets.tsv` contains tweets/retweets containing the `#gi2019` hashtag and from people that tweeted at least once with the hashtag.
+- `gi2019-core-favorites.tsv` contains the IDs of users (who tweeted at least once with the conf hashtag) that favorited a `#gi2019` tweet.
