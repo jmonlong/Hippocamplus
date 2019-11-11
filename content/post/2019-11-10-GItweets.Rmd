@@ -1,0 +1,184 @@
+---
+title: Tweet network from Genome Informatics 2019
+date: 2019-11-10
+tags: ["plot", "R"]
+slug: gi2019-tweetnetwork
+---
+
+```{r include=FALSE}
+knitr::opts_chunk$set(fig.width=10, echo=FALSE, message=FALSE, warning=FALSE)
+```
+
+I want to have a quick look at the tweets from the Genome Informatics meeting:
+
+- to learn how to use the [rtweet](https://rtweet.info/) and [ggraph](https://ggraph.data-imaginist.com/index.html) R packages.
+- to create a visual representation (as nice as possible) of our open community, with attendants sharing with each other.
+- to highlight the high-volume accounts and their value even for someone attending the conference.
+- to see if there are sub-groups of researchers among the attendants.
+
+There is already a comprehensive post about the tweets at this conference (see [lazappi's Twitter stats](https://lazappi.github.io/twitter-stats/gi2019.html)).
+Here, I'm trying to visualize the **network of researchers at the conference** (or interested enough to tweet about it) and **how they retweeted/favorited each other's tweets**.
+Some sort of measure of who values whose tweets among the attendants.
+With this network, I hope to highlight that the high-volume accounts at the conference are also valuable for people attending the conference.
+I'm also curious to see if some sub-groups appear.
+
+**All the analysis/numbers are derived only from accounts that tweeted at least once the conference hashtag `#gi2019`**. 
+This was a way to mostly look at twitter-active people attending the conference.
+Of course anyone can use the hashtag so it also includes people that didn't attend but were interested enough to use the hashtag at least once.
+In the rest, I might say "people attending the conference" but I also mean those who twitted the hashtag at least once.
+
+```{r load}
+library(rtweet)
+library(tidygraph)
+library(ggraph)
+library(igraph)
+library(visNetwork)
+library(dplyr)
+cbPalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+
+CACHE=TRUE ## Use cache is available
+if(CACHE && file.exists('gi2019-tweets.RData')){
+  load('gi2019-tweets.RData')
+} else {
+    rt.all = search_tweets('#gi2019', n=1e4, include_rts=TRUE)
+    ## People who tweeted using the hashtag (not counting retweet or replies)
+    core = rt.all %>% filter(!is_retweet)
+    ## core %>% .$screen_name %>% unique %>% length
+
+    favs.l = list()
+    if(file.exists('gi2019-favs.RData')){
+      load('gi2019-favs.RData')
+    }     
+
+    uids = core %>% .$user_id %>% unique
+    while(length(favs.l) < length(uids)){
+      message('Favorites from ', uids[length(favs.l)+1], ' ',
+              length(favs.l)+1, '/', length(uids))
+      favs = c()
+      while(length(favs)==0){
+        favs = tryCatch(
+          get_favorites(uids[length(favs.l)+1], 500),
+          error = function(e){
+            message(e$message)
+            wait.mins = 3
+            message('Waiting ', wait.mins, 'mins')
+            Sys.sleep(60*wait.mins)
+            return(c())
+          })
+      }
+      favs = favs[sapply(favs$hashtags, function(e) 'gi2019' %in% tolower(e)),]
+      favs.l = c(favs.l, list(favs))
+      save(favs.l, file='gi2019-favs.RData')
+    }
+
+    core.favs = do.call(rbind, favs.l)
+    save(rt.all, core, core.favs, file='gi2019-tweets.RData')
+}
+```
+
+### Retweets and favorites
+
+A lot of retweets/favorites between people attending the conference!
+The high-volume accounts are in the center, super valuable for people at the conference too!
+
+```{r rt-favs-nw, fig.height=8}
+rt = rt.all %>% filter(user_id %in% core$user_id)
+tt = rt %>% filter(!is_retweet) %>% group_by(screen_name) %>% summarize(n=n())
+userToN = tt$n
+names(userToN) = tt$screen_name
+idToUser = core$screen_name
+names(idToUser) = as.character(core$user_id)
+graph.tbl = rbind(
+  rt %>% filter(is_retweet) %>% mutate(from.id=user_id, to.id=retweet_user_id, type='retweet') %>% select(from.id, to.id, type),
+  core.favs %>% mutate(from.id=favorited_by, to.id=user_id, type='favorite') %>% select(from.id, to.id, type)
+)
+graph.tbl = graph.tbl %>% group_by(from.id, to.id) %>% summarize(retweets=sum(type=='retweet'),
+                                                                 favorites=sum(type=='favorite'),
+                                                                 all=retweets+favorites) %>%
+  group_by(from.id) %>% mutate(weight=all/sum(all)) %>% 
+  mutate(from=idToUser[as.character(from.id)], to=idToUser[as.character(to.id)]) %>%
+  filter(!is.na(from), !is.na(to))
+
+graph = as_tbl_graph(graph.tbl)  %>% mutate(popularity=centrality_degree(mode='in'),
+                                            ntweets=userToN[as.character(name)])
+
+ggraph(graph, layout='mds') + 
+  geom_edge_fan(aes(alpha=weight),
+                arrow=arrow(length=unit(3, 'mm'), angle=5, type='closed'),
+                show.legend=TRUE) + 
+  geom_edge_loop(aes(alpha=weight), show.legend=TRUE) + 
+  geom_node_point(aes(size=ntweets, color=popularity)) +
+  scale_color_gradient(low=cbPalette[3], high=cbPalette[2]) + 
+  theme_graph() +
+  labs(size='number of tweets by this user',
+       color='number of tweets\nretweeted/favorited\nby other gi2019 users',
+       edge_alpha='proportion of retweet/favorites\nby this user',
+       caption='Node: user who tweeted with #gi2019. Edge A->B: User A retweeted/favorited #gi2019 tweets from user B.')
+```
+
+- Nodes are different users colored by how many other users retweeted/favorited their tweets.
+- The size of the node corresponds to the total number of original tweet by this user.
+- The edge represents retweets/favorites. `A -> B`: *A* retweeted/favorited tweets from *B*.
+- The transparency of the edge represents the proportion of the total retweets/favs from one user (*A*) that went to the other user (*B*).
+
+
+### MVP per user
+
+For each user, I **keep only one outgoing connection, the one corresponding to the most retweeted/favorited**. 
+Kind of who was the most valuable for this user, the MVP per user. 
+I'm not good with names...
+If tied, retweets are used to break the ties.
+
+*Interactive network. May take a few seconds to render. Scroll to zoom in (names appear when zooming in). Hover on nodes to see more information about a user, on edges to see the proportion of the retweets/favorites from user A that went to user B.*
+
+```{r mvp}
+graph.bf.tbl = graph.tbl %>% group_by(from) %>% arrange(desc(weight), desc(retweets)) %>%
+  do(head(.,1))
+
+graph.bf = as_tbl_graph(graph.bf.tbl)  %>% mutate(popularity=centrality_degree(mode='in'),
+                                                  ntweets=userToN[as.character(name)])
+
+data <- toVisNetworkData(graph.bf)
+data$edges = data$edges %>% mutate(title=round(weight, 3), width=10*weight)
+data$nodes = graph.tbl %>% mutate(label=from) %>% 
+  group_by(label) %>% summarize(n.rt.favs=sum(all)) %>%
+  merge(data$nodes, all.y=TRUE)
+data$nodes = graph.tbl %>% mutate(label=to) %>% 
+  group_by(label) %>% summarize(rt.favs.by=sum(all)) %>%
+  merge(data$nodes, all.y=TRUE) %>%
+  mutate(n.rt.favs=ifelse(is.na(n.rt.favs), 0, n.rt.favs),
+         rt.favs.by=ifelse(is.na(rt.favs.by), 0, rt.favs.by),
+         title=paste0('tweets:', ntweets, '; retweets/favs:', n.rt.favs,
+                      '; retweets/favs by:', rt.favs.by),
+         size=5+20*ntweets/max(ntweets))
+visNetwork(nodes=data$nodes, edges=data$edges, height="800px", width="1000px") %>%
+  visEdges(arrows=list(to=list(enabled=TRUE, scaleFactor=.5)))
+```
+
+### Methods
+
+1. Extract tweets/retweet from accounts that have tweeted at least once with the conference hashtag (`#gi2019`).
+   - Searched for `#gi2019`. Extracted accounts when excluding retweets. Kept tweet/retweets from these accounts.
+   - Easy, the *rtweet* package can easily do this type of search.
+1. Extract the recent favorited tweet for these accounts and keep all the ones with the conference hashtag.
+   - More laborious because it's not part of the search results.
+   - Also there is  a limit for the number of query per 15 mins. Had to extract some, wait and repeat.
+1. Make a network with each accounts (node) and the number of times they retweeted/favorited a tweet from someone in the set.
+   - For a pair of accounts, I summed the number of retweets and favorited tweets.
+   - The size of the edges are the relative amount of retweet/favorites for each account, i.e. the proportion of someone's GI2019 retweets/favorites that went to a particular user.
+1. Look for sub-groups
+   - I first tried to keep only one outgoing edge per node: the most retweeted/favorited GI2019 twitter account for each user.
+   - I also ran some community detection algorithms but the results weren't very informative (way too many communities, don't want to dig into them...). 
+
+### Data
+
+I made two TSV files with tweet/retweets and favorites info, available [here](https://github.com/jmonlong/Hippocamplus/tree/config/R/gi2019tweetnetwork).
+
+```{r data, include=FALSE}
+core.favs %>% select(favorited_by, user_id, status_id) %>%
+  write.table(file='gi2019-core-favorites.tsv', row.names=FALSE, sep='\t', quote=FALSE)
+rt %>% select(user_id, screen_name, status_id, is_retweet, retweet_user_id,
+              retweet_count, favorite_count) %>%
+  write.table(file='gi2019-core-tweets-retweets.tsv', row.names=FALSE, sep='\t',
+              quote=FALSE)
+```

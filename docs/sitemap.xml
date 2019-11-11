@@ -47,6 +47,11 @@
   </url>
   
   <url>
+    <loc>/Hippocamplus/2019/11/10/gi2019-tweetnetwork/</loc>
+    <lastmod>2019-11-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/Hippocamplus/2019/07/15/workflow-description-language-wdl-in-emacs/</loc>
     <lastmod>2019-07-15T00:00:00+00:00</lastmod>
   </url>
@@ -178,7 +183,7 @@
   
   <url>
     <loc>/Hippocamplus/</loc>
-    <lastmod>2019-07-15T00:00:00+00:00</lastmod>
+    <lastmod>2019-11-10T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -236,13 +241,13 @@
   
   <url>
     <loc>/Hippocamplus/tags/plot/</loc>
-    <lastmod>2018-12-08T00:00:00+00:00</lastmod>
+    <lastmod>2019-11-10T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>/Hippocamplus/post/</loc>
-    <lastmod>2019-07-15T00:00:00+00:00</lastmod>
+    <lastmod>2019-11-10T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -253,7 +258,7 @@
   
   <url>
     <loc>/Hippocamplus/tags/r/</loc>
-    <lastmod>2019-04-03T00:00:00+00:00</lastmod>
+    <lastmod>2019-11-10T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

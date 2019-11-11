@@ -6,10 +6,20 @@
     <description>Recent content in R on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 03 Apr 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 10 Nov 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/Hippocamplus/tags/r/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Tweet network from Genome Informatics 2019</title>
+      <link>/Hippocamplus/2019/11/10/gi2019-tweetnetwork/</link>
+      <pubDate>Sun, 10 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/Hippocamplus/2019/11/10/gi2019-tweetnetwork/</guid>
+      <description>I want to have a quick look at the tweets from the Genome Informatics meeting:
+ to learn how to use the rtweet and ggraph R packages. to create a visual representation (as nice as possible) of our open community, with attendants sharing with each other. to highlight the high-volume accounts and their value even for someone attending the conference. to see if there are sub-groups of researchers among the attendants.</description>
+    </item>
     
     <item>
       <title>Cancer genes and CNA hotspots</title>

@@ -1,0 +1,123 @@
+---
+title: BBC Horizon interviews of Richard Feynman
+date: 2019-08-01
+draft: true
+tags: ["science"]
+output:
+  blogdown::html_page:
+    toc: true
+---
+
+Some notes from two short BBC Horizon documentaries on [Richard Feynman](https://en.wikipedia.org/wiki/Richard_Feynman): 
+
+- [*The Pleasure of Finding Things Out*](https://www.bbc.co.uk/programmes/p018dvyg) (1981)
+- *No Ordinary Genius Richard Feynman* (1993)
+
+## Metaphors
+
+Richard Feynman used a few great metaphors in his interviews.
+For example, on what it's like to study science:
+
+- multiple people are diving into a pool and we are an insect trying to figure it out from the waves in the pool.
+- gods is playing chess and we are watching the board (sometimes) and trying to understand the rules.
+
+## Advice for researchers
+
+**Keep an open mind.**
+When facing a problem, he was good at going back to thinking like a child, ignoring what everybody else thinks. 
+It goes hand in hand with the importance of humility, something that is clear with him.
+That also explains why he was so suspicious of "experts".
+
+**Experiment.**
+Follow the scientific process, no matter how elegant an hypothesis is or how much you like it.
+
+> If it disagrees with experiment, it's wrong. 
+
+**Get involve publicly in matters that are important to you.**
+For example, he was hesitant to join the committee in charge of investigating the Challenger shuttle explosion.
+A discussion with his wife (??) made him realize that it's something that he could really help, potentially better than another, hence that he actually felt he should get involved.
+
+**Keep a creative mind.**
+He advocates being able to see the world with both a emotional and curious eye.
+There is a discussion about how his artist friend or him see a flower and Feynman conclusion seems to be that he can see the different layers of beauty.
+He used to draw quite a lot, including dancers in strip-clubs.
+He also played the bongo drums (?).
+Many researchers were slightly annoyed that he spend so much of his time on his artistic hobbies "wasting his genius".
+
+**Don't hesitate to study things for the fun of it.**
+He was very curious about everything and every problem.
+He followed what interested him even if some people were suggesting he study more "important" problems.
+
+**Self-actualize constantly.**
+I'm actually not sure about the *self-actualize* but I mean it in the sense of taking a break and thinking about what we're doing.
+One of the thing Feynman regretted is how the Manhattan projects evolved. 
+It started as an essential project during the war that he supported strongly.
+With time he forgot his original moral reason and didn't realize when they changed.
+At the end, he was a bit depressed and had a hard time imagining a world with atomic bombs.
+He had a fatalistic view, expecting that everything would be destroyed by bombs.
+
+**Dedicate solid, undistracted, time for research.**
+This might be one of the most important advice for a scientist now.
+It's so easy to get distracted, now more than ever.
+
+> To do real good physics work you do need absolute solid length of time.
+
+## Inspiration for scientists
+
+A few inspiring quotes from the interviews:
+
+> The prize is the pleasure of finding the thing out, the kick of the discovery, the observation of the people using it. [...] I don't like honors.
+
+> We are never right, we can only be sure we're wrong.
+
+> Reality must take precedence over public relations, for Nature cannot be fooled.
+
+> It doesn't frighten me not to know.
+
+## On teaching
+
+He talks a lot about how he learned to be curious and a good scientist.
+He's also an extraordinary orator although as someone says in the documentary:
+
+FIND EXACT QUOTE "All the things that were so clear when listening to him, were difficult to come back because we were missing his train of thoughts"
+
+Since he was a kid he learned the importance of ideas and concepts rather than knowing the names or numbers.
+For example, when his father was reading a book that described animals or objects at difference scales, he used to picture them in the real world or make comparison with the real world so that they could imagine it.
+Instead of just reading the numbers, he would imagine the head of the T-rex in the bedroom for example.
+His father also taught him about focusing on things rather than their names:
+
+> He knew the difference between knowing the name of something and knowing something.
+
+Things have hundreds of names, e.g. in different languages, but even if you know them all you still know very little about the thing, just what humans call it.
+
+His philosophy of teaching is to have no philosophy, to be chaotic!
+Game with his son to make up story from odd points of view, e.g. stories about tiny people.
+Although this worked with his son, his daughter didn't like that particularly. 
+There is no magic recipe, a teacher should try different things and see what works.
+
+## Opinions
+
+### About honors/awards
+
+He didn't like honors although he accepted his Nobel prize (mostly because it would make is mother happy??)
+In the same way he disapproves of many of the activities of committees or Societies that spend a large amount of time discussing who else should join their club.
+Who cares.
+
+### About religions
+
+> I can't believe the special stories that have been made up about our relationship to the universe at large because they seem to be too simple, too local, too provincial.
+
+Although he doesn't believe, he doesn't try to change religious people's mind.
+
+> It's no use arguing.
+
+For him it's too difficult to believe: how are you supposed to find out the truth?
+And if you're religious and you start doubting, you're on a slippery slope.
+
+> It's much more interesting to live not knowing than to have answers that might be wrong.
+
+### About the different sciences
+
+Not all sciences are doing science according to him:
+
+> Social sciences is an example of a science which is not a science.

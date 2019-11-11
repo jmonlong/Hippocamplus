@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Tweet network from Genome Informatics 2019 &middot; Hippocamplus
+    
+  </title>
+
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113785126-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    
+    gtag('config', "UA-113785126-1");
+  </script>
+  
+  
+  <link rel="stylesheet" href="../../../../css/poole.css">
+  <link rel="stylesheet" href="../../../../css/syntax.css">
+  <link rel="stylesheet" href="../../../../css/lanyon.css">
+  <link rel="stylesheet" href="../../../../css/idea.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
+  <link rel="stylesheet" href="../../../../fa/css/font-awesome.min.css">
+  
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../../../assets/hippoPlus-icon.png">
+  <link rel="shortcut icon" href="../../../../assets/hippoPlus-icon.png">
+
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="../../../../atom.xml">
+</head>
+
+  
+  <body>
+
+    
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>A place to gather useful information I keep on forgetting.</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item " href="../../../../">Home</a>
+    <a class="sidebar-nav-item " href="../../../../post">Posts</a>
+
+    
+    
+      
+        <a class="sidebar-nav-item " href="../../../../emacs/">Emacs</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../expression/">Expression</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../latex/">LaTeX</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../markdown/">Markdown</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../math/stats/">Math/Stats</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../org-mode/">Org mode</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../python/">Python</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../r/">R</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../shell/">Shell</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../internet/">Internet</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../../../about/">About</a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+    
+  </nav>
+
+  <div class="sidebar-item">
+  </div>
+  
+  <div class="sidebar-item">
+    <div><a href="../../../../index.xml"><i class="fa fa-rss-square" aria-hidden="true"></i> RSS</a></div>
+    <div><a href="https://twitter.com/JMonlong"><i class="fa fa-twitter" aria-hidden="true"></i> @JMonlong</a></div>
+    <p>&copy; 2019 Jean Monlong. All rights reserved.</p>
+  </div>
+</div>
+
+
+    
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="../../../../" title="Home">Hippocamplus</a>
+            <small>My Second Memory</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+
+
+<div class="post">
+  <h1 class="post-title">Tweet network from Genome Informatics 2019</h1>
+  <span class="post-date">Nov 10 2019
+  
+  
+  
+  
+  
+  <a href='../../../../tags/plot/' class='label'>plot</a>
+  
+  <a href='../../../../tags/r/' class='label'>R</a>
+  
+  
+  
+  </span>
+  
+<script src="../../../../rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
+<link href="../../../../rmarkdown-libs/vis/vis.css" rel="stylesheet" />
+<script src="../../../../rmarkdown-libs/vis/vis.min.js"></script>
+<script src="../../../../rmarkdown-libs/visNetwork-binding/visNetwork.js"></script>
+
+
+<p>I want to have a quick look at the tweets from the Genome Informatics meeting:</p>
+<ul>
+<li>to learn how to use the <a href="https://rtweet.info/">rtweet</a> and <a href="https://ggraph.data-imaginist.com/index.html">ggraph</a> R packages.</li>
+<li>to create a visual representation (as nice as possible) of our open community, with attendants sharing with each other.</li>
+<li>to highlight the high-volume accounts and their value even for someone attending the conference.</li>
+<li>to see if there are sub-groups of researchers among the attendants.</li>
+</ul>
+<p>There is already a comprehensive post about the tweets at this conference (see <a href="https://lazappi.github.io/twitter-stats/gi2019.html">lazappi’s Twitter stats</a>).
+Here, I’m trying to visualize the <strong>network of researchers at the conference</strong> (or interested enough to tweet about it) and <strong>how they retweeted/favorited each other’s tweets</strong>.
+Some sort of measure of who values whose tweets among the attendants.
+With this network, I hope to highlight that the high-volume accounts at the conference are also valuable for people attending the conference.
+I’m also curious to see if some sub-groups appear.</p>
+<p><strong>All the analysis/numbers are derived only from accounts that tweeted at least once the conference hashtag <code>#gi2019</code></strong>.
+This was a way to mostly look at twitter-active people attending the conference.
+Of course anyone can use the hashtag so it also includes people that didn’t attend but were interested enough to use the hashtag at least once.
+In the rest, I might say “people attending the conference” but I also mean those who twitted the hashtag at least once.</p>
+<div id="retweets-and-favorites" class="section level3">
+<h3>Retweets and favorites</h3>
+<p>A lot of retweets/favorites between people attending the conference!
+The high-volume accounts are in the center, super valuable for people at the conference too!</p>
+<p><img src="../../../../post/2019-11-10-GItweets_files/figure-html/rt-favs-nw-1.png" width="960" /></p>
+<ul>
+<li>Nodes are different users colored by how many other users retweeted/favorited their tweets.</li>
+<li>The size of the node corresponds to the total number of original tweet by this user.</li>
+<li>The edge represents retweets/favorites. <code>A -&gt; B</code>: <em>A</em> retweeted/favorited tweets from <em>B</em>.</li>
+<li>The transparency of the edge represents the proportion of the total retweets/favs from one user (<em>A</em>) that went to the other user (<em>B</em>).</li>
+</ul>
+</div>
+<div id="mvp-per-user" class="section level3">
+<h3>MVP per user</h3>
+<p>For each user, I <strong>keep only one outgoing connection, the one corresponding to the most retweeted/favorited</strong>.
+Kind of who was the most valuable for this user, the MVP per user.
+I’m not good with names…
+If tied, retweets are used to break the ties.</p>
+<p><em>Interactive network. May take a few seconds to render. Scroll to zoom in (names appear when zooming in). Hover on nodes to see more information about a user, on edges to see the proportion of the retweets/favorites from user A that went to user B.</em></p>
+<div id="htmlwidget-1" style="width:1000px;height:800px;" class="visNetwork html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"nodes":{"label":["__yoson__","_bakshay","_lazappi_","aaronquinlan","ACSCevents","AdamJOrr","Ahmed_Microbes","ahmedElkoussy","alaina_shumate","alexwoolley","AliciaOshlack","anaconesa","AndrewBCaldwell","AP_Boyle","aphillippy","ArangRhie","BenLangmead","BillHanage","BioinfoTools","bnlasse","byuhobbes","camerongenomics","CChujia","chrisamiller","cshlmeetings","CuriousMaia","David_McGaughey","DCGenomics","deannachurch","dgmacarthur","DNAwyman","dsurujon","DUNQU1","envisagenics","FadelBerkadar","FairlieReese","Gavin_Oliver","GeneviaLtd","GenomeAssembler","GenomeBiology","GenomeInABottle","genomicscloud","giuliaguidi","gkay92","gnarzisi","GrameneDatabase","groza_cristian","guilbourque","hdashnow","HeiniMNatri","hjpimentel","HKhiabanian","hpcprogrammer","IanFiddes","iddux","infoecho","jake_vancampen","JaneAnnPulman","JasonWilliamsNY","JMonlong","JonathanGoeke","jordanberg0","k3yavi","KadashKate","KarineLeRoch1","kasukawa","Kiss_RNA_Lab","KitRidout","KMS_Meltzy","kuthedk","KVittingSeerup","LaurenCowley4","lh3lh3","lizworthey","lpachter","Magdoll","mahtabm81","marianattestad","MarkGerstein","megbowman","michaelhoffman","michelebusby","milot_mirdita","MinionLab","natalicik","NeBanovich","nephantes","nimra236","noush_joglekar","ObsGynaeCam","OnixHealth","pathogenomenick","pmelsted","pouryany","RareSeas","Repealist_","s_ramach","sailakss","samstudio8","sedlazeck","SeriousHorncat","SevenBridges","sexchrlab","si_hardwick","sienkieee","sinabooeshaghi","starfishlu","StevenSalzberg1","sunggong","sz_genomics","thesteinegger","timp0","TTTrinh16","TwilightForce1","vladimir_tomic","wait_sasha","winhide","YiXing77","zevkronenberg"],"rt.favs.by":[37,3,20,22,20,5,3,2,4,4,229,28,2,4,60,28,53,17,0,64,220,5,7,106,51,9,34,19,10,10,3,5,4,6,0,21,2,6,5,181,10,1,5,3,10,2,3,3,215,15,27,6,3,2,65,88,2,3,37,4,1,4,14,2,10,16,2,1,7,2,2,2,37,214,181,185,1,2,6,5,17,7,9,6,7,1,12,27,30,1,2,96,110,0,4,17,2,3,70,36,18,5,94,17,7,11,8,65,1,17,16,0,9,1,10,2,2,28,1],"n.rt.favs":[31,10,11,42,1,60,50,13,6,2,203,40,3,3,23,8,48,5,3,73,132,14,7,21,25,20,2,64,3,6,10,11,15,3,19,10,4,5,5,50,3,7,130,17,13,9,14,2,103,18,87,7,49,7,17,52,6,13,289,14,7,58,56,14,60,14,3,2,3,4,14,45,3,68,40,13,3,5,83,17,26,8,15,11,8,11,5,23,24,2,1,58,5,1,132,15,23,34,52,67,45,1,77,11,5,30,7,19,3,40,12,16,3,1,6,31,5,42,6],"id":["__yoson__","_bakshay","_lazappi_","aaronquinlan","ACSCevents","AdamJOrr","Ahmed_Microbes","ahmedElkoussy","alaina_shumate","alexwoolley","AliciaOshlack","anaconesa","AndrewBCaldwell","AP_Boyle","aphillippy","ArangRhie","BenLangmead","BillHanage","BioinfoTools","bnlasse","byuhobbes","camerongenomics","CChujia","chrisamiller","cshlmeetings","CuriousMaia","David_McGaughey","DCGenomics","deannachurch","dgmacarthur","DNAwyman","dsurujon","DUNQU1","envisagenics","FadelBerkadar","FairlieReese","Gavin_Oliver","GeneviaLtd","GenomeAssembler","GenomeBiology","GenomeInABottle","genomicscloud","giuliaguidi","gkay92","gnarzisi","GrameneDatabase","groza_cristian","guilbourque","hdashnow","HeiniMNatri","hjpimentel","HKhiabanian","hpcprogrammer","IanFiddes","iddux","infoecho","jake_vancampen","JaneAnnPulman","JasonWilliamsNY","JMonlong","JonathanGoeke","jordanberg0","k3yavi","KadashKate","KarineLeRoch1","kasukawa","Kiss_RNA_Lab","KitRidout","KMS_Meltzy","kuthedk","KVittingSeerup","LaurenCowley4","lh3lh3","lizworthey","lpachter","Magdoll","mahtabm81","marianattestad","MarkGerstein","megbowman","michaelhoffman","michelebusby","milot_mirdita","MinionLab","natalicik","NeBanovich","nephantes","nimra236","noush_joglekar","ObsGynaeCam","OnixHealth","pathogenomenick","pmelsted","pouryany","RareSeas","Repealist_","s_ramach","sailakss","samstudio8","sedlazeck","SeriousHorncat","SevenBridges","sexchrlab","si_hardwick","sienkieee","sinabooeshaghi","starfishlu","StevenSalzberg1","sunggong","sz_genomics","thesteinegger","timp0","TTTrinh16","TwilightForce1","vladimir_tomic","wait_sasha","winhide","YiXing77","zevkronenberg"],"popularity":[1,0,1,0,0,0,0,0,0,0,11,2,0,0,0,1,1,0,0,4,9,0,0,2,2,0,2,1,1,0,0,0,0,0,0,0,0,0,0,8,0,0,0,0,0,0,0,0,11,0,0,0,0,0,3,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,8,12,0,1,0,0,0,0,1,0,0,0,0,2,0,0,0,3,1,0,1,1,0,0,1,1,0,1,8,0,0,1,0,0,0,0,2,0,2,1,1,0,0,1,0],"ntweets":[8,1,4,1,1,2,4,1,1,1,39,11,1,2,3,2,2,5,2,32,262,2,1,33,3,3,16,9,2,1,1,2,5,2,1,3,1,4,2,155,1,1,1,1,1,1,4,1,49,4,5,3,2,1,24,14,3,1,7,1,2,1,4,1,2,34,1,1,1,1,1,1,1,274,42,111,1,1,4,1,4,1,3,2,5,1,6,2,9,1,2,11,60,1,4,10,2,1,9,6,6,1,15,6,2,2,2,9,1,4,6,1,1,1,2,1,2,10,1],"title":["tweets:8; retweets/favs:31; retweets/favs by:37","tweets:1; retweets/favs:10; retweets/favs by:3","tweets:4; retweets/favs:11; retweets/favs by:20","tweets:1; retweets/favs:42; retweets/favs by:22","tweets:1; retweets/favs:1; retweets/favs by:20","tweets:2; retweets/favs:60; retweets/favs by:5","tweets:4; retweets/favs:50; retweets/favs by:3","tweets:1; retweets/favs:13; retweets/favs by:2","tweets:1; retweets/favs:6; retweets/favs by:4","tweets:1; retweets/favs:2; retweets/favs by:4","tweets:39; retweets/favs:203; retweets/favs by:229","tweets:11; retweets/favs:40; retweets/favs by:28","tweets:1; retweets/favs:3; retweets/favs by:2","tweets:2; retweets/favs:3; retweets/favs by:4","tweets:3; retweets/favs:23; retweets/favs by:60","tweets:2; retweets/favs:8; retweets/favs by:28","tweets:2; retweets/favs:48; retweets/favs by:53","tweets:5; retweets/favs:5; retweets/favs by:17","tweets:2; retweets/favs:3; retweets/favs by:0","tweets:32; retweets/favs:73; retweets/favs by:64","tweets:262; retweets/favs:132; retweets/favs by:220","tweets:2; retweets/favs:14; retweets/favs by:5","tweets:1; retweets/favs:7; retweets/favs by:7","tweets:33; retweets/favs:21; retweets/favs by:106","tweets:3; retweets/favs:25; retweets/favs by:51","tweets:3; retweets/favs:20; retweets/favs by:9","tweets:16; retweets/favs:2; retweets/favs by:34","tweets:9; retweets/favs:64; retweets/favs by:19","tweets:2; retweets/favs:3; retweets/favs by:10","tweets:1; retweets/favs:6; retweets/favs by:10","tweets:1; retweets/favs:10; retweets/favs by:3","tweets:2; retweets/favs:11; retweets/favs by:5","tweets:5; retweets/favs:15; retweets/favs by:4","tweets:2; retweets/favs:3; retweets/favs by:6","tweets:1; retweets/favs:19; retweets/favs by:0","tweets:3; retweets/favs:10; retweets/favs by:21","tweets:1; retweets/favs:4; retweets/favs by:2","tweets:4; retweets/favs:5; retweets/favs by:6","tweets:2; retweets/favs:5; retweets/favs by:5","tweets:155; retweets/favs:50; retweets/favs by:181","tweets:1; retweets/favs:3; retweets/favs by:10","tweets:1; retweets/favs:7; retweets/favs by:1","tweets:1; retweets/favs:130; retweets/favs by:5","tweets:1; retweets/favs:17; retweets/favs by:3","tweets:1; retweets/favs:13; retweets/favs by:10","tweets:1; retweets/favs:9; retweets/favs by:2","tweets:4; retweets/favs:14; retweets/favs by:3","tweets:1; retweets/favs:2; retweets/favs by:3","tweets:49; retweets/favs:103; retweets/favs by:215","tweets:4; retweets/favs:18; retweets/favs by:15","tweets:5; retweets/favs:87; retweets/favs by:27","tweets:3; retweets/favs:7; retweets/favs by:6","tweets:2; retweets/favs:49; retweets/favs by:3","tweets:1; retweets/favs:7; retweets/favs by:2","tweets:24; retweets/favs:17; retweets/favs by:65","tweets:14; retweets/favs:52; retweets/favs by:88","tweets:3; retweets/favs:6; retweets/favs by:2","tweets:1; retweets/favs:13; retweets/favs by:3","tweets:7; retweets/favs:289; retweets/favs by:37","tweets:1; retweets/favs:14; retweets/favs by:4","tweets:2; retweets/favs:7; retweets/favs by:1","tweets:1; retweets/favs:58; retweets/favs by:4","tweets:4; retweets/favs:56; retweets/favs by:14","tweets:1; retweets/favs:14; retweets/favs by:2","tweets:2; retweets/favs:60; retweets/favs by:10","tweets:34; retweets/favs:14; retweets/favs by:16","tweets:1; retweets/favs:3; retweets/favs by:2","tweets:1; retweets/favs:2; retweets/favs by:1","tweets:1; retweets/favs:3; retweets/favs by:7","tweets:1; retweets/favs:4; retweets/favs by:2","tweets:1; retweets/favs:14; retweets/favs by:2","tweets:1; retweets/favs:45; retweets/favs by:2","tweets:1; retweets/favs:3; retweets/favs by:37","tweets:274; retweets/favs:68; retweets/favs by:214","tweets:42; retweets/favs:40; retweets/favs by:181","tweets:111; retweets/favs:13; retweets/favs by:185","tweets:1; retweets/favs:3; retweets/favs by:1","tweets:1; retweets/favs:5; retweets/favs by:2","tweets:4; retweets/favs:83; retweets/favs by:6","tweets:1; retweets/favs:17; retweets/favs by:5","tweets:4; retweets/favs:26; retweets/favs by:17","tweets:1; retweets/favs:8; retweets/favs by:7","tweets:3; retweets/favs:15; retweets/favs by:9","tweets:2; retweets/favs:11; retweets/favs by:6","tweets:5; retweets/favs:8; retweets/favs by:7","tweets:1; retweets/favs:11; retweets/favs by:1","tweets:6; retweets/favs:5; retweets/favs by:12","tweets:2; retweets/favs:23; retweets/favs by:27","tweets:9; retweets/favs:24; retweets/favs by:30","tweets:1; retweets/favs:2; retweets/favs by:1","tweets:2; retweets/favs:1; retweets/favs by:2","tweets:11; retweets/favs:58; retweets/favs by:96","tweets:60; retweets/favs:5; retweets/favs by:110","tweets:1; retweets/favs:1; retweets/favs by:0","tweets:4; retweets/favs:132; retweets/favs by:4","tweets:10; retweets/favs:15; retweets/favs by:17","tweets:2; retweets/favs:23; retweets/favs by:2","tweets:1; retweets/favs:34; retweets/favs by:3","tweets:9; retweets/favs:52; retweets/favs by:70","tweets:6; retweets/favs:67; retweets/favs by:36","tweets:6; retweets/favs:45; retweets/favs by:18","tweets:1; retweets/favs:1; retweets/favs by:5","tweets:15; retweets/favs:77; retweets/favs by:94","tweets:6; retweets/favs:11; retweets/favs by:17","tweets:2; retweets/favs:5; retweets/favs by:7","tweets:2; retweets/favs:30; retweets/favs by:11","tweets:2; retweets/favs:7; retweets/favs by:8","tweets:9; retweets/favs:19; retweets/favs by:65","tweets:1; retweets/favs:3; retweets/favs by:1","tweets:4; retweets/favs:40; retweets/favs by:17","tweets:6; retweets/favs:12; retweets/favs by:16","tweets:1; retweets/favs:16; retweets/favs by:0","tweets:1; retweets/favs:3; retweets/favs by:9","tweets:1; retweets/favs:1; retweets/favs by:1","tweets:2; retweets/favs:6; retweets/favs by:10","tweets:1; retweets/favs:31; retweets/favs by:2","tweets:2; retweets/favs:5; retweets/favs by:2","tweets:10; retweets/favs:42; retweets/favs by:28","tweets:1; retweets/favs:6; retweets/favs by:1"],"size":[5.58394160583942,5.07299270072993,5.29197080291971,5.07299270072993,5.07299270072993,5.14598540145985,5.29197080291971,5.07299270072993,5.07299270072993,5.07299270072993,7.84671532846715,5.8029197080292,5.07299270072993,5.14598540145985,5.21897810218978,5.14598540145985,5.14598540145985,5.36496350364964,5.14598540145985,7.33576642335766,24.1240875912409,5.14598540145985,5.07299270072993,7.40875912408759,5.21897810218978,5.21897810218978,6.16788321167883,5.65693430656934,5.14598540145985,5.07299270072993,5.07299270072993,5.14598540145985,5.36496350364964,5.14598540145985,5.07299270072993,5.21897810218978,5.07299270072993,5.29197080291971,5.14598540145985,16.3138686131387,5.07299270072993,5.07299270072993,5.07299270072993,5.07299270072993,5.07299270072993,5.07299270072993,5.29197080291971,5.07299270072993,8.57664233576642,5.29197080291971,5.36496350364964,5.21897810218978,5.14598540145985,5.07299270072993,6.75182481751825,6.02189781021898,5.21897810218978,5.07299270072993,5.51094890510949,5.07299270072993,5.14598540145985,5.07299270072993,5.29197080291971,5.07299270072993,5.14598540145985,7.48175182481752,5.07299270072993,5.07299270072993,5.07299270072993,5.07299270072993,5.07299270072993,5.07299270072993,5.07299270072993,25,8.06569343065693,13.1021897810219,5.07299270072993,5.07299270072993,5.29197080291971,5.07299270072993,5.29197080291971,5.07299270072993,5.21897810218978,5.14598540145985,5.36496350364964,5.07299270072993,5.43795620437956,5.14598540145985,5.65693430656934,5.07299270072993,5.14598540145985,5.8029197080292,9.37956204379562,5.07299270072993,5.29197080291971,5.72992700729927,5.14598540145985,5.07299270072993,5.65693430656934,5.43795620437956,5.43795620437956,5.07299270072993,6.0948905109489,5.43795620437956,5.14598540145985,5.14598540145985,5.14598540145985,5.65693430656934,5.07299270072993,5.29197080291971,5.43795620437956,5.07299270072993,5.07299270072993,5.07299270072993,5.14598540145985,5.07299270072993,5.14598540145985,5.72992700729927,5.07299270072993]},"edges":{"from":["__yoson__","_bakshay","_lazappi_","aaronquinlan","ACSCevents","AdamJOrr","Ahmed_Microbes","ahmedElkoussy","alaina_shumate","alexwoolley","AliciaOshlack","anaconesa","AndrewBCaldwell","AP_Boyle","aphillippy","ArangRhie","BenLangmead","BillHanage","BioinfoTools","bnlasse","byuhobbes","camerongenomics","CChujia","chrisamiller","cshlmeetings","CuriousMaia","David_McGaughey","DCGenomics","deannachurch","dgmacarthur","DNAwyman","dsurujon","DUNQU1","envisagenics","FadelBerkadar","FairlieReese","Gavin_Oliver","GeneviaLtd","GenomeAssembler","GenomeBiology","GenomeInABottle","genomicscloud","giuliaguidi","gkay92","gnarzisi","GrameneDatabase","groza_cristian","guilbourque","hdashnow","HeiniMNatri","hjpimentel","HKhiabanian","hpcprogrammer","IanFiddes","iddux","infoecho","jake_vancampen","JaneAnnPulman","JasonWilliamsNY","JMonlong","JonathanGoeke","jordanberg0","k3yavi","KadashKate","KarineLeRoch1","kasukawa","Kiss_RNA_Lab","KitRidout","KMS_Meltzy","kuthedk","KVittingSeerup","LaurenCowley4","lh3lh3","lizworthey","lpachter","Magdoll","mahtabm81","marianattestad","MarkGerstein","megbowman","michaelhoffman","michelebusby","milot_mirdita","MinionLab","natalicik","NeBanovich","nephantes","nimra236","noush_joglekar","ObsGynaeCam","OnixHealth","pathogenomenick","pmelsted","pouryany","RareSeas","Repealist_","s_ramach","sailakss","samstudio8","sedlazeck","SeriousHorncat","SevenBridges","sexchrlab","si_hardwick","sienkieee","sinabooeshaghi","starfishlu","StevenSalzberg1","sunggong","sz_genomics","thesteinegger","timp0","TTTrinh16","TwilightForce1","vladimir_tomic","wait_sasha","winhide","YiXing77","zevkronenberg"],"to":["lpachter","lpachter","bnlasse","AliciaOshlack","sexchrlab","sexchrlab","pathogenomenick","GenomeBiology","thesteinegger","GenomeBiology","hdashnow","Magdoll","iddux","BenLangmead","ArangRhie","infoecho","AliciaOshlack","pathogenomenick","sexchrlab","lizworthey","lizworthey","hdashnow","GenomeBiology","_lazappi_","Repealist_","AliciaOshlack","hdashnow","byuhobbes","Magdoll","sexchrlab","anaconesa","lpachter","Magdoll","cshlmeetings","AliciaOshlack","anaconesa","hdashnow","bnlasse","AliciaOshlack","hdashnow","DCGenomics","SevenBridges","GenomeBiology","pathogenomenick","AliciaOshlack","infoecho","nimra236","sexchrlab","AliciaOshlack","GenomeBiology","lpachter","sexchrlab","byuhobbes","infoecho","byuhobbes","Magdoll","bnlasse","hdashnow","byuhobbes","Magdoll","Magdoll","hdashnow","byuhobbes","YiXing77","lizworthey","chrisamiller","TTTrinh16","hdashnow","chrisamiller","samstudio8","byuhobbes","byuhobbes","Magdoll","hdashnow","__yoson__","David_McGaughey","AliciaOshlack","deannachurch","lizworthey","hdashnow","sexchrlab","lpachter","thesteinegger","sexchrlab","pmelsted","lpachter","bnlasse","infoecho","Magdoll","lpachter","RareSeas","AliciaOshlack","sinabooeshaghi","cshlmeetings","byuhobbes","lizworthey","hdashnow","GenomeBiology","GenomeBiology","GenomeBiology","Magdoll","vladimir_tomic","AliciaOshlack","AliciaOshlack","iddux","lpachter","nimra236","byuhobbes","David_McGaughey","Magdoll","milot_mirdita","sedlazeck","TTTrinh16","TwilightForce1","Magdoll","infoecho","iddux","Magdoll","marianattestad"],"from.id":["1699767620","760184116541140992","2601010981","293116923","420574055","287953746","52240235","168478817","917765718682275841","13941962","1547838528","156162127","4750151687","24257253","52133120","817382322274070528","296300255","21184460","86493795","1081042932","37997717","778232695302291457","898069274341908480","10054472","454977993","818256778945241089","1382528755","1608312078","16174754","16629477","1141449353522900992","750347027456860160","2856326414","2239884889","1028770772","440115109","257903608","3179285374","2930281926","115039678","778427430","2897667230","112156645","132841631","228410704","293139665","837344325520482306","493594946","20126211","3245973772","2213018582","4026259319","40707676","394283200","15276911","29575969","918304901171625984","222255743","1692248610","2781954351","2664569172","822551391541542912","1022198774","1167507112836128768","1039300879189327873","7583472","931179725694914561","79293586","1425644274","855754040","2992390126","1137135674","2165843324","562328466","31936449","18927401","47566275","109487723","230944453","18154205","14897792","155651779","424098004","2530913857","18913738","2285597287","201043553","2482049948","931540786616963077","2569068973","1153420722687098880","85906238","1135472480","1566909187","2355383844","4615306949","1370684718","1493247858","40444555","2781296741","286967790","260900441","143086518","4196485460","358172333","1455996980","931741628141891584","782615960","35460946","994031581789589504","784241064936771584","191501637","1192092249137524737","1184415367579328513","885356456","917386554280239104","15273272","1589203201","22741656"],"to.id":["31936449","31936449","1081042932","1547838528","143086518","143086518","85906238","115039678","784241064936771584","115039678","20126211","18927401","15276911","296300255","817382322274070528","29575969","1547838528","85906238","143086518","562328466","562328466","20126211","115039678","2601010981","4615306949","1547838528","20126211","37997717","18927401","143086518","156162127","31936449","18927401","454977993","1547838528","156162127","20126211","1081042932","1547838528","20126211","1608312078","260900441","115039678","85906238","1547838528","29575969","2482049948","143086518","1547838528","115039678","31936449","143086518","37997717","29575969","37997717","18927401","1081042932","20126211","37997717","18927401","18927401","20126211","37997717","1589203201","562328466","10054472","1192092249137524737","20126211","10054472","40444555","37997717","37997717","18927401","20126211","1699767620","1382528755","1547838528","16174754","562328466","20126211","143086518","31936449","784241064936771584","143086518","1135472480","31936449","1081042932","29575969","18927401","31936449","2355383844","1547838528","1455996980","454977993","37997717","562328466","20126211","115039678","115039678","115039678","18927401","885356456","1547838528","1547838528","15276911","31936449","2482049948","37997717","1382528755","18927401","424098004","2781296741","1192092249137524737","1184415367579328513","18927401","29575969","15276911","18927401","109487723"],"retweets":[1,1,1,1,0,0,1,1,1,0,13,4,0,1,2,0,2,0,0,1,29,0,0,0,1,0,1,4,1,1,1,1,0,1,0,0,1,0,0,7,0,1,0,0,0,1,1,0,5,1,0,0,1,1,4,3,1,0,11,1,1,0,5,3,0,3,1,1,0,1,0,0,0,6,2,1,0,1,5,0,0,1,2,0,0,1,1,1,0,0,0,0,1,0,11,1,1,7,1,3,0,1,2,0,1,3,1,0,0,1,2,1,0,0,0,0,0,0,0],"favorites":[5,4,1,8,1,5,6,2,1,1,18,6,1,1,2,3,8,2,1,10,0,3,1,3,2,3,0,2,0,1,1,0,4,1,6,1,0,1,1,0,1,1,11,3,3,1,1,1,12,5,17,1,10,1,1,4,0,5,20,3,2,5,6,5,12,3,1,0,1,1,4,8,1,7,3,1,2,1,17,7,3,1,2,3,1,1,0,2,11,1,1,5,0,1,16,2,3,0,8,7,5,0,13,2,1,8,1,3,1,5,2,1,1,1,1,4,1,6,1],"all":[6,5,2,9,1,5,7,3,2,1,31,10,1,2,4,3,10,2,1,11,29,3,1,3,3,3,1,6,1,2,2,1,4,2,6,1,1,1,1,7,1,2,11,3,3,2,2,1,17,6,17,1,11,2,5,7,1,5,31,4,3,5,11,8,12,6,2,1,1,2,4,8,1,13,5,2,2,2,22,7,3,2,4,3,1,2,1,3,11,1,1,5,1,1,27,3,4,7,9,10,5,1,15,2,2,11,2,3,1,6,4,2,1,1,1,4,1,6,1],"weight":[0.193548387096774,0.5,0.181818181818182,0.214285714285714,1,0.0833333333333333,0.14,0.230769230769231,0.333333333333333,0.5,0.151960784313725,0.25,0.333333333333333,0.666666666666667,0.173913043478261,0.375,0.208333333333333,0.4,0.333333333333333,0.150684931506849,0.21969696969697,0.214285714285714,0.142857142857143,0.142857142857143,0.12,0.15,0.5,0.09375,0.333333333333333,0.333333333333333,0.2,0.0909090909090909,0.266666666666667,0.666666666666667,0.315789473684211,0.1,0.25,0.2,0.2,0.14,0.333333333333333,0.285714285714286,0.0846153846153846,0.176470588235294,0.230769230769231,0.222222222222222,0.142857142857143,0.5,0.16504854368932,0.333333333333333,0.195402298850575,0.142857142857143,0.224489795918367,0.285714285714286,0.294117647058824,0.134615384615385,0.166666666666667,0.384615384615385,0.107266435986159,0.285714285714286,0.428571428571429,0.0862068965517241,0.196428571428571,0.571428571428571,0.2,0.428571428571429,0.666666666666667,0.5,0.333333333333333,0.5,0.285714285714286,0.177777777777778,0.333333333333333,0.191176470588235,0.125,0.153846153846154,0.666666666666667,0.4,0.265060240963855,0.411764705882353,0.115384615384615,0.25,0.266666666666667,0.272727272727273,0.125,0.181818181818182,0.2,0.130434782608696,0.458333333333333,0.5,1,0.0862068965517241,0.2,1,0.204545454545455,0.2,0.173913043478261,0.205882352941176,0.173076923076923,0.149253731343284,0.111111111111111,1,0.194805194805195,0.181818181818182,0.4,0.366666666666667,0.285714285714286,0.157894736842105,0.333333333333333,0.15,0.333333333333333,0.125,0.333333333333333,1,0.166666666666667,0.129032258064516,0.2,0.142857142857143,0.166666666666667],"title":[0.194,0.5,0.182,0.214,1,0.083,0.14,0.231,0.333,0.5,0.152,0.25,0.333,0.667,0.174,0.375,0.208,0.4,0.333,0.151,0.22,0.214,0.143,0.143,0.12,0.15,0.5,0.094,0.333,0.333,0.2,0.091,0.267,0.667,0.316,0.1,0.25,0.2,0.2,0.14,0.333,0.286,0.085,0.176,0.231,0.222,0.143,0.5,0.165,0.333,0.195,0.143,0.224,0.286,0.294,0.135,0.167,0.385,0.107,0.286,0.429,0.086,0.196,0.571,0.2,0.429,0.667,0.5,0.333,0.5,0.286,0.178,0.333,0.191,0.125,0.154,0.667,0.4,0.265,0.412,0.115,0.25,0.267,0.273,0.125,0.182,0.2,0.13,0.458,0.5,1,0.086,0.2,1,0.205,0.2,0.174,0.206,0.173,0.149,0.111,1,0.195,0.182,0.4,0.367,0.286,0.158,0.333,0.15,0.333,0.125,0.333,1,0.167,0.129,0.2,0.143,0.167],"width":[1.93548387096774,5,1.81818181818182,2.14285714285714,10,0.833333333333333,1.4,2.30769230769231,3.33333333333333,5,1.51960784313725,2.5,3.33333333333333,6.66666666666667,1.73913043478261,3.75,2.08333333333333,4,3.33333333333333,1.50684931506849,2.1969696969697,2.14285714285714,1.42857142857143,1.42857142857143,1.2,1.5,5,0.9375,3.33333333333333,3.33333333333333,2,0.909090909090909,2.66666666666667,6.66666666666667,3.15789473684211,1,2.5,2,2,1.4,3.33333333333333,2.85714285714286,0.846153846153846,1.76470588235294,2.30769230769231,2.22222222222222,1.42857142857143,5,1.6504854368932,3.33333333333333,1.95402298850575,1.42857142857143,2.24489795918367,2.85714285714286,2.94117647058824,1.34615384615385,1.66666666666667,3.84615384615385,1.07266435986159,2.85714285714286,4.28571428571429,0.862068965517241,1.96428571428571,5.71428571428571,2,4.28571428571429,6.66666666666667,5,3.33333333333333,5,2.85714285714286,1.77777777777778,3.33333333333333,1.91176470588235,1.25,1.53846153846154,6.66666666666667,4,2.65060240963855,4.11764705882353,1.15384615384615,2.5,2.66666666666667,2.72727272727273,1.25,1.81818181818182,2,1.30434782608696,4.58333333333333,5,10,0.862068965517241,2,10,2.04545454545455,2,1.73913043478261,2.05882352941176,1.73076923076923,1.49253731343284,1.11111111111111,10,1.94805194805195,1.81818181818182,4,3.66666666666667,2.85714285714286,1.57894736842105,3.33333333333333,1.5,3.33333333333333,1.25,3.33333333333333,10,1.66666666666667,1.29032258064516,2,1.42857142857143,1.66666666666667]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot"},"manipulation":{"enabled":false},"edges":{"arrows":{"to":{"enabled":true,"scaleFactor":0.5}}}},"groups":null,"width":"1000px","height":"800px","idselection":{"enabled":false},"byselection":{"enabled":false},"main":null,"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="methods" class="section level3">
+<h3>Methods</h3>
+<ol style="list-style-type: decimal">
+<li>Extract tweets/retweet from accounts that have tweeted at least once with the conference hashtag (<code>#gi2019</code>).
+<ul>
+<li>Searched for <code>#gi2019</code>. Extracted accounts when excluding retweets. Kept tweet/retweets from these accounts.</li>
+<li>Easy, the <em>rtweet</em> package can easily do this type of search.</li>
+</ul></li>
+<li>Extract the recent favorited tweet for these accounts and keep all the ones with the conference hashtag.
+<ul>
+<li>More laborious because it’s not part of the search results.</li>
+<li>Also there is a limit for the number of query per 15 mins. Had to extract some, wait and repeat.</li>
+</ul></li>
+<li>Make a network with each accounts (node) and the number of times they retweeted/favorited a tweet from someone in the set.
+<ul>
+<li>For a pair of accounts, I summed the number of retweets and favorited tweets.</li>
+<li>The size of the edges are the relative amount of retweet/favorites for each account, i.e. the proportion of someone’s GI2019 retweets/favorites that went to a particular user.</li>
+</ul></li>
+<li>Look for sub-groups
+<ul>
+<li>I first tried to keep only one outgoing edge per node: the most retweeted/favorited GI2019 twitter account for each user.</li>
+<li>I also ran some community detection algorithms but the results weren’t very informative (way too many communities, don’t want to dig into them…).</li>
+</ul></li>
+</ol>
+</div>
+<div id="data" class="section level3">
+<h3>Data</h3>
+<p>I made two TSV files with tweet/retweets and favorites info, available <a href="https://github.com/jmonlong/Hippocamplus/tree/config/R/gi2019tweetnetwork">here</a>.</p>
+</div>
+
+</div>
+
+      </div>
+    </div>
+
+    
+    
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src="../../../../assets/highlight.pack.js"></script>
+    <script src="../../../../assets/r.min.js"></script>
+    
+    <script>
+      hljs.configure({languages: ['r']});
+      hljs.initHighlightingOnLoad();
+    </script>
+
+    <script src="//yihui.name/js/math-code.js"></script>
+    <script async src="//cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    
+  </body>
+</html>
+
