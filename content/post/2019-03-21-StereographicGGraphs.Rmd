@@ -87,14 +87,16 @@ The typical PCA looks like this:
 
 ```{r normalpcas, echo=TRUE}
 ggplot(pca.df, aes(x=PC1, y=PC2, color=super.population)) +
+  scale_color_brewer(palette='Dark2') + 
   geom_point(alpha=.3) + theme_bw()
 ggplot(pca.df, aes(x=PC1, y=PC3, color=super.population)) +
+  scale_color_brewer(palette='Dark2') + 
   geom_point(alpha=.3) + theme_bw()
 ```
 
 Now a stereogram for all the samples using the [ggforce R package](https://ggforce.data-imaginist.com/):
 
-```{r stereopca, echo=TRUE, fig.height=7}
+```{r stereopca, echo=TRUE, fig.height=6}
 ## add some white space around the points
 extra.margin = .2
 pc1.r = range(pca.df$PC1)
@@ -103,31 +105,19 @@ pc2.r = range(pca.df$PC2)
 pc2.r = pc2.r + c(-1,1)*extra.margin*diff(pc2.r)
 ##
 ggplot(pca.df, aes(x=PC1, y=PC2, depth=-PC3, color=super.population)) +
-  geom_point(alpha=.8, size=1) + facet_stereo() +
+  geom_point(alpha=.4, size=1) + facet_stereo(IPD=-63.5) +
   theme_bw() + theme(legend.position='bottom') +
-  xlim(pc1.r) + ylim(pc2.r)
-
-
-```
-
-I specified the limits of the graph to add a bit of white space around the graph.
-I found that it helps a bit.
-Sometimes it also helps sub-sampling the points.
-I find separate points easier to align than big blobs.
-
-```{r stereopca-sub, echo=TRUE, fig.height=7}
-pca.df %>% group_by(super.population) %>% sample_n(100) %>% ungroup %>% 
-  ggplot(aes(x=PC1, y=PC2, depth=-PC3, color=super.population)) +
-  geom_point(alpha=.8, size=1) + facet_stereo() +
-  scale_color_brewer(palette='Set1') + 
-  theme_bw() + theme(legend.position='bottom') +
+  scale_color_brewer(palette='Dark2') + 
   xlim(pc1.r) + ylim(pc2.r)
 ```
 
-Pretty cool, we can tell that the *SAS* are "behind" other point and we can see the branch of *AMR* reaching toward us.
+A few notes: 
 
-However it's not really what we expect. 
-I suspect that the order at which points are plotted is incorrect.
-Need to look at the code.
+- I specified the limits of the graph to add a bit of white space around the points. It helps a bit IMO.
+- I specified `IPD=-63.5` to switch to "cross-eyed' mode. The default is `IPD=63.5` for the "parallel" technique that I find more difficult. I could only manage it by making the plot very small.
 
-It's also fun to imagine showing these graphs during a presentation and watching a crossed-eyed audience.
+The result is pretty cool, we can tell that the *SAS* are in front of all other points and that the branch of *AMR* stretching to the back.
+
+It's fun to imagine showing these graphs during a presentation and watching a crossed-eyed audience like:
+
+![](../../../../imgs/crosseyeddenis.gif)
