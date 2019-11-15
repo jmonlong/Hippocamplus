@@ -39,10 +39,10 @@
           <author>Jean Monlong</author>
           <guid>/Hippocamplus/2019/11/10/gi2019-tweetnetwork/</guid>
           <description>
-&lt;script src=&#34;./rmarkdown-libs/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
-&lt;link href=&#34;./rmarkdown-libs/vis/vis.css&#34; rel=&#34;stylesheet&#34; /&gt;
-&lt;script src=&#34;./rmarkdown-libs/vis/vis.min.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;./rmarkdown-libs/visNetwork-binding/visNetwork.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;./assets/rmarkdown-libs/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;./assets/rmarkdown-libs/vis/vis.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;./assets/rmarkdown-libs/vis/vis.min.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;./assets/rmarkdown-libs/visNetwork-binding/visNetwork.js&#34;&gt;&lt;/script&gt;
 
 
 &lt;p&gt;I want to have a quick look at the tweets from the Genome Informatics meeting:&lt;/p&gt;

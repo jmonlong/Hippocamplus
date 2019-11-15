@@ -34,7 +34,6 @@ git config --global user.email '<EMAIL>'
 git config --global user.name 'Jean Monlong'
 ~~~
 
-
 #### Branches
 
 + List branches: `git branch`
@@ -90,10 +89,16 @@ altscreen on
 term screen-256color
 ```
 
+
+## `.bashrc` aliases
+
+- `alias rf='ls -rt | tail -1'` to quickly get the most recent file. Then for example `` evince `rf` `` to open the latest file.
+
 ## Misc
 
 - Redirect stderr to stdout: `2>&1`.
 - Show special characters (end of line, tabs) with `cat -A`.
+
 
 ### Colors in `less`
 
