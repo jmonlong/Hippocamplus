@@ -62,7 +62,6 @@ if(!file.exists('smalldata/1kgp-pca.RData')){
   ##   curl ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr22.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz | zcat | head -1000 | grep '#' --color=never > ss.vcf
   ## for CHR in `seq 1 22`
   ## do
-  ##     echo $CHR
   ##     curl ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr$CHR.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz | zcat | grep -v '##' |  awk 'BEGIN{srand()}{match($0, /AC=([^;]*);/, ac); if(ac[1]>9){if(rand()<.001){print $0}}}' >> ss.vcf
   ## done
   library(VariantAnnotation)
@@ -121,3 +120,34 @@ The result is pretty cool, we can tell that the *SAS* are in front of all other 
 It's fun to imagine showing these graphs during a presentation and watching a crossed-eyed audience like:
 
 ![](../../../../imgs/crosseyeddenis.gif)
+
+## Making a tSNE stereogram using the 1000 Genomes Project data
+
+A tSNE with 3 components using the top 30 PCs looks like this:
+
+```{r tsne}
+library(Rtsne)
+
+set.seed(12345)
+tsne.o = Rtsne(pca.o$x[,1:30], pca=FALSE, dims=3)
+
+tsne.df = tibble(sample=rownames(pca.o$x),
+                 tsne1=tsne.o$Y[,1],
+                 tsne2=tsne.o$Y[,2],
+                 tsne3=tsne.o$Y[,3]) %>% merge(info)
+
+## add some white space around the points
+extra.margin = .2
+tsne1.r = range(tsne.df$tsne1)
+tsne1.r = tsne1.r + c(-1,1)*extra.margin*diff(tsne1.r)
+tsne2.r = range(tsne.df$tsne2)
+tsne2.r = tsne2.r + c(-1,1)*extra.margin*diff(tsne2.r)
+##
+ggplot(tsne.df, aes(tsne1, tsne2, depth=tsne3, color=population)) +
+  geom_point(alpha=.4, size=2) + facet_stereo(IPD=-63.5) +
+  theme_bw() + theme(legend.position='bottom') +
+  xlim(tsne1.r) + ylim(tsne2.r) +
+  guides(color=guide_legend(override.aes=list(alpha=1), ncol=15))
+```
+
+The blobs are nicely separated in 3D and we can clearly see some blobs corresponding to single populations.
