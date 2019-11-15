@@ -1,0 +1,133 @@
+---
+title: Stereographic graphs with ggforce
+date: 2019-03-21
+tags: ["R", "plot"]
+draft: true
+slug: stereographic-graphs
+---
+
+```{r include=FALSE}
+knitr::opts_chunk$set(message=FALSE, echo=FALSE, warning=FALSE, fig.width=10)
+```
+
+
+```{r libs}
+library(ggforce)
+library(dplyr)
+library(ggplot2)
+```
+
+## What is stereoscopy? How to look at stereogram?
+
+> Technique for creating or enhancing the illusion of depth in an image by means of stereopsis for binocular vision.
+
+--[Wikipedia](https://en.wikipedia.org/wiki/Stereoscopy)
+
+Although some binocular-like devices can be used to merge two images and create the illusion of depth, there are also "freeviewing" techniques that don't require any.
+The two main techniques are to either look straight through the image or to cross eyes.
+[Wikihow](https://www.wikihow.com/View-Stereograms) has some tips for the "parallel" method.
+
+I knew about the [autostereogram](https://en.wikipedia.org/wiki/Autostereogram) (as "magic images" when I was a kid), like this example from Wikipedia: 
+
+![](https://upload.wikimedia.org/wikipedia/commons/8/8f/Stereogram_Tut_Random_Dot_Shark.png)
+
+Side-by-side images are another type of stereograms which can also be viewed by letting the eyes look further or by crossing eyes. 
+An example from Wikipedia:
+
+![](https://upload.wikimedia.org/wikipedia/commons/b/bc/Passiflora_caerulea_STEREO_%28R-L%29_2019-06-27.jpg)
+
+For the side-by-side images I find it easier to use the cross-eye technique because it's easy to adjust how much to cross my eyes to see both images overlap.
+
+I also noticed that it's important to have my head straight so that both eyes are on the same plane.
+When using the cross-eyed method, it helps tilting slightly the head on one side or the other to align the two images vertically.
+
+## Making a PCA stereogram using the 1000 Genomes Project data
+
+Now let's see how to make a stereogram of the typical PCA plot using the 1000 Genomes Project data.
+We'll use *PC1*/*PC2* for the x/y axis, as usual, and *PC3* for the "depth" dimension.
+
+I downloaded a downsampled set of the variants in the 1000 Genomes Project Phase 3 that had at least 10 alternate alleles in called genotypes in autosomes (0.1% of variants with *AC>=10*). 
+I used the VCFs from `ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.<CHR>.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz`.
+Homozygous refs were then converted to *0*, heterozygous variants to *1* and homozygous alts to *2*.
+
+```{r pca1kgp}
+pop.info = tibble(population=c('CHB', 'JPT', 'CHS', 'CDX', 'KHV', 'CEU', 'TSI', 'FIN', 'GBR', 'IBS', 'YRI', 'LWK', 'GWD', 'MSL', 'ESN', 'ASW', 'ACB', 'MXL', 'PUR', 'CLM', 'PEL', 'GIH', 'PJL', 'BEB', 'STU', 'ITU'),
+                  super.population=c('EAS', 'EAS', 'EAS', 'EAS', 'EAS', 'EUR', 'EUR', 'EUR', 'EUR', 'EUR', 'AFR', 'AFR', 'AFR', 'AFR', 'AFR', 'AFR', 'AFR', 'AMR', 'AMR', 'AMR', 'AMR', 'SAS', 'SAS', 'SAS', 'SAS', 'SAS'))
+
+info = read.csv('smalldata/20130606_sample_info.csv', as.is=TRUE) %>%
+  mutate(sample=Sample, population=Population, pop.desc=Population.Description) %>%
+  select(sample, population, pop.desc) %>% merge(pop.info)
+
+if(!file.exists('smalldata/1kgp-pca.RData')){
+  ##   curl ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr22.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz | zcat | head -1000 | grep '#' --color=never > ss.vcf
+  ## for CHR in `seq 1 22`
+  ## do
+  ##     echo $CHR
+  ##     curl ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.chr$CHR.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz | zcat | grep -v '##' |  awk 'BEGIN{srand()}{match($0, /AC=([^;]*);/, ac); if(ac[1]>9){if(rand()<.001){print $0}}}' >> ss.vcf
+  ## done
+  library(VariantAnnotation)
+  vcf = readVcf('ss.vcf')
+  gt = geno(vcf)$GT
+  convGT = c('0|0'=0, '.|.'=0, '1|0'=1, '0|1'=1, '1|1'=2)
+  gt = apply(gt, 2, function(x)convGT[x])
+  gt = gt[which(rowSums(gt)>0),]
+  pca.o = prcomp(t(gt))
+  pca.o$x = pca.o$x[,1:100]
+  pca.o$sdev = pca.o$sdev[1:100]
+  pca.o$rotation = pca.o$rotation[1:100,]
+  save(pca.o, file='smalldata/1kgp-pca.RData')
+} else {
+  load('smalldata/1kgp-pca.RData')
+}
+pca.df = tibble(sample=rownames(pca.o$x)) %>%
+  cbind(as.data.frame(pca.o$x[,1:10])) %>% merge(info)
+```
+
+The typical PCA looks like this:
+
+```{r normalpcas, echo=TRUE}
+ggplot(pca.df, aes(x=PC1, y=PC2, color=super.population)) +
+  geom_point(alpha=.3) + theme_bw()
+ggplot(pca.df, aes(x=PC1, y=PC3, color=super.population)) +
+  geom_point(alpha=.3) + theme_bw()
+```
+
+Now a stereogram for all the samples using the [ggforce R package](https://ggforce.data-imaginist.com/):
+
+```{r stereopca, echo=TRUE, fig.height=7}
+## add some white space around the points
+extra.margin = .2
+pc1.r = range(pca.df$PC1)
+pc1.r = pc1.r + c(-1,1)*extra.margin*diff(pc1.r)
+pc2.r = range(pca.df$PC2)
+pc2.r = pc2.r + c(-1,1)*extra.margin*diff(pc2.r)
+##
+ggplot(pca.df, aes(x=PC1, y=PC2, depth=-PC3, color=super.population)) +
+  geom_point(alpha=.8, size=1) + facet_stereo() +
+  theme_bw() + theme(legend.position='bottom') +
+  xlim(pc1.r) + ylim(pc2.r)
+
+
+```
+
+I specified the limits of the graph to add a bit of white space around the graph.
+I found that it helps a bit.
+Sometimes it also helps sub-sampling the points.
+I find separate points easier to align than big blobs.
+
+```{r stereopca-sub, echo=TRUE, fig.height=7}
+pca.df %>% group_by(super.population) %>% sample_n(100) %>% ungroup %>% 
+  ggplot(aes(x=PC1, y=PC2, depth=-PC3, color=super.population)) +
+  geom_point(alpha=.8, size=1) + facet_stereo() +
+  scale_color_brewer(palette='Set1') + 
+  theme_bw() + theme(legend.position='bottom') +
+  xlim(pc1.r) + ylim(pc2.r)
+```
+
+Pretty cool, we can tell that the *SAS* are "behind" other point and we can see the branch of *AMR* reaching toward us.
+
+However it's not really what we expect. 
+I suspect that the order at which points are plotted is incorrect.
+Need to look at the code.
+
+It's also fun to imagine showing these graphs during a presentation and watching a crossed-eyed audience.
