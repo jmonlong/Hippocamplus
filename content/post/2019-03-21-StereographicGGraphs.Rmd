@@ -1,9 +1,8 @@
 ---
-title: "1000 Genomes PCA/tSNE stereograms"
-date: 2019-11-20
+title: "Stereograms of the 1KGP PCA/tSNE"
+date: 2019-11-19
 tags: ["R", "plot"]
-draft: true
-slug: stereograms-pca-tsne
+slug: stereograms-1kgp-pca-tsne
 ---
 
 ```{r include=FALSE}
@@ -24,20 +23,20 @@ library(ggplot2)
 --[Stereoscopy (Wikipedia)](https://en.wikipedia.org/wiki/Stereoscopy)
 
 Although some binocular-like devices can be used to merge two images and create the illusion of depth, there are also "freeviewing" techniques that don't require any particular material.
-The two main techniques are to either to look straight through the image or to cross your eyes.
+The two main techniques are to either look straight through the image or to cross your eyes.
 [Wikihow](https://www.wikihow.com/View-Stereograms) has some tips for the "parallel" method.
 
 I knew about the [autostereogram](https://en.wikipedia.org/wiki/Autostereogram) (I had a book of "magic images" as a kid), like this example from Wikipedia: 
 
-![](https://upload.wikimedia.org/wikipedia/commons/8/8f/Stereogram_Tut_Random_Dot_Shark.png)
+![*Let your eyes see through the image and you'll see a shark appear.*](https://upload.wikimedia.org/wikipedia/commons/8/8f/Stereogram_Tut_Random_Dot_Shark.png)
 
 Side-by-side images were new to me. 
 It's the same principle though: either let your eyes look through  or cross your eyes until both images overlap. 
 An example from Wikipedia:
 
-![](https://upload.wikimedia.org/wikipedia/commons/b/bc/Passiflora_caerulea_STEREO_%28R-L%29_2019-06-27.jpg)
+![*Cross your eyes to align both images and create a new one in between.*](https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Passiflora_caerulea_STEREO_%28R-L%29_2019-06-27.jpg/1280px-Passiflora_caerulea_STEREO_%28R-L%29_2019-06-27.jpg)
 
-For the side-by-side images I find it easier to use the cross-eye technique because it's easy to adjust how much to cross my eyes to see both images overlap.
+For the side-by-side images I find it easier to use the cross-eye technique because it's easy to adjust how much to cross my eyes to overlap both images.
 
 I also noticed that it's important to have my head straight (both eyes are on the same plane).
 When using the cross-eyed method, it helps tilting slightly the head on one side or the other to align the two images vertically.
@@ -47,8 +46,8 @@ When using the cross-eyed method, it helps tilting slightly the head on one side
 Now let's see how to make a stereogram of the typical PCA plot using the 1000 Genomes Project data.
 We'll use *PC1*/*PC2* for the x/y axis, as usual, and *PC3* for the "depth" dimension.
 
-I downloaded a downsampled set of variants in the 1000 Genomes Project Phase 3 that had at least 10 alternate alleles in called genotypes in autosomes (0.1% of variants with *AC>=10*). 
-I used the VCFs from `ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.<CHR>.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz`.
+I downloaded a subset of variants in the 1000 Genomes Project Phase 3 that had at least 10 alternate alleles in called genotypes in autosomes (0.1% of variants with *AC>=10*). 
+I used the autosomes' VCFs at `ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.<CHR>.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz`.
 Homozygous refs were then converted to *0*, heterozygous variants to *1* and homozygous alts to *2*.
 
 ```{r pca1kgp}
@@ -87,11 +86,13 @@ The typical PCA looks like this:
 
 ```{r normalpcas, echo=TRUE}
 ggplot(pca.df, aes(x=PC1, y=PC2, color=super.population)) +
+  geom_point(alpha=.4) + theme_bw() +
   scale_color_brewer(palette='Dark2') + 
-  geom_point(alpha=.3) + theme_bw()
+  guides(colour=guide_legend(override.aes=list(alpha=1)))
 ggplot(pca.df, aes(x=PC1, y=PC3, color=super.population)) +
+  geom_point(alpha=.4) + theme_bw() +
   scale_color_brewer(palette='Dark2') + 
-  geom_point(alpha=.3) + theme_bw()
+  guides(colour=guide_legend(override.aes=list(alpha=1)))
 ```
 
 Now the same data with a stereogram using the [ggforce R package](https://ggforce.data-imaginist.com/):
@@ -105,9 +106,10 @@ pc2.r = range(pca.df$PC2)
 pc2.r = pc2.r + c(-1,1)*extra.margin*diff(pc2.r)
 ##
 ggplot(pca.df, aes(x=PC1, y=PC2, depth=-PC3, color=super.population)) +
-  geom_point(alpha=.4, size=1) + facet_stereo(IPD=-63.5) +
-  theme_bw() + theme(legend.position='bottom') +
-  scale_color_brewer(palette='Dark2') + 
+  geom_point(alpha=.4) + theme_bw() +
+  scale_color_brewer(palette='Dark2') +
+  guides(colour=guide_legend(override.aes=list(alpha=1))) + 
+  facet_stereo(IPD=-63.5) + theme(legend.position='bottom') +
   xlim(pc1.r) + ylim(pc2.r)
 ```
 

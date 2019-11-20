@@ -6,10 +6,21 @@
     <description>Recent content in R on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 10 Nov 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 19 Nov 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/Hippocamplus/tags/r/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Stereograms of the 1KGP PCA/tSNE</title>
+      <link>/Hippocamplus/2019/11/19/stereograms-1kgp-pca-tsne/</link>
+      <pubDate>Tue, 19 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/Hippocamplus/2019/11/19/stereograms-1kgp-pca-tsne/</guid>
+      <description>What is stereoscopy? How to look at a stereogram?  Technique for creating or enhancing the illusion of depth in an image by means of stereopsis for binocular vision.
+ –Stereoscopy (Wikipedia)
+Although some binocular-like devices can be used to merge two images and create the illusion of depth, there are also “freeviewing” techniques that don’t require any particular material. The two main techniques are to either look straight through the image or to cross your eyes.</description>
+    </item>
     
     <item>
       <title>Tweet network from Genome Informatics 2019</title>

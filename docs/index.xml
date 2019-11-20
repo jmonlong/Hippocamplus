@@ -6,7 +6,7 @@
     <language>en-us</language>
     <author>Jean Monlong</author>
     <rights>(C) 2019</rights>
-    <updated>2019-11-10 00:00:00 &#43;0000 UTC</updated>
+    <updated>2019-11-19 00:00:00 &#43;0000 UTC</updated>
 
     
       
@@ -29,6 +29,94 @@
     
       
     
+      
+    
+      
+        <item>
+          <title>Stereograms of the 1KGP PCA/tSNE</title>
+          <link>/Hippocamplus/2019/11/19/stereograms-1kgp-pca-tsne/</link>
+          <pubDate>Tue, 19 Nov 2019 00:00:00 UTC</pubDate>
+          <author>Jean Monlong</author>
+          <guid>/Hippocamplus/2019/11/19/stereograms-1kgp-pca-tsne/</guid>
+          <description>
+
+
+&lt;div id=&#34;what-is-stereoscopy-how-to-look-at-a-stereogram&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;What is stereoscopy? How to look at a stereogram?&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Technique for creating or enhancing the illusion of depth in an image by means of stereopsis for binocular vision.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;–&lt;a href=&#34;https://en.wikipedia.org/wiki/Stereoscopy&#34;&gt;Stereoscopy (Wikipedia)&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Although some binocular-like devices can be used to merge two images and create the illusion of depth, there are also “freeviewing” techniques that don’t require any particular material.
+The two main techniques are to either look straight through the image or to cross your eyes.
+&lt;a href=&#34;https://www.wikihow.com/View-Stereograms&#34;&gt;Wikihow&lt;/a&gt; has some tips for the “parallel” method.&lt;/p&gt;
+&lt;p&gt;I knew about the &lt;a href=&#34;https://en.wikipedia.org/wiki/Autostereogram&#34;&gt;autostereogram&lt;/a&gt; (I had a book of “magic images” as a kid), like this example from Wikipedia:&lt;/p&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;https://upload.wikimedia.org/wikipedia/commons/8/8f/Stereogram_Tut_Random_Dot_Shark.png&#34; alt=&#34;&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;&lt;em&gt;Let your eyes see through the image and you’ll see a shark appear.&lt;/em&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Side-by-side images were new to me.
+It’s the same principle though: either let your eyes look through or cross your eyes until both images overlap.
+An example from Wikipedia:&lt;/p&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Passiflora_caerulea_STEREO_%28R-L%29_2019-06-27.jpg/1280px-Passiflora_caerulea_STEREO_%28R-L%29_2019-06-27.jpg&#34; alt=&#34;&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;&lt;em&gt;Cross your eyes to align both images and create a new one in between.&lt;/em&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;For the side-by-side images I find it easier to use the cross-eye technique because it’s easy to adjust how much to cross my eyes to overlap both images.&lt;/p&gt;
+&lt;p&gt;I also noticed that it’s important to have my head straight (both eyes are on the same plane).
+When using the cross-eyed method, it helps tilting slightly the head on one side or the other to align the two images vertically.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;making-a-pca-stereogram-using-the-1000-genomes-project-data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Making a PCA stereogram using the 1000 Genomes Project data&lt;/h2&gt;
+&lt;p&gt;Now let’s see how to make a stereogram of the typical PCA plot using the 1000 Genomes Project data.
+We’ll use &lt;em&gt;PC1&lt;/em&gt;/&lt;em&gt;PC2&lt;/em&gt; for the x/y axis, as usual, and &lt;em&gt;PC3&lt;/em&gt; for the “depth” dimension.&lt;/p&gt;
+&lt;p&gt;I downloaded a subset of variants in the 1000 Genomes Project Phase 3 that had at least 10 alternate alleles in called genotypes in autosomes (0.1% of variants with &lt;em&gt;AC&amp;gt;=10&lt;/em&gt;).
+I used the autosomes’ VCFs at &lt;code&gt;ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.&amp;lt;CHR&amp;gt;.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz&lt;/code&gt;.
+Homozygous refs were then converted to &lt;em&gt;0&lt;/em&gt;, heterozygous variants to &lt;em&gt;1&lt;/em&gt; and homozygous alts to &lt;em&gt;2&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;The typical PCA looks like this:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(pca.df, aes(x=PC1, y=PC2, color=super.population)) +
+  geom_point(alpha=.4) + theme_bw() +
+  scale_color_brewer(palette=&amp;#39;Dark2&amp;#39;) + 
+  guides(colour=guide_legend(override.aes=list(alpha=1)))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;./post/2019-03-21-StereographicGGraphs_files/figure-html/normalpcas-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(pca.df, aes(x=PC1, y=PC3, color=super.population)) +
+  geom_point(alpha=.4) + theme_bw() +
+  scale_color_brewer(palette=&amp;#39;Dark2&amp;#39;) + 
+  guides(colour=guide_legend(override.aes=list(alpha=1)))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;./post/2019-03-21-StereographicGGraphs_files/figure-html/normalpcas-2.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Now the same data with a stereogram using the &lt;a href=&#34;https://ggforce.data-imaginist.com/&#34;&gt;ggforce R package&lt;/a&gt;:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;## add some white space around the points
+extra.margin = .2
+pc1.r = range(pca.df$PC1)
+pc1.r = pc1.r + c(-1,1)*extra.margin*diff(pc1.r)
+pc2.r = range(pca.df$PC2)
+pc2.r = pc2.r + c(-1,1)*extra.margin*diff(pc2.r)
+##
+ggplot(pca.df, aes(x=PC1, y=PC2, depth=-PC3, color=super.population)) +
+  geom_point(alpha=.4) + theme_bw() +
+  scale_color_brewer(palette=&amp;#39;Dark2&amp;#39;) +
+  guides(colour=guide_legend(override.aes=list(alpha=1))) + 
+  facet_stereo(IPD=-63.5) + theme(legend.position=&amp;#39;bottom&amp;#39;) +
+  xlim(pc1.r) + ylim(pc2.r)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;./post/2019-03-21-StereographicGGraphs_files/figure-html/stereopca-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;A few notes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;I specified the limits of the graph to add a bit of white space around the points. It helps a bit IMO.&lt;/li&gt;
+&lt;li&gt;I specified &lt;code&gt;IPD=-63.5&lt;/code&gt; to switch to “cross-eyed’ mode. The default is &lt;code&gt;IPD=63.5&lt;/code&gt; for the”parallel&#34; technique. I could only manage the “parallel” viewing by making the plot very small.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The result is pretty cool, we can tell that the &lt;em&gt;SAS&lt;/em&gt; are in front of all other points, and that the branch of &lt;em&gt;AMR&lt;/em&gt; is stretching to the back.&lt;/p&gt;
+&lt;p&gt;It’s fun to imagine showing these graphs during a presentation and watching a crossed-eyed audience like:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;../../../../imgs/crosseyeddenis.gif&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;making-a-tsne-stereogram-using-the-1000-genomes-project-data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Making a tSNE stereogram using the 1000 Genomes Project data&lt;/h2&gt;
+&lt;p&gt;A tSNE with 3 components using the top 30 PCs looks like this:&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;./post/2019-03-21-StereographicGGraphs_files/figure-html/tsne-1.png&#34; width=&#34;960&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;The blobs are nicely separated in 3D.
+We can clearly see some blobs corresponding to single populations.&lt;/p&gt;
+&lt;/div&gt;
+</description>
+        </item>
       
     
       
