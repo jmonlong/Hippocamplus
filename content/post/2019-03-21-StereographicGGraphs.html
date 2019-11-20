@@ -1,0 +1,75 @@
+---
+title: "1000 Genomes PCA/tSNE stereograms"
+date: 2019-11-20
+tags: ["R", "plot"]
+draft: true
+slug: stereograms-pca-tsne
+---
+
+
+
+<div id="what-is-stereoscopy-how-to-look-at-a-stereogram" class="section level2">
+<h2>What is stereoscopy? How to look at a stereogram?</h2>
+<blockquote>
+<p>Technique for creating or enhancing the illusion of depth in an image by means of stereopsis for binocular vision.</p>
+</blockquote>
+<p>–<a href="https://en.wikipedia.org/wiki/Stereoscopy">Stereoscopy (Wikipedia)</a></p>
+<p>Although some binocular-like devices can be used to merge two images and create the illusion of depth, there are also “freeviewing” techniques that don’t require any particular material.
+The two main techniques are to either to look straight through the image or to cross your eyes.
+<a href="https://www.wikihow.com/View-Stereograms">Wikihow</a> has some tips for the “parallel” method.</p>
+<p>I knew about the <a href="https://en.wikipedia.org/wiki/Autostereogram">autostereogram</a> (I had a book of “magic images” as a kid), like this example from Wikipedia:</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/8/8f/Stereogram_Tut_Random_Dot_Shark.png" /></p>
+<p>Side-by-side images were new to me.
+It’s the same principle though: either let your eyes look through or cross your eyes until both images overlap.
+An example from Wikipedia:</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Passiflora_caerulea_STEREO_%28R-L%29_2019-06-27.jpg" /></p>
+<p>For the side-by-side images I find it easier to use the cross-eye technique because it’s easy to adjust how much to cross my eyes to see both images overlap.</p>
+<p>I also noticed that it’s important to have my head straight (both eyes are on the same plane).
+When using the cross-eyed method, it helps tilting slightly the head on one side or the other to align the two images vertically.</p>
+</div>
+<div id="making-a-pca-stereogram-using-the-1000-genomes-project-data" class="section level2">
+<h2>Making a PCA stereogram using the 1000 Genomes Project data</h2>
+<p>Now let’s see how to make a stereogram of the typical PCA plot using the 1000 Genomes Project data.
+We’ll use <em>PC1</em>/<em>PC2</em> for the x/y axis, as usual, and <em>PC3</em> for the “depth” dimension.</p>
+<p>I downloaded a downsampled set of variants in the 1000 Genomes Project Phase 3 that had at least 10 alternate alleles in called genotypes in autosomes (0.1% of variants with <em>AC&gt;=10</em>).
+I used the VCFs from <code>ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/ALL.&lt;CHR&gt;.phase3_shapeit2_mvncall_integrated_v5a.20130502.genotypes.vcf.gz</code>.
+Homozygous refs were then converted to <em>0</em>, heterozygous variants to <em>1</em> and homozygous alts to <em>2</em>.</p>
+<p>The typical PCA looks like this:</p>
+<pre class="r"><code>ggplot(pca.df, aes(x=PC1, y=PC2, color=super.population)) +
+  scale_color_brewer(palette=&#39;Dark2&#39;) + 
+  geom_point(alpha=.3) + theme_bw()</code></pre>
+<p><img src="/post/2019-03-21-StereographicGGraphs_files/figure-html/normalpcas-1.png" width="960" /></p>
+<pre class="r"><code>ggplot(pca.df, aes(x=PC1, y=PC3, color=super.population)) +
+  scale_color_brewer(palette=&#39;Dark2&#39;) + 
+  geom_point(alpha=.3) + theme_bw()</code></pre>
+<p><img src="/post/2019-03-21-StereographicGGraphs_files/figure-html/normalpcas-2.png" width="960" /></p>
+<p>Now the same data with a stereogram using the <a href="https://ggforce.data-imaginist.com/">ggforce R package</a>:</p>
+<pre class="r"><code>## add some white space around the points
+extra.margin = .2
+pc1.r = range(pca.df$PC1)
+pc1.r = pc1.r + c(-1,1)*extra.margin*diff(pc1.r)
+pc2.r = range(pca.df$PC2)
+pc2.r = pc2.r + c(-1,1)*extra.margin*diff(pc2.r)
+##
+ggplot(pca.df, aes(x=PC1, y=PC2, depth=-PC3, color=super.population)) +
+  geom_point(alpha=.4, size=1) + facet_stereo(IPD=-63.5) +
+  theme_bw() + theme(legend.position=&#39;bottom&#39;) +
+  scale_color_brewer(palette=&#39;Dark2&#39;) + 
+  xlim(pc1.r) + ylim(pc2.r)</code></pre>
+<p><img src="/post/2019-03-21-StereographicGGraphs_files/figure-html/stereopca-1.png" width="960" /></p>
+<p>A few notes:</p>
+<ul>
+<li>I specified the limits of the graph to add a bit of white space around the points. It helps a bit IMO.</li>
+<li>I specified <code>IPD=-63.5</code> to switch to “cross-eyed’ mode. The default is <code>IPD=63.5</code> for the”parallel&quot; technique. I could only manage the “parallel” viewing by making the plot very small.</li>
+</ul>
+<p>The result is pretty cool, we can tell that the <em>SAS</em> are in front of all other points, and that the branch of <em>AMR</em> is stretching to the back.</p>
+<p>It’s fun to imagine showing these graphs during a presentation and watching a crossed-eyed audience like:</p>
+<p><img src="../../../../imgs/crosseyeddenis.gif" /></p>
+</div>
+<div id="making-a-tsne-stereogram-using-the-1000-genomes-project-data" class="section level2">
+<h2>Making a tSNE stereogram using the 1000 Genomes Project data</h2>
+<p>A tSNE with 3 components using the top 30 PCs looks like this:</p>
+<p><img src="/post/2019-03-21-StereographicGGraphs_files/figure-html/tsne-1.png" width="960" /></p>
+<p>The blobs are nicely separated in 3D.
+We can clearly see some blobs corresponding to single populations.</p>
+</div>

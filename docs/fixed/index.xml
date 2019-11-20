@@ -112,18 +112,7 @@ Naming and formatting  Use lowercase _-separated for modules and functions name.
       
       <guid>/Hippocamplus/about/</guid>
       <description>About this website This is where I put all the useful information I keep on forgetting. Instead of googling the same things over and over, wasting time and server energy I put them here. It’s like a second memory, better than my hippocampus, my hippocamPLUS…
- About me  Personal page with links. Twitter.  My current lab  Computational Genomics Lab at UCSC. Genomics Institute at UCSC My housemate   My previous labs  Bourque Lab.</description>
-    </item>
-    
-    <item>
-      <title>Ryan Lorig-Roach</title>
-      <link>/Hippocamplus/ryan-lorig-roach/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/Hippocamplus/ryan-lorig-roach/</guid>
-      <description> Ryan Lorig-Roach This is Ryan Lorig-Roach, PhD student at UCSC working on nanopore sequencing and genome assembly. I like Mexican food and am particularly proud of planes.
- LinkedIn GitHub Researchgate Rxivist  Ryan Lorig-Roach UCSC
-  </description>
+ About me  Personal page with links. Twitter.  My current lab  Computational Genomics Lab at UCSC. Genomics Institute at UCSC   My previous labs  Bourque Lab.</description>
     </item>
     
   </channel>
