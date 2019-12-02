@@ -197,14 +197,26 @@ I either want to know the tasks and events for the day, or just the events for t
 ~~~lisp
 (setq org-agenda-custom-commands
       '(("c" "Today's agenda"
-         ((agenda "" ((org-agenda-span 1)))
+         ((agenda "" ((org-agenda-ndays 1)
+                      (org-agenda-skip-function
+                       '(org-agenda-skip-subtree-if 'regexp ":habit:")
+                       )
+                      ))
           (alltodo ""
                    ((org-agenda-skip-function
                      (lambda nil
                        (org-agenda-skip-entry-if (quote scheduled)
                                                  (quote deadline))))
                     (org-agenda-overriding-header "Un-scheduled tasks:")
-                    )))
+                    ))
+          (agenda ""
+                  ((org-agenda-ndays 1)
+                   (org-agenda-use-time-grid nil)
+                   (org-agenda-skip-function
+                    '(org-agenda-skip-subtree-if 'notregexp ":habit:")
+                       )
+                   (org-agenda-overriding-header "Habits:")
+                   )))
          ((org-agenda-compact-blocks t))
          )
         ("w" "Week's events"

@@ -218,14 +218,26 @@ To switch on syntax highlighting, add to <code>.emacs</code>:</p>
 </ul>
 <pre class="lisp"><code>(setq org-agenda-custom-commands
       &#39;((&quot;c&quot; &quot;Today&#39;s agenda&quot;
-         ((agenda &quot;&quot; ((org-agenda-span 1)))
+         ((agenda &quot;&quot; ((org-agenda-ndays 1)
+                      (org-agenda-skip-function
+                       &#39;(org-agenda-skip-subtree-if &#39;regexp &quot;:habit:&quot;)
+                       )
+                      ))
           (alltodo &quot;&quot;
                    ((org-agenda-skip-function
                      (lambda nil
                        (org-agenda-skip-entry-if (quote scheduled)
                                                  (quote deadline))))
                     (org-agenda-overriding-header &quot;Un-scheduled tasks:&quot;)
-                    )))
+                    ))
+          (agenda &quot;&quot;
+                  ((org-agenda-ndays 1)
+                   (org-agenda-use-time-grid nil)
+                   (org-agenda-skip-function
+                    &#39;(org-agenda-skip-subtree-if &#39;notregexp &quot;:habit:&quot;)
+                       )
+                   (org-agenda-overriding-header &quot;Habits:&quot;)
+                   )))
          ((org-agenda-compact-blocks t))
          )
         (&quot;w&quot; &quot;Week&#39;s events&quot;
