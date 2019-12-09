@@ -70,6 +70,11 @@ grive -s ArticlesPDF
 
 *I usually try with the `--dry-run` option first because there are some glitches sometimes.*
 
+Since very recently (~Nov 2019) another step is necessary:
+
+1. Create a API key on [https://console.developers.google.com/apis/library](https://console.developers.google.com/apis/library) following [those instructions](https://github.com/vitalif/grive2/issues/287#issuecomment-559814555).
+2. Run with `grive -s zotero-library --id "<ID.apps.googleusercontent.com>" --secret "<SECRET>"` (eventually add `-a` to configure).
+
 ## Sync PDFs between Mendeley and Google Drive
 
 See [this post](/2018/09/22/sync-mendeley/).
@@ -90,6 +95,8 @@ The configuration I use is:
 For the [Better BibTeX plugin](https://retorque.re/zotero-better-bibtex/), the most important setting is the citation key style: `[auth:lower][year][journal:lower:abbr]`.
 
 I use [FolderSync](https://play.google.com/store/apps/details?id=dk.tacit.android.foldersync.lite&hl=en_US) to sync the PDFs that I annotate on my Android tablet.
+I rarely need to manage/explore my library on my Android device (I usually just sync then read/annotate the most recent PDFs), but when I do I use the [ZotDroid](https://play.google.com/store/apps/details?id=computer.benjamin.zotdr0id&hl=en_US) app. 
+Not great but the best I could find.
 
 ## Dowload files from Dropbox
 

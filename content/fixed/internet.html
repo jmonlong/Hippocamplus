@@ -21,7 +21,9 @@ output:
 
 <div id="duckduckgo" class="section level2">
 <h2>DuckDuckGo</h2>
-<p><a href="https://duckduckgo.com/about">DuckDuckGo</a> is a “search engine that doesn’t track you”. It provides nice “bangs” to search directly specific websites. By making DDG the default search engine these bangs can be used directly in the address bar.</p>
+<p><a href="https://duckduckgo.com/about">DuckDuckGo</a> is a “search engine that doesn’t track you”.
+It provides nice “bangs” to search directly specific websites.
+By making DDG the default search engine these bangs can be used directly in the address bar.</p>
 <ul>
 <li><code>!pub</code> PubMed.</li>
 <li><code>!scholar</code> Google Scholar.</li>
@@ -48,7 +50,7 @@ output:
 <li>I followed some of the steps <a href="http://www.omgubuntu.co.uk/2016/04/10-things-to-do-after-installing-ubuntu-16-04-lts">there</a> to install essential packages.</li>
 <li>To enable the use of my existing DSA SSH keys I did:</li>
 </ul>
-<p><code>echo &quot;PubkeyAcceptedKeyTypes +ssh-dss&quot; &gt;&gt; ~/.ssh/config</code></p>
+<p><code>echo "PubkeyAcceptedKeyTypes +ssh-dss" &gt;&gt; ~/.ssh/config</code></p>
 <ul>
 <li>To force the second screen to follow the workspace of the primary screen I found <a href="http://gregcor.com/2011/05/07/fix-dual-monitors-in-gnome-3-aka-my-workspaces-are-broken/">this</a>:</li>
 </ul>
@@ -67,25 +69,35 @@ grive -a -s ArticlesPDF</code></pre>
 <p>In the future just sync by running the following command (in the DIR folder):</p>
 <pre class="sh"><code>grive -s ArticlesPDF</code></pre>
 <p><em>I usually try with the <code>--dry-run</code> option first because there are some glitches sometimes.</em></p>
+<p>Since very recently (~Nov 2019) another step is necessary:</p>
+<ol style="list-style-type: decimal">
+<li>Create a API key on <a href="https://console.developers.google.com/apis/library">https://console.developers.google.com/apis/library</a> following <a href="https://github.com/vitalif/grive2/issues/287#issuecomment-559814555">those instructions</a>.</li>
+<li>Run with <code>grive -s zotero-library --id "&lt;ID.apps.googleusercontent.com&gt;" --secret "&lt;SECRET&gt;"</code> (eventually add <code>-a</code> to configure).</li>
+</ol>
 </div>
 <div id="sync-pdfs-between-mendeley-and-google-drive" class="section level2">
 <h2>Sync PDFs between Mendeley and Google Drive</h2>
-<p>See <a href="/2018/09/22/sync-mendeley/">this post</a>. <em>Edit: I switched to a “Zotero + Google Drive” solution, see below.</em></p>
+<p>See <a href="/2018/09/22/sync-mendeley/">this post</a>.
+<em>Edit: I switched to a “Zotero + Google Drive” solution, see below.</em></p>
 </div>
 <div id="zotero" class="section level2">
 <h2>Zotero</h2>
 <p>Mostly following <a href="https://ikashnitsky.github.io/2019/zotero/">this blog post</a>.</p>
 <p>In the general settings of Zotero I also specify the Google Drive folder as <em>base directory</em> and swich off the <em>Sync full-text content</em>.</p>
-<p>Then using the <a href="http://zotfile.com/">Zotfile</a> plugins to make sure the PDF files are consistent between computers. The configuration I use is:</p>
+<p>Then using the <a href="http://zotfile.com/">Zotfile</a> plugins to make sure the PDF files are consistent between computers.
+The configuration I use is:</p>
 <ul>
 <li>Pointing at the Google Drive folder, with subfolders by authors <code>/%a</code>.</li>
 <li>Chaning to lower case and replacing blanks in file names.</li>
 </ul>
 <p>For the <a href="https://retorque.re/zotero-better-bibtex/">Better BibTeX plugin</a>, the most important setting is the citation key style: <code>[auth:lower][year][journal:lower:abbr]</code>.</p>
-<p>I use <a href="https://play.google.com/store/apps/details?id=dk.tacit.android.foldersync.lite&amp;hl=en_US">FolderSync</a> to sync the PDFs that I annotate on my Android tablet.</p>
+<p>I use <a href="https://play.google.com/store/apps/details?id=dk.tacit.android.foldersync.lite&amp;hl=en_US">FolderSync</a> to sync the PDFs that I annotate on my Android tablet.
+I rarely need to manage/explore my library on my Android device (I usually just sync then read/annotate the most recent PDFs), but when I do I use the <a href="https://play.google.com/store/apps/details?id=computer.benjamin.zotdr0id&amp;hl=en_US">ZotDroid</a> app.
+Not great but the best I could find.</p>
 </div>
 <div id="dowload-files-from-dropbox" class="section level2">
 <h2>Dowload files from Dropbox</h2>
-<p>By replacing <code>https://www.dropbox.com</code> with <code>https://dl.dropboxusercontent.com</code> in the link, a file can be dowloaded using command lines tools (e.g. wget or <em>download.file</em> in R). It’s useful to host files that are used in scripts, like some of the post I made using R-Markdown.</p>
+<p>By replacing <code>https://www.dropbox.com</code> with <code>https://dl.dropboxusercontent.com</code> in the link, a file can be dowloaded using command lines tools (e.g. wget or <em>download.file</em> in R).
+It’s useful to host files that are used in scripts, like some of the post I made using R-Markdown.</p>
 <p>Originally it was useful to “serve” HTML pages but it doesn’t work anymore.</p>
 </div>
