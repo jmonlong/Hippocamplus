@@ -35,7 +35,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/Hippocamplus/latex/</guid>
-      <description>Standard packages TinyTeX Misc Document class Page size Font sizes Change the symbol in lists Math calligraphy Languages and encoding Links Table of contents Metadata  Figures Position Sub-figures Supplementary figures  Tables Control tabular width Supplementary tables Spanning columns/rows Align columns Rectangular selection/cut/paste Tables from R  Code blocks For manuscripts Abstract Author affiliation Text formatting Notes/comments Main text and supplements in two documents Compare versions and highlight revisions One figure = one file  Bibliography Reduce long list of authors “Name Year” style Order of initials No URL or DOI  Presentations Changing the font Section slides Themes Background image Backup slides Link to frame    A lot of good information in the LaTeX Wikibook.</description>
+      <description>Standard packages TinyTeX Misc Document class Page size Font sizes Change the symbol in lists Math calligraphy Languages and encoding Links Table of contents Metadata  Figures Position Sub-figures Supplementary figures  Tables Control tabular width Add vertical padding Supplementary tables Spanning columns/rows Align columns Rectangular selection/cut/paste Tables from R  Code blocks For manuscripts Abstract Author affiliation Text formatting Notes/comments Main text and supplements in two documents Compare versions and highlight revisions One figure = one file  Bibliography Reduce long list of authors “Name Year” style Order of initials No URL or DOI  Presentations Changing the font Section slides Themes Background image Backup slides Link to frame    A lot of good information in the LaTeX Wikibook.</description>
     </item>
     
     <item>
@@ -62,7 +62,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/Hippocamplus/org-mode/</guid>
-      <description>Org file Configuration Syntax Keybindings From anywhere Edit mode Timestamps Agenda views Capture  TODO entry Property drawer Habits entry Code block Links Tags Custom agenda views   I’m giving Org mode a try. This page will contain my configuration and the small subset of commands that I want to learn.
+      <description>Org file Configuration Syntax Keybindings From anywhere Edit mode Timestamps Agenda views Capture  TODO entry Tables Property drawer Habits entry Code block Links Tags Custom agenda views   I’m giving Org mode a try. This page will contain my configuration and the small subset of commands that I want to learn.
 Org Manual
 Org file  Start with MY PROJECTS -*- mode: org; -*-   Configuration In .</description>
     </item>

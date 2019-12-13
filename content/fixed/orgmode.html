@@ -21,6 +21,7 @@ output:
 <li><a href="#capture">Capture</a></li>
 </ul></li>
 <li><a href="#todo-entry">TODO entry</a></li>
+<li><a href="#tables">Tables</a></li>
 <li><a href="#property-drawer">Property drawer</a></li>
 <li><a href="#habits-entry">Habits entry</a></li>
 <li><a href="#code-block">Code block</a></li>
@@ -130,14 +131,36 @@ This page will contain my configuration and the small subset of commands that I 
 </div>
 <div id="todo-entry" class="section level2">
 <h2>TODO entry</h2>
-<pre><code>*** TODO Do this before the deadline
+<pre class="text"><code>*** TODO Do this before the deadline
     SCHEDULED: &lt;2004-02-22 Sun&gt;
     DEADLINE: &lt;2004-02-29 Sun&gt;</code></pre>
+</div>
+<div id="tables" class="section level2">
+<h2>Tables</h2>
+<ul>
+<li><code>C-c C-c</code> format the table. If on a <code>TBLFM:</code> line, recompute the formula.</li>
+<li><code>&quot;| &quot; TAB</code> make a new row.</li>
+<li><code>&quot;|-&quot; TAB</code> make a line separation.</li>
+<li><code>M-RIGHT</code>/<code>M-LEFT</code> move column.</li>
+<li><code>M-UP</code>/<code>M-DOWN</code> move row.</li>
+<li><code>S-M-RIGHT</code>/<code>S-M-DOWN</code> add new column/row.</li>
+<li><code>S-M-LEFT</code>/<code>S-M-UP</code> remove current column/row.</li>
+<li><code>C-c }</code> show rows/columns labels.</li>
+</ul>
+<p>An example with a right-aligned column, a field formula (<code>:=</code>) and a column formula (<code>=</code>)</p>
+<pre class="text"><code>|  &lt;r&gt; |      |      |
+| ColA | ColB | ColC |
+|------+------+------|
+|  tes |   13 |   12 |
+|  asd |    3 |    2 |
+|    a |   16 |   15 |
+| mean | 10.7 |  9.7 |
+#+TBLFM: $3=$2-1::@6$2:=vmean(@3..@5);p3</code></pre>
 </div>
 <div id="property-drawer" class="section level2">
 <h2>Property drawer</h2>
 <p>No empty lines between header/scheduled/deadline and property chunk.</p>
-<pre><code>* John Doe
+<pre class="text"><code>* John Doe
 :PROPERTIES: 
 :EMAIL:    [[mailto:john.doe@gmail.com][john.doe@gmail.com]]
 :BIRTHDAY: 1982-01-14
@@ -153,7 +176,7 @@ This page will contain my configuration and the small subset of commands that I 
 </div>
 <div id="habits-entry" class="section level2">
 <h2>Habits entry</h2>
-<pre><code>** TODO Go for a run
+<pre class="text"><code>** TODO Go for a run
 SCHEDULED: &lt;2019-07-16 Tue .+2d/7d&gt;
 :PROPERTIES: 
 :STYLE:    habit
@@ -173,7 +196,7 @@ SCHEDULED: &lt;2019-07-16 Tue .+2d/7d&gt;
 <div id="code-block" class="section level2">
 <h2>Code block</h2>
 <p>A simple code block:</p>
-<pre><code>#+NAME: &lt;name&gt;
+<pre class="text"><code>#+NAME: &lt;name&gt;
 #+BEGIN_SRC &lt;language&gt;
   &lt;body&gt;
 #+END_SRC</code></pre>

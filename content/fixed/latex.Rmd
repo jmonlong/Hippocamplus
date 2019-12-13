@@ -227,6 +227,14 @@ To list tables: `\listoffigures`
 }
 ~~~
 
+### Add vertical padding
+
+~~~tex
+{{\arraystretch}{1.3}
+	TABULAR
+}
+~~~
+
 ### Supplementary tables
 
 Similar to figures I use:

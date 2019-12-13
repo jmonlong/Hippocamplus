@@ -97,17 +97,41 @@ In `.emacs` file:
 
 ## TODO entry
 
-~~~
+~~~text
 *** TODO Do this before the deadline
     SCHEDULED: <2004-02-22 Sun>
     DEADLINE: <2004-02-29 Sun>
+~~~
+
+## Tables
+
+- `C-c C-c` format the table. If on a `TBLFM:` line, recompute the formula.
+- `"| " TAB` make a new row.
+- `"|-" TAB` make a line separation.
+- `M-RIGHT`/`M-LEFT` move column.
+- `M-UP`/`M-DOWN` move row.
+- `S-M-RIGHT`/`S-M-DOWN` add new column/row.
+- `S-M-LEFT`/`S-M-UP` remove current column/row.
+- `C-c }` show rows/columns labels.
+
+An example with a right-aligned column, a field formula (`:=`) and a column formula (`=`)
+
+~~~text
+|  <r> |      |      |
+| ColA | ColB | ColC |
+|------+------+------|
+|  tes |   13 |   12 |
+|  asd |    3 |    2 |
+|    a |   16 |   15 |
+| mean | 10.7 |  9.7 |
+#+TBLFM: $3=$2-1::@6$2:=vmean(@3..@5);p3
 ~~~
 
 ## Property drawer
 
 No empty lines between header/scheduled/deadline and property chunk.
 
-~~~
+~~~text
 * John Doe
 :PROPERTIES: 
 :EMAIL:    [[mailto:john.doe@gmail.com][john.doe@gmail.com]]
@@ -122,7 +146,7 @@ No empty lines between header/scheduled/deadline and property chunk.
 
 ## Habits entry
 
-~~~
+~~~text
 ** TODO Go for a run
 SCHEDULED: <2019-07-16 Tue .+2d/7d>
 :PROPERTIES: 
@@ -149,7 +173,7 @@ For a view of the habit and how well they are followed, I added to my `.emacs`:
 
 A simple code block:
 
-~~~
+~~~text
 #+NAME: <name>
 #+BEGIN_SRC <language>
   <body>
