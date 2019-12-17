@@ -1,0 +1,205 @@
+---
+sidebar: true
+title: Tools
+weight: 1
+output:
+  blogdown::html_page:
+    toc: true
+---
+
+## Git
+
++ Commit all modification and added files: `git commit -am "informative message"`
++ To show all the history of a file: `git log -p -- file`
++ To retrieve a specific version of a file: `git show COMMIT:file`
++ Revert repo to a specific commit: `git checkout COMMIT`
++ Undo a commit: `git reset HEAD~` and then for the real commit `git commit -c ORIG_HEAD`.
++ Update sub-modules: `git submodule update --init --recursive`
++ Add all untracked files: `git st -s | grep '??' | cut -f2 -d ' ' | xargs git add`
++ Add remote e.g. after a fork: `git remote add mine git@github.com:jmonlong/REPO.git`
+
+#### Aliases
+
+~~~sh
+git config --global alias.co checkout
+git config --global alias.ci commit
+git config --global alias.st status
+git config --global alias.br branch
+git config --global user.email '<EMAIL>'
+git config --global user.name 'Jean Monlong'
+~~~
+
+#### Branches
+
++ List branches: `git branch`
++ List all branches: `git branch -a`
++ Update remote branch list: `git remote prune origin`
++ Create branch: `git checkout -b hotfix`
++ Link it to a remote branch: `git branch -u origin/hotflix`
++ Creat a new local branch from remote: `git co -t origin/hotfix`
++ Merge the current branch with another branch: `git merge hotfix`
++ Delete a branch: `git branch -d hotfix`
++ Delete remote branch: `git push origin :hotfix`
+
+
+#### Check status of all repos
+
+I have an alias calling the following commands:
+
+~~~sh
+WD=`pwd`
+for ff in `find . -maxdepth 5 -name .git`
+do
+    GDIR=`dirname $ff`
+    echo $GDIR
+    cd $WD/$GDIR
+    git st -s
+    git st | grep ahead
+done
+cd $WD
+~~~
+
+## Snakemake
+
+- [Documentation](https://snakemake.readthedocs.io)
+
+A few trick I'd like to remember or try soon:
+
+- Double "{{"/"}}" to escape `{` `}` in *expand* or NOT to define wildcards.
+- Define regexp constraints on wildcards as `{data,\d+}` or using *wildcard_constraints* (within a rule or globally).
+- Passing a Python/R *script:* directly.
+- Output file marked as `temp()` are deleted when not needed by any rules anymore.
+- Output file marked as `touch()` for flag files.
+- Local rules when running on a HPC.
+- Use remote (S3) files with `remote()`
+
+[Configuration files](https://snakemake.readthedocs.io/en/stable/snakefiles/configuration.html#configuration) used as `config["samples"]`.
+Can also be used as `snakemake --config yourparam=1.5`.
+For sample metadata, a [tabular configuration](https://snakemake.readthedocs.io/en/stable/snakefiles/configuration.html#tabular-configuration) can also be used using Pandas.
+It's also possible to define a separate config file for the cluster configuration (e.g. resources for each rule).
+
+
+## jq
+
+[Lesson at programminghistorian.org](https://programminghistorian.org/en/lessons/json-and-jq)
+
+- Select elements based on one field's value: `jq 'select(.field==value)'`
+- Keep only desired fields: `jq '{id: .id, title: .title}'`
+- Write in TSV: `jq '.array | @tsv'`
+
+## rsync
+
+`rsync` is not completely intuitive to me. 
+Here are some of the commands I could make work.
+
+--- 
+
+To recurrently sync all the files that match the patterns in `rsyncIncludes.txt`:
+
+~~~sh
+rsync -r --include='*/' --include-from=rsyncIncludes.txt --exclude='*' --prune-empty-dirs SRC DEST
+~~~
+
+---
+
+To recurrently sync all the files that match the patterns in `rsyncIncludes.txt` EXCEPT some with a specific pattern.
+Practical example: all the R scripts but not the ones created by BatchJobs in `*-files` directories:
+
+~~~sh
+rsync -r --exclude="*-files" --include='*/' --include='*.R' --exclude='*' --prune-empty-dirs SRC DEST
+~~~
+
+
+## Docker
+
+I'm still learning Docker but here are commands/parameters that seem relevant for me:
+
+#### Build a docker instance
+
+[Write a Dockerfile](https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/) :
+
++ `WORKDIR /root` sets the working directory.
++ `COPY PopSV_1.0.tar.gz ./` copies a file in the instance. The `/` is important !
++ There is a cache management system so it's important to keep related commands in the same `RUN`.
+
+To run in the folder with the `Dockerfile`.
+
+~~~sh
+docker build -t jmonlong/popsv-docker .
+~~~
+
+Ignore (big) files fro the build context using a `.dockerignore` file.
+
+#### Launch a docker instance
+
+To launch an interactive instance with a shared folder:
+
+~~~sh
+docker run -t -i -v /home/ubuntu/analysis1:/root/analysis1 jmonlong/popsv-docker
+~~~
+
++ `-t` and `-i` are used for interactive run.
++ `-v` links folder in the host with folder in the image. It must be **absolute paths**.
++ Sometimes use `bash` as the command to force interactive, or `--entrypoint /bin/bash` if the image uses an *ENTRYPOINT*.
++ To make sure the files created by the container have the appropriate owner use: `` -u `id -u $USER` ``.
+
+#### Increase memory
+
+In Mac OS, I had some problems with the docker stopping because of memory issues.
+I fixed by changing:
+
+~~~sh
+docker-machine stop
+VBoxManage modifyvm default --cpus 3
+VBoxManage modifyvm default --memory 8192
+docker-machine start
+~~~
+
+## Makefile
+
+- [Makefile basics from Isaacs](https://gist.github.com/isaacs/62a2d1825d04437c6f08).
+
+
+## For file conversion
+
+### Misc
+
+- SVG to PDF: `inkscape --file=in.svg --export-area-drawing --without-gui --export-pdf=out.pdf`
+- Video to mp3: `ffmpeg -i in.m4a -acodec mp3 -ac 2 -ab 192k out.mp3`
+
+### PDF 
+
+#### to EPS
+
+I ended up using Inkscape in command-line mode. The result is not so bad (better than the `pdf2eps` etc).
+
+~~~sh
+inkscape document.pdf --export-eps=document.eps
+~~~
+
+[Apparently](http://blm.io/blog/convert-pdf-eps-osx/), `pdftops` is even better.
+
+~~~sh
+pdftops -eps document.pdf
+~~~
+
+#### to PDF/A
+
+In the end I had to use Acrobat Reader Pro...
+Still, converting the PDF using the following commands beforehand helped (otherwise Acrobat Reader Pro couldn't convert it):
+
+~~~sh
+gs -dPDFA=1 -dBATCH -dNOPAUSE -dEmbedAllFonts=true -dSubsetFonts=false -dHaveTrueTypes=true -dPDFSETTINGS=/prepress -sProcessColorModel=DeviceRGB -sDEVICE=pdfwrite -sPDFACompatibilityPolicy=1 -sOutputFile=mainPDFA.pdf main.pdf
+~~~
+
+On the other hand, passing by a `.ps` stage as recommended [here](https://superuser.com/questions/188953/how-to-convert-a-pdf-to-a-pdf-a), produced a smaller PDF that was directly PDF/A compliant (no need for Acrobat Reader Pro) but lost all cross-reference links :(
+
+~~~sh
+pdftops main.pdf main.ps
+gs -dPDFA -dBATCH -dNOPAUSE -dNOOUTERSAVE -dUseCIEColor -sProcessColorModel=DeviceCMYK -sDEVICE=pdfwrite -sPDFACompatibilityPolicy=1 -sOutputFile=mainPDFA.pdf main.ps
+~~~
+
+To check for PDF/A compliance I used [this online validator](https://www.pdf-online.com/osa/validate.aspx) or Acrobat Reader Pro.
+Another way to check for problems is to look at the *emb* column of `pdffonts main.pdf` (should be all embedded) and the *type* column of `pdfimages -list main.pdf` (should be all *image*).
+
+*Note: this is based only on my one-time experience with the PDF of my thesis.*

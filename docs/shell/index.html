@@ -95,6 +95,10 @@
       
     
       
+        <a class="sidebar-nav-item " href="../tools/">Tools</a>
+      
+    
+      
         <a class="sidebar-nav-item " href="../internet/">Internet</a>
       
     
@@ -237,14 +241,11 @@
 <div id="TOC">
 <ul>
 <li><a href="#external-links">External links</a></li>
-<li><a href="#git">Git</a></li>
-<li><a href="#json-parsing-with-jq">json parsing with <em>jq</em></a></li>
 <li><a href="#gnu-screen">GNU screen</a></li>
 <li><a href="#bashrc-aliases"><code>.bashrc</code> aliases</a></li>
 <li><a href="#misc">Misc</a><ul>
 <li><a href="#colors-in-less">Colors in <code>less</code></a></li>
 <li><a href="#avoid-killing-ssh-jobs">Avoid killing ssh jobs</a></li>
-<li><a href="#rsync">rsync</a></li>
 </ul></li>
 <li><a href="#one-liners">One-liners</a><ul>
 <li><a href="#bash-pipes">Bash &amp; Pipes</a></li>
@@ -255,12 +256,6 @@
 <li><a href="#variables">Variables</a></li>
 <li><a href="#if-then-else">If Then Else</a></li>
 </ul></li>
-<li><a href="#convert-files">Convert files</a><ul>
-<li><a href="#misc-1">Misc</a></li>
-<li><a href="#pdf">PDF</a></li>
-</ul></li>
-<li><a href="#docker-cheatsheet">Docker cheatsheet</a></li>
-<li><a href="#makefile">Makefile</a></li>
 <li><a href="#modules">Modules</a></li>
 <li><a href="#osx">OSX</a><ul>
 <li><a href="#mount-server">Mount server</a></li>
@@ -274,65 +269,6 @@
 <ul>
 <li><a href="https://github.com/jlevy/the-art-of-command-line">The Art of Command Line</a></li>
 <li><a href="https://terminalsare.sexy/">Terminals Are Sexy</a></li>
-</ul>
-</div>
-<div id="git" class="section level2">
-<h2>Git</h2>
-<ul>
-<li>Commit all modification and added files: <code>git commit -am &quot;informative message&quot;</code></li>
-<li>To show all the history of a file: <code>git log -p -- file</code></li>
-<li>To retrieve a specific version of a file: <code>git show COMMIT:file</code></li>
-<li>Revert repo to a specific commit: <code>git checkout COMMIT</code></li>
-<li>Undo a commit: <code>git reset HEAD~</code> and then for the real commit <code>git commit -c ORIG_HEAD</code>.</li>
-<li>Update sub-modules: <code>git submodule update --init --recursive</code></li>
-<li>Add all untracked files: <code>git st -s | grep '??' | cut -f2 -d ' ' | xargs git add</code></li>
-<li>Add remote e.g. after a fork: <code>git remote add mine git@github.com:jmonlong/REPO.git</code></li>
-</ul>
-<div id="aliases" class="section level4">
-<h4>Aliases</h4>
-<pre class="sh"><code>git config --global alias.co checkout
-git config --global alias.ci commit
-git config --global alias.st status
-git config --global alias.br branch
-git config --global user.email &#39;&lt;EMAIL&gt;&#39;
-git config --global user.name &#39;Jean Monlong&#39;</code></pre>
-</div>
-<div id="branches" class="section level4">
-<h4>Branches</h4>
-<ul>
-<li>List branches: <code>git branch</code></li>
-<li>List all branches: <code>git branch -a</code></li>
-<li>Update remote branch list: <code>git remote prune origin</code></li>
-<li>Create branch: <code>git checkout -b hotfix</code></li>
-<li>Link it to a remote branch: <code>git branch -u origin/hotflix</code></li>
-<li>Creat a new local branch from remote: <code>git co -t origin/hotfix</code></li>
-<li>Merge the current branch with another branch: <code>git merge hotfix</code></li>
-<li>Delete a branch: <code>git branch -d hotfix</code></li>
-<li>Delete remote branch: <code>git push origin :hotfix</code></li>
-</ul>
-</div>
-<div id="check-status-of-all-repos" class="section level4">
-<h4>Check status of all repos</h4>
-<p>I have an alias calling the following commands:</p>
-<pre class="sh"><code>WD=`pwd`
-for ff in `find . -maxdepth 5 -name .git`
-do
-    GDIR=`dirname $ff`
-    echo $GDIR
-    cd $WD/$GDIR
-    git st -s
-    git st | grep ahead
-done
-cd $WD</code></pre>
-</div>
-</div>
-<div id="json-parsing-with-jq" class="section level2">
-<h2>json parsing with <em>jq</em></h2>
-<p><a href="https://programminghistorian.org/en/lessons/json-and-jq">Lesson at programminghistorian.org</a></p>
-<ul>
-<li>Select elements based on one field’s value: <code>jq 'select(.field==value)'</code></li>
-<li>Keep only desired fields: <code>jq '{id: .id, title: .title}'</code></li>
-<li>Write in TSV: <code>jq '.array | @tsv'</code></li>
 </ul>
 </div>
 <div id="gnu-screen" class="section level2">
@@ -371,18 +307,6 @@ grep --color=always | less -R</code></pre>
 <div id="avoid-killing-ssh-jobs" class="section level3">
 <h3>Avoid killing ssh jobs</h3>
 <p><code>nohup</code> function (apparently).</p>
-</div>
-<div id="rsync" class="section level3">
-<h3>rsync</h3>
-<p><code>rsync</code> is not completely intuitive to me.
-Here are some of the commands I could make work.</p>
-<hr />
-<p>To recurrently sync all the files that match the patterns in <code>rsyncIncludes.txt</code>:</p>
-<pre class="sh"><code>rsync -r --include=&#39;*/&#39; --include-from=rsyncIncludes.txt --exclude=&#39;*&#39; --prune-empty-dirs SRC DEST</code></pre>
-<hr />
-<p>To recurrently sync all the files that match the patterns in <code>rsyncIncludes.txt</code> EXCEPT some with a specific pattern.
-Practical example: all the R scripts but not the ones created by BatchJobs in <code>*-files</code> directories:</p>
-<pre class="sh"><code>rsync -r --exclude=&quot;*-files&quot; --include=&#39;*/&#39; --include=&#39;*.R&#39; --exclude=&#39;*&#39; --prune-empty-dirs SRC DEST</code></pre>
 </div>
 </div>
 <div id="one-liners" class="section level2">
@@ -467,80 +391,6 @@ fi</code></pre>
 <li><code>-r</code> file readable.</li>
 </ul>
 </div>
-</div>
-<div id="convert-files" class="section level2">
-<h2>Convert files</h2>
-<div id="misc-1" class="section level3">
-<h3>Misc</h3>
-<ul>
-<li>SVG to PDF: <code>inkscape --file=in.svg --export-area-drawing --without-gui --export-pdf=out.pdf</code></li>
-<li>Video to mp3: <code>ffmpeg -i in.m4a -acodec mp3 -ac 2 -ab 192k out.mp3</code></li>
-</ul>
-</div>
-<div id="pdf" class="section level3">
-<h3>PDF</h3>
-<div id="to-eps" class="section level4">
-<h4>to EPS</h4>
-<p>I ended up using Inkscape in command-line mode. The result is not so bad (better than the <code>pdf2eps</code> etc).</p>
-<pre class="sh"><code>inkscape document.pdf --export-eps=document.eps</code></pre>
-<p><a href="http://blm.io/blog/convert-pdf-eps-osx/">Apparently</a>, <code>pdftops</code> is even better.</p>
-<pre class="sh"><code>pdftops -eps document.pdf</code></pre>
-</div>
-<div id="to-pdfa" class="section level4">
-<h4>to PDF/A</h4>
-<p>In the end I had to use Acrobat Reader Pro…
-Still, converting the PDF using the following commands beforehand helped (otherwise Acrobat Reader Pro couldn’t convert it):</p>
-<pre class="sh"><code>gs -dPDFA=1 -dBATCH -dNOPAUSE -dEmbedAllFonts=true -dSubsetFonts=false -dHaveTrueTypes=true -dPDFSETTINGS=/prepress -sProcessColorModel=DeviceRGB -sDEVICE=pdfwrite -sPDFACompatibilityPolicy=1 -sOutputFile=mainPDFA.pdf main.pdf</code></pre>
-<p>On the other hand, passing by a <code>.ps</code> stage as recommended <a href="https://superuser.com/questions/188953/how-to-convert-a-pdf-to-a-pdf-a">here</a>, produced a smaller PDF that was directly PDF/A compliant (no need for Acrobat Reader Pro) but lost all cross-reference links :(</p>
-<pre class="sh"><code>pdftops main.pdf main.ps
-gs -dPDFA -dBATCH -dNOPAUSE -dNOOUTERSAVE -dUseCIEColor -sProcessColorModel=DeviceCMYK -sDEVICE=pdfwrite -sPDFACompatibilityPolicy=1 -sOutputFile=mainPDFA.pdf main.ps</code></pre>
-<p>To check for PDF/A compliance I used <a href="https://www.pdf-online.com/osa/validate.aspx">this online validator</a> or Acrobat Reader Pro.
-Another way to check for problems is to look at the <em>emb</em> column of <code>pdffonts main.pdf</code> (should be all embedded) and the <em>type</em> column of <code>pdfimages -list main.pdf</code> (should be all <em>image</em>).</p>
-<p><em>Note: this is based only on my one-time experience with the PDF of my thesis.</em></p>
-</div>
-</div>
-</div>
-<div id="docker-cheatsheet" class="section level2">
-<h2>Docker cheatsheet</h2>
-<p>I’m still learning Docker but here are commands/parameters that seem relevant for me:</p>
-<div id="build-a-docker-instance" class="section level4">
-<h4>Build a docker instance</h4>
-<p><a href="https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/">Write a Dockerfile</a> :</p>
-<ul>
-<li><code>WORKDIR /root</code> sets the working directory.</li>
-<li><code>COPY PopSV_1.0.tar.gz ./</code> copies a file in the instance. The <code>/</code> is important !</li>
-<li>There is a cache management system so it’s important to keep related commands in the same <code>RUN</code>.</li>
-</ul>
-<p>To run in the folder with the <code>Dockerfile</code>.</p>
-<pre class="sh"><code>docker build -t jmonlong/popsv-docker .</code></pre>
-<p>Ignore (big) files fro the build context using a <code>.dockerignore</code> file.</p>
-</div>
-<div id="launch-a-docker-instance" class="section level4">
-<h4>Launch a docker instance</h4>
-<p>To launch an interactive instance with a shared folder:</p>
-<pre class="sh"><code>docker run -t -i -v /home/ubuntu/analysis1:/root/analysis1 jmonlong/popsv-docker</code></pre>
-<ul>
-<li><code>-t</code> and <code>-i</code> are used for interactive run.</li>
-<li><code>-v</code> links folder in the host with folder in the image. It must be <strong>absolute paths</strong>.</li>
-<li>Sometimes use <code>bash</code> as the command to force interactive, or <code>--entrypoint /bin/bash</code> if the image uses an <em>ENTRYPOINT</em>.</li>
-<li>To make sure the files created by the container have the appropriate owner use: <code>-u `id -u $USER`</code>.</li>
-</ul>
-</div>
-<div id="increase-memory" class="section level4">
-<h4>Increase memory</h4>
-<p>In Mac OS, I had some problems with the docker stopping because of memory issues.
-I fixed by changing:</p>
-<pre class="sh"><code>docker-machine stop
-VBoxManage modifyvm default --cpus 3
-VBoxManage modifyvm default --memory 8192
-docker-machine start</code></pre>
-</div>
-</div>
-<div id="makefile" class="section level2">
-<h2>Makefile</h2>
-<ul>
-<li><a href="https://gist.github.com/isaacs/62a2d1825d04437c6f08">Makefile basics from Isaacs</a>.</li>
-</ul>
 </div>
 <div id="modules" class="section level2">
 <h2>Modules</h2>
