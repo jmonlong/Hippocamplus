@@ -320,7 +320,7 @@ Otherwise, I manually fold the frames/figures/tables that are distracting.
 - `C-c C-s s` `code` (**c**ode).
 - `C-c C-o` follow a link.
 - `C-c C-x C-l` to toggle the *hide-url* mode to get shorter links.
-
+- `C-c C-p`/`C-c C-n` jump to previous/next outline.
 
 ### Table formatting
 

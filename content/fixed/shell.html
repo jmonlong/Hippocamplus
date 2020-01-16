@@ -27,6 +27,9 @@ output:
 <li><a href="#if-then-else">If Then Else</a></li>
 </ul></li>
 <li><a href="#modules">Modules</a></li>
+<li><a href="#ubuntu">Ubuntu</a><ul>
+<li><a href="#sound-problems">Sound problems</a></li>
+</ul></li>
 <li><a href="#osx">OSX</a><ul>
 <li><a href="#mount-server">Mount server</a></li>
 <li><a href="#setup-wd-elements-external-hard-drive">Setup WD Elements external hard drive</a></li>
@@ -58,7 +61,11 @@ term screen-256color</code></pre>
 <div id="bashrc-aliases" class="section level2">
 <h2><code>.bashrc</code> aliases</h2>
 <ul>
+<li><code>alias terml='gnome-terminal --tab-with-profile=&quot;Sol Light&quot;'</code> to open a new terminal with light theme.</li>
+<li><code>alias termd='gnome-terminal --tab-with-profile=&quot;Sol Dark&quot;'</code> same with dark theme.</li>
 <li><code>alias rf='ls -rt | tail -1'</code> to quickly get the most recent file. Then for example <code>evince `rf`</code> to open the latest file.</li>
+<li><code>alias evincel='ls -rt *.pdf | tail -1 | xargs evince'</code> opens the last PDF document</li>
+<li><code>alias R='R --no-save --no-restore'</code> to avoid R asking about saving the history.</li>
 </ul>
 </div>
 <div id="misc" class="section level2">
@@ -179,6 +186,15 @@ prepend-path    LD_LIBRARY_PATH     $root/lib/</code></pre>
 <p>Then to use the module:</p>
 <pre class="shell"><code>module use ~/myModules
 module load jmonlong/emacs</code></pre>
+</div>
+<div id="ubuntu" class="section level2">
+<h2>Ubuntu</h2>
+<div id="sound-problems" class="section level3">
+<h3>Sound problems</h3>
+<p>I touched something my headphones sometime bug (white noise and bad sound quality).
+This fixes it (in my <code>~/.bashrc</code>):</p>
+<pre><code>alias soundfix=&#39;amixer -c PCH cset &quot;name=Headphone Mic Boost Volume&quot; 1&#39;</code></pre>
+</div>
 </div>
 <div id="osx" class="section level2">
 <h2>OSX</h2>

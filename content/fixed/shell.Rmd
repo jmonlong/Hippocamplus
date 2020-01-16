@@ -32,7 +32,13 @@ term screen-256color
 
 ## `.bashrc` aliases
 
+- `alias terml='gnome-terminal --tab-with-profile="Sol Light"'` to open a new terminal with light theme.
+- `alias termd='gnome-terminal --tab-with-profile="Sol Dark"'` same with dark theme.
 - `alias rf='ls -rt | tail -1'` to quickly get the most recent file. Then for example `` evince `rf` `` to open the latest file.
+- `alias evincel='ls -rt *.pdf | tail -1 | xargs evince'` opens the last PDF document
+- `alias R='R --no-save --no-restore'` to avoid R asking about saving the history.
+
+
 
 ## Misc
 
@@ -192,6 +198,16 @@ module use ~/myModules
 module load jmonlong/emacs
 ~~~
 
+## Ubuntu
+
+### Sound problems
+
+I touched something my headphones sometime bug (white noise and bad sound quality). 
+This fixes it (in my `~/.bashrc`):
+
+```
+alias soundfix='amixer -c PCH cset "name=Headphone Mic Boost Volume" 1'
+```
 
 ## OSX
 

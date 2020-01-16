@@ -92,8 +92,7 @@ Naming and formatting  Use lowercase _-separated for modules and functions name.
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/Hippocamplus/shell/</guid>
-      <description>External links GNU screen .bashrc aliases Misc Colors in less Avoid killing ssh jobs  One-liners Bash &amp;amp; Pipes AWK Perl one-liners  Shell scripting Variables If Then Else  Modules OSX Mount server Setup WD Elements external hard drive    External links  The Art of Command Line Terminals Are Sexy   GNU screen I had the following problems in some HPCs:
- screen not clearing out after commands like less or emacs.</description>
+      <description>External links GNU screen .bashrc aliases Misc Colors in less Avoid killing ssh jobs  One-liners Bash &amp;amp; Pipes AWK Perl one-liners  Shell scripting Variables If Then Else  Modules Ubuntu Sound problems  OSX Mount server Setup WD Elements external hard drive    External links  The Art of Command Line Terminals Are Sexy   GNU screen I had the following problems in some HPCs:</description>
     </item>
     
     <item>

@@ -163,6 +163,7 @@ docker-machine start</code></pre>
 <ul>
 <li>SVG to PDF: <code>inkscape --file=in.svg --export-area-drawing --without-gui --export-pdf=out.pdf</code></li>
 <li>Video to mp3: <code>ffmpeg -i in.m4a -acodec mp3 -ac 2 -ab 192k out.mp3</code></li>
+<li>HTML page to PDF: <code>pandoc -o out.pdf --include-in-header h.tex URL</code> where <em>h.tex</em> could contain LaTeX packages declarations like <code>\usepackage{fullpage}</code>.</li>
 </ul>
 </div>
 <div id="pdf" class="section level3">
