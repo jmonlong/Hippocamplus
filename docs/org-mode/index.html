@@ -257,13 +257,17 @@
 <li><a href="#code-block">Code block</a></li>
 <li><a href="#links">Links</a></li>
 <li><a href="#tags">Tags</a></li>
+<li><a href="#clocking-time">Clocking time</a></li>
 <li><a href="#custom-agenda-views">Custom agenda views</a></li>
 </ul>
 </div>
 
 <p>I’m giving <a href="https://orgmode.org/">Org mode</a> a try.
 This page will contain my configuration and the small subset of commands that I want to learn.</p>
-<p><a href="https://orgmode.org/manual/">Org Manual</a></p>
+<ul>
+<li><a href="https://orgmode.org/manual/">Org Manual</a></li>
+<li><a href="http://doc.norang.ca/org-mode.html">Org Mode - Organize Your Life In Plain Text!</a></li>
+</ul>
 <div id="org-file" class="section level2">
 <h2>Org file</h2>
 <ul>
@@ -277,7 +281,7 @@ This page will contain my configuration and the small subset of commands that I 
 ;; Change M-TAB completion to C-TAB
 (define-key org-mode-map (kbd &quot;C-&lt;tab&gt;&quot;) &#39;pcomplete)
 (setq org-todo-keywords
-      &#39;((sequence &quot;TODO&quot; &quot;ONGOING&quot; &quot;WAITING&quot; &quot;|&quot; &quot;DONE&quot;)))
+      &#39;((sequence &quot;TODO&quot; &quot;ONGOING&quot; &quot;CLOCKING&quot; &quot;|&quot; &quot;DONE&quot;)))
 (global-set-key (kbd &quot;C-c a&quot;) &#39;org-agenda)
 (setq org-startup-truncated nil) ;; wrap lines
 (setq org-startup-indented 1) ;; heading indentation
@@ -454,6 +458,20 @@ To switch on syntax highlighting, add to <code>.emacs</code>:</p>
 <ul>
 <li>Set/edit tag: <code>C-c C-q</code></li>
 </ul>
+</div>
+<div id="clocking-time" class="section level2">
+<h2>Clocking time</h2>
+<ul>
+<li><code>C-c C-x ;</code> starts a timer/pomodoro.</li>
+<li><code>C-c C-x C-i</code> starts clocking, or <code>I</code> in agenda view.</li>
+<li><code>C-c C-x C-o</code> stops clocking (also stops when the task is DONE).</li>
+<li><code>C-c C-x C-d</code> shows a summary of the file.</li>
+<li><code>C-c C-x C-r</code> inserts a report table.</li>
+</ul>
+<p>To force saving the clock items in a <em>LOGBOOK</em> drawer I added in my <code>~/.emacs</code>:</p>
+<pre class="lisp"><code>(setq org-clock-into-drawer t)
+(setq org-pretty-entities t)
+(setq org-clock-in-switch-to-state &quot;CLOCKING&quot;)</code></pre>
 </div>
 <div id="custom-agenda-views" class="section level2">
 <h2>Custom agenda views</h2>

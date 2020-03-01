@@ -214,6 +214,7 @@ The bedrock for future studies
 
 - *Now* as a transition word, e.g. when changing slides.
 - *In closing, ...* to introduce the conclusion slide. 
+- *I thought I'd start by...* starting the introduction.
 
 ## Advices
 

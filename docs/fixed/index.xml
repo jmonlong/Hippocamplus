@@ -62,9 +62,8 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/Hippocamplus/org-mode/</guid>
-      <description>Org file Configuration Syntax Keybindings From anywhere Edit mode Timestamps Agenda views Capture  TODO entry Tables Property drawer Habits entry Code block Links Tags Custom agenda views   I’m giving Org mode a try. This page will contain my configuration and the small subset of commands that I want to learn.
-Org Manual
-Org file  Start with MY PROJECTS -*- mode: org; -*-   Configuration In .</description>
+      <description>Org file Configuration Syntax Keybindings From anywhere Edit mode Timestamps Agenda views Capture  TODO entry Tables Property drawer Habits entry Code block Links Tags Clocking time Custom agenda views   I’m giving Org mode a try. This page will contain my configuration and the small subset of commands that I want to learn.
+ Org Manual Org Mode - Organize Your Life In Plain Text!  Org file  Start with MY PROJECTS -*- mode: org; -*-   Configuration In .</description>
     </item>
     
     <item>

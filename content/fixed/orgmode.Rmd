@@ -10,7 +10,8 @@ output:
 I'm giving [Org mode](https://orgmode.org/) a try.
 This page will contain my configuration and the small subset of commands that I want to learn.
 
-[Org Manual](https://orgmode.org/manual/)
+- [Org Manual](https://orgmode.org/manual/)
+- [Org Mode - Organize Your Life In Plain Text!](http://doc.norang.ca/org-mode.html)
 
 ## Org file
 
@@ -25,7 +26,7 @@ In `.emacs` file:
 ;; Change M-TAB completion to C-TAB
 (define-key org-mode-map (kbd "C-<tab>") 'pcomplete)
 (setq org-todo-keywords
-      '((sequence "TODO" "ONGOING" "WAITING" "|" "DONE")))
+      '((sequence "TODO" "ONGOING" "CLOCKING" "|" "DONE")))
 (global-set-key (kbd "C-c a") 'org-agenda)
 (setq org-startup-truncated nil) ;; wrap lines
 (setq org-startup-indented 1) ;; heading indentation
@@ -209,6 +210,22 @@ To define tags/shortcuts, for example Google Map search using `[[gmap:UCSC, Sant
 ## Tags
 
 - Set/edit tag: `C-c C-q`
+
+## Clocking time
+
+- `C-c C-x ;` starts a timer/pomodoro.
+- `C-c C-x C-i` starts clocking, or `I` in agenda view.
+- `C-c C-x C-o` stops clocking (also stops when the task is DONE).
+- `C-c C-x C-d` shows a summary of the file.
+- `C-c C-x C-r` inserts a report table.
+
+To force saving the clock items in a *LOGBOOK* drawer I added in my `~/.emacs`:
+
+~~~lisp
+(setq org-clock-into-drawer t)
+(setq org-pretty-entities t)
+(setq org-clock-in-switch-to-state "CLOCKING")
+~~~
 
 ## Custom agenda views
 
