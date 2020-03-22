@@ -13,6 +13,7 @@ output:
 <li><a href="#git">Git</a></li>
 <li><a href="#snakemake">Snakemake</a></li>
 <li><a href="#jq">jq</a></li>
+<li><a href="#vd">vd</a></li>
 <li><a href="#rsync">rsync</a></li>
 <li><a href="#docker">Docker</a></li>
 <li><a href="#makefile">Makefile</a></li>
@@ -100,6 +101,32 @@ It’s also possible to define a separate config file for the cluster configurat
 <li>Select elements based on one field’s value: <code>jq 'select(.field==value)'</code></li>
 <li>Keep only desired fields: <code>jq '{id: .id, title: .title}'</code></li>
 <li>Write in TSV: <code>jq '.array | @tsv'</code></li>
+</ul>
+</div>
+<div id="vd" class="section level2">
+<h2>vd</h2>
+<p><a href="https://github.com/saulpw/visidata">vd</a> can read many file formats, including TSV, CSV, JSON.
+I use it to explore TSV files as a more powerful <em>less</em>.
+It’s great to format wide columns but also to quickly explore summary stats of the table.</p>
+<p>Keybindings:</p>
+<ul>
+<li><code>Ctr-H</code> or <code>z?</code> triggers the help page</li>
+<li><code>_</code> expand/contract column.</li>
+<li><code>z_ &lt;N&gt;</code> set current column width to <em>N</em>.</li>
+<li><code>/</code> regex search in current column</li>
+<li><code>g/</code> regex search in all columns</li>
+<li><code>n</code>/<code>N</code> move to next/previous match</li>
+<li><code>[</code>/<code>]</code> sort ascending/descending by current column</li>
+<li><code>F</code> toggle a frequency table/histogram of the current column.
+<ul>
+<li><code>Enter</code> to focus on a subset defined by a row in frequency table.</li>
+</ul></li>
+<li><code>I</code> toggle Describe sheet with summary statistics for each column.</li>
+<li><code>.</code> toggle dot plot.
+<ul>
+<li>Make sure to set a column as numeric with <code>#</code>.</li>
+<li>Eventually select x-axis or labels with <code>!</code> first.</li>
+</ul></li>
 </ul>
 </div>
 <div id="rsync" class="section level2">

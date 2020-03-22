@@ -7,11 +7,13 @@ output:
     toc: true
 ---
 
+This page focuses on configuration of the terminal, one-liners and scripting.
+Command-line tools I used (e.g. git, snakemake, docker) are described in the [Tools page](../tools/).
+
 ## External links
 
 - [The Art of Command Line](https://github.com/jlevy/the-art-of-command-line)
 - [Terminals Are Sexy](https://terminalsare.sexy/)
-
 
 ## GNU screen
 
@@ -38,13 +40,10 @@ term screen-256color
 - `alias evincel='ls -rt *.pdf | tail -1 | xargs evince'` opens the last PDF document
 - `alias R='R --no-save --no-restore'` to avoid R asking about saving the history.
 
-
-
 ## Misc
 
 - Redirect stderr to stdout: `2>&1`.
 - Show special characters (end of line, tabs) with `cat -A`.
-
 
 ### Colors in `less`
 
