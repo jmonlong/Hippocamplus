@@ -223,6 +223,44 @@ I'm more of a tidyverse person but for very large data the [data.table](https://
 | `group_by(col1,col2) %>% mutate(nb=n())` | `dt[,nb:=.N,by=.(col1,col2)]` |
 | `filter(nb==2)` | `dt[nb==2]` |
 
+## Rcpp
+
+Useful links:
+
+- [Rcpp page from Dirk Eddelbuettel website](http://dirk.eddelbuettel.com/code/rcpp.html)
+- [Writing a package that uses Rcpp](https://cran.rstudio.com/web/packages/Rcpp/vignettes/Rcpp-package.pdf)
+- [Section from "Advanced R" by Hadley Wickham](http://adv-r.had.co.nz/Rcpp.html)
+
+Tips:
+
+- Using external libraries: place *.h*/*.cpp* in the `src` directory with your cpp files
+- Manipulate (g)zipped files: I used *gzstream* that I took from the [ndjson source code](https://gitlab.com/hrbrmstr/ndjson/-/blob/master/src/gzstream.h).
+- Use `Rcpp::checkUserInterrupt();` once in a while to make sure the user can stop easily.
+- Use `Rcout << "message" << std::endl;` to print messages
+
+Example:
+
+~~~cpp
+#include <Rcpp.h>
+using namespace Rcpp;
+
+//' Description
+//' @title Title
+//' @param filename the path to the file
+//' @return data.frame
+//' @author Jean Monlong
+//' @keywords internal
+// [[Rcpp::export]]
+DataFrame read_vcf_cpp(std::string filename){
+    std::vector<std::string> seqnames;
+    std::vector<int> starts;
+    std::vector<int> ends;
+    // DO STUFF AND UPDATE VECTORS
+    return DataFrame::create(_["seqnames"] = seqnames, _["start"] = starts, _["end"] = ends);
+}
+~~~
+
+
 ## Linux setup
 
 Necessary to compile some R packages:

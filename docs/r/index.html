@@ -59,6 +59,10 @@
     
     
       
+        <a class="sidebar-nav-item " href="../cpp/">CPP</a>
+      
+    
+      
         <a class="sidebar-nav-item " href="../emacs/">Emacs</a>
       
     
@@ -255,6 +259,7 @@
 <li><a href="#jekyll-website">Jekyll website</a></li>
 </ul></li>
 <li><a href="#data.table-package"><em>data.table</em> package</a></li>
+<li><a href="#rcpp">Rcpp</a></li>
 <li><a href="#linux-setup">Linux setup</a></li>
 </ul>
 </div>
@@ -264,8 +269,8 @@
 <ul>
 <li>Use <code>rbindlist</code> from <em>data.table</em> package for a memory-optimized and faster <code>do.call(rbind, list(..))</code>.</li>
 <li>Use <code>system2</code> instead of <code>system</code> to run a command. It’s more portable apparently.</li>
-<li>Get RPubs working with <code>options(rpubs.upload.method = &quot;internal&quot;)</code>.</li>
-<li>Operations on dates using <code>strptime(x, &quot;%a %b %d %T PST %Y'&quot;)</code> and <code>difftime</code> and then <code>as.Double(d, units=&quot;hours&quot;)</code>.</li>
+<li>Get RPubs working with <code>options(rpubs.upload.method = "internal")</code>.</li>
+<li>Operations on dates using <code>strptime(x, "%a %b %d %T PST %Y'")</code> and <code>difftime</code> and then <code>as.Double(d, units="hours")</code>.</li>
 </ul>
 <div id="order-in-condition-assessment" class="section level3">
 <h3>Order in condition assessment</h3>
@@ -287,8 +292,8 @@ Caution, <code>&amp;&amp;</code> doesn’t work on vectors (it will only test th
 <div id="graphs" class="section level2">
 <h2>Graphs</h2>
 <ul>
-<li><code>pdf(&quot;g.pdf&quot;, 9, 7)</code></li>
-<li><code>png(&quot;g.png&quot;, 1300, 1000, res=200)</code></li>
+<li><code>pdf("g.pdf", 9, 7)</code></li>
+<li><code>png("g.png", 1300, 1000, res=200)</code></li>
 <li><code>options(device=function() pdf(width=9, height=7))</code> to set the default device (e.g. remote graphs).</li>
 </ul>
 <div id="palette-with-many-colors" class="section level3">
@@ -311,7 +316,7 @@ pal = interk(rainbow(20, s=.8), 5)</code></pre>
 <div id="ggplot2-tricks" class="section level3">
 <h3>ggplot2 tricks</h3>
 <ul>
-<li>To plot a density distribution without the x-axis line, use <code>stat_density(geom=&quot;line&quot;)</code> (and eventually <code>position=&quot;dodge&quot;</code> if plotting several groups).</li>
+<li>To plot a density distribution without the x-axis line, use <code>stat_density(geom="line")</code> (and eventually <code>position="dodge"</code> if plotting several groups).</li>
 <li>To override the legend’s aes: <code>guides(colour=guide_legend(override.aes=list(alpha=1)))</code></li>
 <li>Multi-column legends: <code>guides(fill=guide_legend(ncol=4))</code></li>
 </ul>
@@ -449,6 +454,40 @@ knitr::kable(matrix(rnorm(10),10,10), format=&#39;latex&#39;)
 </tr>
 </tbody>
 </table>
+</div>
+<div id="rcpp" class="section level2">
+<h2>Rcpp</h2>
+<p>Useful links:</p>
+<ul>
+<li><a href="http://dirk.eddelbuettel.com/code/rcpp.html">Rcpp page from Dirk Eddelbuettel website</a></li>
+<li><a href="https://cran.rstudio.com/web/packages/Rcpp/vignettes/Rcpp-package.pdf">Writing a package that uses Rcpp</a></li>
+<li><a href="http://adv-r.had.co.nz/Rcpp.html">Section from “Advanced R” by Hadley Wickham</a></li>
+</ul>
+<p>Tips:</p>
+<ul>
+<li>Using external libraries: place <em>.h</em>/<em>.cpp</em> in the <code>src</code> directory with your cpp files</li>
+<li>Manipulate (g)zipped files: I used <em>gzstream</em> that I took from the <a href="https://gitlab.com/hrbrmstr/ndjson/-/blob/master/src/gzstream.h">ndjson source code</a>.</li>
+<li>Use <code>Rcpp::checkUserInterrupt();</code> once in a while to make sure the user can stop easily.</li>
+<li>Use <code>Rcout &lt;&lt; "message" &lt;&lt; std::endl;</code> to print messages</li>
+</ul>
+<p>Example:</p>
+<pre class="cpp"><code>#include &lt;Rcpp.h&gt;
+using namespace Rcpp;
+
+//&#39; Description
+//&#39; @title Title
+//&#39; @param filename the path to the file
+//&#39; @return data.frame
+//&#39; @author Jean Monlong
+//&#39; @keywords internal
+// [[Rcpp::export]]
+DataFrame read_vcf_cpp(std::string filename){
+    std::vector&lt;std::string&gt; seqnames;
+    std::vector&lt;int&gt; starts;
+    std::vector&lt;int&gt; ends;
+    // DO STUFF AND UPDATE VECTORS
+    return DataFrame::create(_[&quot;seqnames&quot;] = seqnames, _[&quot;start&quot;] = starts, _[&quot;end&quot;] = ends);
+}</code></pre>
 </div>
 <div id="linux-setup" class="section level2">
 <h2>Linux setup</h2>
