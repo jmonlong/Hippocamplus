@@ -87,6 +87,28 @@ It's also possible to define a separate config file for the cluster configuratio
 - Keep only desired fields: `jq '{id: .id, title: .title}'`
 - Write in TSV: `jq '.array | @tsv'`
 
+## vd
+
+[vd](https://github.com/saulpw/visidata) can read many file formats, including TSV, CSV, JSON. 
+I use it to explore TSV files as a more powerful *less*.
+It's great to format wide columns but also to quickly explore summary stats of the table.
+
+Keybindings:
+
+- `Ctr-H` or `z?` triggers the help page
+- `_` expand/contract column.
+- `z_ <N>` set current column width to *N*.
+- `/` regex search in current column
+- `g/` regex search in all columns
+- `n`/`N` move to next/previous match
+- `[`/`]` sort ascending/descending by current column
+- `F` toggle a frequency table/histogram of the current column.
+    - `Enter` to focus on a subset defined by a row in frequency table.
+- `I` toggle Describe sheet with summary statistics for each column.
+- `.` toggle dot plot. 
+    - Make sure to set a column as numeric with `#`. 
+    - Eventually select x-axis or labels with `!` first.
+
 ## rsync
 
 `rsync` is not completely intuitive to me. 
