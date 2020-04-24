@@ -104,3 +104,11 @@ By replacing `https://www.dropbox.com` with `https://dl.dropboxusercontent.com` 
 It's useful to host files that are used in scripts, like some of the post I made using R-Markdown.
 
 Originally it was useful to "serve" HTML pages but it doesn't work anymore. 
+
+## Record a webradio stream with VLC
+
+[VLC doc](https://wiki.videolan.org/Documentation:Streaming_HowTo/Receive_and_Save_a_Stream/)
+
+```
+vlc -vvv http://hazel.torontocast.com:2220/stream --sout=file/ogg:classical.ogg
+```
