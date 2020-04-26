@@ -179,8 +179,25 @@ docker-machine start
 
 ## Makefile
 
+- [GNU make manual](https://www.gnu.org/software/make/manual/html_node/index.html)
 - [Makefile basics from Isaacs](https://gist.github.com/isaacs/62a2d1825d04437c6f08).
 
+- [Automatic variables](https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html#Automatic-Variables)
+    - `$@` the target
+    - `$<` the first prerequisite
+    - `$^` all prerequisites
+    - `$(@D)` the directory part of `$@` (works the same with `<`,`^`, etc).
+    - `$(@F)` the filename part of `$@` (works the same with `<`,`^`, etc).
+- [File name functions](https://www.gnu.org/software/make/manual/html_node/File-Name-Functions.html#File-Name-Functions)
+    - `$(notdir src/foo.c)` returns *foo.c*.
+    - `$(addsuffix .c,foo)` returns *foo.c*.
+    - `$(basename dir/foo.test.c)` returns *dir/foo.test*.
+    - `objects := $(wildcard *.o)` to list files in a variable.
+- [String functions](https://www.gnu.org/software/make/manual/html_node/Text-Functions.html#Text-Functions)
+    - `$(patsubst %.c,%.o,file.c)` to substitute file extensions
+    - `$(subst from,to,text)` replaces all occurrences of *from* to *to* in *text*.
+    - `$(word n,text)` returns the n-th word in *text*.
+- Shell function: `$(shell cat foo)` runs a shell command.
 
 ## For file conversion
 

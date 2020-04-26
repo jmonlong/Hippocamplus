@@ -44,6 +44,7 @@ term screen-256color
 
 - Redirect stderr to stdout: `2>&1`.
 - Show special characters (end of line, tabs) with `cat -A`.
+- `$RANDOM` to get a random number, e.g. between 1 and 10: `$((1 + RANDOM % 10))`
 
 ### Colors in `less`
 
