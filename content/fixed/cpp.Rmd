@@ -2,7 +2,6 @@
 sidebar: true
 weight: 1
 title: CPP
-draft: true
 output:
   blogdown::html_page:
     toc: true
@@ -14,3 +13,68 @@ output:
 - [C++ Primer (5th Edition). Stanley B. Lippman, Josée Lajoie, Barbara E. Moo](https://www.amazon.com/Primer-5th-Stanley-B-Lippman/dp/0321714113)
 - [Accelerated C++. Andrew Koenig](https://www.bookdepository.com/Accelerated-C-Andrew-Koenig/9780201703535)
 
+## File I/O
+
+### Read text file one line at a time
+
+~~~cpp
+#include <fstream>
+
+std::ifstream in_file('file.txt');
+std::string line;
+while(std::getline(in_file, line)){
+    // Do something with 'line'
+}
+in_file.close();
+~~~
+
+## Data structures
+
+~~~cpp
+std::vector<std::string> str_vec;
+str_vec.push_back('one element');
+for(unsigned int ii=0; ii<str_vec.size(); ii++){
+    // LOOP ACTION on 'str_vec[ii]'
+}
+
+std::map<std::string,std::double> map_obj;
+map_obj['key1'] = 1.3;
+// check if a key is in the map
+if(map_obj.count('key2') > 0)){
+    // something with map_obj['key2'] ?
+}
+// iterate over key/value pairs
+for(std::map<int,int>::iterator iter=map_obj.begin(); iter!=map_obj.end(); iter++){
+    // iter->first contains the key
+    // iter->secong contains the value
+}
+~~~
+
+Maybe *unordered_map* is better for what I need in general?
+
+## String manipulation
+
+- `.length()`
+- convert to int: `atoi(str_obj.c_str());`
+- convert to double: `atof(str_obj.c_str());`
+- check for presence of a substring:`str_obj.find("pattern") == std::string::npos`
+- extract a substring: `str_obj.substr(3, 7)`
+- insert characters: `str_obj.insert(10, "INSERT")`
+
+### Split a string
+
+~~~cpp
+std::vector<std::string> split_str(std::string in_str, std::string delim="\t"){
+  std::vector<std::string> line_v;
+  auto f_start = 0U;
+  auto f_end = in_str.find(delim);
+  while (f_end != std::string::npos)
+    {
+      line_v.push_back(in_str.substr(f_start, f_end - f_start));
+      f_start = f_end + delim.length();
+      f_end = in_str.find(delim, f_start);
+    }
+  line_v.push_back(in_str.substr(f_start, in_str.size()));
+  return line_v;
+}
+~~~

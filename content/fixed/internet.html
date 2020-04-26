@@ -16,6 +16,7 @@ output:
 <li><a href="#sync-pdfs-between-mendeley-and-google-drive">Sync PDFs between Mendeley and Google Drive</a></li>
 <li><a href="#zotero">Zotero</a></li>
 <li><a href="#dowload-files-from-dropbox">Dowload files from Dropbox</a></li>
+<li><a href="#record-a-webradio-stream-with-vlc">Record a webradio stream with VLC</a></li>
 </ul>
 </div>
 
@@ -100,4 +101,9 @@ Not great but the best I could find.</p>
 <p>By replacing <code>https://www.dropbox.com</code> with <code>https://dl.dropboxusercontent.com</code> in the link, a file can be dowloaded using command lines tools (e.g. wget or <em>download.file</em> in R).
 It’s useful to host files that are used in scripts, like some of the post I made using R-Markdown.</p>
 <p>Originally it was useful to “serve” HTML pages but it doesn’t work anymore.</p>
+</div>
+<div id="record-a-webradio-stream-with-vlc" class="section level2">
+<h2>Record a webradio stream with VLC</h2>
+<p><a href="https://wiki.videolan.org/Documentation:Streaming_HowTo/Receive_and_Save_a_Stream/">VLC doc</a></p>
+<pre><code>vlc -vvv http://hazel.torontocast.com:2220/stream --sout=file/ogg:classical.ogg</code></pre>
 </div>

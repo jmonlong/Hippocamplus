@@ -2,7 +2,6 @@
 sidebar: true
 weight: 1
 title: CPP
-draft: true
 output:
   blogdown::html_page:
     toc: true
@@ -12,6 +11,13 @@ output:
 <div id="TOC">
 <ul>
 <li><a href="#resources">Resources</a></li>
+<li><a href="#file-io">File I/O</a><ul>
+<li><a href="#read-text-file-one-line-at-a-time">Read text file one line at a time</a></li>
+</ul></li>
+<li><a href="#data-structures">Data structures</a></li>
+<li><a href="#string-manipulation">String manipulation</a><ul>
+<li><a href="#split-a-string">Split a string</a></li>
+</ul></li>
 </ul>
 </div>
 
@@ -22,4 +28,66 @@ output:
 <li><a href="https://www.amazon.com/Primer-5th-Stanley-B-Lippman/dp/0321714113">C++ Primer (5th Edition). Stanley B. Lippman, Josée Lajoie, Barbara E. Moo</a></li>
 <li><a href="https://www.bookdepository.com/Accelerated-C-Andrew-Koenig/9780201703535">Accelerated C++. Andrew Koenig</a></li>
 </ul>
+</div>
+<div id="file-io" class="section level2">
+<h2>File I/O</h2>
+<div id="read-text-file-one-line-at-a-time" class="section level3">
+<h3>Read text file one line at a time</h3>
+<pre class="cpp"><code>#include &lt;fstream&gt;
+
+std::ifstream in_file(&#39;file.txt&#39;);
+std::string line;
+while(std::getline(in_file, line)){
+    // Do something with &#39;line&#39;
+}
+in_file.close();</code></pre>
+</div>
+</div>
+<div id="data-structures" class="section level2">
+<h2>Data structures</h2>
+<pre class="cpp"><code>std::vector&lt;std::string&gt; str_vec;
+str_vec.push_back(&#39;one element&#39;);
+for(unsigned int ii=0; ii&lt;str_vec.size(); ii++){
+    // LOOP ACTION on &#39;str_vec[ii]&#39;
+}
+
+std::map&lt;std::string,std::double&gt; map_obj;
+map_obj[&#39;key1&#39;] = 1.3;
+// check if a key is in the map
+if(map_obj.count(&#39;key2&#39;) &gt; 0)){
+    // something with map_obj[&#39;key2&#39;] ?
+}
+// iterate over key/value pairs
+for(std::map&lt;int,int&gt;::iterator iter=map_obj.begin(); iter!=map_obj.end(); iter++){
+    // iter-&gt;first contains the key
+    // iter-&gt;secong contains the value
+}</code></pre>
+<p>Maybe <em>unordered_map</em> is better for what I need in general?</p>
+</div>
+<div id="string-manipulation" class="section level2">
+<h2>String manipulation</h2>
+<ul>
+<li><code>.length()</code></li>
+<li>convert to int: <code>atoi(str_obj.c_str());</code></li>
+<li>convert to double: <code>atof(str_obj.c_str());</code></li>
+<li>check for presence of a substring:<code>str_obj.find("pattern") == std::string::npos</code></li>
+<li>extract a substring: <code>str_obj.substr(3, 7)</code></li>
+<li>insert characters: <code>str_obj.insert(10, "INSERT")</code></li>
+</ul>
+<div id="split-a-string" class="section level3">
+<h3>Split a string</h3>
+<pre class="cpp"><code>std::vector&lt;std::string&gt; split_str(std::string in_str, std::string delim=&quot;\t&quot;){
+  std::vector&lt;std::string&gt; line_v;
+  auto f_start = 0U;
+  auto f_end = in_str.find(delim);
+  while (f_end != std::string::npos)
+    {
+      line_v.push_back(in_str.substr(f_start, f_end - f_start));
+      f_start = f_end + delim.length();
+      f_end = in_str.find(delim, f_start);
+    }
+  line_v.push_back(in_str.substr(f_start, in_str.size()));
+  return line_v;
+}</code></pre>
+</div>
 </div>

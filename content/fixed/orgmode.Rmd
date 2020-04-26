@@ -114,6 +114,7 @@ In `.emacs` file:
 - `S-M-RIGHT`/`S-M-DOWN` add new column/row.
 - `S-M-LEFT`/`S-M-UP` remove current column/row.
 - `C-c }` show rows/columns labels.
+- `C-c ^` sort rows based on the current column.
 
 An example with a right-aligned column, a field formula (`:=`) and a column formula (`=`)
 

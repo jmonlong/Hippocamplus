@@ -11,6 +11,15 @@
     
     
     <item>
+      <title>CPP</title>
+      <link>/Hippocamplus/cpp/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/Hippocamplus/cpp/</guid>
+      <description>Resources File I/O Read text file one line at a time  Data structures String manipulation Split a string    Resources  C++ Core Guidelines C++ Primer (5th Edition). Stanley B. Lippman, Josée Lajoie, Barbara E. Moo Accelerated C++. Andrew Koenig   File I/O Read text file one line at a time #include &amp;lt;fstream&amp;gt; std::ifstream in_file(&amp;#39;file.txt&amp;#39;); std::string line; while(std::getline(in_file, line)){ // Do something with &amp;#39;line&amp;#39; } in_file.</description>
+    </item>
+    
+    <item>
       <title>Emacs</title>
       <link>/Hippocamplus/emacs/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -82,7 +91,7 @@ Naming and formatting  Use lowercase _-separated for modules and functions name.
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/Hippocamplus/r/</guid>
-      <description>Details to remember Order in condition assessment  Graphs Palette with many colors ggplot2 tricks Multi-panel ggplots Change font in ggplot2 Waffle graphs  Rmarkdown Beamer presentation Jekyll website  data.table package Linux setup   Details to remember  Use rbindlist from data.table package for a memory-optimized and faster do.call(rbind, list(..)). Use system2 instead of system to run a command. It’s more portable apparently. Get RPubs working with options(rpubs.</description>
+      <description>Details to remember Order in condition assessment  Graphs Palette with many colors ggplot2 tricks Multi-panel ggplots Change font in ggplot2 Waffle graphs  Rmarkdown Beamer presentation Jekyll website  data.table package Rcpp Linux setup   Details to remember  Use rbindlist from data.table package for a memory-optimized and faster do.call(rbind, list(..)). Use system2 instead of system to run a command. It’s more portable apparently. Get RPubs working with options(rpubs.</description>
     </item>
     
     <item>
@@ -109,8 +118,8 @@ Naming and formatting  Use lowercase _-separated for modules and functions name.
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/Hippocamplus/internet/</guid>
-      <description>DuckDuckGo Ubuntu Sync a specific Google Drive folder on Ubuntu Sync PDFs between Mendeley and Google Drive Zotero Dowload files from Dropbox   DuckDuckGo DuckDuckGo is a “search engine that doesn’t track you”. It provides nice “bangs” to search directly specific websites. By making DDG the default search engine these bangs can be used directly in the address bar.
- !pub PubMed. !scholar Google Scholar. !bioc Bioconductor. !</description>
+      <description>DuckDuckGo Ubuntu Sync a specific Google Drive folder on Ubuntu Sync PDFs between Mendeley and Google Drive Zotero Dowload files from Dropbox Record a webradio stream with VLC   DuckDuckGo DuckDuckGo is a “search engine that doesn’t track you”. It provides nice “bangs” to search directly specific websites. By making DDG the default search engine these bangs can be used directly in the address bar.
+ !pub PubMed.</description>
     </item>
     
     <item>
