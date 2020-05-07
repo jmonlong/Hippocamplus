@@ -59,6 +59,21 @@ grep --color=always | less -R
 
 `nohup` function (apparently).
 
+### Custom prompt
+
+To shorten the prompt in my terminal, I tweaked this paragraph in my `~/.bashrc`:
+
+~~~sh
+if [ "$color_prompt" = yes ]; then
+    PS1='[${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u\[\033[00m\] \[\033[01;34m\]\W\[\033[00m\]]\$ '
+else
+    PS1='${debian_chroot:+($debian_chroot)}\u \W\$ '
+fi
+~~~
+
+`\u` is the username and `\w`/`\W` is the working directory (directory name/full path).
+Compared to the default, I just added flanking `[`/`]`, a space instead of a `:`, and to use the directory name instead of the full path.
+
 ## One-liners
 
 ### Bash & Pipes
