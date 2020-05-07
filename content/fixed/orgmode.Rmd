@@ -115,10 +115,12 @@ In `.emacs` file:
 - `S-M-LEFT`/`S-M-UP` remove current column/row.
 - `C-c }` show rows/columns labels.
 - `C-c ^` sort rows based on the current column.
+- `C-c " g` to make a plot (requires gnuplot and gnuplot to be installed)
 
-An example with a right-aligned column, a field formula (`:=`) and a column formula (`=`)
+An example with a graph definition, a right-aligned column, a field formula (`:=`) and a column formula (`=`)
 
 ~~~text
+#+PLOT: title:"graph title" ind:1 deps:(2 3) set:"xlabel 'ColA'"
 |  <r> |      |      |
 | ColA | ColB | ColC |
 |------+------+------|
