@@ -49,6 +49,11 @@ In `.emacs` file:
 - `*bold*`, `/italic/`, `_underlined_`, `+strike-through+`.
 - `=verbatim=`, `~code~`. 
 
+~~~text
+: simple text, e.g. code source
+: respecting line breaks
+~~~
+
 ## Keybindings
 
 ### From anywhere
@@ -72,6 +77,7 @@ In `.emacs` file:
 - New/edit link: `C-c C-l`.
 - Add property field: `C-c C-x p`.
 - Narrow/widen to subtree: `C-x n s`/`C-x n w`.
+- Switch a list to checklist: `C-u C-c C-c`
 
 ### Timestamps
 
@@ -79,18 +85,17 @@ In `.emacs` file:
 - Insert/edit schedule: `C-c C-s`.
 - Insert/edit deadline: `C-c C-d`.
 - Navigate with `S-ARROW`.
-- Toggle the calendar at a specific date: `C-c >`.
-- Insert selected date in the calendar at cursor position: `C-c <`.
+- Jump to today with `.`.
+- `10:00+1` means from 10am to 11am.
 
 ### Agenda views
 
-- Add/remove document to agenda files: `C-c [`/`C-c ]`.
 - Highlight in file: `SPC`.
 - Jump to file: `TAB`.
 - Jump to file and close agenda: `RET`.
 - Change TODO states with `t`.
-- Jump to a specific date: `j`.
 - Previous/next day/week/month: `b`/`f`
+- Jump to a specific date: `j`.
 
 ### Capture
 
@@ -115,21 +120,28 @@ In `.emacs` file:
 - `S-M-LEFT`/`S-M-UP` remove current column/row.
 - `C-c }` show rows/columns labels.
 - `C-c ^` sort rows based on the current column.
-- `C-c " g` to make a plot (requires gnuplot and gnuplot to be installed)
 
-An example with a graph definition, a right-aligned column, a field formula (`:=`) and a column formula (`=`)
+An example with a right-aligned column, a field formula and a column formula.
 
 ~~~text
-#+PLOT: title:"graph title" ind:1 deps:(2 3) set:"xlabel 'ColA'"
 |  <r> |      |      |
 | ColA | ColB | ColC |
 |------+------+------|
 |  tes |   13 |   12 |
 |  asd |    3 |    2 |
 |    a |   16 |   15 |
+|------+------+------|
 | mean | 10.7 |  9.7 |
-#+TBLFM: $3=$2-1::@6$2:=vmean(@3..@5);p3
+#+TBLFM: $3=$2-1::@>$2=vmean(@3..@-I);p3
 ~~~
+
+- Start a formula in a cell by typing `:=FORMULA` and `C-c C-c` (`=FORMULA` for column formulas).
+- `@>` means *the last row*
+- `I` to define range relative to the target field, e.g. `@-I`=*row above*.
+
+
+- A plot line could look like: `#+PLOT: title:"graph title" ind:1 deps:(2 3) set:"xlabel 'ColA'"`
+- `C-c " g` to make a plot (requires gnuplot and gnuplot to be installed)
 
 ## Code block
 

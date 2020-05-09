@@ -256,9 +256,9 @@
 </ul></li>
 <li><a href="#todo-entry">TODO entry</a></li>
 <li><a href="#tables">Tables</a></li>
+<li><a href="#code-block">Code block</a></li>
 <li><a href="#property-drawer">Property drawer</a></li>
 <li><a href="#habits-entry">Habits entry</a></li>
-<li><a href="#code-block">Code block</a></li>
 <li><a href="#links">Links</a></li>
 <li><a href="#tags">Tags</a></li>
 <li><a href="#clocking-time">Clocking time</a></li>
@@ -308,6 +308,8 @@ This page will contain my configuration and the small subset of commands that I 
 <li><code>*bold*</code>, <code>/italic/</code>, <code>_underlined_</code>, <code>+strike-through+</code>.</li>
 <li><code>=verbatim=</code>, <code>~code~</code>.</li>
 </ul>
+<pre class="text"><code>: simple text, e.g. code source
+: respecting line breaks</code></pre>
 </div>
 <div id="keybindings" class="section level2">
 <h2>Keybindings</h2>
@@ -385,9 +387,11 @@ This page will contain my configuration and the small subset of commands that I 
 <li><code>S-M-LEFT</code>/<code>S-M-UP</code> remove current column/row.</li>
 <li><code>C-c }</code> show rows/columns labels.</li>
 <li><code>C-c ^</code> sort rows based on the current column.</li>
+<li><code>C-c " g</code> to make a plot (requires gnuplot and gnuplot to be installed)</li>
 </ul>
-<p>An example with a right-aligned column, a field formula (<code>:=</code>) and a column formula (<code>=</code>)</p>
-<pre class="text"><code>|  &lt;r&gt; |      |      |
+<p>An example with a graph definition, a right-aligned column, a field formula (<code>:=</code>) and a column formula (<code>=</code>)</p>
+<pre class="text"><code>#+PLOT: title:&quot;graph title&quot; ind:1 deps:(2 3) set:&quot;xlabel &#39;ColA&#39;&quot;
+|  &lt;r&gt; |      |      |
 | ColA | ColB | ColC |
 |------+------+------|
 |  tes |   13 |   12 |
@@ -395,6 +399,41 @@ This page will contain my configuration and the small subset of commands that I 
 |    a |   16 |   15 |
 | mean | 10.7 |  9.7 |
 #+TBLFM: $3=$2-1::@6$2:=vmean(@3..@5);p3</code></pre>
+</div>
+<div id="code-block" class="section level2">
+<h2>Code block</h2>
+<p>A simple code block:</p>
+<pre class="text"><code>#+NAME: &lt;name&gt;
+#+BEGIN_SRC &lt;language&gt;
+  &lt;body&gt;
+#+END_SRC</code></pre>
+<p>See the <a href="https://orgmode.org/worg/org-contrib/babel/languages.html">list of available languages</a>.
+To switch on syntax highlighting, add to <code>.emacs</code>:</p>
+<pre class="lisp"><code>(setq org-src-fontify-natively t)</code></pre>
+<p>To enable the evaluation of a language, e.g. R:</p>
+<pre class="lisp"><code>(require &#39;ob-R)
+(org-babel-do-load-languages
+  &#39;org-babel-load-languages
+  &#39;((R . t)))</code></pre>
+<p>If it looks like it’s not working, remove all <code>*.elc</code> files in <code>~/.emacs.d/elpa/org-plus-contrib-*/</code> and restart.</p>
+<ul>
+<li><code>C-c C-c</code> to evaluate a source block</li>
+</ul>
+<p>Example of a R block that uses a named org-table as input:</p>
+<pre class="lisp"><code>#+tblname: tbl1
+|   x |  y | group |
+|-----+----+-------|
+|   0 | 47 | A     |
+| 111 | 50 | A     |
+| 180 | 56 | A     |
+|   0 | 46 | B     |
+| 109 | 58 | B     |
+| 167 | 60 | B     |
+
+#+begin_src R :exports both :results output graphics :var tbl1=tbl1 :file tbl1-r.pdf :width 7 :height 5 :file-ext pdf
+library(ggplot2)
+ggplot(tbl1, aes(x=x, y=y, colour=group)) + geom_point()
+#+end_src</code></pre>
 </div>
 <div id="property-drawer" class="section level2">
 <h2>Property drawer</h2>
@@ -431,17 +470,6 @@ SCHEDULED: &lt;2019-07-16 Tue .+2d/7d&gt;
 ;;       org-habit-graph-column 40
 ;;       org-habit-preceding-days 28
 ;;       org-habit-following-days 7)</code></pre>
-</div>
-<div id="code-block" class="section level2">
-<h2>Code block</h2>
-<p>A simple code block:</p>
-<pre class="text"><code>#+NAME: &lt;name&gt;
-#+BEGIN_SRC &lt;language&gt;
-  &lt;body&gt;
-#+END_SRC</code></pre>
-<p>See the <a href="https://orgmode.org/worg/org-contrib/babel/languages.html">list of available languages</a>.
-To switch on syntax highlighting, add to <code>.emacs</code>:</p>
-<pre class="lisp"><code>(setq org-src-fontify-natively t)</code></pre>
 </div>
 <div id="links" class="section level2">
 <h2>Links</h2>
