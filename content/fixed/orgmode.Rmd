@@ -131,6 +131,56 @@ An example with a graph definition, a right-aligned column, a field formula (`:=
 #+TBLFM: $3=$2-1::@6$2:=vmean(@3..@5);p3
 ~~~
 
+## Code block
+
+A simple code block:
+
+~~~text
+#+NAME: <name>
+#+BEGIN_SRC <language>
+  <body>
+#+END_SRC
+~~~
+
+See the [list of available languages](https://orgmode.org/worg/org-contrib/babel/languages.html).
+To switch on syntax highlighting, add to `.emacs`:
+
+~~~lisp
+(setq org-src-fontify-natively t)
+~~~
+
+To enable the evaluation of a language, e.g. R:
+
+~~~lisp
+(require 'ob-R)
+(org-babel-do-load-languages
+  'org-babel-load-languages
+  '((R . t)))
+~~~
+
+If it looks like it's not working, remove all `*.elc` files in `~/.emacs.d/elpa/org-plus-contrib-*/` and restart.
+
+- `C-c C-c` to evaluate a source block
+
+Example of a R block that uses a named org-table as input:
+
+~~~lisp
+#+tblname: tbl1
+|   x |  y | group |
+|-----+----+-------|
+|   0 | 47 | A     |
+| 111 | 50 | A     |
+| 180 | 56 | A     |
+|   0 | 46 | B     |
+| 109 | 58 | B     |
+| 167 | 60 | B     |
+
+#+begin_src R :exports both :results output graphics :var tbl1=tbl1 :file tbl1-r.pdf :width 7 :height 5 :file-ext pdf
+library(ggplot2)
+ggplot(tbl1, aes(x=x, y=y, colour=group)) + geom_point()
+#+end_src
+~~~
+
 ## Property drawer
 
 No empty lines between header/scheduled/deadline and property chunk.
@@ -171,24 +221,6 @@ For a view of the habit and how well they are followed, I added to my `.emacs`:
 ;;       org-habit-graph-column 40
 ;;       org-habit-preceding-days 28
 ;;       org-habit-following-days 7)
-~~~
-
-## Code block
-
-A simple code block:
-
-~~~text
-#+NAME: <name>
-#+BEGIN_SRC <language>
-  <body>
-#+END_SRC
-~~~
-
-See the [list of available languages](https://orgmode.org/worg/org-contrib/babel/languages.html).
-To switch on syntax highlighting, add to `.emacs`:
-
-~~~lisp
-(setq org-src-fontify-natively t)
 ~~~
 
 ## Links
