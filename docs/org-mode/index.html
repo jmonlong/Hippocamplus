@@ -337,6 +337,7 @@ This page will contain my configuration and the small subset of commands that I 
 <li>New/edit link: <code>C-c C-l</code>.</li>
 <li>Add property field: <code>C-c C-x p</code>.</li>
 <li>Narrow/widen to subtree: <code>C-x n s</code>/<code>C-x n w</code>.</li>
+<li>Switch a list to checklist: <code>C-u C-c C-c</code></li>
 </ul>
 </div>
 <div id="timestamps" class="section level3">
@@ -346,20 +347,19 @@ This page will contain my configuration and the small subset of commands that I 
 <li>Insert/edit schedule: <code>C-c C-s</code>.</li>
 <li>Insert/edit deadline: <code>C-c C-d</code>.</li>
 <li>Navigate with <code>S-ARROW</code>.</li>
-<li>Toggle the calendar at a specific date: <code>C-c &gt;</code>.</li>
-<li>Insert selected date in the calendar at cursor position: <code>C-c &lt;</code>.</li>
+<li>Jump to today with <code>.</code>.</li>
+<li><code>10:00+1</code> means from 10am to 11am.</li>
 </ul>
 </div>
 <div id="agenda-views" class="section level3">
 <h3>Agenda views</h3>
 <ul>
-<li>Add/remove document to agenda files: <code>C-c [</code>/<code>C-c ]</code>.</li>
 <li>Highlight in file: <code>SPC</code>.</li>
 <li>Jump to file: <code>TAB</code>.</li>
 <li>Jump to file and close agenda: <code>RET</code>.</li>
 <li>Change TODO states with <code>t</code>.</li>
-<li>Jump to a specific date: <code>j</code>.</li>
 <li>Previous/next day/week/month: <code>b</code>/<code>f</code></li>
+<li>Jump to a specific date: <code>j</code>.</li>
 </ul>
 </div>
 <div id="capture" class="section level3">
@@ -387,18 +387,24 @@ This page will contain my configuration and the small subset of commands that I 
 <li><code>S-M-LEFT</code>/<code>S-M-UP</code> remove current column/row.</li>
 <li><code>C-c }</code> show rows/columns labels.</li>
 <li><code>C-c ^</code> sort rows based on the current column.</li>
-<li><code>C-c " g</code> to make a plot (requires gnuplot and gnuplot to be installed)</li>
 </ul>
-<p>An example with a graph definition, a right-aligned column, a field formula (<code>:=</code>) and a column formula (<code>=</code>)</p>
-<pre class="text"><code>#+PLOT: title:&quot;graph title&quot; ind:1 deps:(2 3) set:&quot;xlabel &#39;ColA&#39;&quot;
-|  &lt;r&gt; |      |      |
+<p>An example with a right-aligned column, a field formula and a column formula.</p>
+<pre class="text"><code>|  &lt;r&gt; |      |      |
 | ColA | ColB | ColC |
 |------+------+------|
 |  tes |   13 |   12 |
 |  asd |    3 |    2 |
 |    a |   16 |   15 |
+|------+------+------|
 | mean | 10.7 |  9.7 |
-#+TBLFM: $3=$2-1::@6$2:=vmean(@3..@5);p3</code></pre>
+#+TBLFM: $3=$2-1::@&gt;$2=vmean(@3..@-I);p3</code></pre>
+<ul>
+<li><p>Start a formula in a cell by typing <code>:=FORMULA</code> and <code>C-c C-c</code> (<code>=FORMULA</code> for column formulas).</p></li>
+<li><p><code>@&gt;</code> means <em>the last row</em></p></li>
+<li><p><code>I</code> to define range relative to the target field, e.g. <code>@-I</code>=<em>row above</em>.</p></li>
+<li><p>A plot line could look like: <code>#+PLOT: title:"graph title" ind:1 deps:(2 3) set:"xlabel 'ColA'"</code></p></li>
+<li><p><code>C-c " g</code> to make a plot (requires gnuplot and gnuplot to be installed)</p></li>
+</ul>
 </div>
 <div id="code-block" class="section level2">
 <h2>Code block</h2>

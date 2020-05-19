@@ -246,6 +246,8 @@
 <ul>
 <li><a href="#basic-configuration">Basic configuration</a></li>
 <li><a href="#general-commands">General commands</a><ul>
+<li><a href="#kill-ring">Kill ring</a></li>
+<li><a href="#calculator">Calculator</a></li>
 <li><a href="#console-size-split-screen">Console-size split screen</a></li>
 </ul></li>
 <li><a href="#melpa-package-repository">MELPA package repository</a></li>
@@ -280,16 +282,17 @@
 <li><a href="#for-shell">For Shell</a></li>
 <li><a href="#for-wdl-workflows">For WDL workflows</a></li>
 <li><a href="#for-file-manipulation">For file manipulation</a><ul>
+<li><a href="#compare-two-files-diff">Compare two files (diff)</a></li>
 <li><a href="#csvtsv">CSV/TSV</a></li>
 <li><a href="#dired-mode">Dired mode</a></li>
 </ul></li>
 <li><a href="#for-version-control">For Version Control</a></li>
+<li><a href="#file-encryption">File encryption</a></li>
+<li><a href="#on-hpcs">On HPCs</a></li>
 <li><a href="#for-online-notes">For online notes</a><ul>
 <li><a href="#evernote">Evernote</a></li>
 <li><a href="#simplenote">Simplenote</a></li>
 </ul></li>
-<li><a href="#file-encryption">File encryption</a></li>
-<li><a href="#on-hpcs">On HPCs</a></li>
 <li><a href="#for-osx">For OSX</a><ul>
 <li><a href="#maximize-window-at-opening">Maximize window at opening</a></li>
 <li><a href="#keybindings">Keybindings</a></li>
@@ -299,7 +302,16 @@
 </ul>
 </div>
 
-<p>I use Emacs for almost everything: <strong>coding, writing, taking notes, preparing presentations</strong>. I’m using it right now ! Well I mean, at the time I’m writing this. There is also a good chance I’m using it now <em>now</em>.</p>
+<p>I use Emacs for almost everything: <strong>coding, writing, taking notes, managing tasks, using version control, preparing presentations</strong>. I’m using it right now! Well I mean, I’m writing this in Emacs. There is also a good chance I’m using it now <em>now</em>.
+The two main reasons why I like it and would recommend it:</p>
+<ul>
+<li>Universal: I can use the same customized/familiar/efficient editor for everything. No need to learn how to use multiple editors.</li>
+<li>It can be used in the terminal (super useful to work remotely on servers).</li>
+</ul>
+<p>If I couldn’t use Emacs, I would definitely learn vim for these same reasons.</p>
+<ul>
+<li><a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/index.html">Emacs Manual</a></li>
+</ul>
 <div id="basic-configuration" class="section level2">
 <h2>Basic configuration</h2>
 <p>Some of the basic tweaks in my <code>.emacs</code> file:</p>
@@ -316,6 +328,7 @@
 </div>
 <div id="general-commands" class="section level2">
 <h2>General commands</h2>
+<p>Some miscellaneous commands that could be useful:</p>
 <ul>
 <li>Counting words: select a region and press <code>M-=</code>. There are other ways for LaTeX.</li>
 <li>In a console (R, Shell), previous/next line in the history is accessed by <code>M-p</code>/<code>M-n</code>. (Useful when ssh-tunneling with broken key-bindings).</li>
@@ -334,6 +347,42 @@
 <li><code>\(</code> and <code>\)</code> to define groups.</li>
 <li><code>\1</code> to refer to the first group.</li>
 </ul>
+<div id="kill-ring" class="section level3">
+<h3>Kill ring</h3>
+<p>The kill ring is the equivalent of the clipboard, used to copy(kill) and paste(yank) stuff.
+Of note, deleting stuff also adds it to the kill ring.</p>
+<ul>
+<li>Copy a selection to clipboard/kill ring with <code>M-w</code>.</li>
+<li>Cut/kill a selection with <code>C-w</code>.</li>
+<li>Paste(yank) the last kill <code>C-y</code>.</li>
+<li>Yank a specific position in the kill ring, e.g. second-to-last with <code>M-2 C-y</code>.</li>
+<li>After yanking (<code>C-y</code>), cycle through earlier kills with <code>M-y</code> (useful if you don’t remember when you copied something).</li>
+</ul>
+</div>
+<div id="calculator" class="section level3">
+<h3>Calculator</h3>
+<p>Call the <em>quick</em> interface of the calculator with <code>C-x * q</code> (or <code>M-x quick-calc</code>).
+The result of the calculation will be shown and saved in the clipboard.</p>
+<p>You can also evaluate a calculation in a buffer (make sure it’s flanked but empty lines) with <code>C-x * e</code>, then <code>q</code> to quit the calc mode.</p>
+<p>For the standard interface, type <code>C-x * c</code> (or <code>M-x calc</code>).</p>
+<p>By default it works in <em>stack</em> mode:</p>
+<ul>
+<li><code>&lt;ENTER&gt;</code> adds a number to the stack.</li>
+<li><code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>^</code> performs an basic operations between the last 2 numbers.</li>
+<li><code>&lt;TAB&gt;</code> swaps the last 2 numbers.</li>
+<li><code>&lt;BACKSPC&gt;</code> removes last number in stack.</li>
+<li><code>M-0 &lt;BACKSPC&gt;</code> removes all numbers in stack.</li>
+</ul>
+<p>To use the more conventional <em>algebraic</em> mode, start with an apostrophe <code>'</code>.</p>
+<p>There’s a lot more to it (see <a href="https://www.gnu.org/software/emacs/manual/html_mono/calc.html">manual</a>).
+For example it can convert different units with <code>u c</code>, e.g. :</p>
+<ul>
+<li><code>' 10 mi/h</code>, then <code>u c m/s</code></li>
+<li><code>' 1.80 m</code>, then <code>u c mfi</code></li>
+<li><code>' 23425 s</code>, then <code>u c hms</code></li>
+</ul>
+<p>Display the list of units with <code>u v</code>.</p>
+</div>
 <div id="console-size-split-screen" class="section level3">
 <h3>Console-size split screen</h3>
 <p>I put this function and key binding in my <code>.emacs</code>:</p>
@@ -348,7 +397,8 @@
 </div>
 <div id="melpa-package-repository" class="section level2">
 <h2>MELPA package repository</h2>
-<p>Usually packages are just <code>.el</code> files to download and add in the folder defined in <code>.emacs</code> (e.g. <code>(add-to-list 'load-path &quot;~/.emacs.d/lisp/&quot;)</code>). However, there is easier way: <a href="http://www.emacswiki.org/emacs/MELPA">MELPA</a> package manager !</p>
+<p>Usually packages are just <code>.el</code> files to download and add in the folder defined in <code>.emacs</code> (e.g. <code>(add-to-list 'load-path "~/.emacs.d/lisp/")</code>).
+However, there is easier way: <a href="http://www.emacswiki.org/emacs/MELPA">MELPA</a> package manager!</p>
 <p>To install it, add to <code>.emacs</code>:</p>
 <pre class="lisp"><code>(require &#39;package)
 (add-to-list &#39;package-archives &#39;(&quot;melpa&quot; . &quot;https://melpa.org/packages/&quot;) t)
@@ -363,13 +413,14 @@ Then I added the dark version as default with <code>(load-theme 'sanityinc-solar
 To change it interactively I run <code>M-x load-theme</code> and then for example <code>sanityinc-solarized-light</code>.</p>
 <p>I also have an alias in my <code>.bashrc</code> to open emacs directly in <em>light</em> mode:</p>
 <pre class="sh"><code>alias emacsl=&quot;emacs --eval \&quot;(load-theme &#39;sanityinc-solarized-light t)\&quot;&quot;</code></pre>
-<p>Note: a theme can be unloaded using <code>M-x disable-theme</code>.</p>
+<p>Note: a theme can be “unloaded” using <code>M-x disable-theme</code>.</p>
 </div>
 <div id="for-r" class="section level2">
 <h2>For R</h2>
 <div id="emacs-speaks-statistics" class="section level3">
 <h3>Emacs Speaks Statistics</h3>
-<p>ESS can be installed through <strong>MELPA</strong>. Otherwise, see below.</p>
+<p>The easiest is to install ESS through <strong>MELPA</strong>.
+Otherwise, see below (potentially outdated).</p>
 <p>To install ESS, without needing the admin rights, the easiest way is to download and compile it in a dedicated folder (e.g. <code>.emacs.d/lisp/ess</code>):</p>
 <pre class="sh"><code>git clone https://github.com/emacs-ess/ESS.git .emacs.d/lisp/ess
 cd .emacs.d/lisp/ess
@@ -398,14 +449,19 @@ make</code></pre>
 </div>
 <div id="smart-underscores" class="section level3">
 <h3>Smart underscores</h3>
-<p>By default, pressing underscore will insert a <code>&lt;-</code> instead of a <code>_</code>. This was supposed to ease the pain of writing assignments with the arrow. However now we want a <code>_</code> most of the time (e.g. for <em>ggplot2</em> functions). Using smart underscore, <code>&lt;-</code> will be inserted only when following a space.</p>
-<p>Available in <strong>MELPA</strong>. Otherwise simply put <a href="http://www.emacswiki.org/emacs/download/ess-smart-underscore.el">this <em>.el</em> file</a> in the load path and add these lines to <code>~/.emacs</code>:</p>
+<p>By default, pressing underscore will insert a <code>&lt;-</code> instead of a <code>_</code>.
+This was supposed to ease the pain of writing assignments with the arrow.
+However, now we actually want a <code>_</code> most of the time (e.g. for <em>ggplot2</em> functions).
+Using smart underscores, <code>&lt;-</code> will be inserted only when following a space.</p>
+<p>It’s available in <strong>MELPA</strong>.
+Otherwise simply put <a href="http://www.emacswiki.org/emacs/download/ess-smart-underscore.el">this <em>.el</em> file</a> in the load path and add these lines to <code>~/.emacs</code>:</p>
 <pre class="lisp"><code>(require &#39;ess-smart-underscore)
 (setq ess-S-underscore-when-last-character-is-a-space t)</code></pre>
 </div>
 <div id="poly-mode-for-r-markdown" class="section level3">
 <h3>Poly-mode for R + Markdown</h3>
-<p>With polymode (MELPA), the mode depends on the position of the cursor in the document. For R + Markdown it means that we can edit the Markdown part in the markdown-mode and run the R code as if in a R script.</p>
+<p>With polymode (MELPA), the mode depends on the position of the cursor in the document.
+For R + Markdown it means that we can edit the Markdown part in <em>markdown-mode</em> and run the R code as if in a R script.</p>
 <p>I added this to my <code>.emacs</code>:</p>
 <pre class="lisp"><code>(require &#39;poly-R)
 (require &#39;poly-markdown)
@@ -413,6 +469,7 @@ make</code></pre>
 </div>
 <div id="custom-keyboard-shortcuts" class="section level3">
 <h3>Custom keyboard shortcuts</h3>
+<p>Some keybindings I set up but don’t end up using that much…</p>
 <div id="to-render-rmarkdown" class="section level4">
 <h4>To render RMarkdown</h4>
 <p>I <a href="https://stat.ethz.ch/pipermail/ess-help/2004-September/002092.html">tweaked</a> a function to run <code>rmarkdown::render</code> on the current buffer and I created a shortcut for it.</p>
@@ -429,7 +486,7 @@ make</code></pre>
 </div>
 <div id="to-send-a-dev.off" class="section level4">
 <h4>To send a <code>dev.off()</code></h4>
-<p>When working remotely, I send <code>dev.off()</code> to the R buffer using <code>C-c C-d C-d</code> to “update” the PDF opened from the mounted server.</p>
+<p>When working remotely, I send <code>dev.off()</code> to the R buffer using <code>C-c C-d C-d</code> to “update” the PDF opened from a mounted server.</p>
 <p>In <code>.emacs</code>:</p>
 <pre class="lisp"><code>(defun devoff ()
   (interactive)
@@ -449,7 +506,7 @@ make</code></pre>
 <div id="spell-checking" class="section level3">
 <h3>Spell checking</h3>
 <p>I use <em>ispell</em> and <em>flyspell</em>.</p>
-<p>To turn on automatically the live spell check for Latex and markdown documents:</p>
+<p>To turn on the live spell check automatically for Latex and markdown documents:</p>
 <pre class="lisp"><code>(add-hook &#39;LaTeX-mode-hook &#39;flyspell-mode)
 (add-hook &#39;markdown-mode-hook &#39;flyspell-mode)</code></pre>
 <p>I use the <em>american</em> dictionary by default:</p>
@@ -458,7 +515,7 @@ make</code></pre>
 </div>
 <div id="thesaurus-and-synonyms" class="section level3">
 <h3>Thesaurus and synonyms</h3>
-<p>I use the <code>synosaurus</code> package available in MELPA.
+<p>I tested the <code>synosaurus</code> package a few times (available in MELPA).
 It’s not as user friendly as some online resources but a good offline alternative.
 It uses the <a href="https://en.wikipedia.org/wiki/WordNet">WordNet</a> database through the <code>wn</code> command line.
 The shortcut to list synonyms is <code>C-c C-s l</code>.</p>
@@ -537,7 +594,7 @@ Otherwise, I manually fold the frames/figures/tables that are distracting.</p>
 <div id="table-formatting" class="section level3">
 <h3>Table formatting</h3>
 <p>Pressing <code>TAB</code> when the cursor is in a heading will cycle through <em>heading-only/full</em> view.</p>
-<p><code>M-x orgtbl-mode</code> to format markdown tables.</p>
+<p><code>M-x orgtbl-mode</code> to format markdown tables like org-tables.</p>
 </div>
 <div id="markdown-live-preview" class="section level3">
 <h3>Markdown live preview</h3>
@@ -682,7 +739,12 @@ This can be changed later using <code>M-x lsp-workspace-folders-remove</code> an
 </div>
 <div id="for-file-manipulation" class="section level2">
 <h2>For file manipulation</h2>
-<p>To compare and merge two files, use Ediff mode by calling <code>M-x ediff</code> (or <code>M-x ediff-buffers</code> when <em>diff</em> should be done between existing buffers). Once launched press:</p>
+<p>To visualize blanks (tabs, spaces, new lines) I use the minor mode <code>whitespace-mode</code>.</p>
+<p>To insert a tab: <code>C-q &lt;tab&gt;</code></p>
+<div id="compare-two-files-diff" class="section level3">
+<h3>Compare two files (diff)</h3>
+<p>To compare and merge two files, use Ediff mode by calling <code>M-x ediff</code> (or <code>M-x ediff-buffers</code> when <em>diff</em> should be done between existing buffers).
+Once launched press:</p>
 <ul>
 <li><code>|</code> to change the split mode (vertical/horizontal).</li>
 <li><code>n</code>/<code>p</code> to go to the next/previous difference.</li>
@@ -691,8 +753,7 @@ This can be changed later using <code>M-x lsp-workspace-folders-remove</code> an
 <li><code>q</code> to quit.</li>
 <li><code>?</code> to get the full list of shortcuts.</li>
 </ul>
-<p>To visualize blanks (tabs, spaces, new lines) I use the minor mode <code>whitespace-mode</code>.</p>
-<p>To insert a tab: <code>C-q &lt;tab&gt;</code></p>
+</div>
 <div id="csvtsv" class="section level3">
 <h3>CSV/TSV</h3>
 <p>I use the <code>csv-mode</code> and the command <code>c-c c-a</code> to align columns.
@@ -736,8 +797,20 @@ After installing <em>magit</em> using MELPA, invoke the main buffer with <code>M
 <pre class="lisp"><code>(setq vc-handled-backends (delq &#39;Git vc-handled-backends))
 (global-set-key (kbd &quot;C-x g&quot;) &#39;magit-status)</code></pre>
 </div>
+<div id="file-encryption" class="section level2">
+<h2>File encryption</h2>
+<p>Encryption is integrated directly. Just add the extension <code>.gpg</code> to a file.</p>
+</div>
+<div id="on-hpcs" class="section level2">
+<h2>On HPCs</h2>
+<ul>
+<li>See how to setup GNU screen to avoid visual glitches in the <a href="../shell/#gnu-screen">Shell section</a>.</li>
+<li><code>M-x ess-remote</code> to use a <em>shell</em> buffer as R buffer to send commands to. For example to send commands from a local R script to an R session on a server (connected through ssh in the <em>shell</em> buffer), or on an interactive job (launched in the <em>shell</em> buffer).</li>
+</ul>
+</div>
 <div id="for-online-notes" class="section level2">
 <h2>For online notes</h2>
+<p><em>Update: I don’t use this anymore. I take temporary notes in Simplenote, some of which I save in org-mode if I want to keep them.</em></p>
 <div id="evernote" class="section level3">
 <h3>Evernote</h3>
 <p>I use <a href="https://evernote.com/">Evernote</a> for easily keep notes synchronized across computer, tablet and smartphone. And there is a <a href="https://github.com/pymander/evernote-mode">Emacs mode for it</a> (of course!).</p>
@@ -787,19 +860,9 @@ ruby setup.rb</code></pre>
 </ul>
 </div>
 </div>
-<div id="file-encryption" class="section level2">
-<h2>File encryption</h2>
-<p>Encryption is integrated directly. Just add the extension <code>.gpg</code> to a file.</p>
-</div>
-<div id="on-hpcs" class="section level2">
-<h2>On HPCs</h2>
-<ul>
-<li>See how to setup GNU screen to avoid visual glitches in the <a href="../shell/#gnu-screen">Shell section</a>.</li>
-<li><code>M-x ess-remote</code> to use a <em>shell</em> buffer as R buffer to send commands to. For example to send commands from a local R script to an R session on a server (connected through ssh in the <em>shell</em> buffer), or on an interactive job (launched in the <em>shell</em> buffer).</li>
-</ul>
-</div>
 <div id="for-osx" class="section level2">
 <h2>For OSX</h2>
+<p><em>Update: I don’t use macs anymore so this section might be more outdated than the rest.</em></p>
 <p>Here are some bits of configuration specific to OSX.</p>
 <div id="maximize-window-at-opening" class="section level3">
 <h3>Maximize window at opening</h3>
