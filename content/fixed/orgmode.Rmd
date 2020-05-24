@@ -49,6 +49,11 @@ In `.emacs` file:
 - `*bold*`, `/italic/`, `_underlined_`, `+strike-through+`.
 - `=verbatim=`, `~code~`. 
 
+~~~text
+: simple text, e.g. code source
+: respecting line breaks
+~~~
+
 ## Keybindings
 
 ### From anywhere
@@ -72,6 +77,7 @@ In `.emacs` file:
 - New/edit link: `C-c C-l`.
 - Add property field: `C-c C-x p`.
 - Narrow/widen to subtree: `C-x n s`/`C-x n w`.
+- Switch a list to checklist: `C-u C-c C-c`
 
 ### Timestamps
 
@@ -79,18 +85,17 @@ In `.emacs` file:
 - Insert/edit schedule: `C-c C-s`.
 - Insert/edit deadline: `C-c C-d`.
 - Navigate with `S-ARROW`.
-- Toggle the calendar at a specific date: `C-c >`.
-- Insert selected date in the calendar at cursor position: `C-c <`.
+- Jump to today with `.`.
+- `10:00+1` means from 10am to 11am.
 
 ### Agenda views
 
-- Add/remove document to agenda files: `C-c [`/`C-c ]`.
 - Highlight in file: `SPC`.
 - Jump to file: `TAB`.
 - Jump to file and close agenda: `RET`.
 - Change TODO states with `t`.
-- Jump to a specific date: `j`.
 - Previous/next day/week/month: `b`/`f`
+- Jump to a specific date: `j`.
 
 ### Capture
 
@@ -116,7 +121,7 @@ In `.emacs` file:
 - `C-c }` show rows/columns labels.
 - `C-c ^` sort rows based on the current column.
 
-An example with a right-aligned column, a field formula (`:=`) and a column formula (`=`)
+An example with a right-aligned column, a field formula and a column formula.
 
 ~~~text
 |  <r> |      |      |
@@ -125,8 +130,67 @@ An example with a right-aligned column, a field formula (`:=`) and a column form
 |  tes |   13 |   12 |
 |  asd |    3 |    2 |
 |    a |   16 |   15 |
+|------+------+------|
 | mean | 10.7 |  9.7 |
-#+TBLFM: $3=$2-1::@6$2:=vmean(@3..@5);p3
+#+TBLFM: $3=$2-1::@>$2=vmean(@3..@-I);p3
+~~~
+
+- Start a formula in a cell by typing `:=FORMULA` and `C-c C-c` (`=FORMULA` for column formulas).
+- `@>` means *the last row*
+- `I` to define range relative to the target field, e.g. `@-I`=*row above*.
+
+
+- A plot line could look like: `#+PLOT: title:"graph title" ind:1 deps:(2 3) set:"xlabel 'ColA'"`
+- `C-c " g` to make a plot (requires gnuplot and gnuplot to be installed)
+
+## Code block
+
+A simple code block:
+
+~~~text
+#+NAME: <name>
+#+BEGIN_SRC <language>
+  <body>
+#+END_SRC
+~~~
+
+See the [list of available languages](https://orgmode.org/worg/org-contrib/babel/languages.html).
+To switch on syntax highlighting, add to `.emacs`:
+
+~~~lisp
+(setq org-src-fontify-natively t)
+~~~
+
+To enable the evaluation of a language, e.g. R:
+
+~~~lisp
+(require 'ob-R)
+(org-babel-do-load-languages
+  'org-babel-load-languages
+  '((R . t)))
+~~~
+
+If it looks like it's not working, remove all `*.elc` files in `~/.emacs.d/elpa/org-plus-contrib-*/` and restart.
+
+- `C-c C-c` to evaluate a source block
+
+Example of a R block that uses a named org-table as input:
+
+~~~lisp
+#+tblname: tbl1
+|   x |  y | group |
+|-----+----+-------|
+|   0 | 47 | A     |
+| 111 | 50 | A     |
+| 180 | 56 | A     |
+|   0 | 46 | B     |
+| 109 | 58 | B     |
+| 167 | 60 | B     |
+
+#+begin_src R :exports both :results output graphics :var tbl1=tbl1 :file tbl1-r.pdf :width 7 :height 5 :file-ext pdf
+library(ggplot2)
+ggplot(tbl1, aes(x=x, y=y, colour=group)) + geom_point()
+#+end_src
 ~~~
 
 ## Property drawer
@@ -169,24 +233,6 @@ For a view of the habit and how well they are followed, I added to my `.emacs`:
 ;;       org-habit-graph-column 40
 ;;       org-habit-preceding-days 28
 ;;       org-habit-following-days 7)
-~~~
-
-## Code block
-
-A simple code block:
-
-~~~text
-#+NAME: <name>
-#+BEGIN_SRC <language>
-  <body>
-#+END_SRC
-~~~
-
-See the [list of available languages](https://orgmode.org/worg/org-contrib/babel/languages.html).
-To switch on syntax highlighting, add to `.emacs`:
-
-~~~lisp
-(setq org-src-fontify-natively t)
 ~~~
 
 ## Links

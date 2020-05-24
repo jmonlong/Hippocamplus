@@ -7,7 +7,15 @@ output:
     toc: true
 ---
 
-I use Emacs for almost everything: **coding, writing, taking notes, preparing presentations**. I'm using it right now ! Well I mean, at the time I'm writing this. There is also a good chance I'm using it now *now*.
+I use Emacs for almost everything: **coding, writing, taking notes, managing tasks, using version control, preparing presentations**. I'm using it right now! Well I mean, I'm writing this in Emacs. There is also a good chance I'm using it now *now*.
+The two main reasons why I like it and would recommend it:
+
+- Universal: I can use the same customized/familiar/efficient editor for everything. No need to learn how to use multiple editors.
+- It can be used in the terminal (super useful to work remotely on servers).
+
+If I couldn't use Emacs, I would definitely learn vim for these same reasons.
+
+- [Emacs Manual](https://www.gnu.org/software/emacs/manual/html_node/emacs/index.html)
 
 ## Basic configuration
 
@@ -26,8 +34,9 @@ Some of the basic tweaks in my `.emacs` file:
 (setq column-number-mode t)
 ~~~
 
-
 ## General commands
+
+Some miscellaneous commands that could be useful:
 
 + Counting words: select a region and press `M-=`. There are other ways for LaTeX.
 + In a console (R, Shell), previous/next line in the history is accessed by `M-p`/`M-n`. (Useful when ssh-tunneling with broken key-bindings).
@@ -46,6 +55,45 @@ Regexp replace :
 + `\(` and `\)` to define groups.
 + `\1` to refer to the first group.
 
+### Kill ring
+
+The kill ring is the equivalent of the clipboard, used to copy(kill) and paste(yank) stuff.
+Of note, deleting stuff also adds it to the kill ring.
+
+- Copy a selection to clipboard/kill ring with `M-w`.
+- Cut/kill a selection with `C-w`.
+- Paste(yank) the last kill `C-y`.
+- Yank a specific position in the kill ring, e.g. second-to-last with `M-2 C-y`.
+- After yanking (`C-y`), cycle through earlier kills with `M-y` (useful if you don't remember when you copied something).
+
+### Calculator
+
+Call the *quick* interface of the calculator with `C-x * q` (or `M-x quick-calc`). 
+The result of the calculation will be shown and saved in the clipboard.
+
+You can also evaluate a calculation in a buffer (make sure it's flanked but empty lines) with `C-x * e`, then `q` to quit the calc mode. 
+
+For the standard interface, type `C-x * c` (or `M-x calc`). 
+
+By default it works in *stack* mode:
+
+- `<ENTER>` adds a number to the stack.
+- `+`, `-`, `*`, `/`, `^` performs an basic operations between the last 2 numbers.
+- `<TAB>` swaps the last 2 numbers.
+- `<BACKSPC>` removes last number in stack.
+- `M-0 <BACKSPC>` removes all numbers in stack.
+
+To use the more conventional *algebraic* mode, start with an apostrophe `'`. 
+
+There's a lot more to it (see [manual](https://www.gnu.org/software/emacs/manual/html_mono/calc.html)).
+For example it can convert different units with `u c`, e.g. : 
+
+- `' 10 mi/h`, then `u c m/s`
+- `' 1.80 m`, then `u c mfi`
+- `' 23425 s`, then `u c hms`
+
+Display the list of units with `u v`.
+
 ### Console-size split screen
 
 I put this function and key binding in my `.emacs`:
@@ -63,7 +111,8 @@ It splits the buffer in two and reduce the bottom buffer by 15 lines resulting i
 
 ## MELPA package repository
 
-Usually packages are just `.el` files to download and add in the folder defined in `.emacs` (e.g. `(add-to-list 'load-path "~/.emacs.d/lisp/")`). However, there is easier way: [MELPA](http://www.emacswiki.org/emacs/MELPA) package manager !
+Usually packages are just `.el` files to download and add in the folder defined in `.emacs` (e.g. `(add-to-list 'load-path "~/.emacs.d/lisp/")`). 
+However, there is easier way: [MELPA](http://www.emacswiki.org/emacs/MELPA) package manager!
 
 To install it, add to `.emacs`:
 
@@ -88,13 +137,14 @@ I also have an alias in my `.bashrc` to open emacs directly in *light* mode:
 alias emacsl="emacs --eval \"(load-theme 'sanityinc-solarized-light t)\""
 ~~~
 
-Note: a theme can be unloaded using `M-x disable-theme`.
+Note: a theme can be "unloaded" using `M-x disable-theme`.
 
 ## For R
 
 ### Emacs Speaks Statistics
 
-ESS can be installed through **MELPA**. Otherwise, see below.
+The easiest is to install ESS through **MELPA**. 
+Otherwise, see below (potentially outdated).
 
 To install ESS, without needing the admin rights, the easiest way is to download and compile it in a dedicated folder (e.g. `.emacs.d/lisp/ess`):
 
@@ -140,9 +190,14 @@ Then I configure it in my `.emacs`:
 
 
 ### Smart underscores
-By default, pressing underscore will insert a ` <- ` instead of a `_`. This was supposed to ease the pain of writing assignments with the arrow. However now we want a `_` most of the time (e.g. for *ggplot2* functions). Using smart underscore, ` <- ` will be inserted only when following a space.
 
-Available in **MELPA**. Otherwise simply put [this *.el* file](http://www.emacswiki.org/emacs/download/ess-smart-underscore.el) in the load path and add these lines to `~/.emacs`:
+By default, pressing underscore will insert a ` <- ` instead of a `_`. 
+This was supposed to ease the pain of writing assignments with the arrow. 
+However, now we actually want a `_` most of the time (e.g. for *ggplot2* functions). 
+Using smart underscores, ` <- ` will be inserted only when following a space.
+
+It's available in **MELPA**. 
+Otherwise simply put [this *.el* file](http://www.emacswiki.org/emacs/download/ess-smart-underscore.el) in the load path and add these lines to `~/.emacs`:
 
 ~~~lisp
 (require 'ess-smart-underscore)
@@ -151,7 +206,8 @@ Available in **MELPA**. Otherwise simply put [this *.el* file](http://www.emacsw
 
 ### Poly-mode for R + Markdown
 
-With polymode (MELPA), the mode depends on the position of the cursor in the document. For R + Markdown it means that we can edit the Markdown part in the markdown-mode and run the R code as if in a R script.
+With polymode (MELPA), the mode depends on the position of the cursor in the document. 
+For R + Markdown it means that we can edit the Markdown part in *markdown-mode* and run the R code as if in a R script.
 
 I added this to my `.emacs`:
 
@@ -162,6 +218,8 @@ I added this to my `.emacs`:
 ~~~
 
 ### Custom keyboard shortcuts
+
+Some keybindings I set up but don't end up using that much...
 
 #### To render RMarkdown
 
@@ -183,7 +241,7 @@ In `.emacs`:
 
 #### To send a `dev.off()`
 
-When working remotely, I send `dev.off()` to the R buffer using `C-c C-d C-d` to "update" the PDF opened from the mounted server.
+When working remotely, I send `dev.off()` to the R buffer using `C-c C-d C-d` to "update" the PDF opened from a mounted server.
 
 In `.emacs`:
 
@@ -207,7 +265,7 @@ Note: I use `options(device=function() pdf(width=9, height=7))` to specify the d
 
 I use *ispell* and *flyspell*.
 
-To turn on automatically the live spell check for Latex and markdown documents:
+To turn on the live spell check automatically for Latex and markdown documents:
 
 ~~~lisp
 (add-hook 'LaTeX-mode-hook 'flyspell-mode)
@@ -223,7 +281,7 @@ I use the *american* dictionary by default:
 
 ### Thesaurus and synonyms
 
-I use the `synosaurus` package available in MELPA.
+I tested the `synosaurus` package a few times (available in MELPA).
 It's not as user friendly as some online resources but a good offline alternative.
 It uses the [WordNet](https://en.wikipedia.org/wiki/WordNet) database through the `wn` command line.
 The shortcut to list synonyms is `C-c C-s l`.
@@ -326,7 +384,7 @@ Otherwise, I manually fold the frames/figures/tables that are distracting.
 
 Pressing `TAB` when the cursor is in a heading will cycle through *heading-only/full* view.
 
-`M-x orgtbl-mode` to format markdown tables.
+`M-x orgtbl-mode` to format markdown tables like org-tables.
 
 ### Markdown live preview
 
@@ -493,7 +551,14 @@ This can be changed later using `M-x lsp-workspace-folders-remove` and `M-x lsp-
 
 ## For file manipulation
 
-To compare and merge two files, use Ediff mode by calling `M-x ediff` (or `M-x ediff-buffers` when *diff* should be done between existing buffers). Once launched press:
+To visualize blanks (tabs, spaces, new lines) I use the minor mode `whitespace-mode`.
+
+To insert a tab: `C-q <tab>`
+
+### Compare two files (diff)
+
+To compare and merge two files, use Ediff mode by calling `M-x ediff` (or `M-x ediff-buffers` when *diff* should be done between existing buffers). 
+Once launched press:
 
 + `|` to change the split mode (vertical/horizontal).
 + `n`/`p` to go to the next/previous difference.
@@ -501,10 +566,6 @@ To compare and merge two files, use Ediff mode by calling `M-x ediff` (or `M-x e
 + `b` to put B's version to A.
 + `q` to quit.
 + `?` to get the full list of shortcuts.
-
-To visualize blanks (tabs, spaces, new lines) I use the minor mode `whitespace-mode`.
-
-To insert a tab: `C-q <tab>`
 
 ### CSV/TSV
 
@@ -550,7 +611,19 @@ Magit configuration in my `.emacs`:
 (global-set-key (kbd "C-x g") 'magit-status)
 ~~~
 
+
+## File encryption
+
+Encryption is integrated directly. Just add the extension `.gpg` to a file.
+
+## On HPCs
+
+- See how to setup GNU screen to avoid visual glitches in the [Shell section](../shell/#gnu-screen).
+- `M-x ess-remote` to use a *shell* buffer as R buffer to send commands to. For example to send commands from a local R script to an R session on a server (connected through ssh in the *shell* buffer), or on an interactive job (launched in the *shell* buffer).
+
 ## For online notes
+
+*Update: I don't use this anymore. I take temporary notes in Simplenote, some of which I save in org-mode if I want to keep them.*
 
 ### Evernote
 
@@ -612,17 +685,9 @@ Other general commands include:
 - `simplenote2-add-tag` and `simplenote2-delete-tag`
 - `simplenote2-set-markdown`
 
-
-## File encryption
-
-Encryption is integrated directly. Just add the extension `.gpg` to a file.
-
-## On HPCs
-
-- See how to setup GNU screen to avoid visual glitches in the [Shell section](../shell/#gnu-screen).
-- `M-x ess-remote` to use a *shell* buffer as R buffer to send commands to. For example to send commands from a local R script to an R session on a server (connected through ssh in the *shell* buffer), or on an interactive job (launched in the *shell* buffer).
-
 ## For OSX
+
+*Update: I don't use macs anymore so this section might be more outdated than the rest.*
 
 Here are some bits of configuration specific to OSX.
 
