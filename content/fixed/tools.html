@@ -155,6 +155,11 @@ Practical example: all the R scripts but not the ones created by BatchJobs in <c
 <p>To run in the folder with the <code>Dockerfile</code>.</p>
 <pre class="sh"><code>docker build -t jmonlong/popsv-docker .</code></pre>
 <p>Ignore (big) files fro the build context using a <code>.dockerignore</code> file.</p>
+<p>To make setup a time zone for a ubuntu-based container, use <em>tzdata</em> in the Dockerfile:</p>
+<pre class="docker"><code>RUN apt-get -y update &amp;&amp; DEBIAN_FRONTEND=noninteractive apt-get -y install tzdata
+ENV TZ=America/Los_Angeles</code></pre>
+<p>The time zone can also be changed in run command using <code>-e TZ=America/Los_Angeles</code>.
+<a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones">List of time zone codes</a></p>
 </div>
 <div id="launch-a-docker-instance" class="section level4">
 <h4>Launch a docker instance</h4>
@@ -176,11 +181,50 @@ VBoxManage modifyvm default --cpus 3
 VBoxManage modifyvm default --memory 8192
 docker-machine start</code></pre>
 </div>
+<div id="clean-up-space" class="section level4">
+<h4>Clean up space</h4>
+<p>From <a href="https://lebkowski.name/docker-volumes/">Maciej Łebkowski’s website</a>, use this script:</p>
+<pre class="sh"><code>#!/bin/bash
+
+# remove exited containers:
+docker ps --filter status=dead --filter status=exited -aq | xargs -r docker rm -v
+    
+# remove unused images:
+docker images --no-trunc | grep &#39;&lt;none&gt;&#39; | awk &#39;{ print $3 }&#39; | xargs -r docker rmi
+
+# remove unused volumes:
+find &#39;/var/lib/docker/volumes/&#39; -mindepth 1 -maxdepth 1 -type d | grep -vFf &lt;(
+  docker ps -aq | xargs docker inspect | jq -r &#39;.[] | .Mounts | .[] | .Name | select(.)&#39;
+) | xargs -r rm -fr</code></pre>
+</div>
 </div>
 <div id="makefile" class="section level2">
 <h2>Makefile</h2>
 <ul>
-<li><a href="https://gist.github.com/isaacs/62a2d1825d04437c6f08">Makefile basics from Isaacs</a>.</li>
+<li><a href="https://www.gnu.org/software/make/manual/html_node/index.html">GNU make manual</a></li>
+<li><p><a href="https://gist.github.com/isaacs/62a2d1825d04437c6f08">Makefile basics from Isaacs</a>.</p></li>
+<li><a href="https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html#Automatic-Variables">Automatic variables</a>
+<ul>
+<li><code>$@</code> the target</li>
+<li><code>$&lt;</code> the first prerequisite</li>
+<li><code>$^</code> all prerequisites</li>
+<li><code>$(@D)</code> the directory part of <code>$@</code> (works the same with <code>&lt;</code>,<code>^</code>, etc).</li>
+<li><code>$(@F)</code> the filename part of <code>$@</code> (works the same with <code>&lt;</code>,<code>^</code>, etc).</li>
+</ul></li>
+<li><a href="https://www.gnu.org/software/make/manual/html_node/File-Name-Functions.html#File-Name-Functions">File name functions</a>
+<ul>
+<li><code>$(notdir src/foo.c)</code> returns <em>foo.c</em>.</li>
+<li><code>$(addsuffix .c,foo)</code> returns <em>foo.c</em>.</li>
+<li><code>$(basename dir/foo.test.c)</code> returns <em>dir/foo.test</em>.</li>
+<li><code>objects := $(wildcard *.o)</code> to list files in a variable.</li>
+</ul></li>
+<li><a href="https://www.gnu.org/software/make/manual/html_node/Text-Functions.html#Text-Functions">String functions</a>
+<ul>
+<li><code>$(patsubst %.c,%.o,file.c)</code> to substitute file extensions</li>
+<li><code>$(subst from,to,text)</code> replaces all occurrences of <em>from</em> to <em>to</em> in <em>text</em>.</li>
+<li><code>$(word n,text)</code> returns the n-th word in <em>text</em>.</li>
+</ul></li>
+<li><p>Shell function: <code>$(shell cat foo)</code> runs a shell command.</p></li>
 </ul>
 </div>
 <div id="for-file-conversion" class="section level2">
