@@ -43,17 +43,26 @@ Some miscellaneous commands that could be useful:
 + Search for a regular expression in files using `M-x lgrep` command.
 + Evaluate lisp commands: `C-M-x`.
 + List key bindings currently available: `C-h b`.
++ Search Emacs documentation: `C-h a`.
 + List key bindings currently available starting with `C-c`: `C-c C-h`.
-+ Narrow down to a region with `C-x n n` and widen back to the entire buffer with `C-x n w` (e.g. when refactoring).
++ Narrow down to a region with `C-x n n` (e.g. when refactoring).
+    + Widen back to the entire buffer with `C-x n w`.
 + Accents with `C-x 8` (`C-x 8 C-h` for list).
 + Shift a selected chunk with spaces: `C-x TAB` or `C-4 C-x TAB` to add a specific number of spaces (here 4).
-- To insert a tab: `C-q <tab>`
++ To insert a tab: `C-q <tab>`
 
 Regexp replace :
 
 + Command: `C-M-%`.
 + `\(` and `\)` to define groups.
 + `\1` to refer to the first group.
+
+Windows:
+
+- `C-x 1` remove other windows.
+- `C-x 2` split window horizontally.
+- `C-x 3` split window vertically.
+- `C-x +` balance windows.
 
 ### Kill ring
 
