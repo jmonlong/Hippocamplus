@@ -36,8 +36,8 @@ term screen-256color
 
 - `alias terml='gnome-terminal --tab-with-profile="Sol Light"'` to open a new terminal with light theme.
 - `alias termd='gnome-terminal --tab-with-profile="Sol Dark"'` same with dark theme.
-- `alias rf='ls -rt | tail -1'` to quickly get the most recent file. Then for example `` evince `rf` `` to open the latest file.
-- `alias evincel='ls -rt *.pdf | tail -1 | xargs evince'` opens the last PDF document
+- `alias rf='ls -t | head -1'` to quickly get the most recent file. Then for example `` less `rf` `` to look at the latest file.
+- `alias evincel='ls -t --quoting-style=shell *.pdf | head -1 | xargs evince'` opens the latest PDF document
 - `alias R='R --no-save --no-restore'` to avoid R asking about saving the history.
 
 ## Misc
