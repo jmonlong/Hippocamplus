@@ -352,3 +352,7 @@ I added in my `.emacs`:
       "")))
 (setq org-agenda-prefix-format " %i %-15(getlasthead)%?-12t% s ")
 ~~~
+
+## To check next
+
+- [Export to HTML with ox-twbs](https://github.com/marsmining/ox-twbs)
