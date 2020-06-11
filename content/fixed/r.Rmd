@@ -7,6 +7,8 @@ output:
     toc: true
 ---
 
+- [What They Forgot to Teach You About R](https://rstats.wtf/index.html)
+
 ## Details to remember
 
 - Use `rbindlist` from *data.table* package for a memory-optimized and faster `do.call(rbind, list(..))`.

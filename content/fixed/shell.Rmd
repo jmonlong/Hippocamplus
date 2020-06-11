@@ -14,6 +14,7 @@ Command-line tools I used (e.g. git, snakemake, docker) are described in the [To
 
 - [The Art of Command Line](https://github.com/jlevy/the-art-of-command-line)
 - [Terminals Are Sexy](https://terminalsare.sexy/)
+- [Data Science at the Command Line](https://www.datascienceatthecommandline.com/)
 
 ## GNU screen
 
@@ -45,6 +46,7 @@ term screen-256color
 - Redirect stderr to stdout: `2>&1`.
 - Show special characters (end of line, tabs) with `cat -A`.
 - `$RANDOM` to get a random number, e.g. between 1 and 10: `$((1 + RANDOM % 10))`
+- `ncdu` instead of `du`
 
 ### Colors in `less`
 
