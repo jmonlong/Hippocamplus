@@ -251,6 +251,7 @@
 <li><a href="#from-anywhere">From anywhere</a></li>
 <li><a href="#edit-mode">Edit mode</a></li>
 <li><a href="#timestamps">Timestamps</a></li>
+<li><a href="#repeating-events">Repeating events</a></li>
 <li><a href="#agenda-views">Agenda views</a></li>
 <li><a href="#capture">Capture</a></li>
 </ul></li>
@@ -271,6 +272,7 @@ This page will contain my configuration and the small subset of commands that I 
 <ul>
 <li><a href="https://orgmode.org/manual/">Org Manual</a></li>
 <li><a href="http://doc.norang.ca/org-mode.html">Org Mode - Organize Your Life In Plain Text!</a></li>
+<li><a href="https://karl-voit.at/2019/09/25/using-orgmode/">Karl Voit’s series on Org-mode features</a></li>
 </ul>
 <div id="org-file" class="section level2">
 <h2>Org file</h2>
@@ -349,6 +351,17 @@ This page will contain my configuration and the small subset of commands that I 
 <li>Navigate with <code>S-ARROW</code>.</li>
 <li>Jump to today with <code>.</code>.</li>
 <li><code>10:00+1</code> means from 10am to 11am.</li>
+</ul>
+</div>
+<div id="repeating-events" class="section level3">
+<h3>Repeating events</h3>
+<p>For example regular meetings</p>
+<ul>
+<li>Possible to write a timestamp like <code>&lt;2020-03-18 Wed 12:30 +1w&gt;</code></li>
+</ul>
+<p><em>After using this for some time, I agree with <a href="https://karl-voit.at/2017/01/15/org-clone-subtree-with-time-shift/">Karl Voit</a> that it’s more practical to duplicate the events instead (helps dealing with exceptional changes, taking notes, keeping a trace once the event stops).</em></p>
+<ul>
+<li><code>C-c C-x c</code> clone an event/task (specify how many times and the time shift)</li>
 </ul>
 </div>
 <div id="agenda-views" class="section level3">

@@ -12,6 +12,7 @@ This page will contain my configuration and the small subset of commands that I 
 
 - [Org Manual](https://orgmode.org/manual/)
 - [Org Mode - Organize Your Life In Plain Text!](http://doc.norang.ca/org-mode.html)
+- [Karl Voit's series on Org-mode features](https://karl-voit.at/2019/09/25/using-orgmode/)
 
 ## Org file
 
@@ -87,6 +88,16 @@ In `.emacs` file:
 - Navigate with `S-ARROW`.
 - Jump to today with `.`.
 - `10:00+1` means from 10am to 11am.
+
+### Repeating events
+
+For example regular meetings
+
+- Possible to write a timestamp like `<2020-03-18 Wed 12:30 +1w>`
+
+*After using this for some time, I agree with [Karl Voit](https://karl-voit.at/2017/01/15/org-clone-subtree-with-time-shift/) that it's more practical to duplicate the events instead (helps dealing with exceptional changes, taking notes, keeping a trace once the event stops).*
+
+- `C-c C-x c` clone an event/task (specify how many times and the time shift)
 
 ### Agenda views
 
