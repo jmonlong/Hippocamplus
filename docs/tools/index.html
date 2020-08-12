@@ -251,6 +251,7 @@
 <li><a href="#rsync">rsync</a></li>
 <li><a href="#docker">Docker</a></li>
 <li><a href="#makefile">Makefile</a></li>
+<li><a href="#ftp">FTP</a></li>
 <li><a href="#for-file-conversion">For file conversion</a><ul>
 <li><a href="#misc">Misc</a></li>
 <li><a href="#pdf">PDF</a></li>
@@ -261,7 +262,7 @@
 <div id="git" class="section level2">
 <h2>Git</h2>
 <ul>
-<li>Commit all modification and added files: <code>git commit -am &quot;informative message&quot;</code></li>
+<li>Commit all modification and added files: <code>git commit -am "informative message"</code></li>
 <li>To show all the history of a file: <code>git log -p -- file</code></li>
 <li>To retrieve a specific version of a file: <code>git show COMMIT:file</code></li>
 <li>Revert repo to a specific commit: <code>git checkout COMMIT</code></li>
@@ -323,7 +324,7 @@ cd $WD</code></pre>
 <li>Local rules when running on a HPC.</li>
 <li>Use remote (S3) files with <code>remote()</code></li>
 </ul>
-<p><a href="https://snakemake.readthedocs.io/en/stable/snakefiles/configuration.html#configuration">Configuration files</a> used as <code>config[&quot;samples&quot;]</code>.
+<p><a href="https://snakemake.readthedocs.io/en/stable/snakefiles/configuration.html#configuration">Configuration files</a> used as <code>config["samples"]</code>.
 Can also be used as <code>snakemake --config yourparam=1.5</code>.
 For sample metadata, a <a href="https://snakemake.readthedocs.io/en/stable/snakefiles/configuration.html#tabular-configuration">tabular configuration</a> can also be used using Pandas.
 It’s also possible to define a separate config file for the cluster configuration (e.g. resources for each rule).</p>
@@ -435,9 +436,9 @@ find &#39;/var/lib/docker/volumes/&#39; -mindepth 1 -maxdepth 1 -type d | grep -
 <div id="makefile" class="section level2">
 <h2>Makefile</h2>
 <ul>
-<li><a href="https://www.gnu.org/software/make/manual/html_node/index.html">GNU make manual</a></li>
+<li><p><a href="https://www.gnu.org/software/make/manual/html_node/index.html">GNU make manual</a></p></li>
 <li><p><a href="https://gist.github.com/isaacs/62a2d1825d04437c6f08">Makefile basics from Isaacs</a>.</p></li>
-<li><a href="https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html#Automatic-Variables">Automatic variables</a>
+<li><p><a href="https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html#Automatic-Variables">Automatic variables</a></p>
 <ul>
 <li><code>$@</code> the target</li>
 <li><code>$&lt;</code> the first prerequisite</li>
@@ -445,20 +446,32 @@ find &#39;/var/lib/docker/volumes/&#39; -mindepth 1 -maxdepth 1 -type d | grep -
 <li><code>$(@D)</code> the directory part of <code>$@</code> (works the same with <code>&lt;</code>,<code>^</code>, etc).</li>
 <li><code>$(@F)</code> the filename part of <code>$@</code> (works the same with <code>&lt;</code>,<code>^</code>, etc).</li>
 </ul></li>
-<li><a href="https://www.gnu.org/software/make/manual/html_node/File-Name-Functions.html#File-Name-Functions">File name functions</a>
+<li><p><a href="https://www.gnu.org/software/make/manual/html_node/File-Name-Functions.html#File-Name-Functions">File name functions</a></p>
 <ul>
 <li><code>$(notdir src/foo.c)</code> returns <em>foo.c</em>.</li>
 <li><code>$(addsuffix .c,foo)</code> returns <em>foo.c</em>.</li>
 <li><code>$(basename dir/foo.test.c)</code> returns <em>dir/foo.test</em>.</li>
 <li><code>objects := $(wildcard *.o)</code> to list files in a variable.</li>
 </ul></li>
-<li><a href="https://www.gnu.org/software/make/manual/html_node/Text-Functions.html#Text-Functions">String functions</a>
+<li><p><a href="https://www.gnu.org/software/make/manual/html_node/Text-Functions.html#Text-Functions">String functions</a></p>
 <ul>
 <li><code>$(patsubst %.c,%.o,file.c)</code> to substitute file extensions</li>
 <li><code>$(subst from,to,text)</code> replaces all occurrences of <em>from</em> to <em>to</em> in <em>text</em>.</li>
 <li><code>$(word n,text)</code> returns the n-th word in <em>text</em>.</li>
 </ul></li>
 <li><p>Shell function: <code>$(shell cat foo)</code> runs a shell command.</p></li>
+</ul>
+</div>
+<div id="ftp" class="section level2">
+<h2>FTP</h2>
+<p>Basic commands:</p>
+<ul>
+<li><code>cd</code>/<code>ls</code> to change directory/list files in the remote location</li>
+<li><code>get</code> to copy a file from the remote location to the local machine</li>
+<li><code>put</code> to copy a file from the local machine to the remote location</li>
+<li><code>delete</code> to remove a file in the remote location</li>
+<li><code>lcd</code> to change directory in the local machine</li>
+<li><code>help</code> to list FTP commands</li>
 </ul>
 </div>
 <div id="for-file-conversion" class="section level2">
@@ -491,6 +504,11 @@ gs -dPDFA -dBATCH -dNOPAUSE -dNOOUTERSAVE -dUseCIEColor -sProcessColorModel=Devi
 <p>To check for PDF/A compliance I used <a href="https://www.pdf-online.com/osa/validate.aspx">this online validator</a> or Acrobat Reader Pro.
 Another way to check for problems is to look at the <em>emb</em> column of <code>pdffonts main.pdf</code> (should be all embedded) and the <em>type</em> column of <code>pdfimages -list main.pdf</code> (should be all <em>image</em>).</p>
 <p><em>Note: this is based only on my one-time experience with the PDF of my thesis.</em></p>
+</div>
+<div id="adding-a-signature-to-a-pdf" class="section level4">
+<h4>Adding a signature to a PDF</h4>
+<p>On Ubuntu, I digitally add signatures using <a href="http://xournal.sourceforge.net/">Xournal</a>.
+It’s ugly but the output PDF is left unchanged and it’s easy to place the signature (from a .png file for example) and export to PDF.</p>
 </div>
 </div>
 </div>

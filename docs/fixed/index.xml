@@ -16,7 +16,8 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/Hippocamplus/cpp/</guid>
-      <description>Resources File I/O Read text file one line at a time  Data structures String manipulation Split a string    Resources  C++ Core Guidelines C++ Primer (5th Edition). Stanley B. Lippman, Josée Lajoie, Barbara E. Moo Accelerated C++. Andrew Koenig   File I/O Read text file one line at a time #include &amp;lt;fstream&amp;gt; std::ifstream in_file(&amp;#39;file.txt&amp;#39;); std::string line; while(std::getline(in_file, line)){ // Do something with &amp;#39;line&amp;#39; } in_file.</description>
+      <description>Resources File I/O Read text file one line at a time  Data structures String manipulation Split a string    Resources  C++ Core Guidelines C++ Primer (5th Edition). Stanley B. Lippman, Josée Lajoie, Barbara E. Moo Accelerated C++. Andrew Koenig  Slides:
+ The Spirit of C++ Back To Basics: Modern C++ Style   File I/O Read text file one line at a time #include &amp;lt;fstream&amp;gt; std::ifstream in_file(&amp;#39;file.</description>
     </item>
     
     <item>
@@ -71,7 +72,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/Hippocamplus/org-mode/</guid>
-      <description>Org file Configuration Syntax Keybindings From anywhere Edit mode Timestamps Repeating events Agenda views Capture  TODO entry Tables Code block Property drawer Habits entry Links Tags Clocking time Custom agenda views   I’m giving Org mode a try. This page will contain my configuration and the small subset of commands that I want to learn.
+      <description>Org file Configuration Syntax Keybindings From anywhere Edit mode Timestamps Repeating events Agenda views Capture  TODO entry Tables Code block Property drawer Habits entry Links Tags Clocking time Custom agenda views To check next   I’m giving Org mode a try. This page will contain my configuration and the small subset of commands that I want to learn.
  Org Manual Org Mode - Organize Your Life In Plain Text!</description>
     </item>
     
@@ -91,7 +92,7 @@ Naming and formatting  Use lowercase _-separated for modules and functions name.
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/Hippocamplus/r/</guid>
-      <description>Details to remember Order in condition assessment  Graphs Palette with many colors ggplot2 tricks Multi-panel ggplots Change font in ggplot2 Waffle graphs  Rmarkdown Beamer presentation Jekyll website  data.table package Rcpp Linux setup   Details to remember  Use rbindlist from data.table package for a memory-optimized and faster do.call(rbind, list(..)). Use system2 instead of system to run a command. It’s more portable apparently. Get RPubs working with options(rpubs.</description>
+      <description>Details to remember Order in condition assessment  Graphs Palette with many colors ggplot2 tricks Multi-panel ggplots Change font in ggplot2 Waffle graphs  Rmarkdown Zoom-on-click images Beamer presentation Jekyll website  data.table package Rcpp Linux setup    What They Forgot to Teach You About R  Details to remember  Use rbindlist from data.table package for a memory-optimized and faster do.call(rbind, list(..)). Use system2 instead of system to run a command.</description>
     </item>
     
     <item>
@@ -109,7 +110,7 @@ Naming and formatting  Use lowercase _-separated for modules and functions name.
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/Hippocamplus/tools/</guid>
-      <description>Git Snakemake jq vd rsync Docker Makefile For file conversion Misc PDF    Git  Commit all modification and added files: git commit -am &amp;quot;informative message&amp;quot; To show all the history of a file: git log -p -- file To retrieve a specific version of a file: git show COMMIT:file Revert repo to a specific commit: git checkout COMMIT Undo a commit: git reset HEAD~ and then for the real commit git commit -c ORIG_HEAD.</description>
+      <description>Git Snakemake jq vd rsync Docker Makefile FTP For file conversion Misc PDF    Git  Commit all modification and added files: git commit -am &#34;informative message&#34; To show all the history of a file: git log -p -- file To retrieve a specific version of a file: git show COMMIT:file Revert repo to a specific commit: git checkout COMMIT Undo a commit: git reset HEAD~ and then for the real commit git commit -c ORIG_HEAD.</description>
     </item>
     
     <item>

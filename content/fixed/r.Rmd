@@ -154,6 +154,58 @@ knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, fig.width=10)
 
 - [Awesome tables](https://haozhu233.github.io/kableExtra/awesome_table_in_pdf.pdf).
 
+### Zoom-on-click images
+
+To get this feature on an HTML report, add anywhere (or by including an html file e.g. with `includes: before_body:`)
+
+~~~html
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<style>
+.zoomDiv {
+  opacity: 0;
+  position:fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 50;
+  transform: translate(-50%, -50%);
+  box-shadow: 0px 0px 50px #888888;
+  max-height:100%; 
+  overflow: scroll;
+}
+
+.zoomImg {
+  width: 100%;
+}
+</style>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').prepend("<div class=\"zoomDiv\"><img src=\"\" class=\"zoomImg\"></div>");
+    // onClick function for all plots (img's)
+    $('img:not(.zoomImg)').click(function() {
+      $('.zoomImg').attr('src', $(this).attr('src'));
+      $('.zoomDiv').css({opacity: '1', width: '100%'});
+    });
+    // onClick function for zoomImg
+    $('img.zoomImg').click(function() {
+      $('.zoomDiv').css({opacity: '0', width: '0%'});
+    });
+  });
+</script>
+~~~
+
+All the images can then be clicked on to display a zoomed in display. 
+Click again on the image to close the zoomed image.
+
+Note: It required pandoc version >2 to load the javascript lib.
+
+Other options I haven't tried yet: 
+
+- [knitrBootstrap](https://github.com/jimhester/knitrBootstrap) seems to include a similar feature by default.
+- [fancybox](https://fancyapps.com/fancybox/) like described in [this tufte issue](https://github.com/rstudio/tufte/issues/30).
+
+
 ### Beamer presentation
 
 Some useful options to put in the YAML header:

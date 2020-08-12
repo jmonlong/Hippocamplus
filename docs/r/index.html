@@ -255,6 +255,7 @@
 <li><a href="#waffle-graphs">Waffle graphs</a></li>
 </ul></li>
 <li><a href="#rmarkdown">Rmarkdown</a><ul>
+<li><a href="#zoom-on-click-images">Zoom-on-click images</a></li>
 <li><a href="#beamer-presentation">Beamer presentation</a></li>
 <li><a href="#jekyll-website">Jekyll website</a></li>
 </ul></li>
@@ -264,6 +265,9 @@
 </ul>
 </div>
 
+<ul>
+<li><a href="https://rstats.wtf/index.html">What They Forgot to Teach You About R</a></li>
+</ul>
 <div id="details-to-remember" class="section level2">
 <h2>Details to remember</h2>
 <ul>
@@ -379,6 +383,52 @@ knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, fig.width=10)
 <ul>
 <li><a href="https://haozhu233.github.io/kableExtra/awesome_table_in_pdf.pdf">Awesome tables</a>.</li>
 </ul>
+<div id="zoom-on-click-images" class="section level3">
+<h3>Zoom-on-click images</h3>
+<p>To get this feature on an HTML report, add anywhere (or by including an html file e.g. with <code>includes: before_body:</code>)</p>
+<pre class="html"><code>&lt;script src=&quot;https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js&quot;&gt;&lt;/script&gt;
+
+&lt;style&gt;
+.zoomDiv {
+  opacity: 0;
+  position:fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 50;
+  transform: translate(-50%, -50%);
+  box-shadow: 0px 0px 50px #888888;
+  max-height:100%; 
+  overflow: scroll;
+}
+
+.zoomImg {
+  width: 100%;
+}
+&lt;/style&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+  $(document).ready(function() {
+    $(&#39;body&#39;).prepend(&quot;&lt;div class=\&quot;zoomDiv\&quot;&gt;&lt;img src=\&quot;\&quot; class=\&quot;zoomImg\&quot;&gt;&lt;/div&gt;&quot;);
+    // onClick function for all plots (img&#39;s)
+    $(&#39;img:not(.zoomImg)&#39;).click(function() {
+      $(&#39;.zoomImg&#39;).attr(&#39;src&#39;, $(this).attr(&#39;src&#39;));
+      $(&#39;.zoomDiv&#39;).css({opacity: &#39;1&#39;, width: &#39;100%&#39;});
+    });
+    // onClick function for zoomImg
+    $(&#39;img.zoomImg&#39;).click(function() {
+      $(&#39;.zoomDiv&#39;).css({opacity: &#39;0&#39;, width: &#39;0%&#39;});
+    });
+  });
+&lt;/script&gt;</code></pre>
+<p>All the images can then be clicked on to display a zoomed in display.
+Click again on the image to close the zoomed image.</p>
+<p>Note: It required pandoc version &gt;2 to load the javascript lib.</p>
+<p>Other options I haven’t tried yet:</p>
+<ul>
+<li><a href="https://github.com/jimhester/knitrBootstrap">knitrBootstrap</a> seems to include a similar feature by default.</li>
+<li><a href="https://fancyapps.com/fancybox/">fancybox</a> like described in <a href="https://github.com/rstudio/tufte/issues/30">this tufte issue</a>.</li>
+</ul>
+</div>
 <div id="beamer-presentation" class="section level3">
 <h3>Beamer presentation</h3>
 <p>Some useful options to put in the YAML header:</p>
