@@ -13,6 +13,12 @@ output:
 - [C++ Primer (5th Edition). Stanley B. Lippman, Josée Lajoie, Barbara E. Moo](https://www.amazon.com/Primer-5th-Stanley-B-Lippman/dp/0321714113)
 - [Accelerated C++. Andrew Koenig](https://www.bookdepository.com/Accelerated-C-Andrew-Koenig/9780201703535)
 
+Slides:
+
+- [The Spirit of C++](https://legends2k.github.io/spirit-of-cpp/)
+- [Back To Basics: Modern C++ Style](https://github.com/CppCon/CppCon2014/blob/master/Presentations/Back%20to%20the%20Basics!%20Essentials%20of%20Modern%20C%2B%2B%20Style/Back%20to%20the%20Basics!%20Essentials%20of%20Modern%20C%2B%2B%20Style%20-%20Herb%20Sutter%20-%20CppCon%202014.pdf)
+
+
 ## File I/O
 
 ### Read text file one line at a time
