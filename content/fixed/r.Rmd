@@ -40,6 +40,33 @@ if(!is.null(x) && x>10) message("so big !")
 Now it won't try to do `x<10` if `!is.null(x)` is not true (because what's the point, anything "*False AND ...*" is for sure *False*).
 Caution, `&&` doesn't work on vectors (it will only test the first element).
 
+## Read files in chunk
+
+To avoid memory problems, I sometimes had to read a file by chunk.
+(This is usually not the right way to do things, more of a quick-and-dirty way to try something to gauge if it's worth implementing something in Rcpp etc.)
+
+Here are bits of code to help with that.
+
+```r
+## open connection to file
+con = gzfile(args[1], 'r')
+## read one line at a time
+while(length((line.r=readLines(con, 1)))>0){
+  ## something on line.r (character containing the line), e.g. 
+  line.s = unlist(strsplit(line.r, '\t'))
+  ...
+}
+```
+
+Using `readLines(con, N)` with larger N, a larger chunk of the file can be read at a time.
+In that case, it can be useful to parse the chunk (vector of character element) into a *data.frame* using `read.table`/`read.csv` with:
+
+```r
+lines.r=readLines(con, 100)
+nodes.df = read.csv(textConnection(lines.r), as.is=TRUE, header=TRUE)
+```
+
+
 ## Graphs
 
 - `pdf("g.pdf", 9, 7)`

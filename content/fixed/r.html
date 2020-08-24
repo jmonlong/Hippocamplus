@@ -13,6 +13,7 @@ output:
 <li><a href="#details-to-remember">Details to remember</a><ul>
 <li><a href="#order-in-condition-assessment">Order in condition assessment</a></li>
 </ul></li>
+<li><a href="#read-files-in-chunk">Read files in chunk</a></li>
 <li><a href="#graphs">Graphs</a><ul>
 <li><a href="#palette-with-many-colors">Palette with many colors</a></li>
 <li><a href="#ggplot2-tricks">ggplot2 tricks</a></li>
@@ -58,6 +59,24 @@ if(!is.null(x) &amp;&amp; x&gt;10) message(&quot;so big !&quot;)</code></pre>
 <p>Now it won’t try to do <code>x&lt;10</code> if <code>!is.null(x)</code> is not true (because what’s the point, anything “<em>False AND …</em>” is for sure <em>False</em>).
 Caution, <code>&amp;&amp;</code> doesn’t work on vectors (it will only test the first element).</p>
 </div>
+</div>
+<div id="read-files-in-chunk" class="section level2">
+<h2>Read files in chunk</h2>
+<p>To avoid memory problems, I sometimes had to read a file by chunk.
+(This is usually not the right way to do things, more of a quick-and-dirty way to try something to gauge if it’s worth implementing something in Rcpp etc.)</p>
+<p>Here are bits of code to help with that.</p>
+<pre class="r"><code>## open connection to file
+con = gzfile(args[1], &#39;r&#39;)
+## read one line at a time
+while(length((line.r=readLines(con, 1)))&gt;0){
+  ## something on line.r (character containing the line), e.g. 
+  line.s = unlist(strsplit(line.r, &#39;\t&#39;))
+  ...
+}</code></pre>
+<p>Using <code>readLines(con, N)</code> with larger N, a larger chunk of the file can be read at a time.
+In that case, it can be useful to parse the chunk (vector of character element) into a <em>data.frame</em> using <code>read.table</code>/<code>read.csv</code> with:</p>
+<pre class="r"><code>lines.r=readLines(con, 100)
+nodes.df = read.csv(textConnection(lines.r), as.is=TRUE, header=TRUE)</code></pre>
 </div>
 <div id="graphs" class="section level2">
 <h2>Graphs</h2>

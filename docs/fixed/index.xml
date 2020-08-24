@@ -92,7 +92,7 @@ Naming and formatting  Use lowercase _-separated for modules and functions name.
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/Hippocamplus/r/</guid>
-      <description>Details to remember Order in condition assessment  Graphs Palette with many colors ggplot2 tricks Multi-panel ggplots Change font in ggplot2 Waffle graphs  Rmarkdown Zoom-on-click images Beamer presentation Jekyll website  data.table package Rcpp Linux setup    What They Forgot to Teach You About R  Details to remember  Use rbindlist from data.table package for a memory-optimized and faster do.call(rbind, list(..)). Use system2 instead of system to run a command.</description>
+      <description>Details to remember Order in condition assessment  Read files in chunk Graphs Palette with many colors ggplot2 tricks Multi-panel ggplots Change font in ggplot2 Waffle graphs  Rmarkdown Zoom-on-click images Beamer presentation Jekyll website  data.table package Rcpp Linux setup    What They Forgot to Teach You About R  Details to remember  Use rbindlist from data.table package for a memory-optimized and faster do.call(rbind, list(.</description>
     </item>
     
     <item>

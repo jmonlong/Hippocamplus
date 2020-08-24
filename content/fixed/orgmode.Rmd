@@ -262,7 +262,7 @@ To define tags/shortcuts, for example Google Map search using `[[gmap:UCSC, Sant
 
 ~~~lisp
 (setq org-link-abbrev-alist
-      '(("gmap"      . "http://maps.google.com/maps?q=%s")))
+      '(("gmap" . "http://maps.google.com/maps?q=%s")))
 ~~~
 
 ## Tags
