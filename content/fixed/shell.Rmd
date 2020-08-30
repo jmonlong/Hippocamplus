@@ -113,7 +113,10 @@ find pdf -mtime -1 | xargs evince
 
 ### AWK
 
-- Capture group in string regexp using `match($0, /xxx(.*)yyy/, a); print a[1]'`
+- Split a string into an array: `split($3, a, ",")`
+- Substitute pattern in string: `gsub('pattern', 'replacement', $4)`
+- Capture group in string regexp using `match($2, /xxx(.*)yyy/, a); print a[1]'`
+- Set output separator to tabs: `BEGIN{OFS="\t"}` (same idea for `FS`, `RS`, `ORS`)
 
 ### Perl one-liners
 
