@@ -9,6 +9,11 @@ output:
 
 A lot of good information in the [LaTeX Wikibook](https://en.wikibooks.org/wiki/LaTeX).
 
+## Cheatsheets
+
+- [First cheatsheet I ever used by Vincent Seguin (2000)](/pdf/aide-memoire-latex.pdf).
+- [List of symbols](/pdf/Symbols.pdf)
+
 ## Standard packages
 
 This is my default (more or less) :

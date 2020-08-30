@@ -335,6 +335,16 @@ for ii in xrange(1000):
 SeqIO.write(recs, "reads.fa", "fasta")
 ~~~
 
+To read/write a gzipped fasta file:
+
+~~~python
+inf = gzip.open('input.fa.gz', 'rt')
+recs = []
+for rec in SeqIO.parse(inf, 'fasta'):
+    ...
+SeqIO.write(recs, gzip.open('reads.fa.gz', 'wt'), "fasta")
+~~~
+
 #### Indexed fasta
 
 I use `pyfaidx` (see [repo](https://github.com/mdshw5/pyfaidx)) to quickly access slices of an indexed fasta. The indexing can be performed by `samtools faidx` or functions from the package.

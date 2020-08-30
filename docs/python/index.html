@@ -312,7 +312,7 @@ The opposite would be <code>'\t'.join(map(str, arr))</code></p>
 line.split(&#39;\t&#39;)</code></pre>
 <ul>
 <li><code>rstrip</code> removes the trailing characters. By defaut, white spaces. <code>s.rstrip('\t\n')</code> removes <em>any combination</em> of tabs and new lines.</li>
-<li><code>str.replace(a_string, &quot;:&quot;, &quot;_&quot;)</code> to replace characters.</li>
+<li><code>str.replace(a_string, ":", "_")</code> to replace characters.</li>
 <li><code>' '.join(a_string_array)</code> to merge an array into one string.</li>
 </ul>
 <p>For regular expression:</p>
@@ -497,6 +497,12 @@ for ii in xrange(1000):
     seq = randSeq(100))
     recs.append(SeqRecord(seq, id=str(ii)))
 SeqIO.write(recs, &quot;reads.fa&quot;, &quot;fasta&quot;)</code></pre>
+<p>To read/write a gzipped fasta file:</p>
+<pre class="python"><code>inf = gzip.open(&#39;input.fa.gz&#39;, &#39;rt&#39;)
+recs = []
+for rec in SeqIO.parse(inf, &#39;fasta&#39;):
+    ...
+SeqIO.write(recs, gzip.open(&#39;reads.fa.gz&#39;, &#39;wt&#39;), &quot;fasta&quot;)</code></pre>
 <div id="indexed-fasta" class="section level4">
 <h4>Indexed fasta</h4>
 <p>I use <code>pyfaidx</code> (see <a href="https://github.com/mdshw5/pyfaidx">repo</a>) to quickly access slices of an indexed fasta. The indexing can be performed by <code>samtools faidx</code> or functions from the package.</p>
