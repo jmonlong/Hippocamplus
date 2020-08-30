@@ -523,6 +523,15 @@ For R + Markdown it means that we can edit the Markdown part in <em>markdown-mod
 <p>I use the <em>american</em> dictionary by default:</p>
 <pre class="lisp"><code>(setq ispell-dictionary &quot;american&quot;)
 (setq ispell-local-dictionary &quot;american&quot;)</code></pre>
+<p>Most useful key binding (more at <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Spelling.html">Emacs Manual</a>):</p>
+<ul>
+<li><code>M-$</code> to trigger spell checking on a word (for example flagged by flyspell).</li>
+<li><code>M-x ispell-buffer</code> to launch spell checking. See also <code>ispell-region</code> or <code>ispell-continue</code>.</li>
+</ul>
+<p>In the <code>ispell</code> interface, select a correction (<code>0..9</code>), skip (<code>SPC</code>) or update the dictionary (<code>a</code>ccept/<code>i</code>nsert).</p>
+<p>If using a GUI, <code>flyspell-popup</code> (available on MELPA) provides a convenient pop-up interface that I bound to <code>C-;</code> with:</p>
+<pre class="lisp"><code>(require &#39;flyspell)
+(define-key flyspell-mode-map (kbd &quot;C-;&quot;) &#39;flyspell-popup-correct)</code></pre>
 </div>
 <div id="thesaurus-and-synonyms" class="section level3">
 <h3>Thesaurus and synonyms</h3>
