@@ -288,6 +288,20 @@ I use the *american* dictionary by default:
 (setq ispell-local-dictionary "american")
 ~~~
 
+Most useful key binding (more at [Emacs Manual](https://www.gnu.org/software/emacs/manual/html_node/emacs/Spelling.html)):
+
+- `M-$` to trigger spell checking on a word (for example flagged by flyspell).
+- `M-x ispell-buffer` to launch spell checking. See also `ispell-region` or `ispell-continue`.
+
+In the `ispell` interface, select a correction (`0..9`), skip (`SPC`) or update the dictionary (`a`ccept/`i`nsert).
+
+If using a GUI, `flyspell-popup` (available on MELPA) provides a convenient pop-up interface that I bound to `C-;` with:
+
+~~~lisp
+(require 'flyspell)
+(define-key flyspell-mode-map (kbd "C-;") 'flyspell-popup-correct)
+~~~
+
 ### Thesaurus and synonyms
 
 I tested the `synosaurus` package a few times (available in MELPA).

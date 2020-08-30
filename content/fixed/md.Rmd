@@ -132,7 +132,7 @@ bibliography: [../../static/library.bib]
 link-citations: true
 ~~~
 
-I also use [a script to reduce the BibTeX file](https://github.com/jmonlong/Hippocamplus/tree/config/python/reduceBib) used (see [this post](/2018/11/17/speedup-blogwdown-hugo-large-bibliography/)).
+I also use [a script to reduce the BibTeX file](https://github.com/jmonlong/Hippocamplus/tree/config/python/reduceBib) used (see [this post](/2018/11/17/speedup-blogwdown-pandoc-large-bibliography/)).
 Otherwise, large BibTeX files or large author lists make the rendering extremely slow.
 
 ## R Markdown
