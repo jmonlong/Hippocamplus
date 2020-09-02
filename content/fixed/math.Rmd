@@ -7,7 +7,8 @@ output:
     toc: true
 ---
 
-All of this is mostly extracted from [Wikipedia](https://en.wikipedia.org). These notes are exactly fitted to my fragmented knowledge/memory, the purpose is to fill the gaps, not to fully review the concepts.
+All of this is mostly extracted from [Wikipedia](https://en.wikipedia.org). 
+These notes are exactly fitted to my fragmented knowledge/memory, the purpose is to fill the gaps or refresh my recollection, not to fully review the concepts.
 
 ## Probability distributions
 
@@ -141,8 +142,30 @@ Using both, we can compute the probability of a state given all the other observ
 > A greedy algorithm is an algorithmic paradigm that follows the problem solving heuristic of making the locally optimal choice at each stage with the hope of finding a global optimum.
 
 ### Bayesian vs Frequentist
+### FM-index
 
+[Wikipedia](https://en.wikipedia.org/wiki/FM-index)
 
+For an alphabet *A* and a sequence of size *S*, compute three objects:
+
+1. Burrows-Wheeler transform of the sequence
+    - Order each possible rotation of the sequence. 
+    - Save last column *L*.
+    - Use first column to compute the *C* table below
+    - Vector of size S (and alphabet A).
+2. *C* table
+    - Saves the position of each letter in *A* in the first column of the ordered rotations.
+    - Vector of size *|A|*.
+3. An occurrence table *Occ*
+    - Saves the number of times each letter appeared in *L* before a position *k*.
+    - Array of size *Sx|A|*
+
+To look for a kmer, iterate over the letters, starting from the end, to narrow the search range with something like
+
+- *s* = *C*[l] + *Occ*[l, s]
+- *e* = *C*[l] + *Occ*[l, e]
+
+To extract position in the original sequence we would use another index vector with this mapping and the final search range.
 
 ## Graph theory
 
