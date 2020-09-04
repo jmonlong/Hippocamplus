@@ -43,6 +43,7 @@ output:
 <p>I use RMarkdown.
 It creates a self-contained HTML document that looks nice enough and is easy to share.</p>
 <pre class="sh"><code>Rscript -e &#39;rmarkdown::render(&quot;document.md&quot;)&#39;</code></pre>
+<p>Note: In <a href="../emacs/#to-render-rmarkdown">Emacs</a>, I use a custom key binding to run this command on the current buffer</p>
 </div>
 <div id="converting-markdown-into-slides" class="section level2">
 <h2>Converting Markdown into slides</h2>
@@ -84,7 +85,7 @@ It creates a self-contained HTML document that looks nice enough and is easy to 
 <p><a href="https://github.com/rstudio/blogdown">blogdown</a> is a R package extending <a href="http://rmarkdown.rstudio.com/">R Markdown</a> to build <a href="https://gohugo.io/">Hugo</a> static websites.
 Hugo is easier to install than Jekyll and apparently faster. Most importantly blogdown makes it easier to write posts with R code like in a RMarkdown document.</p>
 <p>I still use GitHub Pages to deploy the website.
-GH Pages doesn’t support Hugo, so I build the website in a <code>docs</code> folder (<code>publishDir = "docs"</code> in <code>config.toml</code>) which I set up on the website settings to be the source of the static website.</p>
+GH Pages doesn’t support Hugo, so I build the website in a <code>docs</code> folder (<code>publishDir = &quot;docs&quot;</code> in <code>config.toml</code>) which I set up on the website settings to be the source of the static website.</p>
 <div id="themes-1" class="section level3">
 <h3>Themes</h3>
 <p>There are several themes <a href="https://themes.gohugo.io/">available</a>.

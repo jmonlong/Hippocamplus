@@ -23,6 +23,8 @@ It creates a self-contained HTML document that looks nice enough and is easy to 
 Rscript -e 'rmarkdown::render("document.md")'
 ~~~
 
+Note: In [Emacs](../emacs/#to-render-rmarkdown), I use a custom key binding to run this command on the current buffer
+
 ## Converting Markdown into slides
 
 I use RMarkdown or [MarkdownSlides](https://github.com/asanzdiego/markdownslides).

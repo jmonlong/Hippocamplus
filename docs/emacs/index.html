@@ -408,7 +408,7 @@ For example it can convert different units with <code>u c</code>, e.g. :</p>
 </div>
 <div id="melpa-package-repository" class="section level2">
 <h2>MELPA package repository</h2>
-<p>Usually packages are just <code>.el</code> files to download and add in the folder defined in <code>.emacs</code> (e.g. <code>(add-to-list 'load-path "~/.emacs.d/lisp/")</code>).
+<p>Usually packages are just <code>.el</code> files to download and add in the folder defined in <code>.emacs</code> (e.g. <code>(add-to-list 'load-path &quot;~/.emacs.d/lisp/&quot;)</code>).
 However, there is easier way: <a href="http://www.emacswiki.org/emacs/MELPA">MELPA</a> package manager!</p>
 <p>To install it, add to <code>.emacs</code>:</p>
 <pre class="lisp"><code>(require &#39;package)
@@ -483,17 +483,21 @@ For R + Markdown it means that we can edit the Markdown part in <em>markdown-mod
 <p>Some keybindings I set up but don’t end up using that much…</p>
 <div id="to-render-rmarkdown" class="section level4">
 <h4>To render RMarkdown</h4>
-<p>I <a href="https://stat.ethz.ch/pipermail/ess-help/2004-September/002092.html">tweaked</a> a function to run <code>rmarkdown::render</code> on the current buffer and I created a shortcut for it.</p>
+<p>I <a href="https://stat.ethz.ch/pipermail/ess-help/2004-September/002092.html">tweaked</a> a function to run <code>rmarkdown::render</code> on the current buffer and bound it to <code>C-c C-r</code>.</p>
 <p>In <code>.emacs</code>:</p>
 <pre class="lisp"><code>(defun renderRmd ()
   (interactive)
-  (save-excursion
+  (save-window-excursion
     (message &quot;Rendering %S&quot; (buffer-file-name))
-    (setq ess-command (format &quot;rmarkdown::render(%S)&quot; (buffer-file-name)))
-    (ess-execute ess-command &#39;buffer nil nil)))
+    (shell-command (format &quot;Rscript -e &#39;rmarkdown::render(%S)&#39;&quot; (buffer-file-name)))
+    (message &quot;Done&quot;)))
+(add-hook &#39;markdown-mode-hook
+          (lambda ()
+            (local-set-key (kbd &quot;C-c C-r&quot;) &#39;renderRmd)))
 (add-hook &#39;ess-mode-hook
           (lambda ()
-            (local-set-key (kbd &quot;C-c C-d C-r&quot;) &#39;renderRmd)))</code></pre>
+            (local-set-key (kbd &quot;C-c C-r&quot;) &#39;renderRmd)))</code></pre>
+<p>The key binding is active in markdown documents or R scripts (and so anywhere in a R-Markdown document).</p>
 </div>
 <div id="to-send-a-dev.off" class="section level4">
 <h4>To send a <code>dev.off()</code></h4>
