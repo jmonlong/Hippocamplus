@@ -233,21 +233,26 @@ Some keybindings I set up but don't end up using that much...
 
 #### To render RMarkdown
 
-I [tweaked](https://stat.ethz.ch/pipermail/ess-help/2004-September/002092.html) a function to run `rmarkdown::render` on the current buffer and I created a shortcut for it.
+I [tweaked](https://stat.ethz.ch/pipermail/ess-help/2004-September/002092.html) a function to run `rmarkdown::render` on the current buffer and bound it to `C-c C-r`.
 
 In `.emacs`:
 
 ~~~lisp
 (defun renderRmd ()
   (interactive)
-  (save-excursion
+  (save-window-excursion
     (message "Rendering %S" (buffer-file-name))
-    (setq ess-command (format "rmarkdown::render(%S)" (buffer-file-name)))
-    (ess-execute ess-command 'buffer nil nil)))
+    (shell-command (format "Rscript -e 'rmarkdown::render(%S)'" (buffer-file-name)))
+    (message "Done")))
+(add-hook 'markdown-mode-hook
+          (lambda ()
+            (local-set-key (kbd "C-c C-r") 'renderRmd)))
 (add-hook 'ess-mode-hook
           (lambda ()
-            (local-set-key (kbd "C-c C-d C-r") 'renderRmd)))
+            (local-set-key (kbd "C-c C-r") 'renderRmd)))
 ~~~
+
+The key binding is active in markdown documents or R scripts (and so anywhere in a R-Markdown document).
 
 #### To send a `dev.off()`
 
