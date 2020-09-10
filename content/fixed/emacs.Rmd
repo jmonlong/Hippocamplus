@@ -50,6 +50,7 @@ Some miscellaneous commands that could be useful:
 + Accents with `C-x 8` (`C-x 8 C-h` for list).
 + Shift a selected chunk with spaces: `C-x TAB` or `C-4 C-x TAB` to add a specific number of spaces (here 4).
 + To insert a tab: `C-q <tab>`
++ Go to line `M-g g`
 
 Regexp replace :
 

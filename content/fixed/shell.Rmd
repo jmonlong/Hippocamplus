@@ -117,6 +117,7 @@ find pdf -mtime -1 | xargs evince
 - Substitute pattern in string: `gsub('pattern', 'replacement', $4)`
 - Capture group in string regexp using `match($2, /xxx(.*)yyy/, a); print a[1]'`
 - Set output separator to tabs: `BEGIN{OFS="\t"}` (same idea for `FS`, `RS`, `ORS`)
+- [GNU Manual](https://www.gnu.org/software/gawk/manual/gawk.html)
 
 ### Perl one-liners
 
