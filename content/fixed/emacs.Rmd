@@ -233,7 +233,7 @@ Some keybindings I set up but don't end up using that much...
 
 #### To render RMarkdown
 
-I [tweaked](https://stat.ethz.ch/pipermail/ess-help/2004-September/002092.html) a function to run `rmarkdown::render` on the current buffer and bound it to `C-c C-r`.
+I [tweaked](https://stat.ethz.ch/pipermail/ess-help/2004-September/002092.html) a function to run `rmarkdown::render` on the current buffer and bound it to `C-c C-e`.
 
 In `.emacs`:
 
@@ -246,10 +246,10 @@ In `.emacs`:
     (message "Done")))
 (add-hook 'markdown-mode-hook
           (lambda ()
-            (local-set-key (kbd "C-c C-r") 'renderRmd)))
+            (local-set-key (kbd "C-c C-e") 'renderRmd)))
 (add-hook 'ess-mode-hook
           (lambda ()
-            (local-set-key (kbd "C-c C-r") 'renderRmd)))
+            (local-set-key (kbd "C-c C-e") 'renderRmd)))
 ~~~
 
 The key binding is active in markdown documents or R scripts (and so anywhere in a R-Markdown document).
