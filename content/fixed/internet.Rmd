@@ -7,6 +7,11 @@ output:
     toc: true
 ---
 
+## Misc tools
+
+- [https://www.diagrams.net/](https://www.diagrams.net/) to make cartoon and diagrams (used to be *draw.io*)
+- [MS Paint Online](https://jspaint.app/)
+
 ## DuckDuckGo
 
 [DuckDuckGo](https://duckduckgo.com/about) is a "search engine that doesn't track you". 
