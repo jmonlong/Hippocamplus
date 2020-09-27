@@ -1,0 +1,305 @@
+---
+layout: post
+title: Repeat-rich functional regions
+tags: cnv
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, fig.width=15)
+```
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(magrittr)
+library(GenomicRanges)
+library(data.table)
+library(knitr)
+library(tidyr)
+library(PopSV)
+library(ggrepel)
+library(topGO)
+library(org.Hs.eg.db)
+library(wordcloud)
+
+winsorF <- function(x, u=NULL){
+  if(is.null(u)) u = min(median(x, na.rm=TRUE)*3, quantile(x, .95, na.rm=TRUE))
+  if(any(x>u)) x[x>u] = u
+  x
+}
+repProp <- function(gr, rep.gr){
+  rep.gr = reduce(rep.gr)
+  ol = findOverlaps(gr, rep.gr)
+  olw = width(pintersect(gr[queryHits(ol)], rep.gr[subjectHits(ol)])) / width(gr)[queryHits(ol)]
+  olt = tapply(olw, queryHits(ol), sum)
+  repprop = rep(0, length(gr))
+  repprop[as.numeric(names(olt))] = as.numeric(olt)
+  repprop  
+}
+mapMean <- function(gr, map.gr){
+  ol = findOverlaps(gr, map.gr)
+  olt = tapply(map.gr$map[subjectHits(ol)], queryHits(ol), mean)
+  map = rep(NA, length(gr))
+  map[as.numeric(names(olt))] = as.numeric(olt)
+  map
+}
+```
+
+Most of the functional elements, such as protein-coding genes or regulatory regions, are located in unique regions.
+For decades repeats and repeat-rich regions in general have been considered junk DNA. 
+As a consequence of their high repeat content, these regions are more challenging to characterize due to their low-mappability for sequencing reads.
+Overall, it's fine because research likes to focus on the functional part of the genome.
+Although this is OK overall, there are more and more examples of variation in these low-mappability regions associated with diseases and some very important genes surrounded by repeats.
+
+Here, I would like to see if I can identify these functional regions that are within repeat-rich regions. 
+These would be regions that have been overlooked because of the technical challenges but might be important for a particular phenotype.
+
+
+## Data
+
+### Gene annotation
+
+From Gencode V19, I retrieve the gene body for protein-coding genes. 
+Maybe at some point I could add lincRNAs or miRNAs.
+
+```{r}
+if(!file.exists("genes-gencodeV19.RData")){
+    download.file("ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz", "gencode.v19.gtf.gz")
+    gtf = fread("gunzip -c gencode.v19.gtf.gz", showProgress = FALSE)
+    genes = gtf %>% as.data.frame %>% filter(V3=="gene") %>% dplyr::select(V1,V4,V5,V9)
+    colnames(genes) = c("chr","start","end","info")
+    genes$chr = factor(gsub("chr","",genes$chr), levels=c(1:22,"X","Y"))
+    genes = subset(genes, !is.na(chr))
+    genes$type = gsub(".*gene_type \"([^\"]+).*","\\1",genes$info)
+    genes$gene = gsub(".*gene_name \"([^\"]+).*","\\1",genes$info)
+    genes$info = NULL
+    exons = gtf %>% as.data.frame %>% filter(V3=="exon") %>% dplyr::select(V1,V4,V5,V9)
+    colnames(exons) = c("chr","start","end","info")
+    exons$chr = factor(gsub("chr","",exons$chr), levels=c(1:22,"X","Y"))
+    exons = subset(exons, !is.na(chr))
+    exons$type = gsub(".*gene_type \"([^\"]+).*","\\1",exons$info)
+    exons$gene = gsub(".*gene_name \"([^\"]+).*","\\1",exons$info)
+    exons$info = NULL
+    save(genes, exons, file="genes-gencodeV19.RData")
+} else {
+    load("genes-gencodeV19.RData")
+}
+genes.gr = genes %>% filter(type=="protein_coding", chr %in% 1:22) %>% group_by(gene, chr) %>% summarize(start=min(start), end=max(end)) %>% makeGRangesFromDataFrame(keep.extra.columns = TRUE)
+```
+
+In total there are `r length(genes.gr)` protein-coding genes.
+
+### Epigenetics marks
+
+I previously gathered histone marks and DNAse and classified them by tissue. 
+For this study I will focus on shared marks, i.e. marks seen in at least two tissues.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+if(!file.exists("epiTracks.RData")) download.file("https://dl.dropboxusercontent.com/s/8c412u1ug2lwrc2/epiTracks.RData?dl=0", "epiTracks.RData")
+load("epiTracks.RData")
+seqlevels(tracks.gr) = gsub("chr","",seqlevels(tracks.gr) )
+epi.gr = subset(tracks.gr, nb.tis>3) %>% reduce
+epi.gr$mark = 1:length(epi.gr)
+```
+
+### Mappability measure
+
+A mappability track was produced from the UCSC track. The raw file contains, for each base in the genome, an estimation of how likely for a read to be correctly mapped to this position. 
+
+Using a sliding-window approach, I compute the average mappability in regions of size 1 Kbp.
+This is a more manageable amount of data and still informative, especially when interested in the context of larger regions. I used a custom Perl script to efficiently parse the bedGraph-transformed original file and uploaded the result there: [https://dl.dropboxusercontent.com/s/i537zjs65dpw34n/map100mer-1kbp.bed.gz?dl=0](https://dl.dropboxusercontent.com/s/i537zjs65dpw34n/map100mer-1kbp.bed.gz?dl=0).
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+if(!file.exists("map100mer-1kbp.bed.gz")) download.file("https://dl.dropboxusercontent.com/s/i537zjs65dpw34n/map100mer-1kbp.bed.gz","map100mer-1kbp.bed.gz")
+map.df = as.data.frame(fread("gunzip -c map100mer-1kbp.bed.gz", showProgress = FALSE))
+colnames(map.df) = c("chr", "start", "end", "map")
+map.df %<>% mutate(chr=factor(gsub("chr","",chr), levels=c(1:22,"X","Y"))) %>% filter(!is.na(chr))
+map.gr = makeGRangesFromDataFrame(map.df, keep.extra.columns=TRUE)
+```
+
+
+### Centromere, telomeres and gaps
+
+The surroundings of centromere/telomere/gaps are usually repeat-rich and also technically challenging. I put different types of regions in this category:
+
+```{r}
+if(!file.exists("cytoBandIdeo.txt.gz")) download.file("http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/cytoBandIdeo.txt.gz","cytoBandIdeo.txt.gz")
+chr.band = read.table("cytoBandIdeo.txt.gz",sep="\t")
+colnames(chr.band)[1:3] = c("chr","start","end")
+if(!file.exists("gap-hg19.tsv.gz")) download.file("http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/gap.txt.gz","gap-hg19.tsv.gz")
+ct = read.table("gap-hg19.tsv.gz",sep="\t")
+ct = ct %>% dplyr::select(V2,V3,V4,V8)
+colnames(ct) =  c("chr","start","end", "type")
+ct = rbind(ct, chr.band %>% group_by(chr) %>% summarize(start=min(start),end=1e4) %>% mutate(type="telomere"))
+ct = rbind(ct, chr.band %>% group_by(chr) %>% summarize(start=max(end)-1e4,end=max(end)) %>% mutate(type="telomere"))
+centel.gr = ct %>% mutate(chr=gsub("chr","",chr)) %>% makeGRangesFromDataFrame(TRUE)
+centel.gr %>% as.data.frame %>% group_by(type) %>% summarize(n=n(), mean.size.kb=mean(end-start)/1e3, total.size.kb=sum(end-start)/1e3) %>% arrange(desc(n)) %>% arrange(desc(total.size.kb)) %>% kable(digits=1)
+```
+
+### RepeatMasker
+
+I'll use all the elements annotated by RepeatMasker to assess the repeat content of the regions of interest.
+
+```{r}
+if(!file.exists("rmsk.txt.gz")) download.file("http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/rmsk.txt.gz","rmsk.txt.gz")
+rm.df = as.data.frame(fread("gunzip -c rmsk.txt.gz", showProgress = FALSE, sel=c(6:8, 11:13)))
+colnames(rm.df) = c("chr","start","end","repName","repClass","repFamily")
+rm.df %<>% mutate(chr=gsub("chr","",chr)) %>% filter(chr %in% c(1:22, "X", "Y"))
+rm.gr = makeGRangesFromDataFrame(rm.df, keep.extra.columns=TRUE)
+sat.gr = subset(rm.gr, repClass=="Satellite") %>% reduce
+str.gr = subset(rm.gr, repClass=="Simple_repeat") %>% reduce
+lcomp.gr = subset(rm.gr, repClass=="Low_complexity") %>% reduce
+rm.gr = reduce(rm.gr)
+rm2.gr = reduce(c(sat.gr, str.gr, lcomp.gr))
+```
+
+### Segmental duplications
+
+Segmental duplications are also challenging, especially very recent/identical pairs.
+
+```{r}
+if(!file.exists("genomicSuperDups.txt.gz")) download.file("http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/genomicSuperDups.txt.gz", "genomicSuperDups.txt.gz")
+segdup = read.table("genomicSuperDups.txt.gz", as.is=TRUE)
+segdup = segdup[,c(2:4,27)]
+colnames(segdup) = c("chr", "start", "end", "fracMatch")
+segdup %<>% mutate(chr=gsub("chr","",chr)) %>% filter(chr %in% c(1:22, "X", "Y"))
+ggplot(segdup, aes(x=fracMatch)) + geom_histogram() + theme_bw() + geom_vline(xintercept=.99, linetype=2)
+sd.gr = segdup %>% filter(fracMatch>=.99) %>% makeGRangesFromDataFrame(keep.extra.columns=TRUE) %>% reduce
+```
+
+
+## Methods
+
+### GO analysis
+
+GO analysis on repeat-rich genes. I perform a Fisher test. For both, I use the *elim* algorithm which accounts for the GO topology. I report all the GO terms with p-value < 0.01.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+GOanalysis <- function(genes, map, th, ontology="BP"){
+    all.genes = map
+    names(all.genes) = genes
+    sigfun <- function(x) x<th
+    dump = capture.output({GOdata = new("topGOdata",
+        ontology = ontology,
+        allGenes = all.genes,
+        geneSel = sigfun,
+        description = "test",
+        annot = annFUN.org,
+        mapping = "org.Hs.eg.db",
+        ID="SYMBOL")})
+    dump = capture.output({test.fisher = runTest(GOdata,algorithm = "elim", statistic = "fisher")})
+    allRes <- GenTable(GOdata, classic = test.fisher, orderBy = "classic", topNodes=length(which(score(test.fisher)<.01)))
+    go.terms = Term(allRes$GO.ID)
+    go.words = go.terms %>% strsplit(" ") %>% unlist
+    return(list(table=allRes, words=go.words, terms=go.terms))
+}
+```
+
+**Soon...*
+
+## Results
+
+### Flanking regions
+
+#### Genes
+
+```{r}
+genes.fl = c(flank(genes.gr, 5e4), flank(genes.gr, 1e4, start=FALSE))
+
+genes.fl$rm.prop = repProp(genes.fl, rm.gr)
+genes.fl$rm2.prop = repProp(genes.fl, rm2.gr)
+genes.fl$sat.prop = repProp(genes.fl, sat.gr)
+genes.fl$str.prop = repProp(genes.fl, str.gr)
+genes.fl$lcomp.prop = repProp(genes.fl, lcomp.gr)
+genes.fl$sd.prop = repProp(genes.fl, sd.gr)
+genes.fl$ctg.prop = repProp(genes.fl, centel.gr)
+genes.fl$map = mapMean(genes.fl, map.gr)
+
+gfl.df = genes.fl %>% as.data.frame %>% group_by(gene) %>% summarize(rm.prop=mean(rm.prop),rm2.prop=mean(rm2.prop),sat.prop=mean(sat.prop),str.prop=mean(str.prop),lcomp.prop=mean(lcomp.prop), map=mean(map), sd.prop=mean(sd.prop), ctg.prop=mean(ctg.prop))
+ggplot(gfl.df, aes(x=rm.prop)) + geom_histogram() + theme_bw()
+ggplot(gfl.df, aes(x=rm2.prop)) + geom_histogram() + theme_bw()
+ggplot(gfl.df, aes(x=sat.prop)) + geom_histogram() + theme_bw()
+ggplot(gfl.df, aes(x=str.prop)) + geom_histogram() + theme_bw()
+ggplot(gfl.df, aes(x=lcomp.prop)) + geom_histogram() + theme_bw()
+ggplot(gfl.df, aes(x=sd.prop)) + geom_histogram() + theme_bw()
+ggplot(gfl.df, aes(x=ctg.prop)) + geom_histogram() + theme_bw()
+ggplot(gfl.df, aes(x=map)) + geom_histogram() + theme_bw()
+
+
+genes.fl %>% as.data.frame %>% ggplot(aes(x=map, y=rm2.prop)) + geom_point(alpha=.6) + theme_bw()
+
+ggplot(gfl.df, aes(x=map, y=rm.prop)) + geom_point(alpha=.6) + theme_bw()
+ggplot(gfl.df, aes(x=map, y=rm2.prop)) + geom_point(alpha=.6) + theme_bw()
+ggplot(gfl.df, aes(x=map, y=sd.prop)) + geom_point(alpha=.6) + theme_bw()
+ggplot(gfl.df, aes(x=map, y=ctg.prop)) + geom_point(alpha=.6) + theme_bw()
+```
+
+I'll look for two profiles:
+
++ Functional regions surrounded by low-mappability regions.
++ Functional regions with at least one low-mappability flank.
+
+```{r}
+genes.fl = c(flank(genes.gr, 5e4), flank(genes.gr, 1e4, start=FALSE))
+genes.fl$map = mapMean(genes.fl, map.gr)
+gfl.df = genes.fl %>% as.data.frame %>% group_by(gene) %>% summarize(map1=max(map), map2=min(map))
+map1.th = median(gfl.df$map1) - 10*mad(gfl.df$map1)
+map2.th = median(gfl.df$map2) - 10*mad(gfl.df$map2)
+map1.th = quantile(gfl.df$map1, .05)
+map2.th = quantile(gfl.df$map2, .05)
+map.th = mean(c(map1.th, map2.th))
+gfl.df %<>% mutate(rep=ifelse(map2<map.th, "flank", "no"), rep=ifelse(map1<map.th, "both", rep))
+ggplot(gfl.df, aes(x=map1, fill=rep)) + geom_histogram() + theme_bw() + geom_vline(xintercept=map.th)
+ggplot(gfl.df, aes(x=map2, fill=rep)) + geom_histogram() + theme_bw() + geom_vline(xintercept=map.th)
+ggplot(gfl.df, aes(x=map1, y=map2, colour=rep)) + geom_point(alpha=.5) + theme_bw() + geom_vline(xintercept=map.th) + geom_hline(yintercept=map.th)
+gfl.df %>% group_by(rep) %>% summarize(gene=n()) %>% kable
+```
+
+What kind of genes are these ?
+
+```{r}
+gfl.df %>% filter(rep=="both") %>% mutate(geneFam=gsub("[0-9]+.*", "", gene)) %>% .$geneFam %>% wordcloud
+gboth.go = GOanalysis(gfl.df$gene, gfl.df$map1, th=map.th, ontology="BP")
+gboth.go$table %>% head %>% kable
+wordcloud(gboth.go$words, min.freq=1, scale=c(5,.5))
+gflank.go = GOanalysis(gfl.df$gene, gfl.df$map2, th=map.th, ontology="BP")
+gflank.go$table %>% head %>% kable
+wordcloud(gflank.go$words, min.freq=1, scale=c(5,.5))
+```
+
+Finally let's compare with the genes that I found highly enriched in CNVs in normal genomes.
+
+```{r}
+load("SVgeneMulti.RData")
+gene.mult %>% filter(set=="popsv.all2") %>% ggplot(aes(x=cnv, y=geneSize)) + geom_point(alpha=.6) + theme_bw()
+gfl.df = gene.mult %>% filter(set=="popsv.all2") %>% ungroup %>% dplyr::select(gene, resid, cnv, geneSize) %>% as.data.frame %>% merge(gfl.df)
+ggplot(gfl.df, aes(x=cnv, y=geneSize, colour=rep)) + geom_point(alpha=.6) + theme_bw()
+ggplot(gfl.df, aes(x=map1, y=resid)) + geom_point(alpha=.5) + theme_bw()
+ggplot(gfl.df, aes(x=map2, y=resid)) + geom_point(alpha=.5) + theme_bw()
+gfl.df%>% ggplot(aes(x=resid, fill=rep)) + geom_histogram() + theme_bw() + facet_grid(rep~., scales="free")
+```
+
+
+#### Epigenetic marks
+
+```{r}
+epi.fl = c(flank(epi.gr, 5e4), flank(epi.gr, 1e4, start=FALSE))
+
+epi.fl$map = mapMean(epi.fl, map.gr)
+efl.df = epi.fl %>% as.data.frame %>% group_by(mark) %>% summarize(map1=max(map), map2=min(map))
+map1.th = quantile(efl.df$map1, .05, na.rm=TRUE)
+map2.th = quantile(efl.df$map2, .05, na.rm=TRUE)
+map.th = mean(c(map1.th, map2.th))
+efl.df %<>% mutate(rep=ifelse(map2<map.th, "flank", "no"), rep=ifelse(map1<map.th, "both", rep))
+ggplot(efl.df, aes(x=map1, fill=rep)) + geom_histogram() + theme_bw() + geom_vline(xintercept=map.th)
+ggplot(efl.df, aes(x=map2, fill=rep)) + geom_histogram() + theme_bw() + geom_vline(xintercept=map.th)
+ggplot(efl.df, aes(x=map1, y=map2, colour=rep)) + geom_point(alpha=.5) + theme_bw() + geom_vline(xintercept=map.th) + geom_hline(yintercept=map.th)
+efl.df %>% group_by(rep) %>% summarize(mark=n()) %>% kable
+```
+
+
+## Conclusion
+
+## To go further
+
+

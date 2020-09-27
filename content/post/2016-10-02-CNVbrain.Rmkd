@@ -1,0 +1,318 @@
+---
+layout: post
+title: SV in healthy individuals and brain
+tags: cnv
+---
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(wordcloud)
+library(ggplot2)
+library(dplyr)
+library(magrittr)
+library(GenomicRanges)
+library(data.table)
+library(knitr)
+library(tidyr)
+library(PopSV)
+library(topGO)
+library(org.Hs.eg.db)
+
+bins.df = fragment.genome.hg19(5e3)
+bins.gr = makeGRangesFromDataFrame(bins.df)
+brain.keywords = "synap|brain|neuro"
+
+winsorF <- function(x, u=NULL){
+  if(is.null(u)) u = min(median(x, na.rm=TRUE)*3, quantile(x, .95, na.rm=TRUE))
+  if(any(x>u)) x[x>u] = u
+  x
+}
+
+reduceDf <- function(df, stitch.dist=0){
+  df %>% makeGRangesFromDataFrame(keep.extra.columns=TRUE) %>% reduce(min.gapwidth=stitch.dist) %>% as.data.frame %>% mutate(chr=seqnames) %>% dplyr::select(chr, start, end)
+}
+
+testGeneMulti <- function(start, end, cnv.d.ecdf){
+  if(length(start)==1){
+    return(runif(1))
+  } else {
+      d = start[-1] - end[-length(end)]
+      d = ifelse(d<0, 0, d)
+    return(prod(cnv.d.ecdf(d)))
+  }
+}
+
+regTile <- function(bins.gr, reg.l, reg.col, range.gr=NULL){
+    reg.l = lapply(reg.l, function(gr){
+                       if(is.data.frame(gr)) gr = makeGRangesFromDataFrame(gr, keep.extra.columns=TRUE)
+                       return(gr)
+                   })
+    if(!is.null(range.gr)){
+        reg.l = lapply(reg.l, subsetByOverlaps, range.gr)
+    }
+    bins.gr$pos = (start(bins.gr) + end(bins.gr))/2
+    ol.df = lapply(1:length(reg.l), function(ii){
+               gr = reg.l[[ii]]
+               ol.df = as.data.frame(findOverlaps(bins.gr, gr))
+               ol.df %<>% mutate(label=mcols(gr)[, reg.col[ii]][subjectHits], pos=bins.gr$pos[queryHits]) %>% dplyr::select(queryHits, label, pos) %>% unique %>% mutate(mark=names(reg.l)[ii])
+           })
+    ol.df = do.call(rbind, ol.df)
+    ol.df$label = factor(ol.df$label, levels=unique(ol.df$label[order(ol.df$pos)]))
+    ol.df
+}
+
+multiHitsGenesV1 <- function(res.df, gene.gr, sample.reduce=TRUE){
+    graphs.l = list()
+    if(sample.reduce){
+        ## 100 kbp stich per sample
+        cnv.df = res.df %>% group_by(sample) %>% do(reduceDf(., 1e5))
+    } else {
+        cnv.df = res.df
+    }
+    ## 2-bins stitch on the full catalog
+    bin.size = 5e3
+    cnv.df %<>% reduceDf(., 2*bin.size)
+    ## Distribution of distance to nearest CNVs
+    cnv.d = cnv.df %>% group_by(chr) %>% arrange(start) %>% do(data.frame(d = .$start[-1] - .$end[-nrow(.)]))
+    cnv.d.ecdf = ecdf(cnv.d$d)
+    graphs.l$d.ecdf.log = ggplot(cnv.d, aes(x=d)) + stat_ecdf() + theme_bw() + scale_x_log10()
+    graphs.l$d.ecdf = ggplot(cnv.d, aes(x=winsorF(d, 1e5))) + stat_ecdf() + theme_bw()
+    ## Gene-centric test
+    cnv.gr = cnv.df %>% makeGRangesFromDataFrame
+    ol = as.data.frame(findOverlaps(gene.gr, cnv.gr))
+    ol = cbind(ol, cnv.df[ol$subjectHits,])
+    ol$gene=gene.gr$gene[ol$queryHits]
+    gene.mult = ol %>% group_by(gene) %>% filter(!duplicated(subjectHits)) %>% arrange(chr, start) %>% summarize(cnv=n(), pv=testGeneMulti(start,end, cnv.d.ecdf))
+    gene.mult %<>% mutate(qv=p.adjust(pv, method="fdr"))
+    graphs.l$pv = ggplot(gene.mult, aes(x=pv)) + geom_histogram()
+    return(list(graphs=graphs.l, gene.mult=gene.mult, cnv.df=cnv.df))
+}
+```
+
+## Data
+
+### SV catalogs
+
+I have already gathered SVs from several public studies. Here is an overview:
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+load("SVdatabase.RData")
+mcols(svs.gr) %>% as.data.frame %>% group_by(project, type) %>% summarize(sv=n()) %>% ggplot(aes(x=reorder(project, sv, sum), fill=type, y=sv)) + geom_bar(stat="identity") + theme_bw() + coord_flip() + scale_fill_brewer(palette="Set1") + xlab("project")
+svs.gr$size = width(svs.gr)
+mcols(svs.gr) %>% as.data.frame %>% group_by(project, type) %>% summarize(mb=sum(size/1e6)) %>% ggplot(aes(x=reorder(project, mb, sum), fill=type, y=mb)) + geom_bar(stat="identity") + theme_bw() + coord_flip() + scale_fill_brewer(palette="Set1") + xlab("project") + ylab("affected genome (Mb)")
+```
+
+### Gene annotation
+
+From Gencode V19, I retrieve the gene body and exons for protein-coding genes.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+if(!file.exists("genes-gencodeV19.RData")){
+    download.file("ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz", "gencode.v19.gtf.gz")
+    gtf = fread("gunzip -c gencode.v19.gtf.gz", showProgress = FALSE)
+    genes = gtf %>% as.data.frame %>% filter(V3=="gene") %>% dplyr::select(V1,V4,V5,V9)
+    colnames(genes) = c("chr","start","end","info")
+    genes$chr = factor(gsub("chr","",genes$chr), levels=c(1:22,"X","Y"))
+    genes = subset(genes, !is.na(chr))
+    genes$type = gsub(".*gene_type \"([^\"]+).*","\\1",genes$info)
+    genes$gene = gsub(".*gene_name \"([^\"]+).*","\\1",genes$info)
+    genes$info = NULL
+    exons = gtf %>% as.data.frame %>% filter(V3=="exon") %>% dplyr::select(V1,V4,V5,V9)
+    colnames(exons) = c("chr","start","end","info")
+    exons$chr = factor(gsub("chr","",exons$chr), levels=c(1:22,"X","Y"))
+    exons = subset(exons, !is.na(chr))
+    exons$type = gsub(".*gene_type \"([^\"]+).*","\\1",exons$info)
+    exons$gene = gsub(".*gene_name \"([^\"]+).*","\\1",exons$info)
+    exons$info = NULL
+    save(genes, exons, file="genes-gencodeV19.RData")
+} else {
+    load("genes-gencodeV19.RData")
+}
+genes.gr = subset(genes, type=="protein_coding") %>% group_by(gene, chr) %>% summarize(start=min(start), end=max(end)) %>% makeGRangesFromDataFrame(keep.extra.columns = TRUE)
+exons.gr = subset(exons, type=="protein_coding") %>% makeGRangesFromDataFrame(keep.extra.columns = TRUE)
+```
+
+In total there are `r length(genes.gr)` genes and `r length(exons.gr)` exons.
+
+## Centromere, telomeres and gaps
+
+I use this annotation only to draw control regions that fit better the CNV distribution. Instead of drawing regions randomly in the genome I usually choose to force the same amount of overlap with centromere/telomere/gaps. That way I don't get too many calls in these regions.
+
+I put different types of regions in this category:
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+if(!file.exists("cytoBandIdeo.txt.gz")) download.file("http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/cytoBandIdeo.txt.gz","cytoBandIdeo.txt.gz")
+chr.band = read.table("cytoBandIdeo.txt.gz",sep="\t")
+colnames(chr.band)[1:3] = c("chr","start","end")
+if(!file.exists("gap-hg19.tsv.gz")) download.file("http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/gap.txt.gz","gap-hg19.tsv.gz")
+ct = read.table("gap-hg19.tsv.gz",sep="\t")
+ct = ct %>% dplyr::select(V2,V3,V4,V8)
+colnames(ct) =  c("chr","start","end", "type")
+ct = rbind(ct, chr.band %>% group_by(chr) %>% summarize(start=min(start),end=1e4) %>% mutate(type="telomere"))
+ct = rbind(ct, chr.band %>% group_by(chr) %>% summarize(start=max(end)-1e4,end=max(end)) %>% mutate(type="telomere"))
+centel.gr = ct %>% mutate(chr=gsub("chr","",chr)) %>% makeGRangesFromDataFrame(TRUE)
+centel.gr %>% as.data.frame %>% group_by(type) %>% summarize(n=n(), mean.size.kb=mean(end-start)/1e3, total.size.kb=sum(end-start)/1e3) %>% arrange(desc(n)) %>% arrange(desc(total.size.kb)) %>% kable(digits=1)
+```
+
+### Epigenetic marks across tissues
+
+I previously gathered histone marks and DNAse and classified them by tissue. I differentiate tissue-specific marks (seen in only one tissue) to shared marks (at least two tissues).
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+if(!file.exists("epiTracks.RData")) download.file("https://dl.dropboxusercontent.com/s/8c412u1ug2lwrc2/epiTracks.RData?dl=0", "epiTracks.RData")
+load("epiTracks.RData")
+seqlevels(tracks.gr) = gsub("chr","",seqlevels(tracks.gr) )
+tracks.shared = subset(tracks.gr, nb.tis>1)
+tracks.shared$label = paste0("shared-", tracks.shared$mark)
+tracks.spec = subset(tracks.gr, nb.tis==1)
+tracks.spec$label = paste0(tracks.spec$tissue, "-", tracks.spec$mark)
+tracks.grl = c(tracks.spec, tracks.shared)
+tracks.grl = split(tracks.grl, tracks.grl$label)
+tracks.grl = lapply(tracks.grl, reduce)
+```
+
+## Methods
+
+### Excess of SV in the gene body
+
+I use the empirical distribution of the distance between two consecutive SVs to compute the probability of observing X number of SVs in a particular gene. This approach integrates the size of the gene body and the number of SVs hitting it.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+tgp = subset(svs.gr, project=="1KGP")
+tgp.mhg1 = multiHitsGenesV1(as.data.frame(tgp), genes.gr, sample.reduce=FALSE)
+tgp.mhg1$graphs$d.ecdf.log
+tgp.mhg1$graphs$d.ecdf
+tgp.mhg1$graphs$pv
+```
+
+### GO analysis
+
+GO analysis on genes with FDR < 1%. I perform a Fisher test and a Kolmogorov-Smirnov test. For both, I use the *elim* algorithm which accounts for the GO topology. I report all the GO terms with KS p-value < 0.01.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+GOanalysis <- function(gene.mult){
+    all.genes = gene.mult$qv
+    names(all.genes) = gene.mult$gene
+    sigfun <- function(x) x < .01
+    dump = capture.output({GOdata = new("topGOdata",
+        ontology = "BP",
+        allGenes = all.genes,
+        geneSel = sigfun,
+        description = "test",
+        annot = annFUN.org,
+        mapping = "org.Hs.eg.db",
+        ID="SYMBOL")})
+    dump = capture.output({test.fisher = runTest(GOdata,algorithm = "elim", statistic = "fisher")})
+    dump = capture.output({test.ks = runTest(GOdata,algorithm = "elim", statistic = "ks")})
+    allRes <- GenTable(GOdata, classic = test.fisher, KS = test.ks, orderBy = "KS", ranksOf = "classic", topNodes=length(which(score(test.ks)<.01)))
+    go.terms = Term(allRes$GO.ID)
+    go.words = go.terms %>% strsplit(" ") %>% unlist
+    return(list(table=allRes, words=go.words, terms=go.terms))
+}
+```
+
+### Enrichment in epigenetics marks
+
+I compute the number and proportion of SVs that overlap a type (mark/tissue) epigenetic mark. The same is done for control regions, i.e. same size distribution as the SVs and same overlap with centromere/telomere/gaps. The fold-enrichment is the proportion of SVs overlapping the mark divided by the expected proportion (control regions).
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+enrMark <- function(cnv.df, feat.grl, nb.rep=10, nb.cores=1){
+    enr.feat = mclapply(1:nb.rep, function(rr){
+                            cat.all = cnv.df %>% mutate(control=FALSE) %>% makeGRangesFromDataFrame(keep.extra.columns=TRUE)
+                            cat.null = draw.controls(cat.all, list(centel=centel.gr), nb.cores=1)
+                            cat.null$control = TRUE
+                            cat.all = c(cat.all, cat.null)
+                            res = lapply(1:length(feat.grl), function(ii){
+                                             cat.all$ol = overlapsAny(cat.all, feat.grl[[ii]])
+                                             mcols(cat.all) %>% as.data.frame %>% group_by(control) %>% summarize(nb=sum(ol), prop=(1+nb)/(1+n())) %>% mutate(feat=names(feat.grl)[ii], rep=rr)
+                                         })
+                            res = do.call(rbind, res)
+                        }, mc.cores=nb.cores)
+    enr.feat = do.call(rbind, enr.feat)
+    enr.sum = enr.feat %>% group_by(rep, feat) %>% summarize(nb=nb[!control], enr=prop[!control]/prop[control], prop=prop[!control]) %>% mutate(tissue=gsub("-.*","", feat), mark=gsub(".*-","", feat))
+    gp = ggplot(enr.sum, aes(x=reorder(mark, enr, mean), fill=tissue, y=enr)) + geom_boxplot() + theme_bw() + geom_hline(yintercept=1, linetype=2) + ylab("fold-enrichment") + xlab("")
+    return(list(df=enr.sum, graph=gp))
+}
+```
+
+## QC
+
+Check that:
+
++ It's not only the largest genes with significant excess of SVs.
+
+## Results
+
+### 1000 Genomes Project
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+tgp = subset(svs.gr, project=="1KGP")
+tgp.mhg1 = multiHitsGenesV1(as.data.frame(tgp), genes.gr, sample.reduce=FALSE)
+tgp.mhg1$gene.mult %>% arrange(pv) %>% head(10) %>% kable(digits=Inf)
+tgp.go = GOanalysis(tgp.mhg1$gene.mult)
+wordcloud(tgp.go$words, min.freq=1, scale=c(5,.5))
+tgp.go$table[grep(brain.keywords, tgp.go$term),] %>% kable
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
+tgp.mark = enrMark(tgp.mhg1$cnv.df, tracks.grl, nb.rep=20)
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+tgp.mark$graph
+```
+
+
+### GoNL
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+gonl = subset(svs.gr, project=="GoNL")
+gonl.mhg1 = multiHitsGenesV1(as.data.frame(gonl), genes.gr, sample.reduce=FALSE)
+gonl.mhg1$gene.mult %>% arrange(pv) %>% head(10) %>% kable(digits=Inf)
+gonl.go = GOanalysis(gonl.mhg1$gene.mult)
+wordcloud(gonl.go$words, min.freq=1, scale=c(5,.5))
+gonl.go$table[grep(brain.keywords, gonl.go$term),] %>% kable
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
+gonl.mark = enrMark(gonl.mhg1$cnv.df, tracks.grl, nb.rep=20)
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+gonl.mark$graph
+```
+
+### PopSV
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+popsv = subset(svs.gr, project=="PopSV")
+popsv.mhg1 = multiHitsGenesV1(as.data.frame(popsv), genes.gr, sample.reduce=FALSE)
+popsv.mhg1$gene.mult %>% arrange(pv) %>% head(10) %>% kable(digits=Inf)
+popsv.go = GOanalysis(popsv.mhg1$gene.mult)
+wordcloud(popsv.go$words, min.freq=1, scale=c(5,.5))
+popsv.go$table[grep(brain.keywords, popsv.go$term),] %>% kable
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
+popsv.mark = enrMark(popsv.mhg1$cnv.df, tracks.grl, nb.rep=20)
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+popsv.mark$graph
+```
+
+## Example
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+tgp.mhg1$cnv.df %<>% mutate(sample=1:n())
+top.gene.mult = genes.gr %>% as.data.frame %>% merge(tgp.mhg1$gene.mult) %>% arrange(qv) %>% head %>% makeGRangesFromDataFrame(keep.extra.columns=TRUE)
+regTile(bins.gr, list(cnv=tgp.mhg1$cnv.df, exon=exons.gr), c("sample","gene"), range.gr=top.gene.mult[1]) %>% ggplot(aes(x=pos,y=label, fill=mark)) + geom_tile() + theme(axis.text.x=element_text(angle=45, hjust=1)) + xlab("position") + ylab("sample") + facet_grid(mark~., scales="free", space="free") + theme_bw() + ylab("")
+```
+
+## To go further
+
++ What types of SV create the pattern ?
++ What about the SV frequency ?
++ Is it population specific ?
++ Find list of neuro genes.
++ Check if genes for same GO term are in not in genomic clusters.
++ Compare genes found by different projects. Always the same genes ?

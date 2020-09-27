@@ -288,3 +288,63 @@ Another way to check for problems is to look at the *emb* column of `pdffonts ma
 
 On Ubuntu, I digitally add signatures using [Xournal](http://xournal.sourceforge.net/).
 It's ugly but the output PDF is left unchanged and it's easy to place the signature (from a .png file for example) and export to PDF.
+
+#### Remove watermark
+
+Some articles have diagonal watermarks behind the text.
+It makes it more difficult to select and copy text. 
+Personally, it's annoying when I want to highlight/annotate a PDF.
+
+Sometimes it's as easy as uncompressing the PDF and replacing the text of the watermark.
+From [StackExchange](https://superuser.com/questions/448519/how-to-remove-watermark-from-pdf-using-pdftk):
+
+```
+pdftk original.pdf output uncompressed.pdf uncompress 
+sed -e "s/watermarktextstring/ /" uncompressed.pdf > unwatermarked.pdf
+pdftk unwatermarked.pdf output fixed.pdf compress
+```
+
+Sometimes, the watermark text is not there in the PDF (e.g. the letters are split or the font uses unicodes or something).
+That's my experience with Nature papers with the annoyingly big "ACCELERATED ARTICLE PREVIEW" watermark.
+In this situation, I had to look at the uncompress PDF (e.g. `cat uncompress.pdf | less`) to guess the block with the watermark and then mess it up (e.g. its text matrix field Tm):
+
+```
+sed -e "s/33.94110107 33.94110107 -33.94110107 33.94110107 5.8685999 122.48609924 Tm/0 0 0 0 0 0 Tm/g" < uncompress.pdf > unwatermarked.pdf
+```
+
+for a block that looked like:
+
+```
+...
+BT
+0 0 0 rg
+/GS2 gs
+/C2_1 1 Tf
+0 Tc
+0 Tw
+33.94110107 33.94110107 -33.94110107 33.94110107 5.8685999 122.48609924 Tm
+(^@$)Tj
+.695 0 Td
+(^@&)Tj
+.722 0 Td
+(^@&)Tj
+.695 0 Td
+(^@\()Tj
+.61199998 0 Td
+(^@/)Tj
+.61199998 0 Td
+(^@\()Tj
+.695 0 Td
+(^@5)Tj
+.695 0 Td
+(^@$)Tj
+.639 0 Td
+(^@7)Tj
+.639 0 Td
+(^@\()Tj
+.695 0 Td
+(^@')Tj
+.361 -.85799998 Td
+(^@^C)Tj
+...
+```

@@ -1,0 +1,121 @@
+---
+layout: post
+title: Enhancer map
+tags: non-coding
+---
+
+```{r include=FALSE}
+knitr::opts_chunk$set(fig.width=15, echo=FALSE, message=FALSE, warning=FALSE)
+```
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(magrittr)
+library(GenomicRanges)
+library(data.table)
+library(knitr)
+library(tidyr)
+RECOMPUTE=FALSE
+```
+
+A lot of genomic variants are non-coding which makes their interpretation difficult.
+What is their impact ? Which genes might they disrupt ? Or maybe involving non-coding RNAs ?
+
+There is not on really good enhancer database but some information could be used as proxy.
+
+Here I use eQTLs and DNase-to-promoter **to link non-coding regions to the gene** they are most likely associated with.
+
+Eventually, I might try to gather (ultra)-conserved regions or regions enriched in non-coding RNA. Maybe integrate other scores (CADD ?). This would help **to assess the impact** of a variant.
+
+## GTEx eQTLs
+
+I downloaded GTEx eQTLs (v6p) from the [GTEx Portal](http://gtexportal.org/home/datasets).
+It requires registration (quick and free).
+I downloaded `GTEx_Analysis_v6p_eQTL.tar` tar file with *eGene and significant snp-gene associations based on permutations*.
+
+```{r gtex}
+if(!RECOMPUTE & file.exists("enhancerMap.RData")){
+    load("enhancerMap.RData")
+} else {
+    if(file.exists("GTEx_Analysis_v6p_eQTL.tar")){
+        gtex.f = untar("GTEx_Analysis_v6p_eQTL.tar", list=TRUE)
+        gtex.f = grep("snpgene_pairs", gtex.f, value=TRUE)
+        eqtl = lapply(gtex.f, function(fn){
+                          tissue = gsub(".*/(.*)_Analysis.*", "\\1", fn)
+                          untar("GTEx_Analysis_v6p_eQTL.tar", fn)
+                          eqtl = fread(paste0("gunzip -c ", fn))
+                          file.remove(fn)
+                          eqtl = as.data.frame(eqtl)
+                          eqtl %>% mutate(chr=gsub("_.*","",variant_id), start=gsub(".*_([0-9]+)_.*","\\1", variant_id), start=as.numeric(start), end=start+1, score=-log10(pval_beta)) %>% select(chr, start, end, gene_id, score) %>% mutate(tissue=tissue) %>% makeGRangesFromDataFrame(keep.extra.columns=TRUE)
+                      })
+        eqtl = do.call(c, eqtl)
+        eqtl %<>% as.data.frame %>% group_by(seqnames, start, end, gene_id) %>% summarize(score=mean(score), nb.tis=n(), tissue=paste(tissue, collapse=",")) %>% makeGRangesFromDataFrame(keep.extra.columns=TRUE)
+    } else {
+        stop("Download GTEx_Analysis_v6p_eQTL.tar from the GTEx portal.")
+    }
+}
+```
+
+### Number of tissues
+
+```{r gtextis}
+eqtl %>% mcols %>% as.data.frame %>% ggplot(aes(x=nb.tis)) + geom_histogram() + theme_bw() + ylab("eQTL") + xlab("tissue")
+eqtl %>% mcols %>% as.data.frame %>% summarize(mean=mean(nb.tis), median=median(nb.tis), max=max(nb.tis)) %>% kable(digits=1)
+```
+
+### P-values
+
+```{r gtexpv}
+eqtl %>% mcols %>% as.data.frame %>% ggplot(aes(x=score)) + geom_histogram() + theme_bw() + ylab("eQTL") + xlab("-log10(P-value)")
+eqtl %>% mcols %>% as.data.frame %>% summarize(mean=mean(score), median=median(score)) %>% kable(digits=2)
+```
+
+### Tissue-specific eQTLs
+
+```{r gtexspec}
+eqtl %>% mcols %>% as.data.frame %>% filter(nb.tis==1) %>% group_by(tissue) %>% summarize(n=n()) %>% ggplot(aes(x=reorder(tissue, n), y=n)) + geom_bar(stat="identity") + theme_bw() + xlab("") + ylab("specific eQTL") + theme(axis.text.x=element_text(angle=90,vjust=.5, hjust=1))
+```
+
+## DNase-to-promoter
+
+From Maurano et al ([Science 2012](http://www.sciencemag.org/content/337/6099/1190.full)), a distal hypersensitive site is linked to a promoter site if their presence are correlated across different cell types.
+All the correlated pairs of DNase sites are available [here](http://www.uwencode.org/proj/Science_Maurano_Humbert_et_al/data/genomewideCorrs_above0.7_promoterPlusMinus500kb_withGeneNames_35celltypeCategories.bed8.gz).
+
+```{r dnase}
+if(!file.exists("genomewideCorrs_above0.7_promoterPlusMinus500kb_withGeneNames_35celltypeCategories.bed8.gz")) download.file("http://www.uwencode.org/proj/Science_Maurano_Humbert_et_al/data/genomewideCorrs_above0.7_promoterPlusMinus500kb_withGeneNames_35celltypeCategories.bed8.gz", "genomewideCorrs_above0.7_promoterPlusMinus500kb_withGeneNames_35celltypeCategories.bed8.gz")
+dnaseMap.all = read.table("genomewideCorrs_above0.7_promoterPlusMinus500kb_withGeneNames_35celltypeCategories.bed8.gz", as.is=TRUE)
+dnaseMap = dnaseMap.all[,4:8]
+colnames(dnaseMap) = c("gene", "chr","start","end","score")
+dnaseMap = makeGRangesFromDataFrame(dnaseMap, keep.extra.columns=TRUE)
+```
+
+### Number of DNase-to-promoter per gene
+
+```{r dnasegene}
+dnasegene = dnaseMap %>% mcols %>% as.data.frame %>% group_by(gene) %>% summarize(n=n())
+ggplot(dnasegene, aes(x=n)) + geom_histogram() + theme_bw() + xlab("DNase-to-promoter") + ylab("gene") + geom_vline(xintercept=median(dnasegene$n), linetype=2)
+dnasegene %>% summarize(mean=mean(n), median=median(n), max=max(n)) %>% kable(digits=1)
+```
+
+### Distribution of the distances
+
+```{r dnasedist}
+colnames(dnaseMap.all) = c("chrG","startG","endG", "gene", "chr","start","end","score")
+dnase = with(dnaseMap.all, GRanges(chrG, IRanges(startG, endG)))
+prom = with(dnaseMap.all, GRanges(chr, IRanges(start, end)))
+dnaseMap.all$d = distance(dnase, prom)
+ggplot(dnaseMap.all, aes(x=d)) + geom_histogram() + theme_bw() + xlab("distance between DNase and the associated promoter") + ylab("DNase site")
+dnaseMap.all %>% summarize(mean=mean(d), median=median(d)) %>% kable(digits=1)
+```
+
+As expected the number of DNase-to-promoter quickly decreases with the distance. The plateau is still pretty high so the average distance is around 200 kb.
+
+## Save the R objects
+
+```{r save}
+save(eqtl, dnaseMap, file="enhancerMap.RData")
+```
+
+I save these two types of information into a `.RData` file (~40Mb). It's also available [there](https://dl.dropboxusercontent.com/s/nm4h4ecsesuyre4/enhancerMap.RData).
+

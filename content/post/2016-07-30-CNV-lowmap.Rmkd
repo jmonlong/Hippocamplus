@@ -1,0 +1,233 @@
+---
+layout: post
+title: CNV catalogs and low-mappability regions
+tags: cnv
+date: 2017-02-22
+---
+
+```{r include=FALSE}
+knitr::opts_chunk$set(fig.width=15, echo=FALSE, message=FALSE, warning=FALSE)
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(ggplot2)
+library(dplyr)
+library(magrittr)
+library(GenomicRanges)
+library(data.table)
+library(knitr)
+library(tidyr)
+DOWNLOAD=TRUE
+library(BSgenome.Hsapiens.UCSC.hg19)
+seql.1.22 = seqlengths(BSgenome.Hsapiens.UCSC.hg19)[paste0("chr",1:22)]
+rand.gr <- function(widths){
+    chrs = apply(rmultinom(length(widths), 1, (seql.1.22/1e3)/sum(seql.1.22/1e3)),2,function(e)which(e==1))
+    starts = runif(length(widths), 0, seql.1.22[chrs]-widths)
+    return(GRanges(chrs, IRanges(starts, width=widths)))
+}
+winsor <- function(x, u){
+    if(any(x>u)) x[x>u] = u
+    x
+}
+```
+
+## Mappability track
+
+The original mappability track comes from UCSC.
+It gives a theoretical measure of mappability for each base pair.
+I computed the average mappability in 1 kb windows across the genome.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+if(DOWNLOAD & !file.exists("map100mer-1kbp.bed.gz")) download.file("https://dl.dropboxusercontent.com/s/i537zjs65dpw34n/map100mer-1kbp.bed.gz","map100mer-1kbp.bed.gz")
+map.df = as.data.frame(fread("gunzip -c map100mer-1kbp.bed.gz", showProgress = FALSE))
+colnames(map.df) = c("chr", "start", "end", "map")
+map.df %<>% mutate(chr=factor(gsub("chr","",chr), levels=c(1:22,"X","Y"))) %>% filter(!is.na(chr))
+ggplot(map.df, aes(x=map)) + geom_histogram() + theme_bw() + xlab("mappability") + ylab("1kb bin")
+```
+
+Most of the genome has a good mappability (~1).
+
+## DGV
+
+From *[Zarrei et al (Nature Reviews Genetics 2015)](http://www.nature.com/nrg/journal/v16/n3/full/nrg3871.html)*, the stringent catalogs of SVs based on the Database of Genomic Variation.
+
+I down-sample the SVs to 10,000 random variants.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+if(DOWNLOAD & !file.exists("Stringent.Gain+Loss.hg19.2015-02-03.txt")) download.file("http://dgvbeta.tcag.ca/dgv/docs/Stringent.Gain+Loss.hg19.2015-02-03.txt", "Stringent.Gain+Loss.hg19.2015-02-03.txt")
+dgv = read.table("Stringent.Gain+Loss.hg19.2015-02-03.txt",as.is=TRUE,header=TRUE,sep="\t",quote="")
+dgv$nb.studies = unlist(lapply(strsplit(dgv$studies,","),length))
+dgv$chr = gsub("chr","",dgv$chr)
+dgv = dgv[sample.int(nrow(dgv), 1e4),]
+```
+
+## 1000 Genomes Project
+
+The full SV catalog from *XX et al.*.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+tgp = as.data.frame(fread("1kgp-SVs.tsv", showProgress = FALSE))
+tgp %<>% select(chr, start, end, type, sample)
+```
+
+## GoNL
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+if(DOWNLOAD & !file.exists("gonl.SV.r5.vcf.gz")) download.file("https://molgenis26.target.rug.nl/downloads/gonl_public/variants/release5/gonl.SV.r5.vcf.gz", "gonl.SV.r5.vcf.gz")
+gonl = read.table("gonl.SV.r5.vcf.gz",as.is=TRUE,sep="\t",quote="")
+colnames(gonl) = c("chr","start","id","ref","alt","qual","filter","info")
+gonl$type = gsub(".*SVTYPE=([^;]+);*.*","\\1",gonl$info)
+gonl$af = as.numeric(gsub(".*AF=([^;]+);*.*","\\1",gonl$info))
+gonl$end = as.numeric(gsub(".*END=([^;]+);*.*","\\1",gonl$info))
+gonl %<>% select(chr, start, end, af, type)
+gonl.samp = lapply(1:100, function(ii){
+                     genotype = runif(nrow(gonl)) < gonl$af
+                     res = gonl[which(genotype),]
+                     res$sample = paste0("s",ii)
+                     res
+                   })
+gonl.samp = do.call(rbind, gonl.samp)
+```
+
+I simulated 100 synthetic samples using the allele frequencies.
+
+## CNVs - Sudmant Science 2015
+
+From Supplementary Table 1.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+sud = read.csv("Sudmant-Science2015-S1.csv", skip=1)
+sud = gather(sud, "sample","cn",7:ncol(sud))
+colnames(sud)[1] = "chr"
+
+sud.cn = sud %>% filter(cn != -1) %>% group_by(chr, start, end, type, size) %>% summarize(cn.min=min(cn), maf=sum(sort(table(cn), decreasing=TRUE)[-1])/n())
+
+ggplot(sud.cn, aes(x=winsor(cn.min,10), fill=cut(maf, breaks=seq(0,1,.2)))) + geom_bar(colour="black") + theme_bw() + scale_x_continuous(breaks=0:10, label=c(0:9,"10+")) + xlab("minimum copy number in population") + scale_fill_brewer(name="frequency") + theme(legend.position=c(1,1), legend.justification=c(1,1)) + ylab("CNV")
+```
+
+Some regions have a high copy number across all samples.
+To take care of these regions I use the most frequent copy-number as *normal* and calls variants if a sample has a different copy number.
+Of note these could affect other regions with more conventional copy numbers, e.g. a regions with more one-copy deletion than 2-copies.
+
+```{r}
+sud %<>% filter(cn != -1) %>% group_by(chr, start, end, type, size) %>% mutate(cn.maj=names(sort(table(cn), decreasing=TRUE))[1]) %>% filter(cn != cn.maj) %>% ungroup %>% select(chr, start, end, type, sample, cn) %>% mutate(chr=gsub("chr","",chr))
+ggplot(sud, aes(x=winsor(cn,10))) + geom_bar() + theme_bw() + scale_x_continuous(breaks=0:10, label=c(0:9,"10+")) + xlab("copy number") + ylab("sample-CNV")
+sud %<>% select(chr, start, end, type, sample)
+```
+
+## Handsaker - Nature Genetics 2015
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+if(DOWNLOAD & !file.exists("1000G_phase1_cnv_genotypes_phased_25Jul2014.genotypes.vcf.gz")) download.file("http://www.broadinstitute.org/~handsake/mcnv_data/bulk/1000G_phase1_cnv_genotypes_phased_25Jul2014.genotypes.vcf.gz", "1000G_phase1_cnv_genotypes_phased_25Jul2014.genotypes.vcf.gz", method="wget")
+hand = read.table("1000G_phase1_cnv_genotypes_phased_25Jul2014.genotypes.vcf.gz",as.is=TRUE,sep="\t",quote="")
+hand = hand[, c(1,2,8,sample(10:ncol(hand),10))]
+hand = gather(hand, "sample","gt",4:ncol(hand))
+colnames(hand)[1:3] = c("chr","start","info")
+hand$type = gsub(".*SVTYPE=([^;]+);*.*","\\1",hand$info)
+hand$end = as.numeric(gsub(".*END=([^;]+);*.*","\\1",hand$info))
+hand$gt = unlist(lapply(strsplit(hand$gt, ":"), "[", 1))
+hand %<>% filter(gt != "0|0")
+```
+
+I took just 10 samples to get an idea. And I don't have the copy number here.
+
+## Chaisson PacBio
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+chm1 = read.table("chaisson15.bed", as.is=TRUE)
+colnames(chm1) = c("chr","start","end","type")
+chm1 %<>% mutate(chr=gsub("chr","",chr), sample="chm1")
+```
+
+## Pendleton PacBio
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+pd = read.csv("pendleton2015-S3.csv")
+pd = pd[,c(1:3,10)]
+colnames(pd) = c("chr","start","end","type")
+pd %<>% mutate(chr=gsub("chr","",chr), sample="pb")
+```
+
+## Lumpy
+
+*These calls are the ones that were validated by PacBio/Modulo.*
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+lumpy = read.table("lumpy-AddFile5.bed", as.is=TRUE)
+lumpy = lumpy[,c(1:3,11)]
+colnames(lumpy) = c("chr","start","end","type")
+lumpy %<>% mutate(chr=gsub("chr","",chr), sample="lumpy")
+```
+
+## SWAN
+
+*Soon.*
+
+## No original data available
+
+For the following methods, I looked for the list of calls described in the original paper but couldn't find anything. Neither in the supplements nor in the official/lab website.
+
+- CNVnator
+- DELLY
+- cn.MOPS
+- Control-FREEC
+
+## PopSV
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+popsv = read.table("CNV-PopSV-Twin_CageKid_GoNL-germline.tsv", header=TRUE, as.is=TRUE)
+popsv %<>% filter(!grepl("gonl",sample)) %>% select(chr, start, end, sample)
+```
+
+## Quick overview at the different catalogs
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+cnv.cats = list(tgp=tgp, sud=sud, lumpy=lumpy, chm1=chm1, pd=pd, popsv=popsv, gonl=gonl.samp, hand=hand)
+cnv.cats = lapply(names(cnv.cats), function(cat) cnv.cats[[cat]] %>% select(chr, start, end, sample) %>% mutate(catalog=cat))
+cnv.cats = do.call(rbind, cnv.cats)
+
+cnv.cats %>% group_by(catalog, sample) %>% summarize(mb=sum((end-start)/1e6), nb=n()) %>% group_by(catalog) %>% summarize(mb=median(mb), nb=median(nb)) %>% arrange(desc(mb)) %>% kable
+
+csize.df = cnv.cats %>% mutate(size=end-start) %>% group_by(catalog) %>% do({data.frame(cprop=seq(0,1,.01), size=quantile(.$size, probs=seq(0,1,.01)))})
+ggplot(csize.df, aes(x=size, y=cprop, colour=catalog)) + geom_line() + scale_x_log10() + theme_bw() + scale_colour_brewer(palette="Set1")
+```
+
+## CNVs and low-mappability regions
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+cnv.sub = cnv.cats %>% group_by(catalog) %>% filter(sample %in% sample(unique(sample), min(10, length(unique(sample)))))
+
+ol = findOverlaps(makeGRangesFromDataFrame(cnv.sub), makeGRangesFromDataFrame(map.df))
+cnv.sub$map = NA
+map.s = tapply(map.df$map[subjectHits(ol)], queryHits(ol), mean)
+cnv.sub$map[as.numeric(names(map.s))] = as.numeric(map.s)
+cp.df = cnv.sub %>% mutate(map=round(map, 2)) %>% arrange(map) %>% group_by(catalog, sample) %>% mutate(cmb=cumsum((end-start)/1e6), cnb=1:n(), cprop=cnb/n()) %>% group_by(catalog, sample, map) %>% summarize(cprop=max(cprop), cnb=max(cnb), cmb=max(cmb)) %>% group_by(catalog, map) %>% summarize(cprop=mean(cprop), cnb=mean(cnb), cmb=mean(cmb))
+
+ggplot(cp.df, aes(x=map, y=cprop, colour=catalog)) + geom_line() + theme_bw() + scale_colour_brewer(palette="Set1")
+ggplot(cp.df, aes(x=map, y=cnb, colour=catalog)) + geom_line() + theme_bw() + scale_colour_brewer(palette="Set1")
+ggplot(cp.df, aes(x=map, y=cmb, colour=catalog)) + geom_line() + theme_bw() + scale_colour_brewer(palette="Set1")
+```
+
++ Is the null distribution affected by the size distribution ?
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+cnv.sub = cnv.cats %>% group_by(catalog) %>% filter(sample %in% sample(unique(sample), min(10, length(unique(sample)))))
+cnv.null = with(cnv.sub, rand.gr(end - start))
+cnv.null$catalog = cnv.sub$catalog
+cnv.null$sample = cnv.sub$sample
+
+ol = findOverlaps(cnv.null, makeGRangesFromDataFrame(map.df))
+cnv.null$map = NA
+map.s = tapply(map.df$map[subjectHits(ol)], queryHits(ol), mean)
+cnv.null$map[as.numeric(names(map.s))] = as.numeric(map.s)
+cp.null = cnv.null %>% as.data.frame %>% mutate(map=round(map, 2)) %>% arrange(map) %>% group_by(catalog, sample) %>% mutate(cmb=cumsum((end-start)/1e6), cnb=1:n(), cprop=cnb/n()) %>% group_by(catalog, sample, map) %>% summarize(cprop=max(cprop), cnb=max(cnb), cmb=max(cmb)) %>% group_by(catalog, map) %>% summarize(cprop=mean(cprop), cnb=mean(cnb), cmb=mean(cmb))
+
+ggplot(cp.null, aes(x=map, y=cprop, colour=catalog)) + geom_line() + theme_bw() + scale_colour_brewer(palette="Set1")
+```
+
+*Nope.*
+
+
+## Remarks
+
+In the different catalogs, the sequencing depth was sometimes different. We should keep that in mind. When a catalog is missing some types of variant, it could be because of the method, the sequencing resolution or both.

@@ -1,0 +1,83 @@
+---
+layout: post
+title: Gviz - Visualizing genome regions in R
+tags: r
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, fig.width=15)
+```
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(magrittr)
+library(GenomicRanges)
+library(data.table)
+library(knitr)
+library(tidyr)
+library(Gviz)
+```
+
+## Gene annotation
+
+From Gencode V19, I format the original GTF into the appropriate *data.frame*.
+
+The goal is to have something like this:
+
+```{r}
+data(geneModels)
+head(geneModels) %>% kable
+summary(geneModels) %>% kable
+```
+
+
+```{r}
+if(!file.exists("gencode.v19.gtf.gz")) download.file("ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz", "gencode.v19.gtf.gz")
+gtf = fread("gunzip -c gencode.v19.gtf.gz", showProgress = FALSE, sel=c(1, 3:5,7,9)) %>% as.data.frame
+colnames(gtf) = c("chromosome","type","start","end","strand","info")
+gtf %<>% filter(type %in% c("CDS", "UTR","exon")) %>%
+    mutate(width=end-start,
+           gene = gsub(".*gene_id \"([^\"]+).*","\\1",info),
+           transcript = gsub(".*transcript_id \"([^\"]+).*","\\1",info),
+           symbol = gsub(".*gene_name \"([^\"]+).*","\\1",info),
+           gtype=gsub(".*gene_type \"([^\"]+).*","\\1",info))
+
+gtf %<>% mutate(feature=ifelse(type=="UTR", "utr", gtype), info=NULL, type=NULL, gtype=NULL)
+```
+
+Let's try for example for gene SKAP2.
+
+```{r}
+gene.gtf = subset(gtf, symbol=="SKAP2")
+gctrack <- GeneRegionTrack(gene.gtf, genome = "hg19" ,chromosome = gene.gtf$chromosome[1], name = "Gene", transcriptAnnotation = "symbol")
+pt = plotTracks(gctrack)
+```
+
+I'll also create simplified annotation without all the different transcripts per genes.
+
+```{r}
+gtf.simp = gtf %>% mutate(transcript=gene)
+gene.gtf = subset(gtf.simp, symbol %in% c("SKAP2", "C7orf71","RPL7AP38","KIAA0087"))
+gctrack <- GeneRegionTrack(gene.gtf, genome = "hg19" ,chromosome = gene.gtf$chromosome[1], name = "Gene", transcriptAnnotation = "symbol")
+pt = plotTracks(gctrack)
+```
+
+```{r}
+save(gtf, file="gencodev19-gviz.RData")
+save(gtf.simp, file="gencodev19-gviz-simp.RData")
+```
+
+## Epigenetic marks
+
+```{r}
+load("epiTracks.RData")
+
+gene.gtf = subset(gtf, symbol=="SKAP2")
+gctrack <- GeneRegionTrack(gene.gtf, genome = "hg19" ,chromosome = gene.gtf$chromosome[1], name = "Gene", transcriptAnnotation = "symbol")
+epi.gtf = subsetByOverlaps(tracks.gr, makeGRangesFromDataFrame(gene.gtf))
+epit = DataTrack(epi.gtf, name="Epi", data=epi.gtf$nb.tis, type="gradient")
+pt = plotTracks(list(gctrack, epit))
+```
+
+Eventually, I should try to create a heatmap that would show the number of tissue (intensity) across different marks (*y-axis*).

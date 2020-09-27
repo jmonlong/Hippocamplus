@@ -1,0 +1,296 @@
+---
+title: Quick look at the other contigs in hg38 using minimap2
+date: 2020-05-02
+tags: ["genome", "sv"]
+slug: hg38-other-contigs
+draft: true
+output:
+  blogdown::html_page:
+    toc: true
+---
+
+```{r include=FALSE}
+knitr::opts_chunk$set(fig.width=10, echo=FALSE, message=FALSE, warning=FALSE)
+```
+
+```{r libs}
+library(ggplot2)
+library(dplyr)
+library(readr)
+library(knitr)
+library(VariantAnnotation)
+library(GenomicRanges)
+library(ggrepel)
+## converts to a markdown link to a region in the UCSC genoe browser
+linkBrowser <- function(chr, start, end){
+  paste0('[', chr, ':', start, '-', end, '](https://genome.ucsc.edu/cgi-bin/hgTracks?db=hg38&lastVirtModeType=default&position=', chr, '%3A', start, '%2D', end, ')')
+}
+## library(ggridges)
+## library(tidyr)
+## library(magrittr)
+## library(GenomicRanges)
+## theme_bw2 <- function(...) theme_bw(base_size=16, ...)
+## interk <- function(x, k=4){ # Interleaves elements in x
+##   idx = unlist(lapply(1:k, function(kk) seq(kk, length(x), k)))
+##   x[idx]
+## }
+## paln <- function(n){
+##   interk(rainbow(n, s=.8), 5)
+## }
+winsor <- function(x, u){
+  if(any(x>u)) x[x>u] = u
+  x
+}
+
+## RepeatMasker annotation
+rmsk = read_tsv('~/Documents/datagenome/rmsk.txt.gz', col_names=FALSE)
+rmsk = GRanges(rmsk$X6, IRanges(rmsk$X7, rmsk$X8), repClass=rmsk$X12)
+```
+
+## Alignment with minimap2 and calls fir `paftools call`
+
+hg38 contains the sequence of autosomes and sex chromosomes but also:
+
+- alternative sequences, chromosome and position known (e.g. `chr1_GL383520v2_alt`)
+- unlocalized sequences chromosome known but position unknown (e.g. `chr1_KI270706v1_random`)
+- unplaced sequences, chromosome and position unknown (e.g. `chrUn_KI270521v1`)
+
+I'm curious to see what the variation in the ALT sequences looks like.
+I also wonder if sequences are unlocalized/unplaced because they could come from multiple positions in the genome or none.
+
+I ran the following commands:
+
+```sh
+## extract names of all contigs
+cut -f1 hg38.fa.fai > all.contigs.txt
+wc -l all.contigs.txt # 455
+
+## split chromosomes and other contigs (alt, unlocalized, unplaced)
+for CHR in `seq 1 22` X Y; do echo chr$CHR; done > chrs.txt
+comm -23 <(sort all.contigs.txt) <(sort chrs.txt) > other.contigs.txt
+
+## extract sequence for each set
+samtools faidx hg38.fa -r other.contigs.txt > hg38.others.fa
+samtools faidx hg38.fa -r chrs.txt > hg38.chrs.fa
+
+minimap2 --version # 2.17-r941
+## align with minimap2
+minimap2 -t 32 -x asm5 -c --cs -o hg38.chrs.others.minimap2.paf hg38.chrs.fa hg38.others.fa
+## call variation with paftools
+sort -k6,6 -k8,8n hg38.chrs.others.minimap2.paf | paftools.js call -f hg38.chrs.fa - > hg38.chrs.others.minimap2.vcf
+```
+
+## Other contigs
+
+Quick look at the number and size of these other contigs:
+
+```{r othercontigs}
+contigs.df = read_tsv('hg38.fa.fai', col_names=c('name', 'length', 'offset', 'linebases',
+                                                 'linewidth')) %>%
+  dplyr::select(name, length) %>% 
+  mutate(type=gsub('.*_alt', 'alt', name),
+         type=gsub('.*_random', 'unlocalized', type),
+         type=gsub('chrUn_.*', 'unplaced', type))
+
+contigs.sum.df = contigs.df %>% filter(type %in% c('alt', 'unlocalized', 'unplaced')) %>%
+  group_by(type) %>% summarize(n=n(), mean.kbp=mean(length)/1000,
+                               max.kbp=max(length)/1000, total.mb=sum(length)/1e6)
+kable(contigs.sum.df, digits=1, format.args=list(big.mark=','))
+
+contigs.df %>% filter(type %in% c('alt', 'unlocalized', 'unplaced')) %>%
+  ggplot(aes(x=length, fill=type)) + geom_histogram(color='black') + theme_bw() +
+  scale_fill_brewer(palette='Set2') + scale_x_log10() +
+  xlab('contig length (bp)') + ylab('contig') +
+  theme(legend.position=c(.01,.99), legend.justification=c(0,1))
+```
+
+- Unplaced contigs tend to be shorter.
+- ALTs can be multiple Mbp long
+
+## Alignment stats
+
+Alignment stats derived from the PAF file.
+
+A contig can have multiple alignment blocks. 
+The graph below shows how much each alignment block spans the contig (y-axis) and their mapping confidence (color: mapq). 
+
+```{r importpaf}
+paf.df = read_tsv('hg38.chrs.others.minimap2.paf.gz', col_names=F)
+paf.df = paf.df[, c(1:12)]
+colnames(paf.df) = c('qname', 'qlen', 'qstart', 'qend', 'strand',
+                     'tname', 'tlen', 'tstart', 'tend', 'nmatch',
+                     'alblock', 'mapq')
+paf.df = contigs.df %>% filter(type %in% c('alt', 'unlocalized', 'unplaced')) %>%
+  dplyr::rename(qname=name) %>% merge(paf.df, all=TRUE)
+```
+
+```{r pafal}
+paf.df %>%
+  mutate(prop.al=(qend-qstart)/qlen,
+         prop.al=ifelse(is.na(prop.al), 0, prop.al)) %>%
+  ggplot(aes(x=reorder(qname, prop.al, max), y=prop.al, color=mapq)) +
+  geom_hline(yintercept=1, linetype=2) +
+  geom_point() + theme_bw() +
+  facet_grid(.~type, scales='free', space='free') +
+  theme(axis.text.x=element_blank()) +
+  scale_color_gradient(low='indianred2', high='black') + 
+  xlab('contig') +
+  ylab('proportion of contig spanned by alignment block')
+```
+
+For many ALT contigs, the whole contig was aligned in one block and confidently mapped.
+Unlocalized and unplaced contigs sometimes align poorly but sometimes aligns very well. 
+For many, at least some pieces aligns confidently to a chromosomal regions.
+Could this create multi-mapping issues?
+
+### Unlocalized and unplaced contigs
+
+Zooming in to the contigs that are unlocalized (assigned chromosome but unknown position) or unplaced (unknown chromosome).
+
+```{r uncontigs}
+paf.df %>% filter(type %in% c('unlocalized', 'unplaced')) %>% 
+  mutate(prop.al=(qend-qstart)/qlen,
+         prop.al=ifelse(is.na(prop.al), 0, prop.al)) %>%
+  ggplot(aes(x=reorder(qname, prop.al, max), y=prop.al, color=mapq)) +
+  geom_hline(yintercept=1, linetype=2) +
+  geom_point() + theme_bw() +
+  facet_grid(.~type, scales='free', space='free') +
+  theme(axis.text.x=element_blank()) +
+  scale_color_gradient(low='indianred2', high='black') + 
+  xlab('contig') +
+  ylab('proportion of contig spanned by alignment block')
+```
+
+In the end, it looks like more than half of the bases map confidently (mapq>60) to a chromosomes:
+
+```{r uncontmapped.mb}
+paf.df %>% filter(type %in% c('unlocalized', 'unplaced'), mapq==60) %>%
+  group_by(type) %>% summarize(mb=sum(qend-qstart)/1e6) %>%
+  merge(contigs.sum.df) %>% dplyr::select(type, mb, total.mb) %>% 
+  kable(digits=2)
+```
+
+Looking at the best aligned contigs, we can see multiple of them align to satellite repeats in centromeric regions.
+There are also several that matches very confidently a chromosomal region without being in a repeat-rich region.
+Some unlocalized contigs don't align to the chromosome they were assigned to (did I do something wrong?).
+
+```{r}
+uncont.mapped = paf.df %>% filter(type %in% c('unlocalized', 'unplaced'),
+                                  (qend-qstart)/qlen>.7, mapq==60) %>%
+  mutate(prop.match=nmatch/alblock, span.prop=(qend-qstart)/qlen) %>%
+  arrange(desc(nmatch/qlen), desc(mapq), desc(prop.match))
+
+## annotate with repeats
+uncont.mapped.gr = GRanges(uncont.mapped$tname, IRanges(uncont.mapped$tstart,
+                                                        uncont.mapped$tend))
+ol.df = findOverlaps(uncont.mapped.gr, rmsk) %>% as.data.frame %>%
+  mutate(repClass=rmsk$repClass[subjectHits]) %>% group_by(queryHits, repClass) %>%
+  mutate(cov.prop=sum(width(reduce(pintersect(uncont.mapped.gr[queryHits],
+                                          rmsk[subjectHits]))))/
+           width(uncont.mapped.gr[queryHits])) %>%
+  group_by(queryHits) %>% arrange(desc(cov.prop)) %>% do(head(., 1))
+uncont.mapped$repClass = NA
+uncont.mapped$repClass[ol.df$queryHits] = ol.df$repClass
+uncont.mapped$repCov = 0
+uncont.mapped$repCov[ol.df$queryHits] = ol.df$cov.prop
+
+## table
+uncont.mapped %>%
+  mutate(tcoord=linkBrowser(tname, tstart, tend),
+         repClass=ifelse(repCov>.5, repClass, '-')) %>% 
+  dplyr::select(type, qname, qlen, span.prop, prop.match, tcoord, repClass) %>%
+  kable(digits=3)
+```
+
+Visualizing the alignment blocks for each of these contigs sometimes clarifies why they are unplaced.
+For example, we see some with pieces mapping to different chromosomes. 
+In other cases the boundary is not mapped anywhere.
+Still many pieces match chromosomal regions very well (>90% of the contig aligned with mapq 60 and >97% similarity).
+
+```{r uncontigsplot, fig.height=10}
+paf.df %>% filter(qname %in% uncont.mapped$qname) %>%
+  mutate(qstart=qstart/qlen, qend=qend/qlen, prop.match=nmatch/alblock) %>% 
+  arrange(desc(nmatch/qlen)) %>%
+  mutate(qname=factor(qname, levels=unique(uncont.mapped$qname))) %>% 
+  group_by(qname) %>% mutate(idx=rev(1:n())) %>% ggplot() +
+  geom_rect(aes(xmin=qstart, xmax=qend, ymin=idx-.4, ymax=idx+.4,
+                fill=prop.match, alpha=mapq)) +
+  ## geom_point(aes(x=qstart, y=idx, color=prop.match), size=3) + 
+  geom_label(aes(x=(qstart+qend)/2, y=idx, label=tname), size=3) + 
+  theme_bw() +
+  scale_fill_gradient(name='match\nproportion', low='indianred2', high='black') +
+  scale_alpha_continuous(name='mapping\nquality') + 
+  ylab('alignment block') + xlab('relative position in contig') +
+  geom_vline(xintercept=c(0,1), linetype=2) +
+  facet_grid(qname~., scales='free', space='free', switch='y') +
+  theme(strip.text.y=element_text(angle=180),
+        axis.text.y=element_blank())
+```
+
+### ALT contigs
+
+For ALT contigs, let's just visualize a few examples across the spectrum.
+I'll look at the type of variants called in the next section.
+
+```{r altalign, fig.height=10}
+alt.ex =  paf.df %>% filter(type=='alt') %>% 
+  mutate(prop.al=(qend-qstart)/qlen,
+         prop.al=ifelse(is.na(prop.al), 0, prop.al)) %>%
+  group_by(qname) %>% summarize(prop.al=max(prop.al)) %>%
+  ungroup %>% arrange(prop.al) %>%
+  mutate(prop.al=cut(prop.al, 5)) %>%
+  group_by(prop.al) %>% do(head(.,1))
+
+paf.df %>% filter(qname %in% alt.ex$qname) %>%
+  mutate(qstart=qstart/qlen, qend=qend/qlen, prop.match=nmatch/alblock,
+         qname=factor(qname, levels=rev(alt.ex$qname))) %>%
+  arrange(qname) %>% mutate(qname=paste0(qname, '\n', round(qlen/1e6, 1), ' Mbp'),
+                            qname=factor(qname, levels=unique(qname))) %>% 
+  arrange(desc(nmatch/qlen)) %>%
+  group_by(qname) %>% mutate(idx=rev(1:n())) %>% ggplot() +
+  geom_rect(aes(xmin=qstart, xmax=qend, ymin=idx-.4, ymax=idx+.4,
+                fill=prop.match, alpha=mapq)) +
+  ## geom_point(aes(x=qstart, y=idx, color=prop.match), size=3) + 
+  geom_label(aes(x=(qstart+qend)/2, y=idx, label=tname), size=3) + 
+  theme_bw() +
+  scale_fill_gradient(name='match\nproportion', low='indianred2', high='black') +
+  scale_alpha_continuous(name='mapping\nquality') + 
+  ylab('alignment block') + xlab('relative position in contig') +
+  geom_vline(xintercept=c(0,1), linetype=2) +
+  facet_grid(qname~., scales='free', space='free', switch='y') +
+  theme(strip.text.y=element_text(angle=180),
+        axis.text.y=element_blank())
+```
+
+As expected some ALT contigs look as simple as two flanks that align properly with a gap in the middle that could be either deleted or novel sequence.
+Some contigs are quite complex though, with very few/short pieces aligning to chromosomes.
+
+## Variant calls
+
+Variant calls from the VCF produced by paftools.
+
+```{r vcf}
+vcf.o = readVcf('./hg38.chrs.others.minimap2.vcf')
+
+calls.df = tibble(chr=as.character(seqnames(vcf.o)), start=start(vcf.o), end=end(vcf.o),
+                  ref.size=nchar(rowRanges(vcf.o)$REF),
+                  alt.size=unlist(lapply(nchar(rowRanges(vcf.o)$ALT), '[', 1)),
+                  qname=info(vcf.o)$QNAME) %>%
+  filter(abs(alt.size-ref.size)>50) %>%
+  mutate(svtype=ifelse(alt.size>ref.size, 'INS', 'DEL'),
+         svsize=abs(alt.size-ref.size))
+calls.df = contigs.df %>% dplyr::rename(qname=name) %>% merge(calls.df)
+
+calls.df %>% group_by(type, svtype) %>%
+  summarize(n=n(), mean.svsize.bp=round(mean(svsize), 0),
+            total.svsize.kbp=round(sum(svsize)/1e3, 1)) %>%
+  kable
+
+ggplot(calls.df, aes(x=svsize, fill=type)) + geom_histogram(color='black') +
+  theme_bw() + facet_grid(svtype~.) + xlab('SV size (bp)') + ylab('SV call') +
+  scale_fill_brewer(name='contig type', palette='Set2') +
+  theme(legend.position=c(.99, .99), legend.justification=c(1,1))
+```
+
+More and larger insertions than deletions. 
+Is it expected?

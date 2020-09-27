@@ -1,0 +1,497 @@
+---
+layout: post
+title: Genes hit by multiple SVs in healthy individuals
+tags: cnv
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, fig.width=15)
+```
+
+```{r}
+library(ggplot2)
+library(dplyr)
+library(magrittr)
+library(GenomicRanges)
+library(data.table)
+library(knitr)
+library(tidyr)
+library(PopSV)
+library(ggrepel)
+
+bins.df = fragment.genome.hg19(1e3)
+bins.gr = makeGRangesFromDataFrame(bins.df)
+
+winsorF <- function(x, u=NULL){
+  if(is.null(u)) u = min(median(x, na.rm=TRUE)*3, quantile(x, .95, na.rm=TRUE))
+  if(any(x>u)) x[x>u] = u
+  x
+}
+
+reduceDf <- function(df, stitch.dist=0){
+  df %>% makeGRangesFromDataFrame(keep.extra.columns=TRUE) %>% reduce(min.gapwidth=stitch.dist) %>% as.data.frame %>% mutate(chr=seqnames) %>% dplyr::select(chr, start, end)
+}
+
+regTile <- function(bins.gr, reg.l, reg.col, range.gr=NULL){
+    reg.l = lapply(reg.l, function(gr){
+                       if(is.data.frame(gr)) gr = makeGRangesFromDataFrame(gr, keep.extra.columns=TRUE)
+                       return(gr)
+                   })
+    if(!is.null(range.gr)){
+        reg.l = lapply(reg.l, subsetByOverlaps, range.gr)
+    }
+    bins.gr$pos = (start(bins.gr) + end(bins.gr))/2
+    ol.df = lapply(1:length(reg.l), function(ii){
+               gr = reg.l[[ii]]
+               ol.df = as.data.frame(findOverlaps(bins.gr, gr))
+               ol.df %<>% mutate(label=mcols(gr)[, reg.col[ii]][subjectHits], pos=bins.gr$pos[queryHits]) %>% dplyr::select(queryHits, label, pos) %>% unique %>% mutate(mark=names(reg.l)[ii])
+           })
+    ol.df = do.call(rbind, ol.df)
+    ol.df$label = factor(ol.df$label, levels=unique(ol.df$label[order(ol.df$pos)]))
+    ol.df$mark = factor(ol.df$mark, levels=names(reg.l))
+    ol.df
+}
+
+totalSize <- function(starts, ends){
+    IRanges(starts, ends) %>% reduce %>% width %>% sum
+}
+
+multiHitsGenesV1 <- function(res.df, gene.gr, sample.reduce=TRUE, expand=0){
+    graphs.l = list()
+    if(sample.reduce){
+        ## 100 kbp stich per sample
+        cnv.df = res.df %>% group_by(sample) %>% do(reduceDf(., 1e5))
+    } else {
+        cnv.df = res.df
+    }
+    if(expand>0){
+        gene.gr = resize(gene.gr, width(gene.gr)+2*expand, fix="center")
+    }
+    bin.size = 5e3
+    cnv.df %<>% reduceDf(., 2*bin.size)
+    cnv.gr = cnv.df %>% makeGRangesFromDataFrame
+    ol = as.data.frame(findOverlaps(gene.gr, cnv.gr))
+    ol = cbind(ol, cnv.df[ol$subjectHits,])
+    ol$gene=gene.gr$gene[ol$queryHits]
+    ol$geneSize = width(gene.gr)[ol$queryHits]
+    gene.mult = ol %>% group_by(gene, geneSize) %>% filter(!duplicated(subjectHits)) %>% summarize(cnv=n(), cnv.size=totalSize(start, end))
+    gene.mult = gene.gr %>% as.data.frame %>% filter(!(gene %in% gene.mult$gene)) %>% mutate(geneSize=width, cnv=0, cnv.size=0) %>% select(gene, geneSize, cnv, cnv.size) %>% as.data.frame %>% rbind(as.data.frame(gene.mult))
+    lm.o = glm(cnv~geneSize, data=gene.mult)
+    var.o = mad(lm.o$residuals)
+    gene.mult$resid = lm.o$residuals
+    gene.mult$resid.pv = pnorm(-abs(lm.o$residuals)/2, 0, var.o)
+    gene.mult$resid.qv = p.adjust(gene.mult$resid.pv)
+    graphs.l$cnvVsGeneSize = ggplot(gene.mult, aes(x=cnv, y=geneSize/1e6, colour=resid.qv<.01)) + geom_point(alpha=.5) + theme_bw() + geom_text_repel(aes(label=gene), data=subset(gene.mult, resid.qv<.01 & rank(resid.qv)<20)) + scale_colour_brewer(palette="Set1") + theme(legend.position=c(1,0), legend.justification=c(1,0)) + ylab("gene size (Mb)")
+    return(list(gene.mult=gene.mult, graphs=graphs.l, cnv.df=cnv.df))
+}
+
+reduceExactDf <- function(df, max.dist=0){
+    gr = df %>% makeGRangesFromDataFrame(keep.extra.columns=TRUE)
+    ol = findOverlaps(gr, gr, type="equal", maxgap=max.dist)
+    ol = ol[which(subjectHits(ol) <= queryHits(ol))]
+    multi.ii = queryHits(ol)[which(duplicated(queryHits(ol)))]
+    ol = ol[which(!(subjectHits(ol) %in% multi.ii))]
+    uniq.ii = tapply(queryHits(ol), subjectHits(ol), head, 1)
+    res = gr[as.numeric(uniq.ii)]
+    res %>% as.data.frame %>% mutate(chr=seqnames) %>% select(chr, start, end)
+}
+
+multiHitsGenesV2 <- function(res.df, gene.gr, sample.reduce=TRUE, expand=0){
+    graphs.l = list()
+    if(sample.reduce){
+        ## 100 kbp stich per sample
+        cnv.df = res.df %>% group_by(sample) %>% do(reduceDf(., 1e5))
+    } else {
+        cnv.df = res.df
+    }
+    if(expand>0){
+        gene.gr = resize(gene.gr, width(gene.gr)+2*expand, fix="center")
+    }
+    bin.size = 5e3
+    cnv.df %<>% reduceExactDf %>% reduceExactDf(., 2*bin.size)
+    cnv.gr = cnv.df %>% makeGRangesFromDataFrame
+    ol = as.data.frame(findOverlaps(gene.gr, cnv.gr))
+    ol = cbind(ol, cnv.df[ol$subjectHits,])
+    ol$gene=gene.gr$gene[ol$queryHits]
+    ol$geneSize = width(gene.gr)[ol$queryHits]
+    gene.mult = ol %>% group_by(gene, geneSize) %>% filter(!duplicated(subjectHits)) %>% summarize(cnv=n(), cnv.size=totalSize(start, end))
+    gene.mult = gene.gr %>% as.data.frame %>% filter(!(gene %in% gene.mult$gene)) %>% mutate(geneSize=width, cnv=0, cnv.size=0) %>% select(gene, geneSize, cnv, cnv.size) %>% as.data.frame %>% rbind(as.data.frame(gene.mult))
+    lm.o = glm(cnv~geneSize, data=gene.mult)
+    var.o = mad(lm.o$residuals)
+    gene.mult$resid = lm.o$residuals
+    gene.mult$resid.pv = pnorm(-abs(lm.o$residuals)/2, 0, var.o)
+    gene.mult$resid.qv = p.adjust(gene.mult$resid.pv)
+    graphs.l$cnvVsGeneSize = ggplot(gene.mult, aes(x=cnv, y=geneSize/1e6, colour=resid.qv<.01)) + geom_point(alpha=.5) + theme_bw() + geom_text_repel(aes(label=gene), data=subset(gene.mult, resid.qv<.01 & rank(resid.qv)<20)) + scale_colour_brewer(palette="Set1") + theme(legend.position=c(1,0), legend.justification=c(1,0)) + ylab("gene size (Mb)")
+    return(list(gene.mult=gene.mult, graphs=graphs.l, cnv.df=cnv.df))
+}
+```
+
+## Data
+
+### SV catalogs
+
+I have already gathered SVs from several public studies. Here is an overview:
+
+```{r}
+load("SVdatabase.RData")
+svs.gr = subset(svs.gr, project %in% c("1KGP", "GoNL"))
+mcols(svs.gr) %>% as.data.frame %>% group_by(project, type) %>% summarize(sv=n()) %>% ggplot(aes(x=reorder(project, sv, sum), fill=type, y=sv)) + geom_bar(stat="identity") + theme_bw() + coord_flip() + scale_fill_brewer(palette="Set1") + xlab("project")
+svs.gr %>% as.data.frame %>% group_by(project, type) %>% summarize(mb=sum(width/1e6)) %>% ggplot(aes(x=reorder(project, mb, sum), fill=type, y=mb)) + geom_bar(stat="identity") + theme_bw() + coord_flip() + scale_fill_brewer(palette="Set1") + xlab("project") + ylab("affected genome (Mb)")
+popsv = read.table("CNV-PopSV-Twin_CageKid_GoNL-germline.tsv", as.is=TRUE, header=TRUE)
+```
+
+However, for PopSV I will use directly the calls from the samples. In contrast to 1KGP or GoNL, the SV annotation is about how often CNVs overlap each region rather than genotyped CNVs and their frequency. To avoid problems with fragmented calls, I will go back to the raw calls per sample (more in Methods).
+
+### Gene annotation
+
+From Gencode V19, I retrieve the gene body and exons for protein-coding genes.
+
+```{r}
+if(!file.exists("genes-gencodeV19.RData")){
+    download.file("ftp://ftp.sanger.ac.uk/pub/gencode/Gencode_human/release_19/gencode.v19.annotation.gtf.gz", "gencode.v19.gtf.gz")
+    gtf = fread("gunzip -c gencode.v19.gtf.gz", showProgress = FALSE)
+    genes = gtf %>% as.data.frame %>% filter(V3=="gene") %>% dplyr::select(V1,V4,V5,V9)
+    colnames(genes) = c("chr","start","end","info")
+    genes$chr = factor(gsub("chr","",genes$chr), levels=c(1:22,"X","Y"))
+    genes = subset(genes, !is.na(chr))
+    genes$type = gsub(".*gene_type \"([^\"]+).*","\\1",genes$info)
+    genes$gene = gsub(".*gene_name \"([^\"]+).*","\\1",genes$info)
+    genes$info = NULL
+    exons = gtf %>% as.data.frame %>% filter(V3=="exon") %>% dplyr::select(V1,V4,V5,V9)
+    colnames(exons) = c("chr","start","end","info")
+    exons$chr = factor(gsub("chr","",exons$chr), levels=c(1:22,"X","Y"))
+    exons = subset(exons, !is.na(chr))
+    exons$type = gsub(".*gene_type \"([^\"]+).*","\\1",exons$info)
+    exons$gene = gsub(".*gene_name \"([^\"]+).*","\\1",exons$info)
+    exons$info = NULL
+    save(genes, exons, file="genes-gencodeV19.RData")
+} else {
+    load("genes-gencodeV19.RData")
+}
+genes.gr = genes %>% filter(type=="protein_coding", chr %in% 1:22) %>% group_by(gene, chr) %>% summarize(start=min(start), end=max(end)) %>% makeGRangesFromDataFrame(keep.extra.columns = TRUE)
+exons.gr = subset(exons, type=="protein_coding") %>% makeGRangesFromDataFrame(keep.extra.columns = TRUE)
+```
+
+In total there are `r length(genes.gr)` genes and `r length(exons.gr)` exons.
+
+## Centromere, telomeres and gaps
+
+I use this annotation only to draw control regions that fit better the SV distribution. Instead of drawing regions randomly in the genome I usually choose to force the same amount of overlap with centromere/telomere/gaps. That way I don't get too many calls in these regions.
+
+I put different types of regions in this category:
+
+```{r}
+if(!file.exists("cytoBandIdeo.txt.gz")) download.file("http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/cytoBandIdeo.txt.gz","cytoBandIdeo.txt.gz")
+chr.band = read.table("cytoBandIdeo.txt.gz",sep="\t")
+colnames(chr.band)[1:3] = c("chr","start","end")
+if(!file.exists("gap-hg19.tsv.gz")) download.file("http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/gap.txt.gz","gap-hg19.tsv.gz")
+ct = read.table("gap-hg19.tsv.gz",sep="\t")
+ct = ct %>% dplyr::select(V2,V3,V4,V8)
+colnames(ct) =  c("chr","start","end", "type")
+ct = rbind(ct, chr.band %>% group_by(chr) %>% summarize(start=min(start),end=1e4) %>% mutate(type="telomere"))
+ct = rbind(ct, chr.band %>% group_by(chr) %>% summarize(start=max(end)-1e4,end=max(end)) %>% mutate(type="telomere"))
+centel.gr = ct %>% mutate(chr=gsub("chr","",chr)) %>% makeGRangesFromDataFrame(TRUE)
+centel.gr %>% as.data.frame %>% group_by(type) %>% summarize(n=n(), mean.size.kb=mean(end-start)/1e3, total.size.kb=sum(end-start)/1e3) %>% arrange(desc(n)) %>% arrange(desc(total.size.kb)) %>% kable(digits=1)
+```
+
+## Methods
+
+I tried two methods to count how many distinct SV hit the gene body. They differ in the way I merge the individual calls.
+
+The **first version** uses a more **aggressive merging**: if two SVs overlap or are at less than 10 kb from each other, they are merged into one. It's a safe way to avoid fragmented calls or call inaccuracy to inflate the results. Then it's not really about how many SVs hit a gene but more **how many distinct regions in the gene are hit by SVs**. However, a very large SV will "swallow" all the SVs in the region, even if they are clearly distinct.
+
+The **second version** tries to merge only SVs that have similar boundaries (+- 10 kb). It might be affected by fragmented calls, if they are distant by more than 10 kb. To limit this problem, I use PopSV raw calls and first aggressively merge the calls for each sample. Anyway, hopefully this situation is very rare and only slightly inflates the counts. With this measure, it's really about **how many different SVs hit a gene**.
+
+
+
+## Results
+
+### 1000 Genomes Project
+
+#### All SVs
+
+##### Version 1
+
+```{r}
+tgp = subset(svs.gr, project=="1KGP")
+tgp.all = multiHitsGenesV1(as.data.frame(tgp), genes.gr, sample.reduce=FALSE)
+tgp.all$graphs$cnvVsGeneSize
+```
+
+##### Version 2
+
+```{r}
+tgp.all2 = multiHitsGenesV2(as.data.frame(tgp), genes.gr, sample.reduce=FALSE)
+tgp.all2$graphs$cnvVsGeneSize
+```
+
+#### Exonic SVs or close to an exon
+
+##### Version 1
+
+```{r}
+tgp$exon.d = as.data.frame(distanceToNearest(tgp, exons.gr))$distance
+tgp.ex = multiHitsGenesV1(as.data.frame(tgp[which(tgp$exon.d<5e3)]), genes.gr, sample.reduce=FALSE)
+tgp.ex$graphs$cnvVsGeneSize
+```
+
+##### Version 2
+
+```{r}
+tgp.ex2 = multiHitsGenesV2(as.data.frame(tgp[which(tgp$exon.d<5e3)]), genes.gr, sample.reduce=FALSE)
+tgp.ex2$graphs$cnvVsGeneSize
+```
+
+#### Non-coding SVs in the gene body or close by
+
+##### Version 1
+
+```{r}
+tgp.nc = multiHitsGenesV1(as.data.frame(tgp[!overlapsAny(tgp, exons.gr)]), genes.gr, sample.reduce=FALSE, expand=1e4)
+tgp.nc$graphs$cnvVsGeneSize
+```
+
+##### Version 2
+
+```{r}
+tgp.nc2 = multiHitsGenesV2(as.data.frame(tgp[!overlapsAny(tgp, exons.gr)]), genes.gr, sample.reduce=FALSE, expand=1e4)
+tgp.nc2$graphs$cnvVsGeneSize
+```
+
+
+### GoNL
+
+#### All SVs
+
+##### Version 1
+
+```{r}
+gonl = subset(svs.gr, project=="GoNL")
+gonl.all = multiHitsGenesV1(as.data.frame(gonl), genes.gr, sample.reduce=FALSE)
+gonl.all$graphs$cnvVsGeneSize
+```
+
+##### Version 2
+
+```{r}
+gonl.all2 = multiHitsGenesV2(as.data.frame(gonl), genes.gr, sample.reduce=FALSE)
+gonl.all2$graphs$cnvVsGeneSize
+```
+
+#### Exonic SVs or close to an exon
+
+##### Version 1
+
+```{r}
+gonl$exon.d = Inf
+exond = as.data.frame(distanceToNearest(gonl, exons.gr))
+gonl$exon.d[exond$queryHits] = exond$distance
+gonl.ex = multiHitsGenesV1(as.data.frame(gonl[which(gonl$exon.d<5e3)]), genes.gr, sample.reduce=FALSE)
+gonl.ex$graphs$cnvVsGeneSize
+```
+
+##### Version 2
+
+```{r}
+gonl.ex2 = multiHitsGenesV2(as.data.frame(gonl[which(gonl$exon.d<5e3)]), genes.gr, sample.reduce=FALSE)
+gonl.ex2$graphs$cnvVsGeneSize
+```
+
+#### Non-coding SVs in the gene body or close by
+
+##### Version 1
+
+```{r}
+gonl.nc = multiHitsGenesV1(as.data.frame(gonl[!overlapsAny(gonl, exons.gr)]), genes.gr, sample.reduce=FALSE, expand=1e4)
+gonl.nc$graphs$cnvVsGeneSize
+```
+
+##### Version 2
+
+```{r}
+gonl.nc2 = multiHitsGenesV2(as.data.frame(gonl[!overlapsAny(gonl, exons.gr)]), genes.gr, sample.reduce=FALSE, expand=1e4)
+gonl.nc2$graphs$cnvVsGeneSize
+```
+
+### PopSV
+
+#### All SVs
+
+##### Version 1
+
+```{r}
+popsv.all = multiHitsGenesV1(popsv, genes.gr, sample.reduce=TRUE)
+popsv.all$graphs$cnvVsGeneSize
+```
+
+##### Version 2
+
+```{r}
+popsv.all2 = multiHitsGenesV2(popsv, genes.gr, sample.reduce=TRUE)
+popsv.all2$graphs$cnvVsGeneSize
+```
+
+#### Exonic SVs or close to an exon
+
+##### Version 1
+
+```{r}
+popsv$exon.d = as.data.frame(distanceToNearest(makeGRangesFromDataFrame(popsv, keep.extra.columns=TRUE), exons.gr))$distance
+popsv.ex = multiHitsGenesV1(subset(popsv, exon.d<5e3), genes.gr, sample.reduce=TRUE)
+popsv.ex$graphs$cnvVsGeneSize
+```
+
+##### Version 2
+
+```{r}
+popsv.ex2 = multiHitsGenesV2(subset(popsv, exon.d<5e3), genes.gr, sample.reduce=TRUE)
+popsv.ex2$graphs$cnvVsGeneSize
+```
+
+#### Non-coding SVs in the gene body or close by
+
+##### Version 1
+
+```{r}
+popsv.nc = multiHitsGenesV1(subset(popsv, exon.d>0), genes.gr, sample.reduce=TRUE, expand=1e4)
+popsv.nc$graphs$cnvVsGeneSize
+```
+
+##### Version 2
+
+```{r}
+popsv.nc2 = multiHitsGenesV2(subset(popsv, exon.d>0), genes.gr, sample.reduce=TRUE, expand=1e4)
+popsv.nc2$graphs$cnvVsGeneSize
+```
+
+## Example
+
+```{r}
+tgp.nc$cnv.df %<>% mutate(sample=1:n())
+tgp.nc2$cnv.df %<>% mutate(sample=1:n())
+
+top.gene.mult = genes.gr %>% as.data.frame %>% merge(tgp.nc$gene.mult) %>% arrange(resid.qv) %>% filter(resid>0, cnv<30) %>% head %>% makeGRangesFromDataFrame(keep.extra.columns=TRUE)
+```
+
+Let's look at non-coding SVs in `r top.gene.mult$gene[1]` with each merging approach.
+
+```{r}
+regTile(bins.gr, list(cnv=tgp.nc$cnv.df, exon=exons.gr), c("sample","gene"), range.gr=top.gene.mult[1]) %>% ggplot(aes(x=pos,y=label, fill=mark)) + geom_tile() + theme(axis.text.x=element_text(angle=45, hjust=1)) + xlab("position") + ylab("sample") + facet_grid(mark~., scales="free", space="free") + theme_bw() + ylab("") + ggtitle("Version 1")
+regTile(bins.gr, list(cnv=tgp.nc2$cnv.df, exon=exons.gr), c("sample","gene"), range.gr=top.gene.mult[1]) %>% ggplot(aes(x=pos,y=label, fill=mark)) + geom_tile() + theme(axis.text.x=element_text(angle=45, hjust=1)) + xlab("position") + ylab("sample") + facet_grid(mark~., scales="free", space="free") + theme_bw() + ylab("") + ggtitle("Version 2")
+```
+
+## Compare gene lists
+
+```{r}
+gene.mult = list(tgp.all=tgp.all, tgp.ex=tgp.ex, tgp.nc=tgp.nc,
+    gonl.all=gonl.all, gonl.ex=gonl.ex, gonl.nc=gonl.nc,
+    popsv.all=popsv.all, popsv.ex=popsv.ex, popsv.nc=popsv.nc,
+    tgp.all2=tgp.all2, tgp.ex2=tgp.ex2, tgp.nc2=tgp.nc2,
+    gonl.all2=gonl.all2, gonl.ex2=gonl.ex2, gonl.nc2=gonl.nc2,
+    popsv.all2=popsv.all2, popsv.ex2=popsv.ex2, popsv.nc2=popsv.nc2)
+gene.mult = lapply(names(gene.mult), function(nn)data.frame(set=nn, gene.mult[[nn]]$gene.mult))
+gene.mult = do.call(rbind, gene.mult)
+gene.mult %<>% mutate(project=gsub("\\..*","",set), type=gsub(".*\\.","",set), version=ifelse(grepl("2", set), 2, 1), type=gsub("2","",type))
+
+gene.mult %<>% group_by(gene, project, version) %>% mutate(resid.med.type=median(resid)) %>% group_by(gene, type, version) %>% mutate(resid.med.proj=median(resid))  %>% group_by(gene, type, project) %>% mutate(resid.med.version=median(resid))
+```
+
+### Gene body, exonic or non-coding
+
+```{r}
+ggplot(subset(gene.mult, version==1), aes(x=resid, y=resid.med.type, colour=type)) + geom_vline(xintercept=0) + geom_hline(yintercept=0) + geom_point(alpha=.5) + facet_wrap(~project) + theme_bw() + ggtitle("Version 1")
+ggplot(subset(gene.mult, version==2), aes(x=resid, y=resid.med.type, colour=type)) + geom_vline(xintercept=0) + geom_hline(yintercept=0) + geom_point(alpha=.5) + facet_wrap(~project) + theme_bw() + ggtitle("Version 2")
+gene.mult %>% group_by(version, project) %>% summarize(cor=cor(resid,resid.med.type)) %>% kable(digits=3)
+```
+
+The measure correlates well, so it doesn't really matter what type of SV we choose.
+
+### Across projects
+
+```{r}
+ggplot(subset(gene.mult, version==1), aes(x=resid, y=resid.med.proj, colour=project)) + geom_vline(xintercept=0) + geom_hline(yintercept=0) + geom_point(alpha=.5) + facet_wrap(~type) + theme_bw() + ggtitle("Version 1")
+ggplot(subset(gene.mult, version==2), aes(x=resid, y=resid.med.proj, colour=project)) + geom_vline(xintercept=0) + geom_hline(yintercept=0) + geom_point(alpha=.5) + facet_wrap(~type) + theme_bw() + ggtitle("Version 2")
+gene.mult %>% group_by(version, type) %>% summarize(cor=cor(resid,resid.med.proj)) %>% kable(digits=3)
+```
+
+The projects are more consistent when using version 1 (i.e. aggressive merging). In version 2 we notice many outliers with large residual in PopSV cohort. These genes are likely in repeat-rich regions.
+
+### Across merging approaches
+
+```{r}
+ggplot(subset(gene.mult, type=="all"), aes(x=resid, y=resid.med.version, colour=factor(version))) + geom_vline(xintercept=0) + geom_hline(yintercept=0) + geom_point(alpha=.5) + facet_wrap(~project) + theme_bw() + ggtitle("All CNVs") + scale_colour_hue(name="version")
+```
+
+Same observation as before, PopSV cohort shows some discrepancies between the two merging approaches.
+
+
+## Comparison with ExAC scores
+
+The pLI score is the probability score for loss of function intolerance.
+A high score (~1) means intolerant.
+Available on [ExAC FTP server](ftp://ftp.broadinstitute.org/pub/ExAC_release/release0.3.1/functional_gene_constraint/).
+
+A CNV intolerance score was also produced by the ExAC consortium.
+The score are the winsorized residuals of their regression, hence higher (positive) score means intolerant.
+Available on [ExAC FTP server](ftp://ftp.broadinstitute.org/pub/ExAC_release/release0.3.1/cnv/).
+
+```{r}
+if(!file.exists("fordist_cleaned_exac_r03_march16_z_pli_rec_null_data.txt")) download.file("ftp://ftp.broadinstitute.org/pub/ExAC_release/release0.3.1/functional_gene_constraint/fordist_cleaned_exac_r03_march16_z_pli_rec_null_data.txt", "fordist_cleaned_exac_r03_march16_z_pli_rec_null_data.txt")
+exac.pli = read.table("fordist_cleaned_exac_r03_march16_z_pli_rec_null_data.txt", as.is=TRUE, sep="\t", header=TRUE)
+if(!file.exists("exac-final-cnv.gene.scores071316")) download.file("ftp://ftp.broadinstitute.org/pub/ExAC_release/release0.3.1/cnv/exac-final-cnv.gene.scores071316", "exac-final-cnv.gene.scores071316")
+exac.cnv = read.table("exac-final-cnv.gene.scores071316", as.is=TRUE, sep=" ", header=TRUE)
+exac.pli %<>% select(gene, pLI)
+exac.s = exac.cnv %>% mutate(gene=gene_symbol) %>% select(gene, cnv.score) %>% merge(exac.pli, all=TRUE)
+exac.s = gene.mult %>% filter(type=="all", project=="tgp", version==1) %>% mutate(gene.multi.v1=resid.med.type) %>% ungroup %>% select(gene, gene.multi.v1) %>% unique %>% merge(exac.s, all=TRUE)
+exac.s = gene.mult %>% filter(type=="all", project=="tgp", version==2) %>% mutate(gene.multi.v2=resid.med.type) %>% ungroup %>% select(gene, gene.multi.v2) %>% unique %>% merge(exac.s, all=TRUE)
+
+ggplot(exac.s, aes(x=cnv.score, y=pLI)) + geom_point(alpha=.5) + theme_bw()
+ggplot(exac.s, aes(x=gene.multi.v1, y=pLI)) + geom_point(alpha=.5) + theme_bw()
+ggplot(exac.s, aes(x=gene.multi.v1, y=cnv.score)) + geom_point(alpha=.5) + theme_bw()
+ggplot(exac.s, aes(x=gene.multi.v2, y=pLI)) + geom_point(alpha=.5) + theme_bw()
+ggplot(exac.s, aes(x=gene.multi.v2, y=cnv.score)) + geom_point(alpha=.5) + theme_bw()
+```
+
+Frankly, I don't see much consistency between the three scores...
+
+```{r}
+cor.test(exac.s$pLI, exac.s$cnv.score)
+cor.test(exac.s$pLI, exac.s$gene.multi.v1)
+cor.test(exac.s$gene.multi.v1, exac.s$cnv.score)
+cor.test(exac.s$pLI, exac.s$gene.multi.v2)
+cor.test(exac.s$gene.multi.v2, exac.s$cnv.score)
+```
+
+However, the test shows they are all significantly correlated.
+
+## Conclusion
+
+This is yet another measure of (in)tolerance to variation.
+It is significantly (but not visibly) correlated with other existing scores (e.g. ExAC).
+
+In practice, I don't plan on using this score for annotation or gene ranking.
+The idea is to run the same analysis on CNVs from cases and look for switches in the scores.
+More specifically, are there genes with a negative/null residual here and a strongly positive residual in the cases ?
+These would be genes that don't usually have an excess of CNVs but do in the cases.
+We saw in that the residuals are comparable across projects so I believe comparing them with residuals from cases is possible.
+
+```{r}
+save(gene.mult, file="SVgeneMulti.RData")
+```
+
+## To go further
+
++ What about the SV frequency ?
++ What about PopSV discrepancies using version 2 ?
+
+
+## Extra: Investigating PopSV-specific outliers
+
+```{r, fig.height=8}
+tgp$sample=1:length(tgp)
+gonl$sample=1:length(gonl)
+
+tmp = lapply(c("AGAP8", "UPK3B", "CNTNAP3B", "GTF2H2"), function(gn){
+                 print(regTile(bins.gr, list(popsv=popsv, tgp=tgp, gonl=gonl, exon=exons.gr), c("sample","sample","sample","gene"), range.gr=subset(genes.gr, gene==gn)) %>% ggplot(aes(x=pos,y=label, fill=mark)) + geom_tile() + theme(axis.text.x=element_text(angle=45, hjust=1)) + xlab("position") + ylab("sample") + facet_grid(mark~., scales="free", space="free") + theme_bw() + ylab(""))
+    })
+```
