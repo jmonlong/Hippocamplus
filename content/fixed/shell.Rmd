@@ -156,6 +156,17 @@ foo=${foop#$prefix}
 foo=${foos%$suffix}
 ~~~
 
+### Looping
+
+Loop across lines of a file:
+
+~~~sh
+while read in_line
+do
+    command $in_line
+done < lines.txt
+~~~
+
 ### If Then Else
 
 A simple example:

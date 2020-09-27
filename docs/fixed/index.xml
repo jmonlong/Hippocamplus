@@ -101,7 +101,7 @@ Naming and formatting  Use lowercase _-separated for modules and functions name.
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/Hippocamplus/shell/</guid>
-      <description>External links GNU screen .bashrc aliases Misc Colors in less Avoid killing ssh jobs Custom prompt  One-liners Bash &amp;amp; Pipes AWK Perl one-liners  Shell scripting Variables If Then Else  Modules Ubuntu Sound problems  OSX Mount server Setup WD Elements external hard drive    This page focuses on configuration of the terminal, one-liners and scripting. Command-line tools I used (e.g. git, snakemake, docker) are described in the Tools page.</description>
+      <description>External links GNU screen .bashrc aliases Misc Colors in less Avoid killing ssh jobs Custom prompt  One-liners Bash &amp;amp; Pipes AWK Perl one-liners  Shell scripting Variables Looping If Then Else  Modules Ubuntu Sound problems  OSX Mount server Setup WD Elements external hard drive    This page focuses on configuration of the terminal, one-liners and scripting. Command-line tools I used (e.g. git, snakemake, docker) are described in the Tools page.</description>
     </item>
     
     <item>
@@ -110,7 +110,7 @@ Naming and formatting  Use lowercase _-separated for modules and functions name.
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/Hippocamplus/tools/</guid>
-      <description>Git Snakemake jq vd rsync Docker Makefile FTP For file conversion Misc PDF    Git  Commit all modification and added files: git commit -am &amp;quot;informative message&amp;quot; To show all the history of a file: git log -p -- file To retrieve a specific version of a file: git show COMMIT:file Revert repo to a specific commit: git checkout COMMIT Undo a commit: git reset HEAD~ and then for the real commit git commit -c ORIG_HEAD.</description>
+      <description>Git Snakemake jq vd rsync Docker WDL Makefile FTP For file conversion Misc PDF    Git  Commit all modification and added files: git commit -am &#34;informative message&#34; To show all the history of a file: git log -p -- file To retrieve a specific version of a file: git show COMMIT:file Revert repo to a specific commit: git checkout COMMIT Undo a commit: git reset HEAD~ and then for the real commit git commit -c ORIG_HEAD.</description>
     </item>
     
     <item>

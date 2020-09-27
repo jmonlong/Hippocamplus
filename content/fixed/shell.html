@@ -25,6 +25,7 @@ output:
 </ul></li>
 <li><a href="#shell-scripting">Shell scripting</a><ul>
 <li><a href="#variables">Variables</a></li>
+<li><a href="#looping">Looping</a></li>
 <li><a href="#if-then-else">If Then Else</a></li>
 </ul></li>
 <li><a href="#modules">Modules</a></li>
@@ -158,6 +159,14 @@ Compared to the default, I just added flanking <code>[</code>/<code>]</code>, a 
 <p>To remove a specific prefix/suffix from a variable name:</p>
 <pre class="sh"><code>foo=${foop#$prefix}
 foo=${foos%$suffix}</code></pre>
+</div>
+<div id="looping" class="section level3">
+<h3>Looping</h3>
+<p>Loop across lines of a file:</p>
+<pre class="sh"><code>while read in_line
+do
+    command $in_line
+done &lt; lines.txt</code></pre>
 </div>
 <div id="if-then-else" class="section level3">
 <h3>If Then Else</h3>
