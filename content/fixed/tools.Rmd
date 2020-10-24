@@ -17,6 +17,7 @@ output:
 + Update sub-modules: `git submodule update --init --recursive`
 + Add all untracked files: `git st -s | grep '??' | cut -f2 -d ' ' | xargs git add`
 + Add remote e.g. after a fork: `git remote add mine git@github.com:jmonlong/REPO.git`
++ Activate credential saving (avoid retyping username/passwords, e.g. when SSH keys don't work): `git config credential.helper store`
 
 #### Aliases
 

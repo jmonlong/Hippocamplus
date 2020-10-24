@@ -37,6 +37,7 @@ output:
 <li>Update sub-modules: <code>git submodule update --init --recursive</code></li>
 <li>Add all untracked files: <code>git st -s | grep '??' | cut -f2 -d ' ' | xargs git add</code></li>
 <li>Add remote e.g. after a fork: <code>git remote add mine git@github.com:jmonlong/REPO.git</code></li>
+<li>Activate credential saving (avoid retyping username/passwords, e.g. when SSH keys don’t work): <code>git config credential.helper store</code></li>
 </ul>
 <div id="aliases" class="section level4">
 <h4>Aliases</h4>
