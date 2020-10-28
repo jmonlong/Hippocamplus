@@ -375,10 +375,9 @@ And in the `suppmat.tex` document:
 \externaldocument{main}
 ~~~
 
-On Overleaf, they use [a variant](http://tex.stackexchange.com/a/69832/226) where the `suppmat.tex` is not compiled but its references can still be used in the `main.tex` using:
+On Overleaf, they use [a variant](https://www.overleaf.com/learn/how-to/Cross_referencing_with_the_xr_package_in_Overleaf) where the `suppmat.tex` is not compiled but its references can still be used in the `main.tex` using:
 
 ~~~tex
-\usepackage{xcite}
 \usepackage{xr}
 \makeatletter
 \newcommand*{\addFileDependency}[1]{% argument=file name and extension
@@ -394,6 +393,19 @@ On Overleaf, they use [a variant](http://tex.stackexchange.com/a/69832/226) wher
     \addFileDependency{#1.aux}%
 }
 \myexternaldocument{SuppMat}
+~~~
+
+and a `latermkrc` file with:
+
+~~~
+add_cus_dep( 'tex', 'aux', 0, 'makeexternaldocument' );
+
+sub makeexternaldocument {
+    if (!($root_filename eq $_[0]))
+    {
+        system( "latexmk -cd -pdf \"$_[0]\"" );
+    }
+}
 ~~~
 
 ### Compare versions and highlight revisions
