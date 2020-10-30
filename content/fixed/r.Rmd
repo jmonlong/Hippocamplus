@@ -313,6 +313,7 @@ Useful links:
 - [Rcpp page from Dirk Eddelbuettel website](http://dirk.eddelbuettel.com/code/rcpp.html)
 - [Writing a package that uses Rcpp](https://cran.rstudio.com/web/packages/Rcpp/vignettes/Rcpp-package.pdf)
 - [Section from "Advanced R" by Hadley Wickham](http://adv-r.had.co.nz/Rcpp.html)
+- [Rcpp for everyone (book in progress?)](https://teuder.github.io/rcpp4everyone_en/)
 
 Tips:
 
