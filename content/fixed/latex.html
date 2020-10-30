@@ -349,9 +349,8 @@ Then no need to manually split the pdf (and likely lose links).</p>
 <p>And in the <code>suppmat.tex</code> document:</p>
 <pre class="tex"><code>\usepackage{xr}
 \externaldocument{main}</code></pre>
-<p>On Overleaf, they use <a href="http://tex.stackexchange.com/a/69832/226">a variant</a> where the <code>suppmat.tex</code> is not compiled but its references can still be used in the <code>main.tex</code> using:</p>
-<pre class="tex"><code>\usepackage{xcite}
-\usepackage{xr}
+<p>On Overleaf, they use <a href="https://www.overleaf.com/learn/how-to/Cross_referencing_with_the_xr_package_in_Overleaf">a variant</a> where the <code>suppmat.tex</code> is not compiled but its references can still be used in the <code>main.tex</code> using:</p>
+<pre class="tex"><code>\usepackage{xr}
 \makeatletter
 \newcommand*{\addFileDependency}[1]{% argument=file name and extension
   \typeout{(#1)}
@@ -366,6 +365,15 @@ Then no need to manually split the pdf (and likely lose links).</p>
     \addFileDependency{#1.aux}%
 }
 \myexternaldocument{SuppMat}</code></pre>
+<p>and a <code>latermkrc</code> file with:</p>
+<pre><code>add_cus_dep( &#39;tex&#39;, &#39;aux&#39;, 0, &#39;makeexternaldocument&#39; );
+
+sub makeexternaldocument {
+    if (!($root_filename eq $_[0]))
+    {
+        system( &quot;latexmk -cd -pdf \&quot;$_[0]\&quot;&quot; );
+    }
+}</code></pre>
 </div>
 <div id="compare-versions-and-highlight-revisions" class="section level3">
 <h3>Compare versions and highlight revisions</h3>

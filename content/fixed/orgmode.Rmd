@@ -156,6 +156,8 @@ An example with a right-aligned column, a field formula and a column formula.
 
 ## Code block
 
+Can be triggered by `C-c C-, s` (potentially surrounding a selected region).
+
 A simple code block:
 
 ~~~text
