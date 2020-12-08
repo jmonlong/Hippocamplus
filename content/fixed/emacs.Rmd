@@ -276,6 +276,8 @@ Note: I use `options(device=function() pdf(width=9, height=7))` to specify the d
 
 ## For writing
 
+When writing I prefer when long lines are wrapped without cutting a word: `M-x visual-line-mode`
+
 ### Spell checking
 
 I use *ispell* and *flyspell*.
