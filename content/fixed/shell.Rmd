@@ -47,7 +47,7 @@ term screen-256color
 - Show special characters (end of line, tabs) with `cat -A`.
 - `$RANDOM` to get a random number, e.g. between 1 and 10: `$((1 + RANDOM % 10))`
 - `ncdu` instead of `du`
-- `sdp-say 'done'` to say *done*, e.g. when a long command finishes.
+- `spd-say 'done'` to say *done*, e.g. when a long command finishes.
 
 ### Colors in `less`
 
