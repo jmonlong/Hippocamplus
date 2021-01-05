@@ -77,6 +77,14 @@ def functionname( parameters ):
    return [expression]
 ~~~
 
+### Data frame (pandas)
+
+
+~~~python
+
+DataFrame.from_csv('file.tsv, sep='\t', header=0)
+~~~
+
 
 ## Input/Output
 

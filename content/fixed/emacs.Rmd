@@ -310,6 +310,8 @@ If using a GUI, `flyspell-popup` (available on MELPA) provides a convenient pop-
 (define-key flyspell-mode-map (kbd "C-;") 'flyspell-popup-correct)
 ~~~
 
+On Ubuntu, more dictionaries are installed using [aspell](http://aspell.net/) packages, for example the `aspell-fr` for the French dictionary.
+
 ### Thesaurus and synonyms
 
 I tested the `synosaurus` package a few times (available in MELPA).
