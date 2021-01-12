@@ -1,6 +1,6 @@
 ---
 sidebar: true
-title: Internet
+title: OS/Internet
 weight: 2
 output:
   blogdown::html_page:
@@ -47,6 +47,27 @@ I'm using [Ubuntu Gnome 16.04](https://wiki.ubuntu.com/UbuntuGNOME/GetUbuntuGNOM
 + To force the second screen to follow the workspace of the primary screen I found [this](http://gregcor.com/2011/05/07/fix-dual-monitors-in-gnome-3-aka-my-workspaces-are-broken/): 
 
 `gsettings set org.gnome.shell.overrides workspaces-only-on-primary false`
+
+### (French) Accents in Gnome Ubuntu
+
+I use the international layout with dead keys:
+
+`Settings` -> `Region & Language` -> `Input Sources` -> `+` -> `English (United States)` -> `English (intl., with AltGr dead keys)`
+
+An accented letter can be "spelled out" with, for example, `AltGr+Super+' e`.
+Some accented letters can be inserted directly with `AltGr`, e.g. `AltGr+e`.
+Inspired by [this post](https://askubuntu.com/questions/1187917/change-accented-letters-in-international-with-dead-keys-keyboard-layout), I modified the default accented letters to use grave/circumflex accents and cedilla. 
+In `/usr/share/X11/xkb/symbols/us` I added to the *xkb_symbols "altgr-intl"* section:
+
+~~~
+   key <AD04> { [ r, R, egrave,       Egrave      ] };
+   key <AD05> { [ t, T, ecircumflex,  Ecircumflex ] };
+   key <AD06> { [ y, Y, ediaeresis,   Ediaeresis  ] };
+   key <AD07> { [ u, U, ugrave,       Ugrave      ] };
+   key <AD09> { [ o, O, ocircumflex,  Ocircumflex ] };
+   key <AC01> { [ a, A, agrave,       Agrave      ] };
+   key <AB03> { [ c, C, ccedilla,     Ccedilla    ] };
+~~~
 
 ## Sync a specific Google Drive folder on Ubuntu
 
