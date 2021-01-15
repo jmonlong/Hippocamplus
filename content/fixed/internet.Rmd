@@ -48,6 +48,15 @@ I'm using [Ubuntu Gnome 16.04](https://wiki.ubuntu.com/UbuntuGNOME/GetUbuntuGNOM
 
 `gsettings set org.gnome.shell.overrides workspaces-only-on-primary false`
 
+### Update expired keys
+
+Sometimes `apt-get update` doesn't work because keys have expired (e.g. `The following signatures were invalid: EXPKEYSIG XXX`). 
+To update a key:
+
+~~~sh
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys XXX
+~~~
+
 ### (French) Accents in Gnome Ubuntu
 
 I use the international layout with dead keys:
