@@ -1,0 +1,202 @@
+#
+## Base d'un prog Perl
+#
+
+#!/usr/bin/perl
+use strict;
+use warnings;
+
+## Comment
+
+exit;
+
+
+<STDIN> comme variable
+chomp enleve le caractère ENTER à la fin de la variable
+=> ex : 
+   print "Taper le texte ici : ";
+   my $text = <STDIN>;
+   chomp $text
+Avec un tableau : 
+my @lines = <STDIN>; 
+
+@ARGV : tab des arguments du programme
+
+
+
+
+#
+## Manipulations chaines de caractères
+#
+
+m/source/ : match source
+s/source/dest/g : substitution de source par dest
+tr/ATGC/TACG/ : complementarisation
+uc, lc : en majuscules/minuscules
+split(/sep/,$string) : crée un tab en séparant à chaque car "sep"
+
+$chaine =~ /"patron"/ -> TRUE si cumple el patron FALSE sino
+-> si parenthese(group) dans "patron" s'utilise avec $1 $2 ...
+
+Metacharacter : 
+|	ou
+(...)	group
+[...]	one of the character
+^	beginning of string or after newline
+$	end of string or before newline
+.	Anyone character
+
+Quantifier : 
+*	   0-n
++	   1-n
+?	   0-1
+{n}	   n
+{MIN,}	   MIN-n
+{MIN,MAX}  MIN-MAX
+
+Class : 
+\d    digit		\D	nondigit
+\s    whitespace	\S	non-whitespace
+\w    word (a76ea_2)	\W	non-Word
+
+
+
+#
+##Tableaux:
+#
+
+pop @array
+push @array,nv_elt
+shift @array
+unshift @array,nv_elt
+splice array,debut,longueur,nv_elts
+$nb_elt = @array ou scalar @array
+
+->boucle interessante : 
+while(@tab){
+   my $elt = pop @tab;
+   ...
+}
+
+
+
+#
+##Hashes
+#
+
+%hashes = (
+    'clave1' => 'valor1',
+    'clave2' => 'valor2',
+    'clave3' => 'valor3'
+) ou ('clave1','valor1','clave2','valor2','clave3','valor3')
+@clés = keys %hashes;
+@valeurs = values %hashes;
+$valeur = %hashes{'clave1'};
+$valeur = %hashes{$clavevar};
+delete $hashes{$clavevar};
+$hashes{'nuevaclave'} = 'valor';
+
+
+
+
+#
+## Manip Fichiers
+#
+open (MONFICH,"monfich.txt") or die "Error!\n"
+open (MONFICH,">monfich.txt") or die "Error!\n"
+open (MONFICH,">>monfich.txt") or die "Error!\n"
+while (my $ligne = <MONFICH>) {
+chomp $ligne;
+print "$ligne\n";
+}
+print MONFICH "phrase à ajouter";
+close(MONFICH);
+
+
+
+#
+## Subroutine
+#
+Peuvent se mettre après exit;
+@_ : tab avec arg de la sub
+$_ : valeur dans la boucle
+=> ex:
+sub mysub {
+
+for each(@_){
+    blabl($_)
+    ...
+}
+
+}
+
+
+#
+## Boucles if..else
+#
+if($string eq "Exemple"){
+...
+} elsif ($numero == 3){
+...
+} else {
+...
+}
+
+
+
+#
+## Programmation orientée objet
+#
+=> ex:
+   package Person;
+
+   # Class à utiliser
+   use warnings;
+   use strict;
+
+   # Attributs 'static' : pour tout le package
+   my @Everyone;
+
+   # Constructeur et initialisation
+   sub new {
+   my $class = shift;
+   my $self = {@_};
+   bless($self, $class); ## définit la réference de l'objet
+   $self->_init; ## appelle la subroutine 'privée' _init
+   return $self;
+   }
+
+   sub _init {
+   my $self = shift; ## donne comme attributs ceux de la définition du hash
+   push @Everyone, $self;
+   }
+
+   # Get-Set méthodes
+   sub address { $_[0]->{address }=$_[1] if defined $_[1]; $_[0]->{address } }
+   sub surname { $_[0]->{surname }=$_[1] if defined $_[1]; $_[0]->{surname } }
+   sub forename { $_[0]->{forename}=$_[1] if defined $_[1]; $_[0]->{forename} }
+   sub phone_no { $_[0]->{phone_no}=$_[1] if defined $_[1]; $_[0]->{phone_no} }
+   sub occupation {
+   $_[0]->{occupation}=$_[1] if defined $_[1]; $_[0]->{occupation}
+   }
+
+   # Accesseur pour les attributs 'static' 
+   sub headcount { scalar @Everyone }
+   sub everyone { @Everyone }
+
+   # Méthodes
+   sub fullname {
+   my $self = shift;
+   return $self->forename." ".$self->surname;
+   }
+
+# Héritage
+Ajout de : 
+      use ClasseMere
+      our @ISA = qw(ClasseMere);
+Appel explicite d'une méthode de la classe mère : 
+      $self->SUPER::_init();
+
+
+# One-liner
+ perl -ne '$_ =~ m/gene_id "([^"]*)"/,print $1."\n";'
