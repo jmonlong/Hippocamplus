@@ -130,7 +130,7 @@ The configuration I use is:
 For the [Better BibTeX plugin](https://retorque.re/zotero-better-bibtex/), the most important setting is the citation key style: `[auth:lower][year][journal:lower:abbr]`.
 
 I use [FolderSync](https://play.google.com/store/apps/details?id=dk.tacit.android.foldersync.lite&hl=en_US) to sync the PDFs that I annotate on my Android tablet.
-I rarely need to manage/explore my library on my Android device (I usually just sync then read/annotate the most recent PDFs), but when I do I use the [ZotDroid](https://play.google.com/store/apps/details?id=computer.benjamin.zotdr0id&hl=en_US) app. 
+I rarely need to manage/explore my library on my Android device (I usually just sync then read/annotate the most recent PDFs), but when I do I use the [ZotDroid](https://play.google.com/store/apps/details?id=computer.benjamin.zotdr0id&hl=en_US) app, or the [Library](https://play.google.com/store/apps/details?id=com.cgogolin.library&hl=en_US&gl=US) app to search my library's BibTeX file (also synced).
 Not great but the best I could find.
 
 ## Dowload files from Dropbox
