@@ -75,6 +75,7 @@ In `/usr/share/X11/xkb/symbols/us` I added to the *xkb_symbols "altgr-intl"* sec
    key <AD07> { [ u, U, ugrave,       Ugrave      ] };
    key <AD09> { [ o, O, ocircumflex,  Ocircumflex ] };
    key <AC01> { [ a, A, agrave,       Agrave      ] };
+   key <AC02> { [ s, S, acircumflex,  Acircumflex ] };
    key <AB03> { [ c, C, ccedilla,     Ccedilla    ] };
 ~~~
 
