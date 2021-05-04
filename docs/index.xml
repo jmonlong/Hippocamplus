@@ -2,10 +2,10 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title> </title>
-    <link>/Hippocamplus/</link>
+    <link>/</link>
     <language>en-us</language>
     <author>Jean Monlong</author>
-    <rights>(C) 2019</rights>
+    <rights>(C) 2020 Jean Monlong</rights>
     <updated>2019-11-19 00:00:00 &#43;0000 UTC</updated>
 
     
@@ -38,10 +38,10 @@
       
         <item>
           <title>Stereograms of the 1KGP PCA/tSNE</title>
-          <link>/Hippocamplus/2019/11/19/stereograms-1kgp-pca-tsne/</link>
+          <link>/2019/11/19/stereograms-1kgp-pca-tsne/</link>
           <pubDate>Tue, 19 Nov 2019 00:00:00 UTC</pubDate>
           <author>Jean Monlong</author>
-          <guid>/Hippocamplus/2019/11/19/stereograms-1kgp-pca-tsne/</guid>
+          <guid>/2019/11/19/stereograms-1kgp-pca-tsne/</guid>
           <description>
 
 
@@ -126,10 +126,10 @@ We can clearly see some blobs corresponding to single populations.&lt;/p&gt;
       
         <item>
           <title>Tweet network from Genome Informatics 2019</title>
-          <link>/Hippocamplus/2019/11/10/gi2019-tweetnetwork/</link>
+          <link>/2019/11/10/gi2019-tweetnetwork/</link>
           <pubDate>Sun, 10 Nov 2019 00:00:00 UTC</pubDate>
           <author>Jean Monlong</author>
-          <guid>/Hippocamplus/2019/11/10/gi2019-tweetnetwork/</guid>
+          <guid>/2019/11/10/gi2019-tweetnetwork/</guid>
           <description>
 &lt;script src=&#34;./assets/rmarkdown-libs/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
 &lt;link href=&#34;./assets/rmarkdown-libs/vis/vis.css&#34; rel=&#34;stylesheet&#34; /&gt;
@@ -211,10 +211,10 @@ If tied, retweets are used to break the ties.&lt;/p&gt;
       
         <item>
           <title>Workflow Description Language (WDL) in Emacs</title>
-          <link>/Hippocamplus/2019/07/15/workflow-description-language-wdl-in-emacs/</link>
+          <link>/2019/07/15/workflow-description-language-wdl-in-emacs/</link>
           <pubDate>Mon, 15 Jul 2019 00:00:00 UTC</pubDate>
           <author>Jean Monlong</author>
-          <guid>/Hippocamplus/2019/07/15/workflow-description-language-wdl-in-emacs/</guid>
+          <guid>/2019/07/15/workflow-description-language-wdl-in-emacs/</guid>
           <description>
 
 &lt;div id=&#34;TOC&#34;&gt;
@@ -310,10 +310,10 @@ This can be changed at any time using &lt;code&gt;M-x lsp-workspace-folders-remo
       
         <item>
           <title>Cancer genes and CNA hotspots</title>
-          <link>/Hippocamplus/2019/04/03/cancer-genes-cna-r/</link>
+          <link>/2019/04/03/cancer-genes-cna-r/</link>
           <pubDate>Wed, 03 Apr 2019 00:00:00 UTC</pubDate>
           <author>Jean Monlong</author>
-          <guid>/Hippocamplus/2019/04/03/cancer-genes-cna-r/</guid>
+          <guid>/2019/04/03/cancer-genes-cna-r/</guid>
           <description>
 
 &lt;div id=&#34;TOC&#34;&gt;
@@ -697,10 +697,10 @@ It’s available &lt;a href=&#34;https://dl.dropboxusercontent.com/s/kayue1w92no
       
         <item>
           <title>First look at the gnomAD SV catalog</title>
-          <link>/Hippocamplus/2019/03/31/gnomad-sv-first-look/</link>
+          <link>/2019/03/31/gnomad-sv-first-look/</link>
           <pubDate>Sun, 31 Mar 2019 00:00:00 UTC</pubDate>
           <author>Jean Monlong</author>
-          <guid>/Hippocamplus/2019/03/31/gnomad-sv-first-look/</guid>
+          <guid>/2019/03/31/gnomad-sv-first-look/</guid>
           <description>
 
 &lt;div id=&#34;TOC&#34;&gt;
@@ -1515,10 +1515,10 @@ Just a few dozens variants with &lt;em&gt;FILTER=PASS&lt;/em&gt; may have a prob
       
         <item>
           <title>Artistic representation of DNA tests&#39; results</title>
-          <link>/Hippocamplus/2018/12/08/dna-art/</link>
+          <link>/2018/12/08/dna-art/</link>
           <pubDate>Sat, 08 Dec 2018 00:00:00 UTC</pubDate>
           <author>Jean Monlong</author>
-          <guid>/Hippocamplus/2018/12/08/dna-art/</guid>
+          <guid>/2018/12/08/dna-art/</guid>
           <description>
 
 &lt;div id=&#34;TOC&#34;&gt;
@@ -1598,10 +1598,10 @@ Just a few dozens variants with &lt;em&gt;FILTER=PASS&lt;/em&gt; may have a prob
       
         <item>
           <title>Speeding up blogdown/Pandoc for large bibliography</title>
-          <link>/Hippocamplus/2018/11/17/speedup-blogwdown-pandoc-large-bibliography/</link>
+          <link>/2018/11/17/speedup-blogwdown-pandoc-large-bibliography/</link>
           <pubDate>Sat, 17 Nov 2018 00:00:00 UTC</pubDate>
           <author>Jean Monlong</author>
-          <guid>/Hippocamplus/2018/11/17/speedup-blogwdown-pandoc-large-bibliography/</guid>
+          <guid>/2018/11/17/speedup-blogwdown-pandoc-large-bibliography/</guid>
           <description>
 
 
@@ -1649,10 +1649,10 @@ optional arguments:
       
         <item>
           <title>The Formation of the Scientific Mind, Gaston Bachelard - part 1</title>
-          <link>/Hippocamplus/2018/11/12/bachelard-formation-esprit-scientifique-part1/</link>
+          <link>/2018/11/12/bachelard-formation-esprit-scientifique-part1/</link>
           <pubDate>Mon, 12 Nov 2018 00:00:00 UTC</pubDate>
           <author>Jean Monlong</author>
-          <guid>/Hippocamplus/2018/11/12/bachelard-formation-esprit-scientifique-part1/</guid>
+          <guid>/2018/11/12/bachelard-formation-esprit-scientifique-part1/</guid>
           <description>
 
 &lt;div id=&#34;TOC&#34;&gt;
@@ -1885,10 +1885,10 @@ optional arguments:
       
         <item>
           <title>Peer-review opportunities for early career researchers</title>
-          <link>/Hippocamplus/2018/11/07/ecr-peerreview/</link>
+          <link>/2018/11/07/ecr-peerreview/</link>
           <pubDate>Wed, 07 Nov 2018 00:00:00 UTC</pubDate>
           <author>Jean Monlong</author>
-          <guid>/Hippocamplus/2018/11/07/ecr-peerreview/</guid>
+          <guid>/2018/11/07/ecr-peerreview/</guid>
           <description>
 
 
@@ -1967,10 +1967,10 @@ To have a chance to be included in the pool of reviewers, we should submit a let
       
         <item>
           <title>Syncing Mendeley and PDFs across devices</title>
-          <link>/Hippocamplus/2018/09/22/sync-mendeley/</link>
+          <link>/2018/09/22/sync-mendeley/</link>
           <pubDate>Sat, 22 Sep 2018 00:00:00 UTC</pubDate>
           <author>Jean Monlong</author>
-          <guid>/Hippocamplus/2018/09/22/sync-mendeley/</guid>
+          <guid>/2018/09/22/sync-mendeley/</guid>
           <description>
 
 
@@ -2019,10 +2019,10 @@ To have a chance to be included in the pool of reviewers, we should submit a let
       
         <item>
           <title>Mental health crisis in science...but careful with nonresponse bias</title>
-          <link>/Hippocamplus/2018/07/08/mental-health-crisis-science/</link>
+          <link>/2018/07/08/mental-health-crisis-science/</link>
           <pubDate>Sun, 08 Jul 2018 00:00:00 UTC</pubDate>
           <author>Jean Monlong</author>
-          <guid>/Hippocamplus/2018/07/08/mental-health-crisis-science/</guid>
+          <guid>/2018/07/08/mental-health-crisis-science/</guid>
           <description>
 
 
@@ -2074,10 +2074,10 @@ To have a chance to be included in the pool of reviewers, we should submit a let
       
         <item>
           <title>Clustering into same size clusters</title>
-          <link>/Hippocamplus/2018/06/09/cluster-same-size/</link>
+          <link>/2018/06/09/cluster-same-size/</link>
           <pubDate>Sat, 09 Jun 2018 00:00:00 UTC</pubDate>
           <author>Jean Monlong</author>
-          <guid>/Hippocamplus/2018/06/09/cluster-same-size/</guid>
+          <guid>/2018/06/09/cluster-same-size/</guid>
           <description>
 
 &lt;div id=&#34;TOC&#34;&gt;
@@ -2235,10 +2235,10 @@ Maybe implementing the loop with Rcpp could speed up the computation (in practic
       
         <item>
           <title>Converting scientific reviews to EPUB</title>
-          <link>/Hippocamplus/2018/05/07/epub-reviews/</link>
+          <link>/2018/05/07/epub-reviews/</link>
           <pubDate>Mon, 07 May 2018 00:00:00 UTC</pubDate>
           <author>Jean Monlong</author>
-          <guid>/Hippocamplus/2018/05/07/epub-reviews/</guid>
+          <guid>/2018/05/07/epub-reviews/</guid>
           <description>
 
 &lt;div id=&#34;TOC&#34;&gt;
@@ -2350,10 +2350,10 @@ Rscript epubify-naturereviews.R -i https://www.nature.com/articles/nrg.2015.16&l
       
         <item>
           <title>Additional checks for a LaTeX manuscript</title>
-          <link>/Hippocamplus/2018/04/18/check-latex-pub/</link>
+          <link>/2018/04/18/check-latex-pub/</link>
           <pubDate>Wed, 18 Apr 2018 00:00:00 UTC</pubDate>
           <author>Jean Monlong</author>
-          <guid>/Hippocamplus/2018/04/18/check-latex-pub/</guid>
+          <guid>/2018/04/18/check-latex-pub/</guid>
           <description>
 
 
@@ -2407,10 +2407,10 @@ optional arguments:
       
         <item>
           <title>Checking text similarity between two documents</title>
-          <link>/Hippocamplus/2018/04/16/text-similarity/</link>
+          <link>/2018/04/16/text-similarity/</link>
           <pubDate>Mon, 16 Apr 2018 00:00:00 UTC</pubDate>
           <author>Jean Monlong</author>
-          <guid>/Hippocamplus/2018/04/16/text-similarity/</guid>
+          <guid>/2018/04/16/text-similarity/</guid>
           <description>
 
 
@@ -2460,10 +2460,10 @@ T2: eletions and duplications, which affect DNA copy number, are collectively kn
       
         <item>
           <title>Journal comparison</title>
-          <link>/Hippocamplus/2018/02/23/journals-comparison/</link>
+          <link>/2018/02/23/journals-comparison/</link>
           <pubDate>Fri, 23 Feb 2018 00:00:00 UTC</pubDate>
           <author>Jean Monlong</author>
-          <guid>/Hippocamplus/2018/02/23/journals-comparison/</guid>
+          <guid>/2018/02/23/journals-comparison/</guid>
           <description>
 
 
@@ -3002,10 +3002,10 @@ T2: eletions and duplications, which affect DNA copy number, are collectively kn
       
         <item>
           <title>tSNE and clustering</title>
-          <link>/Hippocamplus/2018/02/13/tsne-and-clustering/</link>
+          <link>/2018/02/13/tsne-and-clustering/</link>
           <pubDate>Tue, 13 Feb 2018 00:00:00 UTC</pubDate>
           <author>Jean Monlong</author>
-          <guid>/Hippocamplus/2018/02/13/tsne-and-clustering/</guid>
+          <guid>/2018/02/13/tsne-and-clustering/</guid>
           <description>
 
 
@@ -3298,10 +3298,10 @@ ggplot(info.real, aes(x = tsne1, y = tsne2, colour = louvain)) +
       
         <item>
           <title>Bibliography style for AJHG</title>
-          <link>/Hippocamplus/2017/10/04/bibliography-style-for-ajhg/</link>
+          <link>/2017/10/04/bibliography-style-for-ajhg/</link>
           <pubDate>Wed, 04 Oct 2017 00:00:00 UTC</pubDate>
           <author>Jean Monlong</author>
-          <guid>/Hippocamplus/2017/10/04/bibliography-style-for-ajhg/</guid>
+          <guid>/2017/10/04/bibliography-style-for-ajhg/</guid>
           <description>
 
 
@@ -3317,10 +3317,10 @@ ggplot(info.real, aes(x = tsne1, y = tsne2, colour = louvain)) +
       
         <item>
           <title>MUMmerplots with ggplot2</title>
-          <link>/Hippocamplus/2017/09/19/mummerplots-with-ggplot2/</link>
+          <link>/2017/09/19/mummerplots-with-ggplot2/</link>
           <pubDate>Tue, 19 Sep 2017 00:00:00 UTC</pubDate>
           <author>Jean Monlong</author>
-          <guid>/Hippocamplus/2017/09/19/mummerplots-with-ggplot2/</guid>
+          <guid>/2017/09/19/mummerplots-with-ggplot2/</guid>
           <description>
 
 
@@ -3678,10 +3678,10 @@ mumgp.filt.m %&amp;gt;% select(similarity, start, end, filter) %&amp;gt;% gather
       
         <item>
           <title>Regression sandbox</title>
-          <link>/Hippocamplus/2017/09/16/regression-sandbox/</link>
+          <link>/2017/09/16/regression-sandbox/</link>
           <pubDate>Sat, 16 Sep 2017 00:00:00 UTC</pubDate>
           <author>Jean Monlong</author>
-          <guid>/Hippocamplus/2017/09/16/regression-sandbox/</guid>
+          <guid>/2017/09/16/regression-sandbox/</guid>
           <description>
 
 
@@ -4005,10 +4005,10 @@ ggplot(df, aes(x = x, y = y)) + geom_point(alpha = 0.2) +
       
         <item>
           <title>Enrichment between genomic regions</title>
-          <link>/Hippocamplus/2017/09/05/enrichment-between-genomic-regions/</link>
+          <link>/2017/09/05/enrichment-between-genomic-regions/</link>
           <pubDate>Tue, 05 Sep 2017 00:00:00 UTC</pubDate>
           <author>Jean Monlong</author>
-          <guid>/Hippocamplus/2017/09/05/enrichment-between-genomic-regions/</guid>
+          <guid>/2017/09/05/enrichment-between-genomic-regions/</guid>
           <description>
 
 
@@ -4457,10 +4457,10 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
       
         <item>
           <title>Conservation to annotate large(r) regions</title>
-          <link>/Hippocamplus/2017/02/25/conservation-to-annotate-larger-regions/</link>
+          <link>/2017/02/25/conservation-to-annotate-larger-regions/</link>
           <pubDate>Sat, 25 Feb 2017 00:00:00 UTC</pubDate>
           <author>Jean Monlong</author>
-          <guid>/Hippocamplus/2017/02/25/conservation-to-annotate-larger-regions/</guid>
+          <guid>/2017/02/25/conservation-to-annotate-larger-regions/</guid>
           <description>
 
 
@@ -4508,10 +4508,10 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
       
         <item>
           <title>Segmental duplication exploration</title>
-          <link>/Hippocamplus/2016/10/20/segmental-duplication-exploration/</link>
+          <link>/2016/10/20/segmental-duplication-exploration/</link>
           <pubDate>Thu, 20 Oct 2016 00:00:00 UTC</pubDate>
           <author>Jean Monlong</author>
-          <guid>/Hippocamplus/2016/10/20/segmental-duplication-exploration/</guid>
+          <guid>/2016/10/20/segmental-duplication-exploration/</guid>
           <description>
 
 
@@ -5260,10 +5260,10 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
       
         <item>
           <title>Summary epigenetic mark tracks</title>
-          <link>/Hippocamplus/2016/09/06/summary-epigenetic-mark-tracks/</link>
+          <link>/2016/09/06/summary-epigenetic-mark-tracks/</link>
           <pubDate>Tue, 06 Sep 2016 00:00:00 UTC</pubDate>
           <author>Jean Monlong</author>
-          <guid>/Hippocamplus/2016/09/06/summary-epigenetic-mark-tracks/</guid>
+          <guid>/2016/09/06/summary-epigenetic-mark-tracks/</guid>
           <description>
 
 
@@ -5306,10 +5306,10 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
       
         <item>
           <title>Exploring basic annotations of the Human genome</title>
-          <link>/Hippocamplus/2016/06/04/exploring-basic-annotations-of-the-human-genome/</link>
+          <link>/2016/06/04/exploring-basic-annotations-of-the-human-genome/</link>
           <pubDate>Sat, 04 Jun 2016 00:00:00 UTC</pubDate>
           <author>Jean Monlong</author>
-          <guid>/Hippocamplus/2016/06/04/exploring-basic-annotations-of-the-human-genome/</guid>
+          <guid>/2016/06/04/exploring-basic-annotations-of-the-human-genome/</guid>
           <description>
 
 
@@ -7329,10 +7329,10 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
       
         <item>
           <title>Gencode exploration</title>
-          <link>/Hippocamplus/2016/06/04/gencode-exploration/</link>
+          <link>/2016/06/04/gencode-exploration/</link>
           <pubDate>Sat, 04 Jun 2016 00:00:00 UTC</pubDate>
           <author>Jean Monlong</author>
-          <guid>/Hippocamplus/2016/06/04/gencode-exploration/</guid>
+          <guid>/2016/06/04/gencode-exploration/</guid>
           <description>
 
 
@@ -7629,10 +7629,10 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
       
         <item>
           <title>Preparing some genomic annotations</title>
-          <link>/Hippocamplus/2016/06/03/preparing-some-genomic-annotations/</link>
+          <link>/2016/06/03/preparing-some-genomic-annotations/</link>
           <pubDate>Fri, 03 Jun 2016 00:00:00 UTC</pubDate>
           <author>Jean Monlong</author>
-          <guid>/Hippocamplus/2016/06/03/preparing-some-genomic-annotations/</guid>
+          <guid>/2016/06/03/preparing-some-genomic-annotations/</guid>
           <description>
 
 
@@ -7683,10 +7683,10 @@ asso.df = do.call(rbind, asso.df)&lt;/code&gt;&lt;/pre&gt;
       
         <item>
           <title>Word Cloud in R</title>
-          <link>/Hippocamplus/2016/02/26/word-cloud-in-r/</link>
+          <link>/2016/02/26/word-cloud-in-r/</link>
           <pubDate>Fri, 26 Feb 2016 00:00:00 UTC</pubDate>
           <author>Jean Monlong</author>
-          <guid>/Hippocamplus/2016/02/26/word-cloud-in-r/</guid>
+          <guid>/2016/02/26/word-cloud-in-r/</guid>
           <description>
 
 

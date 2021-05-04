@@ -2,30 +2,30 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Science on </title>
-    <link>/Hippocamplus/tags/science/</link>
+    <link>/tags/science/</link>
     <description>Recent content in Science on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 12 Nov 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/Hippocamplus/tags/science/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/science/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>The Formation of the Scientific Mind, Gaston Bachelard - part 1</title>
-      <link>/Hippocamplus/2018/11/12/bachelard-formation-esprit-scientifique-part1/</link>
+      <link>/2018/11/12/bachelard-formation-esprit-scientifique-part1/</link>
       <pubDate>Mon, 12 Nov 2018 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/2018/11/12/bachelard-formation-esprit-scientifique-part1/</guid>
+      <guid>/2018/11/12/bachelard-formation-esprit-scientifique-part1/</guid>
       <description>Quotes about science The concept of epistemological obstacle The first obstacle: the primary experiment General knowledge as an obstacle An example of verbal obstacle: the sponge Aside on education Sick burns   These are notes from my reading of La formation de l’esprit scientifique by Gaston Bachelard. I hesitated a bit but finally decided to write the notes in English. In the end this blog is as much a place to save things I want to remember as a place to practice writing in English and share with other people.</description>
     </item>
     
     <item>
       <title>Peer-review opportunities for early career researchers</title>
-      <link>/Hippocamplus/2018/11/07/ecr-peerreview/</link>
+      <link>/2018/11/07/ecr-peerreview/</link>
       <pubDate>Wed, 07 Nov 2018 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/2018/11/07/ecr-peerreview/</guid>
+      <guid>/2018/11/07/ecr-peerreview/</guid>
       <description>Some notes from today’s workshop organized by USPA with bio-protocol and eLife ambassadors.
 Bio-protocol Data is uploaded to databases, code to repos like GitHub but protocols are still just in the Methods section of papers. And the Methods of a paper often omits many details which makes it difficult to reuse the experiment or reproduce results.
 Dennis Bua introduced bio-protocol, a platform to peer-review protocols. Here the goal is to make sure all the information is provided to reproduce an experiment.</description>
@@ -33,10 +33,10 @@ Dennis Bua introduced bio-protocol, a platform to peer-review protocols. Here th
     
     <item>
       <title>Mental health crisis in science...but careful with nonresponse bias</title>
-      <link>/Hippocamplus/2018/07/08/mental-health-crisis-science/</link>
+      <link>/2018/07/08/mental-health-crisis-science/</link>
       <pubDate>Sun, 08 Jul 2018 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/2018/07/08/mental-health-crisis-science/</guid>
+      <guid>/2018/07/08/mental-health-crisis-science/</guid>
       <description>A few month ago, a short paper was published in Nature Biotechnology1 about the mental health crisis in science. It attracted a bit of attention on the news and social media, which is good because it’s an important matter. The article was very good at putting the subject on the table and proposing some solutions, but it picked my curiosity about nonresponse bias.
 Issues with the Nature Biotech article The numbers are based on an email survey so one issue is the nonresponse bias: the individuals that responded might not be representative of the population.</description>
     </item>

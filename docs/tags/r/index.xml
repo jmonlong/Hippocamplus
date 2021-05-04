@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>R on </title>
-    <link>/Hippocamplus/tags/r/</link>
+    <link>/tags/r/</link>
     <description>Recent content in R on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 19 Nov 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/Hippocamplus/tags/r/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/r/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Stereograms of the 1KGP PCA/tSNE</title>
-      <link>/Hippocamplus/2019/11/19/stereograms-1kgp-pca-tsne/</link>
+      <link>/2019/11/19/stereograms-1kgp-pca-tsne/</link>
       <pubDate>Tue, 19 Nov 2019 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/2019/11/19/stereograms-1kgp-pca-tsne/</guid>
+      <guid>/2019/11/19/stereograms-1kgp-pca-tsne/</guid>
       <description>What is stereoscopy? How to look at a stereogram?  Technique for creating or enhancing the illusion of depth in an image by means of stereopsis for binocular vision.
  –Stereoscopy (Wikipedia)
 Although some binocular-like devices can be used to merge two images and create the illusion of depth, there are also “freeviewing” techniques that don’t require any particular material. The two main techniques are to either look straight through the image or to cross your eyes.</description>
@@ -24,48 +24,48 @@ Although some binocular-like devices can be used to merge two images and create 
     
     <item>
       <title>Tweet network from Genome Informatics 2019</title>
-      <link>/Hippocamplus/2019/11/10/gi2019-tweetnetwork/</link>
+      <link>/2019/11/10/gi2019-tweetnetwork/</link>
       <pubDate>Sun, 10 Nov 2019 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/2019/11/10/gi2019-tweetnetwork/</guid>
+      <guid>/2019/11/10/gi2019-tweetnetwork/</guid>
       <description>I want to have a quick look at the tweets from the Genome Informatics meeting:
  to learn how to use the rtweet and ggraph R packages. to create a visual representation (as nice as possible) of our open community, with attendants sharing with each other. to highlight the high-volume accounts and their value even for someone attending the conference. to see if there are sub-groups of researchers among the attendants.</description>
     </item>
     
     <item>
       <title>Cancer genes and CNA hotspots</title>
-      <link>/Hippocamplus/2019/04/03/cancer-genes-cna-r/</link>
+      <link>/2019/04/03/cancer-genes-cna-r/</link>
       <pubDate>Wed, 03 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/2019/04/03/cancer-genes-cna-r/</guid>
+      <guid>/2019/04/03/cancer-genes-cna-r/</guid>
       <description>Candidate Cancer Gene Database (CCGD) Cancer Gene Census Merge the gene lists “Effect” vs “Role” ?  Known CNA hotspots Saving the R objects   This is an updated version of an old private post where I had prepared some R objects with cancer genes and CNA hotspots. I used this to quickly annotate copy number results in cancer projects. The file was almost 3 years old so here is an updated version (as of today, Apr 3 2019).</description>
     </item>
     
     <item>
       <title>Speeding up blogdown/Pandoc for large bibliography</title>
-      <link>/Hippocamplus/2018/11/17/speedup-blogwdown-pandoc-large-bibliography/</link>
+      <link>/2018/11/17/speedup-blogwdown-pandoc-large-bibliography/</link>
       <pubDate>Sat, 17 Nov 2018 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/2018/11/17/speedup-blogwdown-pandoc-large-bibliography/</guid>
+      <guid>/2018/11/17/speedup-blogwdown-pandoc-large-bibliography/</guid>
       <description>I have another website where I write down my reviews of the papers I read. To handle citations in pages and posts, I was originally using jekyll-scholar. It scales well enough that I could have one main BibTeX file for all the pages of the website. I’m now switching to blogdown/Hugo because it’s apparently faster, with less dependencies, but most importantly because it’s very easy to integrate R code with RMarkdown.</description>
     </item>
     
     <item>
       <title>Clustering into same size clusters</title>
-      <link>/Hippocamplus/2018/06/09/cluster-same-size/</link>
+      <link>/2018/06/09/cluster-same-size/</link>
       <pubDate>Sat, 09 Jun 2018 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/2018/06/09/cluster-same-size/</guid>
+      <guid>/2018/06/09/cluster-same-size/</guid>
       <description>Methods Iterative dichotomy Iterative nearest neighbor Same-size k-Means Variation Iterative “bottom-leaves” hierarchical clustering  Test data Results Cluster size Within-cluster distance Silhouette score  Conclusions Extra: optimization Code   Update Nov 23 2018: New iterative approach using hierarchical clustering and better graphs.
 I would like to cluster points into groups of similar size. For example I would like to group 1000 points into clusters of around 20 points each.</description>
     </item>
     
     <item>
       <title>tSNE and clustering</title>
-      <link>/Hippocamplus/2018/02/13/tsne-and-clustering/</link>
+      <link>/2018/02/13/tsne-and-clustering/</link>
       <pubDate>Tue, 13 Feb 2018 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/2018/02/13/tsne-and-clustering/</guid>
+      <guid>/2018/02/13/tsne-and-clustering/</guid>
       <description>tSNE can give really nice results when we want to visualize many groups of multi-dimensional points. Once the 2D graph is done we might want to identify which points cluster in the tSNE blobs.
 Using simulated and real data, I’ll try different methods:
  Hierarchical clustering K-means Gaussian mixture Density-based clustering Louvain community detection.  TL;DR If &amp;lt;30K points, hierarchical clustering is robust, easy to use and with reasonable computing time.</description>
@@ -73,20 +73,20 @@ Using simulated and real data, I’ll try different methods:
     
     <item>
       <title>MUMmerplots with ggplot2</title>
-      <link>/Hippocamplus/2017/09/19/mummerplots-with-ggplot2/</link>
+      <link>/2017/09/19/mummerplots-with-ggplot2/</link>
       <pubDate>Tue, 19 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/2017/09/19/mummerplots-with-ggplot2/</guid>
+      <guid>/2017/09/19/mummerplots-with-ggplot2/</guid>
       <description>Update Oct 28 2018: added reference id (rid) to be able to visualize multiple reference regions. Also uploaded the example data somewhere.
 library(dplyr) library(magrittr) library(GenomicRanges) library(knitr) library(ggplot2) library(tidyr) MUMmer plot The MUMmer plot that I want to reproduce showed three contigs overlapping a region of chr 14. I had filtered the delta file with delta-filter -l 10000 -q -r to get only the contigs with the best alignments. I had used mummerplot with the -l layout option to reorder and orient the sequences to have a nice diagonal.</description>
     </item>
     
     <item>
       <title>Regression sandbox</title>
-      <link>/Hippocamplus/2017/09/16/regression-sandbox/</link>
+      <link>/2017/09/16/regression-sandbox/</link>
       <pubDate>Sat, 16 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/2017/09/16/regression-sandbox/</guid>
+      <guid>/2017/09/16/regression-sandbox/</guid>
       <description>library(ggplot2) library(broom) library(magrittr) library(dplyr) library(knitr) Logistic regression One way or another If we have two binary variables and we want to see if they are associated we could use a logistic regression. How do we decide which variable to be the predictor and which variable to observed variable ?
 In theory there shouldn’t be any differences but let’s check with a dummy example:
 df = data.frame(x = sample(c(FALSE, TRUE), 100, TRUE)) df$y = df$x df$y[1:70] = sample(c(FALSE, TRUE), 70, TRUE) glm(y ~ x, data = df, family = binomial()) %&amp;gt;% tidy %&amp;gt;% kable   term estimate std.</description>
@@ -94,10 +94,10 @@ df = data.frame(x = sample(c(FALSE, TRUE), 100, TRUE)) df$y = df$x df$y[1:70] = 
     
     <item>
       <title>Word Cloud in R</title>
-      <link>/Hippocamplus/2016/02/26/word-cloud-in-r/</link>
+      <link>/2016/02/26/word-cloud-in-r/</link>
       <pubDate>Fri, 26 Feb 2016 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/2016/02/26/word-cloud-in-r/</guid>
+      <guid>/2016/02/26/word-cloud-in-r/</guid>
       <description>The wordcloud package is available on CRAN.
 Fake words I create fake words to see a bit how the command is working.
 library(wordcloud) createWords &amp;lt;- function(w.l = 3) paste(sample(letters, w.l, TRUE), collapse = &amp;quot;&amp;quot;) words = sapply(1:200, function(e) createWords(runif(1, 3, 10))) freq = c(sample(1:30, 190, T), sample(30:150, 10, T)) freq = freq/sum(freq) wordcloud(words, freq) ## Big words in the center wordcloud(words, freq, random.order = FALSE) ## Max word number wordcloud(words, freq, max.</description>

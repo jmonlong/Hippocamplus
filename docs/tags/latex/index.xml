@@ -2,41 +2,41 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Latex on </title>
-    <link>/Hippocamplus/tags/latex/</link>
+    <link>/tags/latex/</link>
     <description>Recent content in Latex on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 18 Apr 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/Hippocamplus/tags/latex/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/latex/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Additional checks for a LaTeX manuscript</title>
-      <link>/Hippocamplus/2018/04/18/check-latex-pub/</link>
+      <link>/2018/04/18/check-latex-pub/</link>
       <pubDate>Wed, 18 Apr 2018 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/2018/04/18/check-latex-pub/</guid>
+      <guid>/2018/04/18/check-latex-pub/</guid>
       <description>To continue on the series of “Things I did instead of writing my thesis to help me write my thesis”, another Python script that reads a LaTeX manuscript and helps check that everything is fine. More specifically, the checkLatex.py script (on GitHub) will:
 List missing references. List multi-references to reorder. List duplicated labels. List labels that don’t start by fig: or tab:. List figures/tables that are not in order. List ?</description>
     </item>
     
     <item>
       <title>Checking text similarity between two documents</title>
-      <link>/Hippocamplus/2018/04/16/text-similarity/</link>
+      <link>/2018/04/16/text-similarity/</link>
       <pubDate>Mon, 16 Apr 2018 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/2018/04/16/text-similarity/</guid>
+      <guid>/2018/04/16/text-similarity/</guid>
       <description>To start the series of “Things I did instead of writing my thesis to help me write my thesis”, a small Python script that compares two text documents and output similar parts. I did that to avoid auto-plagiarism of my manuscripts’ introduction in the main thesis introduction.
 It’s a very naive approach but sped up the checking process (maybe worth the time). It first looks for short exact matches between the two documents, then extends these exact matches and uses the difflib module to keep text with a minimum similarity score (default 80%).</description>
     </item>
     
     <item>
       <title>Bibliography style for AJHG</title>
-      <link>/Hippocamplus/2017/10/04/bibliography-style-for-ajhg/</link>
+      <link>/2017/10/04/bibliography-style-for-ajhg/</link>
       <pubDate>Wed, 04 Oct 2017 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/2017/10/04/bibliography-style-for-ajhg/</guid>
+      <guid>/2017/10/04/bibliography-style-for-ajhg/</guid>
       <description>I couldn’t find an up-to-date/working LaTeX bibliography style for the American Journal of Human Genetics (AJHG). The output from unsrtnat (my goto style) was also quite different from what the journal wanted.
 I found a bibliography style for Cell which is almost what AJHG wants, but I also wanted the references to be ordered by their appearance in the text (like for unsrtnat) and not alphabetically. So I downloaded both cell.</description>
     </item>

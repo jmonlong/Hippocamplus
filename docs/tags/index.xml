@@ -2,156 +2,156 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on </title>
-    <link>/Hippocamplus/tags/</link>
+    <link>/tags/</link>
     <description>Recent content in Tags on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 12 Nov 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/Hippocamplus/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Book</title>
-      <link>/Hippocamplus/tags/book/</link>
+      <link>/tags/book/</link>
       <pubDate>Mon, 12 Nov 2018 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/tags/book/</guid>
+      <guid>/tags/book/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Data</title>
-      <link>/Hippocamplus/tags/data/</link>
+      <link>/tags/data/</link>
       <pubDate>Wed, 03 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/tags/data/</guid>
+      <guid>/tags/data/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Emacs</title>
-      <link>/Hippocamplus/tags/emacs/</link>
+      <link>/tags/emacs/</link>
       <pubDate>Mon, 15 Jul 2019 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/tags/emacs/</guid>
+      <guid>/tags/emacs/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Epigenetic</title>
-      <link>/Hippocamplus/tags/epigenetic/</link>
+      <link>/tags/epigenetic/</link>
       <pubDate>Tue, 06 Sep 2016 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/tags/epigenetic/</guid>
+      <guid>/tags/epigenetic/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Genome</title>
-      <link>/Hippocamplus/tags/genome/</link>
+      <link>/tags/genome/</link>
       <pubDate>Wed, 03 Apr 2019 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/tags/genome/</guid>
+      <guid>/tags/genome/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Latex</title>
-      <link>/Hippocamplus/tags/latex/</link>
+      <link>/tags/latex/</link>
       <pubDate>Wed, 18 Apr 2018 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/tags/latex/</guid>
+      <guid>/tags/latex/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Non Coding</title>
-      <link>/Hippocamplus/tags/non-coding/</link>
+      <link>/tags/non-coding/</link>
       <pubDate>Sat, 25 Feb 2017 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/tags/non-coding/</guid>
+      <guid>/tags/non-coding/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Plot</title>
-      <link>/Hippocamplus/tags/plot/</link>
+      <link>/tags/plot/</link>
       <pubDate>Tue, 19 Nov 2019 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/tags/plot/</guid>
+      <guid>/tags/plot/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Pub</title>
-      <link>/Hippocamplus/tags/pub/</link>
+      <link>/tags/pub/</link>
       <pubDate>Wed, 07 Nov 2018 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/tags/pub/</guid>
+      <guid>/tags/pub/</guid>
       <description></description>
     </item>
     
     <item>
       <title>R</title>
-      <link>/Hippocamplus/tags/r/</link>
+      <link>/tags/r/</link>
       <pubDate>Tue, 19 Nov 2019 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/tags/r/</guid>
+      <guid>/tags/r/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Science</title>
-      <link>/Hippocamplus/tags/science/</link>
+      <link>/tags/science/</link>
       <pubDate>Mon, 12 Nov 2018 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/tags/science/</guid>
+      <guid>/tags/science/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Stats</title>
-      <link>/Hippocamplus/tags/stats/</link>
+      <link>/tags/stats/</link>
       <pubDate>Sat, 09 Jun 2018 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/tags/stats/</guid>
+      <guid>/tags/stats/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Sv</title>
-      <link>/Hippocamplus/tags/sv/</link>
+      <link>/tags/sv/</link>
       <pubDate>Sun, 31 Mar 2019 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/tags/sv/</guid>
+      <guid>/tags/sv/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Thesis</title>
-      <link>/Hippocamplus/tags/thesis/</link>
+      <link>/tags/thesis/</link>
       <pubDate>Mon, 07 May 2018 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/tags/thesis/</guid>
+      <guid>/tags/thesis/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Wdl</title>
-      <link>/Hippocamplus/tags/wdl/</link>
+      <link>/tags/wdl/</link>
       <pubDate>Mon, 15 Jul 2019 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/tags/wdl/</guid>
+      <guid>/tags/wdl/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Website</title>
-      <link>/Hippocamplus/tags/website/</link>
+      <link>/tags/website/</link>
       <pubDate>Sat, 17 Nov 2018 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/tags/website/</guid>
+      <guid>/tags/website/</guid>
       <description></description>
     </item>
     

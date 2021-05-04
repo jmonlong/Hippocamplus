@@ -2,31 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Stats on </title>
-    <link>/Hippocamplus/tags/stats/</link>
+    <link>/tags/stats/</link>
     <description>Recent content in Stats on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 09 Jun 2018 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/Hippocamplus/tags/stats/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/stats/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Clustering into same size clusters</title>
-      <link>/Hippocamplus/2018/06/09/cluster-same-size/</link>
+      <link>/2018/06/09/cluster-same-size/</link>
       <pubDate>Sat, 09 Jun 2018 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/2018/06/09/cluster-same-size/</guid>
+      <guid>/2018/06/09/cluster-same-size/</guid>
       <description>Methods Iterative dichotomy Iterative nearest neighbor Same-size k-Means Variation Iterative “bottom-leaves” hierarchical clustering  Test data Results Cluster size Within-cluster distance Silhouette score  Conclusions Extra: optimization Code   Update Nov 23 2018: New iterative approach using hierarchical clustering and better graphs.
 I would like to cluster points into groups of similar size. For example I would like to group 1000 points into clusters of around 20 points each.</description>
     </item>
     
     <item>
       <title>tSNE and clustering</title>
-      <link>/Hippocamplus/2018/02/13/tsne-and-clustering/</link>
+      <link>/2018/02/13/tsne-and-clustering/</link>
       <pubDate>Tue, 13 Feb 2018 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/2018/02/13/tsne-and-clustering/</guid>
+      <guid>/2018/02/13/tsne-and-clustering/</guid>
       <description>tSNE can give really nice results when we want to visualize many groups of multi-dimensional points. Once the 2D graph is done we might want to identify which points cluster in the tSNE blobs.
 Using simulated and real data, I’ll try different methods:
  Hierarchical clustering K-means Gaussian mixture Density-based clustering Louvain community detection.  TL;DR If &amp;lt;30K points, hierarchical clustering is robust, easy to use and with reasonable computing time.</description>
@@ -34,10 +34,10 @@ Using simulated and real data, I’ll try different methods:
     
     <item>
       <title>Regression sandbox</title>
-      <link>/Hippocamplus/2017/09/16/regression-sandbox/</link>
+      <link>/2017/09/16/regression-sandbox/</link>
       <pubDate>Sat, 16 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/2017/09/16/regression-sandbox/</guid>
+      <guid>/2017/09/16/regression-sandbox/</guid>
       <description>library(ggplot2) library(broom) library(magrittr) library(dplyr) library(knitr) Logistic regression One way or another If we have two binary variables and we want to see if they are associated we could use a logistic regression. How do we decide which variable to be the predictor and which variable to observed variable ?
 In theory there shouldn’t be any differences but let’s check with a dummy example:
 df = data.frame(x = sample(c(FALSE, TRUE), 100, TRUE)) df$y = df$x df$y[1:70] = sample(c(FALSE, TRUE), 70, TRUE) glm(y ~ x, data = df, family = binomial()) %&amp;gt;% tidy %&amp;gt;% kable   term estimate std.</description>
@@ -45,10 +45,10 @@ df = data.frame(x = sample(c(FALSE, TRUE), 100, TRUE)) df$y = df$x df$y[1:70] = 
     
     <item>
       <title>Enrichment between genomic regions</title>
-      <link>/Hippocamplus/2017/09/05/enrichment-between-genomic-regions/</link>
+      <link>/2017/09/05/enrichment-between-genomic-regions/</link>
       <pubDate>Tue, 05 Sep 2017 00:00:00 +0000</pubDate>
       
-      <guid>/Hippocamplus/2017/09/05/enrichment-between-genomic-regions/</guid>
+      <guid>/2017/09/05/enrichment-between-genomic-regions/</guid>
       <description>Testing if two sets of genomic regions overlap significantly is not straightforward. In the simple situation of regions of 1 bp (e.g. SNVs) we could use a hypergeometric test. When the regions are small enough and there are not too many, the hypergeometric test might also be a fair approximation.
 But when we manipulate many regions of variable size covering the entire genome it’s not as straightforward. The gene annotation is an example.</description>
     </item>
