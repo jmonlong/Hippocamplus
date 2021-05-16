@@ -41,6 +41,8 @@ To find which package provides a particular *xxx.sty* run `tlmgr_search("/xxx.st
 
 ## Misc
 
+- Use `~` to make sure words are not split by line wrapping, e.g. a good habit: `Fig~\ref{..}`.
+
 ### Document class
 
 ~~~tex
@@ -331,7 +333,19 @@ Using `\usepackage{authblk}`, the authors' affiliations can be defined like this
 ~~~
 
 
-### Notes/comments
+### Notes/comments using the [todo package](http://tug.ctan.org/macros/latex/contrib/todonotes/todonotes.pdf)
+
+To set the font size or width for all notes:
+
+~~~tex
+\usepackage[textsize=scriptsize]{todonotes}
+%% avoid the todo notes going out of the margin
+\setlength{\marginparwidth}{4em}
+~~~
+
+An example of inline note specifying an author: `\todo[inline,author=NAME]{The note's content}`
+
+Slightly nicer custom comment commands, bolding the author and adding a comment number:
 
 ~~~tex
 \usepackage{todonotes}
@@ -352,7 +366,9 @@ Using `\usepackage{authblk}`, the authors' affiliations can be defined like this
   }}
 ~~~
 
-To add a note: `\commentil[NAME]{This is an inline comment}`.
+Then, add a note with `\comment[NAME]{This is a comment}` or `\commentil[NAME]{This is an inline comment}`.
+
+
 
 ### Main text and supplements in two documents
 

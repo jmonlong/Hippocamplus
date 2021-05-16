@@ -43,7 +43,7 @@ output:
 <li><a href="#abstract">Abstract</a></li>
 <li><a href="#author-affiliation">Author affiliation</a></li>
 <li><a href="#text-formatting">Text formatting</a></li>
-<li><a href="#notescomments">Notes/comments</a></li>
+<li><a href="#notescomments-using-the-todo-package">Notes/comments using the <span>todo package</span></a></li>
 <li><a href="#main-text-and-supplements-in-two-documents">Main text and supplements in two documents</a></li>
 <li><a href="#compare-versions-and-highlight-revisions">Compare versions and highlight revisions</a></li>
 <li><a href="#one-figure-one-file">One figure = one file</a></li>
@@ -97,6 +97,9 @@ To find which package provides a particular <em>xxx.sty</em> run <code>tlmgr_sea
 </div>
 <div id="misc" class="section level2">
 <h2>Misc</h2>
+<ul>
+<li>Use <code>~</code> to make sure words are not split by line wrapping, e.g. a good habit: <code>Fig~\ref{..}</code>.</li>
+</ul>
 <div id="document-class" class="section level3">
 <h3>Document class</h3>
 <pre class="tex"><code>\documentclass[12pt, a4paper]{article}</code></pre>
@@ -318,8 +321,14 @@ Genetics has been shown to be important...
 <pre class="tex"><code>\usepackage[modulo]{lineno}
 \linenumbers</code></pre>
 </div>
-<div id="notescomments" class="section level3">
-<h3>Notes/comments</h3>
+<div id="notescomments-using-the-todo-package" class="section level3">
+<h3>Notes/comments using the <a href="http://tug.ctan.org/macros/latex/contrib/todonotes/todonotes.pdf">todo package</a></h3>
+<p>To set the font size or width for all notes:</p>
+<pre class="tex"><code>\usepackage[textsize=scriptsize]{todonotes}
+%% avoid the todo notes going out of the margin
+\setlength{\marginparwidth}{4em}</code></pre>
+<p>An example of inline note specifying an author: <code>\todo[inline,author=NAME]{The note's content}</code></p>
+<p>Slightly nicer custom comment commands, bolding the author and adding a comment number:</p>
 <pre class="tex"><code>\usepackage{todonotes}
 \newcounter{mycomment}
 \newcommand{\comment}[2][]{%
@@ -336,7 +345,7 @@ Genetics has been shown to be important...
     \todo[inline,color={red!100!green!33},size=\tiny]{%
       \textbf{[\uppercase{#1}\themycomment]:}~#2}%
   }}</code></pre>
-<p>To add a note: <code>\commentil[NAME]{This is an inline comment}</code>.</p>
+<p>Then, add a note with <code>\comment[NAME]{This is a comment}</code> or <code>\commentil[NAME]{This is an inline comment}</code>.</p>
 </div>
 <div id="main-text-and-supplements-in-two-documents" class="section level3">
 <h3>Main text and supplements in two documents</h3>
