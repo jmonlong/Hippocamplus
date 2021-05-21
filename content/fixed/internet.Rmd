@@ -79,6 +79,18 @@ In `/usr/share/X11/xkb/symbols/us` I added to the *xkb_symbols "altgr-intl"* sec
    key <AB03> { [ c, C, ccedilla,     Ccedilla    ] };
 ~~~
 
+## Install a specific/older R version
+
+R updated automatically once and I didn't want to re-install all the packages, so I temporarily switched back to the previous version with:
+
+~~~sh
+sudo apt install r-base-core=4.0.5-1.2004.0
+sudo apt install r-recommended=4.0.5-1.2004.0
+sudo apt install r-base=4.0.5-1.2004.0
+~~~
+
+The available versions were listed using `sudo apt list -a r-base-core`
+
 ## Sync a specific Google Drive folder on Ubuntu
 
 I use *grive* and followed [these instructions](https://www.howtoforge.com/tutorial/sync-documents-with-google-drive-on-ubuntu-linux/).
