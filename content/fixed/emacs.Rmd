@@ -328,7 +328,7 @@ In my `.emacs` I added the `synosaurus-mode` minor mode:
 ### Grammar checking
 
 The `langtool` package is available in MELPA. 
-It uses the [LanguageTool](https://languagetool.org/) JAR to highlight potential grammar problems.
+It uses the [LanguageTool](https://languagetool.org/) JAR to highlight potential grammar problems (downloaded from [here](https://languagetool.org/download/LanguageTool-stable.zip)).
 In my `.emacs`:
 
 ~~~lisp
