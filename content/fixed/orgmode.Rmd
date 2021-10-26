@@ -366,6 +366,27 @@ I added in my `.emacs`:
 (setq org-agenda-prefix-format " %i %-15(getlasthead)%?-12t% s ")
 ~~~
 
+## Shift timestamps by X hours when traveling to a different time zone
+
+There is apparently no way to handle time zones easily.
+It makes it a bit annoying when traveling to a different time zone. 
+This is the best I could find:
+
+1. In *agenda view*, mark the events to modify for bulk change using `m`
+2. Use a bulk change with a custom function. E.g. to add 3h: `C-u 3 B h`
+
+I defined the custom function linked to the bulk command *h* in my `.emacs`:
+
+~~~lisp
+(setq org-agenda-bulk-custom-functions
+      `((?h (lambda () (call-interactively 'org-agenda-date-later-hours)))
+        ,@org-agenda-bulk-custom-functions))
+~~~
+
+This is easy enough because I really just want to change the times of upcoming meetings, not everything.
+I don't really care if the scheduled tasks I set for myself are not in the proper time zone, they tend to be re-scheduled anyway.
+And I travel for a couple of weeks maximum, so it's quick to launch a *week* agenda view (`C-c a w`) and mark/shift the few upcoming meetings. 
+
 ## To check next
 
 - [Export to HTML with ox-twbs](https://github.com/marsmining/ox-twbs)

@@ -264,6 +264,7 @@
 <li><a href="#tags">Tags</a></li>
 <li><a href="#clocking-time">Clocking time</a></li>
 <li><a href="#custom-agenda-views">Custom agenda views</a></li>
+<li><a href="#shift-timestamps-by-x-hours-when-traveling-to-a-different-time-zone">Shift timestamps by X hours when traveling to a different time zone</a></li>
 <li><a href="#to-check-next">To check next</a></li>
 </ul>
 </div>
@@ -413,10 +414,10 @@ This page will contain my configuration and the small subset of commands that I 
 | mean | 10.7 |  9.7 |
 #+TBLFM: $3=$2-1::@&gt;$2=vmean(@3..@-I);p3</code></pre>
 <ul>
-<li><p>Start a formula in a cell by typing <code>:=FORMULA</code> and <code>C-c C-c</code> (<code>=FORMULA</code> for column formulas).</p></li>
-<li><p><code>@&gt;</code> means <em>the last row</em></p></li>
+<li>Start a formula in a cell by typing <code>:=FORMULA</code> and <code>C-c C-c</code> (<code>=FORMULA</code> for column formulas).</li>
+<li><code>@&gt;</code> means <em>the last row</em></li>
 <li><p><code>I</code> to define range relative to the target field, e.g. <code>@-I</code>=<em>row above</em>.</p></li>
-<li><p>A plot line could look like: <code>#+PLOT: title:"graph title" ind:1 deps:(2 3) set:"xlabel 'ColA'"</code></p></li>
+<li>A plot line could look like: <code>#+PLOT: title:"graph title" ind:1 deps:(2 3) set:"xlabel 'ColA'"</code></li>
 <li><p><code>C-c " g</code> to make a plot (requires gnuplot and gnuplot to be installed)</p></li>
 </ul>
 </div>
@@ -605,6 +606,23 @@ I added in my <code>.emacs</code>:</p>
       (concat &quot;[&quot; (org-format-outline-path (list x)) &quot;]&quot;))
       &quot;&quot;)))
 (setq org-agenda-prefix-format &quot; %i %-15(getlasthead)%?-12t% s &quot;)</code></pre>
+</div>
+<div id="shift-timestamps-by-x-hours-when-traveling-to-a-different-time-zone" class="section level2">
+<h2>Shift timestamps by X hours when traveling to a different time zone</h2>
+<p>There is apparently no way to handle time zones easily.
+It makes it a bit annoying when traveling to a different time zone.
+This is the best I could find:</p>
+<ol style="list-style-type: decimal">
+<li>In <em>agenda view</em>, mark the events to modify for bulk change using <code>m</code></li>
+<li>Use a bulk change with a custom function. E.g. to add 3h: <code>C-u 3 B h</code></li>
+</ol>
+<p>I defined the custom function linked to the bulk command <em>h</em> in my <code>.emacs</code>:</p>
+<pre class="lisp"><code>(setq org-agenda-bulk-custom-functions
+      `((?h (lambda () (call-interactively &#39;org-agenda-date-later-hours)))
+        ,@org-agenda-bulk-custom-functions))</code></pre>
+<p>This is easy enough because I really just want to change the times of upcoming meetings, not everything.
+I don’t really care if the scheduled tasks I set for myself are not in the proper time zone, they tend to be re-scheduled anyway.
+And I travel for a couple of weeks maximum, so it’s quick to launch a <em>week</em> agenda view (<code>C-c a w</code>) and mark/shift the few upcoming meetings.</p>
 </div>
 <div id="to-check-next" class="section level2">
 <h2>To check next</h2>
