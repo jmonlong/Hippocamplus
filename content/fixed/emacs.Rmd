@@ -32,6 +32,8 @@ Some of the basic tweaks in my `.emacs` file:
 (set-default-font "DejaVu Sans Mono 12")
 ;; Show column number
 (setq column-number-mode t)
+;; turn off alarm bell
+(setq ring-bell-function 'ignore)
 ~~~
 
 ## General commands
