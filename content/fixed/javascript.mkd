@@ -1,0 +1,10 @@
+## Array
+
+```
+let array = [];
+array.push(1, 2, 3);
+
+array.forEach(x => {
+	console.log(x);
+});
+```
