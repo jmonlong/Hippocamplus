@@ -387,6 +387,12 @@ This is easy enough because I really just want to change the times of upcoming m
 I don't really care if the scheduled tasks I set for myself are not in the proper time zone, they tend to be re-scheduled anyway.
 And I travel for a couple of weeks maximum, so it's quick to launch a *week* agenda view (`C-c a w`) and mark/shift the few upcoming meetings. 
 
+## Reverse the order of headers
+
+For example, when realizing half-way through that I prefer anti-chronological order (better have the latest/in-progress header at the top and not have to scroll down to the bottom).
+
+From the higher-level header: `M-x org-sort RET F point RET RET`
+
 ## To check next
 
 - [Export to HTML with ox-twbs](https://github.com/marsmining/ox-twbs)
