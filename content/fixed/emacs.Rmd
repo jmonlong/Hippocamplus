@@ -178,10 +178,20 @@ I also have these ESS config:
 ~~~lisp
 (setq ess-default-style 'DEFAULT)
 (setq ess-indent-level 2)
+(setq ess-ask-for-ess-directory nil)
 (setq ess-r-package-auto-set-evaluation-env nil)
 ~~~
 
 The last one took me some times to figure out: when developing a R package, commands were evaluated in another environment so the objects didn't exist in the usual R buffer (which was driving me crazy).
+
+Recently I had an issue where the startup directory was not the buffer's directory but the root of the git repo.
+The solution was to define a `ess-directory-function` like so:
+
+~~~lisp
+(defun my-ess-directory-function ()
+  default-directory)
+(setq ess-directory-function #'my-ess-directory-function)
+~~~
 
 ### Auto-complete
 
