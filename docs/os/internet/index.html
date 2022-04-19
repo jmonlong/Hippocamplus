@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      OS/Internet &middot; Hippocamplus
+    
+  </title>
+
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113785126-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    
+    gtag('config', "UA-113785126-1");
+  </script>
+  
+  
+  <link rel="stylesheet" href="../../css/poole.css">
+  <link rel="stylesheet" href="../../css/syntax.css">
+  <link rel="stylesheet" href="../../css/lanyon.css">
+  <link rel="stylesheet" href="../../css/idea.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
+  <link rel="stylesheet" href="../../fa/css/font-awesome.min.css">
+  
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../../assets/hippoPlus-icon.png">
+  <link rel="shortcut icon" href="../../assets/hippoPlus-icon.png">
+
+  
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="../../atom.xml">
+</head>
+
+  
+  <body>
+
+    
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>A place to gather useful information I keep on forgetting.</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item " href="../../">Home</a>
+    <a class="sidebar-nav-item " href="../../post">Posts</a>
+
+    
+    
+      
+        <a class="sidebar-nav-item " href="../../cpp/">CPP</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../emacs/">Emacs</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../expression/">Expression</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../latex/">LaTeX</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../markdown/">Markdown</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../math/stats/">Math/Stats</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../org-mode/">Org mode</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../python/">Python</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../r/">R</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../shell/">Shell</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../tools/">Tools</a>
+      
+    
+      
+        <a class="sidebar-nav-item  active " href="../../os/internet/">OS/Internet</a>
+      
+    
+      
+        <a class="sidebar-nav-item " href="../../about/">About</a>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+    
+  </nav>
+
+  <div class="sidebar-item">
+  </div>
+  
+  <div class="sidebar-item">
+    <div><a href="../../index.xml"><i class="fa fa-rss-square" aria-hidden="true"></i> RSS</a></div>
+    <div><a href="https://twitter.com/JMonlong"><i class="fa fa-twitter" aria-hidden="true"></i> @JMonlong</a></div>
+    <p>&copy; 2020 Jean Monlong. All rights reserved.</p>
+  </div>
+</div>
+
+
+    
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="../../" title="Home">Hippocamplus</a>
+            <small>My Second Memory</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+
+
+<div class="page">
+  <h1 class="page-title">OS/Internet</h1>
+  
+
+<div id="TOC">
+<ul>
+<li><a href="#misc-tools">Misc tools</a></li>
+<li><a href="#duckduckgo">DuckDuckGo</a></li>
+<li><a href="#ubuntu">Ubuntu</a><ul>
+<li><a href="#update-expired-keys">Update expired keys</a></li>
+<li><a href="#french-accents-in-gnome-ubuntu">(French) Accents in Gnome Ubuntu</a></li>
+</ul></li>
+<li><a href="#install-a-specificolder-r-version">Install a specific/older R version</a></li>
+<li><a href="#sync-a-specific-google-drive-folder-on-ubuntu">Sync a specific Google Drive folder on Ubuntu</a></li>
+<li><a href="#sync-pdfs-between-mendeley-and-google-drive">Sync PDFs between Mendeley and Google Drive</a></li>
+<li><a href="#zotero">Zotero</a></li>
+<li><a href="#dowload-files-from-dropbox">Dowload files from Dropbox</a></li>
+<li><a href="#record-a-webradio-stream-with-vlc">Record a webradio stream with VLC</a></li>
+</ul>
+</div>
+
+<div id="misc-tools" class="section level2">
+<h2>Misc tools</h2>
+<ul>
+<li><a href="https://www.diagrams.net/">https://www.diagrams.net/</a> to make cartoon and diagrams (used to be <em>draw.io</em>)</li>
+<li><a href="https://jspaint.app/">MS Paint Online</a></li>
+</ul>
+</div>
+<div id="duckduckgo" class="section level2">
+<h2>DuckDuckGo</h2>
+<p><a href="https://duckduckgo.com/about">DuckDuckGo</a> is a “search engine that doesn’t track you”.
+It provides nice “bangs” to search directly specific websites.
+By making DDG the default search engine these bangs can be used directly in the address bar.</p>
+<ul>
+<li><code>!pub</code> PubMed.</li>
+<li><code>!scholar</code> Google Scholar.</li>
+<li><code>!bioc</code> Bioconductor.</li>
+<li><code>!so</code> Stack Overflow.</li>
+<li><code>!git</code> GitHub.</li>
+<li><code>!w</code> Wikipedia.</li>
+<li><code>!syn</code> synonyms from thesaurus.com.</li>
+<li><code>!tz</code> Time Zone, time in other places.</li>
+<li><code>!dgi</code> DuckDuckGo Images.</li>
+<li><code>!i</code> Google Images.</li>
+<li><code>!imd</code> IMDb.</li>
+<li><code>!marmiton</code> Marmiton.</li>
+<li><code>!map</code> Google Maps.</li>
+<li><code>!wref</code>/<code>wrfe</code> Word Reference English to French (et vice versa).</li>
+<li><code>!gtfr</code> Google Translate to French.</li>
+<li><code>!gten</code> Google Translate to English.</li>
+</ul>
+</div>
+<div id="ubuntu" class="section level2">
+<h2>Ubuntu</h2>
+<p>I’m using <a href="https://wiki.ubuntu.com/UbuntuGNOME/GetUbuntuGNOME">Ubuntu Gnome 16.04</a>.</p>
+<ul>
+<li>I followed some of the steps <a href="http://www.omgubuntu.co.uk/2016/04/10-things-to-do-after-installing-ubuntu-16-04-lts">there</a> to install essential packages.</li>
+<li>To enable the use of my existing DSA SSH keys I did:</li>
+</ul>
+<p><code>echo "PubkeyAcceptedKeyTypes +ssh-dss" &gt;&gt; ~/.ssh/config</code></p>
+<ul>
+<li>To force the second screen to follow the workspace of the primary screen I found <a href="http://gregcor.com/2011/05/07/fix-dual-monitors-in-gnome-3-aka-my-workspaces-are-broken/">this</a>:</li>
+</ul>
+<p><code>gsettings set org.gnome.shell.overrides workspaces-only-on-primary false</code></p>
+<div id="update-expired-keys" class="section level3">
+<h3>Update expired keys</h3>
+<p>Sometimes <code>apt-get update</code> doesn’t work because keys have expired (e.g. <code>The following signatures were invalid: EXPKEYSIG XXX</code>).
+To update a key:</p>
+<pre class="sh"><code>sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys XXX</code></pre>
+</div>
+<div id="french-accents-in-gnome-ubuntu" class="section level3">
+<h3>(French) Accents in Gnome Ubuntu</h3>
+<p>I use the international layout with dead keys:</p>
+<p><code>Settings</code> -&gt; <code>Region &amp; Language</code> -&gt; <code>Input Sources</code> -&gt; <code>+</code> -&gt; <code>English (United States)</code> -&gt; <code>English (intl., with AltGr dead keys)</code></p>
+<p>An accented letter can be “spelled out” with, for example, <code>AltGr+Super+' e</code>.
+Some accented letters can be inserted directly with <code>AltGr</code>, e.g. <code>AltGr+e</code>.
+Inspired by <a href="https://askubuntu.com/questions/1187917/change-accented-letters-in-international-with-dead-keys-keyboard-layout">this post</a>, I modified the default accented letters to use grave/circumflex accents and cedilla.
+In <code>/usr/share/X11/xkb/symbols/us</code> I added to the <em>xkb_symbols “altgr-intl”</em> section:</p>
+<pre><code>   key &lt;AD04&gt; { [ r, R, egrave,       Egrave      ] };
+   key &lt;AD05&gt; { [ t, T, ecircumflex,  Ecircumflex ] };
+   key &lt;AD06&gt; { [ y, Y, ediaeresis,   Ediaeresis  ] };
+   key &lt;AD07&gt; { [ u, U, ugrave,       Ugrave      ] };
+   key &lt;AD09&gt; { [ o, O, ocircumflex,  Ocircumflex ] };
+   key &lt;AC01&gt; { [ a, A, agrave,       Agrave      ] };
+   key &lt;AC02&gt; { [ s, S, acircumflex,  Acircumflex ] };
+   key &lt;AB03&gt; { [ c, C, ccedilla,     Ccedilla    ] };</code></pre>
+</div>
+</div>
+<div id="install-a-specificolder-r-version" class="section level2">
+<h2>Install a specific/older R version</h2>
+<p>R updated automatically once and I didn’t want to re-install all the packages, so I temporarily switched back to the previous version with:</p>
+<pre class="sh"><code>sudo apt install r-base-core=4.0.5-1.2004.0
+sudo apt install r-recommended=4.0.5-1.2004.0
+sudo apt install r-base=4.0.5-1.2004.0</code></pre>
+<p>The available versions were listed using <code>sudo apt list -a r-base-core</code></p>
+</div>
+<div id="sync-a-specific-google-drive-folder-on-ubuntu" class="section level2">
+<h2>Sync a specific Google Drive folder on Ubuntu</h2>
+<p>I use <em>grive</em> and followed <a href="https://www.howtoforge.com/tutorial/sync-documents-with-google-drive-on-ubuntu-linux/">these instructions</a>.</p>
+<p>To install:</p>
+<pre class="sh"><code>sudo apt-add-repository ppa:nilarimogard/webupd8
+sudo apt-get update
+sudo apt-get install grive</code></pre>
+<p>To configure in a directory DIR, syncing the Drive folder “ArticlesPDF”:</p>
+<pre class="sh"><code>cd DIR
+grive -a -s ArticlesPDF</code></pre>
+<p>In the future just sync by running the following command (in the DIR folder):</p>
+<pre class="sh"><code>grive -s ArticlesPDF</code></pre>
+<p><em>I usually try with the <code>--dry-run</code> option first because there are some glitches sometimes.</em></p>
+<p>Since very recently (~Nov 2019) another step is necessary:</p>
+<ol style="list-style-type: decimal">
+<li>Create a API key on <a href="https://console.developers.google.com/apis/library">https://console.developers.google.com/apis/library</a> following <a href="https://github.com/vitalif/grive2/issues/287#issuecomment-559814555">those instructions</a>.</li>
+<li>Run with <code>grive -s zotero-library --id "&lt;ID.apps.googleusercontent.com&gt;" --secret "&lt;SECRET&gt;"</code> (eventually add <code>-a</code> to configure).</li>
+</ol>
+</div>
+<div id="sync-pdfs-between-mendeley-and-google-drive" class="section level2">
+<h2>Sync PDFs between Mendeley and Google Drive</h2>
+<p>See <a href="../../2018/09/22/sync-mendeley/">this post</a>.
+<em>Edit: I switched to a “Zotero + Google Drive” solution, see below.</em></p>
+</div>
+<div id="zotero" class="section level2">
+<h2>Zotero</h2>
+<p>Mostly following <a href="https://ikashnitsky.github.io/2019/zotero/">this blog post</a>.</p>
+<p>In the general settings of Zotero I also specify the Google Drive folder as <em>base directory</em> and swich off the <em>Sync full-text content</em>.</p>
+<p>Then using the <a href="http://zotfile.com/">Zotfile</a> plugins to make sure the PDF files are consistent between computers.
+The configuration I use is:</p>
+<ul>
+<li>Pointing at the Google Drive folder, with subfolders by authors <code>/%a</code>.</li>
+<li>Chaning to lower case and replacing blanks in file names.</li>
+</ul>
+<p>For the <a href="https://retorque.re/zotero-better-bibtex/">Better BibTeX plugin</a>, the most important setting is the citation key style: <code>[auth:lower][year][journal:lower:abbr]</code>.</p>
+<p>I use <a href="https://play.google.com/store/apps/details?id=dk.tacit.android.foldersync.lite&amp;hl=en_US">FolderSync</a> to sync the PDFs that I annotate on my Android tablet.
+I rarely need to manage/explore my library on my Android device (I usually just sync then read/annotate the most recent PDFs), but when I do I use the <a href="https://play.google.com/store/apps/details?id=computer.benjamin.zotdr0id&amp;hl=en_US">ZotDroid</a> app, or the <a href="https://play.google.com/store/apps/details?id=com.cgogolin.library&amp;hl=en_US&amp;gl=US">Library</a> app to search my library’s BibTeX file (also synced).
+Not great but the best I could find.</p>
+</div>
+<div id="dowload-files-from-dropbox" class="section level2">
+<h2>Dowload files from Dropbox</h2>
+<p>By replacing <code>https://www.dropbox.com</code> with <code>https://dl.dropboxusercontent.com</code> in the link, a file can be dowloaded using command lines tools (e.g. wget or <em>download.file</em> in R).
+It’s useful to host files that are used in scripts, like some of the post I made using R-Markdown.</p>
+<p>Originally it was useful to “serve” HTML pages but it doesn’t work anymore.</p>
+</div>
+<div id="record-a-webradio-stream-with-vlc" class="section level2">
+<h2>Record a webradio stream with VLC</h2>
+<p><a href="https://wiki.videolan.org/Documentation:Streaming_HowTo/Receive_and_Save_a_Stream/">VLC doc</a></p>
+<pre><code>vlc -vvv http://hazel.torontocast.com:2220/stream --sout=file/ogg:classical.ogg</code></pre>
+</div>
+
+</div>
+
+      </div>
+    </div>
+
+    
+    
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script src="../../assets/highlight.pack.js"></script>
+    <script src="../../assets/r.min.js"></script>
+    
+    <script>
+      hljs.configure({languages: ['r']});
+      hljs.initHighlightingOnLoad();
+    </script>
+
+    <script src="//yihui.name/js/math-code.js"></script>
+    <script async src="//cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    
+  </body>
+</html>
+
