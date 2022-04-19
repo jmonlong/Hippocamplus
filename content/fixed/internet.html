@@ -1,6 +1,6 @@
 ---
 sidebar: true
-title: Internet
+title: OS/Internet
 weight: 2
 output:
   blogdown::html_page:
@@ -12,7 +12,11 @@ output:
 <ul>
 <li><a href="#misc-tools">Misc tools</a></li>
 <li><a href="#duckduckgo">DuckDuckGo</a></li>
-<li><a href="#ubuntu">Ubuntu</a></li>
+<li><a href="#ubuntu">Ubuntu</a><ul>
+<li><a href="#update-expired-keys">Update expired keys</a></li>
+<li><a href="#french-accents-in-gnome-ubuntu">(French) Accents in Gnome Ubuntu</a></li>
+</ul></li>
+<li><a href="#install-a-specificolder-r-version">Install a specific/older R version</a></li>
 <li><a href="#sync-a-specific-google-drive-folder-on-ubuntu">Sync a specific Google Drive folder on Ubuntu</a></li>
 <li><a href="#sync-pdfs-between-mendeley-and-google-drive">Sync PDFs between Mendeley and Google Drive</a></li>
 <li><a href="#zotero">Zotero</a></li>
@@ -64,6 +68,37 @@ By making DDG the default search engine these bangs can be used directly in the 
 <li>To force the second screen to follow the workspace of the primary screen I found <a href="http://gregcor.com/2011/05/07/fix-dual-monitors-in-gnome-3-aka-my-workspaces-are-broken/">this</a>:</li>
 </ul>
 <p><code>gsettings set org.gnome.shell.overrides workspaces-only-on-primary false</code></p>
+<div id="update-expired-keys" class="section level3">
+<h3>Update expired keys</h3>
+<p>Sometimes <code>apt-get update</code> doesn’t work because keys have expired (e.g. <code>The following signatures were invalid: EXPKEYSIG XXX</code>).
+To update a key:</p>
+<pre class="sh"><code>sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys XXX</code></pre>
+</div>
+<div id="french-accents-in-gnome-ubuntu" class="section level3">
+<h3>(French) Accents in Gnome Ubuntu</h3>
+<p>I use the international layout with dead keys:</p>
+<p><code>Settings</code> -&gt; <code>Region &amp; Language</code> -&gt; <code>Input Sources</code> -&gt; <code>+</code> -&gt; <code>English (United States)</code> -&gt; <code>English (intl., with AltGr dead keys)</code></p>
+<p>An accented letter can be “spelled out” with, for example, <code>AltGr+Super+' e</code>.
+Some accented letters can be inserted directly with <code>AltGr</code>, e.g. <code>AltGr+e</code>.
+Inspired by <a href="https://askubuntu.com/questions/1187917/change-accented-letters-in-international-with-dead-keys-keyboard-layout">this post</a>, I modified the default accented letters to use grave/circumflex accents and cedilla.
+In <code>/usr/share/X11/xkb/symbols/us</code> I added to the <em>xkb_symbols “altgr-intl”</em> section:</p>
+<pre><code>   key &lt;AD04&gt; { [ r, R, egrave,       Egrave      ] };
+   key &lt;AD05&gt; { [ t, T, ecircumflex,  Ecircumflex ] };
+   key &lt;AD06&gt; { [ y, Y, ediaeresis,   Ediaeresis  ] };
+   key &lt;AD07&gt; { [ u, U, ugrave,       Ugrave      ] };
+   key &lt;AD09&gt; { [ o, O, ocircumflex,  Ocircumflex ] };
+   key &lt;AC01&gt; { [ a, A, agrave,       Agrave      ] };
+   key &lt;AC02&gt; { [ s, S, acircumflex,  Acircumflex ] };
+   key &lt;AB03&gt; { [ c, C, ccedilla,     Ccedilla    ] };</code></pre>
+</div>
+</div>
+<div id="install-a-specificolder-r-version" class="section level2">
+<h2>Install a specific/older R version</h2>
+<p>R updated automatically once and I didn’t want to re-install all the packages, so I temporarily switched back to the previous version with:</p>
+<pre class="sh"><code>sudo apt install r-base-core=4.0.5-1.2004.0
+sudo apt install r-recommended=4.0.5-1.2004.0
+sudo apt install r-base=4.0.5-1.2004.0</code></pre>
+<p>The available versions were listed using <code>sudo apt list -a r-base-core</code></p>
 </div>
 <div id="sync-a-specific-google-drive-folder-on-ubuntu" class="section level2">
 <h2>Sync a specific Google Drive folder on Ubuntu</h2>
@@ -101,7 +136,7 @@ The configuration I use is:</p>
 </ul>
 <p>For the <a href="https://retorque.re/zotero-better-bibtex/">Better BibTeX plugin</a>, the most important setting is the citation key style: <code>[auth:lower][year][journal:lower:abbr]</code>.</p>
 <p>I use <a href="https://play.google.com/store/apps/details?id=dk.tacit.android.foldersync.lite&amp;hl=en_US">FolderSync</a> to sync the PDFs that I annotate on my Android tablet.
-I rarely need to manage/explore my library on my Android device (I usually just sync then read/annotate the most recent PDFs), but when I do I use the <a href="https://play.google.com/store/apps/details?id=computer.benjamin.zotdr0id&amp;hl=en_US">ZotDroid</a> app.
+I rarely need to manage/explore my library on my Android device (I usually just sync then read/annotate the most recent PDFs), but when I do I use the <a href="https://play.google.com/store/apps/details?id=computer.benjamin.zotdr0id&amp;hl=en_US">ZotDroid</a> app, or the <a href="https://play.google.com/store/apps/details?id=com.cgogolin.library&amp;hl=en_US&amp;gl=US">Library</a> app to search my library’s BibTeX file (also synced).
 Not great but the best I could find.</p>
 </div>
 <div id="dowload-files-from-dropbox" class="section level2">

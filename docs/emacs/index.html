@@ -103,7 +103,7 @@
       
     
       
-        <a class="sidebar-nav-item " href="../internet/">Internet</a>
+        <a class="sidebar-nav-item " href="../os/internet/">OS/Internet</a>
       
     
       
@@ -324,7 +324,9 @@ The two main reasons why I like it and would recommend it:</p>
 ;; Change the font
 (set-default-font &quot;DejaVu Sans Mono 12&quot;)
 ;; Show column number
-(setq column-number-mode t)</code></pre>
+(setq column-number-mode t)
+;; turn off alarm bell
+(setq ring-bell-function &#39;ignore)</code></pre>
 </div>
 <div id="general-commands" class="section level2">
 <h2>General commands</h2>
@@ -443,8 +445,14 @@ make</code></pre>
 <p>I also have these ESS config:</p>
 <pre class="lisp"><code>(setq ess-default-style &#39;DEFAULT)
 (setq ess-indent-level 2)
+(setq ess-ask-for-ess-directory nil)
 (setq ess-r-package-auto-set-evaluation-env nil)</code></pre>
 <p>The last one took me some times to figure out: when developing a R package, commands were evaluated in another environment so the objects didn’t exist in the usual R buffer (which was driving me crazy).</p>
+<p>Recently I had an issue where the startup directory was not the buffer’s directory but the root of the git repo.
+The solution was to define a <code>ess-directory-function</code> like so:</p>
+<pre class="lisp"><code>(defun my-ess-directory-function ()
+  default-directory)
+(setq ess-directory-function #&#39;my-ess-directory-function)</code></pre>
 </div>
 <div id="auto-complete" class="section level3">
 <h3>Auto-complete</h3>
@@ -519,6 +527,7 @@ For R + Markdown it means that we can edit the Markdown part in <em>markdown-mod
 </div>
 <div id="for-writing" class="section level2">
 <h2>For writing</h2>
+<p>When writing I prefer when long lines are wrapped without cutting a word: <code>M-x visual-line-mode</code></p>
 <div id="spell-checking" class="section level3">
 <h3>Spell checking</h3>
 <p>I use <em>ispell</em> and <em>flyspell</em>.</p>
@@ -537,6 +546,7 @@ For R + Markdown it means that we can edit the Markdown part in <em>markdown-mod
 <p>If using a GUI, <code>flyspell-popup</code> (available on MELPA) provides a convenient pop-up interface that I bound to <code>C-;</code> with:</p>
 <pre class="lisp"><code>(require &#39;flyspell)
 (define-key flyspell-mode-map (kbd &quot;C-;&quot;) &#39;flyspell-popup-correct)</code></pre>
+<p>On Ubuntu, more dictionaries are installed using <a href="http://aspell.net/">aspell</a> packages, for example the <code>aspell-fr</code> for the French dictionary.</p>
 </div>
 <div id="thesaurus-and-synonyms" class="section level3">
 <h3>Thesaurus and synonyms</h3>
@@ -550,7 +560,7 @@ The shortcut to list synonyms is <code>C-c C-s l</code>.</p>
 <div id="grammar-checking" class="section level3">
 <h3>Grammar checking</h3>
 <p>The <code>langtool</code> package is available in MELPA.
-It uses the <a href="https://languagetool.org/">LanguageTool</a> JAR to highlight potential grammar problems.
+It uses the <a href="https://languagetool.org/">LanguageTool</a> JAR to highlight potential grammar problems (downloaded from <a href="https://languagetool.org/download/LanguageTool-stable.zip">here</a>).
 In my <code>.emacs</code>:</p>
 <pre class="lisp"><code>(require &#39;langtool)
 (setq langtool-language-tool-jar &quot;/usr/local/Cellar/languagetool/3.8/libexec/languagetool-commandline.jar&quot;)

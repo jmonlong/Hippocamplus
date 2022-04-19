@@ -103,7 +103,7 @@
       
     
       
-        <a class="sidebar-nav-item " href="../internet/">Internet</a>
+        <a class="sidebar-nav-item " href="../os/internet/">OS/Internet</a>
       
     
       
@@ -314,6 +314,7 @@ term screen-256color</code></pre>
 <li>Show special characters (end of line, tabs) with <code>cat -A</code>.</li>
 <li><code>$RANDOM</code> to get a random number, e.g. between 1 and 10: <code>$((1 + RANDOM % 10))</code></li>
 <li><code>ncdu</code> instead of <code>du</code></li>
+<li><code>spd-say 'done'</code> to say <em>done</em>, e.g. when a long command finishes.</li>
 </ul>
 <div id="colors-in-less" class="section level3">
 <h3>Colors in <code>less</code></h3>
@@ -368,18 +369,18 @@ Compared to the default, I just added flanking <code>[</code>/<code>]</code>, a 
 <h3>Perl one-liners</h3>
 <p>Inspired from these: <a href="http://www.catonmat.net/blog/introduction-to-perl-one-liners/">Catonmat</a>, <a href="https://blogs.oracle.com/ksplice/the-top-10-tricks-of-perl-one-liners">Ksplice</a></p>
 <ul>
-<li><p><code>-p</code> run command on each line and print line.</p></li>
-<li><p><code>-n</code> run command on each line but don’t print line.</p></li>
-<li><p><code>-i</code> operates on the file in-place, i.e. updating the input file.</p></li>
-<li><p><code>-a</code> split the lines by white spaces into a <code>@F</code> array (<code>-F</code> to choose the separator)</p></li>
-<li><p><code>-l</code> removes the trailing new line, and adds it back if <code>-p</code> is used.</p></li>
-<li><p><code>$_</code> contains the line.</p></li>
+<li><code>-p</code> run command on each line and print line.</li>
+<li><code>-n</code> run command on each line but don’t print line.</li>
+<li><code>-i</code> operates on the file in-place, i.e. updating the input file.</li>
+<li><code>-a</code> split the lines by white spaces into a <code>@F</code> array (<code>-F</code> to choose the separator)</li>
+<li><code>-l</code> removes the trailing new line, and adds it back if <code>-p</code> is used.</li>
+<li><code>$_</code> contains the line.</li>
 <li><p><code>$.</code> contains the line number.</p></li>
-<li><p>Replace text line-by-line in a file: <code>perl -pe 's/you/me/g'</code></p></li>
-<li><p>Replace text if line contains <em>foo</em>: <code>perl -pe 's/you/me/g if /foo/</code></p></li>
-<li><p>Replace text line-by-line with regexp: <code>perl -pe 's/ID(\d+)/$1/g'</code></p></li>
-<li><p>Operations on a CSV file: <code>perl -F, -ane 'print $F[3]+$F[8]</code></p></li>
-<li><p>Operations on a CSV file and print at the end: <code>perl -F, -ane $t+=$F[3]+$F[8]; END{print $t}</code> %</p></li>
+<li>Replace text line-by-line in a file: <code>perl -pe 's/you/me/g'</code></li>
+<li>Replace text if line contains <em>foo</em>: <code>perl -pe 's/you/me/g if /foo/</code></li>
+<li>Replace text line-by-line with regexp: <code>perl -pe 's/ID(\d+)/$1/g'</code></li>
+<li>Operations on a CSV file: <code>perl -F, -ane 'print $F[3]+$F[8]</code></li>
+<li>Operations on a CSV file and print at the end: <code>perl -F, -ane $t+=$F[3]+$F[8]; END{print $t}</code> %</li>
 <li><p>Print matches from regular expression: <code>perl -ne 'print "$1\n" if /foo=([^;]*)/'</code></p></li>
 </ul>
 </div>

@@ -103,7 +103,7 @@
       
     
       
-        <a class="sidebar-nav-item " href="../internet/">Internet</a>
+        <a class="sidebar-nav-item " href="../os/internet/">OS/Internet</a>
       
     
       
@@ -452,9 +452,9 @@ command -f ~{write_lines(in_vcf_list)}
 <div id="makefile" class="section level2">
 <h2>Makefile</h2>
 <ul>
-<li><p><a href="https://www.gnu.org/software/make/manual/html_node/index.html">GNU make manual</a></p></li>
+<li><a href="https://www.gnu.org/software/make/manual/html_node/index.html">GNU make manual</a></li>
 <li><p><a href="https://gist.github.com/isaacs/62a2d1825d04437c6f08">Makefile basics from Isaacs</a>.</p></li>
-<li><p><a href="https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html#Automatic-Variables">Automatic variables</a></p>
+<li><a href="https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html#Automatic-Variables">Automatic variables</a>
 <ul>
 <li><code>$@</code> the target</li>
 <li><code>$&lt;</code> the first prerequisite</li>
@@ -462,14 +462,14 @@ command -f ~{write_lines(in_vcf_list)}
 <li><code>$(@D)</code> the directory part of <code>$@</code> (works the same with <code>&lt;</code>,<code>^</code>, etc).</li>
 <li><code>$(@F)</code> the filename part of <code>$@</code> (works the same with <code>&lt;</code>,<code>^</code>, etc).</li>
 </ul></li>
-<li><p><a href="https://www.gnu.org/software/make/manual/html_node/File-Name-Functions.html#File-Name-Functions">File name functions</a></p>
+<li><a href="https://www.gnu.org/software/make/manual/html_node/File-Name-Functions.html#File-Name-Functions">File name functions</a>
 <ul>
 <li><code>$(notdir src/foo.c)</code> returns <em>foo.c</em>.</li>
 <li><code>$(addsuffix .c,foo)</code> returns <em>foo.c</em>.</li>
 <li><code>$(basename dir/foo.test.c)</code> returns <em>dir/foo.test</em>.</li>
 <li><code>objects := $(wildcard *.o)</code> to list files in a variable.</li>
 </ul></li>
-<li><p><a href="https://www.gnu.org/software/make/manual/html_node/Text-Functions.html#Text-Functions">String functions</a></p>
+<li><a href="https://www.gnu.org/software/make/manual/html_node/Text-Functions.html#Text-Functions">String functions</a>
 <ul>
 <li><code>$(patsubst %.c,%.o,file.c)</code> to substitute file extensions</li>
 <li><code>$(subst from,to,text)</code> replaces all occurrences of <em>from</em> to <em>to</em> in <em>text</em>.</li>

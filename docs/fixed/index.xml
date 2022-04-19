@@ -81,7 +81,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/python/</guid>
-      <description>Naming and formatting Objects Array Hash Class String Function  Input/Output Module, files, imports Packaging code Install a module locally  Passing arguments to a script Graphs Shell integration Timing Bioinfo Sequences Fasta SAM files VCF  Tricks Jupyter notebooks   Some notes on my recent attempt to learn Python.
+      <description>Naming and formatting Objects Array Hash Class String Function Data frame (pandas)  Input/Output Module, files, imports Packaging code Install a module locally  Passing arguments to a script Graphs Shell integration Timing Bioinfo Sequences Fasta SAM files VCF  Tricks Jupyter notebooks   Some notes on my recent attempt to learn Python.
 Naming and formatting  Use lowercase _-separated for modules and functions name. E.g. my_function. Use CapsWord for classes.</description>
     </item>
     
@@ -113,12 +113,12 @@ Naming and formatting  Use lowercase _-separated for modules and functions name.
     </item>
     
     <item>
-      <title>Internet</title>
-      <link>/internet/</link>
+      <title>OS/Internet</title>
+      <link>/os/internet/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/internet/</guid>
-      <description>Misc tools DuckDuckGo Ubuntu Sync a specific Google Drive folder on Ubuntu Sync PDFs between Mendeley and Google Drive Zotero Dowload files from Dropbox Record a webradio stream with VLC   Misc tools  https://www.diagrams.net/ to make cartoon and diagrams (used to be draw.io) MS Paint Online   DuckDuckGo DuckDuckGo is a “search engine that doesn’t track you”. It provides nice “bangs” to search directly specific websites.</description>
+      <guid>/os/internet/</guid>
+      <description>Misc tools DuckDuckGo Ubuntu Update expired keys (French) Accents in Gnome Ubuntu  Install a specific/older R version Sync a specific Google Drive folder on Ubuntu Sync PDFs between Mendeley and Google Drive Zotero Dowload files from Dropbox Record a webradio stream with VLC   Misc tools  https://www.diagrams.net/ to make cartoon and diagrams (used to be draw.io) MS Paint Online   DuckDuckGo DuckDuckGo is a “search engine that doesn’t track you”.</description>
     </item>
     
     <item>
