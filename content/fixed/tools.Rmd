@@ -103,6 +103,10 @@ Keybindings:
 - `g/` regex search in all columns
 - `n`/`N` move to next/previous match
 - `[`/`]` sort ascending/descending by current column
+- Select rows and filter:
+	- `|` select by regexp in current column
+	- `,` select rows matching current cell in current column
+	- `z"` copy selected rows to new sheet
 - `F` toggle a frequency table/histogram of the current column.
     - `Enter` to focus on a subset defined by a row in frequency table.
 - `I` toggle Describe sheet with summary statistics for each column.
