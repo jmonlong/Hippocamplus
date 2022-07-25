@@ -108,6 +108,7 @@ ggplot(bar.df, aes(x=x, fill=c)) + geom_bar() + coord_flip() +
 - Multi-column legends: `guides(fill=guide_legend(ncol=4))`
 - Add more vertical space between legend labels (e.g. for multi-lines labels): `guides(fill=guide_legend(keyheight=2))`
 - Don't show *a* in legend when using text (e.g. when already having points and colors): `geom_text(show.legend=FALSE)`
+- Keep "dodged" bars the same width: `position=position_dodge(.9, preserve='single')`
 
 ### Multi-panel ggplots
 
