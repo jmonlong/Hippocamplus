@@ -91,7 +91,21 @@ sudo apt install r-base=4.0.5-1.2004.0
 
 The available versions were listed using `sudo apt list -a r-base-core`
 
-## Sync a specific Google Drive folder on Ubuntu
+## Sync a specific folder on Ubuntu
+
+I use [Nextcloud](https://nextcloud.com/) which offers a free tier with 2 Gb (for most [providers](https://nextcloud.com/sign-up/)).
+It also has an Ubuntu software and Android app that can sync a specific folder. 
+I use it to synchronize the articles I read and annotate between my tablet and computer(s) (see the ["Zotero" section](#zotero) below).
+
+1. Sign up for a free 2Gb server at https://nextcloud.com/sign-up/ (for example [The Good Cloud](https://thegood.cloud/))
+1. Download the AppImage for Ubuntu from https://nextcloud.com/install/
+   - An [AppImage](https://appimage.org/) is some kind of binary: make it executable using `chmod +x` and place in your *PATH*.
+1. When logging in to the Nexcloud app, there is an option to select exactly which folder(s) to sync.
+1. On the tablet, use the Nexcloud Android App from [F-Droid](https://f-droid.org/packages/com.nextcloud.client/) or [Google Play](https://play.google.com/store/apps/details?id=com.nextcloud.client).
+
+### [DEPRECATED?] Before: sync a specific Google Drive folder on Ubuntu
+
+*This might not work anymore. Last time I tried to use it, I was confused by an error and ended up switching to Nextcloud (see above).*
 
 I use *grive* and followed [these instructions](https://www.howtoforge.com/tutorial/sync-documents-with-google-drive-on-ubuntu-linux/).
 
@@ -123,11 +137,6 @@ Since very recently (~Nov 2019) another step is necessary:
 1. Create a API key on [https://console.developers.google.com/apis/library](https://console.developers.google.com/apis/library) following [those instructions](https://github.com/vitalif/grive2/issues/287#issuecomment-559814555).
 2. Run with `grive -s zotero-library --id "<ID.apps.googleusercontent.com>" --secret "<SECRET>"` (eventually add `-a` to configure).
 
-## Sync PDFs between Mendeley and Google Drive
-
-See [this post](/2018/09/22/sync-mendeley/).
-*Edit: I switched to a "Zotero + Google Drive" solution, see below.*
-
 ## Zotero
 
 Mostly following [this blog post](https://ikashnitsky.github.io/2019/zotero/).
@@ -138,13 +147,17 @@ Then using the [Zotfile](http://zotfile.com/) plugins to make sure the PDF files
 The configuration I use is:
 
 - Pointing at the Google Drive folder, with subfolders by authors `/%a`.
-- Chaning to lower case and replacing blanks in file names.
+- Changing to lower case and replacing blanks in file names.
 
 For the [Better BibTeX plugin](https://retorque.re/zotero-better-bibtex/), the most important setting is the citation key style: `[auth:lower][year][journal:lower:abbr]`.
 
 I use [FolderSync](https://play.google.com/store/apps/details?id=dk.tacit.android.foldersync.lite&hl=en_US) to sync the PDFs that I annotate on my Android tablet.
 I rarely need to manage/explore my library on my Android device (I usually just sync then read/annotate the most recent PDFs), but when I do I use the [ZotDroid](https://play.google.com/store/apps/details?id=computer.benjamin.zotdr0id&hl=en_US) app, or the [Library](https://play.google.com/store/apps/details?id=com.cgogolin.library&hl=en_US&gl=US) app to search my library's BibTeX file (also synced).
 Not great but the best I could find.
+
+### [DEPRECATED] Before: sync PDFs between Mendeley and Google Drive
+
+*Before switching to Zotero, I used Mendeley. I was still syncing my annotated PDFs between my tablet and computer. I had described this approach in [this post](/2018/09/22/sync-mendeley/).*
 
 ## Dowload files from Dropbox
 

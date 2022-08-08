@@ -244,18 +244,24 @@
 
 <div id="TOC">
 <ul>
-<li><a href="#misc-tools">Misc tools</a></li>
-<li><a href="#duckduckgo">DuckDuckGo</a></li>
-<li><a href="#ubuntu">Ubuntu</a><ul>
-<li><a href="#update-expired-keys">Update expired keys</a></li>
-<li><a href="#french-accents-in-gnome-ubuntu">(French) Accents in Gnome Ubuntu</a></li>
+<li><a href="#misc-tools" id="toc-misc-tools">Misc tools</a></li>
+<li><a href="#duckduckgo" id="toc-duckduckgo">DuckDuckGo</a></li>
+<li><a href="#ubuntu" id="toc-ubuntu">Ubuntu</a>
+<ul>
+<li><a href="#update-expired-keys" id="toc-update-expired-keys">Update expired keys</a></li>
+<li><a href="#french-accents-in-gnome-ubuntu" id="toc-french-accents-in-gnome-ubuntu">(French) Accents in Gnome Ubuntu</a></li>
 </ul></li>
-<li><a href="#install-a-specificolder-r-version">Install a specific/older R version</a></li>
-<li><a href="#sync-a-specific-google-drive-folder-on-ubuntu">Sync a specific Google Drive folder on Ubuntu</a></li>
-<li><a href="#sync-pdfs-between-mendeley-and-google-drive">Sync PDFs between Mendeley and Google Drive</a></li>
-<li><a href="#zotero">Zotero</a></li>
-<li><a href="#dowload-files-from-dropbox">Dowload files from Dropbox</a></li>
-<li><a href="#record-a-webradio-stream-with-vlc">Record a webradio stream with VLC</a></li>
+<li><a href="#install-a-specificolder-r-version" id="toc-install-a-specificolder-r-version">Install a specific/older R version</a></li>
+<li><a href="#sync-a-specific-folder-on-ubuntu" id="toc-sync-a-specific-folder-on-ubuntu">Sync a specific folder on Ubuntu</a>
+<ul>
+<li><a href="#deprecated-before-sync-a-specific-google-drive-folder-on-ubuntu" id="toc-deprecated-before-sync-a-specific-google-drive-folder-on-ubuntu">[DEPRECATED?] Before: sync a specific Google Drive folder on Ubuntu</a></li>
+</ul></li>
+<li><a href="#zotero" id="toc-zotero">Zotero</a>
+<ul>
+<li><a href="#deprecated-before-sync-pdfs-between-mendeley-and-google-drive" id="toc-deprecated-before-sync-pdfs-between-mendeley-and-google-drive">[DEPRECATED] Before: sync PDFs between Mendeley and Google Drive</a></li>
+</ul></li>
+<li><a href="#dowload-files-from-dropbox" id="toc-dowload-files-from-dropbox">Dowload files from Dropbox</a></li>
+<li><a href="#record-a-webradio-stream-with-vlc" id="toc-record-a-webradio-stream-with-vlc">Record a webradio stream with VLC</a></li>
 </ul>
 </div>
 
@@ -334,8 +340,23 @@ sudo apt install r-recommended=4.0.5-1.2004.0
 sudo apt install r-base=4.0.5-1.2004.0</code></pre>
 <p>The available versions were listed using <code>sudo apt list -a r-base-core</code></p>
 </div>
-<div id="sync-a-specific-google-drive-folder-on-ubuntu" class="section level2">
-<h2>Sync a specific Google Drive folder on Ubuntu</h2>
+<div id="sync-a-specific-folder-on-ubuntu" class="section level2">
+<h2>Sync a specific folder on Ubuntu</h2>
+<p>I use <a href="https://nextcloud.com/">Nextcloud</a> which offers a free tier with 2 Gb (for most <a href="https://nextcloud.com/sign-up/">providers</a>).
+It also has an Ubuntu software and Android app that can sync a specific folder.
+I use it to synchronize the articles I read and annotate between my tablet and computer(s) (see the <a href="#zotero">“Zotero” section</a> below).</p>
+<ol style="list-style-type: decimal">
+<li>Sign up for a free 2Gb server at <a href="https://nextcloud.com/sign-up/" class="uri">https://nextcloud.com/sign-up/</a> (for example <a href="https://thegood.cloud/">The Good Cloud</a>)</li>
+<li>Download the AppImage for Ubuntu from <a href="https://nextcloud.com/install/" class="uri">https://nextcloud.com/install/</a>
+<ul>
+<li>An <a href="https://appimage.org/">AppImage</a> is some kind of binary: make it executable using <code>chmod +x</code> and place in your <em>PATH</em>.</li>
+</ul></li>
+<li>When logging in to the Nexcloud app, there is an option to select exactly which folder(s) to sync.</li>
+<li>On the tablet, use the Nexcloud Android App from <a href="https://f-droid.org/packages/com.nextcloud.client/">F-Droid</a> or <a href="https://play.google.com/store/apps/details?id=com.nextcloud.client">Google Play</a>.</li>
+</ol>
+<div id="deprecated-before-sync-a-specific-google-drive-folder-on-ubuntu" class="section level3">
+<h3>[DEPRECATED?] Before: sync a specific Google Drive folder on Ubuntu</h3>
+<p><em>This might not work anymore. Last time I tried to use it, I was confused by an error and ended up switching to Nextcloud (see above).</em></p>
 <p>I use <em>grive</em> and followed <a href="https://www.howtoforge.com/tutorial/sync-documents-with-google-drive-on-ubuntu-linux/">these instructions</a>.</p>
 <p>To install:</p>
 <pre class="sh"><code>sudo apt-add-repository ppa:nilarimogard/webupd8
@@ -353,10 +374,6 @@ grive -a -s ArticlesPDF</code></pre>
 <li>Run with <code>grive -s zotero-library --id "&lt;ID.apps.googleusercontent.com&gt;" --secret "&lt;SECRET&gt;"</code> (eventually add <code>-a</code> to configure).</li>
 </ol>
 </div>
-<div id="sync-pdfs-between-mendeley-and-google-drive" class="section level2">
-<h2>Sync PDFs between Mendeley and Google Drive</h2>
-<p>See <a href="../../2018/09/22/sync-mendeley/">this post</a>.
-<em>Edit: I switched to a “Zotero + Google Drive” solution, see below.</em></p>
 </div>
 <div id="zotero" class="section level2">
 <h2>Zotero</h2>
@@ -366,12 +383,16 @@ grive -a -s ArticlesPDF</code></pre>
 The configuration I use is:</p>
 <ul>
 <li>Pointing at the Google Drive folder, with subfolders by authors <code>/%a</code>.</li>
-<li>Chaning to lower case and replacing blanks in file names.</li>
+<li>Changing to lower case and replacing blanks in file names.</li>
 </ul>
 <p>For the <a href="https://retorque.re/zotero-better-bibtex/">Better BibTeX plugin</a>, the most important setting is the citation key style: <code>[auth:lower][year][journal:lower:abbr]</code>.</p>
 <p>I use <a href="https://play.google.com/store/apps/details?id=dk.tacit.android.foldersync.lite&amp;hl=en_US">FolderSync</a> to sync the PDFs that I annotate on my Android tablet.
 I rarely need to manage/explore my library on my Android device (I usually just sync then read/annotate the most recent PDFs), but when I do I use the <a href="https://play.google.com/store/apps/details?id=computer.benjamin.zotdr0id&amp;hl=en_US">ZotDroid</a> app, or the <a href="https://play.google.com/store/apps/details?id=com.cgogolin.library&amp;hl=en_US&amp;gl=US">Library</a> app to search my library’s BibTeX file (also synced).
 Not great but the best I could find.</p>
+<div id="deprecated-before-sync-pdfs-between-mendeley-and-google-drive" class="section level3">
+<h3>[DEPRECATED] Before: sync PDFs between Mendeley and Google Drive</h3>
+<p><em>Before switching to Zotero, I used Mendeley. I was still syncing my annotated PDFs between my tablet and computer. I had described this approach in <a href="../../2018/09/22/sync-mendeley/">this post</a>.</em></p>
+</div>
 </div>
 <div id="dowload-files-from-dropbox" class="section level2">
 <h2>Dowload files from Dropbox</h2>
