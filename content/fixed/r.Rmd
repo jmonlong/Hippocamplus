@@ -122,6 +122,17 @@ p3 = ggplot(...) + ...
 grid.arrange(p1, p2, p3, heights=c(2,1), layout_matrix=rbind(c(1,1), 2:3))
 ```
 
+#### Repositioned titles as panel legend
+
+We can add *A)*, *B)* etc as a title for each panel.
+To reposition them, for example near the corner:
+
+```r
+p1 = p1 + ggtitle('A') + theme(plot.title=element_text(hjust=-.05, vjust=-3))
+```
+
+*hjust/vjust may need to be adjusted to fit the graph type and aspect ratio.*
+
 #### Aligning the x-axis
 
 Sometimes we might want to have two graphs, one on top of the other, with their x-axis aligned.

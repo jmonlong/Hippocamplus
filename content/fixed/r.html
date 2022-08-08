@@ -10,25 +10,28 @@ output:
 
 <div id="TOC">
 <ul>
-<li><a href="#details-to-remember">Details to remember</a><ul>
-<li><a href="#order-in-condition-assessment">Order in condition assessment</a></li>
+<li><a href="#details-to-remember" id="toc-details-to-remember">Details to remember</a>
+<ul>
+<li><a href="#order-in-condition-assessment" id="toc-order-in-condition-assessment">Order in condition assessment</a></li>
 </ul></li>
-<li><a href="#read-files-in-chunk">Read files in chunk</a></li>
-<li><a href="#graphs">Graphs</a><ul>
-<li><a href="#palette-with-many-colors">Palette with many colors</a></li>
-<li><a href="#ggplot2-tricks">ggplot2 tricks</a></li>
-<li><a href="#multi-panel-ggplots">Multi-panel ggplots</a></li>
-<li><a href="#change-font-in-ggplot2">Change font in ggplot2</a></li>
-<li><a href="#waffle-graphs">Waffle graphs</a></li>
+<li><a href="#read-files-in-chunk" id="toc-read-files-in-chunk">Read files in chunk</a></li>
+<li><a href="#graphs" id="toc-graphs">Graphs</a>
+<ul>
+<li><a href="#palette-with-many-colors" id="toc-palette-with-many-colors">Palette with many colors</a></li>
+<li><a href="#ggplot2-tricks" id="toc-ggplot2-tricks">ggplot2 tricks</a></li>
+<li><a href="#multi-panel-ggplots" id="toc-multi-panel-ggplots">Multi-panel ggplots</a></li>
+<li><a href="#change-font-in-ggplot2" id="toc-change-font-in-ggplot2">Change font in ggplot2</a></li>
+<li><a href="#waffle-graphs" id="toc-waffle-graphs">Waffle graphs</a></li>
 </ul></li>
-<li><a href="#rmarkdown">Rmarkdown</a><ul>
-<li><a href="#zoom-on-click-images">Zoom-on-click images</a></li>
-<li><a href="#beamer-presentation">Beamer presentation</a></li>
-<li><a href="#jekyll-website">Jekyll website</a></li>
+<li><a href="#rmarkdown" id="toc-rmarkdown">Rmarkdown</a>
+<ul>
+<li><a href="#zoom-on-click-images" id="toc-zoom-on-click-images">Zoom-on-click images</a></li>
+<li><a href="#beamer-presentation" id="toc-beamer-presentation">Beamer presentation</a></li>
+<li><a href="#jekyll-website" id="toc-jekyll-website">Jekyll website</a></li>
 </ul></li>
-<li><a href="#data.table-package"><em>data.table</em> package</a></li>
-<li><a href="#rcpp">Rcpp</a></li>
-<li><a href="#linux-setup">Linux setup</a></li>
+<li><a href="#data.table-package" id="toc-data.table-package"><em>data.table</em> package</a></li>
+<li><a href="#rcpp" id="toc-rcpp">Rcpp</a></li>
+<li><a href="#linux-setup" id="toc-linux-setup">Linux setup</a></li>
 </ul>
 </div>
 
@@ -110,6 +113,7 @@ pal = interk(rainbow(20, s=.8), 5)</code></pre>
 <li>Multi-column legends: <code>guides(fill=guide_legend(ncol=4))</code></li>
 <li>Add more vertical space between legend labels (e.g. for multi-lines labels): <code>guides(fill=guide_legend(keyheight=2))</code></li>
 <li>Don’t show <em>a</em> in legend when using text (e.g. when already having points and colors): <code>geom_text(show.legend=FALSE)</code></li>
+<li>Keep “dodged” bars the same width: <code>position=position_dodge(.9, preserve='single')</code></li>
 </ul>
 </div>
 <div id="multi-panel-ggplots" class="section level3">
@@ -120,6 +124,13 @@ For example:</p>
 p2 = ggplot(...) + ...
 p3 = ggplot(...) + ...
 grid.arrange(p1, p2, p3, heights=c(2,1), layout_matrix=rbind(c(1,1), 2:3))</code></pre>
+<div id="repositioned-titles-as-panel-legend" class="section level4">
+<h4>Repositioned titles as panel legend</h4>
+<p>We can add <em>A)</em>, <em>B)</em> etc as a title for each panel.
+To reposition them, for example near the corner:</p>
+<pre class="r"><code>p1 = p1 + ggtitle(&#39;A&#39;) + theme(plot.title=element_text(hjust=-.05, vjust=-3))</code></pre>
+<p><em>hjust/vjust may need to be adjusted to fit the graph type and aspect ratio.</em></p>
+</div>
 <div id="aligning-the-x-axis" class="section level4">
 <h4>Aligning the x-axis</h4>
 <p>Sometimes we might want to have two graphs, one on top of the other, with their x-axis aligned.</p>
@@ -270,6 +281,10 @@ knitr::kable(matrix(rnorm(10),10,10), format=&#39;latex&#39;)
 <li><a href="https://s3.amazonaws.com/assets.datacamp.com/blog_assets/datatable_Cheat_Sheet_R.pdf">Cheatsheet from DataCamp</a></li>
 </ul>
 <table>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th><em>tidyverse</em></th>
