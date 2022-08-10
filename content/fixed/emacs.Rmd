@@ -286,6 +286,22 @@ In `.emacs`:
 
 Note: I use `options(device=function() pdf(width=9, height=7))` to specify the dimensions of the default *Rplots.pdf* created.
 
+### Jumping to function definitions
+
+When developping a package, use the typical commands:
+
+- `M-.` jump to a definition
+- `M-,` jump back.
+
+Build the *TAGS* file with `M-x ess-build-tags-for-directory`. 
+
+To use, activating the mode `M-x xref-etags-mode` might be necessary. 
+I added this to my `.emacs`:
+
+~~~lisp
+(add-hook 'ess-mode-hook (lambda () (xref-etags-mode)))
+~~~
+
 ## For writing
 
 When writing I prefer when long lines are wrapped without cutting a word: `M-x visual-line-mode`
