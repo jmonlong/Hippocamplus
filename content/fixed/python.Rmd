@@ -9,15 +9,95 @@ output:
 
 Some notes on my recent attempt to learn Python.
 
-## Naming and formatting
+## Input/Output
 
-+ Use lowercase `_`-separated for modules and functions name. E.g. `my_function`.
-+ Use CapsWord for classes. E.g. `MyClass`.
-+ Use `_` prefix for private variable. E.g. `_secret_variable`.
+To read the standard input:
+
+~~~python
+import fileinput
+
+for line in fileinput.input():
+    # SOMETHING WITH line
+~~~
+
+To read a file line by line:
+
+~~~python
+for line in open(input_file, 'rt')
+    line.rstrip('\n')
+~~~
+
+Or in one line:
+
+~~~python
+lines = [line.rstrip('\n') for line in open(input_file, 'rt')]
+~~~
+
+To write a file:
+
+~~~python
+f = open(output_file, 'wt') # 'a' for append mode
+f.write('something' + str(an_integer) + '\n')
+f.close()
+~~~
+
+For gzipped files, use *gzip* module:
+
+~~~python
+import gzip
+f = gzip.open('file.txt.gz', 'rt')
+f = gzip.open('file.txt.gz', 'wt')
+~~~
+
+To quickly read a manually indexed (e.g. `grep -b`) file quickly, use `seek` to jump to a byte-offset and `tell` to save the current byte-offset.
+
+~~~python
+f = open(reads_fn)
+f.seek(bos)
+line = f.next()
+f.close()
+~~~
+
+To save python objects one can use `pickle` module:
+
+~~~python
+pickle.dump(obj1, open("obj1.pkl","wb"))
+obj1 = pickle.load(open("obj1.pkl", "rb"))
+~~~
+
+Note the *b* that specifies *binary mode* which is slightly more efficient for non-text files.
+
+## Passing arguments to a script
+
+The quick way is to use `sys.argv` like that:
+
+~~~python
+import sys
+in1 =  sys.argv[1]
+~~~
+
+The more fancy way is to use `argparse`. I usually use it like this (see the [doc](https://docs.python.org/2/library/argparse.html) for a more complete example):
+
+~~~python
+import argparse
+
+parser = argparse.ArgumentParser(description='Do something cool.')
+parser.add_argument('-in', dest='input', help='the input file', required=True)
+parser.add_argument('-k', dest='k', default=3, type=int, help='an integer')
+parser.add_argument('-bool', dest='bool', action='store_true', help='False by default')
+parser.add_argument('-out', dest='output', help='the output file')
+
+args = parser.parse_args()
+print args.input
+print args.k
+print args.output
+~~~
+
+
 
 ## Objects
 
-### Array
+### Array/lists
 
 ~~~python
 arr = [3]
@@ -46,6 +126,17 @@ Hash tables or dictionaries holds unordered sets of key/value pairs.
 a_hash = {'bob': 42, 'kevin': 7}
 ~~~
 
+### Set
+
+It's much faster to check the presence of an element in a set than a list. 
+For example:
+
+~~~python
+all_words = set()
+all_words.add('word') # etc
+'word' in all_words
+~~~
+
 ### Class
 
 ### String
@@ -68,6 +159,13 @@ mres = pattern.search(line)
 mres.group(1)
 ~~~
 
+To decode/encode a string, e.g. when reading/writing files and not using the text mode `t`:
+
+~~~python
+cur_line.decode('ascii')
+cur_line.encode('utf-8')
+~~~
+
 ### Function
 
 ~~~python
@@ -86,63 +184,11 @@ DataFrame.from_csv('file.tsv, sep='\t', header=0)
 ~~~
 
 
-## Input/Output
+## Naming and formatting
 
-To read the standard input:
-
-~~~python
-import fileinput
-
-for line in fileinput.input():
-    # SOMETHING WITH line
-~~~
-
-To read a file line by line:
-
-~~~python
-for line in open(input_file)
-    line.rstrip('\n')
-~~~
-
-Or in one line:
-
-~~~python
-lines = [line.rstrip('\n') for line in open(input_file)]
-~~~
-
-To write a file:
-
-~~~python
-f = open(output_file, 'w') # 'a' for append mode
-f.write('something' + str(an_integer) + '\n')
-f.close()
-~~~
-
-For gzipped files, use *gzip* module:
-
-~~~python
-import gzip
-f = gzip.open('file.txt.gz', 'rb')
-f = gzip.open('file.txt.gz', 'wb')
-~~~
-
-To quickly read a manually indexed (e.g. `grep -b`) file quickly, use `seek` to jump to a byte-offset and `tell` to save the current byte-offset.
-
-~~~python
-f = open(reads_fn)
-f.seek(bos)
-line = f.next()
-f.close()
-~~~
-
-To save python objects one can use `pickle` module:
-
-~~~python
-pickle.dump(obj1, open("obj1.pkl","wb"))
-obj1 = pickle.load(open("obj1.pkl", "rb"))
-~~~
-
-Note the *b* that specifies *binary mode* which is slightly more efficient for non-text files.
++ Use lowercase `_`-separated for modules and functions name. E.g. `my_function`.
++ Use CapsWord for classes. E.g. `MyClass`.
++ Use `_` prefix for private variable. E.g. `_secret_variable`.
 
 ## Module, files, imports
 
@@ -202,34 +248,6 @@ To use this, I must always have the local library in `PYTHONPATH`.
 
 Modules (as in `module load ...`) might be a cleaner solution. I use existing *module* but I didn't take the time to see how I could create and use them more.
 
-## Passing arguments to a script
-
-The quick way is to use `sys.argv` like that:
-
-~~~python
-import sys
-in1 =  sys.argv[1]
-~~~
-
-The more fancy way is to use `argparse`. I usually use it like this (see the [doc](https://docs.python.org/2/library/argparse.html) for a more complete example):
-
-~~~python
-import argparse
-
-parser = argparse.ArgumentParser(description='Do something cool.')
-parser.add_argument('-in', dest='input', help='the input file', required=True)
-parser.add_argument('-k', dest='k', default=3, type=int, help='an integer')
-parser.add_argument('-bool', dest='bool', action='store_true', help='False by default')
-parser.add_argument('-out', dest='output', help='the output file')
-
-args = parser.parse_args()
-print args.input
-print args.k
-print args.output
-~~~
-
-
-
 ## Graphs
 
 An histogram with *matplotlib*:
@@ -279,9 +297,16 @@ bwa_out = subprocess.check_output(bwa_cmd, stderr=dump)
 dump.close()
 ~~~
 
-## Timing 
+## Resource monitoring
 
-Example with *timeit*:
+For logging, add date to the output with:
+
+~~~python
+import datetime
+print(datetime.datetime.now())
+~~~
+
+Timing a function with *timeit*:
 
 ~~~python
 from timeit import Timer
@@ -289,6 +314,17 @@ def test():
 	global myobj
 	myobj.fun()
 Timer(test).timeit(number=10)
+~~~
+
+A built-in way to monitor resident memory usage:
+
+~~~python
+import tracemalloc
+tracemalloc.start()
+# do something
+mem_size, peak_mem_size = tracemalloc.get_traced_memory()
+peak_mem_gb = round(peak_mem_size/(1024*1024*1024), 5)
+tracemalloc.stop()
 ~~~
 
 ## Bioinfo
