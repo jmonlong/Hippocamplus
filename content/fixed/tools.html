@@ -10,18 +10,19 @@ output:
 
 <div id="TOC">
 <ul>
-<li><a href="#git">Git</a></li>
-<li><a href="#snakemake">Snakemake</a></li>
-<li><a href="#jq">jq</a></li>
-<li><a href="#vd">vd</a></li>
-<li><a href="#rsync">rsync</a></li>
-<li><a href="#docker">Docker</a></li>
-<li><a href="#wdl">WDL</a></li>
-<li><a href="#makefile">Makefile</a></li>
-<li><a href="#ftp">FTP</a></li>
-<li><a href="#for-file-conversion">For file conversion</a><ul>
-<li><a href="#misc">Misc</a></li>
-<li><a href="#pdf">PDF</a></li>
+<li><a href="#git" id="toc-git">Git</a></li>
+<li><a href="#snakemake" id="toc-snakemake">Snakemake</a></li>
+<li><a href="#jq" id="toc-jq">jq</a></li>
+<li><a href="#vd" id="toc-vd">vd</a></li>
+<li><a href="#rsync" id="toc-rsync">rsync</a></li>
+<li><a href="#docker" id="toc-docker">Docker</a></li>
+<li><a href="#wdl" id="toc-wdl">WDL</a></li>
+<li><a href="#makefile" id="toc-makefile">Makefile</a></li>
+<li><a href="#ftp" id="toc-ftp">FTP</a></li>
+<li><a href="#for-file-conversion" id="toc-for-file-conversion">For file conversion</a>
+<ul>
+<li><a href="#misc" id="toc-misc">Misc</a></li>
+<li><a href="#pdf" id="toc-pdf">PDF</a></li>
 </ul></li>
 </ul>
 </div>
@@ -120,6 +121,12 @@ It’s great to format wide columns but also to quickly explore summary stats of
 <li><code>g/</code> regex search in all columns</li>
 <li><code>n</code>/<code>N</code> move to next/previous match</li>
 <li><code>[</code>/<code>]</code> sort ascending/descending by current column</li>
+<li>Select rows and filter:
+<ul>
+<li><code>|</code> select by regexp in current column</li>
+<li><code>,</code> select rows matching current cell in current column</li>
+<li><code>z"</code> copy selected rows to new sheet</li>
+</ul></li>
 <li><code>F</code> toggle a frequency table/histogram of the current column.
 <ul>
 <li><code>Enter</code> to focus on a subset defined by a row in frequency table.</li>
@@ -203,6 +210,20 @@ find &#39;/var/lib/docker/volumes/&#39; -mindepth 1 -maxdepth 1 -type d | grep -
 </div>
 <div id="wdl" class="section level2">
 <h2>WDL</h2>
+<p>A few useful commands/trick/remainders for WDL (see <a href="https://github.com/openwdl/wdl/blob/main/versions/1.0/SPEC.md">full specs</a>).</p>
+<ul>
+<li><code>size(file_name, 'G')</code> to get the size in Gb (e.g. for dynamic disk space allocation). Used with <code>ceil</code>/<code>round</code> to get a round number.</li>
+<li>and=<code>&amp;&amp;</code>, or=<code>||</code></li>
+<li><code>~{true="yes" false="no" BOOLEAN_ARG}</code> to inject different strings in the command section, depending on the value of a Boolean.</li>
+<li><code>~{sep="," array_value}</code> to “join” an array into a string.</li>
+<li><code>Int value = if othervalue &lt; 5 then 1 else 4</code></li>
+<li><code>glob("*.bam")</code> to cath output files for example.</li>
+<li><code>String out_prefix = basename(in_gam_file, ".gam")</code> to get the basename of a file and strip a suffix too.</li>
+<li><code>File sel_file = select_first([OPTIONAL_INPUT_FILE, task.output_file])</code> to select the first defined arg in an array (e.g. when a task can recreate an optional input).</li>
+<li><code>Array[Pair[File,File]] paired_files_list = zip(file_list_1, file_list_2)</code>, e.g. to scatter across two lists. In the scatter, access with <code>.left</code>/<code>.right</code>.</li>
+<li>Start command section with <code>set -eux -o pipefail</code> to stop the job at the first error, even in a pipe.</li>
+<li><a href="https://github.com/jmonlong/wdl-workflows/blob/master/read_stats/workflow.wdl">Simple workflow with typical structure</a></li>
+</ul>
 <p>If an input is a (long) array, use it through a file with one element per line (see in <a href="https://github.com/openwdl/wdl/blob/main/versions/1.0/SPEC.md#array-serialization-using-write_lines">WDL Spec</a>):</p>
 <pre><code>input {
     Array[File] in_vcf_list
@@ -218,9 +239,9 @@ command -f ~{write_lines(in_vcf_list)}
 <div id="makefile" class="section level2">
 <h2>Makefile</h2>
 <ul>
-<li><a href="https://www.gnu.org/software/make/manual/html_node/index.html">GNU make manual</a></li>
+<li><p><a href="https://www.gnu.org/software/make/manual/html_node/index.html">GNU make manual</a></p></li>
 <li><p><a href="https://gist.github.com/isaacs/62a2d1825d04437c6f08">Makefile basics from Isaacs</a>.</p></li>
-<li><a href="https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html#Automatic-Variables">Automatic variables</a>
+<li><p><a href="https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html#Automatic-Variables">Automatic variables</a></p>
 <ul>
 <li><code>$@</code> the target</li>
 <li><code>$&lt;</code> the first prerequisite</li>
@@ -228,14 +249,14 @@ command -f ~{write_lines(in_vcf_list)}
 <li><code>$(@D)</code> the directory part of <code>$@</code> (works the same with <code>&lt;</code>,<code>^</code>, etc).</li>
 <li><code>$(@F)</code> the filename part of <code>$@</code> (works the same with <code>&lt;</code>,<code>^</code>, etc).</li>
 </ul></li>
-<li><a href="https://www.gnu.org/software/make/manual/html_node/File-Name-Functions.html#File-Name-Functions">File name functions</a>
+<li><p><a href="https://www.gnu.org/software/make/manual/html_node/File-Name-Functions.html#File-Name-Functions">File name functions</a></p>
 <ul>
 <li><code>$(notdir src/foo.c)</code> returns <em>foo.c</em>.</li>
 <li><code>$(addsuffix .c,foo)</code> returns <em>foo.c</em>.</li>
 <li><code>$(basename dir/foo.test.c)</code> returns <em>dir/foo.test</em>.</li>
 <li><code>objects := $(wildcard *.o)</code> to list files in a variable.</li>
 </ul></li>
-<li><a href="https://www.gnu.org/software/make/manual/html_node/Text-Functions.html#Text-Functions">String functions</a>
+<li><p><a href="https://www.gnu.org/software/make/manual/html_node/Text-Functions.html#Text-Functions">String functions</a></p>
 <ul>
 <li><code>$(patsubst %.c,%.o,file.c)</code> to substitute file extensions</li>
 <li><code>$(subst from,to,text)</code> replaces all occurrences of <em>from</em> to <em>to</em> in <em>text</em>.</li>

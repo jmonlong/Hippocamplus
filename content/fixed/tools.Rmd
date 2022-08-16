@@ -214,6 +214,20 @@ find '/var/lib/docker/volumes/' -mindepth 1 -maxdepth 1 -type d | grep -vFf <(
 
 ## WDL
 
+A few useful commands/trick/remainders for WDL (see [full specs](https://github.com/openwdl/wdl/blob/main/versions/1.0/SPEC.md)).
+
+- `size(file_name, 'G')` to get the size in Gb (e.g. for dynamic disk space allocation). Used with `ceil`/`round` to get a round number.
+- and=`&&`, or=`||`
+- `~{true="yes" false="no" boolean_value}` to inject different strings in the command section, depending on the value of a Boolean.
+- `~{sep="," array_value}` to "join" an array into a string.
+- `Int value = if othervalue < 5 then 1 else 4`
+- `glob("*.bam")` to cath output files for example.
+- `String out_prefix = basename(in_gam_file, ".gam")` to get the basename of a file and strip a suffix too.
+- `File sel_file = select_first([OPTIONAL_INPUT_FILE, task.output_file])` to select the first defined arg in an array (e.g. when a task can recreate an optional input).
+- `Array[Pair[File,File]] paired_files_list = zip(file_list_1, file_list_2)`, e.g. to scatter across two lists. In the scatter, access with `.left`/`.right`.
+- Start command section with `set -eux -o pipefail` to stop the job at the first error, even in a pipe.
+- [Simple workflow with typical structure](https://github.com/jmonlong/wdl-workflows/blob/master/read_stats/workflow.wdl)
+
 If an input is a (long) array, use it through a file with one element per line (see in [WDL Spec](https://github.com/openwdl/wdl/blob/main/versions/1.0/SPEC.md#array-serialization-using-write_lines)):
 
 ~~~
