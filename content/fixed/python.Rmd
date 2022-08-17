@@ -184,6 +184,25 @@ DataFrame.from_csv('file.tsv, sep='\t', header=0)
 ~~~
 
 
+## Multi-threading
+
+~~~python
+import threading
+
+def task(x, results, index):
+    results[index] = SOMETHING WITH X
+
+threads = [None] * 10
+results = [None] * 10
+
+## assuming the inputs are in an array called inputs
+for ii in range(len(threads)):
+    threads[ii] = threading.Thread(target=task, args=(inputs[ii], results, ii))
+    threads[ii].start()
+for ii in range(len(threads)):
+    threads[ii].join()
+~~~
+
 ## Naming and formatting
 
 + Use lowercase `_`-separated for modules and functions name. E.g. `my_function`.
