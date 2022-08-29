@@ -155,6 +155,17 @@ p2$widths[2:3] <- maxWidth
 grid.arrange(p1, p2, heights = c(3, 2))
 ~~~
 
+Otherwise, there is always adding manually margins to align them...
+
+~~~r
+ggp.panels = grid.arrange(
+    ggp.1 + theme(axis.text.x=element_blank(), axis.title.x=element_blank(),
+                  plot.margin = margin(.1,.1,.1,.35, "cm")), 
+    ggp.2 + theme(plot.margin = margin(.1,1.5,.1,.8, "cm")),
+    heights=c(2,3))
+~~~
+
+
 ### Change font in ggplot2
 
 ~~~r
