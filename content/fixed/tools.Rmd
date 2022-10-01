@@ -42,6 +42,22 @@ git config --global user.name 'Jean Monlong'
 + Delete a branch: `git branch -d hotfix`
 + Delete remote branch: `git push origin :hotfix`
 
+#### Tags
+
+Create a tag:
+
+~~~sh
+git tag -a tagname -m "message"
+~~~
+
+---
+
+Push tag:
+
+~~~sh
+git push --tags
+~~~
+
 
 #### Check status of all repos
 
@@ -79,6 +95,36 @@ Can also be used as `snakemake --config yourparam=1.5`.
 For sample metadata, a [tabular configuration](https://snakemake.readthedocs.io/en/stable/snakefiles/configuration.html#tabular-configuration) can also be used using Pandas.
 It's also possible to define a separate config file for the cluster configuration (e.g. resources for each rule).
 
+
+## bcftools
+
+- [bcftools man page](https://samtools.github.io/bcftools/bcftools.html)
+- [bcftools tutorials](https://samtools.github.io/bcftools/howtos/index.html)
+
+#### Rename sample
+
+```
+echo SAMPLENAME > temp.txt
+bcftools reheader -s temp.txt input.vcf.gz > output.vcf.gz
+```
+
+#### Remove INFO fields and keep GT only
+
+```
+bcftools annotate -x INFO,^FORMAT/GT input.vcf.gz
+```
+
+#### Extract a sample and keep only sites with an alt allele
+
+```
+bcftools view -c 1 -s SAMPLENAME input.vcf.gz
+```
+
+#### Add AN,AC,AF to the INFO
+
+```
+bcftools +fill-tags input.vcf.gz -Oz -o output.vcf.gz --threads 4 -- -t AN,AC,AF
+```
 
 ## jq
 

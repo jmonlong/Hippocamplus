@@ -504,6 +504,8 @@ At this point `C-Enter` will send the command to the *shell* buffer.
 
 ## For C/CPP
 
+- Set the default indentation level with the `c-basic-offset` (e.g. setting it with `M-x set-variable`).
+
 I'm following [this tutorial](https://tuhdo.github.io/c-ide.html).
 
 - The speedbar is nice to get an overview of the files. `M-x speedbar`.
