@@ -93,6 +93,8 @@ The available versions were listed using `sudo apt list -a r-base-core`
 
 ## Sync a specific folder on Ubuntu
 
+### On the cloud
+
 I use [Nextcloud](https://nextcloud.com/) which offers a free tier with 2 Gb (for most [providers](https://nextcloud.com/sign-up/)).
 It also has an Ubuntu software and Android app that can sync a specific folder. 
 I use it to synchronize the articles I read and annotate between my tablet and computer(s) (see the ["Zotero" section](#zotero) below).
@@ -102,6 +104,21 @@ I use it to synchronize the articles I read and annotate between my tablet and c
    - An [AppImage](https://appimage.org/) is some kind of binary: make it executable using `chmod +x` and place in your *PATH*.
 1. When logging in to the Nexcloud app, there is an option to select exactly which folder(s) to sync.
 1. On the tablet, use the Nexcloud Android App from [F-Droid](https://f-droid.org/packages/com.nextcloud.client/) or [Google Play](https://play.google.com/store/apps/details?id=com.nextcloud.client).
+   - Note: the app is buggy on my tablet. An alternative solution is [FolderSync](https://play.google.com/store/apps/details?id=dk.tacit.android.foldersync.lite&hl=en_US) which is slow (checks all the files!) but works. Another "alternative" is to sync directly using Syncthing (see below)
+   
+### Sync in real time with Syncthing
+
+[Syncthing](https://syncthing.net/) can be easily setup to synchronize specific folders. It needs to be running on all the devices but it's fast and avoids using a cloud hosting service.
+
+On Ubuntu, I run it using Docker with:
+
+~~~sh
+docker run -p 8384:8384 -p 22000:22000/tcp -p 22000:22000/udp -p 21027:21027/udp -v `pwd`:/var/syncthing --hostname=my-syncthing syncthing/syncthing:latest
+~~~
+
+The GUI can then be openened in the browser, by default at http://127.0.0.1:8384/.
+
+The Syncthing Androids app is available on [F-Droid](https://f-droid.org/en/packages/com.nutomic.syncthingandroid/) and [Google Play](https://play.google.com/store/apps/details?id=com.nutomic.syncthingandroid).
 
 ### [DEPRECATED?] Before: sync a specific Google Drive folder on Ubuntu
 
@@ -146,14 +163,22 @@ In the general settings of Zotero I also specify the Google Drive folder as *bas
 Then using the [Zotfile](http://zotfile.com/) plugins to make sure the PDF files are consistent between computers.
 The configuration I use is:
 
-- Pointing at the Google Drive folder, with subfolders by authors `/%a`.
+- Pointing at the folder synced with the Cloud (see below), with subfolders by authors `/%a`.
 - Changing to lower case and replacing blanks in file names.
 
 For the [Better BibTeX plugin](https://retorque.re/zotero-better-bibtex/), the most important setting is the citation key style: `[auth:lower][year][journal:lower:abbr]`.
 
-I use [FolderSync](https://play.google.com/store/apps/details?id=dk.tacit.android.foldersync.lite&hl=en_US) to sync the PDFs that I annotate on my Android tablet.
-I rarely need to manage/explore my library on my Android device (I usually just sync then read/annotate the most recent PDFs), but when I do I use the [ZotDroid](https://play.google.com/store/apps/details?id=computer.benjamin.zotdr0id&hl=en_US) app, or the [Library](https://play.google.com/store/apps/details?id=com.cgogolin.library&hl=en_US&gl=US) app to search my library's BibTeX file (also synced).
-Not great but the best I could find.
+I still haven't found a perfect way to **synchronize my library with my Android tablet**.
+Currently, I store the PDFs on Nextcloud (2 Gb free tier, see above), and then:
+
+1. Annotate the PDFs with [Xodo](https://play.google.com/store/apps/details?id=com.xodo.pdf.reader&gl=US&pli=1).
+3. Synchronize the PDFs with:
+   - When it doesn't crash (which is rare), the Nextcloud app on Android is fast and ideal. 
+   - When I don't have my computer around, the fallback app ias [FolderSync](https://play.google.com/store/apps/details?id=dk.tacit.android.foldersync.lite&hl=en_US) which can be set up for Nextcloud. It works but takes a lot of time (>20m) checking each PDF.
+   - When I have my computer around, I launch Syncthing on both for a much faster process (see above).
+2. Browse the library using [ZotDroid](https://play.google.com/store/apps/details?id=computer.benjamin.zotdr0id&hl=en_US), or [Library](https://play.google.com/store/apps/details?id=com.cgogolin.library&hl=en_US&gl=US) (to search my library's BibTeX file which is synced with the PDFs). None of those work that well. I organize my reading list in Orgmode so I don't usually need this anyway.
+
+*Work in progress. I might realize that this was a bad idea later.*
 
 ### [DEPRECATED] Before: sync PDFs between Mendeley and Google Drive
 

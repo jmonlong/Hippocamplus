@@ -10,56 +10,202 @@ output:
 
 <div id="TOC">
 <ul>
-<li><a href="#tips">Tips</a></li>
-<li><a href="#converting-markdown-into-nice-html-pages">Converting Markdown into nice HTML pages</a></li>
-<li><a href="#converting-markdown-into-slides">Converting Markdown into slides</a></li>
-<li><a href="#jekyll-websites">Jekyll websites</a><ul>
-<li><a href="#themes">Themes</a></li>
-<li><a href="#table-of-contents">Table of Contents</a></li>
-<li><a href="#math-formulas">Math formulas</a></li>
+<li><a href="#markdown-tips" id="toc-markdown-tips">Markdown tips</a></li>
+<li><a href="#yaml-header" id="toc-yaml-header">YAML header</a></li>
+<li><a href="#bibliography" id="toc-bibliography">Bibliography</a></li>
+<li><a href="#markdown-to-pdf-report" id="toc-markdown-to-pdf-report">Markdown to PDF report</a></li>
+<li><a href="#markdown-to-word-document" id="toc-markdown-to-word-document">Markdown to Word document</a></li>
+<li><a href="#markdown-to-html-pages" id="toc-markdown-to-html-pages">Markdown to HTML pages</a></li>
+<li><a href="#markdown-to-slides" id="toc-markdown-to-slides">Markdown to slides</a>
+<ul>
+<li><a href="#pdf-slides" id="toc-pdf-slides">PDF slides</a></li>
+<li><a href="#html-slides" id="toc-html-slides">HTML slides</a></li>
 </ul></li>
-<li><a href="#blogdown-websites">blogdown websites</a><ul>
-<li><a href="#themes-1">Themes</a></li>
-<li><a href="#table-of-contents-1">Table of Contents</a></li>
-<li><a href="#draft-posts">Draft posts</a></li>
-<li><a href="#math-formulas-1">Math formulas</a></li>
-<li><a href="#bibliography">Bibliography</a></li>
+<li><a href="#websites" id="toc-websites">Websites</a>
+<ul>
+<li><a href="#blogdown-websites" id="toc-blogdown-websites">blogdown websites</a></li>
+<li><a href="#jekyll-websites-deprecated" id="toc-jekyll-websites-deprecated">Jekyll websites (deprecated)</a></li>
 </ul></li>
-<li><a href="#r-markdown">R Markdown</a></li>
+<li><a href="#r-markdown" id="toc-r-markdown">R Markdown</a></li>
 </ul>
 </div>
 
-<div id="tips" class="section level2">
-<h2>Tips</h2>
+<p>I compile markdown documents using the <a href="https://rmarkdown.rstudio.com/">RMarkdown R package</a> (which uses <a href="https://pandoc.org/">Pandoc</a>).</p>
+<pre class="sh"><code>Rscript -e &#39;rmarkdown::render(&quot;document.md&quot;)&#39;</code></pre>
+<p>The output format is either defined in the YAML header (see below), or can be specified with <code>output_format=</code>.</p>
+<p>Note: In <a href="../emacs/#to-render-rmarkdown">Emacs</a>, I use a custom key binding to run this command on the current buffer.</p>
+<div id="markdown-tips" class="section level2">
+<h2>Markdown tips</h2>
 <ul>
+<li>Insert images with <code>![](image.jpg)</code>.</li>
 <li><code>/</code> to add some vertical space/break (e.g. in slides).</li>
 <li>Use two <code>`</code> and a space to escape <code>`</code> in inline code. E.g <code>`` `pwd` ``</code> gives <code>`pwd`</code>.</li>
 <li><code>---</code> to add horizontal line/separation.</li>
 <li>Comments using: <code>[//]: # (This is a comment)</code> or <code>&lt;!-- This is a comment --&gt;</code></li>
+<li>Insert page breaks with <code>\newpage</code> (also works on some non-LaTeX-based outputs).</li>
 </ul>
 </div>
-<div id="converting-markdown-into-nice-html-pages" class="section level2">
-<h2>Converting Markdown into nice HTML pages</h2>
-<p>I use RMarkdown.
-It creates a self-contained HTML document that looks nice enough and is easy to share.</p>
-<pre class="sh"><code>Rscript -e &#39;rmarkdown::render(&quot;document.md&quot;)&#39;</code></pre>
-<p>Note: In <a href="../emacs/#to-render-rmarkdown">Emacs</a>, I use a custom key binding to run this command on the current buffer</p>
+<div id="yaml-header" class="section level2">
+<h2>YAML header</h2>
+<p>Common info for the YAML header</p>
+<pre class="yaml"><code>---
+title: My title
+subtitle: My subtitle
+author: Jean Monlong
+date: Oct 23, 2023
+---</code></pre>
 </div>
-<div id="converting-markdown-into-slides" class="section level2">
-<h2>Converting Markdown into slides</h2>
-<p>I use RMarkdown or <a href="https://github.com/asanzdiego/markdownslides">MarkdownSlides</a>.</p>
+<div id="bibliography" class="section level2">
+<h2>Bibliography</h2>
+<p>To use BibTeX references from a <code>library.bib</code> file, add to the YAML header:</p>
+<pre class="yaml"><code>---
+bibliography: library.bib
+csl: style.csl
+link-citations: true
+---</code></pre>
+<p>A lot of CSL styles can be found at the <a href="https://www.zotero.org/styles">Zotero Style Repository</a>.</p>
+<p>Cite with <code>@bibtexid</code> or <code>[@bibtexid]</code> (to add parenthesis).
+Multi-citations with <code>[@id1; @id2]</code>.</p>
 </div>
-<div id="jekyll-websites" class="section level2">
-<h2>Jekyll websites</h2>
+<div id="markdown-to-pdf-report" class="section level2">
+<h2>Markdown to PDF report</h2>
+<p>Some YAML header options (<a href="https://pandoc.org/MANUAL.html#variables-for-latex">see documentation for more</a>):</p>
+<pre class="yaml"><code>---
+output:
+  pdf_document:
+    keep_tex: true
+    toc: true
+    toc_depth: 2
+    includes:
+      in_header: header.tex
+linkcolor: NavyBlue
+urlcolor: NavyBlue
+documentclass: article
+papersize: a4
+fontsize: 11pt
+geometry: margin=2cm
+---</code></pre>
+<ul>
+<li><code>header.tex</code> can be used to define custom LaTeX packages/commands to use.</li>
+</ul>
+</div>
+<div id="markdown-to-word-document" class="section level2">
+<h2>Markdown to Word document</h2>
+<p>Some YAML header options:</p>
+<pre class="yaml"><code>---
+output: word_document
+---</code></pre>
+</div>
+<div id="markdown-to-html-pages" class="section level2">
+<h2>Markdown to HTML pages</h2>
+<p>RMarkdown creates self-contained HTML documents that look good and are easy to share.</p>
+<p>Some YAML header options:</p>
+<pre class="yaml"><code>---
+output: 
+  html_document:
+    toc: true
+    toc_depth: 2
+    toc_float: true
+    code_folding: hide
+---</code></pre>
+</div>
+<div id="markdown-to-slides" class="section level2">
+<h2>Markdown to slides</h2>
+<div id="pdf-slides" class="section level3">
+<h3>PDF slides</h3>
+<p>Using Beamer:</p>
+<pre class="yaml"><code>---
+output:
+  beamer_presentation:
+    slide_level: 2
+    theme: &quot;default&quot;
+    colortheme: &quot;dolphin&quot;
+    fonttheme: &quot;structurebold&quot;
+---</code></pre>
+<p>Pick a theme from <a href="https://hartwork.org/beamer-theme-matrix/">https://hartwork.org/beamer-theme-matrix/</a> (for example).</p>
+</div>
+<div id="html-slides" class="section level3">
+<h3>HTML slides</h3>
+<p>Some YAML header options:</p>
+<pre class="yaml"><code>---
+output: 
+  ioslides_presentation:
+    widescreen: true
+    css: style.css
+---</code></pre>
+<p>I used the <code>style.css</code> file to make sure the images are sized properly and don’t overflow.
+For example, this CSS code seemed to help:</p>
+<pre class="css"><code>img {
+    max-width:100%;
+    max-height:400px;
+    height: auto;
+    width:auto;
+}</code></pre>
+<p>In this mode, the user can use key bindings such as <code>f</code> (<strong>f</strong>ullscreen), <code>w</code> (<strong>w</strong>idescreen), <code>o</code> (<strong>o</strong>verview), <code>p</code> (<strong>p</strong>resenter <a href="https://bookdown.org/yihui/rmarkdown/ioslides-presentation.html#presenter-mode">notes</a>).</p>
+<div id="incremental-bullet-points" class="section level4">
+<h4>Incremental bullet points</h4>
+<p>Use the blockquote syntax:</p>
+<pre class="md"><code>&gt; - First things first
+&gt; - But also this</code></pre>
+</div>
+</div>
+</div>
+<div id="websites" class="section level2">
+<h2>Websites</h2>
+<div id="blogdown-websites" class="section level3">
+<h3>blogdown websites</h3>
+<p><a href="https://github.com/rstudio/blogdown">blogdown</a> is a R package extending <a href="http://rmarkdown.rstudio.com/">R Markdown</a> to build <a href="https://gohugo.io/">Hugo</a> static websites.
+Hugo is easier to install than Jekyll and apparently faster. Most importantly blogdown makes it easier to write posts with R code like in a RMarkdown document.</p>
+<p>I still use GitHub Pages to deploy the website.
+GH Pages doesn’t support Hugo, so I build the website in a <code>docs</code> folder (<code>publishDir = "docs"</code> in <code>config.toml</code>) which I set up on the website settings to be the source of the static website.</p>
+<div id="themes" class="section level4">
+<h4>Themes</h4>
+<p>There are several themes <a href="https://themes.gohugo.io/">available</a>.
+I keep using the <a href="http://getpoole.com/">Poole</a> themes, Hyde and Lanyon, that have been <a href="https://github.com/tummychow/lanyon-hugo">made available for Hugo</a>.</p>
+</div>
+<div id="table-of-contents" class="section level4">
+<h4>Table of Contents</h4>
+<p>In the YAML header of a page:</p>
+<pre class="yaml"><code>output:
+  blogdown::html_page:
+    toc: true</code></pre>
+</div>
+<div id="draft-posts" class="section level4">
+<h4>Draft posts</h4>
+<p>Most of the time I would like to build the website with minimal recompilation and I don’t want the draft posts to show (except for previews).</p>
+<p><code>build_site()</code> builds the site without showing posts with YAML <code>draft: true</code>.
+But it also recompiles everything and that can be a pain.</p>
+<p><code>serve_site()</code> recompiles only the <em>Rmd</em> documents newer than the corresponding <em>HTML</em> but it builds all posts, even if they have the <em>draft</em> parameter.</p>
+<p>For minimal recompilation and hidden draft posts I do <code>hugo_build()</code> after a <code>serve_site()</code>.</p>
+</div>
+<div id="math-formulas" class="section level4">
+<h4>Math formulas</h4>
+<p>Using <a href="http://docs.mathjax.org/en/latest/mathjax.html">MathJax</a> JavaScript display engine, I followed the instruction in the <a href="https://bookdown.org/yihui/blogdown/templates.html#how-to">blogdown documentation</a> and added to the footer partial:</p>
+<pre class="html"><code>&lt;script src=&quot;//yihui.name/js/math-code.js&quot;&gt;&lt;/script&gt;
+&lt;script async src=&quot;//cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML&quot;&gt;
+&lt;/script&gt;</code></pre>
+<p>Then inline formulas are surronded by $ (for equations use two $), and they follow <a href="https://en.wikibooks.org/wiki/LaTeX/Mathematics">LaTeX syntax</a>.</p>
+</div>
+<div id="bibliography-1" class="section level4">
+<h4>Bibliography</h4>
+<p>In the YAML header:</p>
+<pre><code>bibliography: [../../static/library.bib]
+link-citations: true</code></pre>
+<p>I also use <a href="https://github.com/jmonlong/Hippocamplus/tree/config/python/reduceBib">a script to reduce the BibTeX file</a> used (see <a href="/2018/11/17/speedup-blogwdown-pandoc-large-bibliography/">this post</a>).
+Otherwise, large BibTeX files or large author lists make the rendering extremely slow.</p>
+</div>
+</div>
+<div id="jekyll-websites-deprecated" class="section level3">
+<h3>Jekyll websites (deprecated)</h3>
+<p>Note: I now use <em>blogdown</em> for markdown-based websites, see above.</p>
 <p><a href="http://jekyllrb.com/">Jekyll</a> websites are simple Markdown documents that can be converted into a website.
 <a href="https://pages.github.com/">GitHub</a> uses it to provide a website for a repo.</p>
-<p>Note: I now use <em>blogdown</em> for markdown-based websites, see below.</p>
-<div id="themes" class="section level3">
-<h3>Themes</h3>
+<div id="themes-1" class="section level4">
+<h4>Themes</h4>
 <p>There are several themes <a href="http://jekyllthemes.org/">available</a>. My favorites are the two <a href="http://getpoole.com/">Poole</a> themes, Hyde and Lanyon.</p>
 </div>
-<div id="table-of-contents" class="section level3">
-<h3>Table of Contents</h3>
+<div id="table-of-contents-1" class="section level4">
+<h4>Table of Contents</h4>
 <p><code>kramdown</code> automatically creates TOC if it sees :</p>
 <pre class="markdown"><code>* Is replaced by the TOC
 {toc}</code></pre>
@@ -72,58 +218,16 @@ It creates a self-contained HTML document that looks nice enough and is easy to 
 <p>Then I call the TOC in each markdown document using (without the <code>\</code>):</p>
 <pre class="markdown"><code>\{\% include toc.html \%\}</code></pre>
 </div>
-<div id="math-formulas" class="section level3">
-<h3>Math formulas</h3>
+<div id="math-formulas-1" class="section level4">
+<h4>Math formulas</h4>
 <p>I use <a href="http://docs.mathjax.org/en/latest/mathjax.html">MathJax</a> JavaScript display engine. I added to the <em>head</em> of the pages:</p>
 <pre class="html"><code>&lt;script type=&quot;text/javascript&quot; src=&quot;http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot; &gt;&lt;/script&gt;</code></pre>
 <p>Then inline formulas are defined by <code>\\(...\\)</code> (for equations, use <code>\\[...\\]</code>), and they follow <a href="https://en.wikibooks.org/wiki/LaTeX/Mathematics">LaTeX syntax</a>.</p>
 <p>For example, <code>\\(\int_{-\infty}^\infty e^{-x^2}\mathrm{d}x = \sqrt{\pi}\\)</code> produces <span class="math inline">\(\int_{-\infty}^\infty e^{-x^2}\mathrm{d}x = \sqrt{\pi}\)</span>.</p>
 </div>
 </div>
-<div id="blogdown-websites" class="section level2">
-<h2>blogdown websites</h2>
-<p><a href="https://github.com/rstudio/blogdown">blogdown</a> is a R package extending <a href="http://rmarkdown.rstudio.com/">R Markdown</a> to build <a href="https://gohugo.io/">Hugo</a> static websites.
-Hugo is easier to install than Jekyll and apparently faster. Most importantly blogdown makes it easier to write posts with R code like in a RMarkdown document.</p>
-<p>I still use GitHub Pages to deploy the website.
-GH Pages doesn’t support Hugo, so I build the website in a <code>docs</code> folder (<code>publishDir = "docs"</code> in <code>config.toml</code>) which I set up on the website settings to be the source of the static website.</p>
-<div id="themes-1" class="section level3">
-<h3>Themes</h3>
-<p>There are several themes <a href="https://themes.gohugo.io/">available</a>.
-I keep using the <a href="http://getpoole.com/">Poole</a> themes, Hyde and Lanyon, that have been <a href="https://github.com/tummychow/lanyon-hugo">made available for Hugo</a>.</p>
-</div>
-<div id="table-of-contents-1" class="section level3">
-<h3>Table of Contents</h3>
-<p>In the YAML header of a page:</p>
-<pre class="yaml"><code>output:
-  blogdown::html_page:
-    toc: true</code></pre>
-</div>
-<div id="draft-posts" class="section level3">
-<h3>Draft posts</h3>
-<p>Most of the time I would like to build the website with minimal recompilation and I don’t want the draft posts to show (except for previews).</p>
-<p><code>build_site()</code> builds the site without showing posts with YAML <code>draft: true</code>.
-But it also recompiles everything and that can be a pain.</p>
-<p><code>serve_site()</code> recompiles only the <em>Rmd</em> documents newer than the corresponding <em>HTML</em> but it builds all posts, even if they have the <em>draft</em> parameter.</p>
-<p>For minimal recompilation and hidden draft posts I do <code>hugo_build()</code> after a <code>serve_site()</code>.</p>
-</div>
-<div id="math-formulas-1" class="section level3">
-<h3>Math formulas</h3>
-<p>Using <a href="http://docs.mathjax.org/en/latest/mathjax.html">MathJax</a> JavaScript display engine, I followed the instruction in the <a href="https://bookdown.org/yihui/blogdown/templates.html#how-to">blogdown documentation</a> and added to the footer partial:</p>
-<pre class="html"><code>&lt;script src=&quot;//yihui.name/js/math-code.js&quot;&gt;&lt;/script&gt;
-&lt;script async src=&quot;//cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML&quot;&gt;
-&lt;/script&gt;</code></pre>
-<p>Then inline formulas are surronded by $ (for equations use two $), and they follow <a href="https://en.wikibooks.org/wiki/LaTeX/Mathematics">LaTeX syntax</a>.</p>
-</div>
-<div id="bibliography" class="section level3">
-<h3>Bibliography</h3>
-<p>In the YAML header:</p>
-<pre><code>bibliography: [../../static/library.bib]
-link-citations: true</code></pre>
-<p>I also use <a href="https://github.com/jmonlong/Hippocamplus/tree/config/python/reduceBib">a script to reduce the BibTeX file</a> used (see <a href="/2018/11/17/speedup-blogwdown-pandoc-large-bibliography/">this post</a>).
-Otherwise, large BibTeX files or large author lists make the rendering extremely slow.</p>
-</div>
 </div>
 <div id="r-markdown" class="section level2">
 <h2>R Markdown</h2>
-<p>I put R Markdown content in the <a href="../r/#rmarkdown">R section</a>.</p>
+<p>I put information about running R code in a R Markdown document in the <a href="../r/#rmarkdown">R section</a>.</p>
 </div>

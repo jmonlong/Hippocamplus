@@ -54,7 +54,8 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/markdown/</guid>
-      <description>Tips Converting Markdown into nice HTML pages Converting Markdown into slides Jekyll websites Themes Table of Contents Math formulas  blogdown websites Themes Table of Contents Draft posts Math formulas Bibliography  R Markdown   Tips  / to add some vertical space/break (e.g. in slides). Use two ` and a space to escape ` in inline code. E.g `` `pwd` `` gives `pwd`. --- to add horizontal line/separation.</description>
+      <description>Markdown tips YAML header Bibliography Markdown to PDF report Markdown to Word document Markdown to HTML pages Markdown to slides  PDF slides HTML slides  Websites  blogdown websites Jekyll websites (deprecated)  R Markdown   I compile markdown documents using the RMarkdown R package (which uses Pandoc).
+Rscript -e &amp;#39;rmarkdown::render(&amp;quot;document.md&amp;quot;)&amp;#39; The output format is either defined in the YAML header (see below), or can be specified with output_format=.</description>
     </item>
     
     <item>
@@ -118,7 +119,7 @@ Naming and formatting  Use lowercase _-separated for modules and functions name.
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/os/internet/</guid>
-      <description>Misc tools DuckDuckGo Ubuntu  Update expired keys (French) Accents in Gnome Ubuntu  Install a specific/older R version Sync a specific folder on Ubuntu  [DEPRECATED?] Before: sync a specific Google Drive folder on Ubuntu  Zotero  [DEPRECATED] Before: sync PDFs between Mendeley and Google Drive  Dowload files from Dropbox Record a webradio stream with VLC   Misc tools  https://www.diagrams.net/ to make cartoon and diagrams (used to be draw.</description>
+      <description>Misc tools DuckDuckGo Ubuntu  Update expired keys (French) Accents in Gnome Ubuntu  Install a specific/older R version Sync a specific folder on Ubuntu  On the cloud Sync in real time with Syncthing [DEPRECATED?] Before: sync a specific Google Drive folder on Ubuntu  Zotero  [DEPRECATED] Before: sync PDFs between Mendeley and Google Drive  Dowload files from Dropbox Record a webradio stream with VLC   Misc tools  https://www.</description>
     </item>
     
     <item>
