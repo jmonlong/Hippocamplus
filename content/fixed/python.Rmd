@@ -93,6 +93,17 @@ print args.k
 print args.output
 ~~~
 
+To use argparse but still read the standard input with fileinput:
+
+~~~python
+import argparse
+import fileinput
+
+# argparse definition
+
+for line in fileinput.input(files='-'):
+    # something with 'line' and the arguments from argparse
+~~~
 
 
 ## Objects
