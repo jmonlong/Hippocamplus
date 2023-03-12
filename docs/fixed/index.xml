@@ -16,7 +16,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/cpp/</guid>
-      <description>Resources File I/O Read text file one line at a time  Data structures String manipulation Split a string    Resources  C++ Core Guidelines C++ Primer (5th Edition). Stanley B. Lippman, Josée Lajoie, Barbara E. Moo Accelerated C++. Andrew Koenig  Slides:
+      <description>Resources File I/O  Read text file one line at a time  Data structures String manipulation  Split a string    Resources  C++ Core Guidelines C++ Primer (5th Edition). Stanley B. Lippman, Josée Lajoie, Barbara E. Moo Accelerated C++. Andrew Koenig  Slides:
  The Spirit of C++ Back To Basics: Modern C++ Style   File I/O Read text file one line at a time #include &amp;lt;fstream&amp;gt; std::ifstream in_file(&amp;#39;file.</description>
     </item>
     
@@ -35,8 +35,8 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/expression/</guid>
-      <description>Writing General Starting the sentence Explanation Not sure Opening Nice expression/style Introduce the second part of a sentence  Introduction/reviews Intro the intro Pionner work Changing subject More Closing  Discussion  Oral Expression Advices    Writing Some recommendations from Sportscience:
- i.e. and e.g. only within parenthesis (is that a thing?) aim for economy. However or synonyms at most once per paragraph. while/since for time related stuff, not instead of whereas/although/because.</description>
+      <description>Writing  General  Starting the sentence Explanation Not sure Opening Nice expression/style Introduce the second part of a sentence  Introduction/reviews  Intro the intro Pionner work Changing subject More Closing  Discussion  Oral Expression  Advices    Writing Some recommendations from Sportscience:
+ i.e. and e.g. only within parenthesis (is that a thing?) aim for economy. However or synonyms at most once per paragraph.</description>
     </item>
     
     <item>
@@ -45,7 +45,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/latex/</guid>
-      <description>Cheatsheets Standard packages TinyTeX Misc Document class Page size Font sizes Change the symbol in lists Math calligraphy Languages and encoding Links Table of contents Metadata  Figures Position Sub-figures Supplementary figures  Tables Control tabular width Add vertical padding Supplementary tables Spanning columns/rows Align columns Rectangular selection/cut/paste Tables from R  Code blocks For manuscripts Abstract Author affiliation Text formatting Notes/comments using the todo package Main text and supplements in two documents Compare versions and highlight revisions One figure = one file  Bibliography Reduce long list of authors “Name Year” style Order of initials No URL or DOI  Presentations Changing the font Section slides Themes Background image Backup slides Link to frame    A lot of good information in the LaTeX Wikibook.</description>
+      <description>Cheatsheets Standard packages TinyTeX Misc  Document class Page size Font sizes Change the symbol in lists Math calligraphy Languages and encoding Links Table of contents Metadata  Figures  Position Sub-figures Supplementary figures  Tables  Control tabular width Add vertical padding Supplementary tables Spanning columns/rows Align columns Rectangular selection/cut/paste Tables from R  Code blocks For manuscripts  Abstract Author affiliation Text formatting Notes/comments using the todo package Main text and supplements in two documents Compare versions and highlight revisions One figure = one file  Bibliography  Reduce long list of authors “Name Year” style Order of initials No URL or DOI  Presentations  Changing the font Section slides Themes Background image Backup slides Link to frame    A lot of good information in the LaTeX Wikibook.</description>
     </item>
     
     <item>
@@ -64,7 +64,7 @@ Rscript -e &amp;#39;rmarkdown::render(&amp;quot;document.md&amp;quot;)&amp;#39; 
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/math/stats/</guid>
-      <description>Probability distributions Binomial Hypergeometric Normal Poisson Beta-binomial Beta  Statistical tests Student t-test Fisher’s exact test \(\chi^2\) test Wilcoxon test ANOVA  Regression &amp;amp; Machine Learning Linear regression LASSO LOESS Machine Learning basics CART Neural Networks SVM  Misc stats Markov Model Monte Carlo methods MCMC Hidden Markov Model Maximum Likelihood Estimation Expectation-Maximization Greedy algorithm Bayesian vs Frequentist FM-index  Graph theory De Bruijn graphs Hamiltonian path Euclidian path  Algebra SVD decomposition PCA    All of this is mostly extracted from Wikipedia.</description>
+      <description>Probability distributions  Binomial Hypergeometric Normal Poisson Beta-binomial Beta  Statistical tests  Student t-test Fisher’s exact test \(\chi^2\) test Wilcoxon test ANOVA  Regression &amp;amp; Machine Learning  Linear regression LASSO LOESS Machine Learning basics CART Neural Networks SVM  Misc stats  Markov Model Monte Carlo methods MCMC Hidden Markov Model Maximum Likelihood Estimation Expectation-Maximization Greedy algorithm Bayesian vs Frequentist FM-index  Graph theory  De Bruijn graphs Hamiltonian path Euclidian path  Algebra  SVD decomposition PCA    All of this is mostly extracted from Wikipedia.</description>
     </item>
     
     <item>
@@ -73,7 +73,7 @@ Rscript -e &amp;#39;rmarkdown::render(&amp;quot;document.md&amp;quot;)&amp;#39; 
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/org-mode/</guid>
-      <description>Org file Configuration Syntax Keybindings From anywhere Edit mode Timestamps Repeating events Agenda views Capture  TODO entry Tables Code block Property drawer Habits entry Links Tags Clocking time Custom agenda views Shift timestamps by X hours when traveling to a different time zone Reverse the order of headers To check next   I’m giving Org mode a try. This page will contain my configuration and the small subset of commands that I want to learn.</description>
+      <description>Org file Configuration Syntax Keybindings  From anywhere Edit mode Timestamps Repeating events Agenda views Capture  TODO entry Tables Code block Property drawer Habits entry Links Tags Clocking time Custom agenda views Shift timestamps by X hours when traveling to a different time zone Reverse the order of headers To check next   I’m giving Org mode a try. This page will contain my configuration and the small subset of commands that I want to learn.</description>
     </item>
     
     <item>
@@ -82,8 +82,9 @@ Rscript -e &amp;#39;rmarkdown::render(&amp;quot;document.md&amp;quot;)&amp;#39; 
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/python/</guid>
-      <description>Naming and formatting Objects Array Hash Class String Function Data frame (pandas)  Input/Output Module, files, imports Packaging code Install a module locally  Passing arguments to a script Graphs Shell integration Timing Bioinfo Sequences Fasta SAM files VCF  Tricks Jupyter notebooks   Some notes on my recent attempt to learn Python.
-Naming and formatting  Use lowercase _-separated for modules and functions name. E.g. my_function. Use CapsWord for classes.</description>
+      <description>Input/Output Passing arguments to a script Objects  Array/lists Hash Set Class String Function Data frame (pandas)  Multi-threading Naming and formatting Module, files, imports  Packaging code Install a module locally  Graphs Shell integration Resource monitoring Bioinfo  Sequences Fasta SAM files VCF  Tricks Jupyter notebooks   Some notes on my recent attempt to learn Python.
+Input/Output To read the standard input:
+import fileinput for line in fileinput.</description>
     </item>
     
     <item>
@@ -101,7 +102,7 @@ Naming and formatting  Use lowercase _-separated for modules and functions name.
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/shell/</guid>
-      <description>External links GNU screen .bashrc aliases Misc Colors in less Avoid killing ssh jobs Custom prompt  One-liners Bash &amp;amp; Pipes AWK Perl one-liners  Shell scripting Variables Looping If Then Else  Modules Ubuntu Sound problems  OSX Mount server Setup WD Elements external hard drive    This page focuses on configuration of the terminal, one-liners and scripting. Command-line tools I used (e.g. git, snakemake, docker) are described in the Tools page.</description>
+      <description>External links GNU screen .bashrc aliases Misc  Colors in less Avoid killing ssh jobs Custom prompt  One-liners  Bash &amp;amp; Pipes AWK Perl one-liners  Shell scripting  Variables Looping If Then Else  Modules Ubuntu  Sound problems  OSX  Mount server Setup WD Elements external hard drive    This page focuses on configuration of the terminal, one-liners and scripting. Command-line tools I used (e.</description>
     </item>
     
     <item>
@@ -110,7 +111,7 @@ Naming and formatting  Use lowercase _-separated for modules and functions name.
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tools/</guid>
-      <description>Git Snakemake jq vd rsync Docker WDL Makefile FTP For file conversion  Misc PDF    Git  Commit all modification and added files: git commit -am &#34;informative message&#34; To show all the history of a file: git log -p -- file To retrieve a specific version of a file: git show COMMIT:file Revert repo to a specific commit: git checkout COMMIT Undo a commit: git reset HEAD~ and then for the real commit git commit -c ORIG_HEAD.</description>
+      <description>Git Snakemake bcftools jq vd rsync Docker WDL Makefile FTP For file conversion  Misc PDF    Git  Commit all modification and added files: git commit -am &#34;informative message&#34; To show all the history of a file: git log -p -- file To retrieve a specific version of a file: git show COMMIT:file Revert repo to a specific commit: git checkout COMMIT Undo a commit: git reset HEAD~ and then for the real commit git commit -c ORIG_HEAD.</description>
     </item>
     
     <item>

@@ -348,6 +348,8 @@ pal = interk(rainbow(20, s=.8), 5)</code></pre>
 <li>Add more vertical space between legend labels (e.g. for multi-lines labels): <code>guides(fill=guide_legend(keyheight=2))</code></li>
 <li>Don’t show <em>a</em> in legend when using text (e.g. when already having points and colors): <code>geom_text(show.legend=FALSE)</code></li>
 <li>Keep “dodged” bars the same width: <code>position=position_dodge(.9, preserve='single')</code></li>
+<li>Change direction of multi-legends: <code>theme(legend.box='vertical')</code></li>
+<li>Remove some white space between legend and graph, or where the title used to be: <code>theme(legend.margin=margin(-5))</code></li>
 </ul>
 </div>
 <div id="multi-panel-ggplots" class="section level3">
@@ -381,6 +383,12 @@ maxWidth = unit.pmax(p1$widths[2:3], p2$widths[2:3])
 p1$widths[2:3] &lt;- maxWidth
 p2$widths[2:3] &lt;- maxWidth
 grid.arrange(p1, p2, heights = c(3, 2))</code></pre>
+<p>Otherwise, there is always adding manually margins to align them…</p>
+<pre class="r"><code>ggp.panels = grid.arrange(
+    ggp.1 + theme(axis.text.x=element_blank(), axis.title.x=element_blank(),
+                  plot.margin = margin(.1,.1,.1,.35, &quot;cm&quot;)), 
+    ggp.2 + theme(plot.margin = margin(.1,1.5,.1,.8, &quot;cm&quot;)),
+    heights=c(2,3))</code></pre>
 </div>
 </div>
 <div id="change-font-in-ggplot2" class="section level3">

@@ -344,7 +344,13 @@ It’s not as user friendly as some online resources but a good offline alternat
 It uses the <a href="https://en.wikipedia.org/wiki/WordNet">WordNet</a> database through the <code>wn</code> command line.
 The shortcut to list synonyms is <code>C-c C-s l</code>.</p>
 <p>In my <code>.emacs</code> I added the <code>synosaurus-mode</code> minor mode:</p>
-<pre class="lisp"><code>(add-hook &#39;LaTeX-mode-hook &#39;synosaurus-mode)</code></pre>
+<pre class="lisp"><code>(add-hook &#39;LaTeX-mode-hook &#39;synosaurus-mode)
+(add-hook &#39;markdown-mode-hook &#39;synosaurus-mode)
+;; disable keybinding conflicting with markdown&#39;s
+(eval-after-load &quot;synosaurus&quot;
+  &#39;(define-key synosaurus-mode-map (kbd &quot;C-c C-s i&quot;) nil))
+(eval-after-load &quot;synosaurus&quot;
+  &#39;(define-key synosaurus-mode-map (kbd &quot;C-c C-s l&quot;) nil))</code></pre>
 </div>
 <div id="grammar-checking" class="section level3">
 <h3>Grammar checking</h3>
@@ -466,6 +472,9 @@ At this point <code>C-Enter</code> will send the command to the <em>shell</em> b
 </div>
 <div id="for-ccpp" class="section level2">
 <h2>For C/CPP</h2>
+<ul>
+<li>Set the default indentation level with the <code>c-basic-offset</code> (e.g. setting it with <code>M-x set-variable</code>).</li>
+</ul>
 <p>I’m following <a href="https://tuhdo.github.io/c-ide.html">this tutorial</a>.</p>
 <ul>
 <li>The speedbar is nice to get an overview of the files. <code>M-x speedbar</code>.</li>

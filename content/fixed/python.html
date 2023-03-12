@@ -10,48 +10,104 @@ output:
 
 <div id="TOC">
 <ul>
-<li><a href="#naming-and-formatting">Naming and formatting</a></li>
-<li><a href="#objects">Objects</a><ul>
-<li><a href="#array">Array</a></li>
-<li><a href="#hash">Hash</a></li>
-<li><a href="#class">Class</a></li>
-<li><a href="#string">String</a></li>
-<li><a href="#function">Function</a></li>
-<li><a href="#data-frame-pandas">Data frame (pandas)</a></li>
+<li><a href="#inputoutput" id="toc-inputoutput">Input/Output</a></li>
+<li><a href="#passing-arguments-to-a-script" id="toc-passing-arguments-to-a-script">Passing arguments to a script</a></li>
+<li><a href="#objects" id="toc-objects">Objects</a>
+<ul>
+<li><a href="#arraylists" id="toc-arraylists">Array/lists</a></li>
+<li><a href="#hash" id="toc-hash">Hash</a></li>
+<li><a href="#set" id="toc-set">Set</a></li>
+<li><a href="#class" id="toc-class">Class</a></li>
+<li><a href="#string" id="toc-string">String</a></li>
+<li><a href="#function" id="toc-function">Function</a></li>
+<li><a href="#data-frame-pandas" id="toc-data-frame-pandas">Data frame (pandas)</a></li>
 </ul></li>
-<li><a href="#inputoutput">Input/Output</a></li>
-<li><a href="#module-files-imports">Module, files, imports</a><ul>
-<li><a href="#packaging-code">Packaging code</a></li>
-<li><a href="#install-a-module-locally">Install a module locally</a></li>
+<li><a href="#multi-threading" id="toc-multi-threading">Multi-threading</a></li>
+<li><a href="#naming-and-formatting" id="toc-naming-and-formatting">Naming and formatting</a></li>
+<li><a href="#module-files-imports" id="toc-module-files-imports">Module, files, imports</a>
+<ul>
+<li><a href="#packaging-code" id="toc-packaging-code">Packaging code</a></li>
+<li><a href="#install-a-module-locally" id="toc-install-a-module-locally">Install a module locally</a></li>
 </ul></li>
-<li><a href="#passing-arguments-to-a-script">Passing arguments to a script</a></li>
-<li><a href="#graphs">Graphs</a></li>
-<li><a href="#shell-integration">Shell integration</a></li>
-<li><a href="#timing">Timing</a></li>
-<li><a href="#bioinfo">Bioinfo</a><ul>
-<li><a href="#sequences">Sequences</a></li>
-<li><a href="#fasta">Fasta</a></li>
-<li><a href="#sam-files">SAM files</a></li>
-<li><a href="#vcf">VCF</a></li>
+<li><a href="#graphs" id="toc-graphs">Graphs</a></li>
+<li><a href="#shell-integration" id="toc-shell-integration">Shell integration</a></li>
+<li><a href="#resource-monitoring" id="toc-resource-monitoring">Resource monitoring</a></li>
+<li><a href="#bioinfo" id="toc-bioinfo">Bioinfo</a>
+<ul>
+<li><a href="#sequences" id="toc-sequences">Sequences</a></li>
+<li><a href="#fasta" id="toc-fasta">Fasta</a></li>
+<li><a href="#sam-files" id="toc-sam-files">SAM files</a></li>
+<li><a href="#vcf" id="toc-vcf">VCF</a></li>
 </ul></li>
-<li><a href="#tricks">Tricks</a></li>
-<li><a href="#jupyter-notebooks">Jupyter notebooks</a></li>
+<li><a href="#tricks" id="toc-tricks">Tricks</a></li>
+<li><a href="#jupyter-notebooks" id="toc-jupyter-notebooks">Jupyter notebooks</a></li>
 </ul>
 </div>
 
 <p>Some notes on my recent attempt to learn Python.</p>
-<div id="naming-and-formatting" class="section level2">
-<h2>Naming and formatting</h2>
-<ul>
-<li>Use lowercase <code>_</code>-separated for modules and functions name. E.g. <code>my_function</code>.</li>
-<li>Use CapsWord for classes. E.g. <code>MyClass</code>.</li>
-<li>Use <code>_</code> prefix for private variable. E.g. <code>_secret_variable</code>.</li>
-</ul>
+<div id="inputoutput" class="section level2">
+<h2>Input/Output</h2>
+<p>To read the standard input:</p>
+<pre class="python"><code>import fileinput
+
+for line in fileinput.input():
+    # SOMETHING WITH line</code></pre>
+<p>To read a file line by line:</p>
+<pre class="python"><code>for line in open(input_file, &#39;rt&#39;)
+    line.rstrip(&#39;\n&#39;)</code></pre>
+<p>Or in one line:</p>
+<pre class="python"><code>lines = [line.rstrip(&#39;\n&#39;) for line in open(input_file, &#39;rt&#39;)]</code></pre>
+<p>To write a file:</p>
+<pre class="python"><code>f = open(output_file, &#39;wt&#39;) # &#39;a&#39; for append mode
+f.write(&#39;something&#39; + str(an_integer) + &#39;\n&#39;)
+f.close()</code></pre>
+<p>For gzipped files, use <em>gzip</em> module:</p>
+<pre class="python"><code>import gzip
+f = gzip.open(&#39;file.txt.gz&#39;, &#39;rt&#39;)
+f = gzip.open(&#39;file.txt.gz&#39;, &#39;wt&#39;)</code></pre>
+<p>To quickly read a manually indexed (e.g. <code>grep -b</code>) file quickly, use <code>seek</code> to jump to a byte-offset and <code>tell</code> to save the current byte-offset.</p>
+<pre class="python"><code>f = open(reads_fn)
+f.seek(bos)
+line = f.next()
+f.close()</code></pre>
+<p>To save python objects one can use <code>pickle</code> module:</p>
+<pre class="python"><code>pickle.dump(obj1, open(&quot;obj1.pkl&quot;,&quot;wb&quot;))
+obj1 = pickle.load(open(&quot;obj1.pkl&quot;, &quot;rb&quot;))</code></pre>
+<p>Note the <em>b</em> that specifies <em>binary mode</em> which is slightly more efficient for non-text files.</p>
+<p>To prompt the user for input</p>
+<pre class="python"><code>x = input(&#39;What is?&#39;)</code></pre>
+</div>
+<div id="passing-arguments-to-a-script" class="section level2">
+<h2>Passing arguments to a script</h2>
+<p>The quick way is to use <code>sys.argv</code> like that:</p>
+<pre class="python"><code>import sys
+in1 =  sys.argv[1]</code></pre>
+<p>The more fancy way is to use <code>argparse</code>. I usually use it like this (see the <a href="https://docs.python.org/2/library/argparse.html">doc</a> for a more complete example):</p>
+<pre class="python"><code>import argparse
+
+parser = argparse.ArgumentParser(description=&#39;Do something cool.&#39;)
+parser.add_argument(&#39;-in&#39;, dest=&#39;input&#39;, help=&#39;the input file&#39;, required=True)
+parser.add_argument(&#39;-k&#39;, dest=&#39;k&#39;, default=3, type=int, help=&#39;an integer&#39;)
+parser.add_argument(&#39;-bool&#39;, dest=&#39;bool&#39;, action=&#39;store_true&#39;, help=&#39;False by default&#39;)
+parser.add_argument(&#39;-out&#39;, dest=&#39;output&#39;, help=&#39;the output file&#39;)
+
+args = parser.parse_args()
+print args.input
+print args.k
+print args.output</code></pre>
+<p>To use argparse but still read the standard input with fileinput:</p>
+<pre class="python"><code>import argparse
+import fileinput
+
+# argparse definition
+
+for line in fileinput.input(files=&#39;-&#39;):
+    # something with &#39;line&#39; and the arguments from argparse</code></pre>
 </div>
 <div id="objects" class="section level2">
 <h2>Objects</h2>
-<div id="array" class="section level3">
-<h3>Array</h3>
+<div id="arraylists" class="section level3">
+<h3>Array/lists</h3>
 <pre class="python"><code>arr = [3]
 arr.append(19)
 for elt in arr:
@@ -70,6 +126,14 @@ The opposite would be <code>'\t'.join(map(str, arr))</code></p>
 <p>Hash tables or dictionaries holds unordered sets of key/value pairs.</p>
 <pre class="python"><code>a_hash = {&#39;bob&#39;: 42, &#39;kevin&#39;: 7}</code></pre>
 </div>
+<div id="set" class="section level3">
+<h3>Set</h3>
+<p>It’s much faster to check the presence of an element in a set than a list.
+For example:</p>
+<pre class="python"><code>all_words = set()
+all_words.add(&#39;word&#39;) # etc
+&#39;word&#39; in all_words</code></pre>
+</div>
 <div id="class" class="section level3">
 <h3>Class</h3>
 </div>
@@ -87,6 +151,9 @@ line.split(&#39;\t&#39;)</code></pre>
 pattern = re.compile(&#39;something:(.+)&#39;)
 mres = pattern.search(line)
 mres.group(1)</code></pre>
+<p>To decode/encode a string, e.g. when reading/writing files and not using the text mode <code>t</code>:</p>
+<pre class="python"><code>cur_line.decode(&#39;ascii&#39;)
+cur_line.encode(&#39;utf-8&#39;)</code></pre>
 </div>
 <div id="function" class="section level3">
 <h3>Function</h3>
@@ -97,39 +164,43 @@ mres.group(1)</code></pre>
 </div>
 <div id="data-frame-pandas" class="section level3">
 <h3>Data frame (pandas)</h3>
-<pre class="python"><code>
-DataFrame.from_csv(&#39;file.tsv, sep=&#39;\t&#39;, header=0)</code></pre>
-</div>
-</div>
-<div id="inputoutput" class="section level2">
-<h2>Input/Output</h2>
-<p>To read the standard input:</p>
-<pre class="python"><code>import fileinput
+<pre class="python"><code>df = pd.DataFrame([{&#39;c1&#39;: 1, c2&#39;: &#39;val2&#39;},
+                   {&#39;c1&#39;: 0, c2&#39;: &#39;val3&#39;}])
 
-for line in fileinput.input():
-    # SOMETHING WITH line</code></pre>
-<p>To read a file line by line:</p>
-<pre class="python"><code>for line in open(input_file)
-    line.rstrip(&#39;\n&#39;)</code></pre>
-<p>Or in one line:</p>
-<pre class="python"><code>lines = [line.rstrip(&#39;\n&#39;) for line in open(input_file)]</code></pre>
-<p>To write a file:</p>
-<pre class="python"><code>f = open(output_file, &#39;w&#39;) # &#39;a&#39; for append mode
-f.write(&#39;something&#39; + str(an_integer) + &#39;\n&#39;)
-f.close()</code></pre>
-<p>For gzipped files, use <em>gzip</em> module:</p>
-<pre class="python"><code>import gzip
-f = gzip.open(&#39;file.txt.gz&#39;, &#39;rb&#39;)
-f = gzip.open(&#39;file.txt.gz&#39;, &#39;wb&#39;)</code></pre>
-<p>To quickly read a manually indexed (e.g. <code>grep -b</code>) file quickly, use <code>seek</code> to jump to a byte-offset and <code>tell</code> to save the current byte-offset.</p>
-<pre class="python"><code>f = open(reads_fn)
-f.seek(bos)
-line = f.next()
-f.close()</code></pre>
-<p>To save python objects one can use <code>pickle</code> module:</p>
-<pre class="python"><code>pickle.dump(obj1, open(&quot;obj1.pkl&quot;,&quot;wb&quot;))
-obj1 = pickle.load(open(&quot;obj1.pkl&quot;, &quot;rb&quot;))</code></pre>
-<p>Note the <em>b</em> that specifies <em>binary mode</em> which is slightly more efficient for non-text files.</p>
+df = DataFrame.from_csv(&#39;file.tsv, sep=&#39;\t&#39;, header=0)
+
+df = df.sort_values([&#39;c1&#39;], ascending=False)
+
+df.to_csv(&#39;file.tsv&#39;, sep=&#39;\t&#39;, index=False)
+
+for row in df.itertuples():
+    # something with row.c1</code></pre>
+</div>
+</div>
+<div id="multi-threading" class="section level2">
+<h2>Multi-threading</h2>
+<pre class="python"><code>import threading
+
+def task(x, results, index):
+    results[index] = SOMETHING WITH X
+
+threads = [None] * 10
+results = [None] * 10
+
+## assuming the inputs are in an array called inputs
+for ii in range(len(threads)):
+    threads[ii] = threading.Thread(target=task, args=(inputs[ii], results, ii))
+    threads[ii].start()
+for ii in range(len(threads)):
+    threads[ii].join()</code></pre>
+</div>
+<div id="naming-and-formatting" class="section level2">
+<h2>Naming and formatting</h2>
+<ul>
+<li>Use lowercase <code>_</code>-separated for modules and functions name. E.g. <code>my_function</code>.</li>
+<li>Use CapsWord for classes. E.g. <code>MyClass</code>.</li>
+<li>Use <code>_</code> prefix for private variable. E.g. <code>_secret_variable</code>.</li>
+</ul>
 </div>
 <div id="module-files-imports" class="section level2">
 <h2>Module, files, imports</h2>
@@ -169,25 +240,6 @@ python setup.py install --prefix=/home/monlongj/pylib</code></pre>
 <p>Modules (as in <code>module load ...</code>) might be a cleaner solution. I use existing <em>module</em> but I didn’t take the time to see how I could create and use them more.</p>
 </div>
 </div>
-<div id="passing-arguments-to-a-script" class="section level2">
-<h2>Passing arguments to a script</h2>
-<p>The quick way is to use <code>sys.argv</code> like that:</p>
-<pre class="python"><code>import sys
-in1 =  sys.argv[1]</code></pre>
-<p>The more fancy way is to use <code>argparse</code>. I usually use it like this (see the <a href="https://docs.python.org/2/library/argparse.html">doc</a> for a more complete example):</p>
-<pre class="python"><code>import argparse
-
-parser = argparse.ArgumentParser(description=&#39;Do something cool.&#39;)
-parser.add_argument(&#39;-in&#39;, dest=&#39;input&#39;, help=&#39;the input file&#39;, required=True)
-parser.add_argument(&#39;-k&#39;, dest=&#39;k&#39;, default=3, type=int, help=&#39;an integer&#39;)
-parser.add_argument(&#39;-bool&#39;, dest=&#39;bool&#39;, action=&#39;store_true&#39;, help=&#39;False by default&#39;)
-parser.add_argument(&#39;-out&#39;, dest=&#39;output&#39;, help=&#39;the output file&#39;)
-
-args = parser.parse_args()
-print args.input
-print args.k
-print args.output</code></pre>
-</div>
 <div id="graphs" class="section level2">
 <h2>Graphs</h2>
 <p>An histogram with <em>matplotlib</em>:</p>
@@ -223,14 +275,24 @@ dump = open(&#39;/dev/null&#39;)
 bwa_out = subprocess.check_output(bwa_cmd, stderr=dump)
 dump.close()</code></pre>
 </div>
-<div id="timing" class="section level2">
-<h2>Timing</h2>
-<p>Example with <em>timeit</em>:</p>
+<div id="resource-monitoring" class="section level2">
+<h2>Resource monitoring</h2>
+<p>For logging, add date to the output with:</p>
+<pre class="python"><code>import datetime
+print(datetime.datetime.now())</code></pre>
+<p>Timing a function with <em>timeit</em>:</p>
 <pre class="python"><code>from timeit import Timer
 def test():
     global myobj
     myobj.fun()
 Timer(test).timeit(number=10)</code></pre>
+<p>A built-in way to monitor resident memory usage:</p>
+<pre class="python"><code>import tracemalloc
+tracemalloc.start()
+# do something
+mem_size, peak_mem_size = tracemalloc.get_traced_memory()
+peak_mem_gb = round(peak_mem_size/(1024*1024*1024), 5)
+tracemalloc.stop()</code></pre>
 </div>
 <div id="bioinfo" class="section level2">
 <h2>Bioinfo</h2>

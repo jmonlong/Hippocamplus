@@ -10,29 +10,30 @@ output:
 
 <div id="TOC">
 <ul>
-<li><a href="#org-file">Org file</a></li>
-<li><a href="#configuration">Configuration</a></li>
-<li><a href="#syntax">Syntax</a></li>
-<li><a href="#keybindings">Keybindings</a><ul>
-<li><a href="#from-anywhere">From anywhere</a></li>
-<li><a href="#edit-mode">Edit mode</a></li>
-<li><a href="#timestamps">Timestamps</a></li>
-<li><a href="#repeating-events">Repeating events</a></li>
-<li><a href="#agenda-views">Agenda views</a></li>
-<li><a href="#capture">Capture</a></li>
+<li><a href="#org-file" id="toc-org-file">Org file</a></li>
+<li><a href="#configuration" id="toc-configuration">Configuration</a></li>
+<li><a href="#syntax" id="toc-syntax">Syntax</a></li>
+<li><a href="#keybindings" id="toc-keybindings">Keybindings</a>
+<ul>
+<li><a href="#from-anywhere" id="toc-from-anywhere">From anywhere</a></li>
+<li><a href="#edit-mode" id="toc-edit-mode">Edit mode</a></li>
+<li><a href="#timestamps" id="toc-timestamps">Timestamps</a></li>
+<li><a href="#repeating-events" id="toc-repeating-events">Repeating events</a></li>
+<li><a href="#agenda-views" id="toc-agenda-views">Agenda views</a></li>
+<li><a href="#capture" id="toc-capture">Capture</a></li>
 </ul></li>
-<li><a href="#todo-entry">TODO entry</a></li>
-<li><a href="#tables">Tables</a></li>
-<li><a href="#code-block">Code block</a></li>
-<li><a href="#property-drawer">Property drawer</a></li>
-<li><a href="#habits-entry">Habits entry</a></li>
-<li><a href="#links">Links</a></li>
-<li><a href="#tags">Tags</a></li>
-<li><a href="#clocking-time">Clocking time</a></li>
-<li><a href="#custom-agenda-views">Custom agenda views</a></li>
-<li><a href="#shift-timestamps-by-x-hours-when-traveling-to-a-different-time-zone">Shift timestamps by X hours when traveling to a different time zone</a></li>
-<li><a href="#reverse-the-order-of-headers">Reverse the order of headers</a></li>
-<li><a href="#to-check-next">To check next</a></li>
+<li><a href="#todo-entry" id="toc-todo-entry">TODO entry</a></li>
+<li><a href="#tables" id="toc-tables">Tables</a></li>
+<li><a href="#code-block" id="toc-code-block">Code block</a></li>
+<li><a href="#property-drawer" id="toc-property-drawer">Property drawer</a></li>
+<li><a href="#habits-entry" id="toc-habits-entry">Habits entry</a></li>
+<li><a href="#links" id="toc-links">Links</a></li>
+<li><a href="#tags" id="toc-tags">Tags</a></li>
+<li><a href="#clocking-time" id="toc-clocking-time">Clocking time</a></li>
+<li><a href="#custom-agenda-views" id="toc-custom-agenda-views">Custom agenda views</a></li>
+<li><a href="#shift-timestamps-by-x-hours-when-traveling-to-a-different-time-zone" id="toc-shift-timestamps-by-x-hours-when-traveling-to-a-different-time-zone">Shift timestamps by X hours when traveling to a different time zone</a></li>
+<li><a href="#reverse-the-order-of-headers" id="toc-reverse-the-order-of-headers">Reverse the order of headers</a></li>
+<li><a href="#to-check-next" id="toc-to-check-next">To check next</a></li>
 </ul>
 </div>
 
@@ -94,6 +95,7 @@ This page will contain my configuration and the small subset of commands that I 
 <div id="edit-mode" class="section level3">
 <h3>Edit mode</h3>
 <ul>
+<li>Reveal context around a point: <code>C-c C-r</code></li>
 <li>Completion: changed to <code>C-tab</code>.</li>
 <li>Move to next/previous heading: <code>C-c C-n</code>/<code>C-c C-p</code>.</li>
 <li>Move to next/previous same-level heading: <code>C-c C-f</code>/<code>C-c C-b</code>.</li>
@@ -181,10 +183,10 @@ This page will contain my configuration and the small subset of commands that I 
 | mean | 10.7 |  9.7 |
 #+TBLFM: $3=$2-1::@&gt;$2=vmean(@3..@-I);p3</code></pre>
 <ul>
-<li>Start a formula in a cell by typing <code>:=FORMULA</code> and <code>C-c C-c</code> (<code>=FORMULA</code> for column formulas).</li>
-<li><code>@&gt;</code> means <em>the last row</em></li>
+<li><p>Start a formula in a cell by typing <code>:=FORMULA</code> and <code>C-c C-c</code> (<code>=FORMULA</code> for column formulas).</p></li>
+<li><p><code>@&gt;</code> means <em>the last row</em></p></li>
 <li><p><code>I</code> to define range relative to the target field, e.g. <code>@-I</code>=<em>row above</em>.</p></li>
-<li>A plot line could look like: <code>#+PLOT: title:"graph title" ind:1 deps:(2 3) set:"xlabel 'ColA'"</code></li>
+<li><p>A plot line could look like: <code>#+PLOT: title:"graph title" ind:1 deps:(2 3) set:"xlabel 'ColA'"</code></p></li>
 <li><p><code>C-c " g</code> to make a plot (requires gnuplot and gnuplot to be installed)</p></li>
 </ul>
 </div>
@@ -271,6 +273,12 @@ SCHEDULED: &lt;2019-07-16 Tue .+2d/7d&gt;
 <li><code>file:projects.org::*task title</code> Org file with heading search.</li>
 <li><code>doi:XX.XXXX/XXX</code></li>
 </ul>
+<p>Using custom id: <code>[[#my-id]]</code> will point at the place where a <em>CUSTOM_ID</em> as been set to <em>my-id</em> in a <em>PROPERTIES</em> drawer.
+E.g.</p>
+<pre><code>:PROPERTIES:
+:CUSTOM_ID: my-id
+:END:</code></pre>
+<p>This also works for <code>file:proj.org::#mu-id</code>.</p>
 <p>To define tags/shortcuts, for example Google Map search using <code>[[gmap:UCSC, Santa Cruz][UCSC]]</code>, add to <code>.emacs</code>:</p>
 <pre class="lisp"><code>(setq org-link-abbrev-alist
       &#39;((&quot;gmap&quot; . &quot;http://maps.google.com/maps?q=%s&quot;)))</code></pre>
