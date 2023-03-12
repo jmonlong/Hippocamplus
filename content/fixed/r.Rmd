@@ -109,6 +109,8 @@ ggplot(bar.df, aes(x=x, fill=c)) + geom_bar() + coord_flip() +
 - Add more vertical space between legend labels (e.g. for multi-lines labels): `guides(fill=guide_legend(keyheight=2))`
 - Don't show *a* in legend when using text (e.g. when already having points and colors): `geom_text(show.legend=FALSE)`
 - Keep "dodged" bars the same width: `position=position_dodge(.9, preserve='single')`
+- Change direction of multi-legends: `theme(legend.box='vertical')`
+- Remove some white space between legend and graph, or where the title used to be: `theme(legend.margin=margin(-5))`
 
 ### Multi-panel ggplots
 

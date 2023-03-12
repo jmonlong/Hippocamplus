@@ -14,8 +14,9 @@ output:
 + To retrieve a specific version of a file: `git show COMMIT:file`
 + Revert repo to a specific commit: `git checkout COMMIT`
 + Undo a commit: `git reset HEAD~` and then for the real commit `git commit -c ORIG_HEAD`.
-+ Update sub-modules: `git submodule update --init --recursive`
 + Add all untracked files: `git st -s | grep '??' | cut -f2 -d ' ' | xargs git add`
++ Unstage a file (without reverting its potential changes): `git restore --staged FILE`
++ Unstage all files `git reset`
 + Add remote e.g. after a fork: `git remote add mine git@github.com:jmonlong/REPO.git`
 + Activate credential saving (avoid retyping username/passwords, e.g. when SSH keys don't work): `git config credential.helper store`
 
@@ -58,6 +59,23 @@ Push tag:
 git push --tags
 ~~~
 
+#### Submodules
+
++ [How-To at devconnected.com](https://devconnected.com/how-to-add-and-update-git-submodules/)
++ Clone a repo with submodules: `git clone --recursive https://github.com/XXX/XXX.git`
++ Update sub-modules: `git submodule update --init --recursive`
+
+Fetch new submodule commits:
+
+```
+## in the submodule
+git fetch
+git checkout <COMMIT>
+## in the main repo
+git add .
+git commit -m "updated the submodule"
+git push
+```
 
 #### Check status of all repos
 
@@ -95,6 +113,18 @@ Can also be used as `snakemake --config yourparam=1.5`.
 For sample metadata, a [tabular configuration](https://snakemake.readthedocs.io/en/stable/snakefiles/configuration.html#tabular-configuration) can also be used using Pandas.
 It's also possible to define a separate config file for the cluster configuration (e.g. resources for each rule).
 
+To use more flexible inputs, use a function and `unpack`:
+
+~~~python
+def input_func(wildcards):
+    return {'file1': '{wildcards.val}.txt'.format(wildcards=wildcards)}
+rule myrule:
+    input:
+        unpack(input_func)
+    output:
+        "output.{val}.txt"
+    shell: " ... {input.file1} ..."
+~~~
 
 ## bcftools
 
@@ -185,8 +215,6 @@ rsync -r --exclude="*-files" --include='*/' --include='*.R' --exclude='*' --prun
 
 ## Docker
 
-I'm still learning Docker but here are commands/parameters that seem relevant for me:
-
 #### Build a docker instance
 
 [Write a Dockerfile](https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices/) :
@@ -240,6 +268,13 @@ docker-machine start
 
 #### Clean up space
 
+To remove all images:
+
+~~~sh
+docker rm -vf $(docker ps -a -q)
+docker rmi -f $(docker images -a -q)
+~~~
+
 From [Maciej Łebkowski's website](https://lebkowski.name/docker-volumes/), use this script:
 
 ~~~sh
@@ -269,7 +304,9 @@ A few useful commands/trick/remainders for WDL (see [full specs](https://github.
 - `Int value = if othervalue < 5 then 1 else 4`
 - `glob("*.bam")` to cath output files for example.
 - `String out_prefix = basename(in_gam_file, ".gam")` to get the basename of a file and strip a suffix too.
+- `String out_prefix = sub(sub(sub(basename(in_gam_file), "\\.gz$", ""), "\\.gaf$", ""), "\\.gam$", "")` another way for when the extension is variable.
 - `File sel_file = select_first([OPTIONAL_INPUT_FILE, task.output_file])` to select the first defined arg in an array (e.g. when a task can recreate an optional input).
+- `flatten([array1, [new_element]])` to add *new_element* to an existing *array1*.
 - `Array[Pair[File,File]] paired_files_list = zip(file_list_1, file_list_2)`, e.g. to scatter across two lists. In the scatter, access with `.left`/`.right`.
 - Start command section with `set -eux -o pipefail` to stop the job at the first error, even in a pipe.
 - [Simple workflow with typical structure](https://github.com/jmonlong/wdl-workflows/blob/master/read_stats/workflow.wdl)
@@ -285,6 +322,7 @@ while read invcf
 do
     command $invcf
 done < ~{write_lines(in_vcf_list)}
+## or
 command -f ~{write_lines(in_vcf_list)}
 >>>
 ~~~

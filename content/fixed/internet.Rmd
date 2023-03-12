@@ -71,8 +71,10 @@ In `/usr/share/X11/xkb/symbols/us` I added to the *xkb_symbols "altgr-intl"* sec
 ~~~
    key <AD04> { [ r, R, egrave,       Egrave      ] };
    key <AD05> { [ t, T, ecircumflex,  Ecircumflex ] };
-   key <AD06> { [ y, Y, ediaeresis,   Ediaeresis  ] };
+   key <AD02> { [ w, W, ediaeresis,   Ediaeresis  ] };
+   key <AD06> { [ y, Y, ucircumflex,  Ucircumflex ] };
    key <AD07> { [ u, U, ugrave,       Ugrave      ] };
+   key <AD08> { [ i, I, icircumflex,  Icircumflex ] };
    key <AD09> { [ o, O, ocircumflex,  Ocircumflex ] };
    key <AC01> { [ a, A, agrave,       Agrave      ] };
    key <AC02> { [ s, S, acircumflex,  Acircumflex ] };

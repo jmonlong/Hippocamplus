@@ -64,6 +64,7 @@ In `.emacs` file:
 
 ### Edit mode
 
+- Reveal context around a point: `C-c C-r`
 - Completion: changed to `C-tab`.
 - Move to next/previous heading: `C-c C-n`/`C-c C-p`.
 - Move to next/previous same-level heading: `C-c C-f`/`C-c C-b`.
@@ -259,6 +260,17 @@ With *LINK*:
 - `file:sometextfile::NNN` file with line number.
 - `file:projects.org::*task title` Org file with heading search.
 - `doi:XX.XXXX/XXX`
+
+Using custom id: `[[#my-id]]` will point at the place where a *CUSTOM_ID* as been set to *my-id* in a *PROPERTIES* drawer. 
+E.g. 
+
+~~~
+:PROPERTIES:
+:CUSTOM_ID: my-id
+:END:
+~~~
+
+This also works for `file:proj.org::#mu-id`.
 
 To define tags/shortcuts, for example Google Map search using `[[gmap:UCSC, Santa Cruz][UCSC]]`, add to `.emacs`:
 

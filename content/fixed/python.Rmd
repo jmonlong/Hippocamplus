@@ -67,6 +67,12 @@ obj1 = pickle.load(open("obj1.pkl", "rb"))
 
 Note the *b* that specifies *binary mode* which is slightly more efficient for non-text files.
 
+To prompt the user for input
+
+~~~python
+x = input('What is?')
+~~~
+
 ## Passing arguments to a script
 
 The quick way is to use `sys.argv` like that:
@@ -190,8 +196,17 @@ def functionname( parameters ):
 
 
 ~~~python
+df = pd.DataFrame([{'c1': 1, c2': 'val2'},
+                   {'c1': 0, c2': 'val3'}])
 
-DataFrame.from_csv('file.tsv, sep='\t', header=0)
+df = DataFrame.from_csv('file.tsv, sep='\t', header=0)
+
+df = df.sort_values(['c1'], ascending=False)
+
+df.to_csv('file.tsv', sep='\t', index=False)
+
+for row in df.itertuples():
+    # something with row.c1
 ~~~
 
 

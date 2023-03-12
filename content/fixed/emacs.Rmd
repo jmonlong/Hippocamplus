@@ -351,6 +351,12 @@ In my `.emacs` I added the `synosaurus-mode` minor mode:
 
 ~~~lisp
 (add-hook 'LaTeX-mode-hook 'synosaurus-mode)
+(add-hook 'markdown-mode-hook 'synosaurus-mode)
+;; disable keybinding conflicting with markdown's
+(eval-after-load "synosaurus"
+  '(define-key synosaurus-mode-map (kbd "C-c C-s i") nil))
+(eval-after-load "synosaurus"
+  '(define-key synosaurus-mode-map (kbd "C-c C-s l") nil))
 ~~~
 
 ### Grammar checking
