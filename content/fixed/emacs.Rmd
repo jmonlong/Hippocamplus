@@ -511,6 +511,7 @@ At this point `C-Enter` will send the command to the *shell* buffer.
 ## For C/CPP
 
 - Set the default indentation level with the `c-basic-offset` (e.g. setting it with `M-x set-variable`).
+- To jump to the matching `{`/`}`: `C-M-f`/`C-M-b`
 
 I'm following [this tutorial](https://tuhdo.github.io/c-ide.html).
 

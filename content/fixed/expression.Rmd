@@ -27,6 +27,38 @@ What I noticed that I'm doing wrong sometimes:
 - Place *such as* at end of the sentence when possible.
 - The verb *represent* might be a faux-ami.
 
+## Grammarly lessons
+
+- less `which`, and more `that`
+    - `sequencing data produces data *that* tools can use for...`
+- avoid separating `to <verb>`
+    - `to better study` -> `to study better`
+    - `to better characterize` -> `to characterize better`
+    - `to quickly produce XX` -> `to produce XX quickly`
+- `in order to` -> `to`
+- less of `will be verb-ing` and more `will verb`
+- less wordy
+    - `in particular` -> `particularly`
+    - `take into account X` -> `account for X`
+- `not only X but also Y` -> `X and Y`
+- `X of the Y` -> `Y X`
+- `with the verb-ing` -> `verb`
+    - `help with the interpretation of X` -> `help interpret X`
+- `that is/are` -> ` `
+- `it is more <adj> to verb than to verb` -> `verb-ing is more <adj> than verb-ing`
+- `the <noun> of X` -> `<verb>-ing X`
+    - `the identification of variants` -> `identifying variants`
+- `X, which <verb>` -> `X, <verb>ing`
+- `will have a large impact on` -> `will greatly impact`
+- `In the near future` -> `Soon`
+- `get better` -> `improve`
+- `in the years to come` -> `in the coming years`
+- `to ensure that the` -> `to ensure the`
+
+## Synonyms
+
+- `identify`: `pinpoint`
+
 ## General
 
 Some snippets that could be useful.

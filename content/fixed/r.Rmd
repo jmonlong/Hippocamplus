@@ -192,6 +192,29 @@ iron(
 )
 ~~~
 
+### Gantt charts
+
+I used [ganttrify](https://github.com/giocomai/ganttrify) for a grant.
+I tweaked the default output a bit to show a legend for the colors.
+
+~~~r
+library(ganttrify)
+library(ggplot2)
+project = read.table('gantt.tsv', as.is=TRUE, header=TRUE, sep='\t')
+## set the order of the activities from the order in the TSV file
+project$wp = factor(project$wp, unique(project$wp))
+spots = read.table('gantt-spots.tsv', as.is=TRUE, header=TRUE, sep='\t')
+ggp = ganttrify(project=project, spots=spots,
+                project_start_date="2024-01", month_breaks=6,
+                mark_years=TRUE, hide_wp=TRUE, label_wrap=40,
+                line_end = "butt", axis_text_align = "right") +
+  theme(legend.position='top', legend.title=element_blank(),
+        legend.margin=margin(0,100,-15)) +
+  scale_color_brewer(palette='Dark2', breaks=unique(project$wp)) + 
+  guides(color=guide_legend(ncol=3))
+ggp 
+~~~
+
 ## Rmarkdown
 
 - `\ ` to force a line break and add vertical spacing (e.g. in slides).

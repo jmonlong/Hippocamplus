@@ -115,7 +115,7 @@ I use it to synchronize the articles I read and annotate between my tablet and c
 On Ubuntu, I run it using Docker with:
 
 ~~~sh
-docker run -p 8384:8384 -p 22000:22000/tcp -p 22000:22000/udp -p 21027:21027/udp -v `pwd`:/var/syncthing --hostname=my-syncthing syncthing/syncthing:latest
+docker run --network=host -v `pwd`:/var/syncthing --hostname=my-syncthing syncthing/syncthing:latest
 ~~~
 
 The GUI can then be openened in the browser, by default at http://127.0.0.1:8384/.
