@@ -81,6 +81,12 @@ In `/usr/share/X11/xkb/symbols/us` I added to the *xkb_symbols "altgr-intl"* sec
    key <AB03> { [ c, C, ccedilla,     Ccedilla    ] };
 ~~~
 
+## Change the `CTRL-.` binding in Ubuntu 22.04
+
+It's calls a way to add emojis. 
+I've changed it to use `SUPER` instead, as it was messing with my emacs keybindings.
+The configuration windows can be accessed by running `ibus-setup`.
+
 ## Install a specific/older R version
 
 R updated automatically once and I didn't want to re-install all the packages, so I temporarily switched back to the previous version with:
