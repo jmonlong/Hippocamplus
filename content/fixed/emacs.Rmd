@@ -29,7 +29,8 @@ Some of the basic tweaks in my `.emacs` file:
 ;; Turn off the tool bar
 (tool-bar-mode 0)
 ;; Change the font
-(set-default-font "DejaVu Sans Mono 12")
+;; (set-default-font "DejaVu Sans Mono 12") ;; (deprecated?)
+(set-frame-font "DejaVu Sans Mono 12" nil t)
 ;; Show column number
 (setq column-number-mode t)
 ;; turn off alarm bell
