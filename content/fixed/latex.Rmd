@@ -39,6 +39,8 @@ Once installed, run `install_tinytex()` to install a first version of TinyTeX.
 Then install additional packages with `tlmgr_install("pkg")`. 
 To find which package provides a particular *xxx.sty* run `tlmgr_search("/xxx.sty")`.
 
+To automatically install packages used in a LaTeX document, compile it with TinyTeX: `latexmk("document.tex")`.
+
 ## Misc
 
 - Use `~` to make sure words are not split by line wrapping, e.g. a good habit: `Fig~\ref{..}`.
