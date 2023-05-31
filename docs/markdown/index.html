@@ -244,23 +244,28 @@
 
 <div id="TOC">
 <ul>
-<li><a href="#markdown-tips" id="toc-markdown-tips">Markdown tips</a></li>
-<li><a href="#yaml-header" id="toc-yaml-header">YAML header</a></li>
-<li><a href="#bibliography" id="toc-bibliography">Bibliography</a></li>
-<li><a href="#markdown-to-pdf-report" id="toc-markdown-to-pdf-report">Markdown to PDF report</a></li>
-<li><a href="#markdown-to-word-document" id="toc-markdown-to-word-document">Markdown to Word document</a></li>
-<li><a href="#markdown-to-html-pages" id="toc-markdown-to-html-pages">Markdown to HTML pages</a></li>
-<li><a href="#markdown-to-slides" id="toc-markdown-to-slides">Markdown to slides</a>
+<li><a href="#markdown-tips">Markdown tips</a></li>
+<li><a href="#yaml-header">YAML header</a></li>
+<li><a href="#bibliography">Bibliography</a></li>
+<li><a href="#markdown-to-pdf-report">Markdown to PDF report</a>
 <ul>
-<li><a href="#pdf-slides" id="toc-pdf-slides">PDF slides</a></li>
-<li><a href="#html-slides" id="toc-html-slides">HTML slides</a></li>
+<li><a href="#custom-document-header">Custom document header</a></li>
+<li><a href="#comments">Comments</a></li>
+<li><a href="#custom-tables">Custom tables</a></li>
 </ul></li>
-<li><a href="#websites" id="toc-websites">Websites</a>
+<li><a href="#markdown-to-word-document">Markdown to Word document</a></li>
+<li><a href="#markdown-to-html-pages">Markdown to HTML pages</a></li>
+<li><a href="#markdown-to-slides">Markdown to slides</a>
 <ul>
-<li><a href="#blogdown-websites" id="toc-blogdown-websites">blogdown websites</a></li>
-<li><a href="#jekyll-websites-deprecated" id="toc-jekyll-websites-deprecated">Jekyll websites (deprecated)</a></li>
+<li><a href="#pdf-slides">PDF slides</a></li>
+<li><a href="#html-slides">HTML slides</a></li>
 </ul></li>
-<li><a href="#r-markdown" id="toc-r-markdown">R Markdown</a></li>
+<li><a href="#websites">Websites</a>
+<ul>
+<li><a href="#blogdown-websites">blogdown websites</a></li>
+<li><a href="#jekyll-websites-deprecated">Jekyll websites (deprecated)</a></li>
+</ul></li>
+<li><a href="#r-markdown">R Markdown</a></li>
 </ul>
 </div>
 
@@ -300,6 +305,7 @@ link-citations: true
 <p>A lot of CSL styles can be found at the <a href="https://www.zotero.org/styles">Zotero Style Repository</a>.</p>
 <p>Cite with <code>@bibtexid</code> or <code>[@bibtexid]</code> (to add parenthesis).
 Multi-citations with <code>[@id1; @id2]</code>.</p>
+<p>I tweaked the Nature style to be more minimal (only one author, the title, journal + year, and DOI url), see <a href="minimal-nature-style.csl">minimal-nature-style.csl</a></p>
 </div>
 <div id="markdown-to-pdf-report" class="section level2">
 <h2>Markdown to PDF report</h2>
@@ -322,6 +328,88 @@ geometry: margin=2cm
 <ul>
 <li><code>header.tex</code> can be used to define custom LaTeX packages/commands to use.</li>
 </ul>
+<div id="custom-document-header" class="section level3">
+<h3>Custom document header</h3>
+<p>For example, for grants with custom templates that include information at the top of the page.</p>
+<p>In the yaml header:</p>
+<pre class="yaml"><code>geometry:
+  - margin=2cm
+  - top=1cm
+  - includehead
+  - headheight=1.1cm</code></pre>
+<p>In the <code>header.tex</code>, define a “table” for the header:</p>
+<pre class="tex"><code>%% make header
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt}
+\fancypagestyle{plain}
+
+% clear all headers and footers
+\fancyhead{}
+\renewcommand{\arraystretch}{1.2}
+  
+% set the C(entre) header location but no O or E
+\fancyhead[C]{
+  \begin{tabular}[c]{|l|l|l|r|}
+    \hline
+    {\large GRANT23} &amp; \multicolumn{2}{l|}{\bf\large PROJECTNAME} &amp; {\large GRANTNAME} \\
+    \hline
+    Coordinated by: &amp; Jean MONLONG \hspace{12em} &amp; X months &amp;   Funding requested: \\
+    \cline{1-3}
+    \multicolumn{3}{|l|}{COMMITEE} &amp;  3 000 000 000 € \\
+    \hline
+  \end{tabular}
+}
+    
+%% shift title
+\usepackage{titling}
+\setlength{\droptitle}{-3em}
+\posttitle{\par\end{center}\vspace{-5em}}</code></pre>
+</div>
+<div id="comments" class="section level3">
+<h3>Comments</h3>
+<p>Define the LaTeX commands in the <code>header.tex</code>:</p>
+<pre class="text"><code>\usepackage[textsize=scriptsize]{todonotes}
+\setlength{\marginparwidth}{4em} %% avoid the todo notes going out of the margin
+\usepackage{xcolor}
+\newcounter{mycomment}
+\newcommand{\note}[1]{
+  \refstepcounter{mycomment}
+  {
+    \todo[inline,color={red!100!green!33},size=\tiny]{
+      \textbf{[\themycomment]:}~#1}
+  }}
+\newcommand{\comment}[1]{
+  \refstepcounter{mycomment}
+  {
+    \todo[color={red!100!green!33},size=\tiny]{
+      \textbf{[\themycomment]:}~#1}
+  }}</code></pre>
+<p>Then use in the text as <code>\note{A note}</code> and <code>\comment{a comment}</code> for inline notes and comments in the margin, respectively.</p>
+</div>
+<div id="custom-tables" class="section level3">
+<h3>Custom tables</h3>
+<p>To better control the table formatting, I write the content of the table in a file (e.g. TSV), then read it in a R code chunk and format it with <a href="https://yihui.org/knitr/">knitr</a> and <a href="https://bookdown.org/yihui/rmarkdown-cookbook/kableextra.html">kableExtra</a>.</p>
+<p>The code chunk, for example with <code>echo=FALSE, message=TRUE, warnings=FALSE</code> parameters, might look like:</p>
+<pre class="r"><code>library(knitr)
+library(kableExtra)
+df = read.table(&#39;table1.tsv&#39;, as.is=TRUE, header=TRUE, sep=&#39;\t&#39;,
+                quote=&quot;&quot;, comment.char = &quot;&quot;, check.names=FALSE)
+kable(df, format=&#39;latex&#39;, booktabs=FALSE) %&gt;%
+  kable_styling(latex_options=&quot;scale_down&quot;, position=&#39;left&#39;) %&gt;%
+  column_spec(2:3, width = &quot;.7in&quot;) %&gt;% 
+  column_spec(4, width = &quot;3in&quot;) %&gt;%
+  column_spec(1, border_left = T) %&gt;%
+  column_spec(ncol(df), border_right=T, width = &quot;1.5in&quot;) %&gt;%
+  row_spec(0,bold=TRUE)</code></pre>
+<p>Note: it’s possible to adapt the table’s format to the output format of the document.
+For example, to use markdown formatting for Word documents:</p>
+<pre class="r"><code>if(knitr::opts_knit$get(&quot;rmarkdown.pandoc.to&quot;) == &#39;docx&#39;){
+  kable(df, format=&#39;markdown&#39;)
+} else {
+    ## SEE ABOVE
+}</code></pre>
+</div>
 </div>
 <div id="markdown-to-word-document" class="section level2">
 <h2>Markdown to Word document</h2>

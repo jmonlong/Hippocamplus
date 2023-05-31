@@ -158,10 +158,10 @@ Then use in the text as `\note{A note}` and `\comment{a comment}` for inline not
 
 To better control the table formatting, I write the content of the table in a file (e.g. TSV), then read it in a R code chunk and format it with [knitr](https://yihui.org/knitr/) and [kableExtra](https://bookdown.org/yihui/rmarkdown-cookbook/kableextra.html).
 
-The code chunk might look like:
+The code chunk, for example with `echo=FALSE, message=TRUE, warnings=FALSE` parameters, might look like:
+
 
 ~~~r
-```{r echo=FALSE, message=TRUE, warnings=FALSE}
 library(knitr)
 library(kableExtra)
 df = read.table('table1.tsv', as.is=TRUE, header=TRUE, sep='\t',
@@ -173,7 +173,6 @@ kable(df, format='latex', booktabs=FALSE) %>%
   column_spec(1, border_left = T) %>%
   column_spec(ncol(df), border_right=T, width = "1.5in") %>%
   row_spec(0,bold=TRUE)
-```
 ~~~
 
 Note: it's possible to adapt the table's format to the output format of the document.
