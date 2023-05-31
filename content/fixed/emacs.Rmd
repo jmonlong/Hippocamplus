@@ -624,6 +624,8 @@ This can be changed later using `M-x lsp-workspace-folders-remove` and `M-x lsp-
 
 To visualize blanks (tabs, spaces, new lines) I use the minor mode `whitespace-mode`.
 
+To disable line wrapping: `M-x toggle-truncate-lines`
+
 To insert a tab: `C-q <tab>`
 
 ### Compare two files (diff)
