@@ -43,6 +43,7 @@ In `.emacs` file:
 ;; capture
 (setq org-default-notes-file (concat org-directory "/notes.org"))
 (global-set-key (kbd "C-c c") 'org-capture)
+(setq system-time-locale "C") ;; use weekdays in English (even on French Ubuntu)
 ~~~
 
 ## Syntax
