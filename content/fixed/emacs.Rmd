@@ -29,7 +29,8 @@ Some of the basic tweaks in my `.emacs` file:
 ;; Turn off the tool bar
 (tool-bar-mode 0)
 ;; Change the font
-(set-default-font "DejaVu Sans Mono 12")
+;; (set-default-font "DejaVu Sans Mono 12") ;; (deprecated?)
+(set-frame-font "DejaVu Sans Mono 12" nil t)
 ;; Show column number
 (setq column-number-mode t)
 ;; turn off alarm bell
@@ -150,6 +151,19 @@ alias emacsl="emacs --eval \"(load-theme 'sanityinc-solarized-light t)\""
 ~~~
 
 Note: a theme can be "unloaded" using `M-x disable-theme`.
+
+I've also created some keybindings to switch between light and dark themes:
+
+~~~lisp
+(defun lighten ()
+  (interactive)
+  (load-theme 'sanityinc-solarized-light t))
+(global-set-key (kbd "C-c b l") 'lighten)
+(defun darken ()
+  (interactive)
+  (load-theme 'sanityinc-solarized-dark t))
+(global-set-key (kbd "C-c b d") 'darken)
+~~~
 
 ## For R
 
@@ -622,6 +636,8 @@ This can be changed later using `M-x lsp-workspace-folders-remove` and `M-x lsp-
 ## For file manipulation
 
 To visualize blanks (tabs, spaces, new lines) I use the minor mode `whitespace-mode`.
+
+To disable line wrapping: `M-x toggle-truncate-lines`
 
 To insert a tab: `C-q <tab>`
 

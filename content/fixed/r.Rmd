@@ -402,3 +402,9 @@ sudo apt-get install libxml2-dev libssl-dev libmariadbclient-dev libcurl4-openss
 ~~~
 
 *Related to XML, OpenSSL, MySQL, Curl respectively.*
+
+For the most recent Ubuntu OSs (e.g. 22.04):
+
+~~~sh
+sudo apt-get install libxml2-dev libssl-dev libcurl4-openssl-dev
+~~~

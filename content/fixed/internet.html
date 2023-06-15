@@ -10,26 +10,27 @@ output:
 
 <div id="TOC">
 <ul>
-<li><a href="#misc-tools" id="toc-misc-tools">Misc tools</a></li>
-<li><a href="#duckduckgo" id="toc-duckduckgo">DuckDuckGo</a></li>
-<li><a href="#ubuntu" id="toc-ubuntu">Ubuntu</a>
+<li><a href="#misc-tools">Misc tools</a></li>
+<li><a href="#duckduckgo">DuckDuckGo</a></li>
+<li><a href="#ubuntu">Ubuntu</a>
 <ul>
-<li><a href="#update-expired-keys" id="toc-update-expired-keys">Update expired keys</a></li>
-<li><a href="#french-accents-in-gnome-ubuntu" id="toc-french-accents-in-gnome-ubuntu">(French) Accents in Gnome Ubuntu</a></li>
+<li><a href="#update-expired-keys">Update expired keys</a></li>
+<li><a href="#french-accents-in-gnome-ubuntu">(French) Accents in Gnome Ubuntu</a></li>
 </ul></li>
-<li><a href="#install-a-specificolder-r-version" id="toc-install-a-specificolder-r-version">Install a specific/older R version</a></li>
-<li><a href="#sync-a-specific-folder-on-ubuntu" id="toc-sync-a-specific-folder-on-ubuntu">Sync a specific folder on Ubuntu</a>
+<li><a href="#change-the-ctrl-.-binding-in-ubuntu-22.04">Change the <code>CTRL-.</code> binding in Ubuntu 22.04</a></li>
+<li><a href="#install-a-specificolder-r-version">Install a specific/older R version</a></li>
+<li><a href="#sync-a-specific-folder-on-ubuntu">Sync a specific folder on Ubuntu</a>
 <ul>
-<li><a href="#on-the-cloud" id="toc-on-the-cloud">On the cloud</a></li>
-<li><a href="#sync-in-real-time-with-syncthing" id="toc-sync-in-real-time-with-syncthing">Sync in real time with Syncthing</a></li>
-<li><a href="#deprecated-before-sync-a-specific-google-drive-folder-on-ubuntu" id="toc-deprecated-before-sync-a-specific-google-drive-folder-on-ubuntu">[DEPRECATED?] Before: sync a specific Google Drive folder on Ubuntu</a></li>
+<li><a href="#on-the-cloud">On the cloud</a></li>
+<li><a href="#sync-in-real-time-with-syncthing">Sync in real time with Syncthing</a></li>
+<li><a href="#deprecated-before-sync-a-specific-google-drive-folder-on-ubuntu">[DEPRECATED?] Before: sync a specific Google Drive folder on Ubuntu</a></li>
 </ul></li>
-<li><a href="#zotero" id="toc-zotero">Zotero</a>
+<li><a href="#zotero">Zotero</a>
 <ul>
-<li><a href="#deprecated-before-sync-pdfs-between-mendeley-and-google-drive" id="toc-deprecated-before-sync-pdfs-between-mendeley-and-google-drive">[DEPRECATED] Before: sync PDFs between Mendeley and Google Drive</a></li>
+<li><a href="#deprecated-before-sync-pdfs-between-mendeley-and-google-drive">[DEPRECATED] Before: sync PDFs between Mendeley and Google Drive</a></li>
 </ul></li>
-<li><a href="#dowload-files-from-dropbox" id="toc-dowload-files-from-dropbox">Dowload files from Dropbox</a></li>
-<li><a href="#record-a-webradio-stream-with-vlc" id="toc-record-a-webradio-stream-with-vlc">Record a webradio stream with VLC</a></li>
+<li><a href="#dowload-files-from-dropbox">Dowload files from Dropbox</a></li>
+<li><a href="#record-a-webradio-stream-with-vlc">Record a webradio stream with VLC</a></li>
 </ul>
 </div>
 
@@ -102,6 +103,12 @@ In <code>/usr/share/X11/xkb/symbols/us</code> I added to the <em>xkb_symbols “
    key &lt;AB03&gt; { [ c, C, ccedilla,     Ccedilla    ] };</code></pre>
 </div>
 </div>
+<div id="change-the-ctrl-.-binding-in-ubuntu-22.04" class="section level2">
+<h2>Change the <code>CTRL-.</code> binding in Ubuntu 22.04</h2>
+<p>It calls a way to add emojis.
+I’ve changed it to use <code>SUPER</code> instead, as it was messing with my emacs keybindings.
+The configuration windows can be accessed by running <code>ibus-setup</code>.</p>
+</div>
 <div id="install-a-specificolder-r-version" class="section level2">
 <h2>Install a specific/older R version</h2>
 <p>R updated automatically once and I didn’t want to re-install all the packages, so I temporarily switched back to the previous version with:</p>
@@ -134,7 +141,7 @@ I use it to synchronize the articles I read and annotate between my tablet and c
 <h3>Sync in real time with Syncthing</h3>
 <p><a href="https://syncthing.net/">Syncthing</a> can be easily setup to synchronize specific folders. It needs to be running on all the devices but it’s fast and avoids using a cloud hosting service.</p>
 <p>On Ubuntu, I run it using Docker with:</p>
-<pre class="sh"><code>docker run -p 8384:8384 -p 22000:22000/tcp -p 22000:22000/udp -p 21027:21027/udp -v `pwd`:/var/syncthing --hostname=my-syncthing syncthing/syncthing:latest</code></pre>
+<pre class="sh"><code>docker run --network=host -v `pwd`:/var/syncthing --hostname=my-syncthing syncthing/syncthing:latest</code></pre>
 <p>The GUI can then be openened in the browser, by default at <a href="http://127.0.0.1:8384/" class="uri">http://127.0.0.1:8384/</a>.</p>
 <p>The Syncthing Androids app is available on <a href="https://f-droid.org/en/packages/com.nutomic.syncthingandroid/">F-Droid</a> and <a href="https://play.google.com/store/apps/details?id=com.nutomic.syncthingandroid">Google Play</a>.</p>
 </div>

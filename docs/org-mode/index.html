@@ -244,30 +244,30 @@
 
 <div id="TOC">
 <ul>
-<li><a href="#org-file" id="toc-org-file">Org file</a></li>
-<li><a href="#configuration" id="toc-configuration">Configuration</a></li>
-<li><a href="#syntax" id="toc-syntax">Syntax</a></li>
-<li><a href="#keybindings" id="toc-keybindings">Keybindings</a>
+<li><a href="#org-file">Org file</a></li>
+<li><a href="#configuration">Configuration</a></li>
+<li><a href="#syntax">Syntax</a></li>
+<li><a href="#keybindings">Keybindings</a>
 <ul>
-<li><a href="#from-anywhere" id="toc-from-anywhere">From anywhere</a></li>
-<li><a href="#edit-mode" id="toc-edit-mode">Edit mode</a></li>
-<li><a href="#timestamps" id="toc-timestamps">Timestamps</a></li>
-<li><a href="#repeating-events" id="toc-repeating-events">Repeating events</a></li>
-<li><a href="#agenda-views" id="toc-agenda-views">Agenda views</a></li>
-<li><a href="#capture" id="toc-capture">Capture</a></li>
+<li><a href="#from-anywhere">From anywhere</a></li>
+<li><a href="#edit-mode">Edit mode</a></li>
+<li><a href="#timestamps">Timestamps</a></li>
+<li><a href="#repeating-events">Repeating events</a></li>
+<li><a href="#agenda-views">Agenda views</a></li>
+<li><a href="#capture">Capture</a></li>
 </ul></li>
-<li><a href="#todo-entry" id="toc-todo-entry">TODO entry</a></li>
-<li><a href="#tables" id="toc-tables">Tables</a></li>
-<li><a href="#code-block" id="toc-code-block">Code block</a></li>
-<li><a href="#property-drawer" id="toc-property-drawer">Property drawer</a></li>
-<li><a href="#habits-entry" id="toc-habits-entry">Habits entry</a></li>
-<li><a href="#links" id="toc-links">Links</a></li>
-<li><a href="#tags" id="toc-tags">Tags</a></li>
-<li><a href="#clocking-time" id="toc-clocking-time">Clocking time</a></li>
-<li><a href="#custom-agenda-views" id="toc-custom-agenda-views">Custom agenda views</a></li>
-<li><a href="#shift-timestamps-by-x-hours-when-traveling-to-a-different-time-zone" id="toc-shift-timestamps-by-x-hours-when-traveling-to-a-different-time-zone">Shift timestamps by X hours when traveling to a different time zone</a></li>
-<li><a href="#reverse-the-order-of-headers" id="toc-reverse-the-order-of-headers">Reverse the order of headers</a></li>
-<li><a href="#to-check-next" id="toc-to-check-next">To check next</a></li>
+<li><a href="#todo-entry">TODO entry</a></li>
+<li><a href="#tables">Tables</a></li>
+<li><a href="#code-block">Code block</a></li>
+<li><a href="#property-drawer">Property drawer</a></li>
+<li><a href="#habits-entry">Habits entry</a></li>
+<li><a href="#links">Links</a></li>
+<li><a href="#tags">Tags</a></li>
+<li><a href="#clocking-time">Clocking time</a></li>
+<li><a href="#custom-agenda-views">Custom agenda views</a></li>
+<li><a href="#shift-timestamps-by-x-hours-when-traveling-to-a-different-time-zone">Shift timestamps by X hours when traveling to a different time zone</a></li>
+<li><a href="#reverse-the-order-of-headers">Reverse the order of headers</a></li>
+<li><a href="#to-check-next">To check next</a></li>
 </ul>
 </div>
 
@@ -553,7 +553,8 @@ E.g.</p>
 </ul>
 <pre class="lisp"><code>(setq org-agenda-custom-commands
       &#39;((&quot;c&quot; &quot;Today&#39;s agenda&quot;
-         ((agenda &quot;&quot; ((org-agenda-ndays 1)
+         ((agenda &quot;&quot; ((org-agenda-span 1)
+                      (org-agenda-block-separator nil)
                       (org-agenda-skip-function
                        &#39;(org-agenda-skip-subtree-if &#39;regexp &quot;:habit:&quot;)
                        )
@@ -564,16 +565,20 @@ E.g.</p>
                        (org-agenda-skip-entry-if (quote scheduled)
                                                  (quote deadline))))
                     (org-agenda-overriding-header &quot;Un-scheduled tasks:&quot;)
+                    (org-agenda-block-separator nil)
                     ))
-          (agenda &quot;&quot;
-                  ((org-agenda-ndays 1)
+         (agenda &quot;&quot;
+                  (
+                   (org-agenda-span &#39;day)
+                   (org-agenda-block-separator nil)
+                   (org-agenda-format-date &quot;&quot;)
                    (org-agenda-use-time-grid nil)
                    (org-agenda-skip-function
                     &#39;(org-agenda-skip-subtree-if &#39;notregexp &quot;:habit:&quot;)
-                       )
+                    )
                    (org-agenda-overriding-header &quot;Habits:&quot;)
-                   )))
-         ((org-agenda-compact-blocks t))
+                   ))
+          )
          )
         (&quot;w&quot; &quot;Week&#39;s events&quot;
          ((agenda &quot;&quot; ((org-agenda-span 7)
@@ -584,8 +589,8 @@ E.g.</p>
                       (org-agenda-show-all-dates nil)
                       (org-agenda-overriding-header &quot;Week&#39;s events:&quot;)
                       )))
-          ((org-agenda-compact-blocks t))
-          )
+         ((org-agenda-compact-blocks t))
+         )
         (&quot;y&quot; &quot;Year&#39;s events (no recurrents)&quot;
          ((agenda &quot;&quot; ((org-agenda-span 365)
                       (org-agenda-skip-function
@@ -597,8 +602,8 @@ E.g.</p>
                       (org-agenda-show-all-dates nil)
                       (org-agenda-overriding-header &quot;Year&#39;s events (no recurrents):&quot;)
                       )))
-          ((org-agenda-compact-blocks t))
-          )
+         ((org-agenda-compact-blocks t))
+         )
         )
       )</code></pre>
 <p>I also changed the way tasks are displayed in the agenda view.
@@ -610,9 +615,9 @@ I added in my <code>.emacs</code>:</p>
 (defun getlasthead ()
   (let ((x (nth 0 (last (org-get-outline-path)))))
     (if x
-    (if (&gt; (string-width x) 12)
-        (concat &quot;[&quot; (org-format-outline-path (list (substring x 0 12))) &quot;]&quot;)
-      (concat &quot;[&quot; (org-format-outline-path (list x)) &quot;]&quot;))
+	(if (&gt; (string-width x) 12)
+	    (concat &quot;[&quot; (org-format-outline-path (list (substring x 0 12))) &quot;]&quot;)
+	  (concat &quot;[&quot; (org-format-outline-path (list x)) &quot;]&quot;))
       &quot;&quot;)))
 (setq org-agenda-prefix-format &quot; %i %-15(getlasthead)%?-12t% s &quot;)</code></pre>
 </div>

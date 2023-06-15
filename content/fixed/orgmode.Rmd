@@ -43,6 +43,7 @@ In `.emacs` file:
 ;; capture
 (setq org-default-notes-file (concat org-directory "/notes.org"))
 (global-set-key (kbd "C-c c") 'org-capture)
+(setq system-time-locale "C") ;; use weekdays in English (even on French Ubuntu)
 ~~~
 
 ## Syntax
@@ -310,7 +311,8 @@ I either want to know the tasks and events for the day, or just the events for t
 ~~~lisp
 (setq org-agenda-custom-commands
       '(("c" "Today's agenda"
-         ((agenda "" ((org-agenda-ndays 1)
+         ((agenda "" ((org-agenda-span 1)
+                      (org-agenda-block-separator nil)
                       (org-agenda-skip-function
                        '(org-agenda-skip-subtree-if 'regexp ":habit:")
                        )
@@ -321,16 +323,20 @@ I either want to know the tasks and events for the day, or just the events for t
                        (org-agenda-skip-entry-if (quote scheduled)
                                                  (quote deadline))))
                     (org-agenda-overriding-header "Un-scheduled tasks:")
+                    (org-agenda-block-separator nil)
                     ))
-          (agenda ""
-                  ((org-agenda-ndays 1)
+         (agenda ""
+                  (
+                   (org-agenda-span 'day)
+                   (org-agenda-block-separator nil)
+                   (org-agenda-format-date "")
                    (org-agenda-use-time-grid nil)
                    (org-agenda-skip-function
                     '(org-agenda-skip-subtree-if 'notregexp ":habit:")
-                       )
+                    )
                    (org-agenda-overriding-header "Habits:")
-                   )))
-         ((org-agenda-compact-blocks t))
+                   ))
+          )
          )
         ("w" "Week's events"
          ((agenda "" ((org-agenda-span 7)
@@ -341,8 +347,8 @@ I either want to know the tasks and events for the day, or just the events for t
                       (org-agenda-show-all-dates nil)
                       (org-agenda-overriding-header "Week's events:")
                       )))
-          ((org-agenda-compact-blocks t))
-          )
+         ((org-agenda-compact-blocks t))
+         )
         ("y" "Year's events (no recurrents)"
          ((agenda "" ((org-agenda-span 365)
                       (org-agenda-skip-function
@@ -354,8 +360,8 @@ I either want to know the tasks and events for the day, or just the events for t
                       (org-agenda-show-all-dates nil)
                       (org-agenda-overriding-header "Year's events (no recurrents):")
                       )))
-          ((org-agenda-compact-blocks t))
-          )
+         ((org-agenda-compact-blocks t))
+         )
         )
       )
 ~~~
