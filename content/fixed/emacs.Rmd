@@ -491,6 +491,7 @@ Then I have in my `.emacs`:
 (setq elpy-company-add-completion-from-shell t)
 (setq elpy-shell-use-project-root nil)
 (setq elpy-shell-display-buffer-after-send t)
+(setq elpy-shell-starting-directory 'current-directory)
 ~~~
 
 Keybindings that I use:
