@@ -414,3 +414,43 @@ From the higher-level header: `M-x org-sort RET F point RET RET`
 ## To check next
 
 - [Export to HTML with ox-twbs](https://github.com/marsmining/ox-twbs)
+## Synchronize with Android
+
+### Termux sync with git
+
+I use [Termux](https://play.google.com/store/apps/details?id=com.termux&pli=1) to keep the git repo hosting the files up to date on my Android phone.
+Their [wiki](https://wiki.termux.com) explains how to install packages and setup the app.
+I did:
+
+~~~sh
+## to give termux permissions to access a shared folder
+termux-setup-storage
+~~~
+
+Packages, like git, can be installed with `pkg install PKG`.
+
+After setting up the repo once, I wrote a script to sync my local copy with the copy on git:
+
+```sh
+#!/bin/sh
+
+cd storage/shared/.../REPO
+
+git commit -am "update on phone"
+git pull
+git push
+```
+
+That works when there are no conflicts that need manual fixing (so, most times).
+
+### Orgzly to interact with org files
+
+I then use [Orgzly](https://orgzly.com/) to browser and edit the org files, or check my agenda.
+
+I've added new custom "searches" to check events in the coming week/month/year:
+
+- `e.ge.now ad.7`
+- `e.ge.now ad.31`
+- `e.ge.now ad.365`
+
+
