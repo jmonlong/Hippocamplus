@@ -18,7 +18,7 @@
 args = commandArgs(TRUE)
 html.urls = NA
 htmllist = FALSE
-title = NA
+main.title = NA
 if(length(args)==0 | args[1]=='-h'){
   message('usage: Rscript epubify-annualreviews.R [-h] -i HTML [-list] [-title TITLE]\n\noptional arguments:\n  -h           show this help message and exit\n  -i HTML      the input URL (or HTML file) or a text file with a list of URLs (or HTML file names)\n  -list        the input is a file with a list\n  -title TITLE   the title of the ebook')
 } else {
@@ -31,7 +31,7 @@ if(length(args)==0 | args[1]=='-h'){
       htmllist = TRUE
       ii = ii + 1
     } else if(args[ii] == '-title'){
-      title = args[ii+1]
+      main.title = args[ii+1]
       ii = ii + 2
     } else {
       stop('unrecognized argument. Run with -h for help.')
@@ -41,6 +41,15 @@ if(length(args)==0 | args[1]=='-h'){
 if(is.na(html.urls)){
   stop('input html file missing. Run with -h for help.')
 }
+
+## start Selenium server with: docker run -it -d -p 4445:4444 selenium/standalone-firefox:2.53.1
+library(RSelenium)
+remDr <- remoteDriver(
+  remoteServerAddr = "localhost",
+  port = 4445L,
+  browserName = "firefox"
+)
+remDr$open()
 
 library(rvest)
 library(knitr)
@@ -53,7 +62,7 @@ if(htmllist){
   html.urls = scan(html.urls, 'a')
 }
 
-outfile = ifelse(is.na(title), html.urls[1], title)
+outfile = ifelse(is.na(main.title), html.urls[1], main.title)
 if(grepl('http', outfile)){
   outfile = gsub('.*/([^/]*)', '\\1', outfile)
 }
@@ -70,13 +79,14 @@ cpt = 1
 for(html.url in html.urls){
   linklab = paste0('l',cpt,'l')
   message('Reading ', html.url)
-  page = read_html(html.url, encoding='UTF-8')
+  remDr$navigate(html.url)
+  page = read_html(remDr$getPageSource()[[1]], encoding='UTF-8')
   html.title = page %>% html_node('title') %>% html_text
   if(cpt == 1){
-    if(is.na(title)) {
-      title = html.title
+    if(is.na(main.title)) {
+      main.title = html.title
     }
-    new.html = c(new.html, paste0('<title>', title, '</title></head><body>'))
+    new.html = c(new.html, paste0('<title>', main.title, '</title></head><body>'))
   }
   new.html = c(new.html, '<h1>', html.title, '</h1>')
   new.html = page %>% html_nodes('article') %>% html_nodes('.article-details') %>% as.character %>% c(new.html, .)
@@ -134,7 +144,11 @@ for(html.url in html.urls){
     links = links %>% html_attr('href')
     for(ii in 1:length(figs)){
       img = figs[[ii]] %>% html_nodes('img') %>% as.character
-      new.img = gsub('src="[^"]*"', paste0('src="', links[ii], '"'), img)
+      ## download image
+      remDr$navigate(paste0('https://www.annualreviews.org/', links[ii]))
+      png.filename = paste0(basename(links[ii]), '.png')
+      remDr$screenshot(file=png.filename)
+      new.img = gsub('src="[^"]*"', paste0('src="', png.filename, '"'), img)
       main.content = gsub(img, new.img, main.content)
     }
   }
