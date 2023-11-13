@@ -37,16 +37,19 @@ By making DDG the default search engine these bangs can be used directly in the 
 
 ## Ubuntu
 
-I'm using [Ubuntu Gnome 16.04](https://wiki.ubuntu.com/UbuntuGNOME/GetUbuntuGNOME). 
+I'm using [Ubuntu 22.04](https://ubuntu.com/download/desktop) with [GNOME Shell](https://extensions.gnome.org/about/). 
 
-+ I followed some of the steps [there](http://www.omgubuntu.co.uk/2016/04/10-things-to-do-after-installing-ubuntu-16-04-lts) to install essential packages.
-+ To enable the use of my existing DSA SSH keys I did: 
+To install GNOME shell:
 
-`echo "PubkeyAcceptedKeyTypes +ssh-dss" >> ~/.ssh/config`
+```sh
+sudo apt-get install gnome-shell
+sudo apt-get install gnome-tweaks gnome-shell-extensions
+```
 
-+ To force the second screen to follow the workspace of the primary screen I found [this](http://gregcor.com/2011/05/07/fix-dual-monitors-in-gnome-3-aka-my-workspaces-are-broken/): 
+Then, when logging in, there should be an option to select GNOME.
 
-`gsettings set org.gnome.shell.overrides workspaces-only-on-primary false`
+Finally, install extensions from [extensions.gnome.org](https://extensions.gnome.org/).
+For example, [Simple System Monitor](https://extensions.gnome.org/extension/4506/simple-system-monitor/), [Sound Input & Output Device Chooser](https://extensions.gnome.org/extension/906/sound-output-device-chooser/), [Bluetooth Quick Connect](https://extensions.gnome.org/extension/1401/bluetooth-quick-connect/), [Panel World Clock](https://extensions.gnome.org/extension/946/panel-world-clock-lite/). [Lock Keys](https://extensions.gnome.org/extension/36/lock-keys/).
 
 ### Update expired keys
 
