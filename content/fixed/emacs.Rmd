@@ -708,6 +708,15 @@ Encryption is integrated directly. Just add the extension `.gpg` to a file.
 - See how to setup GNU screen to avoid visual glitches in the [Shell section](../shell/#gnu-screen).
 - `M-x ess-remote` to use a *shell* buffer as R buffer to send commands to. For example to send commands from a local R script to an R session on a server (connected through ssh in the *shell* buffer), or on an interactive job (launched in the *shell* buffer).
 
+Remote files can be accessed/edited by opening them with `/ssh:USER@SERVER:/path/to/file`.
+A shortcut to connect to a server might be, in the `.emacs`:
+
+```lisp
+(defun connect-SERVER ()
+  (interactive)
+  (dired "/ssh:USER@SERVER:/path/to/root"))
+```
+
 ## For online notes
 
 *Update: I don't use this anymore. I take temporary notes in Simplenote, some of which I save in org-mode if I want to keep them.*
