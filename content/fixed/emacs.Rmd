@@ -670,6 +670,12 @@ When opening a directory (`C-x C-f`), Emacs shows the files in Dired mode:
 - `R` rename a file.
 - `C` copy a file.
 
+Added to my `.emacs` to show human-readable sizes:
+
+~~~lisp
+(setq dired-listing-switches "-aBhl")
+~~~
+
 ## For Version Control
 
 The built-in interface supports Git:

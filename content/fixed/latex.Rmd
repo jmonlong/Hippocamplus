@@ -67,9 +67,11 @@ Custom page/margins:
 
 Or `margin=` to apply the same margin on each side.
 
-### Font sizes
+### Font sizes and style
 
 `\tiny`, `\scriptsize`, `\footnotesize`, `\small`, `\normalsize`, `\large`, `\Large`, `\LARGE`, `\huge`, `\Huge`.
+
+To strikethrough: `\sout{text}` using the `ulem` package.
 
 ### Change the symbol in lists
 
@@ -600,6 +602,16 @@ I tend to use the minimalist *default* theme, remove the navigation bar but add 
 ~~~
 
 For an important presentation, I could use a more fancy theme, such as the [Metropolis](https://github.com/matze/mtheme) theme or the [Execushares](http://hamaluik.com/posts/better-beamer-themes/) one. Eventually I would like to mix and customize these two (see current state [there](https://github.com/jmonlong/Hippocamplus/blob/master/LaTeX/theme/beamerthemeMyExecushares.sty)).
+
+### Aspect ratio
+
+Change with:
+
+~~~tex
+\documentclass[aspectratio=149]{beamer}
+~~~
+
+E.g. 1610, 169, 149, 54, 43 and 32, for 16:10, 16:9, 14:9, 5:4, 4:3 and 3:2, respectively.
 
 ### Background image
 
