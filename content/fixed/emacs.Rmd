@@ -54,6 +54,9 @@ Some miscellaneous commands that could be useful:
 + Shift a selected chunk with spaces: `C-x TAB` or `C-4 C-x TAB` to add a specific number of spaces (here 4).
 + To insert a tab: `C-q <tab>`
 + Go to line `M-g g`
++ Line wrapping
+    + Don't wrap lines: `M-x toggle-truncate-lines`
+    + Wrap line but don't cut words: `M-x visual-line-mode`
 
 Regexp replace :
 
@@ -466,6 +469,7 @@ Otherwise, I manually fold the frames/figures/tables that are distracting.
 Pressing `TAB` when the cursor is in a heading will cycle through *heading-only/full* view.
 
 `M-x orgtbl-mode` to format markdown tables like org-tables.
+
 
 ### Markdown live preview
 
