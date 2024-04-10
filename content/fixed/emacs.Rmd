@@ -384,17 +384,17 @@ In my `.emacs`:
 (setq langtool-language-tool-jar "/usr/local/Cellar/languagetool/3.8/libexec/languagetool-commandline.jar")
 (setq langtool-default-language "en-US")
 (setq langtool-mother-tongue "fr")
-(setq langtool-disabled-rules '("MORFOLOGIK_RULE_EN_US"))
+;; (setq langtool-disabled-rules '("WHITESPACE_RULE")) ;; optional
 ~~~
 
-*MORFOLOGIK_RULE_EN_US* corresponds to spelling mistakes, which I don't want to see because I do the spell-checking separately better with ispell. 
-The list of rules is [here](https://community.languagetool.org/rule/list?lang=en-US). 
-For example, I could disabled *WHITESPACE_RULE* for LaTeX.
+Specific rules can be disabled, see list of rules [here](https://community.languagetool.org/rule/list?lang=en-US). 
+For example, *WHITESPACE_RULE* for LaTeX.
 
 Then:
 
 - `M-x langtool-check` to highlight problems.
 - `M-x langtool-check-done` to remove highlighting.
+- `M-x langtool-switch-default-language` to switch to another language, e.g. `fr`
 
 ## For LaTeX
 

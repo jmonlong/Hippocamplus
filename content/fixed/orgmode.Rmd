@@ -110,6 +110,23 @@ For example regular meetings
 - Previous/next day/week/month: `b`/`f`
 - Jump to a specific date: `j`.
 
+### Calendar view with calfw
+
+I use [calfw](https://github.com/kiwanami/emacs-calfw) to get a calendar-like view of the main events/meetings to come.
+It's easily installable  through MELPA (see Emacs page), packages `calfw` and `calfw-org`.
+
+Then in the `.emacs` config:
+
+~~~lisp
+(require 'calfw-org)
+(setq cfw:org-agenda-schedule-args '(:timestamp))
+~~~
+
+- `M-x cfw:open-org-calendar` to open the calendar
+- `r` to refresh
+- `TAB` to navigate to items within a day.
+- `t` today
+
 ### Capture
 
 - Finish capture and go back to current buffer: `C-c C-c`.
