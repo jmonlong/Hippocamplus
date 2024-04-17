@@ -325,21 +325,56 @@ filelist = glob.glob('temp*')
 for f in filelist:
     os.remove(f)
 
-shutil.rmtree('myDir')
+shutil.copy(my_file, a_copy_of_my_file)
+shutil.copytree(my_dir, a_copy_of_my_dir)
+shutil.rmtree(my_dir_to_remove)
 
 if(os.path.isfile(filen)):
 	file = open(filen)
+    
+new_path = os.path.join(my_dir, my_basename)
+
+# create directory if it doesn't exist
+if not os.path.exists(my_dir):
+    os.makedirs(my_dir)
 ~~~
 
-Run commands with *subprocess*. `/dev/null` to avoid annoying messages.
+
+### Run commands with [*subprocess*](https://docs.python.org/3/library/subprocess.html)
+
+Use `run` with `check=True` (to stop on errors).
 
 ~~~python
 import subprocess
 
 bwa_cmd = ['bwa', 'mem', bwaidx_file, fastq_file]
-dump = open('/dev/null')
-bwa_out = subprocess.check_output(bwa_cmd, stderr=dump)
-dump.close()
+bwa_out = subprocess.run(bwa_cmd, check=True)
+~~~
+
+To avoid large error in the stderr stream, either catch or redirect it.
+Same for stdout.
+
+~~~python
+out_file = open('output.txt', 'w')
+bwa_out = subprocess.run(cmd, check=True, stdout=out_file, stderr=subprocess.DEVNULL)
+out_file.close()
+~~~
+
+To catch errors as a [CalledProcessError exception](https://docs.python.org/3/library/subprocess.html#subprocess.CalledProcessError):
+
+~~~python
+try:
+    subprocess.run(cmd, check=True)
+except subprocess.CalledProcessError as e:
+    print(e)
+    # do something else with e.returncode for example
+~~~
+
+To capture the output (Python >= 3.7):
+
+~~~python
+run_o = subprocess.run(cmd, check=True, capture_output=True)
+## something with run_o.stdout or run_o.stderr
 ~~~
 
 ## Resource monitoring
@@ -474,7 +509,35 @@ If the BAM is indexed, the **number of mapped and unmapped reads** is stored in 
 
 ### VCF
 
-Using the [PyVCF](https://pyvcf.readthedocs.io/en/latest/INTRO.html) module.
+#### [cyvcf2](https://brentp.github.io/cyvcf2/)
+
+I now use this most of the time.
+
+Example of reading and annotating a VCF with cyvcf2:
+
+~~~python
+vcf = VCF(in_vcf_path)
+vcf.add_info_to_header({'ID': 'NEW_INFO',
+                        'Description': 'Description of info',
+                        'Type': 'Float', 'Number': '1'})
+vcf_o = Writer(out_vcf_path, vcf)
+for variant in vcf:
+    # something with :
+    # variant.CHROM, variant.start, variant.end, variant.REF, variant.ALT[0]
+    # variant.format('AD')[0]
+    svtype = variant.INFO.get('SVTYPE')
+    if svtype is not None and svtype == 'BND':
+        continue
+    variant.INFO["NEW_INFO"] = VAL
+    vcf_o.write_record(variant)
+vcf_o.close()
+vcf.close()
+
+~~~
+
+#### PyVCF
+
+I used to use the [PyVCF](https://pyvcf.readthedocs.io/en/latest/INTRO.html) module.
 
 ~~~python
 import vcf
@@ -495,10 +558,8 @@ The fields are accessed through:
 - `record.FILTER`
 - `record.INFO`
 
-
 ## Tricks
 
-+ When iterating, use `xrange` instead of `range`. It's faster and more memory efficient.
 + Sort elements with `sorted(a_list, key=lambda k: -something[k])`.
 + Count unique elements in an array: `unique, counts = numpy.unique(array1, return_counts=True)`.
 + Sub-sample with `random.sample(a_list, 10)`.
@@ -507,6 +568,7 @@ The fields are accessed through:
 + `quit()` to stop a program.
 + `myVar is None` to test if a variable is *None*.
 + Print the working directory with `os.getcwd()` (after importing *os*).
++ To get a ~19 digit-long hash of a string: `hash(my_very_long_id)`.
 
 When filling a nested dictionary, it's painful to always test if the key exists before updating it's value. One trick is to use `try`/`except`. It's not that much quicker but it looks fancier so you forget about the *pain*:
 
