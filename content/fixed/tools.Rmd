@@ -241,6 +241,8 @@ ENV TZ=America/Los_Angeles
 The time zone can also be changed in run command using `-e TZ=America/Los_Angeles`.
 [List of time zone codes](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
 
+To build smaller images, use less layers and a smaller base image (e.g. [Alpine images](https://www.docker.com/blog/how-to-use-the-alpine-docker-official-image/)).
+
 #### Launch a docker instance
 
 To launch an interactive instance with a shared folder:
