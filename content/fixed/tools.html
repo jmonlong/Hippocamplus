@@ -10,20 +10,20 @@ output:
 
 <div id="TOC">
 <ul>
-<li><a href="#git" id="toc-git">Git</a></li>
-<li><a href="#snakemake" id="toc-snakemake">Snakemake</a></li>
-<li><a href="#bcftools" id="toc-bcftools">bcftools</a></li>
-<li><a href="#jq" id="toc-jq">jq</a></li>
-<li><a href="#vd" id="toc-vd">vd</a></li>
-<li><a href="#rsync" id="toc-rsync">rsync</a></li>
-<li><a href="#docker" id="toc-docker">Docker</a></li>
-<li><a href="#wdl" id="toc-wdl">WDL</a></li>
-<li><a href="#makefile" id="toc-makefile">Makefile</a></li>
-<li><a href="#ftp" id="toc-ftp">FTP</a></li>
-<li><a href="#for-file-conversion" id="toc-for-file-conversion">For file conversion</a>
+<li><a href="#git">Git</a></li>
+<li><a href="#snakemake">Snakemake</a></li>
+<li><a href="#bcftools">bcftools</a></li>
+<li><a href="#jq">jq</a></li>
+<li><a href="#vd">vd</a></li>
+<li><a href="#rsync">rsync</a></li>
+<li><a href="#docker">Docker</a></li>
+<li><a href="#wdl">WDL</a></li>
+<li><a href="#makefile">Makefile</a></li>
+<li><a href="#ftp">FTP</a></li>
+<li><a href="#for-file-conversion">For file conversion</a>
 <ul>
-<li><a href="#misc" id="toc-misc">Misc</a></li>
-<li><a href="#pdf" id="toc-pdf">PDF</a></li>
+<li><a href="#misc">Misc</a></li>
+<li><a href="#pdf">PDF</a></li>
 </ul></li>
 </ul>
 </div>
@@ -228,6 +228,7 @@ Practical example: all the R scripts but not the ones created by BatchJobs in <c
 ENV TZ=America/Los_Angeles</code></pre>
 <p>The time zone can also be changed in run command using <code>-e TZ=America/Los_Angeles</code>.
 <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones">List of time zone codes</a></p>
+<p>To build smaller images, use less layers and a smaller base image (e.g. <a href="https://www.docker.com/blog/how-to-use-the-alpine-docker-official-image/">Alpine images</a>).</p>
 </div>
 <div id="launch-a-docker-instance" class="section level4">
 <h4>Launch a docker instance</h4>
@@ -254,19 +255,8 @@ docker-machine start</code></pre>
 <p>To remove all images:</p>
 <pre class="sh"><code>docker rm -vf $(docker ps -a -q)
 docker rmi -f $(docker images -a -q)</code></pre>
-<p>From <a href="https://lebkowski.name/docker-volumes/">Maciej Łebkowski’s website</a>, use this script:</p>
-<pre class="sh"><code>#!/bin/bash
-
-# remove exited containers:
-docker ps --filter status=dead --filter status=exited -aq | xargs -r docker rm -v
-    
-# remove unused images:
-docker images --no-trunc | grep &#39;&lt;none&gt;&#39; | awk &#39;{ print $3 }&#39; | xargs -r docker rmi
-
-# remove unused volumes:
-find &#39;/var/lib/docker/volumes/&#39; -mindepth 1 -maxdepth 1 -type d | grep -vFf &lt;(
-  docker ps -aq | xargs docker inspect | jq -r &#39;.[] | .Mounts | .[] | .Name | select(.)&#39;
-) | xargs -r rm -fr</code></pre>
+<p>To clean cache too:</p>
+<pre class="sh"><code>docker system prune -a</code></pre>
 </div>
 </div>
 <div id="wdl" class="section level2">

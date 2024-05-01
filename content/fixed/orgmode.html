@@ -20,6 +20,7 @@ output:
 <li><a href="#timestamps">Timestamps</a></li>
 <li><a href="#repeating-events">Repeating events</a></li>
 <li><a href="#agenda-views">Agenda views</a></li>
+<li><a href="#calendar-view-with-calfw">Calendar view with calfw</a></li>
 <li><a href="#capture">Capture</a></li>
 </ul></li>
 <li><a href="#todo-entry">TODO entry</a></li>
@@ -33,7 +34,11 @@ output:
 <li><a href="#custom-agenda-views">Custom agenda views</a></li>
 <li><a href="#shift-timestamps-by-x-hours-when-traveling-to-a-different-time-zone">Shift timestamps by X hours when traveling to a different time zone</a></li>
 <li><a href="#reverse-the-order-of-headers">Reverse the order of headers</a></li>
-<li><a href="#to-check-next">To check next</a></li>
+<li><a href="#to-check-next">To check next</a>
+<ul>
+<li><a href="#termux-sync-with-git">Termux sync with git</a></li>
+<li><a href="#orgzly-to-interact-with-org-files">Orgzly to interact with org files</a></li>
+</ul></li>
 </ul>
 </div>
 
@@ -72,7 +77,8 @@ This page will contain my configuration and the small subset of commands that I 
 (setq org-agenda-files (list org-directory))
 ;; capture
 (setq org-default-notes-file (concat org-directory &quot;/notes.org&quot;))
-(global-set-key (kbd &quot;C-c c&quot;) &#39;org-capture)</code></pre>
+(global-set-key (kbd &quot;C-c c&quot;) &#39;org-capture)
+(setq system-time-locale &quot;C&quot;) ;; use weekdays in English (even on French Ubuntu)</code></pre>
 </div>
 <div id="syntax" class="section level2">
 <h2>Syntax</h2>
@@ -144,6 +150,20 @@ This page will contain my configuration and the small subset of commands that I 
 <li>Change TODO states with <code>t</code>.</li>
 <li>Previous/next day/week/month: <code>b</code>/<code>f</code></li>
 <li>Jump to a specific date: <code>j</code>.</li>
+</ul>
+</div>
+<div id="calendar-view-with-calfw" class="section level3">
+<h3>Calendar view with calfw</h3>
+<p>I use <a href="https://github.com/kiwanami/emacs-calfw">calfw</a> to get a calendar-like view of the main events/meetings to come.
+It’s easily installable through MELPA (see Emacs page), packages <code>calfw</code> and <code>calfw-org</code>.</p>
+<p>Then in the <code>.emacs</code> config:</p>
+<pre class="lisp"><code>(require &#39;calfw-org)
+(setq cfw:org-agenda-schedule-args &#39;(:timestamp))</code></pre>
+<ul>
+<li><code>M-x cfw:open-org-calendar</code> to open the calendar</li>
+<li><code>r</code> to refresh</li>
+<li><code>TAB</code> to navigate to items within a day.</li>
+<li><code>t</code> today</li>
 </ul>
 </div>
 <div id="capture" class="section level3">
@@ -412,6 +432,35 @@ And I travel for a couple of weeks maximum, so it’s quick to launch a <em>week
 <div id="to-check-next" class="section level2">
 <h2>To check next</h2>
 <ul>
-<li><a href="https://github.com/marsmining/ox-twbs">Export to HTML with ox-twbs</a></li>
+<li><a href="https://github.com/marsmining/ox-twbs">Export to HTML with ox-twbs</a>
+## Synchronize with Android</li>
 </ul>
+<div id="termux-sync-with-git" class="section level3">
+<h3>Termux sync with git</h3>
+<p>I use <a href="https://play.google.com/store/apps/details?id=com.termux&amp;pli=1">Termux</a> to keep the git repo hosting the files up to date on my Android phone.
+Their <a href="https://wiki.termux.com">wiki</a> explains how to install packages and setup the app.
+I did:</p>
+<pre class="sh"><code>## to give termux permissions to access a shared folder
+termux-setup-storage</code></pre>
+<p>Packages, like git, can be installed with <code>pkg install PKG</code>.</p>
+<p>After setting up the repo once, I wrote a script to sync my local copy with the copy on git:</p>
+<pre class="sh"><code>#!/bin/sh
+
+cd storage/shared/.../REPO
+
+git commit -am &quot;update on phone&quot;
+git pull
+git push</code></pre>
+<p>That works when there are no conflicts that need manual fixing (so, most times).</p>
+</div>
+<div id="orgzly-to-interact-with-org-files" class="section level3">
+<h3>Orgzly to interact with org files</h3>
+<p>I then use <a href="https://orgzly.com/">Orgzly</a> to browser and edit the org files, or check my agenda.</p>
+<p>I’ve added new custom “searches” to check events in the coming week/month/year:</p>
+<ul>
+<li><code>e.ge.now ad.7</code></li>
+<li><code>e.ge.now ad.31</code></li>
+<li><code>e.ge.now ad.365</code></li>
+</ul>
+</div>
 </div>

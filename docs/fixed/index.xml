@@ -45,7 +45,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/latex/</guid>
-      <description>Cheatsheets Standard packages TinyTeX Misc  Document class Page size Font sizes Change the symbol in lists Math calligraphy Languages and encoding Links Table of contents Metadata  Figures  Position Sub-figures Supplementary figures  Tables  Control tabular width Add vertical padding Supplementary tables Spanning columns/rows Align columns Rectangular selection/cut/paste Tables from R  Code blocks For manuscripts  Abstract Author affiliation Text formatting Notes/comments using the todo package Main text and supplements in two documents Compare versions and highlight revisions One figure = one file  Bibliography  Reduce long list of authors “Name Year” style Order of initials No URL or DOI  Presentations  Changing the font Section slides Themes Background image Backup slides Link to frame    A lot of good information in the LaTeX Wikibook.</description>
+      <description>Cheatsheets Standard packages TinyTeX Misc  Document class Page size Font sizes and style Change the symbol in lists Math calligraphy Languages and encoding Links Table of contents Metadata  Figures  Position Sub-figures Supplementary figures  Tables  Control tabular width Add vertical padding Supplementary tables Spanning columns/rows Align columns Rectangular selection/cut/paste Tables from R  Code blocks For manuscripts  Abstract Author affiliation Text formatting Notes/comments using the todo package Main text and supplements in two documents Compare versions and highlight revisions One figure = one file  Bibliography  Reduce long list of authors “Name Year” style Order of initials No URL or DOI  Presentations  Changing the font Section slides Themes Aspect ratio Background image Backup slides Link to frame    A lot of good information in the LaTeX Wikibook.</description>
     </item>
     
     <item>
@@ -73,7 +73,7 @@ Rscript -e &amp;#39;rmarkdown::render(&amp;quot;document.md&amp;quot;)&amp;#39; 
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/org-mode/</guid>
-      <description>Org file Configuration Syntax Keybindings  From anywhere Edit mode Timestamps Repeating events Agenda views Capture  TODO entry Tables Code block Property drawer Habits entry Links Tags Clocking time Custom agenda views Shift timestamps by X hours when traveling to a different time zone Reverse the order of headers To check next   I’m giving Org mode a try. This page will contain my configuration and the small subset of commands that I want to learn.</description>
+      <description>Org file Configuration Syntax Keybindings  From anywhere Edit mode Timestamps Repeating events Agenda views Calendar view with calfw Capture  TODO entry Tables Code block Property drawer Habits entry Links Tags Clocking time Custom agenda views Shift timestamps by X hours when traveling to a different time zone Reverse the order of headers To check next  Termux sync with git Orgzly to interact with org files    I’m giving Org mode a try.</description>
     </item>
     
     <item>
@@ -82,9 +82,8 @@ Rscript -e &amp;#39;rmarkdown::render(&amp;quot;document.md&amp;quot;)&amp;#39; 
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/python/</guid>
-      <description>Input/Output Passing arguments to a script Objects  Array/lists Hash Set Class String Function Data frame (pandas)  Multi-threading Naming and formatting Module, files, imports  Packaging code Install a module locally  Graphs Shell integration Resource monitoring Bioinfo  Sequences Fasta SAM files VCF  Tricks Jupyter notebooks   Some notes on my recent attempt to learn Python.
-Input/Output To read the standard input:
-import fileinput for line in fileinput.</description>
+      <description>Input/Output Passing arguments to a script Objects  Array/lists Hash Set Class String Function Data frame (pandas)  Multi-threading Naming and formatting Module, files, imports  Packaging code Install a module locally  Graphs Shell integration  Run commands with subprocess  Resource monitoring Bioinfo  Sequences Fasta SAM files VCF  Tricks Jupyter notebooks   Some notes on my recent attempt to learn Python.
+Input/Output To read the standard input:</description>
     </item>
     
     <item>
@@ -93,7 +92,7 @@ import fileinput for line in fileinput.</description>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/r/</guid>
-      <description>Details to remember  Order in condition assessment  Read files in chunk Graphs  Palette with many colors ggplot2 tricks Multi-panel ggplots Change font in ggplot2 Waffle graphs  Rmarkdown  Zoom-on-click images Beamer presentation Jekyll website  data.table package Rcpp Linux setup    What They Forgot to Teach You About R  Details to remember  Use rbindlist from data.table package for a memory-optimized and faster do.</description>
+      <description>Details to remember  Order in condition assessment  Read files in chunk Graphs  Palette with many colors ggplot2 tricks Multi-panel ggplots Change font in ggplot2 Waffle graphs Gantt charts  Rmarkdown  Zoom-on-click images Beamer presentation Jekyll website  data.table package Rcpp Linux setup    What They Forgot to Teach You About R  Details to remember  Use rbindlist from data.table package for a memory-optimized and faster do.</description>
     </item>
     
     <item>

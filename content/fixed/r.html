@@ -10,28 +10,29 @@ output:
 
 <div id="TOC">
 <ul>
-<li><a href="#details-to-remember" id="toc-details-to-remember">Details to remember</a>
+<li><a href="#details-to-remember">Details to remember</a>
 <ul>
-<li><a href="#order-in-condition-assessment" id="toc-order-in-condition-assessment">Order in condition assessment</a></li>
+<li><a href="#order-in-condition-assessment">Order in condition assessment</a></li>
 </ul></li>
-<li><a href="#read-files-in-chunk" id="toc-read-files-in-chunk">Read files in chunk</a></li>
-<li><a href="#graphs" id="toc-graphs">Graphs</a>
+<li><a href="#read-files-in-chunk">Read files in chunk</a></li>
+<li><a href="#graphs">Graphs</a>
 <ul>
-<li><a href="#palette-with-many-colors" id="toc-palette-with-many-colors">Palette with many colors</a></li>
-<li><a href="#ggplot2-tricks" id="toc-ggplot2-tricks">ggplot2 tricks</a></li>
-<li><a href="#multi-panel-ggplots" id="toc-multi-panel-ggplots">Multi-panel ggplots</a></li>
-<li><a href="#change-font-in-ggplot2" id="toc-change-font-in-ggplot2">Change font in ggplot2</a></li>
-<li><a href="#waffle-graphs" id="toc-waffle-graphs">Waffle graphs</a></li>
+<li><a href="#palette-with-many-colors">Palette with many colors</a></li>
+<li><a href="#ggplot2-tricks">ggplot2 tricks</a></li>
+<li><a href="#multi-panel-ggplots">Multi-panel ggplots</a></li>
+<li><a href="#change-font-in-ggplot2">Change font in ggplot2</a></li>
+<li><a href="#waffle-graphs">Waffle graphs</a></li>
+<li><a href="#gantt-charts">Gantt charts</a></li>
 </ul></li>
-<li><a href="#rmarkdown" id="toc-rmarkdown">Rmarkdown</a>
+<li><a href="#rmarkdown">Rmarkdown</a>
 <ul>
-<li><a href="#zoom-on-click-images" id="toc-zoom-on-click-images">Zoom-on-click images</a></li>
-<li><a href="#beamer-presentation" id="toc-beamer-presentation">Beamer presentation</a></li>
-<li><a href="#jekyll-website" id="toc-jekyll-website">Jekyll website</a></li>
+<li><a href="#zoom-on-click-images">Zoom-on-click images</a></li>
+<li><a href="#beamer-presentation">Beamer presentation</a></li>
+<li><a href="#jekyll-website">Jekyll website</a></li>
 </ul></li>
-<li><a href="#data.table-package" id="toc-data.table-package"><em>data.table</em> package</a></li>
-<li><a href="#rcpp" id="toc-rcpp">Rcpp</a></li>
-<li><a href="#linux-setup" id="toc-linux-setup">Linux setup</a></li>
+<li><a href="#data.table-package"><em>data.table</em> package</a></li>
+<li><a href="#rcpp">Rcpp</a></li>
+<li><a href="#linux-setup">Linux setup</a></li>
 </ul>
 </div>
 
@@ -174,6 +175,26 @@ qplot(x=rnorm(100)) + geom_histogram() + theme(text=element_text(family=&quot;Co
   waffle(c(thing1=25, thing2=75), rows=5, keep=FALSE, size=0.5, colors=c(&quot;#af9139&quot;, &quot;#544616&quot;))
 )</code></pre>
 </div>
+<div id="gantt-charts" class="section level3">
+<h3>Gantt charts</h3>
+<p>I used <a href="https://github.com/giocomai/ganttrify">ganttrify</a> for a grant.
+I tweaked the default output a bit to show a legend for the colors.</p>
+<pre class="r"><code>library(ganttrify)
+library(ggplot2)
+project = read.table(&#39;gantt.tsv&#39;, as.is=TRUE, header=TRUE, sep=&#39;\t&#39;)
+## set the order of the activities from the order in the TSV file
+project$wp = factor(project$wp, unique(project$wp))
+spots = read.table(&#39;gantt-spots.tsv&#39;, as.is=TRUE, header=TRUE, sep=&#39;\t&#39;)
+ggp = ganttrify(project=project, spots=spots,
+                project_start_date=&quot;2024-01&quot;, month_breaks=6,
+                mark_years=TRUE, hide_wp=TRUE, label_wrap=40,
+                line_end = &quot;butt&quot;, axis_text_align = &quot;right&quot;) +
+  theme(legend.position=&#39;top&#39;, legend.title=element_blank(),
+        legend.margin=margin(0,100,-15)) +
+  scale_color_brewer(palette=&#39;Dark2&#39;, breaks=unique(project$wp)) + 
+  guides(color=guide_legend(ncol=3))
+ggp </code></pre>
+</div>
 </div>
 <div id="rmarkdown" class="section level2">
 <h2>Rmarkdown</h2>
@@ -289,10 +310,6 @@ knitr::kable(matrix(rnorm(10),10,10), format=&#39;latex&#39;)
 <li><a href="https://s3.amazonaws.com/assets.datacamp.com/blog_assets/datatable_Cheat_Sheet_R.pdf">Cheatsheet from DataCamp</a></li>
 </ul>
 <table>
-<colgroup>
-<col width="50%" />
-<col width="50%" />
-</colgroup>
 <thead>
 <tr class="header">
 <th><em>tidyverse</em></th>
@@ -355,4 +372,6 @@ DataFrame read_vcf_cpp(std::string filename){
 <p>Necessary to compile some R packages:</p>
 <pre class="sh"><code>sudo apt-get install libxml2-dev libssl-dev libmariadbclient-dev libcurl4-openssl-dev</code></pre>
 <p><em>Related to XML, OpenSSL, MySQL, Curl respectively.</em></p>
+<p>For the most recent Ubuntu OSs (e.g. 22.04):</p>
+<pre class="sh"><code>sudo apt-get install libxml2-dev libssl-dev libcurl4-openssl-dev</code></pre>
 </div>

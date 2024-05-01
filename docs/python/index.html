@@ -244,37 +244,40 @@
 
 <div id="TOC">
 <ul>
-<li><a href="#inputoutput" id="toc-inputoutput">Input/Output</a></li>
-<li><a href="#passing-arguments-to-a-script" id="toc-passing-arguments-to-a-script">Passing arguments to a script</a></li>
-<li><a href="#objects" id="toc-objects">Objects</a>
+<li><a href="#inputoutput">Input/Output</a></li>
+<li><a href="#passing-arguments-to-a-script">Passing arguments to a script</a></li>
+<li><a href="#objects">Objects</a>
 <ul>
-<li><a href="#arraylists" id="toc-arraylists">Array/lists</a></li>
-<li><a href="#hash" id="toc-hash">Hash</a></li>
-<li><a href="#set" id="toc-set">Set</a></li>
-<li><a href="#class" id="toc-class">Class</a></li>
-<li><a href="#string" id="toc-string">String</a></li>
-<li><a href="#function" id="toc-function">Function</a></li>
-<li><a href="#data-frame-pandas" id="toc-data-frame-pandas">Data frame (pandas)</a></li>
+<li><a href="#arraylists">Array/lists</a></li>
+<li><a href="#hash">Hash</a></li>
+<li><a href="#set">Set</a></li>
+<li><a href="#class">Class</a></li>
+<li><a href="#string">String</a></li>
+<li><a href="#function">Function</a></li>
+<li><a href="#data-frame-pandas">Data frame (pandas)</a></li>
 </ul></li>
-<li><a href="#multi-threading" id="toc-multi-threading">Multi-threading</a></li>
-<li><a href="#naming-and-formatting" id="toc-naming-and-formatting">Naming and formatting</a></li>
-<li><a href="#module-files-imports" id="toc-module-files-imports">Module, files, imports</a>
+<li><a href="#multi-threading">Multi-threading</a></li>
+<li><a href="#naming-and-formatting">Naming and formatting</a></li>
+<li><a href="#module-files-imports">Module, files, imports</a>
 <ul>
-<li><a href="#packaging-code" id="toc-packaging-code">Packaging code</a></li>
-<li><a href="#install-a-module-locally" id="toc-install-a-module-locally">Install a module locally</a></li>
+<li><a href="#packaging-code">Packaging code</a></li>
+<li><a href="#install-a-module-locally">Install a module locally</a></li>
 </ul></li>
-<li><a href="#graphs" id="toc-graphs">Graphs</a></li>
-<li><a href="#shell-integration" id="toc-shell-integration">Shell integration</a></li>
-<li><a href="#resource-monitoring" id="toc-resource-monitoring">Resource monitoring</a></li>
-<li><a href="#bioinfo" id="toc-bioinfo">Bioinfo</a>
+<li><a href="#graphs">Graphs</a></li>
+<li><a href="#shell-integration">Shell integration</a>
 <ul>
-<li><a href="#sequences" id="toc-sequences">Sequences</a></li>
-<li><a href="#fasta" id="toc-fasta">Fasta</a></li>
-<li><a href="#sam-files" id="toc-sam-files">SAM files</a></li>
-<li><a href="#vcf" id="toc-vcf">VCF</a></li>
+<li><a href="#run-commands-with-subprocess">Run commands with <span><em>subprocess</em></span></a></li>
 </ul></li>
-<li><a href="#tricks" id="toc-tricks">Tricks</a></li>
-<li><a href="#jupyter-notebooks" id="toc-jupyter-notebooks">Jupyter notebooks</a></li>
+<li><a href="#resource-monitoring">Resource monitoring</a></li>
+<li><a href="#bioinfo">Bioinfo</a>
+<ul>
+<li><a href="#sequences">Sequences</a></li>
+<li><a href="#fasta">Fasta</a></li>
+<li><a href="#sam-files">SAM files</a></li>
+<li><a href="#vcf">VCF</a></li>
+</ul></li>
+<li><a href="#tricks">Tricks</a></li>
+<li><a href="#jupyter-notebooks">Jupyter notebooks</a></li>
 </ul>
 </div>
 
@@ -497,17 +500,40 @@ filelist = glob.glob(&#39;temp*&#39;)
 for f in filelist:
     os.remove(f)
 
-shutil.rmtree(&#39;myDir&#39;)
+shutil.copy(my_file, a_copy_of_my_file)
+shutil.copytree(my_dir, a_copy_of_my_dir)
+shutil.rmtree(my_dir_to_remove)
 
 if(os.path.isfile(filen)):
-    file = open(filen)</code></pre>
-<p>Run commands with <em>subprocess</em>. <code>/dev/null</code> to avoid annoying messages.</p>
+	file = open(filen)
+    
+new_path = os.path.join(my_dir, my_basename)
+
+# create directory if it doesn&#39;t exist
+if not os.path.exists(my_dir):
+    os.makedirs(my_dir)</code></pre>
+<div id="run-commands-with-subprocess" class="section level3">
+<h3>Run commands with <a href="https://docs.python.org/3/library/subprocess.html"><em>subprocess</em></a></h3>
+<p>Use <code>run</code> with <code>check=True</code> (to stop on errors).</p>
 <pre class="python"><code>import subprocess
 
 bwa_cmd = [&#39;bwa&#39;, &#39;mem&#39;, bwaidx_file, fastq_file]
-dump = open(&#39;/dev/null&#39;)
-bwa_out = subprocess.check_output(bwa_cmd, stderr=dump)
-dump.close()</code></pre>
+bwa_out = subprocess.run(bwa_cmd, check=True)</code></pre>
+<p>To avoid large error in the stderr stream, either catch or redirect it.
+Same for stdout.</p>
+<pre class="python"><code>out_file = open(&#39;output.txt&#39;, &#39;w&#39;)
+bwa_out = subprocess.run(cmd, check=True, stdout=out_file, stderr=subprocess.DEVNULL)
+out_file.close()</code></pre>
+<p>To catch errors as a <a href="https://docs.python.org/3/library/subprocess.html#subprocess.CalledProcessError">CalledProcessError exception</a>:</p>
+<pre class="python"><code>try:
+    subprocess.run(cmd, check=True)
+except subprocess.CalledProcessError as e:
+    print(e)
+    # do something else with e.returncode for example</code></pre>
+<p>To capture the output (Python &gt;= 3.7):</p>
+<pre class="python"><code>run_o = subprocess.run(cmd, check=True, capture_output=True)
+## something with run_o.stdout or run_o.stderr</code></pre>
+</div>
 </div>
 <div id="resource-monitoring" class="section level2">
 <h2>Resource monitoring</h2>
@@ -517,8 +543,8 @@ print(datetime.datetime.now())</code></pre>
 <p>Timing a function with <em>timeit</em>:</p>
 <pre class="python"><code>from timeit import Timer
 def test():
-    global myobj
-    myobj.fun()
+	global myobj
+	myobj.fun()
 Timer(test).timeit(number=10)</code></pre>
 <p>A built-in way to monitor resident memory usage:</p>
 <pre class="python"><code>import tracemalloc
@@ -594,17 +620,41 @@ for read in reads_reg:
     reads_seq[read.query_name] = read.query_alignment_sequence</code></pre>
 <p>To iterate over all the reads (faster) use:</p>
 <pre class="python"><code>for aln in bamfile.fetch(until_eof=True):
-    ...</code></pre>
+	...</code></pre>
 <p>If the BAM is indexed, the <strong>number of mapped and unmapped reads</strong> is stored in <code>bamfile.mapped</code> and <code>bamfile.unmapped</code>.</p>
 </div>
 <div id="vcf" class="section level3">
 <h3>VCF</h3>
-<p>Using the <a href="https://pyvcf.readthedocs.io/en/latest/INTRO.html">PyVCF</a> module.</p>
+<div id="cyvcf2" class="section level4">
+<h4><a href="https://brentp.github.io/cyvcf2/">cyvcf2</a></h4>
+<p>I now use this most of the time.</p>
+<p>Example of reading and annotating a VCF with cyvcf2:</p>
+<pre class="python"><code>vcf = VCF(in_vcf_path)
+vcf.add_info_to_header({&#39;ID&#39;: &#39;NEW_INFO&#39;,
+                        &#39;Description&#39;: &#39;Description of info&#39;,
+                        &#39;Type&#39;: &#39;Float&#39;, &#39;Number&#39;: &#39;1&#39;})
+vcf_o = Writer(out_vcf_path, vcf)
+for variant in vcf:
+    # something with :
+    # variant.CHROM, variant.start, variant.end, variant.REF, variant.ALT[0]
+    # variant.format(&#39;AD&#39;)[0]
+    svtype = variant.INFO.get(&#39;SVTYPE&#39;)
+    if svtype is not None and svtype == &#39;BND&#39;:
+        continue
+    variant.INFO[&quot;NEW_INFO&quot;] = VAL
+    vcf_o.write_record(variant)
+vcf_o.close()
+vcf.close()
+</code></pre>
+</div>
+<div id="pyvcf" class="section level4">
+<h4>PyVCF</h4>
+<p>I used to use the <a href="https://pyvcf.readthedocs.io/en/latest/INTRO.html">PyVCF</a> module.</p>
 <pre class="python"><code>import vcf
 vcf_reader = vcf.Reader(open(&#39;var.vcf&#39;, &#39;r&#39;))
 for record in vcf_reader:
-    if(record.INFO[&#39;AF&#39;][0] &lt; 0.1):
-        print record.ID</code></pre>
+	if(record.INFO[&#39;AF&#39;][0] &lt; 0.1):
+		print record.ID</code></pre>
 <p>The fields are accessed through:</p>
 <ul>
 <li><code>record.CHROM</code></li>
@@ -618,10 +668,10 @@ for record in vcf_reader:
 </ul>
 </div>
 </div>
+</div>
 <div id="tricks" class="section level2">
 <h2>Tricks</h2>
 <ul>
-<li>When iterating, use <code>xrange</code> instead of <code>range</code>. It’s faster and more memory efficient.</li>
 <li>Sort elements with <code>sorted(a_list, key=lambda k: -something[k])</code>.</li>
 <li>Count unique elements in an array: <code>unique, counts = numpy.unique(array1, return_counts=True)</code>.</li>
 <li>Sub-sample with <code>random.sample(a_list, 10)</code>.</li>
@@ -630,6 +680,7 @@ for record in vcf_reader:
 <li><code>quit()</code> to stop a program.</li>
 <li><code>myVar is None</code> to test if a variable is <em>None</em>.</li>
 <li>Print the working directory with <code>os.getcwd()</code> (after importing <em>os</em>).</li>
+<li>To get a ~19 digit-long hash of a string: <code>hash(my_very_long_id)</code>.</li>
 </ul>
 <p>When filling a nested dictionary, it’s painful to always test if the key exists before updating it’s value. One trick is to use <code>try</code>/<code>except</code>. It’s not that much quicker but it looks fancier so you forget about the <em>pain</em>:</p>
 <pre class="python"><code>try:
@@ -640,7 +691,7 @@ except KeyError:
 <p>To convert a <strong>binary number into a decimal number</strong>: <code>int('11011011', 2)</code>.</p>
 <p>To get the index as well as the value in a list, use <code>enumerate</code>:</p>
 <pre class="python"><code>for id, val in enumerate(myList):
-    print(id, val)</code></pre>
+	print(id, val)</code></pre>
 </div>
 <div id="jupyter-notebooks" class="section level2">
 <h2>Jupyter notebooks</h2>

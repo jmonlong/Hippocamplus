@@ -17,7 +17,7 @@ output:
 <ul>
 <li><a href="#document-class">Document class</a></li>
 <li><a href="#page-size">Page size</a></li>
-<li><a href="#font-sizes">Font sizes</a></li>
+<li><a href="#font-sizes-and-style">Font sizes and style</a></li>
 <li><a href="#change-the-symbol-in-lists">Change the symbol in lists</a></li>
 <li><a href="#math-calligraphy">Math calligraphy</a></li>
 <li><a href="#languages-and-encoding">Languages and encoding</a></li>
@@ -64,6 +64,7 @@ output:
 <li><a href="#changing-the-font">Changing the font</a></li>
 <li><a href="#section-slides">Section slides</a></li>
 <li><a href="#themes">Themes</a></li>
+<li><a href="#aspect-ratio">Aspect ratio</a></li>
 <li><a href="#background-image">Background image</a></li>
 <li><a href="#backup-slides">Backup slides</a></li>
 <li><a href="#link-to-frame">Link to frame</a></li>
@@ -100,6 +101,7 @@ It’s a R package.
 Once installed, run <code>install_tinytex()</code> to install a first version of TinyTeX.
 Then install additional packages with <code>tlmgr_install("pkg")</code>.
 To find which package provides a particular <em>xxx.sty</em> run <code>tlmgr_search("/xxx.sty")</code>.</p>
+<p>To automatically install packages used in a LaTeX document, compile it with TinyTeX: <code>latexmk("document.tex")</code>.</p>
 </div>
 <div id="misc" class="section level2">
 <h2>Misc</h2>
@@ -122,9 +124,10 @@ To find which package provides a particular <em>xxx.sty</em> run <code>tlmgr_sea
 <pre class="tex"><code>\usepackage[paperwidth=8.5in, paperheight=11in, top=0.5in, bottom=0.5in, left=1in, right=0.5in]{geometry}</code></pre>
 <p>Or <code>margin=</code> to apply the same margin on each side.</p>
 </div>
-<div id="font-sizes" class="section level3">
-<h3>Font sizes</h3>
+<div id="font-sizes-and-style" class="section level3">
+<h3>Font sizes and style</h3>
 <p><code>\tiny</code>, <code>\scriptsize</code>, <code>\footnotesize</code>, <code>\small</code>, <code>\normalsize</code>, <code>\large</code>, <code>\Large</code>, <code>\LARGE</code>, <code>\huge</code>, <code>\Huge</code>.</p>
+<p>To strikethrough: <code>\sout{text}</code> using the <code>ulem</code> package.</p>
 </div>
 <div id="change-the-symbol-in-lists" class="section level3">
 <h3>Change the symbol in lists</h3>
@@ -529,6 +532,12 @@ FUNCTION {format.doi}
 \setbeamertemplate{navigation symbols}{}
 \setbeamertemplate{footline}[page number]</code></pre>
 <p>For an important presentation, I could use a more fancy theme, such as the <a href="https://github.com/matze/mtheme">Metropolis</a> theme or the <a href="http://hamaluik.com/posts/better-beamer-themes/">Execushares</a> one. Eventually I would like to mix and customize these two (see current state <a href="https://github.com/jmonlong/Hippocamplus/blob/master/LaTeX/theme/beamerthemeMyExecushares.sty">there</a>).</p>
+</div>
+<div id="aspect-ratio" class="section level3">
+<h3>Aspect ratio</h3>
+<p>Change with:</p>
+<pre class="tex"><code>\documentclass[aspectratio=149]{beamer}</code></pre>
+<p>E.g. 1610, 169, 149, 54, 43 and 32, for 16:10, 16:9, 14:9, 5:4, 4:3 and 3:2, respectively.</p>
 </div>
 <div id="background-image" class="section level3">
 <h3>Background image</h3>

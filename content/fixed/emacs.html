@@ -125,6 +125,11 @@ The two main reasons why I like it and would recommend it:</p>
 <li>Shift a selected chunk with spaces: <code>C-x TAB</code> or <code>C-4 C-x TAB</code> to add a specific number of spaces (here 4).</li>
 <li>To insert a tab: <code>C-q &lt;tab&gt;</code></li>
 <li>Go to line <code>M-g g</code></li>
+<li>Line wrapping
+<ul>
+<li>Don’t wrap lines: <code>M-x toggle-truncate-lines</code></li>
+<li>Wrap line but don’t cut words: <code>M-x visual-line-mode</code></li>
+</ul></li>
 </ul>
 <p>Regexp replace :</p>
 <ul>
@@ -371,14 +376,14 @@ In my <code>.emacs</code>:</p>
 (setq langtool-language-tool-jar &quot;/usr/local/Cellar/languagetool/3.8/libexec/languagetool-commandline.jar&quot;)
 (setq langtool-default-language &quot;en-US&quot;)
 (setq langtool-mother-tongue &quot;fr&quot;)
-(setq langtool-disabled-rules &#39;(&quot;MORFOLOGIK_RULE_EN_US&quot;))</code></pre>
-<p><em>MORFOLOGIK_RULE_EN_US</em> corresponds to spelling mistakes, which I don’t want to see because I do the spell-checking separately better with ispell.
-The list of rules is <a href="https://community.languagetool.org/rule/list?lang=en-US">here</a>.
-For example, I could disabled <em>WHITESPACE_RULE</em> for LaTeX.</p>
+;; (setq langtool-disabled-rules &#39;(&quot;WHITESPACE_RULE&quot;)) ;; optional</code></pre>
+<p>Specific rules can be disabled, see list of rules <a href="https://community.languagetool.org/rule/list?lang=en-US">here</a>.
+For example, <em>WHITESPACE_RULE</em> for LaTeX.</p>
 <p>Then:</p>
 <ul>
 <li><code>M-x langtool-check</code> to highlight problems.</li>
 <li><code>M-x langtool-check-done</code> to remove highlighting.</li>
+<li><code>M-x langtool-switch-default-language</code> to switch to another language, e.g. <code>fr</code></li>
 </ul>
 </div>
 </div>
@@ -453,7 +458,8 @@ Otherwise, I manually fold the frames/figures/tables that are distracting.</p>
 (elpy-enable)
 (setq elpy-company-add-completion-from-shell t)
 (setq elpy-shell-use-project-root nil)
-(setq elpy-shell-display-buffer-after-send t)</code></pre>
+(setq elpy-shell-display-buffer-after-send t)
+(setq elpy-shell-starting-directory &#39;current-directory)</code></pre>
 <p>Keybindings that I use:</p>
 <ul>
 <li><code>C-RET</code> or <code>C-c C-y C-e</code> to send line to python and step.</li>
@@ -615,6 +621,8 @@ If not I think the variable to customize is <code>csv-separators</code>.</p>
 <li><code>R</code> rename a file.</li>
 <li><code>C</code> copy a file.</li>
 </ul>
+<p>Added to my <code>.emacs</code> to show human-readable sizes:</p>
+<pre class="lisp"><code>(setq dired-listing-switches &quot;-aBhl&quot;)</code></pre>
 </div>
 </div>
 <div id="for-version-control" class="section level2">
@@ -652,6 +660,11 @@ After installing <em>magit</em> using MELPA, invoke the main buffer with <code>M
 <li>See how to setup GNU screen to avoid visual glitches in the <a href="../shell/#gnu-screen">Shell section</a>.</li>
 <li><code>M-x ess-remote</code> to use a <em>shell</em> buffer as R buffer to send commands to. For example to send commands from a local R script to an R session on a server (connected through ssh in the <em>shell</em> buffer), or on an interactive job (launched in the <em>shell</em> buffer).</li>
 </ul>
+<p>Remote files can be accessed/edited by opening them with <code>/ssh:USER@SERVER:/path/to/file</code>.
+A shortcut to connect to a server might be, in the <code>.emacs</code>:</p>
+<pre class="lisp"><code>(defun connect-SERVER ()
+  (interactive)
+  (dired &quot;/ssh:USER@SERVER:/path/to/root&quot;))</code></pre>
 </div>
 <div id="for-online-notes" class="section level2">
 <h2>For online notes</h2>

@@ -67,16 +67,13 @@ By making DDG the default search engine these bangs can be used directly in the 
 </div>
 <div id="ubuntu" class="section level2">
 <h2>Ubuntu</h2>
-<p>I’m using <a href="https://wiki.ubuntu.com/UbuntuGNOME/GetUbuntuGNOME">Ubuntu Gnome 16.04</a>.</p>
-<ul>
-<li>I followed some of the steps <a href="http://www.omgubuntu.co.uk/2016/04/10-things-to-do-after-installing-ubuntu-16-04-lts">there</a> to install essential packages.</li>
-<li>To enable the use of my existing DSA SSH keys I did:</li>
-</ul>
-<p><code>echo "PubkeyAcceptedKeyTypes +ssh-dss" &gt;&gt; ~/.ssh/config</code></p>
-<ul>
-<li>To force the second screen to follow the workspace of the primary screen I found <a href="http://gregcor.com/2011/05/07/fix-dual-monitors-in-gnome-3-aka-my-workspaces-are-broken/">this</a>:</li>
-</ul>
-<p><code>gsettings set org.gnome.shell.overrides workspaces-only-on-primary false</code></p>
+<p>I’m using <a href="https://ubuntu.com/download/desktop">Ubuntu 22.04</a> with <a href="https://extensions.gnome.org/about/">GNOME Shell</a>.</p>
+<p>To install GNOME shell:</p>
+<pre class="sh"><code>sudo apt-get install gnome-shell
+sudo apt-get install gnome-tweaks gnome-shell-extensions</code></pre>
+<p>Then, when logging in, there should be an option to select GNOME.</p>
+<p>Finally, install extensions from <a href="https://extensions.gnome.org/">extensions.gnome.org</a>.
+For example, <a href="https://extensions.gnome.org/extension/4506/simple-system-monitor/">Simple System Monitor</a>, <a href="https://extensions.gnome.org/extension/906/sound-output-device-chooser/">Sound Input &amp; Output Device Chooser</a>, <a href="https://extensions.gnome.org/extension/1401/bluetooth-quick-connect/">Bluetooth Quick Connect</a>, <a href="https://extensions.gnome.org/extension/946/panel-world-clock-lite/">Panel World Clock</a>. <a href="https://extensions.gnome.org/extension/36/lock-keys/">Lock Keys</a>.</p>
 <div id="update-expired-keys" class="section level3">
 <h3>Update expired keys</h3>
 <p>Sometimes <code>apt-get update</code> doesn’t work because keys have expired (e.g. <code>The following signatures were invalid: EXPKEYSIG XXX</code>).
