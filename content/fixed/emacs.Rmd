@@ -54,6 +54,7 @@ Some miscellaneous commands that could be useful:
 + Shift a selected chunk with spaces: `C-x TAB` or `C-4 C-x TAB` to add a specific number of spaces (here 4).
 + To insert a tab: `C-q <tab>`
 + Go to line `M-g g`
++ Jump to previous "mark"/position: `C-u C-SPC`
 + Line wrapping
     + Don't wrap lines: `M-x toggle-truncate-lines`
     + Wrap line but don't cut words: `M-x visual-line-mode`
@@ -109,6 +110,16 @@ For example it can convert different units with `u c`, e.g. :
 - `' 23425 s`, then `u c hms`
 
 Display the list of units with `u v`.
+
+### Register/bookmark
+
+[Registers](https://www.gnu.org/software/emacs/manual/html_node/emacs/Position-Registers.html) to save a position-file with a character.
+[Bookmarks](https://www.gnu.org/software/emacs/manual/html_node/emacs/Bookmarks.html) to save position-file with long names that persist.
+
+- `C-x r SPC` save position to register
+- `C-x r j` **j**ump to register
+- `C-x r m` **m**ark position in bookmark
+- `C-x r b` jump to **b**ookmark
 
 ### Console-size split screen
 
