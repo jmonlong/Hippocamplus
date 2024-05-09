@@ -35,6 +35,12 @@ By making DDG the default search engine these bangs can be used directly in the 
 - `!gtfr` Google Translate to French.
 - `!gten` Google Translate to English.
 
+The search syntax is explained [here](https://duckduckgo.com/duckduckgo-help-pages/results/syntax/). 
+In particular:
+
+- `dogs site:example.com` Pages about dogs from example.com
+- `cats filetype:pdf` PDFs about cats. 
+
 ## Ubuntu
 
 I'm using [Ubuntu 22.04](https://ubuntu.com/download/desktop) with [GNOME Shell](https://extensions.gnome.org/about/). 
