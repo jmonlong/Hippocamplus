@@ -44,6 +44,8 @@ What I noticed that I'm doing wrong sometimes:
 - `X of the Y` -> `Y X`
 - `with the verb-ing` -> `verb`
     - `help with the interpretation of X` -> `help interpret X`
+    - `has been helpful for the interpreation of X` -> `help interpret X`
+- `intend on verb-ing` -> `inted to verb`
 - `that is/are` -> ` `
 - `it is more <adj> to verb than to verb` -> `verb-ing is more <adj> than verb-ing`
 - `the <noun> of X` -> `<verb>-ing X`

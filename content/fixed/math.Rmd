@@ -68,6 +68,21 @@ Based on ranks, it **tests if one distribution is stochastically higher than ano
 
 ### ANOVA
 
+### Association test
+
+Two-stage linear mixed model, for example with GENESIS, first fits a model without any variant.
+It adjusts for fixed effect covariates like age, sex, batches, principal component.
+A kinship matrix can also be provided at this stage to account for relatedness.
+The second stage fits a similar model but uses the residuals of the first stage as outcome for the second stage.
+Wheeler at al. 2022 use this approach to associate SVs and hematological traits in the TOPMed dataset.
+
+#### Quality control of association tests
+
+- QQ plots
+    - For all tests
+    - Stratified by allele frequencies
+- genomic inflation factors? Around 1?
+
 ## Regression & Machine Learning
 
 ### Linear regression
