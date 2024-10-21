@@ -137,7 +137,10 @@ At the end, the final HTML code is written in a file which is converted to EPUB 
 I knew his name and that he is a legend in the field but never had the chance to really read about him. 
 I saw this tweet from Yaniv Erlich:
 
-```{r echo=FALSE}
+*Twitter widget broken...*
+
+```{r echo=FALSE, eval=FALSE}
+# doesn't work anymore...
 blogdown::shortcode('tweet', '1114107353090146304')
 ```
 

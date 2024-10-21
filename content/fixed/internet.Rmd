@@ -183,6 +183,12 @@ The configuration I use is:
 - Pointing at the folder synced with the Cloud (see below), with subfolders by authors `/%a`.
 - Changing to lower case and replacing blanks in file names.
 
+>
+ZotFile doesn't work with Zotero 7. 
+Instead, I now use [ZotMoov](https://github.com/wileyyugioh/zotmoov) to move attached files to a custom directory (with custom subfolders too).
+And file renaming can be done with Zotero 7 now.
+>
+
 For the [Better BibTeX plugin](https://retorque.re/zotero-better-bibtex/), the most important setting is the citation key style: `[auth:lower][year][journal:lower:abbr]`.
 
 I still haven't found a perfect way to **synchronize my library with my Android tablet**.

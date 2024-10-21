@@ -10,27 +10,27 @@ output:
 
 <div id="TOC">
 <ul>
-<li><a href="#misc-tools">Misc tools</a></li>
-<li><a href="#duckduckgo">DuckDuckGo</a></li>
-<li><a href="#ubuntu">Ubuntu</a>
+<li><a href="#misc-tools" id="toc-misc-tools">Misc tools</a></li>
+<li><a href="#duckduckgo" id="toc-duckduckgo">DuckDuckGo</a></li>
+<li><a href="#ubuntu" id="toc-ubuntu">Ubuntu</a>
 <ul>
-<li><a href="#update-expired-keys">Update expired keys</a></li>
-<li><a href="#french-accents-in-gnome-ubuntu">(French) Accents in Gnome Ubuntu</a></li>
+<li><a href="#update-expired-keys" id="toc-update-expired-keys">Update expired keys</a></li>
+<li><a href="#french-accents-in-gnome-ubuntu" id="toc-french-accents-in-gnome-ubuntu">(French) Accents in Gnome Ubuntu</a></li>
 </ul></li>
-<li><a href="#change-the-ctrl-.-binding-in-ubuntu-22.04">Change the <code>CTRL-.</code> binding in Ubuntu 22.04</a></li>
-<li><a href="#install-a-specificolder-r-version">Install a specific/older R version</a></li>
-<li><a href="#sync-a-specific-folder-on-ubuntu">Sync a specific folder on Ubuntu</a>
+<li><a href="#change-the-ctrl-.-binding-in-ubuntu-22.04" id="toc-change-the-ctrl-.-binding-in-ubuntu-22.04">Change the <code>CTRL-.</code> binding in Ubuntu 22.04</a></li>
+<li><a href="#install-a-specificolder-r-version" id="toc-install-a-specificolder-r-version">Install a specific/older R version</a></li>
+<li><a href="#sync-a-specific-folder-on-ubuntu" id="toc-sync-a-specific-folder-on-ubuntu">Sync a specific folder on Ubuntu</a>
 <ul>
-<li><a href="#on-the-cloud">On the cloud</a></li>
-<li><a href="#sync-in-real-time-with-syncthing">Sync in real time with Syncthing</a></li>
-<li><a href="#deprecated-before-sync-a-specific-google-drive-folder-on-ubuntu">[DEPRECATED?] Before: sync a specific Google Drive folder on Ubuntu</a></li>
+<li><a href="#on-the-cloud" id="toc-on-the-cloud">On the cloud</a></li>
+<li><a href="#sync-in-real-time-with-syncthing" id="toc-sync-in-real-time-with-syncthing">Sync in real time with Syncthing</a></li>
+<li><a href="#deprecated-before-sync-a-specific-google-drive-folder-on-ubuntu" id="toc-deprecated-before-sync-a-specific-google-drive-folder-on-ubuntu">[DEPRECATED?] Before: sync a specific Google Drive folder on Ubuntu</a></li>
 </ul></li>
-<li><a href="#zotero">Zotero</a>
+<li><a href="#zotero" id="toc-zotero">Zotero</a>
 <ul>
-<li><a href="#deprecated-before-sync-pdfs-between-mendeley-and-google-drive">[DEPRECATED] Before: sync PDFs between Mendeley and Google Drive</a></li>
+<li><a href="#deprecated-before-sync-pdfs-between-mendeley-and-google-drive" id="toc-deprecated-before-sync-pdfs-between-mendeley-and-google-drive">[DEPRECATED] Before: sync PDFs between Mendeley and Google Drive</a></li>
 </ul></li>
-<li><a href="#dowload-files-from-dropbox">Dowload files from Dropbox</a></li>
-<li><a href="#record-a-webradio-stream-with-vlc">Record a webradio stream with VLC</a></li>
+<li><a href="#dowload-files-from-dropbox" id="toc-dowload-files-from-dropbox">Dowload files from Dropbox</a></li>
+<li><a href="#record-a-webradio-stream-with-vlc" id="toc-record-a-webradio-stream-with-vlc">Record a webradio stream with VLC</a></li>
 </ul>
 </div>
 
@@ -63,6 +63,12 @@ By making DDG the default search engine these bangs can be used directly in the 
 <li><code>!wref</code>/<code>wrfe</code> Word Reference English to French (et vice versa).</li>
 <li><code>!gtfr</code> Google Translate to French.</li>
 <li><code>!gten</code> Google Translate to English.</li>
+</ul>
+<p>The search syntax is explained <a href="https://duckduckgo.com/duckduckgo-help-pages/results/syntax/">here</a>.
+In particular:</p>
+<ul>
+<li><code>dogs site:example.com</code> Pages about dogs from example.com</li>
+<li><code>cats filetype:pdf</code> PDFs about cats.</li>
 </ul>
 </div>
 <div id="ubuntu" class="section level2">
@@ -173,6 +179,11 @@ The configuration I use is:</p>
 <li>Pointing at the folder synced with the Cloud (see below), with subfolders by authors <code>/%a</code>.</li>
 <li>Changing to lower case and replacing blanks in file names.</li>
 </ul>
+<blockquote>
+<p>ZotFile doesn’t work with Zotero 7.
+Instead, I now use <a href="https://github.com/wileyyugioh/zotmoov">ZotMoov</a> to move attached files to a custom directory (with custom subfolders too).
+And file renaming can be done with Zotero 7 now.</p>
+</blockquote>
 <p>For the <a href="https://retorque.re/zotero-better-bibtex/">Better BibTeX plugin</a>, the most important setting is the citation key style: <code>[auth:lower][year][journal:lower:abbr]</code>.</p>
 <p>I still haven’t found a perfect way to <strong>synchronize my library with my Android tablet</strong>.
 Currently, I store the PDFs on Nextcloud (2 Gb free tier, see above), and then:</p>

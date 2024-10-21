@@ -257,22 +257,26 @@
 
 <div id="TOC">
 <ul>
-<li><a href="#first-check-on-pubmed-central">First, check on PubMed Central</a></li>
-<li><a href="#convert-the-html-page-to-epub">Convert the HTML page to EPUB</a></li>
-<li><a href="#clean-up-the-html-before-conversion">Clean up the HTML before conversion</a><ul>
-<li><a href="#compiling-several-reviews-into-one-epub-document">Compiling several reviews into one EPUB document</a></li>
-<li><a href="#vpn-paywall-and-pandoc">VPN, paywall and Pandoc</a></li>
-<li><a href="#limitations">Limitations</a></li>
-<li><a href="#methods">Methods</a></li>
+<li><a href="#first-check-on-pubmed-central" id="toc-first-check-on-pubmed-central">First, check on PubMed Central</a></li>
+<li><a href="#convert-the-html-page-to-epub" id="toc-convert-the-html-page-to-epub">Convert the HTML page to EPUB</a></li>
+<li><a href="#clean-up-the-html-before-conversion" id="toc-clean-up-the-html-before-conversion">Clean up the HTML before conversion</a>
+<ul>
+<li><a href="#compiling-several-reviews-into-one-epub-document" id="toc-compiling-several-reviews-into-one-epub-document">Compiling several reviews into one EPUB document</a></li>
+<li><a href="#vpn-paywall-and-pandoc" id="toc-vpn-paywall-and-pandoc">VPN, paywall and Pandoc</a></li>
+<li><a href="#limitations" id="toc-limitations">Limitations</a></li>
+<li><a href="#methods" id="toc-methods">Methods</a></li>
 </ul></li>
-<li><a href="#other-epub-resources">Other EPUB resources</a></li>
-<li><a href="#loose-ends-by-sidney-brenner">Loose Ends by Sidney Brenner</a></li>
+<li><a href="#other-epub-resources" id="toc-other-epub-resources">Other EPUB resources</a></li>
+<li><a href="#loose-ends-by-sidney-brenner" id="toc-loose-ends-by-sidney-brenner">Loose Ends by Sidney Brenner</a></li>
 </ul>
 </div>
 
 <p><em>Edit Apr 6 2019: Added the compilation of Loose Ends columns by Sidney Brenner.</em></p>
 <p>Third post on the series of <em>“Things I did instead of writing my thesis to help me write my thesis”</em>: how to find/convert reviews in the EPUB format to read in an ebook reader.</p>
-<p>To motivate myself to write the thesis introduction and get some “style” inspiration, I read a few reviews. Reviews are longer and often more wordy than original research articles so I’d sometimes prefer to use my e-reader. It’s more compact and the e-ink is more comfortable to read, especially outside. But I find PDFs a bit awkward to use on an e-reader so it would be better to have the reviews in a e-reader format like EPUB.</p>
+<p>To motivate myself to write the thesis introduction and get some “style” inspiration, I read a few reviews.
+Reviews are longer and often more wordy than original research articles so I’d sometimes prefer to use my e-reader.
+It’s more compact and the e-ink is more comfortable to read, especially outside.
+But I find PDFs a bit awkward to use on an e-reader so it would be better to have the reviews in a e-reader format like EPUB.</p>
 <p>In my experience, this is the best strategy to get a review in EPUB format:</p>
 <ol style="list-style-type: decimal">
 <li>Check if available on PubMed Central.</li>
@@ -284,17 +288,25 @@
 <p>For <em>Nature Reviews</em> and <em>Annual Reviews</em>, the script I wrote can also merge several reviews into one EPUB ebook.</p>
 <div id="first-check-on-pubmed-central" class="section level2">
 <h2>First, check on PubMed Central</h2>
-<p>In the top-right corner of the article page there is a <em>ePub</em> option (<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3612533/">example</a>). This feature has been in <em>beta</em> version for years but the EPUB files are really good.</p>
-<p>Unfortunately, many articles/reviews are not available through PMC, including the majority of reviews from dedicated journals like <a href="https://www.nature.com/nrg/">Nature Reviews Genetics</a> and <a href="https://www.annualreviews.org/journal/genet">Annual Review of Genetics</a>. For example, there are more than a thousand reviews from Nature Reviews Genetics on PubMed, but only <a href="https://www.ncbi.nlm.nih.gov/pmc/?term=%22nat+rev+genet%22%5BJournal%5D">200-300 available on PubMed Central</a>. Same for Annual Review of Genetics which has <a href="https://www.ncbi.nlm.nih.gov/pmc/?term=%22annual+review+of+genetics%22%5BJournal%5D">~70 reviews available on PMC</a> but almost 1K indexed on PubMed.</p>
+<p>In the top-right corner of the article page there is a <em>ePub</em> option (<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3612533/">example</a>).
+This feature has been in <em>beta</em> version for years but the EPUB files are really good.</p>
+<p>Unfortunately, many articles/reviews are not available through PMC, including the majority of reviews from dedicated journals like <a href="https://www.nature.com/nrg/">Nature Reviews Genetics</a> and <a href="https://www.annualreviews.org/journal/genet">Annual Review of Genetics</a>.
+For example, there are more than a thousand reviews from Nature Reviews Genetics on PubMed, but only <a href="https://www.ncbi.nlm.nih.gov/pmc/?term=%22nat+rev+genet%22%5BJournal%5D">200-300 available on PubMed Central</a>.
+Same for Annual Review of Genetics which has <a href="https://www.ncbi.nlm.nih.gov/pmc/?term=%22annual+review+of+genetics%22%5BJournal%5D">~70 reviews available on PMC</a> but almost 1K indexed on PubMed.</p>
 <p>If it’s not available in PMC (and the journal doesn’t provide an EPUB file), no choice but to manually convert to EPUB.</p>
 </div>
 <div id="convert-the-html-page-to-epub" class="section level2">
 <h2>Convert the HTML page to EPUB</h2>
-<p>Rather than trying to convert the PDF, I found it easier to convert the HTML page. EPUB is a XML-based format which is quite close to the HTML anyway so it should be the way to go.</p>
+<p>Rather than trying to convert the PDF, I found it easier to convert the HTML page.
+EPUB is a XML-based format which is quite close to the HTML anyway so it should be the way to go.</p>
 <p>After saving the webpage locally, the HTML file can be converted with <a href="http://pandoc.org/index.html">Pandoc</a>:</p>
 <pre class="sh"><code>pandoc webpage-i-manually-downloaded.html -o webpage-i-manually-downloaded.epub</code></pre>
-<p>Usually, the result is <strong>readable but not very practical</strong> because the interface of the website is polluting the ebook, many links are external (pointing at webpages), and content is sometimes missing. It’s annoying not being able to click on the reference/figure links (or clicking inadvertently and opening a web browser), having to skip dozens of pages to get to the content, or missing information because they needed to be “expanded” on the website.</p>
-<p>There are exceptions. For example the <strong>“<em>Opportunities and obstacles for deep learning in biology and medicine</em>”</strong>, a cool (and long) review which was published in <a href="http://rsif.royalsocietypublishing.org/content/15/141/20170387">the Journal of the Royal Society Interface</a>, is also formatted in <a href="https://greenelab.github.io/deep-review/">a GitHub HTML page</a>. The manuscript is actually written and build using Markdown/GitHub (I want to learn how to do that at some point). Anyway, the GitHub webpage was straightforward to convert with Pandoc and produced a perfect EPUB version of the review.</p>
+<p>Usually, the result is <strong>readable but not very practical</strong> because the interface of the website is polluting the ebook, many links are external (pointing at webpages), and content is sometimes missing.
+It’s annoying not being able to click on the reference/figure links (or clicking inadvertently and opening a web browser), having to skip dozens of pages to get to the content, or missing information because they needed to be “expanded” on the website.</p>
+<p>There are exceptions.
+For example the <strong>“<em>Opportunities and obstacles for deep learning in biology and medicine</em>”</strong>, a cool (and long) review which was published in <a href="http://rsif.royalsocietypublishing.org/content/15/141/20170387">the Journal of the Royal Society Interface</a>, is also formatted in <a href="https://greenelab.github.io/deep-review/">a GitHub HTML page</a>.
+The manuscript is actually written and build using Markdown/GitHub (I want to learn how to do that at some point).
+Anyway, the GitHub webpage was straightforward to convert with Pandoc and produced a perfect EPUB version of the review.</p>
 <pre class="sh"><code>wget -p https://greenelab.github.io/deep-review/
 cd greenelab.github.io/deep-review
 pandoc index.html -o DeepLearningBioMed.epub</code></pre>
@@ -312,20 +324,29 @@ pandoc index.html -o DeepLearningBioMed.epub</code></pre>
 <li>Shows the content of a <em>box</em> even if hidden in the webpage.</li>
 <li>Replaces low-resolution figure with high-resolution (for Annual Reviews).</li>
 </ol>
-<p>I put the <a href="https://github.com/jmonlong/Hippocamplus/tree/config/R/epubifyReviews">two R scripts on GitHub</a>. Using the URL of the review, run this to clean up the HTML and call Pandoc:</p>
+<p>I put the <a href="https://github.com/jmonlong/Hippocamplus/tree/config/R/epubifyReviews">two R scripts on GitHub</a>.
+Using the URL of the review, run this to clean up the HTML and call Pandoc:</p>
 <pre class="sh"><code>Rscript epubify-annualreviews.R -i https://www.annualreviews.org/doi/full/10.1146/annurev-genet-120215-034854
 ## or
 Rscript epubify-naturereviews.R -i https://www.nature.com/articles/nrg.2015.16</code></pre>
-<p><em>The scripts rely on the <a href="https://github.com/hadley/rvest">rvest package</a> (<code>install.packages('rvest')</code> to install in <code>R</code>) and the <a href="https://yihui.name/knitr/">knitr package</a> (<code>install.packages('knitr')</code> to install in <code>R</code>).</em> <em>It also assumes that <code>pandoc</code> is installed.</em></p>
+<p><em>The scripts rely on the <a href="https://github.com/hadley/rvest">rvest package</a> (<code>install.packages('rvest')</code> to install in <code>R</code>) and the <a href="https://yihui.name/knitr/">knitr package</a> (<code>install.packages('knitr')</code> to install in <code>R</code>).</em>
+<em>It also assumes that <code>pandoc</code> is installed.</em></p>
 <div id="compiling-several-reviews-into-one-epub-document" class="section level3">
 <h3>Compiling several reviews into one EPUB document</h3>
-<p>Some reviews or articles are part of collections, like the “Points of significance” serie in Nature Methods. It would be nice to convert these articles into one EPUB.</p>
-<p>To do this both scripts can loop over URLs in a list and produce one EPUB. The <code>-i</code> argument should be a text file with one URL per line, and the <code>-list</code> argument should be added to switch on the “list” mode. Optional, you can specify a title using the <code>-title</code> argument.</p>
-<p>I don’t think I’m allowed to share publicly the <strong>“Points of Significance” EPUB</strong> but I can share the commands I used (see <a href="https://github.com/jmonlong/Hippocamplus/tree/config/R/epubifyReviews">instructions on GitHub</a>). There are also commands to download <strong>collections</strong> of Nature Reviews (e.g. Genome Editing or Computational Tools) or search results for Annual Reviews (e.g. Microbiome &amp; Sequencing).</p>
+<p>Some reviews or articles are part of collections, like the “Points of significance” serie in Nature Methods.
+It would be nice to convert these articles into one EPUB.</p>
+<p>To do this both scripts can loop over URLs in a list and produce one EPUB.
+The <code>-i</code> argument should be a text file with one URL per line, and the <code>-list</code> argument should be added to switch on the “list” mode.
+Optional, you can specify a title using the <code>-title</code> argument.</p>
+<p>I don’t think I’m allowed to share publicly the <strong>“Points of Significance” EPUB</strong> but I can share the commands I used (see <a href="https://github.com/jmonlong/Hippocamplus/tree/config/R/epubifyReviews">instructions on GitHub</a>).
+There are also commands to download <strong>collections</strong> of Nature Reviews (e.g. Genome Editing or Computational Tools) or search results for Annual Reviews (e.g. Microbiome &amp; Sequencing).</p>
 </div>
 <div id="vpn-paywall-and-pandoc" class="section level3">
 <h3>VPN, paywall and Pandoc</h3>
-<p>The script and Pandoc will try to download the text/images so <strong>they should be used behind the university’s VPN (or at the university).</strong> For Nature Reviews, the page can also be downloaded locally and used instead of the URL argument. That might be useful if the articles are accessed by logging in through the web browser (e.g. McGill’s <a href="http://www.mcgill.ca/library/services/connect">EZproxy system</a>). For Annual Reviews however, the Pandoc command will try to download high-res figures so it’s better to run with a VPN.</p>
+<p>The script and Pandoc will try to download the text/images so <strong>they should be used behind the university’s VPN (or at the university).</strong>
+For Nature Reviews, the page can also be downloaded locally and used instead of the URL argument.
+That might be useful if the articles are accessed by logging in through the web browser (e.g. McGill’s <a href="http://www.mcgill.ca/library/services/connect">EZproxy system</a>).
+For Annual Reviews however, the Pandoc command will try to download high-res figures so it’s better to run with a VPN.</p>
 </div>
 <div id="limitations" class="section level3">
 <h3>Limitations</h3>
@@ -337,8 +358,14 @@ Rscript epubify-naturereviews.R -i https://www.nature.com/articles/nrg.2015.16</
 </div>
 <div id="methods" class="section level3">
 <h3>Methods</h3>
-<p>The scripts use functions from the <a href="https://github.com/hadley/rvest"><em>rvest</em></a> package to download the HTML code of a webpage. Then they use three different strategies to clean up the HTML code. Sometimes <em>rvest</em>’s functions can directly select the relevant parts. Many times, the HTML code is modified using <code>gsub</code> and regular expressions. A few times the script writes new HTML code based on information retrieved using <em>rvest</em>.</p>
-<p>Tables are converted into <em>data.frames</em> with <code>html_table</code>, then converted back to HTML usint <a href="https://yihui.name/knitr/"><em>knitr</em></a>’s <code>kable</code> function. In <em>list</em> mode, the script loops through URLs from the input file and concatenate the cleaned HTML code. At the end, the final HTML code is written in a file which is converted to EPUB by <a href="http://pandoc.org/index.html">Pandoc</a>.</p>
+<p>The scripts use functions from the <a href="https://github.com/hadley/rvest"><em>rvest</em></a> package to download the HTML code of a webpage.
+Then they use three different strategies to clean up the HTML code.
+Sometimes <em>rvest</em>’s functions can directly select the relevant parts.
+Many times, the HTML code is modified using <code>gsub</code> and regular expressions.
+A few times the script writes new HTML code based on information retrieved using <em>rvest</em>.</p>
+<p>Tables are converted into <em>data.frames</em> with <code>html_table</code>, then converted back to HTML usint <a href="https://yihui.name/knitr/"><em>knitr</em></a>’s <code>kable</code> function.
+In <em>list</em> mode, the script loops through URLs from the input file and concatenate the cleaned HTML code.
+At the end, the final HTML code is written in a file which is converted to EPUB by <a href="http://pandoc.org/index.html">Pandoc</a>.</p>
 </div>
 </div>
 <div id="other-epub-resources" class="section level2">
@@ -351,12 +378,12 @@ Rscript epubify-naturereviews.R -i https://www.nature.com/articles/nrg.2015.16</
 <div id="loose-ends-by-sidney-brenner" class="section level2">
 <h2>Loose Ends by Sidney Brenner</h2>
 <p><em>Added Apr 6 2019.</em></p>
-<p><a href="https://en.wikipedia.org/wiki/Sydney_Brenner">Sidney Brenner</a> passed away yesterday. I knew his name and that he is a legend in the field but never had the chance to really read about him. I saw this tweet from Yaniv Erlich:</p>
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">His loose ends book was instrumental for me to get through grad school. You can read it online here:<a href="https://t.co/d4Ni1vosYN">https://t.co/d4Ni1vosYN</a></p>&mdash; Yaniv Erlich 💔 (@erlichya) <a href="https://twitter.com/erlichya/status/1114107353090146304?ref_src=twsrc%5Etfw">April 5, 2019</a></blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
-<p>So I decided to compile <a href="https://www.cell.com/current-biology/libraries/loose-ends">these monthly columns from 1994-2000</a> that Sidney Brenner wrote into EPUB/MOBI files to read on my ebook reader. I put the <a href="https://github.com/jmonlong/Hippocamplus/blob/config/R/epubifyReviews/README.md#loose-ends-by-sidney-brenner">files on GitHub</a> if anyone else is interested.</p>
+<p><a href="https://en.wikipedia.org/wiki/Sydney_Brenner">Sidney Brenner</a> passed away yesterday.
+I knew his name and that he is a legend in the field but never had the chance to really read about him.
+I saw this tweet from Yaniv Erlich:</p>
+<p><em>Twitter widget broken…</em></p>
+<p>So I decided to compile <a href="https://www.cell.com/current-biology/libraries/loose-ends">these monthly columns from 1994-2000</a> that Sidney Brenner wrote into EPUB/MOBI files to read on my ebook reader.
+I put the <a href="https://github.com/jmonlong/Hippocamplus/blob/config/R/epubifyReviews/README.md#loose-ends-by-sidney-brenner">files on GitHub</a> if anyone else is interested.</p>
 </div>
 
 </div>
