@@ -401,7 +401,6 @@ I added in my `.emacs`:
 (setq org-agenda-prefix-format " %i %-15(getlasthead)%?-12t% s ")
 ~~~
 
-
 ## Custom holidays
 
 To specify custom French holidays, I first took their definition from [french-holidays.el](https://www.emacswiki.org/emacs/french-holidays.el), and added them to a `custom-holidays` list.

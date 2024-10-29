@@ -73,7 +73,7 @@ Rscript -e &amp;#39;rmarkdown::render(&amp;quot;document.md&amp;quot;)&amp;#39; 
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/org-mode/</guid>
-      <description>Org file Configuration Syntax Keybindings  From anywhere Edit mode Timestamps Repeating events Agenda views Calendar view with calfw Capture  TODO entry Tables Code block Property drawer Habits entry Links Tags Clocking time Custom agenda views Shift timestamps by X hours when traveling to a different time zone Reverse the order of headers To check next  Termux sync with git Orgzly to interact with org files    I’m giving Org mode a try.</description>
+      <description>Org file Configuration Syntax Keybindings  From anywhere Edit mode Timestamps Repeating events Agenda views Calendar view with calfw Capture  TODO entry Tables Code block Property drawer Habits entry Links Tags Clocking time Custom agenda views Custom holidays Shift timestamps by X hours when traveling to a different time zone Reverse the order of headers To check next  Termux sync with git Orgzly to interact with org files    I’m giving Org mode a try.</description>
     </item>
     
     <item>

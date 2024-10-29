@@ -244,34 +244,35 @@
 
 <div id="TOC">
 <ul>
-<li><a href="#org-file">Org file</a></li>
-<li><a href="#configuration">Configuration</a></li>
-<li><a href="#syntax">Syntax</a></li>
-<li><a href="#keybindings">Keybindings</a>
+<li><a href="#org-file" id="toc-org-file">Org file</a></li>
+<li><a href="#configuration" id="toc-configuration">Configuration</a></li>
+<li><a href="#syntax" id="toc-syntax">Syntax</a></li>
+<li><a href="#keybindings" id="toc-keybindings">Keybindings</a>
 <ul>
-<li><a href="#from-anywhere">From anywhere</a></li>
-<li><a href="#edit-mode">Edit mode</a></li>
-<li><a href="#timestamps">Timestamps</a></li>
-<li><a href="#repeating-events">Repeating events</a></li>
-<li><a href="#agenda-views">Agenda views</a></li>
-<li><a href="#calendar-view-with-calfw">Calendar view with calfw</a></li>
-<li><a href="#capture">Capture</a></li>
+<li><a href="#from-anywhere" id="toc-from-anywhere">From anywhere</a></li>
+<li><a href="#edit-mode" id="toc-edit-mode">Edit mode</a></li>
+<li><a href="#timestamps" id="toc-timestamps">Timestamps</a></li>
+<li><a href="#repeating-events" id="toc-repeating-events">Repeating events</a></li>
+<li><a href="#agenda-views" id="toc-agenda-views">Agenda views</a></li>
+<li><a href="#calendar-view-with-calfw" id="toc-calendar-view-with-calfw">Calendar view with calfw</a></li>
+<li><a href="#capture" id="toc-capture">Capture</a></li>
 </ul></li>
-<li><a href="#todo-entry">TODO entry</a></li>
-<li><a href="#tables">Tables</a></li>
-<li><a href="#code-block">Code block</a></li>
-<li><a href="#property-drawer">Property drawer</a></li>
-<li><a href="#habits-entry">Habits entry</a></li>
-<li><a href="#links">Links</a></li>
-<li><a href="#tags">Tags</a></li>
-<li><a href="#clocking-time">Clocking time</a></li>
-<li><a href="#custom-agenda-views">Custom agenda views</a></li>
-<li><a href="#shift-timestamps-by-x-hours-when-traveling-to-a-different-time-zone">Shift timestamps by X hours when traveling to a different time zone</a></li>
-<li><a href="#reverse-the-order-of-headers">Reverse the order of headers</a></li>
-<li><a href="#to-check-next">To check next</a>
+<li><a href="#todo-entry" id="toc-todo-entry">TODO entry</a></li>
+<li><a href="#tables" id="toc-tables">Tables</a></li>
+<li><a href="#code-block" id="toc-code-block">Code block</a></li>
+<li><a href="#property-drawer" id="toc-property-drawer">Property drawer</a></li>
+<li><a href="#habits-entry" id="toc-habits-entry">Habits entry</a></li>
+<li><a href="#links" id="toc-links">Links</a></li>
+<li><a href="#tags" id="toc-tags">Tags</a></li>
+<li><a href="#clocking-time" id="toc-clocking-time">Clocking time</a></li>
+<li><a href="#custom-agenda-views" id="toc-custom-agenda-views">Custom agenda views</a></li>
+<li><a href="#custom-holidays" id="toc-custom-holidays">Custom holidays</a></li>
+<li><a href="#shift-timestamps-by-x-hours-when-traveling-to-a-different-time-zone" id="toc-shift-timestamps-by-x-hours-when-traveling-to-a-different-time-zone">Shift timestamps by X hours when traveling to a different time zone</a></li>
+<li><a href="#reverse-the-order-of-headers" id="toc-reverse-the-order-of-headers">Reverse the order of headers</a></li>
+<li><a href="#to-check-next" id="toc-to-check-next">To check next</a>
 <ul>
-<li><a href="#termux-sync-with-git">Termux sync with git</a></li>
-<li><a href="#orgzly-to-interact-with-org-files">Orgzly to interact with org files</a></li>
+<li><a href="#termux-sync-with-git" id="toc-termux-sync-with-git">Termux sync with git</a></li>
+<li><a href="#orgzly-to-interact-with-org-files" id="toc-orgzly-to-interact-with-org-files">Orgzly to interact with org files</a></li>
 </ul></li>
 </ul>
 </div>
@@ -640,6 +641,37 @@ I added in my <code>.emacs</code>:</p>
 	  (concat &quot;[&quot; (org-format-outline-path (list x)) &quot;]&quot;))
       &quot;&quot;)))
 (setq org-agenda-prefix-format &quot; %i %-15(getlasthead)%?-12t% s &quot;)</code></pre>
+</div>
+<div id="custom-holidays" class="section level2">
+<h2>Custom holidays</h2>
+<p>To specify custom French holidays, I first took their definition from <a href="https://www.emacswiki.org/emacs/french-holidays.el">french-holidays.el</a>, and added them to a <code>custom-holidays</code> list.
+Then updated the <code>calendar-holidays</code> list with that list.
+In my <code>.emacs</code>:</p>
+<pre class="lisp"><code>(setq custom-holidays
+      `((holiday-fixed 1 1 &quot;Jour de l&#39;an&quot;)
+        (holiday-fixed 1 6 &quot;Épiphanie&quot;)
+        (holiday-fixed 2 2 &quot;Chandeleur&quot;)
+        (holiday-fixed 2 14 &quot;Saint Valentin&quot;)
+        (holiday-fixed 5 1 &quot;Fête du travail&quot;)
+        (holiday-fixed 5 8 &quot;Commémoration de la capitulation de l&#39;Allemagne en 1945&quot;)
+        (holiday-fixed 6 21 &quot;Fête de la musique&quot;)
+        (holiday-fixed 7 14 &quot;Fête nationale - Prise de la Bastille&quot;)
+        (holiday-fixed 8 15 &quot;Assomption (Religieux)&quot;)
+        (holiday-fixed 11 11 &quot;Armistice de 1918&quot;)
+        (holiday-fixed 11 1 &quot;Toussaint&quot;)
+        (holiday-fixed 11 2 &quot;Commémoration des fidèles défunts&quot;)
+        (holiday-fixed 12 25 &quot;Noël&quot;)
+        (holiday-easter-etc 0 &quot;Pâques&quot;)
+        (holiday-easter-etc 1 &quot;Lundi de Pâques&quot;)
+        (holiday-easter-etc 39 &quot;Ascension&quot;)
+        (holiday-easter-etc 49 &quot;Pentecôte&quot;)
+        (holiday-easter-etc -47 &quot;Mardi gras&quot;)
+        (if (not (equal (calendar-nth-named-day -1 0 5 displayed-year)
+                        (caar (holiday-easter-etc 49))))
+            (holiday-float 5 0 -1 &quot;Fête des mères&quot;)
+          (holiday-float 6 0 1 &quot;Fête des mères&quot;))
+        (holiday-float 6 0 3 &quot;Fête des pères&quot;))) ;; troisième dimanche de juin
+(setq calendar-holidays (append calendar-holidays custom-holidays))</code></pre>
 </div>
 <div id="shift-timestamps-by-x-hours-when-traveling-to-a-different-time-zone" class="section level2">
 <h2>Shift timestamps by X hours when traveling to a different time zone</h2>
