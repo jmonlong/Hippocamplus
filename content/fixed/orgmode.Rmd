@@ -401,6 +401,41 @@ I added in my `.emacs`:
 (setq org-agenda-prefix-format " %i %-15(getlasthead)%?-12t% s ")
 ~~~
 
+
+## Custom holidays
+
+To specify custom French holidays, I first took their definition from [french-holidays.el](https://www.emacswiki.org/emacs/french-holidays.el), and added them to a `custom-holidays` list.
+Then updated the `calendar-holidays` list with that list.
+In my `.emacs`:
+
+~~~lisp
+(setq custom-holidays
+      `((holiday-fixed 1 1 "Jour de l'an")
+        (holiday-fixed 1 6 "Épiphanie")
+        (holiday-fixed 2 2 "Chandeleur")
+        (holiday-fixed 2 14 "Saint Valentin")
+        (holiday-fixed 5 1 "Fête du travail")
+        (holiday-fixed 5 8 "Commémoration de la capitulation de l'Allemagne en 1945")
+        (holiday-fixed 6 21 "Fête de la musique")
+        (holiday-fixed 7 14 "Fête nationale - Prise de la Bastille")
+        (holiday-fixed 8 15 "Assomption (Religieux)")
+        (holiday-fixed 11 11 "Armistice de 1918")
+        (holiday-fixed 11 1 "Toussaint")
+        (holiday-fixed 11 2 "Commémoration des fidèles défunts")
+        (holiday-fixed 12 25 "Noël")
+        (holiday-easter-etc 0 "Pâques")
+        (holiday-easter-etc 1 "Lundi de Pâques")
+        (holiday-easter-etc 39 "Ascension")
+        (holiday-easter-etc 49 "Pentecôte")
+        (holiday-easter-etc -47 "Mardi gras")
+        (if (not (equal (calendar-nth-named-day -1 0 5 displayed-year)
+                        (caar (holiday-easter-etc 49))))
+            (holiday-float 5 0 -1 "Fête des mères")
+          (holiday-float 6 0 1 "Fête des mères"))
+        (holiday-float 6 0 3 "Fête des pères"))) ;; troisième dimanche de juin
+(setq calendar-holidays (append calendar-holidays custom-holidays))
+~~~
+
 ## Shift timestamps by X hours when traveling to a different time zone
 
 There is apparently no way to handle time zones easily.
