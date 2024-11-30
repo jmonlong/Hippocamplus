@@ -244,29 +244,30 @@
 
 <div id="TOC">
 <ul>
-<li><a href="#details-to-remember">Details to remember</a>
+<li><a href="#details-to-remember" id="toc-details-to-remember">Details to remember</a>
 <ul>
-<li><a href="#order-in-condition-assessment">Order in condition assessment</a></li>
+<li><a href="#order-in-condition-assessment" id="toc-order-in-condition-assessment">Order in condition assessment</a></li>
 </ul></li>
-<li><a href="#read-files-in-chunk">Read files in chunk</a></li>
-<li><a href="#graphs">Graphs</a>
+<li><a href="#read-files-in-chunk" id="toc-read-files-in-chunk">Read files in chunk</a></li>
+<li><a href="#graphs" id="toc-graphs">Graphs</a>
 <ul>
-<li><a href="#palette-with-many-colors">Palette with many colors</a></li>
-<li><a href="#ggplot2-tricks">ggplot2 tricks</a></li>
-<li><a href="#multi-panel-ggplots">Multi-panel ggplots</a></li>
-<li><a href="#change-font-in-ggplot2">Change font in ggplot2</a></li>
-<li><a href="#waffle-graphs">Waffle graphs</a></li>
-<li><a href="#gantt-charts">Gantt charts</a></li>
+<li><a href="#palette-with-many-colors" id="toc-palette-with-many-colors">Palette with many colors</a></li>
+<li><a href="#repel-pointslabels" id="toc-repel-pointslabels">Repel points/labels</a></li>
+<li><a href="#ggplot2-tricks" id="toc-ggplot2-tricks">ggplot2 tricks</a></li>
+<li><a href="#multi-panel-ggplots" id="toc-multi-panel-ggplots">Multi-panel ggplots</a></li>
+<li><a href="#change-font-in-ggplot2" id="toc-change-font-in-ggplot2">Change font in ggplot2</a></li>
+<li><a href="#waffle-graphs" id="toc-waffle-graphs">Waffle graphs</a></li>
+<li><a href="#gantt-charts" id="toc-gantt-charts">Gantt charts</a></li>
 </ul></li>
-<li><a href="#rmarkdown">Rmarkdown</a>
+<li><a href="#rmarkdown" id="toc-rmarkdown">Rmarkdown</a>
 <ul>
-<li><a href="#zoom-on-click-images">Zoom-on-click images</a></li>
-<li><a href="#beamer-presentation">Beamer presentation</a></li>
-<li><a href="#jekyll-website">Jekyll website</a></li>
+<li><a href="#zoom-on-click-images" id="toc-zoom-on-click-images">Zoom-on-click images</a></li>
+<li><a href="#beamer-presentation" id="toc-beamer-presentation">Beamer presentation</a></li>
+<li><a href="#jekyll-website" id="toc-jekyll-website">Jekyll website</a></li>
 </ul></li>
-<li><a href="#data.table-package"><em>data.table</em> package</a></li>
-<li><a href="#rcpp">Rcpp</a></li>
-<li><a href="#linux-setup">Linux setup</a></li>
+<li><a href="#data.table-package" id="toc-data.table-package"><em>data.table</em> package</a></li>
+<li><a href="#rcpp" id="toc-rcpp">Rcpp</a></li>
+<li><a href="#linux-setup" id="toc-linux-setup">Linux setup</a></li>
 </ul>
 </div>
 
@@ -332,13 +333,31 @@ nodes.df = read.csv(textConnection(lines.r), as.is=TRUE, header=TRUE)</code></pr
 }
 pal = interk(rainbow(20, s=.8), 5)</code></pre>
 <p>For example:</p>
-<pre class="r"><code>ggplot(bar.df, aes(x=x, fill=c)) + geom_bar() + coord_flip() +
+<pre class="r"><code>ggplot(sandbox.df, aes(x=b, fill=c)) + geom_bar() + coord_flip() +
   guides(fill=guide_legend(ncol=4))</code></pre>
 <p><img src="../fixed/r_files/figure-html/inter-palette-1.png" width="960" /></p>
-<pre class="r"><code>ggplot(bar.df, aes(x=x, fill=c)) + geom_bar() + coord_flip() +
+<pre class="r"><code>ggplot(sandbox.df, aes(x=b, fill=c)) + geom_bar() + coord_flip() +
   guides(fill=guide_legend(ncol=4)) + 
   scale_fill_manual(values=pal)</code></pre>
 <p><img src="../fixed/r_files/figure-html/inter-palette-2.png" width="960" /></p>
+<p>Another easy multi-color dark-ish palette is <code>scales::muted(rainbow(N), l=60)</code>, with <em>N</em> the number of colors wanted (see example below).</p>
+</div>
+<div id="repel-pointslabels" class="section level3">
+<h3>Repel points/labels</h3>
+<p>To label points, even when they are crammed.</p>
+<pre class="r"><code>library(ggrepel)
+library(dplyr)
+zoom.df = sandbox.df %&gt;% filter(x&gt;.6) %&gt;%
+  mutate(label=ifelse(x&gt;.9, paste(&#39;point&#39;, c, b, round(x,2)), &#39;&#39;))</code></pre>
+<pre class="r"><code>ggplot(zoom.df, aes(x=x, y=x, label=label)) + geom_point() +
+  geom_label_repel()</code></pre>
+<p><img src="../fixed/r_files/figure-html/repel-tricks-1.png" width="960" /></p>
+<pre class="r"><code>ggplot(zoom.df, aes(x=x, y=x, label=label)) + geom_point() +
+  geom_label_repel(aes(label=label), max.overlaps=Inf,
+                   nudge_x=sample(c(.01, -.01), nrow(zoom.df), TRUE)) +
+  scale_x_continuous(expand = expansion(mult = .2)) + 
+  scale_y_continuous(expand = expansion(mult = .2))</code></pre>
+<p><img src="../fixed/r_files/figure-html/repel-tricks-2.png" width="960" /></p>
 </div>
 <div id="ggplot2-tricks" class="section level3">
 <h3>ggplot2 tricks</h3>
@@ -544,6 +563,10 @@ knitr::kable(matrix(rnorm(10),10,10), format=&#39;latex&#39;)
 <li><a href="https://s3.amazonaws.com/assets.datacamp.com/blog_assets/datatable_Cheat_Sheet_R.pdf">Cheatsheet from DataCamp</a></li>
 </ul>
 <table>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th><em>tidyverse</em></th>

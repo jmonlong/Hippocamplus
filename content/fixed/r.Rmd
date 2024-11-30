@@ -80,7 +80,9 @@ When I need many colors and want to distinguish consecutive classes (e.g. bar gr
 ```{r, include=FALSE}
 library(ggplot2)
 set.seed(123456)
-bar.df = data.frame(x=sample.int(2, 100, TRUE), c=sample(letters[1:20],100, TRUE))
+sandbox.df = data.frame(x=runif(100),
+                        b=sample.int(2, 100, TRUE),
+                        c=sample(letters[1:20],100, TRUE))
 ```
 
 ```{r}
@@ -94,11 +96,34 @@ pal = interk(rainbow(20, s=.8), 5)
 For example:
 
 ```{r inter-palette, fig.height=2, fig.width=10}
-ggplot(bar.df, aes(x=x, fill=c)) + geom_bar() + coord_flip() +
+ggplot(sandbox.df, aes(x=b, fill=c)) + geom_bar() + coord_flip() +
   guides(fill=guide_legend(ncol=4))
-ggplot(bar.df, aes(x=x, fill=c)) + geom_bar() + coord_flip() +
+ggplot(sandbox.df, aes(x=b, fill=c)) + geom_bar() + coord_flip() +
   guides(fill=guide_legend(ncol=4)) + 
   scale_fill_manual(values=pal)
+```
+
+Another easy multi-color dark-ish palette is `scales::muted(rainbow(N), l=60)`, with *N* the number of colors wanted (see example below).
+
+### Repel points/labels
+
+To label points, even when they are crammed.
+
+```{r loadlib, message=FALSE, warnings=FALSE}
+library(ggrepel)
+library(dplyr)
+zoom.df = sandbox.df %>% filter(x>.6) %>%
+  mutate(label=ifelse(x>.9, paste('point', c, b, round(x,2)), ''))
+```
+
+```{r repel-tricks, fig.height=3, fig.width=10}
+ggplot(zoom.df, aes(x=x, y=x, label=label)) + geom_point() +
+  geom_label_repel()
+ggplot(zoom.df, aes(x=x, y=x, label=label)) + geom_point() +
+  geom_label_repel(aes(label=label), max.overlaps=Inf,
+                   nudge_x=sample(c(.01, -.01), nrow(zoom.df), TRUE)) +
+  scale_x_continuous(expand = expansion(mult = .2)) + 
+  scale_y_continuous(expand = expansion(mult = .2))
 ```
 
 ### ggplot2 tricks

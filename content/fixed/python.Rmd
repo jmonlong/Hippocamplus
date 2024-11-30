@@ -9,6 +9,19 @@ output:
 
 Some notes on my recent attempt to learn Python.
 
+## Virtual environments
+
+~~~sh
+## create env
+python3 -m venv myenv
+## activate
+source myenv/bin/activate
+## install more packages
+pip3 install ...
+## deactivate
+deactivate
+~~~
+
 ## Input/Output
 
 To read the standard input:

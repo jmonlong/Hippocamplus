@@ -80,6 +80,8 @@ Compared to the default, I just added flanking `[`/`]`, a space instead of a `:`
 
 ## One-liners
 
+- remove lines with `sed l1,l2d` (where *l1* and *l2* are line numbers).
+
 ### Bash & Pipes
 
 Add headers with cat
@@ -114,11 +116,13 @@ find pdf -mtime -1 | xargs evince
 
 ### AWK
 
+- `/pattern/` or `$2~/pattern/`
 - Split a string into an array: `split($3, a, ",")`
 - Substitute pattern in string: `gsub('pattern', 'replacement', $4)`
 - Capture group in string regexp using `match($2, /xxx(.*)yyy/, a); print a[1]'`
 - Set output separator to tabs: `BEGIN{OFS="\t"}` (same idea for `FS`, `RS`, `ORS`)
 - [GNU Manual](https://www.gnu.org/software/gawk/manual/gawk.html)
+- Sarah's in-house join: `awk -v fileRef=file.with.info 'BEGIN{while (getline < fileRef >0){info[$1]=$2}} {print $0, info[$1]}' input`
 
 ### Perl one-liners
 
@@ -153,8 +157,9 @@ Start a script with one of the [shebang](https://en.wikipedia.org/wiki/Shebang_%
 To remove a specific prefix/suffix from a variable name:
 
 ~~~sh
-foo=${foop#$prefix}
-foo=${foos%$suffix}
+foo=${foop#prefix_to_remove}
+foo=${foos%suffix_to_remove}
+foo=${oof/motif_to_pattern/by_this_pattern/}
 ~~~
 
 ### Looping
