@@ -63,6 +63,14 @@ grep --color=always | less -R
 
 `nohup` function (apparently).
 
+### Set memory limits for a terminal session
+
+~~~sh
+ulimit -Sv 10000000
+~~~
+
+With *10000000* here being the maximum virtual memory in bytes.
+
 ### Custom prompt
 
 To shorten the prompt in my terminal, I tweaked this paragraph in my `~/.bashrc`:

@@ -12,6 +12,13 @@ output:
 - [https://www.diagrams.net/](https://www.diagrams.net/) to make cartoon and diagrams (used to be *draw.io*)
 - [MS Paint Online](https://jspaint.app/)
 
+## Password manager
+
+I'm using MasterPassword ([Spectre](https://gitlab.com/spectre.app/web/) now) which is an open-source password generator.
+No passwords are saved anywhere, you just remember one master password and you can (re)-generate your other passwords on the fly.
+Although it should be safe on the website (https://js.masterpassword.app/), I try to use it locally when I can.
+Either with the (unofficial) [Android App](https://play.google.com/store/apps/details?id=de.devland.masterpassword&hl=en-US) or using the CLI on my computer which I built and run with Docker (see [instructions in my fork](https://github.com/jmonlong/MasterPassword)).
+
 ## DuckDuckGo
 
 [DuckDuckGo](https://duckduckgo.com/about) is a "search engine that doesn't track you". 
@@ -90,11 +97,23 @@ In `/usr/share/X11/xkb/symbols/us` I added to the *xkb_symbols "altgr-intl"* sec
    key <AB03> { [ c, C, ccedilla,     Ccedilla    ] };
 ~~~
 
-## Change the `CTRL-.` binding in Ubuntu 22.04
+### Change the `CTRL-.` binding in Ubuntu 22.04
 
 It calls a way to add emojis. 
 I've changed it to use `SUPER` instead, as it was messing with my emacs keybindings.
 The configuration windows can be accessed by running `ibus-setup`.
+
+### Update the snap-store
+
+Sometimes, snap needs to be updated but can't because it's running. 
+I get messages like *Pending update of "snap-store" snap*, but then get *cannot refresh "snap-store": snap "snap-store" has running apps* when trying to update it in the GUI.
+
+To update it in the terminal:
+
+~~~sh
+snap-store --quit
+sudo snap refresh snap-store
+~~~
 
 ## Install a specific/older R version
 

@@ -16,6 +16,7 @@ The two main reasons why I like it and would recommend it:
 If I couldn't use Emacs, I would definitely learn vim for these same reasons.
 
 - [Emacs Manual](https://www.gnu.org/software/emacs/manual/html_node/emacs/index.html)
+- [Games in Emacs](https://www.masteringemacs.org/article/fun-games-in-emacs)
 
 ## Basic configuration
 
