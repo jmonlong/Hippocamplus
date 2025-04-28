@@ -63,7 +63,7 @@ This page will contain my configuration and the small subset of commands that I 
 ;; Change M-TAB completion to C-TAB
 (define-key org-mode-map (kbd &quot;C-&lt;tab&gt;&quot;) &#39;pcomplete)
 (setq org-todo-keywords
-      &#39;((sequence &quot;TODO&quot; &quot;ONGOING&quot; &quot;CLOCKING&quot; &quot;|&quot; &quot;DONE&quot;)))
+      &#39;((sequence &quot;TODO&quot; &quot;ONGOING&quot; &quot;|&quot; &quot;DONE&quot;)))
 (global-set-key (kbd &quot;C-c a&quot;) &#39;org-agenda)
 (setq org-startup-truncated nil) ;; wrap lines
 (setq org-startup-indented 1) ;; heading indentation
@@ -159,9 +159,10 @@ This page will contain my configuration and the small subset of commands that I 
 It’s easily installable through MELPA (see Emacs page), packages <code>calfw</code> and <code>calfw-org</code>.</p>
 <p>Then in the <code>.emacs</code> config:</p>
 <pre class="lisp"><code>(require &#39;calfw-org)
-(setq cfw:org-agenda-schedule-args &#39;(:timestamp))</code></pre>
+(setq cfw:org-agenda-schedule-args &#39;(:timestamp))
+(global-set-key (kbd &quot;C-x C-a&quot;) &#39;cfw:open-org-calendar)</code></pre>
 <ul>
-<li><code>M-x cfw:open-org-calendar</code> to open the calendar</li>
+<li><code>M-x cfw:open-org-calendar</code> or the new <code>C-x C-a</code> to open the calendar</li>
 <li><code>r</code> to refresh</li>
 <li><code>TAB</code> to navigate to items within a day.</li>
 <li><code>t</code> today</li>
@@ -276,6 +277,7 @@ SCHEDULED: &lt;2019-07-16 Tue .+2d/7d&gt;
 <p>For a view of the habit and how well they are followed, I added to my <code>.emacs</code>:</p>
 <pre class="lisp"><code>(add-to-list &#39;org-modules &#39;org-habit)
 (require &#39;org-habit)
+(set &#39;org-habit-show-all-today t)
 ;; (setq org-habit-show-all-today t
 ;;       org-habit-show-habits-only-for-today t
 ;;       org-habit-show-done-always-green t
@@ -334,8 +336,14 @@ E.g.</p>
 <li><ol start="23" style="list-style-type: lower-alpha">
 <li>Events for the upcoming week.</li>
 </ol></li>
+<li><ol start="23" style="list-style-type: upper-alpha">
+<li>Events for the upcoming 4 weeks.</li>
+</ol></li>
 <li><ol start="25" style="list-style-type: lower-alpha">
 <li>Events for the upcoming year (recurrent events and birthdays excluded).</li>
+</ol></li>
+<li><ol start="8" style="list-style-type: lower-alpha">
+<li>Habit tracker.</li>
 </ol></li>
 </ul>
 <pre class="lisp"><code>(setq org-agenda-custom-commands
@@ -354,17 +362,6 @@ E.g.</p>
                     (org-agenda-overriding-header &quot;Un-scheduled tasks:&quot;)
                     (org-agenda-block-separator nil)
                     ))
-         (agenda &quot;&quot;
-                  (
-                   (org-agenda-span &#39;day)
-                   (org-agenda-block-separator nil)
-                   (org-agenda-format-date &quot;&quot;)
-                   (org-agenda-use-time-grid nil)
-                   (org-agenda-skip-function
-                    &#39;(org-agenda-skip-subtree-if &#39;notregexp &quot;:habit:&quot;)
-                    )
-                   (org-agenda-overriding-header &quot;Habits:&quot;)
-                   ))
           )
          )
         (&quot;w&quot; &quot;Week&#39;s events&quot;
@@ -375,6 +372,17 @@ E.g.</p>
                        )
                       (org-agenda-show-all-dates nil)
                       (org-agenda-overriding-header &quot;Week&#39;s events:&quot;)
+                      )))
+         ((org-agenda-compact-blocks t))
+         )
+        (&quot;W&quot; &quot;Next 4 weeks&#39; events&quot;
+         ((agenda &quot;&quot; ((org-agenda-span 21)
+                      (org-agenda-skip-function
+                       &#39;(or (org-agenda-skip-entry-if &#39;todo &#39;(&quot;TODO&quot; &quot;ONGOING&quot; &quot;DONE&quot;))
+                            )
+                       )
+                      (org-agenda-show-all-dates nil)
+                      (org-agenda-overriding-header &quot;Next 4 weeks&#39; events:&quot;)
                       )))
          ((org-agenda-compact-blocks t))
          )
@@ -391,6 +399,19 @@ E.g.</p>
                       )))
          ((org-agenda-compact-blocks t))
          )
+        (&quot;h&quot; &quot;Habits&quot;
+         ((agenda &quot;&quot;
+                  (
+                   (org-agenda-block-separator nil)
+                   (org-agenda-format-date &quot;&quot;)
+                   (org-agenda-use-time-grid nil)
+                   (org-agenda-skip-function
+                    &#39;(org-agenda-skip-subtree-if &#39;notregexp &quot;:habit:&quot;)
+                    )
+                   (org-agenda-overriding-header &quot;Habits:&quot;)
+                   ))
+          )
+         )
         )
       )</code></pre>
 <p>I also changed the way tasks are displayed in the agenda view.
@@ -400,12 +421,14 @@ No need to repeat the context in the task name anymore.
 I added in my <code>.emacs</code>:</p>
 <pre class="lisp"><code>;; Prefix tasks with parent heading
 (defun getlasthead ()
-  (let ((x (nth 0 (last (org-get-outline-path)))))
-    (if x
-	(if (&gt; (string-width x) 12)
-	    (concat &quot;[&quot; (org-format-outline-path (list (substring x 0 12))) &quot;]&quot;)
-	  (concat &quot;[&quot; (org-format-outline-path (list x)) &quot;]&quot;))
-      &quot;&quot;)))
+  (if (eq major-mode &#39;org-mode)
+      (let ((x (nth 0 (last (org-get-outline-path)))))
+        (if x
+            (if (&gt; (string-width x) 12)
+                (concat &quot;[&quot; (org-format-outline-path (list (substring x 0 12))) &quot;]&quot;)
+              (concat &quot;[&quot; (org-format-outline-path (list x)) &quot;]&quot;))
+          &quot;&quot;))
+    &quot;&quot;))
 (setq org-agenda-prefix-format &quot; %i %-15(getlasthead)%?-12t% s &quot;)</code></pre>
 </div>
 <div id="custom-holidays" class="section level2">

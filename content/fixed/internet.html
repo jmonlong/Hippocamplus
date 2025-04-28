@@ -11,13 +11,15 @@ output:
 <div id="TOC">
 <ul>
 <li><a href="#misc-tools" id="toc-misc-tools">Misc tools</a></li>
+<li><a href="#password-manager" id="toc-password-manager">Password manager</a></li>
 <li><a href="#duckduckgo" id="toc-duckduckgo">DuckDuckGo</a></li>
 <li><a href="#ubuntu" id="toc-ubuntu">Ubuntu</a>
 <ul>
 <li><a href="#update-expired-keys" id="toc-update-expired-keys">Update expired keys</a></li>
 <li><a href="#french-accents-in-gnome-ubuntu" id="toc-french-accents-in-gnome-ubuntu">(French) Accents in Gnome Ubuntu</a></li>
-</ul></li>
 <li><a href="#change-the-ctrl-.-binding-in-ubuntu-22.04" id="toc-change-the-ctrl-.-binding-in-ubuntu-22.04">Change the <code>CTRL-.</code> binding in Ubuntu 22.04</a></li>
+<li><a href="#update-the-snap-store" id="toc-update-the-snap-store">Update the snap-store</a></li>
+</ul></li>
 <li><a href="#install-a-specificolder-r-version" id="toc-install-a-specificolder-r-version">Install a specific/older R version</a></li>
 <li><a href="#sync-a-specific-folder-on-ubuntu" id="toc-sync-a-specific-folder-on-ubuntu">Sync a specific folder on Ubuntu</a>
 <ul>
@@ -40,6 +42,13 @@ output:
 <li><a href="https://www.diagrams.net/">https://www.diagrams.net/</a> to make cartoon and diagrams (used to be <em>draw.io</em>)</li>
 <li><a href="https://jspaint.app/">MS Paint Online</a></li>
 </ul>
+</div>
+<div id="password-manager" class="section level2">
+<h2>Password manager</h2>
+<p>I’m using MasterPassword (<a href="https://gitlab.com/spectre.app/web/">Spectre</a> now) which is an open-source password generator.
+No passwords are saved anywhere, you just remember one master password and you can (re)-generate your other passwords on the fly.
+Although it should be safe on the website (<a href="https://js.masterpassword.app/" class="uri">https://js.masterpassword.app/</a>), I try to use it locally when I can.
+Either with the (unofficial) <a href="https://play.google.com/store/apps/details?id=de.devland.masterpassword&amp;hl=en-US">Android App</a> or using the CLI on my computer which I built and run with Docker (see <a href="https://github.com/jmonlong/MasterPassword">instructions in my fork</a>).</p>
 </div>
 <div id="duckduckgo" class="section level2">
 <h2>DuckDuckGo</h2>
@@ -105,12 +114,20 @@ In <code>/usr/share/X11/xkb/symbols/us</code> I added to the <em>xkb_symbols “
    key &lt;AC02&gt; { [ s, S, acircumflex,  Acircumflex ] };
    key &lt;AB03&gt; { [ c, C, ccedilla,     Ccedilla    ] };</code></pre>
 </div>
-</div>
-<div id="change-the-ctrl-.-binding-in-ubuntu-22.04" class="section level2">
-<h2>Change the <code>CTRL-.</code> binding in Ubuntu 22.04</h2>
+<div id="change-the-ctrl-.-binding-in-ubuntu-22.04" class="section level3">
+<h3>Change the <code>CTRL-.</code> binding in Ubuntu 22.04</h3>
 <p>It calls a way to add emojis.
 I’ve changed it to use <code>SUPER</code> instead, as it was messing with my emacs keybindings.
 The configuration windows can be accessed by running <code>ibus-setup</code>.</p>
+</div>
+<div id="update-the-snap-store" class="section level3">
+<h3>Update the snap-store</h3>
+<p>Sometimes, snap needs to be updated but can’t because it’s running.
+I get messages like <em>Pending update of “snap-store” snap</em>, but then get <em>cannot refresh “snap-store”: snap “snap-store” has running apps</em> when trying to update it in the GUI.</p>
+<p>To update it in the terminal:</p>
+<pre class="sh"><code>snap-store --quit
+sudo snap refresh snap-store</code></pre>
+</div>
 </div>
 <div id="install-a-specificolder-r-version" class="section level2">
 <h2>Install a specific/older R version</h2>
