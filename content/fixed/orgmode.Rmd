@@ -27,7 +27,7 @@ In `.emacs` file:
 ;; Change M-TAB completion to C-TAB
 (define-key org-mode-map (kbd "C-<tab>") 'pcomplete)
 (setq org-todo-keywords
-      '((sequence "TODO" "ONGOING" "CLOCKING" "|" "DONE")))
+      '((sequence "TODO" "ONGOING" "|" "DONE")))
 (global-set-key (kbd "C-c a") 'org-agenda)
 (setq org-startup-truncated nil) ;; wrap lines
 (setq org-startup-indented 1) ;; heading indentation
@@ -120,9 +120,10 @@ Then in the `.emacs` config:
 ~~~lisp
 (require 'calfw-org)
 (setq cfw:org-agenda-schedule-args '(:timestamp))
+(global-set-key (kbd "C-x C-a") 'cfw:open-org-calendar)
 ~~~
 
-- `M-x cfw:open-org-calendar` to open the calendar
+- `M-x cfw:open-org-calendar` or the new `C-x C-a` to open the calendar
 - `r` to refresh
 - `TAB` to navigate to items within a day.
 - `t` today
@@ -259,6 +260,7 @@ For a view of the habit and how well they are followed, I added to my `.emacs`:
 ~~~lisp
 (add-to-list 'org-modules 'org-habit)
 (require 'org-habit)
+(set 'org-habit-show-all-today t)
 ;; (setq org-habit-show-all-today t
 ;;       org-habit-show-habits-only-for-today t
 ;;       org-habit-show-done-always-green t
@@ -323,7 +325,9 @@ I either want to know the tasks and events for the day, or just the events for t
 
 - (c) Today's agenda and un-scheduled tasks.
 - (w) Events for the upcoming week.
+- (W) Events for the upcoming 4 weeks.
 - (y) Events for the upcoming year (recurrent events and birthdays excluded).
+- (h) Habit tracker.
 
 ~~~lisp
 (setq org-agenda-custom-commands
@@ -342,17 +346,6 @@ I either want to know the tasks and events for the day, or just the events for t
                     (org-agenda-overriding-header "Un-scheduled tasks:")
                     (org-agenda-block-separator nil)
                     ))
-         (agenda ""
-                  (
-                   (org-agenda-span 'day)
-                   (org-agenda-block-separator nil)
-                   (org-agenda-format-date "")
-                   (org-agenda-use-time-grid nil)
-                   (org-agenda-skip-function
-                    '(org-agenda-skip-subtree-if 'notregexp ":habit:")
-                    )
-                   (org-agenda-overriding-header "Habits:")
-                   ))
           )
          )
         ("w" "Week's events"
@@ -363,6 +356,17 @@ I either want to know the tasks and events for the day, or just the events for t
                        )
                       (org-agenda-show-all-dates nil)
                       (org-agenda-overriding-header "Week's events:")
+                      )))
+         ((org-agenda-compact-blocks t))
+         )
+        ("W" "Next 4 weeks' events"
+         ((agenda "" ((org-agenda-span 21)
+                      (org-agenda-skip-function
+                       '(or (org-agenda-skip-entry-if 'todo '("TODO" "ONGOING" "DONE"))
+                            )
+                       )
+                      (org-agenda-show-all-dates nil)
+                      (org-agenda-overriding-header "Next 4 weeks' events:")
                       )))
          ((org-agenda-compact-blocks t))
          )
@@ -379,6 +383,19 @@ I either want to know the tasks and events for the day, or just the events for t
                       )))
          ((org-agenda-compact-blocks t))
          )
+        ("h" "Habits"
+         ((agenda ""
+                  (
+                   (org-agenda-block-separator nil)
+                   (org-agenda-format-date "")
+                   (org-agenda-use-time-grid nil)
+                   (org-agenda-skip-function
+                    '(org-agenda-skip-subtree-if 'notregexp ":habit:")
+                    )
+                   (org-agenda-overriding-header "Habits:")
+                   ))
+          )
+         )
         )
       )
 ~~~
@@ -392,12 +409,14 @@ I added in my `.emacs`:
 ~~~lisp
 ;; Prefix tasks with parent heading
 (defun getlasthead ()
-  (let ((x (nth 0 (last (org-get-outline-path)))))
-    (if x
-	(if (> (string-width x) 12)
-	    (concat "[" (org-format-outline-path (list (substring x 0 12))) "]")
-	  (concat "[" (org-format-outline-path (list x)) "]"))
-      "")))
+  (if (eq major-mode 'org-mode)
+      (let ((x (nth 0 (last (org-get-outline-path)))))
+        (if x
+            (if (> (string-width x) 12)
+                (concat "[" (org-format-outline-path (list (substring x 0 12))) "]")
+              (concat "[" (org-format-outline-path (list x)) "]"))
+          ""))
+    ""))
 (setq org-agenda-prefix-format " %i %-15(getlasthead)%?-12t% s ")
 ~~~
 

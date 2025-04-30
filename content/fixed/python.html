@@ -10,44 +10,56 @@ output:
 
 <div id="TOC">
 <ul>
-<li><a href="#inputoutput">Input/Output</a></li>
-<li><a href="#passing-arguments-to-a-script">Passing arguments to a script</a></li>
-<li><a href="#objects">Objects</a>
+<li><a href="#virtual-environments" id="toc-virtual-environments">Virtual environments</a></li>
+<li><a href="#inputoutput" id="toc-inputoutput">Input/Output</a></li>
+<li><a href="#passing-arguments-to-a-script" id="toc-passing-arguments-to-a-script">Passing arguments to a script</a></li>
+<li><a href="#objects" id="toc-objects">Objects</a>
 <ul>
-<li><a href="#arraylists">Array/lists</a></li>
-<li><a href="#hash">Hash</a></li>
-<li><a href="#set">Set</a></li>
-<li><a href="#class">Class</a></li>
-<li><a href="#string">String</a></li>
-<li><a href="#function">Function</a></li>
-<li><a href="#data-frame-pandas">Data frame (pandas)</a></li>
+<li><a href="#arraylists" id="toc-arraylists">Array/lists</a></li>
+<li><a href="#hash" id="toc-hash">Hash</a></li>
+<li><a href="#set" id="toc-set">Set</a></li>
+<li><a href="#class" id="toc-class">Class</a></li>
+<li><a href="#string" id="toc-string">String</a></li>
+<li><a href="#function" id="toc-function">Function</a></li>
+<li><a href="#data-frame-pandas" id="toc-data-frame-pandas">Data frame (pandas)</a></li>
 </ul></li>
-<li><a href="#multi-threading">Multi-threading</a></li>
-<li><a href="#naming-and-formatting">Naming and formatting</a></li>
-<li><a href="#module-files-imports">Module, files, imports</a>
+<li><a href="#multi-threading" id="toc-multi-threading">Multi-threading</a></li>
+<li><a href="#naming-and-formatting" id="toc-naming-and-formatting">Naming and formatting</a></li>
+<li><a href="#module-files-imports" id="toc-module-files-imports">Module, files, imports</a>
 <ul>
-<li><a href="#packaging-code">Packaging code</a></li>
-<li><a href="#install-a-module-locally">Install a module locally</a></li>
+<li><a href="#packaging-code" id="toc-packaging-code">Packaging code</a></li>
+<li><a href="#install-a-module-locally" id="toc-install-a-module-locally">Install a module locally</a></li>
 </ul></li>
-<li><a href="#graphs">Graphs</a></li>
-<li><a href="#shell-integration">Shell integration</a>
+<li><a href="#graphs" id="toc-graphs">Graphs</a></li>
+<li><a href="#shell-integration" id="toc-shell-integration">Shell integration</a>
 <ul>
-<li><a href="#run-commands-with-subprocess">Run commands with <span><em>subprocess</em></span></a></li>
+<li><a href="#run-commands-with-subprocess" id="toc-run-commands-with-subprocess">Run commands with <em>subprocess</em></a></li>
 </ul></li>
-<li><a href="#resource-monitoring">Resource monitoring</a></li>
-<li><a href="#bioinfo">Bioinfo</a>
+<li><a href="#resource-monitoring" id="toc-resource-monitoring">Resource monitoring</a></li>
+<li><a href="#bioinfo" id="toc-bioinfo">Bioinfo</a>
 <ul>
-<li><a href="#sequences">Sequences</a></li>
-<li><a href="#fasta">Fasta</a></li>
-<li><a href="#sam-files">SAM files</a></li>
-<li><a href="#vcf">VCF</a></li>
+<li><a href="#sequences" id="toc-sequences">Sequences</a></li>
+<li><a href="#fasta" id="toc-fasta">Fasta</a></li>
+<li><a href="#sam-files" id="toc-sam-files">SAM files</a></li>
+<li><a href="#vcf" id="toc-vcf">VCF</a></li>
 </ul></li>
-<li><a href="#tricks">Tricks</a></li>
-<li><a href="#jupyter-notebooks">Jupyter notebooks</a></li>
+<li><a href="#tricks" id="toc-tricks">Tricks</a></li>
+<li><a href="#jupyter-notebooks" id="toc-jupyter-notebooks">Jupyter notebooks</a></li>
 </ul>
 </div>
 
 <p>Some notes on my recent attempt to learn Python.</p>
+<div id="virtual-environments" class="section level2">
+<h2>Virtual environments</h2>
+<pre class="sh"><code>## create env
+python3 -m venv myenv
+## activate
+source myenv/bin/activate
+## install more packages
+pip3 install ...
+## deactivate
+deactivate</code></pre>
+</div>
 <div id="inputoutput" class="section level2">
 <h2>Input/Output</h2>
 <p>To read the standard input:</p>

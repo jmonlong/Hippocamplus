@@ -72,6 +72,7 @@ Windows:
 - `C-x 2` split window horizontally.
 - `C-x 3` split window vertically.
 - `C-x +` balance windows.
+- `C-x o` move to the next window.
 
 ### Kill ring
 
@@ -137,6 +138,20 @@ I put this function and key binding in my `.emacs`:
 
 It splits the buffer in two and reduce the bottom buffer by 15 lines resulting in a large and a small buffer for example for a script and the console.
 
+### Move between left/right windows
+
+I've been moving between windows using `C-x o`.
+A quicker way could be to use a keybinding, like `Super-Alt left/right`:
+
+~~~lisp
+;; move between left-right buffers using Super-Alt left/right
+(use-package windmove
+  :ensure nil
+  :bind*
+  (("M-s-<left>" . windmove-left)
+   ("M-s-<right>" . windmove-right)))
+~~~
+
 ## MELPA package repository
 
 Usually packages are just `.el` files to download and add in the folder defined in `.emacs` (e.g. `(add-to-list 'load-path "~/.emacs.d/lisp/")`). 
@@ -178,6 +193,26 @@ I've also created some keybindings to switch between light and dark themes:
   (interactive)
   (load-theme 'sanityinc-solarized-dark t))
 (global-set-key (kbd "C-c b d") 'darken)
+~~~
+
+## Keybindings to change font size
+
+I like to quickly change the font size of all buffers to adapt to the screen size (e.g. laptop vs external scree).
+I've added those keybindings in my `.emacs`: 
+
+~~~list
+(defun largeFonts ()
+  (interactive)
+  (set-frame-font "DejaVu Sans Mono 14" nil t))
+(global-set-key (kbd "C-c l") 'largeFonts)
+(defun hugeFonts ()
+  (interactive)
+  (set-frame-font "DejaVu Sans Mono 16" nil t))
+(global-set-key (kbd "C-c h") 'hugeFonts)
+(defun smallFonts ()
+  (interactive)
+  (set-frame-font "DejaVu Sans Mono 12" nil t))
+(global-set-key (kbd "C-c s") 'smallFonts)
 ~~~
 
 ## For R
@@ -266,6 +301,7 @@ I added this to my `.emacs`:
 (require 'poly-R)
 (require 'poly-markdown)
 (add-to-list 'auto-mode-alist '("\\.Rmd\\'" . poly-markdown+r-mode))
+(add-to-list 'auto-mode-alist '("\\.qmd\\'" . poly-markdown+r-mode))
 ~~~
 
 ### Custom keyboard shortcuts
@@ -283,7 +319,7 @@ In `.emacs`:
   (interactive)
   (save-window-excursion
     (message "Rendering %S" (buffer-file-name))
-    (shell-command (format "Rscript -e 'rmarkdown::render(%S)'" (buffer-file-name)))
+    (shell-command (format "Rscript -e 'rmarkdown::render(%S, output_format=\"all\")'" (buffer-file-name)))
     (message "Done")))
 (add-hook 'markdown-mode-hook
           (lambda ()
@@ -291,9 +327,12 @@ In `.emacs`:
 (add-hook 'ess-mode-hook
           (lambda ()
             (local-set-key (kbd "C-c C-e") 'renderRmd)))
+(add-hook 'yaml-mode-hook
+          (lambda ()
+            (local-set-key (kbd "C-c C-e") 'renderRmd)))
 ~~~
 
-The key binding is active in markdown documents or R scripts (and so anywhere in a R-Markdown document).
+The key binding is active in markdown documents, R scripts, and YAML blocks (to covert all elements in a R-Markdown document).
 
 #### To send a `dev.off()`
 
@@ -411,6 +450,23 @@ Then:
 - `M-x langtool-check-done` to remove highlighting.
 - `M-x langtool-switch-default-language` to switch to another language, e.g. `fr`
 
+### Word count
+
+In general, I use the `M-=` keybindings.
+Otherwise, I've implemented a small function to insert the number of words and characters below the selected region on which it is run.
+
+~~~lisp
+(defun count-words-insert (start end)
+  (interactive "r")
+  (let (wordCount)
+      (save-restriction
+        (narrow-to-region start end)
+        (goto-char (point-min))
+        (setq wordCount (count-matches "\\sw+"))
+        (goto-char (point-max))
+        (insert (format "\n(%d characters, %d words)\n" (- end start) wordCount)))))
+~~~
+
 ## For LaTeX
 
 I put some Emacs tricks (e.g. for table manipulation) on the [LaTeX page](https://jmonlong.github.io/Hippocamplus/latex).
@@ -520,7 +576,7 @@ Keybindings that I use:
 - `C-c C-n` go to next flymake error (previous with *p*).
 - `C-c C-e` edit all occurrences of symbol on point for refactoring (narrow if needed).
 
-Of note, I use the Jupyter console instead of the default interpreter. 
+Of note, I *used to* use the Jupyter console instead of the default interpreter. 
 So `pip install jupyter` and in my `.emacs`:
 
 ~~~lisp
@@ -579,6 +635,17 @@ Useful shortcuts:
 
 List occurrences of current word in the buffer.
 
+
+## For Javascript
+
+Set indentation and turn on for *.mjs* files.
+
+~~~lisp
+(setq js-indent-level 2)
+(add-to-list 'auto-mode-alist '("\\.mjs\\'" . javascript-mode))
+
+~~~
+
 ## For Shell
 
 To open a *shell* buffer, type `M-x shell`.
@@ -598,6 +665,15 @@ Then I use the [*Emacs Speaks SHELL*](http://www.emacswiki.org/emacs/essh) packa
 ~~~
 
 The shortcuts are self-explanatory.
+
+
+## For Snakemake workflows
+
+I've just switched the dedicated mode on all files starting with *Snakefile*.
+
+~~~lisp
+(add-to-list 'auto-mode-alist '("Snakefile*" . snakemake-mode))
+~~~
 
 ## For WDL workflows
 

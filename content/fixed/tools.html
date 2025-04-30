@@ -10,20 +10,20 @@ output:
 
 <div id="TOC">
 <ul>
-<li><a href="#git">Git</a></li>
-<li><a href="#snakemake">Snakemake</a></li>
-<li><a href="#bcftools">bcftools</a></li>
-<li><a href="#jq">jq</a></li>
-<li><a href="#vd">vd</a></li>
-<li><a href="#rsync">rsync</a></li>
-<li><a href="#docker">Docker</a></li>
-<li><a href="#wdl">WDL</a></li>
-<li><a href="#makefile">Makefile</a></li>
-<li><a href="#ftp">FTP</a></li>
-<li><a href="#for-file-conversion">For file conversion</a>
+<li><a href="#git" id="toc-git">Git</a></li>
+<li><a href="#snakemake" id="toc-snakemake">Snakemake</a></li>
+<li><a href="#bcftools" id="toc-bcftools">bcftools</a></li>
+<li><a href="#jq" id="toc-jq">jq</a></li>
+<li><a href="#vd" id="toc-vd">vd</a></li>
+<li><a href="#rsync" id="toc-rsync">rsync</a></li>
+<li><a href="#docker" id="toc-docker">Docker</a></li>
+<li><a href="#wdl" id="toc-wdl">WDL</a></li>
+<li><a href="#makefile" id="toc-makefile">Makefile</a></li>
+<li><a href="#ftp" id="toc-ftp">FTP</a></li>
+<li><a href="#for-file-conversion" id="toc-for-file-conversion">For file conversion</a>
 <ul>
-<li><a href="#misc">Misc</a></li>
-<li><a href="#pdf">PDF</a></li>
+<li><a href="#misc" id="toc-misc">Misc</a></li>
+<li><a href="#pdf" id="toc-pdf">PDF</a></li>
 </ul></li>
 </ul>
 </div>
@@ -339,6 +339,7 @@ command -f ~{write_lines(in_vcf_list)}
 <li>SVG to PDF: <code>inkscape --file=in.svg --export-area-drawing --without-gui --export-pdf=out.pdf</code></li>
 <li>Video to mp3: <code>ffmpeg -i in.m4a -acodec mp3 -ac 2 -ab 192k out.mp3</code></li>
 <li>HTML page to PDF: <code>pandoc -o out.pdf --include-in-header h.tex URL</code> where <em>h.tex</em> could contain LaTeX packages declarations like <code>\usepackage{fullpage}</code>.</li>
+<li>Docx to PDF: <code>pandoc -o out.pdf --pdf-engine=weasyprint in.docx</code> with <a href="https://doc.courtbouillon.org/weasyprint/stable/first_steps.html#installation">WeasyPrint (installable through <code>pip</code></a></li>
 </ul>
 </div>
 <div id="pdf" class="section level3">
