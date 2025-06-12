@@ -194,33 +194,25 @@ Since very recently (~Nov 2019) another step is necessary:
 
 Mostly following [this blog post](https://ikashnitsky.github.io/2019/zotero/).
 
-In the general settings of Zotero I also specify the Google Drive folder as *base directory* and swich off the *Sync full-text content*.
+In the general settings of Zotero I also specify the Google Drive/Syncthing folder as *base directory*. 
+When I setup syncing with my account, I swich off the *Sync full-text content* and all the *File Syncing* options because I'll be using my own storage/syncing option.
 
-Then using the [Zotfile](http://zotfile.com/) plugins to make sure the PDF files are consistent between computers.
-The configuration I use is:
-
-- Pointing at the folder synced with the Cloud (see below), with subfolders by authors `/%a`.
-- Changing to lower case and replacing blanks in file names.
-
->
-ZotFile doesn't work with Zotero 7. 
-Instead, I now use [ZotMoov](https://github.com/wileyyugioh/zotmoov) to move attached files to a custom directory (with custom subfolders too).
+In previous versions of Zotero, I used [Zotfile](http://zotfile.com/) but it currently doesn't work with Zotero 7.
+Instead, I now use [ZotMoov](https://github.com/wileyyugioh/zotmoov) to move attached files to a custom directory (with custom subfolders too using `{%a}` as the *Subdirectory String*).
 And file renaming can be done with Zotero 7 now.
->
+I use `{{ firstCreator suffix="_" case="snake" }}{{ year suffix="_" }}{{ title truncate="100" case="snake" }}` to specify the file name (i.e lowercase with words separated by `_`).
 
-For the [Better BibTeX plugin](https://retorque.re/zotero-better-bibtex/), the most important setting is the citation key style: `[auth:lower][year][journal:lower:abbr]`.
+For the [Better BibTeX plugin](https://retorque.re/zotero-better-bibtex/), the most important setting is the citation key style: `[auth:lower][year][journal:lower:abbr]`, or `auth.lower + year + journal.lower.abbr`.
 
 I still haven't found a perfect way to **synchronize my library with my Android tablet**.
 Currently, I store the PDFs on Nextcloud (2 Gb free tier, see above), and then:
 
 1. Annotate the PDFs with [Xodo](https://play.google.com/store/apps/details?id=com.xodo.pdf.reader&gl=US&pli=1).
 3. Synchronize the PDFs with:
+   - When I have my computer around, I launch Syncthing on both for a much faster process (see above).
    - When it doesn't crash (which is rare), the Nextcloud app on Android is fast and ideal. 
    - When I don't have my computer around, the fallback app ias [FolderSync](https://play.google.com/store/apps/details?id=dk.tacit.android.foldersync.lite&hl=en_US) which can be set up for Nextcloud. It works but takes a lot of time (>20m) checking each PDF.
-   - When I have my computer around, I launch Syncthing on both for a much faster process (see above).
 2. Browse the library using [ZotDroid](https://play.google.com/store/apps/details?id=computer.benjamin.zotdr0id&hl=en_US), or [Library](https://play.google.com/store/apps/details?id=com.cgogolin.library&hl=en_US&gl=US) (to search my library's BibTeX file which is synced with the PDFs). None of those work that well. I organize my reading list in Orgmode so I don't usually need this anyway.
-
-*Work in progress. I might realize that this was a bad idea later.*
 
 ### [DEPRECATED] Before: sync PDFs between Mendeley and Google Drive
 
