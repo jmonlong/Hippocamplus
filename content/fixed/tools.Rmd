@@ -156,6 +156,12 @@ bcftools view -c 1 -s SAMPLENAME input.vcf.gz
 bcftools +fill-tags input.vcf.gz -Oz -o output.vcf.gz --threads 4 -- -t AN,AC,AF
 ```
 
+#### Filter by allele size
+
+```
+bcftools view -i "STRLEN(REF)<30 & MAX(STRLEN(ALT))<30" input.vcf
+```
+
 ## jq
 
 [Lesson at programminghistorian.org](https://programminghistorian.org/en/lessons/json-and-jq)
@@ -189,6 +195,12 @@ Keybindings:
 - `.` toggle dot plot. 
     - Make sure to set a column as numeric with `#`. 
     - Eventually select x-axis or labels with `!` first.
+
+To keep the same color palette/theme as my terminal, I set the theme to `asciimono` in my `~/.visidatarc` (see [manual](https://jsvine.github.io/intro-to-visidata/advanced/configuring-visidata/#the-visidatarc-file)):
+
+```txt
+options.theme = "asciimono"
+```
 
 ## rsync
 
@@ -349,6 +361,23 @@ Basic commands:
 - `delete` to remove a file in the remote location
 - `lcd` to change directory in the local machine
 - `help` to list FTP commands
+
+
+## Thunderbird
+
+- Force a better date format: `Settings`, `General`, `Config Editor` (at the bottom), Set *intl.date_time.pattern_override.date_short* to a string `yyyy-MM-dd`.
+- Langtool extension for spell checking.
+- Shorcuts
+    - Archive message: `A`
+    - New message: `Ctrl+N`
+    - Add attachment: `Ctrl+Shift+A`
+    - Send message: `Ctrl+Enter`
+    - Reply: `Ctrl+R` or `Ctrl+Shift+R`
+    - Forward: `Ctrl+L`
+    - Expand/collapse threads: `Left`/`Right`
+    - Search all message: `Ctrl+K`
+    - Advanced search: `Ctrl+Shift+F`
+    - Go to previous/next message: `B`/`F`
 
 ## For file conversion
 

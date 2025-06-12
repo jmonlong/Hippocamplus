@@ -801,6 +801,14 @@ Magit configuration in my `.emacs`:
 
 Encryption is integrated directly. Just add the extension `.gpg` to a file.
 
+
+## Snippets
+
+I'm trying to use [YASnippet](https://joaotavora.github.io/yasnippet/).
+
+- [Examples of snippets](https://github.com/AndreaCrotti/yasnippet-snippets/tree/master/snippets)
+
+
 ## On HPCs
 
 - See how to setup GNU screen to avoid visual glitches in the [Shell section](../shell/#gnu-screen).
