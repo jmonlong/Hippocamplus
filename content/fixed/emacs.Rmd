@@ -587,6 +587,9 @@ So `pip install jupyter` and in my `.emacs`:
              "jupyter")
 ~~~
 
+Sometimes I get errors like `elpy-promise-reject: peculiar error: "exited abnormally with code 1"` when working within a virtual environment.
+To fix them, I run `M-x elpy-rpc-reinstall-virtualenv`.
+
 ### Send commands to a specific buffer
 
 Sometimes I want to send the commands to a specific buffer. For example, when testing new packages within a Docker container, I start a *shell* buffer, run docker and python.
@@ -807,7 +810,24 @@ Encryption is integrated directly. Just add the extension `.gpg` to a file.
 I'm trying to use [YASnippet](https://joaotavora.github.io/yasnippet/).
 
 - [Examples of snippets](https://github.com/AndreaCrotti/yasnippet-snippets/tree/master/snippets)
+- Type a word and expand snippet with `C-c y`
 
+For example, type `columns` then `C-c y` in LaTeX mode to expand : 
+
+```
+# -*- mode: snippet -*-
+# name: columns
+# key: columns
+# --
+\begin{columns}
+  \begin{columns}{${1:.5}\textwidth}
+    
+  \end{columns}
+  \begin{columns}{${2:.5}\textwidth}
+    
+  \end{columns}
+\end{columns}
+```
 
 ## On HPCs
 
