@@ -188,9 +188,11 @@ Keybindings:
 - Select rows and filter:
 	- `|` select by regexp in current column
 	- `,` select rows matching current cell in current column
+    - `z|` select by Python expression
 	- `z"` copy selected rows to new sheet
 - `F` toggle a frequency table/histogram of the current column.
     - `Enter` to focus on a subset defined by a row in frequency table.
+    - Enable binning of the values (and decide the bin size) in the Options sheet (`O`)
 - `I` toggle Describe sheet with summary statistics for each column.
 - `.` toggle dot plot. 
     - Make sure to set a column as numeric with `#`. 
