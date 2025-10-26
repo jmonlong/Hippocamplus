@@ -20,9 +20,11 @@ output:
 <li><a href="#wdl" id="toc-wdl">WDL</a></li>
 <li><a href="#makefile" id="toc-makefile">Makefile</a></li>
 <li><a href="#ftp" id="toc-ftp">FTP</a></li>
+<li><a href="#thunderbird" id="toc-thunderbird">Thunderbird</a></li>
 <li><a href="#for-file-conversion" id="toc-for-file-conversion">For file conversion</a>
 <ul>
 <li><a href="#misc" id="toc-misc">Misc</a></li>
+<li><a href="#video-conversion-with-ffmpeg" id="toc-video-conversion-with-ffmpeg">Video conversion with ffmpeg</a></li>
 <li><a href="#pdf" id="toc-pdf">PDF</a></li>
 </ul></li>
 </ul>
@@ -156,6 +158,10 @@ bcftools reheader -s temp.txt input.vcf.gz &gt; output.vcf.gz</code></pre>
 <h4>Add AN,AC,AF to the INFO</h4>
 <pre><code>bcftools +fill-tags input.vcf.gz -Oz -o output.vcf.gz --threads 4 -- -t AN,AC,AF</code></pre>
 </div>
+<div id="filter-by-allele-size" class="section level4">
+<h4>Filter by allele size</h4>
+<pre><code>bcftools view -i &quot;STRLEN(REF)&lt;30 &amp; MAX(STRLEN(ALT))&lt;30&quot; input.vcf</code></pre>
+</div>
 </div>
 <div id="jq" class="section level2">
 <h2>jq</h2>
@@ -184,11 +190,13 @@ It’s great to format wide columns but also to quickly explore summary stats of
 <ul>
 <li><code>|</code> select by regexp in current column</li>
 <li><code>,</code> select rows matching current cell in current column</li>
+<li><code>z|</code> select by Python expression</li>
 <li><code>z"</code> copy selected rows to new sheet</li>
 </ul></li>
 <li><code>F</code> toggle a frequency table/histogram of the current column.
 <ul>
 <li><code>Enter</code> to focus on a subset defined by a row in frequency table.</li>
+<li>Enable binning of the values (and decide the bin size) in the Options sheet (<code>O</code>)</li>
 </ul></li>
 <li><code>I</code> toggle Describe sheet with summary statistics for each column.</li>
 <li><code>.</code> toggle dot plot.
@@ -197,6 +205,8 @@ It’s great to format wide columns but also to quickly explore summary stats of
 <li>Eventually select x-axis or labels with <code>!</code> first.</li>
 </ul></li>
 </ul>
+<p>To keep the same color palette/theme as my terminal, I set the theme to <code>asciimono</code> in my <code>~/.visidatarc</code> (see <a href="https://jsvine.github.io/intro-to-visidata/advanced/configuring-visidata/#the-visidatarc-file">manual</a>):</p>
+<pre class="txt"><code>options.theme = &quot;asciimono&quot;</code></pre>
 </div>
 <div id="rsync" class="section level2">
 <h2>rsync</h2>
@@ -331,16 +341,51 @@ command -f ~{write_lines(in_vcf_list)}
 <li><code>help</code> to list FTP commands</li>
 </ul>
 </div>
+<div id="thunderbird" class="section level2">
+<h2>Thunderbird</h2>
+<ul>
+<li>Force a better date format: <code>Settings</code>, <code>General</code>, <code>Config Editor</code> (at the bottom), Set <em>intl.date_time.pattern_override.date_short</em> to a string <code>yyyy-MM-dd</code>.</li>
+<li>Langtool extension for spell checking.</li>
+<li>Shorcuts
+<ul>
+<li>Archive message: <code>A</code></li>
+<li>New message: <code>Ctrl+N</code></li>
+<li>Add attachment: <code>Ctrl+Shift+A</code></li>
+<li>Send message: <code>Ctrl+Enter</code></li>
+<li>Reply: <code>Ctrl+R</code> or <code>Ctrl+Shift+R</code></li>
+<li>Forward: <code>Ctrl+L</code></li>
+<li>Expand/collapse threads: <code>Left</code>/<code>Right</code></li>
+<li>Search all message: <code>Ctrl+K</code></li>
+<li>Advanced search: <code>Ctrl+Shift+F</code></li>
+<li>Go to previous/next message: <code>B</code>/<code>F</code></li>
+</ul></li>
+</ul>
+</div>
 <div id="for-file-conversion" class="section level2">
 <h2>For file conversion</h2>
 <div id="misc" class="section level3">
 <h3>Misc</h3>
 <ul>
 <li>SVG to PDF: <code>inkscape --file=in.svg --export-area-drawing --without-gui --export-pdf=out.pdf</code></li>
-<li>Video to mp3: <code>ffmpeg -i in.m4a -acodec mp3 -ac 2 -ab 192k out.mp3</code></li>
 <li>HTML page to PDF: <code>pandoc -o out.pdf --include-in-header h.tex URL</code> where <em>h.tex</em> could contain LaTeX packages declarations like <code>\usepackage{fullpage}</code>.</li>
 <li>Docx to PDF: <code>pandoc -o out.pdf --pdf-engine=weasyprint in.docx</code> with <a href="https://doc.courtbouillon.org/weasyprint/stable/first_steps.html#installation">WeasyPrint (installable through <code>pip</code></a></li>
 </ul>
+</div>
+<div id="video-conversion-with-ffmpeg" class="section level3">
+<h3>Video conversion with ffmpeg</h3>
+<div id="video-to-mp3" class="section level5">
+<h5>Video to mp3:</h5>
+<pre><code>ffmpeg -i in.m4a -acodec mp3 -ac 2 -ab 192k out.mp3</code></pre>
+</div>
+<div id="lower-video-resolution" class="section level5">
+<h5>Lower video resolution</h5>
+<p>For example to avoid my tablet to lag.</p>
+<pre class="bash"><code>ffmpeg -y -i large.mkv -vf &quot;scale=-1:720&quot; -c:v libx264 -crf 23 smaller.mkv</code></pre>
+<ul>
+<li>Change <code>720</code> to the desired resolution</li>
+<li>Increase the <code>-crf</code> value for smaller file size (and video quality).</li>
+</ul>
+</div>
 </div>
 <div id="pdf" class="section level3">
 <h3>PDF</h3>

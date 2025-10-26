@@ -386,9 +386,28 @@ Basic commands:
 ### Misc
 
 - SVG to PDF: `inkscape --file=in.svg --export-area-drawing --without-gui --export-pdf=out.pdf`
-- Video to mp3: `ffmpeg -i in.m4a -acodec mp3 -ac 2 -ab 192k out.mp3`
 - HTML page to PDF: `pandoc -o out.pdf --include-in-header h.tex URL` where *h.tex* could contain LaTeX packages declarations like `\usepackage{fullpage}`.
 - Docx to PDF: `pandoc -o out.pdf --pdf-engine=weasyprint in.docx` with [WeasyPrint (installable through `pip`](https://doc.courtbouillon.org/weasyprint/stable/first_steps.html#installation)
+
+### Video conversion with ffmpeg
+
+##### Video to mp3:
+
+```
+ffmpeg -i in.m4a -acodec mp3 -ac 2 -ab 192k out.mp3
+```
+
+##### Lower video resolution
+
+For example to avoid my tablet to lag.
+
+```bash
+ffmpeg -y -i large.mkv -vf "scale=-1:720" -c:v libx264 -crf 23 smaller.mkv
+```
+
+- Change `720` to the desired resolution
+- Increase the `-crf` value for smaller file size (and video quality).
+
 
 ### PDF 
 
