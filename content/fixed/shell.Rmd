@@ -35,8 +35,8 @@ term screen-256color
 
 ## `.bashrc` aliases
 
-- `alias terml='gnome-terminal --tab-with-profile="Sol Light"'` to open a new terminal with light theme.
-- `alias termd='gnome-terminal --tab-with-profile="Sol Dark"'` same with dark theme.
+- `alias terml='gnome-terminal --tab-with-profile="Sol Light" && exit'` to open a new terminal with light theme (and close the current one).
+- `alias termd='gnome-terminal --tab-with-profile="Sol Dark" && exit'` same with dark theme (and close the current one).
 - `alias rf='ls -t | head -1'` to quickly get the most recent file. Then for example `` less `rf` `` to look at the latest file.
 - `alias evincel='ls -t --quoting-style=shell *.pdf | head -1 | xargs evince'` opens the latest PDF document
 - `alias R='R --no-save --no-restore'` to avoid R asking about saving the history.

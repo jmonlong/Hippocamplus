@@ -302,6 +302,7 @@
 </ul></li>
 <li><a href="#for-version-control" id="toc-for-version-control">For Version Control</a></li>
 <li><a href="#file-encryption" id="toc-file-encryption">File encryption</a></li>
+<li><a href="#snippets" id="toc-snippets">Snippets</a></li>
 <li><a href="#on-hpcs" id="toc-on-hpcs">On HPCs</a></li>
 <li><a href="#for-online-notes" id="toc-for-online-notes">For online notes</a>
 <ul>
@@ -776,6 +777,8 @@ So <code>pip install jupyter</code> and in my <code>.emacs</code>:</p>
       python-shell-prompt-detect-failure-warning nil)
 (add-to-list &#39;python-shell-completion-native-disabled-interpreters
              &quot;jupyter&quot;)</code></pre>
+<p>Sometimes I get errors like <code>elpy-promise-reject: peculiar error: "exited abnormally with code 1"</code> when working within a virtual environment.
+To fix them, I run <code>M-x elpy-rpc-reinstall-virtualenv</code>.</p>
 </div>
 <div id="send-commands-to-a-specific-buffer" class="section level3">
 <h3>Send commands to a specific buffer</h3>
@@ -964,6 +967,27 @@ After installing <em>magit</em> using MELPA, invoke the main buffer with <code>M
 <div id="file-encryption" class="section level2">
 <h2>File encryption</h2>
 <p>Encryption is integrated directly. Just add the extension <code>.gpg</code> to a file.</p>
+</div>
+<div id="snippets" class="section level2">
+<h2>Snippets</h2>
+<p>I’m trying to use <a href="https://joaotavora.github.io/yasnippet/">YASnippet</a>.</p>
+<ul>
+<li><a href="https://github.com/AndreaCrotti/yasnippet-snippets/tree/master/snippets">Examples of snippets</a></li>
+<li>Type a word and expand snippet with <code>C-c y</code></li>
+</ul>
+<p>For example, type <code>columns</code> then <code>C-c y</code> in LaTeX mode to expand :</p>
+<pre><code># -*- mode: snippet -*-
+# name: columns
+# key: columns
+# --
+\begin{columns}
+  \begin{columns}{${1:.5}\textwidth}
+    
+  \end{columns}
+  \begin{columns}{${2:.5}\textwidth}
+    
+  \end{columns}
+\end{columns}</code></pre>
 </div>
 <div id="on-hpcs" class="section level2">
 <h2>On HPCs</h2>

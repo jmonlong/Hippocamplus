@@ -11,6 +11,7 @@ output:
 
 - [https://www.diagrams.net/](https://www.diagrams.net/) to make cartoon and diagrams (used to be *draw.io*)
 - [MS Paint Online](https://jspaint.app/)
+- https://excalidraw.com/
 
 ## Password manager
 
