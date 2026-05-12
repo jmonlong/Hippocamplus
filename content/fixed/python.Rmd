@@ -7,7 +7,10 @@ output:
     toc: true
 ---
 
-Some notes on my recent attempt to learn Python.
+I'm trying to follow the PEP style guide/recommendations: 
+
+- [PEP 8: Style Guide for Python Code](https://peps.python.org/pep-0008/)
+- [PEP 257: Docstring Conventions](https://peps.python.org/pep-0257/)
 
 ## Virtual environments
 
@@ -581,6 +584,7 @@ The fields are accessed through:
 + `quit()` to stop a program.
 + `myVar is None` to test if a variable is *None*.
 + Print the working directory with `os.getcwd()` (after importing *os*).
+    + Change directory with `os.chdir('PATH')`.
 + To get a ~19 digit-long hash of a string: `hash(my_very_long_id)`.
 
 When filling a nested dictionary, it's painful to always test if the key exists before updating it's value. One trick is to use `try`/`except`. It's not that much quicker but it looks fancier so you forget about the *pain*:

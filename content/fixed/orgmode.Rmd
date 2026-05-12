@@ -7,8 +7,9 @@ output:
     toc: true
 ---
 
-I'm giving [Org mode](https://orgmode.org/) a try.
-This page will contain my configuration and the small subset of commands that I want to learn.
+I'm using [Org mode](https://orgmode.org/) to keep track of why I need to do and have done.
+It's pretty much my work+life lab notebook and agenda.
+This page has information about my configuration and the set of commands that I use.
 
 - [Org Manual](https://orgmode.org/manual/)
 - [Org Mode - Organize Your Life In Plain Text!](http://doc.norang.ca/org-mode.html)

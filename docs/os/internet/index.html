@@ -252,6 +252,7 @@
 <li><a href="#french-accents-in-gnome-ubuntu" id="toc-french-accents-in-gnome-ubuntu">(French) Accents in Gnome Ubuntu</a></li>
 <li><a href="#change-the-ctrl-.-binding-in-ubuntu-22.04" id="toc-change-the-ctrl-.-binding-in-ubuntu-22.04">Change the <code>CTRL-.</code> binding in Ubuntu 22.04</a></li>
 <li><a href="#update-the-snap-store" id="toc-update-the-snap-store">Update the snap-store</a></li>
+<li><a href="#update-the-nvidia-drivers" id="toc-update-the-nvidia-drivers">Update the NVIDIA drivers</a></li>
 </ul></li>
 <li><a href="#install-a-specificolder-r-version" id="toc-install-a-specificolder-r-version">Install a specific/older R version</a></li>
 <li><a href="#sync-a-specific-folder-on-ubuntu" id="toc-sync-a-specific-folder-on-ubuntu">Sync a specific folder on Ubuntu</a>
@@ -266,6 +267,10 @@
 </ul></li>
 <li><a href="#dowload-files-from-dropbox" id="toc-dowload-files-from-dropbox">Dowload files from Dropbox</a></li>
 <li><a href="#record-a-webradio-stream-with-vlc" id="toc-record-a-webradio-stream-with-vlc">Record a webradio stream with VLC</a></li>
+<li><a href="#androidphone" id="toc-androidphone">Android/Phone</a>
+<ul>
+<li><a href="#rss-feed" id="toc-rss-feed">RSS feed</a></li>
+</ul></li>
 </ul>
 </div>
 
@@ -362,6 +367,11 @@ I get messages like <em>Pending update of “snap-store” snap</em>, but then g
 <pre class="sh"><code>snap-store --quit
 sudo snap refresh snap-store</code></pre>
 </div>
+<div id="update-the-nvidia-drivers" class="section level3">
+<h3>Update the NVIDIA drivers</h3>
+<p>This command usually works and fixed several issues (including boot errors…):</p>
+<pre class="sh"><code>sudo ubuntu-drivers install</code></pre>
+</div>
 </div>
 <div id="install-a-specificolder-r-version" class="section level2">
 <h2>Install a specific/older R version</h2>
@@ -397,7 +407,7 @@ I use it to synchronize the articles I read and annotate between my tablet and c
 <p>On Ubuntu, I run it using Docker with:</p>
 <pre class="sh"><code>docker run --network=host -v `pwd`:/var/syncthing --hostname=my-syncthing syncthing/syncthing:latest</code></pre>
 <p>The GUI can then be openened in the browser, by default at <a href="http://127.0.0.1:8384/" class="uri">http://127.0.0.1:8384/</a>.</p>
-<p>The Syncthing Androids app is available on <a href="https://f-droid.org/en/packages/com.nutomic.syncthingandroid/">F-Droid</a> and <a href="https://play.google.com/store/apps/details?id=com.nutomic.syncthingandroid">Google Play</a>.</p>
+<p>A Syncthing Android app is available on <a href="https://f-droid.org/packages/com.github.catfriend1.syncthingfork/">F-Droid</a>.</p>
 </div>
 <div id="deprecated-before-sync-a-specific-google-drive-folder-on-ubuntu" class="section level3">
 <h3>[DEPRECATED?] Before: sync a specific Google Drive folder on Ubuntu</h3>
@@ -457,6 +467,101 @@ It’s useful to host files that are used in scripts, like some of the post I ma
 <h2>Record a webradio stream with VLC</h2>
 <p><a href="https://wiki.videolan.org/Documentation:Streaming_HowTo/Receive_and_Save_a_Stream/">VLC doc</a></p>
 <pre><code>vlc -vvv http://hazel.torontocast.com:2220/stream --sout=file/ogg:classical.ogg</code></pre>
+</div>
+<div id="androidphone" class="section level2">
+<h2>Android/Phone</h2>
+<p>I’m trying <a href="https://grapheneos.org/">GrapheneOS</a>.</p>
+<p>Open-source apps/services:</p>
+<ul>
+<li>App store
+<ul>
+<li><a href="https://f-droid.org/">F-droid</a>: install from an <a href="">official release</a>. Many <a href="https://f-droid.org/en/packages/">Apps</a></li>
+<li><a href="https://obtainium.imranr.dev/">Obtainum</a>: install from website or <a href="https://f-droid.org/en/packages/dev.imranr.obtainium.fdroid/">F-droid</a>. Can follow repos’ releases (faster updates).</li>
+<li><a href="https://f-droid.org/en/packages/com.aurora.store/">Aurora Store</a>, install apps from the Google Play store without google services/account.</li>
+</ul></li>
+<li>QR code: <a href="https://f-droid.org/en/packages/de.markusfisch.android.binaryeye/">Binary Eye</a></li>
+<li>Podcast: <a href="https://antennapod.org/">AntennaPod</a> (<a href="https://f-droid.org/en/packages/de.danoeh.antennapod/">F-droid</a>) full-featured, including offline downloads.</li>
+<li>Streaming: <a href="https://newpipe.net/">NewPipe</a> stream YouTube ads-free and without an account. Recommended to use Obtainium to get latest releases faster.</li>
+<li>Media: <a href="https://www.videolan.org/vlc/download-android.html">VLC</a> (<a href="https://f-droid.org/en/packages/org.videolan.vlc/">F-droid</a>) to play webradios, music and videos.</li>
+<li>Sync:
+<ul>
+<li><a href="https://www.davx5.com/">Davx5</a> (<a href="https://f-droid.org/packages/at.bitfire.davdroid/">F-droid</a> to sync contacts/calendar. I sync with the <em>Contacts</em> application of my self-hosted Nextcloud server.</li>
+<li><a href="https://f-droid.org/packages/com.github.catfriend1.syncthingfork/">Syncthing</a> (<a href="https://github.com/researchxxl/syncthing-android">GitHub</a>). Real-time synchronization of files between devices. See section above about syncing a folder in Ubuntu.</li>
+<li><a href="https://termux.dev/en/">Termux</a> (<a href="https://f-droid.org/en/packages/com.termux/">F-droid</a>) emulates a terminal. I use it to synchronize GIT repos. <a href="https://f-droid.org/en/packages/com.termux.widget/">Termux Widgets</a> help to quickly run a command (synchronize).</li>
+</ul></li>
+<li>Feed/News: <a href="https://play.google.com/store/apps/details?id=com.seazon.feedme">FeedMe</a> (<a href="https://github.com/seazon/FeedMe">GitHub releases</a>). RSS reader set up with my self-hosted FreshRSS server. <em>Not open source?</em></li>
+<li>2FA: <a href="https://github.com/freeotp/freeotp-android">FreeOTP</a> (<a href="https://f-droid.org/en/packages/org.fedorahosted.freeotp/">F-droid</a>).</li>
+<li>Mail: <a href="https://k9mail.app/">K-9 Mail</a> (<a href="https://github.com/thunderbird/thunderbird-android/releases">GitHub</a>)</li>
+<li>Passwords: <a href="https://github.com/dkunzler/masterpassword">Master Password</a>. Passwords generated on-the-fly, not saved anywhere. Unofficial app for MasterPasswordApp/Spectr(<a href="https://js.masterpassword.app/">Online version</a>).</li>
+<li>Cloud Storage: <a href="https://nextcloud.com/">Nextcloud</a> (<a href="https://github.com/nextcloud/android/releases">GitHub releases</a>). Configured with my self-hosted Nextcloud server.</li>
+<li>Notes
+<ul>
+<li><a href="https://www.orgzly.com/">Orgzly</a> (<a href="https://github.com/orgzly/orgzly-android/releases">GitHub</a>): Notebooks in <a href="https://orgmode.org/">Org mode</a> (see my <a href="orgmode">Emacs Org-mode page</a>)</li>
+</ul></li>
+<li>Bookmarks: <a href="https://wallabag.org/">Wallabag</a> (<a href="https://github.com/wallabag/android-app/releases">GitHub</a>) Save online articles/pages. I use a self-hosted Wallabag server.</li>
+<li><a href="https://github.com/wikimedia/apps-android-wikipedia?tab=readme-ov-file">Wikipedia</a> Browse articles and save them offline.</li>
+<li>Maps:
+<ul>
+<li><a href="https://osmand.net/">OsmAnd</a> (<a href="https://f-droid.org/packages/net.osmand.plus/">F-droid</a>): Offline maps and navigation using <a href="https://www.openstreetmap.org">Open Street Map</a>.</li>
+</ul></li>
+<li>Games
+<ul>
+<li><a href="https://f-droid.org/en/packages/name.boyle.chris.sgtpuzzles/">Simon Tatham’s Puzzles</a> (<a href="https://github.com/chrisboyle/sgtpuzzles">GitHub</a>) “collection of 40 single-player logic games”. Personal favorites: <a href="https://www.chiark.greenend.org.uk/~sgtatham/puzzles/js/galaxies.html">Galaxies</a>, <a href="https://www.chiark.greenend.org.uk/~sgtatham/puzzles/js/net.html">Net</a>, <a href="https://www.chiark.greenend.org.uk/~sgtatham/puzzles/js/pearl.html">Pearl</a>, <a href="https://www.chiark.greenend.org.uk/~sgtatham/puzzles/js/map.html">Map</a>, and <a href="https://www.chiark.greenend.org.uk/~sgtatham/puzzles/js/rect.html">Rectangles</a>.</li>
+</ul></li>
+</ul>
+<div id="rss-feed" class="section level3">
+<h3>RSS feed</h3>
+<p>I use <a href="https://play.google.com/store/apps/details?id=com.seazon.feedme">FeedMe</a> (<a href="https://github.com/seazon/FeedMe">GitHub releases</a>) and have it set up with a self-hosted FreshRSS server.
+My settings are:</p>
+<ul>
+<li>Settings
+<ul>
+<li>Sync
+<ul>
+<li>Traffic: all ON</li>
+</ul></li>
+<li>Cache
+<ul>
+<li>Reading List: 1000</li>
+<li>Starred List: 1000</li>
+<li>Items to Keep: 5000</li>
+</ul></li>
+<li>Interface:
+<ul>
+<li>Auto Mark Read: ON</li>
+</ul></li>
+<li>Control
+<ul>
+<li>Volume Buttons: ON (sometimes)</li>
+<li>Swipe Right to Left: Browser</li>
+</ul></li>
+<li>Audio
+<ul>
+<li>Enable Audio: OFF</li>
+</ul></li>
+</ul></li>
+<li>Subscriptions
+<ul>
+<li>Settings (top-right)
+<ul>
+<li>Download images at sync: OFF</li>
+<li>Download web page at sync: OFF</li>
+<li>Download podcast at sync: OFF</li>
+<li>Layout: List</li>
+<li>Everythin else OFF except <em>Decode HTML</em></li>
+</ul></li>
+<li>Same settings in each subscriptions’ setting if needed</li>
+<li>View
+<ul>
+<li>Order: Oldest</li>
+<li>Layout: List</li>
+<li>Show summary: ON</li>
+<li>Show thumbnail: OFF</li>
+<li>Show feed favicon: OFF</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
 </div>
 
 </div>

@@ -116,6 +116,14 @@ snap-store --quit
 sudo snap refresh snap-store
 ~~~
 
+### Update the NVIDIA drivers
+
+This command usually works and fixed several issues (including boot errors...):
+
+~~~sh
+sudo ubuntu-drivers install
+~~~
+
 ## Install a specific/older R version
 
 R updated automatically once and I didn't want to re-install all the packages, so I temporarily switched back to the previous version with:
@@ -155,7 +163,7 @@ docker run --network=host -v `pwd`:/var/syncthing --hostname=my-syncthing syncth
 
 The GUI can then be openened in the browser, by default at http://127.0.0.1:8384/.
 
-The Syncthing Androids app is available on [F-Droid](https://f-droid.org/en/packages/com.nutomic.syncthingandroid/) and [Google Play](https://play.google.com/store/apps/details?id=com.nutomic.syncthingandroid).
+A Syncthing Android app is available on [F-Droid](https://f-droid.org/packages/com.github.catfriend1.syncthingfork/).
 
 ### [DEPRECATED?] Before: sync a specific Google Drive folder on Ubuntu
 
@@ -233,3 +241,70 @@ Originally it was useful to "serve" HTML pages but it doesn't work anymore.
 ```
 vlc -vvv http://hazel.torontocast.com:2220/stream --sout=file/ogg:classical.ogg
 ```
+
+
+## Android/Phone
+
+I'm trying [GrapheneOS](https://grapheneos.org/).
+
+Open-source apps/services:
+
+- App store
+    - [F-droid](https://f-droid.org/): install from an [official release](). Many [Apps](https://f-droid.org/en/packages/)
+    - [Obtainum](https://obtainium.imranr.dev/): install from website or [F-droid](https://f-droid.org/en/packages/dev.imranr.obtainium.fdroid/). Can follow repos' releases (faster updates).
+    - [Aurora Store](https://f-droid.org/en/packages/com.aurora.store/), install apps from the Google Play store without google services/account.
+- QR code: [Binary Eye](https://f-droid.org/en/packages/de.markusfisch.android.binaryeye/)
+- Podcast: [AntennaPod](https://antennapod.org/) ([F-droid](https://f-droid.org/en/packages/de.danoeh.antennapod/)) full-featured, including offline downloads.
+- Streaming: [NewPipe](https://newpipe.net/) stream YouTube ads-free and without an account. Recommended to use Obtainium to get latest releases faster.
+- Media: [VLC](https://www.videolan.org/vlc/download-android.html) ([F-droid](https://f-droid.org/en/packages/org.videolan.vlc/)) to play webradios, music and videos.
+- Sync: 
+    - [Davx5](https://www.davx5.com/) ([F-droid](https://f-droid.org/packages/at.bitfire.davdroid/) to sync contacts/calendar. I sync with the *Contacts* application of my self-hosted Nextcloud server.
+    - [Syncthing](https://f-droid.org/packages/com.github.catfriend1.syncthingfork/) ([GitHub](https://github.com/researchxxl/syncthing-android)). Real-time synchronization of files between devices. See section above about syncing a folder in Ubuntu.
+    - [Termux](https://termux.dev/en/) ([F-droid](https://f-droid.org/en/packages/com.termux/)) emulates a terminal. I use it to synchronize GIT repos. [Termux Widgets](https://f-droid.org/en/packages/com.termux.widget/) help to quickly run a command (synchronize).
+- Feed/News: [FeedMe](https://play.google.com/store/apps/details?id=com.seazon.feedme) ([GitHub releases](https://github.com/seazon/FeedMe)). RSS reader set up with my self-hosted FreshRSS server. *Not open source?*
+- 2FA: [FreeOTP](https://github.com/freeotp/freeotp-android) ([F-droid](https://f-droid.org/en/packages/org.fedorahosted.freeotp/)). 
+- Mail: [K-9 Mail](https://k9mail.app/) ([GitHub](https://github.com/thunderbird/thunderbird-android/releases))
+- Passwords: [Master Password](https://github.com/dkunzler/masterpassword). Passwords generated on-the-fly, not saved anywhere. Unofficial app for MasterPasswordApp/Spectr([Online version](https://js.masterpassword.app/)).
+- Cloud Storage: [Nextcloud](https://nextcloud.com/) ([GitHub releases](https://github.com/nextcloud/android/releases)). Configured with my self-hosted Nextcloud server.
+- Notes
+    - [Orgzly](https://www.orgzly.com/) ([GitHub](https://github.com/orgzly/orgzly-android/releases)): Notebooks in [Org mode](https://orgmode.org/) (see my [Emacs Org-mode page](orgmode))
+- Bookmarks: [Wallabag](https://wallabag.org/) ([GitHub](https://github.com/wallabag/android-app/releases)) Save online articles/pages. I use a self-hosted Wallabag server.
+- [Wikipedia](https://github.com/wikimedia/apps-android-wikipedia?tab=readme-ov-file) Browse articles and save them offline.
+- Maps:
+    - [OsmAnd](https://osmand.net/) ([F-droid](https://f-droid.org/packages/net.osmand.plus/)): Offline maps and navigation using [Open Street Map](https://www.openstreetmap.org).
+- Games
+    - [Simon Tatham's Puzzles](https://f-droid.org/en/packages/name.boyle.chris.sgtpuzzles/) ([GitHub](https://github.com/chrisboyle/sgtpuzzles)) "collection of 40 single-player logic games". Personal favorites: [Galaxies](https://www.chiark.greenend.org.uk/~sgtatham/puzzles/js/galaxies.html), [Net](https://www.chiark.greenend.org.uk/~sgtatham/puzzles/js/net.html), [Pearl](https://www.chiark.greenend.org.uk/~sgtatham/puzzles/js/pearl.html), [Map](https://www.chiark.greenend.org.uk/~sgtatham/puzzles/js/map.html), and [Rectangles](https://www.chiark.greenend.org.uk/~sgtatham/puzzles/js/rect.html).
+
+### RSS feed
+
+I use [FeedMe](https://play.google.com/store/apps/details?id=com.seazon.feedme) ([GitHub releases](https://github.com/seazon/FeedMe)) and have it set up with a self-hosted FreshRSS server. 
+My settings are:
+
+- Settings
+    - Sync
+        - Traffic: all ON
+    - Cache
+        - Reading List: 1000
+        - Starred List: 1000
+        - Items to Keep: 5000
+    - Interface:
+        - Auto Mark Read: ON
+    - Control
+        - Volume Buttons: ON (sometimes)
+        - Swipe Right to Left: Browser
+    - Audio
+        - Enable Audio: OFF
+- Subscriptions
+    - Settings (top-right)
+        - Download images at sync: OFF
+        - Download web page at sync: OFF
+        - Download podcast at sync: OFF
+        - Layout: List
+        - Everythin else OFF except *Decode HTML*
+    - Same settings in each subscriptions' setting if needed
+    - View
+        - Order: Oldest
+        - Layout: List
+        - Show summary: ON
+        - Show thumbnail: OFF
+        - Show feed favicon: OFF

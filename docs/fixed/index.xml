@@ -16,7 +16,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/cpp/</guid>
-      <description>Resources File I/O  Read text file one line at a time  Data structures String manipulation  Split a string    Resources  C++ Core Guidelines C++ Primer (5th Edition). Stanley B. Lippman, Josée Lajoie, Barbara E. Moo Accelerated C++. Andrew Koenig  Slides:
+      <description>Resources File I/O  Read text file one line at a time  Data structures  std::vector unordered_map unordered_set  String manipulation  Split a string    Resources  C++ Core Guidelines C++ Primer (5th Edition). Stanley B. Lippman, Josée Lajoie, Barbara E. Moo Accelerated C++. Andrew Koenig  Slides:
  The Spirit of C++ Back To Basics: Modern C++ Style   File I/O Read text file one line at a time #include &amp;lt;fstream&amp;gt; std::ifstream in_file(&amp;#39;file.</description>
     </item>
     
@@ -26,7 +26,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/emacs/</guid>
-      <description>Basic configuration General commands  Kill ring Calculator Register/bookmark Console-size split screen Move between left/right windows  MELPA package repository Solarized theme Keybindings to change font size For R  Emacs Speaks Statistics Auto-complete Smart underscores Poly-mode for R + Markdown Custom keyboard shortcuts Jumping to function definitions  For writing  Spell checking Thesaurus and synonyms Grammar checking Word count  For LaTeX  Word count Chunk folding  For Markdown  Table formatting Markdown live preview  For Python  Elpy python mode Send commands to a specific buffer  For C/CPP  Tags  For Javascript For Shell For Snakemake workflows For WDL workflows For file manipulation  Compare two files (diff) CSV/TSV Dired mode  For Version Control File encryption Snippets On HPCs For online notes  Evernote Simplenote  For OSX  Maximize window at opening Keybindings Ispell Explicit path definition    I use Emacs for almost everything: coding, writing, taking notes, managing tasks, using version control, preparing presentations.</description>
+      <description>Basic configuration General commands  Kill ring Rectangles Calculator Register/bookmark Console-size split screen Move between left/right windows  MELPA package repository Solarized theme Keybindings to change font size For R  Emacs Speaks Statistics Auto-complete Smart underscores Poly-mode for R + Markdown Custom keyboard shortcuts Jumping to function definitions  For writing  Spell checking Thesaurus and synonyms Grammar checking Word count  For LaTeX  Word count Chunk folding  For Markdown  Table formatting Markdown live preview  For Python  Elpy python mode Send commands to a specific buffer  For C/CPP  Tags  For Javascript For Shell For Snakemake workflows For WDL workflows For file manipulation  Compare two files (diff) CSV/TSV Dired mode  For Version Control File encryption Snippets On HPCs For online notes  Evernote Simplenote  For OSX  Maximize window at opening Keybindings Ispell Explicit path definition    I use Emacs for almost everything: coding, writing, taking notes, managing tasks, using version control, preparing presentations.</description>
     </item>
     
     <item>
@@ -73,7 +73,7 @@ Rscript -e &amp;#39;rmarkdown::render(&amp;quot;document.md&amp;quot;)&amp;#39; 
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/org-mode/</guid>
-      <description>Org file Configuration Syntax Keybindings  From anywhere Edit mode Timestamps Repeating events Agenda views Calendar view with calfw Capture  TODO entry Tables Code block Property drawer Habits entry Links Tags Clocking time Custom agenda views Custom holidays Shift timestamps by X hours when traveling to a different time zone Reverse the order of headers To check next  Termux sync with git Orgzly to interact with org files    I’m giving Org mode a try.</description>
+      <description>Org file Configuration Syntax Keybindings  From anywhere Edit mode Timestamps Repeating events Agenda views Calendar view with calfw Capture  TODO entry Tables Code block Property drawer Habits entry Links Tags Clocking time Custom agenda views Custom holidays Shift timestamps by X hours when traveling to a different time zone Reverse the order of headers To check next  Termux sync with git Orgzly to interact with org files    I’m using Org mode to keep track of why I need to do and have done.</description>
     </item>
     
     <item>
@@ -82,7 +82,8 @@ Rscript -e &amp;#39;rmarkdown::render(&amp;quot;document.md&amp;quot;)&amp;#39; 
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/python/</guid>
-      <description>Virtual environments Input/Output Passing arguments to a script Objects  Array/lists Hash Set Class String Function Data frame (pandas)  Multi-threading Naming and formatting Module, files, imports  Packaging code Install a module locally  Graphs Shell integration  Run commands with subprocess  Resource monitoring Bioinfo  Sequences Fasta SAM files VCF  Tricks Jupyter notebooks   Some notes on my recent attempt to learn Python.</description>
+      <description>Virtual environments Input/Output Passing arguments to a script Objects  Array/lists Hash Set Class String Function Data frame (pandas)  Multi-threading Naming and formatting Module, files, imports  Packaging code Install a module locally  Graphs Shell integration  Run commands with subprocess  Resource monitoring Bioinfo  Sequences Fasta SAM files VCF  Tricks Jupyter notebooks   I’m trying to follow the PEP style guide/recommendations:
+ PEP 8: Style Guide for Python Code PEP 257: Docstring Conventions  Virtual environments ## create env python3 -m venv myenv ## activate source myenv/bin/activate ## install more packages pip3 install .</description>
     </item>
     
     <item>
@@ -109,7 +110,7 @@ Rscript -e &amp;#39;rmarkdown::render(&amp;quot;document.md&amp;quot;)&amp;#39; 
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/tools/</guid>
-      <description>Git Snakemake bcftools jq vd rsync Docker WDL Makefile FTP Thunderbird For file conversion  Misc Video conversion with ffmpeg PDF    Git  Commit all modification and added files: git commit -am &#34;informative message&#34; To show all the history of a file: git log -p -- file To retrieve a specific version of a file: git show COMMIT:file Revert repo to a specific commit: git checkout COMMIT Undo a commit: git reset HEAD~ and then for the real commit git commit -c ORIG_HEAD.</description>
+      <description>Git Snakemake bcftools jq vd rsync Docker WDL Makefile FTP Thunderbird For file conversion  Misc Audio Video conversion with ffmpeg PDF    Git  Commit all modification and added files: git commit -am &#34;informative message&#34; To show all the history of a file: git log -p -- file To retrieve a specific version of a file: git show COMMIT:file Revert repo to a specific commit: git checkout COMMIT Undo a commit: git reset HEAD~ and then for the real commit git commit -c ORIG_HEAD.</description>
     </item>
     
     <item>
@@ -118,7 +119,7 @@ Rscript -e &amp;#39;rmarkdown::render(&amp;quot;document.md&amp;quot;)&amp;#39; 
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/os/internet/</guid>
-      <description>Misc tools Password manager DuckDuckGo Ubuntu  Update expired keys (French) Accents in Gnome Ubuntu Change the CTRL-. binding in Ubuntu 22.04 Update the snap-store  Install a specific/older R version Sync a specific folder on Ubuntu  On the cloud Sync in real time with Syncthing [DEPRECATED?] Before: sync a specific Google Drive folder on Ubuntu  Zotero  [DEPRECATED] Before: sync PDFs between Mendeley and Google Drive  Dowload files from Dropbox Record a webradio stream with VLC   Misc tools  https://www.</description>
+      <description>Misc tools Password manager DuckDuckGo Ubuntu  Update expired keys (French) Accents in Gnome Ubuntu Change the CTRL-. binding in Ubuntu 22.04 Update the snap-store Update the NVIDIA drivers  Install a specific/older R version Sync a specific folder on Ubuntu  On the cloud Sync in real time with Syncthing [DEPRECATED?] Before: sync a specific Google Drive folder on Ubuntu  Zotero  [DEPRECATED] Before: sync PDFs between Mendeley and Google Drive  Dowload files from Dropbox Record a webradio stream with VLC Android/Phone  RSS feed    Misc tools  https://www.</description>
     </item>
     
     <item>

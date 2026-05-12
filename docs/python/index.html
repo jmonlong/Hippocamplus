@@ -281,7 +281,11 @@
 </ul>
 </div>
 
-<p>Some notes on my recent attempt to learn Python.</p>
+<p>I’m trying to follow the PEP style guide/recommendations:</p>
+<ul>
+<li><a href="https://peps.python.org/pep-0008/">PEP 8: Style Guide for Python Code</a></li>
+<li><a href="https://peps.python.org/pep-0257/">PEP 257: Docstring Conventions</a></li>
+</ul>
 <div id="virtual-environments" class="section level2">
 <h2>Virtual environments</h2>
 <pre class="sh"><code>## create env
@@ -690,7 +694,10 @@ for record in vcf_reader:
 <li>Find indexes in array: <code>numpy.where(x &gt; 0)</code>.</li>
 <li><code>quit()</code> to stop a program.</li>
 <li><code>myVar is None</code> to test if a variable is <em>None</em>.</li>
-<li>Print the working directory with <code>os.getcwd()</code> (after importing <em>os</em>).</li>
+<li>Print the working directory with <code>os.getcwd()</code> (after importing <em>os</em>).
+<ul>
+<li>Change directory with <code>os.chdir('PATH')</code>.</li>
+</ul></li>
 <li>To get a ~19 digit-long hash of a string: <code>hash(my_very_long_id)</code>.</li>
 </ul>
 <p>When filling a nested dictionary, it’s painful to always test if the key exists before updating it’s value. One trick is to use <code>try</code>/<code>except</code>. It’s not that much quicker but it looks fancier so you forget about the <em>pain</em>:</p>

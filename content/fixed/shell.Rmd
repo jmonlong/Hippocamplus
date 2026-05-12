@@ -40,6 +40,7 @@ term screen-256color
 - `alias rf='ls -t | head -1'` to quickly get the most recent file. Then for example `` less `rf` `` to look at the latest file.
 - `alias evincel='ls -t --quoting-style=shell *.pdf | head -1 | xargs evince'` opens the latest PDF document
 - `alias R='R --no-save --no-restore'` to avoid R asking about saving the history.
+- `alias ll='ls -AlFrth'` to also show hidden file and sort with recent files last.
 
 ## Misc
 
@@ -104,6 +105,14 @@ Remove empty directories
 
 ```
 find . -type d | xargs rmdir
+```
+
+---
+
+Remove files matching a pattern (even if their names contain spaces)
+
+```
+find . -name "PATTERN" | while read ff; do rm "$ff"; done
 ```
 
 ---

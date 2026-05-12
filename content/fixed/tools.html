@@ -24,6 +24,7 @@ output:
 <li><a href="#for-file-conversion" id="toc-for-file-conversion">For file conversion</a>
 <ul>
 <li><a href="#misc" id="toc-misc">Misc</a></li>
+<li><a href="#audio" id="toc-audio">Audio</a></li>
 <li><a href="#video-conversion-with-ffmpeg" id="toc-video-conversion-with-ffmpeg">Video conversion with ffmpeg</a></li>
 <li><a href="#pdf" id="toc-pdf">PDF</a></li>
 </ul></li>
@@ -207,6 +208,9 @@ It’s great to format wide columns but also to quickly explore summary stats of
 </ul>
 <p>To keep the same color palette/theme as my terminal, I set the theme to <code>asciimono</code> in my <code>~/.visidatarc</code> (see <a href="https://jsvine.github.io/intro-to-visidata/advanced/configuring-visidata/#the-visidatarc-file">manual</a>):</p>
 <pre class="txt"><code>options.theme = &quot;asciimono&quot;</code></pre>
+<p>To open <a href="https://samtools.github.io/hts-specs/VCFv4.2.pdf">VCF</a> files, I use a tiny <code>vdvcf</code> script that I put in my path.
+I couldn’t make the <code>--regex-skip</code> option work to skip the VCF header, so I pipe <em>grep</em>:</p>
+<pre><code>zgrep -v &quot;^##&quot; $1 | vd -f tsv</code></pre>
 </div>
 <div id="rsync" class="section level2">
 <h2>rsync</h2>
@@ -370,6 +374,31 @@ command -f ~{write_lines(in_vcf_list)}
 <li>HTML page to PDF: <code>pandoc -o out.pdf --include-in-header h.tex URL</code> where <em>h.tex</em> could contain LaTeX packages declarations like <code>\usepackage{fullpage}</code>.</li>
 <li>Docx to PDF: <code>pandoc -o out.pdf --pdf-engine=weasyprint in.docx</code> with <a href="https://doc.courtbouillon.org/weasyprint/stable/first_steps.html#installation">WeasyPrint (installable through <code>pip</code></a></li>
 </ul>
+</div>
+<div id="audio" class="section level3">
+<h3>Audio</h3>
+<p>Use ffmpeg, for example:</p>
+<div id="mp3" class="section level4">
+<h4>MP3</h4>
+<pre class="sh"><code># &quot;low&quot; quality
+ffmpeg -i in.wav -aq 6 out.mp3
+# good quality
+ffmpeg -i in.wav -aq 4 out.mp3
+# high quality
+ffmpeg -i in.wav -aq 3 out.mp3</code></pre>
+</div>
+<div id="ogg-vorbis" class="section level4">
+<h4><a href="https://en.wikipedia.org/wiki/Ogg">OGG</a>-<a href="https://en.wikipedia.org/wiki/Vorbis">Vorbis</a></h4>
+<p>Open-source and good compression.</p>
+<pre class="sh"><code># &quot;low&quot; quality (e.g. for speech)
+ffmpeg -i in.wav -q 3 out.ogg
+# standard quality
+ffmpeg -i in.wav -q 5 out.ogg
+# high quality
+ffmpeg -i in.wav -q 7 out.ogg
+# highest quality
+ffmpeg -i in.wav -q 9 out.ogg</code></pre>
+</div>
 </div>
 <div id="video-conversion-with-ffmpeg" class="section level3">
 <h3>Video conversion with ffmpeg</h3>

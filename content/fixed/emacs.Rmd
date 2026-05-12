@@ -85,6 +85,16 @@ Of note, deleting stuff also adds it to the kill ring.
 - Yank a specific position in the kill ring, e.g. second-to-last with `M-2 C-y`.
 - After yanking (`C-y`), cycle through earlier kills with `M-y` (useful if you don't remember when you copied something).
 
+### Rectangles
+
+Select a rectangle, e.g. `C-SPACE` from a corner to the other, then:
+
+- `C-x r k` "kill" (i.e. cut) the content of the rectangle
+- `C-x r y` "yank" (i.e. paste) the rectangle
+- `C-x r t` edit the selected rectangle, e.g. to add text to multiple lines at once.
+
+More in the [Emacs manual](https://www.gnu.org/software/emacs/manual/html_node/emacs/Rectangles.html).
+
 ### Calculator
 
 Call the *quick* interface of the calculator with `C-x * q` (or `M-x quick-calc`). 
@@ -569,12 +579,15 @@ Then I have in my `.emacs`:
 Keybindings that I use:
 
 - `C-RET` or `C-c C-y C-e` to send line to python and step.
-- `C-c C-y r` sends region to python. Same for **f**unction, **c**lass or **b**uffer.
+    - `C-c C-y r` sends region to python. Same for **f**unction, **c**lass or **b**uffer.
 - `C-up`/`C-down` navigates between lines with same indentation as the current line.
 - `C-c C-d` open doc for symbol on point.
-- `C-c C-z` switch to *Python* shell (or start one).
+- `C-c C-s` search for the symbol at point across project files
+- `M-.` go to definition of symbol (`M-,` to go back).
 - `C-c C-n` go to next flymake error (previous with *p*).
+- `C-c C-z` switch to *Python* shell (or start one).
 - `C-c C-e` edit all occurrences of symbol on point for refactoring (narrow if needed).
+- `M-q` to wrap long comments into multiple lines automatically (not a elpy keybinding per se)
 
 Of note, I *used to* use the Jupyter console instead of the default interpreter. 
 So `pip install jupyter` and in my `.emacs`:
@@ -589,6 +602,7 @@ So `pip install jupyter` and in my `.emacs`:
 
 Sometimes I get errors like `elpy-promise-reject: peculiar error: "exited abnormally with code 1"` when working within a virtual environment.
 To fix them, I run `M-x elpy-rpc-reinstall-virtualenv`.
+Another "fix" could be to remove the `~/.emacs.d/elpy/rpc-venv` directory.
 
 ### Send commands to a specific buffer
 
@@ -601,7 +615,8 @@ At this point `C-Enter` will send the command to the *shell* buffer.
 ## For C/CPP
 
 - Set the default indentation level with the `c-basic-offset` (e.g. setting it with `M-x set-variable`).
-- To jump to the matching `{`/`}`: `C-M-f`/`C-M-b`
+- To jump to the matching `{`/`}` (or other types of parentheses): `C-M-f`/`C-M-b`, or `C-M-n`/`C-M-p`
+- To jump to the parent parenthesis group: `C-M-u`
 
 I'm following [this tutorial](https://tuhdo.github.io/c-ide.html).
 
@@ -635,6 +650,9 @@ Useful shortcuts:
     - `M-,` to go back to the previous positions.
 
 *More soon...*
+
+- [EDE}(https://www.gnu.org/software/emacs/manual/html_node/ede/index.html)?
+- [lsp-mode](https://emacs-lsp.github.io/lsp-mode/tutorials/CPP-guide/)
 
 List occurrences of current word in the buffer.
 

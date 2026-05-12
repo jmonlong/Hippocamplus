@@ -248,7 +248,12 @@
 <ul>
 <li><a href="#read-text-file-one-line-at-a-time" id="toc-read-text-file-one-line-at-a-time">Read text file one line at a time</a></li>
 </ul></li>
-<li><a href="#data-structures" id="toc-data-structures">Data structures</a></li>
+<li><a href="#data-structures" id="toc-data-structures">Data structures</a>
+<ul>
+<li><a href="#stdvector" id="toc-stdvector">std::vector</a></li>
+<li><a href="#unordered_map" id="toc-unordered_map">unordered_map</a></li>
+<li><a href="#unordered_set" id="toc-unordered_set">unordered_set</a></li>
+</ul></li>
 <li><a href="#string-manipulation" id="toc-string-manipulation">String manipulation</a>
 <ul>
 <li><a href="#split-a-string" id="toc-split-a-string">Split a string</a></li>
@@ -285,24 +290,91 @@ in_file.close();</code></pre>
 </div>
 <div id="data-structures" class="section level2">
 <h2>Data structures</h2>
-<pre class="cpp"><code>std::vector&lt;std::string&gt; str_vec;
-str_vec.push_back(&#39;one element&#39;);
-for(unsigned int ii=0; ii&lt;str_vec.size(); ii++){
-    // LOOP ACTION on &#39;str_vec[ii]&#39;
+<div id="stdvector" class="section level3">
+<h3><a href="https://en.cppreference.com/w/cpp/container/vector.html">std::vector</a></h3>
+<pre class="cpp"><code>#include &lt;vector&gt;</code></pre>
+<p>Init a vector:</p>
+<pre class="cpp"><code>std::vector&lt;int&gt; vec;
+
+// init with N empty string
+std::vector&lt;std::string&gt; vec(N);
+
+// init with N zeros
+std::vector&lt;size_t&gt; vec(N, 0);</code></pre>
+<p>Add an element (<a href="https://en.cppreference.com/w/cpp/container/vector/emplace_back.html">emplace_back</a>):</p>
+<pre class="cpp"><code>// makes a copy of the new element and moves it to the back
+vec.push_back(&#39;one element&#39;);
+// makes a copy of the new element directly at the back (better for objects?)
+vec.emplace_back(another_vector);</code></pre>
+<p>Loop over a vector:</p>
+<pre class="cpp"><code>for(unsigned int ii=0; ii&lt;vec.size(); ii++){
+    // LOOP ACTION on vec[ii]
 }
 
-std::map&lt;std::string,std::double&gt; map_obj;
+for(auto elt: vec){
+    // LOOP ACTION on element elt
+}</code></pre>
+<p>Sort a vector:</p>
+<pre class="cpp"><code>#include &lt;algorithm&gt;
+
+// ascending order by default
+std::sort(vec.begin(), vec.end());
+// descending order
+std::sort(vec.begin(), vec.end(), std::greater&lt;size_t&gt;());</code></pre>
+<p>Remove elements of a vector (efficiently-ish) (<a href="https://en.cppreference.com/w/cpp/container/vector/erase.html">erase</a>):</p>
+<pre class="cpp"><code>auto it = vec.begin();
+while (it != vec.end()) {
+    if (CONDITION){
+        // let&#39;s say we want to remove this element
+        it = vec.erase(it);
+    } else {
+        it++;
+    }
+}</code></pre>
+<p>Check if something is in a vector (<a href="https://en.cppreference.com/w/cpp/algorithm/find.html">find</a>):</p>
+<pre class="cpp"><code>bool value_in_vec = vec.find(value) != vec.end();</code></pre>
+<p>Misc:</p>
+<pre class="cpp"><code>// get size
+vec.size();
+// is the vector empty?
+vec.empty();
+// get the last element
+vec.back();
+// remove the last element
+vec.pop_back();
+// remove all elements
+vec.clear();
+// to allocate memory for N elements
+vec.reserve(N);
+vec.resize(N);</code></pre>
+</div>
+<div id="unordered_map" class="section level3">
+<h3><a href="https://en.cppreference.com/w/cpp/container/unordered_map.html">unordered_map</a></h3>
+<pre><code>std::unordered_map&lt;std::string,std::double&gt; map_obj;
 map_obj[&#39;key1&#39;] = 1.3;
 // check if a key is in the map
 if(map_obj.count(&#39;key2&#39;) &gt; 0)){
     // something with map_obj[&#39;key2&#39;] ?
 }
 // iterate over key/value pairs
-for(std::map&lt;int,int&gt;::iterator iter=map_obj.begin(); iter!=map_obj.end(); iter++){
+for(auto iter=map_obj.begin(); iter!=map_obj.end(); iter++){
     // iter-&gt;first contains the key
     // iter-&gt;secong contains the value
 }</code></pre>
-<p>Maybe <em>unordered_map</em> is better for what I need in general?</p>
+</div>
+<div id="unordered_set" class="section level3">
+<h3><a href="https://en.cppreference.com/w/cpp/container/unordered_set.html">unordered_set</a></h3>
+<pre><code>std::unordered_set&lt;std::string&gt; set_obj;
+set_obj.insert(item1&#39;);
+// check if an item is in the set
+if(set_obj.find(item1&#39;) != set_obj.end()){
+    // do something
+}
+// iterate over items
+for(auto item : set_obj) {
+    // do something with item
+}</code></pre>
+</div>
 </div>
 <div id="string-manipulation" class="section level2">
 <h2>String manipulation</h2>

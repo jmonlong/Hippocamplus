@@ -204,6 +204,13 @@ To keep the same color palette/theme as my terminal, I set the theme to `asciimo
 options.theme = "asciimono"
 ```
 
+To open [VCF](https://samtools.github.io/hts-specs/VCFv4.2.pdf) files, I use a tiny `vdvcf` script that I put in my path. 
+I couldn't make the `--regex-skip` option work to skip the VCF header, so I pipe *grep*:
+
+```
+zgrep -v "^##" $1 | vd -f tsv
+```
+
 ## rsync
 
 `rsync` is not completely intuitive to me. 
@@ -383,11 +390,42 @@ Basic commands:
 
 ## For file conversion
 
+
 ### Misc
 
 - SVG to PDF: `inkscape --file=in.svg --export-area-drawing --without-gui --export-pdf=out.pdf`
 - HTML page to PDF: `pandoc -o out.pdf --include-in-header h.tex URL` where *h.tex* could contain LaTeX packages declarations like `\usepackage{fullpage}`.
 - Docx to PDF: `pandoc -o out.pdf --pdf-engine=weasyprint in.docx` with [WeasyPrint (installable through `pip`](https://doc.courtbouillon.org/weasyprint/stable/first_steps.html#installation)
+
+### Audio
+
+Use ffmpeg, for example:
+
+#### MP3
+
+```sh
+# "low" quality
+ffmpeg -i in.wav -aq 6 out.mp3
+# good quality
+ffmpeg -i in.wav -aq 4 out.mp3
+# high quality
+ffmpeg -i in.wav -aq 3 out.mp3
+```
+
+#### [OGG](https://en.wikipedia.org/wiki/Ogg)-[Vorbis](https://en.wikipedia.org/wiki/Vorbis)
+
+Open-source and good compression.
+
+~~~sh
+# "low" quality (e.g. for speech)
+ffmpeg -i in.wav -q 3 out.ogg
+# standard quality
+ffmpeg -i in.wav -q 5 out.ogg
+# high quality
+ffmpeg -i in.wav -q 7 out.ogg
+# highest quality
+ffmpeg -i in.wav -q 9 out.ogg
+~~~
 
 ### Video conversion with ffmpeg
 

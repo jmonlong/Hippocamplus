@@ -14,6 +14,7 @@ output:
 <li><a href="#general-commands" id="toc-general-commands">General commands</a>
 <ul>
 <li><a href="#kill-ring" id="toc-kill-ring">Kill ring</a></li>
+<li><a href="#rectangles" id="toc-rectangles">Rectangles</a></li>
 <li><a href="#calculator" id="toc-calculator">Calculator</a></li>
 <li><a href="#registerbookmark" id="toc-registerbookmark">Register/bookmark</a></li>
 <li><a href="#console-size-split-screen" id="toc-console-size-split-screen">Console-size split screen</a></li>
@@ -165,6 +166,16 @@ Of note, deleting stuff also adds it to the kill ring.</p>
 <li>Yank a specific position in the kill ring, e.g. second-to-last with <code>M-2 C-y</code>.</li>
 <li>After yanking (<code>C-y</code>), cycle through earlier kills with <code>M-y</code> (useful if you don’t remember when you copied something).</li>
 </ul>
+</div>
+<div id="rectangles" class="section level3">
+<h3>Rectangles</h3>
+<p>Select a rectangle, e.g. <code>C-SPACE</code> from a corner to the other, then:</p>
+<ul>
+<li><code>C-x r k</code> “kill” (i.e. cut) the content of the rectangle</li>
+<li><code>C-x r y</code> “yank” (i.e. paste) the rectangle</li>
+<li><code>C-x r t</code> edit the selected rectangle, e.g. to add text to multiple lines at once.</li>
+</ul>
+<p>More in the <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Rectangles.html">Emacs manual</a>.</p>
 </div>
 <div id="calculator" class="section level3">
 <h3>Calculator</h3>
@@ -529,13 +540,18 @@ Otherwise, I manually fold the frames/figures/tables that are distracting.</p>
 (setq elpy-shell-starting-directory &#39;current-directory)</code></pre>
 <p>Keybindings that I use:</p>
 <ul>
-<li><code>C-RET</code> or <code>C-c C-y C-e</code> to send line to python and step.</li>
+<li><code>C-RET</code> or <code>C-c C-y C-e</code> to send line to python and step.
+<ul>
 <li><code>C-c C-y r</code> sends region to python. Same for <strong>f</strong>unction, <strong>c</strong>lass or <strong>b</strong>uffer.</li>
+</ul></li>
 <li><code>C-up</code>/<code>C-down</code> navigates between lines with same indentation as the current line.</li>
 <li><code>C-c C-d</code> open doc for symbol on point.</li>
-<li><code>C-c C-z</code> switch to <em>Python</em> shell (or start one).</li>
+<li><code>C-c C-s</code> search for the symbol at point across project files</li>
+<li><code>M-.</code> go to definition of symbol (<code>M-,</code> to go back).</li>
 <li><code>C-c C-n</code> go to next flymake error (previous with <em>p</em>).</li>
+<li><code>C-c C-z</code> switch to <em>Python</em> shell (or start one).</li>
 <li><code>C-c C-e</code> edit all occurrences of symbol on point for refactoring (narrow if needed).</li>
+<li><code>M-q</code> to wrap long comments into multiple lines automatically (not a elpy keybinding per se)</li>
 </ul>
 <p>Of note, I <em>used to</em> use the Jupyter console instead of the default interpreter.
 So <code>pip install jupyter</code> and in my <code>.emacs</code>:</p>
@@ -545,7 +561,8 @@ So <code>pip install jupyter</code> and in my <code>.emacs</code>:</p>
 (add-to-list &#39;python-shell-completion-native-disabled-interpreters
              &quot;jupyter&quot;)</code></pre>
 <p>Sometimes I get errors like <code>elpy-promise-reject: peculiar error: "exited abnormally with code 1"</code> when working within a virtual environment.
-To fix them, I run <code>M-x elpy-rpc-reinstall-virtualenv</code>.</p>
+To fix them, I run <code>M-x elpy-rpc-reinstall-virtualenv</code>.
+Another “fix” could be to remove the <code>~/.emacs.d/elpy/rpc-venv</code> directory.</p>
 </div>
 <div id="send-commands-to-a-specific-buffer" class="section level3">
 <h3>Send commands to a specific buffer</h3>
@@ -559,7 +576,8 @@ At this point <code>C-Enter</code> will send the command to the <em>shell</em> b
 <h2>For C/CPP</h2>
 <ul>
 <li>Set the default indentation level with the <code>c-basic-offset</code> (e.g. setting it with <code>M-x set-variable</code>).</li>
-<li>To jump to the matching <code>{</code>/<code>}</code>: <code>C-M-f</code>/<code>C-M-b</code></li>
+<li>To jump to the matching <code>{</code>/<code>}</code> (or other types of parentheses): <code>C-M-f</code>/<code>C-M-b</code>, or <code>C-M-n</code>/<code>C-M-p</code></li>
+<li>To jump to the parent parenthesis group: <code>C-M-u</code></li>
 </ul>
 <p>I’m following <a href="https://tuhdo.github.io/c-ide.html">this tutorial</a>.</p>
 <ul>
@@ -591,6 +609,10 @@ Then added to <code>.emacs</code>:</p>
 </ul></li>
 </ul>
 <p><em>More soon…</em></p>
+<ul>
+<li>[EDE}(<a href="https://www.gnu.org/software/emacs/manual/html_node/ede/index.html" class="uri">https://www.gnu.org/software/emacs/manual/html_node/ede/index.html</a>)?</li>
+<li><a href="https://emacs-lsp.github.io/lsp-mode/tutorials/CPP-guide/">lsp-mode</a></li>
+</ul>
 <p>List occurrences of current word in the buffer.</p>
 </div>
 </div>
